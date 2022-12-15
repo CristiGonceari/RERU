@@ -2,10 +2,53 @@
     display:none;
 }
 
+.hand-cursor {
+	cursor: pointer;
+}
+
 tbody {
 	tr {
 		td {
 			vertical-align: middle !important;
+			text-align: center;
 		}
 	}
+}
+
+thead {
+	tr {
+		th {
+			vertical-align: middle !important;
+			text-align: center;
+		}
+	}
+}
+
+.department-td{
+	max-width: 60px !important;
+}
+
+.department-header {
+	margin-left: 2em;
+	text-align: right;
+}
+  
+.role-header {
+	margin-top: 11%;
+	margin-right: 2em;
+	text-align: left;
+}
+  
+.department-text-header {
+	font-size: 10px;
+	color: #000000
+}
+  
+.role-text-header {
+	font-size: 10px;
+	color: #000000
+}
+  
+.tooltip-text{
+	font-size: 12px;
 }

@@ -241,7 +241,7 @@
     "close": "Close",
     "all": "All",
     "continue": "Continue",
-    "start-test": "Start Test",
+    "start-test": "Start",
     "allow-to-start": "Allow to Start",
     "yes": "Yes",
     "no": "No",
@@ -383,6 +383,7 @@
     "min-percentage": "Min. percentage of points(%)",
     "accumulated-percent": "Collected percentages",
     "test-type-autoverify": "Selected test template will be veified by system",
+    "select-before-event-pls": "Select please needed event",
     "event-has-evaluator": "Selected event has its own evaluators",
     "asignee": "Assign",
     "user-list-to-add": "User list to add",
@@ -400,7 +401,9 @@
     "stop-test-msg": "Are you sure you want to stop this test?",
     "please-wait": "Please wait while system import tests for users ...",
     "test-template": "test template",
-    "start-test": "Test is going to start in few minutes"
+    "start-test": "Test is going to start in few minutes",
+    "verified-by-system": "Verified by the system",
+    "test-template-delete-modal": "test template"
   },
   "verify-test": {
     "title": "Tests",
@@ -798,6 +801,7 @@
     "import-users": "Bulk import users",
     "bulk-message": "Please, use our special form to import users",
     "evaluators": "Evaluators",
+    "evaluators-e": "evaluators",
     "evaluator": "Evaluator",
     "attach-evaluator": "Attach evaluator",
     "detach-evaluator": "Remove evaluator",
@@ -819,7 +823,8 @@
     "succes-attach-evaluator-msg": "Evaluator was successfully attached",
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
-    "show-user-name": "Show user name"
+    "show-user-name": "Show user name",
+    "from-event": "From event"
   },
   "test-template": {
     "test-template": "Test template",
@@ -908,11 +913,13 @@
     "03000302": "Evaluator already exists in test",
     "03000303": "Evaluator and candidate can not be the same person",
     "03000304": "Inexistent evaluator in event",
+    "03000305": "Can't delete evaluator in use",
     "03000401": "Location already exists in event",
     "03000501": "User is not responsible for this event",
     "03000601": "Test Template exists in event",
     "03000701": "Candidate does not exist in event",
-    "03000702": "Candidate and responsible person can not be the  same person",
+    "03000702": "Candidate and responsible person can not be the same person",
+    "03000703": "Can't delete candidate in use",
     "03000801": "Address is empty",
     "03000802": "Computer count is empty",
     "03000803": "Computer number is empty",

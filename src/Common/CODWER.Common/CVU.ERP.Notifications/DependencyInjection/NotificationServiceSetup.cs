@@ -12,6 +12,7 @@ namespace CVU.ERP.Notifications.DependencyInjection
         {
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
 
             return services;
         }

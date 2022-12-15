@@ -12,7 +12,7 @@
                     {{'evaluations.add-evaluation-event-description' | translate}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-add-evaluation [testEvent]="testEvent"></app-add-evaluation>
+            <app-add-evaluation *ngIf="testEvent" [testEvent]="testEvent" [isTestEvent]="isTestEvent"></app-add-evaluation>
         </mat-expansion-panel>
     </mat-accordion>
     <mat-accordion *ngIf="testEvent == false">
@@ -25,7 +25,7 @@
                     {{'evaluations.add-evaluation-description' | translate}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-add-evaluation></app-add-evaluation>
+            <app-add-evaluation *ngIf="event" [testEvent]="testEvent"></app-add-evaluation>
         </mat-expansion-panel>
     </mat-accordion>
 </erp-shared-content>

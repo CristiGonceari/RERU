@@ -13,7 +13,9 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route("api/[controller]")]
     public class AddressController : BaseController
     {
-        public AddressController(IMediator mediator) : base(mediator) { }
+        public AddressController(IMediator mediator) : base(mediator)
+        {
+        }
 
         [HttpGet("{id}")]
         public async Task<AddressDto> GetAddress([FromRoute] int id)

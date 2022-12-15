@@ -14,12 +14,15 @@ namespace RERU.Data.Entities
         }
 
         public int? AccumulatedPercentage { get; set; }
+        public int? FinalAccumulatedPercentage { get; set; }
         public bool? ShowUserName { get; set; }
         public int? MaxErrors { get; set; }
 
         public TestPassStatusEnum? TestPassStatus { get; set; }
         public TestStatusEnum TestStatus { get; set; }
         public TestResultStatusEnum ResultStatus { get; set; }
+        public TestResultStatusEnum? FinalStatusResult { get; set; }
+        public string HashGroupKey { get; set; }
 
         public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
             ? $"{ResultStatus}:({RecommendedForValue}/{NotRecommendedForValue})" : ResultStatus.ToString();
@@ -49,7 +52,6 @@ namespace RERU.Data.Entities
 
         public int? LocationId { get; set; }
         public Location Location { get; set; }
-      
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }

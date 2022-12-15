@@ -12,7 +12,7 @@
                 <th scope="col">{{'faq.name' | translate}}</th>
                 <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
                 <th scope="col" style="text-align:center; width: 150px">{{'faq.contains-media' | translate}}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="articles">
@@ -22,9 +22,9 @@
                     <i *ngIf="item.containsMedia" class="fa la-plus"></i>
                     <i *ngIf="!item.containsMedia" class="fa la-minus"></i>
                 </td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

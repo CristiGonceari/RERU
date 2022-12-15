@@ -38,7 +38,8 @@
     "date": "Data",
     "view-details": "Vizualizare detalii",
     "delete-logs": "Ștergeți din jurnale",
-    "npp": "N.P.P."
+    "npp": "N.P.P.",
+    "enclosed-mode":"Mod restrâns"
    },
    "delete-log-modal":{
     "title": "Ştergerea jurnalelor mai vechi de:",

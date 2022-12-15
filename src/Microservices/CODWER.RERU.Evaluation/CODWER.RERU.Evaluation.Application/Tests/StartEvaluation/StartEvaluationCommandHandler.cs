@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
@@ -11,10 +12,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartEvaluation
     public class StartEvaluationCommandHandler : IRequestHandler<StartEvaluationCommand, Unit>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public StartEvaluationCommandHandler(AppDbContext appDbContext)
+        public StartEvaluationCommandHandler(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public async Task<Unit> Handle(StartEvaluationCommand request, CancellationToken cancellationToken)
@@ -24,8 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartEvaluation
                 .FirstAsync(x => x.Id == request.TestId);
 
             test.TestStatus = TestStatusEnum.InProgress;
-            test.ProgrammedTime = DateTime.Now;
-            test.StartTime = DateTime.Now;
+            test.ProgrammedTime = _dateTime.Now;
+            test.StartTime = _dateTime.Now;
 
             await _appDbContext.SaveChangesAsync();
 

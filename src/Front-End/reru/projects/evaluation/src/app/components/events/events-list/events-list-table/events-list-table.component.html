@@ -3,7 +3,7 @@
 </app-loading-spinner>
 
 <app-event-calendar (onDatePicked)="getListByDate($event)" (listOfDates)="list($event)" *ngIf="isLoadingCalendar"
-  (listOfCountedEvents)="getListOfCoutedEvents($event)">
+  (listOfCountedEvents)="getListOfCoutedEvents($event)" [isLoading]="isLoadingCountedTests">
 </app-event-calendar>
 
 <div>
@@ -71,7 +71,7 @@
           <th scope="col">{{'locations.description' | translate}}</th>
           <th scope="col" style="width: 200px;">{{'events.start-date' | translate}}</th>
           <th scope="col" style="width: 200px;">{{'events.end-date' | translate}}</th>
-          <th scope="col" style="width: 48px"></th>
+          <th *ngIf="events.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
         </tr>
       </thead>
       <tbody class="datatable-body" *ngIf="events.length">
@@ -81,8 +81,8 @@
             {{item.description}}</td>
           <td>{{item.fromDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
           <td>{{item.tillDate | date: 'dd/MM/yyyy, HH:mm'}}</td>
-          <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-            <div style="overflow: visible; position: relative; width: 0px">
+          <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+            <div>
               <div ngbDropdown class="dropdown dropdown-inline">
                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                   <span class="svg-icon svg-icon-md" ngbDropdownToggle>

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
 {
@@ -42,6 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
                                 ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
                                 : t.ProgrammedTime.Date == request.Date.Date))
                 .OrderByDescending(x => x.CreateDate)
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.TestName))

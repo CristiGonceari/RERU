@@ -44,7 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
                 .Include(x => x.Event)
                 .FirstOrDefaultAsync(x => x.Id == eventTestTemplateId);
 
-            await _loggerService.Log(LogData.AsEvaluation( $"Șablonul de test {eventTestTemplate.TestTemplate.Name} a fost atașat la evenimentul {eventTestTemplate.Event.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation( $@"Șablonul de test ""{eventTestTemplate.TestTemplate.Name}"" a fost atașat la evenimentul ""{eventTestTemplate.Event.Name}"""));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Personal.Application.Services;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using MediatR;
@@ -14,11 +15,13 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
     {
         private readonly AppDbContext _appDbContext;
         private readonly IDismissalTemplateParserService _dismissalTemplateParser;
+        private readonly IDateTime _dateTime;
 
-        public AddDismissalRequestCommandHandler(AppDbContext appDbContext, IDismissalTemplateParserService dismissalTemplateParser)
+        public AddDismissalRequestCommandHandler(AppDbContext appDbContext, IDismissalTemplateParserService dismissalTemplateParser, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _dismissalTemplateParser = dismissalTemplateParser;
+            _dateTime = dateTime;
         }
 
         public async Task<int> Handle(AddDismissalRequestCommand request, CancellationToken cancellationToken)
@@ -27,7 +30,7 @@ namespace CODWER.RERU.Personal.Application.DismissalRequests.AddDismissalRequest
                 .Include(x => x.Positions)
                 .FirstAsync(x => x.Id == request.Data.ContractorId);
 
-            var contractorPosition = contractor.GetCurrentPositionOnData(DateTime.Now);
+            var contractorPosition = contractor.GetCurrentPositionOnData(_dateTime.Now);
             contractorPosition.ToDate = request.Data.From;
 
             var requestToAdd = new DismissalRequest

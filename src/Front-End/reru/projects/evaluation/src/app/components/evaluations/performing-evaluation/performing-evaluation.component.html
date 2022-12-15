@@ -72,7 +72,11 @@
                     </div>
                     <div class="data-container answer"*ngIf="questionUnit.questionType == questionTypeEnum.FileAnswer && hadFile == false">
                             <ngx-dropzone
-                                accept="image/jpeg,image/jpg,image/png,.doc,.docx,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                accept="
+                                    image/jpeg,image/jpg,image/png,image/png,image/svg,
+                                    .mp4,.webm,.ogv,.mp3,.oga,.wav,.ogg,.aac,.opus,
+                                    .pdf,.ppt,.pptx,.mkv,.avi,.mov,.flv,.odp,.key,.tiff,.doc,.docx,.txt,.xls,.xlsx,
+                                    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                 [multiple]="false" [expandable]="true" (change)="setFile($event)"
                                 class="font-weight-light">
                                 <ngx-dropzone-label>

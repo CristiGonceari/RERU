@@ -24,15 +24,9 @@ namespace CODWER.RERU.Evaluation.Application.References.GetAllEventsValues
         public async Task<List<SelectEventValueDto>> Handle(GetAllEventsValuesQuery request, CancellationToken cancellationToken)
         {
             var events = await _appDbContext.Events
+                .Include(e => e.EventEvaluators)
                 .Select(e => _mapper.Map<SelectEventValueDto>(e))
                 .ToListAsync();
-
-            foreach (var x in events)
-            {
-                var eventEvaluators = await _appDbContext.EventEvaluators.AnyAsync(e => e.EventId == x.EventId);
-
-                x.IsEventEvaluator = eventEvaluators;
-            }
 
             return events;
         }

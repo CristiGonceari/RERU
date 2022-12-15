@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using CVU.ERP.Notifications.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CVU.ERP.Notifications.Email;
-using CVU.ERP.Notifications.Services;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 {
-     public class AddTestCommandHandler : IRequestHandler<AddTestCommand, int>
+    public class AddTestCommandHandler : IRequestHandler<AddTestCommand, int>
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
@@ -62,56 +60,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
             _appDbContext.Tests.Add(newTest);
             await _appDbContext.SaveChangesAsync();
 
-            await SendEmailNotification(newTest.Id, request);
-
             return newTest.Id;
-        }
-
-        private async Task<Unit> SendEmailNotification(int testId, AddTestCommand request)
-        {
-            var test = await _appDbContext.Tests
-                .Include(x => x.Event)
-                    .ThenInclude(x => x.EventLocations)
-                        .ThenInclude(x => x.Location)
-                .Include(x => x.UserProfile)
-                .Include(x => x.TestTemplate)
-                .FirstOrDefaultAsync(x => x.Id == testId);
-
-            await _notificationService.PutEmailInQueue(new QueuedEmailData
-            {
-                Subject = "Invitație la evaluare",
-                To = test.UserProfile.Email,
-                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
-                ReplacedValues = new Dictionary<string, string>()
-                {
-                    { "{user_name}", test.UserProfile.FullName },
-                    { "{email_message}",  await GetEmailContent(test.TestTemplate.Name, request)}
-                }
-            });
-
-            return Unit.Value;
-        }
-
-        private async Task<string> GetEmailContent(string testName, AddTestCommand request)
-        {
-            var content = $@"<p>sunteți invitat/ă la evaluarea ""{testName}""</p>";
-
-            if (request.Data.SolicitedTime.HasValue)
-            {
-                content += $@"<p>Data și ora: ""{request.Data.SolicitedTime.Value:dd/MM/yyyy HH:mm}"".</p>";
-            }
-
-            if (request.Data.LocationId.HasValue)
-            {
-                var location = _appDbContext.Locations.First(x => x.Id == request.Data.LocationId);
-               
-                content += $@"<p> Locatia: ""{location.Address}"", ""{location.Name}"" </p>";
-                content += $@"<p> ""{location.Description}""</p>";
-
-                content += "<p> Prezența fizică este obligatorie. </p>";
-            }
-
-            return content;
         }
     }
 }

@@ -33,6 +33,7 @@ export class PlansListComponent implements OnInit {
   isLoading: boolean = true;
 	downloadFile: boolean = false;
   isLoadingCalendar: boolean = true;
+  isLoadingCountedTests: boolean = true;
 
 	headersToPrint = [];
 	printTranslates: any[];
@@ -280,10 +281,13 @@ export class PlansListComponent implements OnInit {
   }
 
   getListOfCoutedPlans(data) {
+    this.isLoadingCountedTests = true;
+
     const request = {
       fromDate: this.parseDates(data.fromDate),
       tillDate: this.parseDates(data.tillDate)
     }
+
     this.planService.getPlanCount(request).subscribe(response => {
       if (response.success) {
         this.countedPlans = response.data;
@@ -303,6 +307,9 @@ export class PlansListComponent implements OnInit {
           }
         }
       }
+      this.isLoadingCountedTests = false;
+    }, () => {
+      this.isLoadingCountedTests = false;
     })
   }
 

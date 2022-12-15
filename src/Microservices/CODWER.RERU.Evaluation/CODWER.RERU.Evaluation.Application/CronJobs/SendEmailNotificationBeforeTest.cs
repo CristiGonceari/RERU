@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -19,15 +20,17 @@ namespace CODWER.RERU.Evaluation.Application.CronJobs
     {
         private readonly AppDbContext _appDbContext;
         private readonly INotificationService _notificationService;
+        private readonly IDateTime _dateTime;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
 
-        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService)
+        public SendEmailNotificationBeforeTest(AppDbContext appDbContext, INotificationService notificationService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _notificationService = notificationService;
-            _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
-            _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
+            _dateTime = dateTime;
+            _timeRangeBeforeStart = _dateTime.Now.AddMinutes(15);
+            _timeRangeAfterStart = _dateTime.Now.AddMinutes(-1);
         }
 
         public async Task SendNotificationBeforeTest()

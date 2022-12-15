@@ -42,8 +42,8 @@
               {{'events.event' | translate}}</label>
             <div class="col-xl-9 col-lg-8">
               <select class="form-control form-control-lg form-control-solid"
-                (ngModelChange)="getActiveTestTemplates($event)" [(ngModel)]="event.value" name="searchEvent">
-                <option value="">{{'questions.select' | translate}}</option>
+                (ngModelChange)="getActiveTestTemplatesWithEvent($event)" [(ngModel)]="event.value" name="searchEvent">
+                <option [value]="0" selected>{{'questions.select' | translate}}</option>
                 <option *ngFor="let item of eventsList" [ngValue]="item.eventId">
                   {{ item.eventName }}
                 </option>
@@ -54,7 +54,10 @@
             <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">
               {{'events.event-overview' | translate}}</label>
             <div class="card ml-5 col-lg-8 col-xl-8">
-              
+              <app-loading-spinner class="card-body" 
+              *ngIf="isLoading" [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'"
+              [colorClass]="'text-primary'">
+            </app-loading-spinner>
               <div class="card-body" *ngIf="!isLoading">
                 <div class="form-group row align-items-center mb-2">
                   <label class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
@@ -94,7 +97,27 @@
               </button>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="isTestEvent">
+            <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">
+              {{'verify-test.select-test-type' | translate}}
+            </label>
+            <div class="col-xl-9 col-lg-8">
+              <span *ngIf="hasSelectedEvent" class="label label-lg label-light label-inline h-45px px-5 w-100">
+                {{'tests.select-before-event-pls' | translate}}
+              </span>
+              <app-loading-spinner class="form-control form-control-lg form-control-solid" *ngIf="isLoading && !hasSelectedEvent"
+                [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'" [colorClass]="'text-primary'">
+              </app-loading-spinner>
+              <select class="form-control form-control-solid" name="test" *ngIf="!isLoading && !hasSelectedEvent"
+                [(ngModel)]="testTemplate.value" (ngModelChange)="checkIfIsOneAnswer($event)">
+                <option [value]="0" selected>{{'questions.select' | translate}}</option>
+                <option *ngFor="let testTemplate of selectActiveTestsWithEvent" [ngValue]="testTemplate.testTemplateId">
+                  {{testTemplate.testTemplateName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="!isTestEvent">
             <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">
               {{'verify-test.select-test-type' | translate}}
             </label>
@@ -104,8 +127,8 @@
               </app-loading-spinner>
               <select class="form-control form-control-solid" name="test" *ngIf="!isLoading"
                 [(ngModel)]="testTemplate.value" (ngModelChange)="checkIfIsOneAnswer($event)">
-                <option value="">{{'questions.select' | translate}}</option>
-                <option *ngFor="let testTemplate of selectActiveTests" [ngValue]="testTemplate.testTemplateId">
+                <option [value]="0" selected>{{'questions.select' | translate}}</option>
+                <option *ngFor="let testTemplate of selectActiveTestsWithoutEvent" [ngValue]="testTemplate.testTemplateId">
                   {{testTemplate.testTemplateName}}
                 </option>
               </select>
@@ -115,7 +138,7 @@
             <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">
               {{'events.evaluator' | translate}}</label>
             <div class="col-xl-9 col-lg-8">
-              <button class="btn btn-light-primary" *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)"
+              <button class="btn btn-light-primary" *ngIf="!isTestTemplateOneAnswer"
                 [disabled]="ceckTestTemplate(testTemplate)" (click)="attachEvaluators()"
                 [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
                 [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
@@ -124,13 +147,13 @@
               <span *ngIf="isTestTemplateOneAnswer" class="label label-lg label-light label-inline h-45px px-5 w-100">
                 {{'tests.test-type-autoverify' | translate}}
               </span>
-              <span *ngIf="hasEventEvaluator && !isTestTemplateOneAnswer"
+              <!-- <span *ngIf="hasEventEvaluator && !isTestTemplateOneAnswer"
                 class="label label-lg label-light label-inline h-45px px-5 w-100">
                 {{'tests.event-has-evaluator' | translate}}
-              </span>
+              </span> -->
             </div>
           </div>
-          <div class="form-group row" *ngIf="!(hasEventEvaluator || isTestTemplateOneAnswer)">
+          <div class="form-group row">
             <label class="col-xl-3 col-lg-4 col-auto col-form-label text-lg-right text-left">{{'events.show-candidate' | translate}}:</label>
             <div class="col my-auto">
               <label class="checkbox checkbox-lg checkbox-inline mr-5">

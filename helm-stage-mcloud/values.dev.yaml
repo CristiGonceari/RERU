@@ -1,4 +1,4 @@
-tag: dev
+tag: mstage
 
 ingress:
   annotations:
@@ -222,6 +222,8 @@ microservices:
           value: "https://reru.mai.gov.md/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
           value: "https://reru.mai.gov.md"
+        - name: TZ
+          value: "Europe/Chisinau"
       appsettings: reru_identity_new.appsettings.json
     name: "reru-identity-new"
     port: 8080

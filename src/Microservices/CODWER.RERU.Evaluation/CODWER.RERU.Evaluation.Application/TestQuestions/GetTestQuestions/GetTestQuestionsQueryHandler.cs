@@ -60,11 +60,17 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestions
                 {
                     if (testQuestionDto.QuestionType == QuestionTypeEnum.FreeText)
                     {
-                        testQuestionDto.AnswerText = _appDbContext.TestAnswers.FirstOrDefault(x => x.TestQuestionId == testQuestionDto.Id).AnswerValue;
+                        testQuestionDto.AnswerText = _appDbContext.TestQuestionsTestAnswers
+                            .Include(x => x.TestAnswer)
+                            .FirstOrDefault(x => x.TestQuestionId == testQuestionDto.Id)?.TestAnswer.AnswerValue;
                     }
                     else
                     {
-                        var savedAnswers = _appDbContext.TestAnswers.Where(x => x.TestQuestionId == testQuestionDto.Id).ToList();
+                        var savedAnswers = _appDbContext.TestQuestionsTestAnswers
+                            .Include(x => x.TestAnswer)
+                            .Where(x => x.TestQuestionId == testQuestionDto.Id)
+                            .Select(x => x.TestAnswer)
+                            .ToList();
 
                         foreach (var savedAnswer in savedAnswers)
                         {

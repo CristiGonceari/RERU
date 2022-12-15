@@ -60,12 +60,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                         .WithErrorCode(ValidationCodes.INEXISTENT_CANDIDATE_IN_EVENT);
                 });
 
-                When(r => !r.Data.EvaluatorId.HasValue && !r.Data.EventId.HasValue, () =>
-                {
-                    RuleFor(x => x.Data)
-                        .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
-                        .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
-                });
+                //When(r => !r.Data.EvaluatorId.HasValue && !r.Data.EventId.HasValue, () =>
+                //{
+                //    RuleFor(x => x.Data)
+                //        .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
+                //        .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
+                //});
 
                 When(r => r.Data.LocationId.HasValue, () =>
                 {
@@ -74,16 +74,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                             ValidationMessages.InvalidReference));
                 });
 
-                When(r => r.Data.EvaluatorId.HasValue, () =>
-                {
-                    RuleFor(x => x.Data.EvaluatorId.Value)
-                        .SetValidator(x => new ItemMustExistValidator<UserProfile>(_appDbContext, ValidationCodes.INVALID_USER,
-                            ValidationMessages.InvalidReference));
+                //When(r => r.Data.EvaluatorId.HasValue, () =>
+                //{
+                //    RuleFor(x => x.Data.EvaluatorId.Value)
+                //        .SetValidator(x => new ItemMustExistValidator<UserProfile>(_appDbContext, ValidationCodes.INVALID_USER,
+                //            ValidationMessages.InvalidReference));
 
-                    RuleFor(x => x.Data)
-                        .Must(x => x.EvaluatorId != x.UserProfileId)
-                        .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
-                });
+                //    RuleFor(x => x.Data)
+                //        .Must(x => x.EvaluatorId != x.UserProfileId)
+                //        .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
+                //});
             });
         }
 

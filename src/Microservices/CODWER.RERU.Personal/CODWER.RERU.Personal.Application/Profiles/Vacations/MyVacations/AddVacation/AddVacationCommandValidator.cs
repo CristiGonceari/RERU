@@ -9,6 +9,7 @@ using CODWER.RERU.Personal.Application.Services;
 using CODWER.RERU.Personal.Application.Validation;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Vacations;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.AddVacation
 {
@@ -17,7 +18,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.AddVac
         private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
 
-        public AddVacationCommandValidator(IUserProfileService userProfileService, AppDbContext appDbContext)
+        public AddVacationCommandValidator(IUserProfileService userProfileService, AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _userProfileService = userProfileService;
@@ -50,7 +51,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.Vacations.MyVacations.AddVac
                 .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.Data)
-                .Must(x => x.FromDate >= DateTime.Now.Date)
+                .Must(x => x.FromDate >= dateTime.Now.Date)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT)
                 .WithMessage(ValidationMessages.InvalidInput);
 

@@ -11,15 +11,14 @@
             <tr>
                 <th scope="col">{{'faq.name' | translate}}</th>
                 <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th *ngIf="articles.length" class="col-1 text-center" [ngStyle]="{'width.%' : 10}">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="articles">
             <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
                 <td style="cursor: pointer;" [routerLink]="['faq-details', item.id]">{{ item.name }}</td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +51,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </td>
             </tr>
         </tbody>

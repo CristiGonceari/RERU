@@ -27,7 +27,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetTestVerificati
                 .Include(x => x.TestQuestions)
                     .ThenInclude(x => x.QuestionUnit)
                 .Include(x => x.TestQuestions)
-                    .ThenInclude(x => x.TestAnswers)
+                    .ThenInclude(x => x.TestQuestionsTestAnswers)
+                        .ThenInclude(x => x.TestAnswer)
                 .FirstAsync(x => x.Id == request.TestId);
 
             return new VerificationTestQuestionDataDto

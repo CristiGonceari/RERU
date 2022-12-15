@@ -6,6 +6,7 @@
     (onDatePicked)="getListByDate($event)" 
     (listOfDates)="list($event)"
     (listOfCountedEvents)="getListOfCoutedPlans($event)"
+    [isLoading]="isLoadingCountedTests"
     >
 </app-event-calendar>
 
@@ -60,7 +61,7 @@
         <th scope="col">{{'locations.description' | translate}}</th>
         <th scope="col" style="width: 200px;">{{'events.start-date' | translate}}</th>
         <th scope="col" style="width: 200px;">{{'events.end-date' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th *ngIf="plans.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="plans.length">

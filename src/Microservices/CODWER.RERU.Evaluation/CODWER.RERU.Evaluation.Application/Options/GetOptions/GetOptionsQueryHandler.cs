@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Options.GetOptions
                 options = options.Where(x => x.QuestionUnitId == request.QuestionUnitId.Value);
             }
 
-            var answer = await options.ToListAsync();
+            var answer = await options.OrderBy(x => x.Id).ToListAsync();
 
             return _mapper.Map<List<OptionDto>>(answer);
         }

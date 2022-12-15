@@ -6,6 +6,7 @@ using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Ranks;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
@@ -13,14 +14,14 @@ namespace CODWER.RERU.Personal.Application.Ranks
 {
     public class RankValidator : AbstractValidator<AddEditRankDto>
     {
-        public RankValidator(AppDbContext appDbContext)
+        public RankValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.Mentions).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
             RuleFor(x=>x.From)
-                .Must(x=>x > DateTime.Now.AddYears(-100))
+                .Must(x=>x > dateTime.Now.AddYears(-100))
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 

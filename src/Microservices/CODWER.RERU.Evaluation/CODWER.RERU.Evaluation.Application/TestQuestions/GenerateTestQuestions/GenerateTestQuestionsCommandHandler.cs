@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 {
@@ -24,23 +26,21 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
 
         public async Task<Unit> Handle(GenerateTestQuestionsCommand request, CancellationToken cancellationToken)
         {
-            var test = await _appDbContext.Tests
-                .Include(x => x.TestTemplate)
-                    .ThenInclude(x => x.TestTemplateQuestionCategories)
-                .Include(x => x.TestTemplate)
-                    .ThenInclude(x => x.Settings)
-                .FirstAsync(x => x.Id == request.TestId);
+            var test = await GetTest(request.TestId);
 
             var totalCount = test.TestTemplate.QuestionCount;
             var testTemplateQuestionCategoriesToUse = test.TestTemplate.TestTemplateQuestionCategories;
             var categoriesCount = testTemplateQuestionCategoriesToUse.Count;
 
+            var index = 1;
+            var questionsPerCategory = 0;
+            var remainsCategoriesCount = categoriesCount;
+            var usedInTestsQuestions = new List<int>();
+
             var allUsersTests = await _appDbContext.Tests
                 .Include(x => x.TestQuestions)
                 .Where(x => x.TestTemplateId == test.TestTemplateId && x.UserProfileId == test.UserProfileId)
                 .ToListAsync();
-
-            var usedInTestsQuestions = new List<int>();
 
             if (allUsersTests.Count > 1)
             {
@@ -48,13 +48,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 usedInTestsQuestions = allUsersTests.SelectMany(x => x.TestQuestions).Select(x => x.QuestionUnitId).ToList();
             }
 
-            var index = 1;
-            var questionsPerCategory = 0;
-            var remainsCategoriesCount = categoriesCount;
-
-            testTemplateQuestionCategoriesToUse = test.TestTemplate.CategoriesSequence == SequenceEnum.Strict 
-                ? testTemplateQuestionCategoriesToUse.OrderBy(x => x.CategoryIndex).ToList() 
-                : testTemplateQuestionCategoriesToUse.OrderBy(x => Guid.NewGuid()).ToList();
+            testTemplateQuestionCategoriesToUse = GetTestTemplateQuestionCategoriesByOrder(test);
 
             if (testTemplateQuestionCategoriesToUse.Any(x => x.QuestionCount == 0))
             {
@@ -82,36 +76,33 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                     }
 
                 }
-                index = await PreworkCategory(category.Id, test.Id, categoryQuestionsCount, index, usedInTestsQuestions);
+                index = await PreworkCategory(category.Id, test, categoryQuestionsCount, index, usedInTestsQuestions);
                 remainsCategoriesCount--;
             }
 
-            //if (test.TestTemplate.Settings.StartAfterProgrammation)
-            //{
-            //    test.StartTime = DateTime.Now;
-            //    test.EndTime = DateTime.Now.AddMinutes(test.TestTemplate.Duration);
-            //}
-            //else
-            //{
-            //    test.StartTime = test.ProgrammedTime;
-            //    test.EndTime = test.ProgrammedTime.AddMinutes(test.TestTemplate.Duration);
-            //}
-
-            if (test.TestTemplate.Settings != null && test.TestTemplate.Settings.MaxErrors != null)
-            {
-                test.MaxErrors = test.TestTemplate.Settings.MaxErrors;
-            }
-            else
-            {
-                test.MaxErrors = 1;
-            }
+            test.MaxErrors = SetMaxErrors(test);
 
             await _appDbContext.SaveChangesAsync();
 
             return Unit.Value;
         }
 
-        private async Task<int> PreworkCategory(int testTemplateQuestionCategoryId, int testId, int questionCount, int index, List<int> usedInTestsQuestions)
+        private async Task<Test> GetTest(int testId) => await _appDbContext.Tests
+            .Include(x => x.TestTemplate)
+            .ThenInclude(x => x.TestTemplateQuestionCategories)
+            .Include(x => x.TestTemplate)
+            .ThenInclude(x => x.Settings)
+            .FirstAsync(x => x.Id == testId);
+
+        private List<TestTemplateQuestionCategory> GetTestTemplateQuestionCategoriesByOrder(Test test) => test.TestTemplate.CategoriesSequence == SequenceEnum.Strict
+            ? test.TestTemplate.TestTemplateQuestionCategories.OrderBy(x => x.CategoryIndex).ToList()
+            : test.TestTemplate.TestTemplateQuestionCategories.OrderBy(x => Guid.NewGuid()).ToList();
+
+        private int? SetMaxErrors(Test test) => test.TestTemplate.Settings != null && test.TestTemplate.Settings.MaxErrors != null
+            ? test.TestTemplate.Settings.MaxErrors
+            : 1;
+
+        private async Task<int> PreworkCategory(int testTemplateQuestionCategoryId, Test test, int questionCount, int index, List<int> usedInTestsQuestions)
         {
             var testTemplateQuestionCategory = await _appDbContext.TestTemplateQuestionCategories.FirstAsync(x => x.Id == testTemplateQuestionCategoryId);
 
@@ -152,32 +143,66 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 }
             }
 
-            for (int i = 1; i <= questionCount; i++)
+            var sameTestQuestions = _appDbContext.TestQuestions
+                .Include(x => x.Test)
+                .Include(x => x.QuestionUnit)
+                    .ThenInclude(x => x.QuestionCategory)
+                .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test && x.QuestionUnit.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId)
+                .DistinctBy2(x => x.Index)
+                .OrderBy(x => x.Index)
+                .ToList();
+
+            if (sameTestQuestions.Any())
             {
-                int questionId;
-                if (testTemplateQuestionCategory.SequenceType == SequenceEnum.Random)
+                foreach (var sameTestQuestion in sameTestQuestions)
                 {
-                    questionId = RandomThis(questionIds);
-                    questionIds.Remove(questionId);
-                }
-                else
-                {
-                    questionId = strictQuestionsToUse.First(x => x.Index == i).QuestionUnitId;
-                }
+                    var testQuestionToAdd = new TestQuestion
+                    {
+                        Index = sameTestQuestion.Index,
+                        QuestionUnitId = sameTestQuestion.QuestionUnitId,
+                        TestId = test.Id,
+                        HashGroupKey = test.HashGroupKey,
+                        Verified = null,
+                        TimeLimit = testTemplateQuestionCategory.TimeLimit,
+                        AnswerStatus = (int)AnswerStatusEnum.None
+                    };
 
-                var testQuestionToAdd = new TestQuestion
+                    await _appDbContext.TestQuestions.AddAsync(testQuestionToAdd);
+                    await _appDbContext.SaveChangesAsync();
+                    index++;
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= questionCount; i++)
                 {
-                    Index = index,
-                    QuestionUnitId = questionId,
-                    TestId = testId,
-                    Verified = null,
-                    TimeLimit = testTemplateQuestionCategory.TimeLimit,
-                    AnswerStatus = (int)AnswerStatusEnum.None
-                };
+                    int questionId;
 
-                await _appDbContext.TestQuestions.AddAsync(testQuestionToAdd);
-                await _appDbContext.SaveChangesAsync();
-                index++;
+                    if (testTemplateQuestionCategory.SequenceType == SequenceEnum.Random)
+                    {
+                        questionId = RandomThis(questionIds);
+                        questionIds.Remove(questionId);
+                    }
+                    else
+                    {
+                        questionId = strictQuestionsToUse.First(x => x.Index == i).QuestionUnitId;
+                    }
+
+                    var testQuestionToAdd = new TestQuestion
+                    {
+                        Index = index,
+                        QuestionUnitId = questionId,
+                        TestId = test.Id,
+                        HashGroupKey = test.HashGroupKey,
+                        Verified = null,
+                        TimeLimit = testTemplateQuestionCategory.TimeLimit,
+                        AnswerStatus = (int)AnswerStatusEnum.None
+                    };
+
+                    await _appDbContext.TestQuestions.AddAsync(testQuestionToAdd);
+                    await _appDbContext.SaveChangesAsync();
+                    index++;
+                }
             }
 
             return index;

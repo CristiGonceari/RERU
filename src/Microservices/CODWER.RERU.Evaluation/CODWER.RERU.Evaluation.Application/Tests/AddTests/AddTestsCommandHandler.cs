@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
@@ -43,7 +44,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             AppDbContext appDbContext,
             INotificationService notificationService,
             IOptions<PlatformConfig> options,
-            IStorageFileService storageFileService, IInternalNotificationService internalNotificationService, ILoggerService<AddTestsCommandHandler> loggerService)
+            IStorageFileService storageFileService, 
+            IInternalNotificationService internalNotificationService, 
+            ILoggerService<AddTestsCommandHandler> loggerService)
         {
             _mediator = mediator;
             _appDbContext = appDbContext;
@@ -69,11 +72,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             var processId = request.ProcessId;
             var tasks = new List<Task>();
 
-            for (int i = 0; i < request.UserProfileId.Count; i++)
+            for (int userProfileIndex = 0; userProfileIndex < request.UserProfileIds.Count; userProfileIndex++)
             {
-                int threadCopy = i;
+                int userProfileIndexCopy = userProfileIndex;
 
-                tasks.Add(Task.Run(() => HandleTask(request, threadCopy, processId)));
+                tasks.Add(Task.Run(() => StartTasks(userProfileIndexCopy, request, processId)));
             }
 
             await WaitTasks(Task.WhenAll(tasks));
@@ -82,9 +85,27 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             await SaveExcelFile(processId, _excelPackage);
 
-            await SendEmailNotificationToEvaluator(request.EvaluatorId, request.TestTemplateId);
-
             return _testsIds;
+        }
+
+        private async Task StartTasks(int userProfileIndex, AddTestsCommand request, int processId)
+        {
+            var myHashGroupKey = Guid.NewGuid().ToString();
+            int userProfileIndexCopy = userProfileIndex;
+            var myHashGroupKeyCopy = myHashGroupKey;
+
+            if (request.EvaluatorIds.Any())
+            {
+                for (int evaluatorIndex = 0; evaluatorIndex < request.EvaluatorIds.Count; evaluatorIndex++)
+                {
+                    int evaluatorIndexCopy = evaluatorIndex;
+                    await HandleTask(request, userProfileIndexCopy, evaluatorIndexCopy, processId, myHashGroupKeyCopy);
+                }
+            }
+            else
+            {
+                await HandleTask(request, userProfileIndexCopy, null, processId, myHashGroupKeyCopy);
+            }
         }
 
         private async Task WaitTasks(Task t)
@@ -100,9 +121,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             }
         }
 
-        private async Task HandleTask(AddTestsCommand request, int i, int processId)
+        private async Task HandleTask(AddTestsCommand request, int i, int? j, int processId, string myHashGroupKey)
         {
-            var addCommand = await GetCommand(request, i);
+            var addCommand = await GetCommand(request, i, j, myHashGroupKey);
 
             try
             {
@@ -112,7 +133,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
                 var generateCommand = new GenerateTestQuestionsCommand
                 {
-                    TestId = testId
+                    TestId = testId,
                 };
 
                 await _mediator.Send(generateCommand);
@@ -122,6 +143,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 await GenerateExcelResult(i, addCommand.Data.UserProfileId, true, string.Empty);
 
                 await SendEmailNotificationToEvaluat(testId);
+
+                if (addCommand.Data.EvaluatorId != null)
+                {
+                    await SendEmailNotificationToEvaluator(addCommand.Data.EvaluatorId, request.TestTemplateId);
+                }
 
                 await LogAction(testId);
             }
@@ -133,19 +159,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             }
         }
 
-        private async Task<AddTestCommand> GetCommand(AddTestsCommand request, int i)
+        private async Task<AddTestCommand> GetCommand(AddTestsCommand request, int userProfileIndex, int? evaluatorIndex, string myHashGroupKey)
         {
             return new AddTestCommand
             {
                 Data = new AddEditTestDto
                 {
-                    UserProfileId = request.UserProfileId[i],
-                    EvaluatorId = request.EvaluatorId,
+                    UserProfileId = request.UserProfileIds[userProfileIndex],
+                    EvaluatorId = evaluatorIndex != null ? request.EvaluatorIds[(int)evaluatorIndex] : null,
                     ShowUserName = request.ShowUserName,
                     TestTemplateId = request.TestTemplateId,
+                    HashGroupKey = myHashGroupKey,
                     EventId = request.EventId,
                     TestStatus = request.TestStatus,
-                    ProgrammedTime = request.ProgrammedTime
+                    ProgrammedTime = request.ProgrammedTime,
+                    FinalStatusResult = TestResultStatusEnum.NoResult,
+                    FinalAccumulatedPercentage = 0
                 }
             };
         }
@@ -162,10 +191,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task GenerateExcelResult(int i, int userProfileId, bool result, string error)
         {
-            await using (var xd = _appDbContext.NewInstance())
-            {
-                
-            }
             await using var db = _appDbContext.NewInstance();
 
             var userProfile = db.UserProfiles.FirstOrDefault(x => x.Id == userProfileId);
@@ -196,7 +221,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .Include(x => x.TestTemplate)
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
-            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"" data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
+            await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"", data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
         }
 
         private async Task SaveExcelFile(int processId, ExcelPackage package)
@@ -224,7 +249,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         }
 
 
-        #region EvaluatorMail
+        #region EvaluatorEmail
         private async Task SendEmailNotificationToEvaluator(int? evaluatorId, int testTemplateId)
         {
             if (evaluatorId == null) return;
@@ -247,7 +272,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         }
         #endregion
 
-        #region EvaluatMail
+        #region EvaluatEmail
         private async Task SendEmailNotificationToEvaluat(int testId)
         {
             await using var db = _appDbContext.NewInstance();
@@ -292,7 +317,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.FullName },
-                    { "{email_message}",message }
+                    { "{email_message}", message }
                 }
             });
         }

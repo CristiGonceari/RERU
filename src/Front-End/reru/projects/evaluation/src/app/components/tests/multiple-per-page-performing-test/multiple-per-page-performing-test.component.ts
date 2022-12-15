@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { createCustomElement } from '@angular/elements';
@@ -16,13 +16,14 @@ import { AnswerStatusEnum } from '../../../utils/enums/answer-status.enum';
 import { HashOptionInputComponent } from '../../../utils/components/hash-option-input/hash-option-input.component';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
 
 @Component({
   selector: 'app-multiple-per-page-performing-test',
   templateUrl: './multiple-per-page-performing-test.component.html',
   styleUrls: ['./multiple-per-page-performing-test.component.scss']
 })
-export class MultiplePerPagePerformingTestComponent implements OnInit {
+export class MultiplePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   testId;
   timeLeft;
@@ -45,6 +46,8 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
 	no: string;
 	yes: string;
 
+  stylesToApply: string = '.breadcrumb{ display: none !important; }';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private testQuestionService: TestQuestionService,
@@ -53,7 +56,8 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
 	  public translate: I18nService,
     private router: Router,
     private testTemplateService: TestTemplateService,
-    private injector: Injector
+    private injector: Injector,
+    private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -64,6 +68,11 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
     this.getTestById();
     this.startTimer();
     this.subscribeForHashedAnswers()
+    this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
+  }
+
+  ngOnDestroy() {
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 
   getTestById() {
@@ -233,5 +242,6 @@ export class MultiplePerPagePerformingTestComponent implements OnInit {
 
   finalizeTest() {
     this.testService.finalizeTest(this.testId).subscribe(() => this.router.navigate(['my-activities/finish-page', this.testId]));
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 }

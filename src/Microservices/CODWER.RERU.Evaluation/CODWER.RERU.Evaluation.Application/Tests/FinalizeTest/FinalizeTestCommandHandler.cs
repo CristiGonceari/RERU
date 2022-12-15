@@ -22,193 +22,193 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
         private readonly IMediator _mediator;
         private readonly INotificationService _notificationService;
         private readonly IInternalNotificationService _internalNotificationService;
-        private readonly ICandidatePositionService _candidatePositionService;
 
         public FinalizeTestCommandHandler(
             AppDbContext appDbContext, 
             IMediator mediator, 
             INotificationService notificationService, 
-            IInternalNotificationService internalNotificationService, 
-            ICandidatePositionService candidatePositionService)
+            IInternalNotificationService internalNotificationService)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;
             _notificationService = notificationService;
             _internalNotificationService = internalNotificationService;
-            _candidatePositionService = candidatePositionService;
         }
 
         public async Task<Unit> Handle(FinalizeTestCommand request, CancellationToken cancellationToken)
         {
-            var testToFinalize = await _appDbContext.Tests
-                .Include(x => x.TestTemplate)
-                .Include(x => x.Event)
-                    .ThenInclude(x => x.EventUsers)
-                        .ThenInclude(x => x.CandidatePosition)
-                .Include(x => x.Event)
-                    .ThenInclude(x => x.EventVacantPositions)
-                        .ThenInclude(x => x.CandidatePosition)
-                .FirstAsync(x => x.Id == request.TestId);
+            var testToFinalize = await GetTest(request.TestId);
 
             testToFinalize.TestStatus = TestStatusEnum.Terminated;
-            var autocheck = false;
 
             await _appDbContext.SaveChangesAsync();
 
-            await _mediator.Send(new AutoVerificationTestQuestionsCommand { TestId = request.TestId });
-
-            if (testToFinalize.TestQuestions.All(x => x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers))
-            {
-                await _mediator.Send(new AutoCheckTestScoreCommand { TestId = request.TestId });
-                testToFinalize.TestStatus = TestStatusEnum.Verified;
-                await _appDbContext.SaveChangesAsync();
-
-                autocheck = true;
-
-            }
+            await AutoVerificationTest(testToFinalize);
 
             if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
             {
-                await SendEmailNotification(testToFinalize, autocheck);
+                await SendEmailNotificationToEvaluators(testToFinalize);
 
                 if (testToFinalize.Event != null)
                 {
-                    await EmailPositionResponsiblePerson(testToFinalize);
+                    await SendEmailPositionResponsiblePerson(testToFinalize);
                 }
             }
+
+            await FinalizeAllTestsWithTheSameHash(testToFinalize);
 
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(Test testToFinalize, bool autoCheck)
+        private async Task<Test> GetTest(int testId) => await _appDbContext.Tests
+            .Include(x => x.TestTemplate)
+            .Include(x => x.Event)
+            .ThenInclude(x => x.EventUsers)
+            .ThenInclude(x => x.CandidatePosition)
+            .Include(x => x.Event)
+            .ThenInclude(x => x.EventVacantPositions)
+            .ThenInclude(x => x.CandidatePosition)
+            .FirstAsync(x => x.Id == testId);
+
+        private async Task AutoVerificationTest(Test test)
         {
-            var eventEvaluators = await _appDbContext.EventEvaluators
-                    .Include(x => x.Evaluator)
-                    .Include(x => x.Event)
-                    .Where(x => x.EventId == testToFinalize.EventId)
-                    .ToListAsync();
+            await _mediator.Send(new AutoVerificationTestQuestionsCommand { TestId = test.Id });
 
-            var candidate = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == testToFinalize.UserProfileId);
-
-            if (autoCheck)
+            if (test.TestQuestions.All(x => x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers))
             {
-                await Send(candidate, testToFinalize, autoCheck);
+                await _mediator.Send(new AutoCheckTestScoreCommand { TestId = test.Id });
+                test.TestStatus = TestStatusEnum.Verified;
+                test.FinalAccumulatedPercentage = test.AccumulatedPercentage;
+                test.FinalStatusResult = test.ResultStatus;
+                await _appDbContext.SaveChangesAsync();
 
-                await _internalNotificationService.AddNotification(candidate.Id, NotificationMessages.YourTestWasVerified);
+                await SendEmailNotificationToCandidate(test);
             }
-            else 
+        }
+
+        private async Task FinalizeAllTestsWithTheSameHash(Test testToFinalize)
+        {
+            var testsWithTheSameHash = _appDbContext.Tests
+                .Where(x => x.HashGroupKey == testToFinalize.HashGroupKey);
+
+            if (testsWithTheSameHash.Any())
             {
-                foreach (var evaluator in eventEvaluators)
+                foreach (var test in testsWithTheSameHash.ToList())
                 {
-                    var userTests = _appDbContext.EventUsers
-                        .Include(x => x.Event)
-                        .Include(x => x.UserProfile)
-                            .ThenInclude(x => x.Tests)
-                        .Where(x => x.EventId == testToFinalize.EventId)
-                        .All(x => x.UserProfile.TestsWithEvaluator
-                                        .Where(x => x.EventId == testToFinalize.EventId)
-                                        .All(t => t.TestStatus == TestStatusEnum.Terminated) &&
-                                    x.UserProfile.TestsWithEvaluator
-                                        .Where(x => x.EventId == testToFinalize.EventId)
-                                        .Any(t => t.UserProfileId == x.UserProfileId));
+                    test.TestStatus = TestStatusEnum.Terminated;
 
-                    if (userTests)
-                    {
-                        await Send(evaluator.Evaluator, testToFinalize, autoCheck);
+                    await _appDbContext.SaveChangesAsync();
 
-                        await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
-                    }
-                    else
-                    {
-                        return Unit.Value;
-                    }
+                    await AutoVerificationTest(test);
                 }
             }
 
-            return Unit.Value;
+            await _appDbContext.SaveChangesAsync();
         }
 
-        private async Task EmailPositionResponsiblePerson(Test test)
+        #region CandidatePositionMail
+        private async Task SendEmailPositionResponsiblePerson(Test test)
         {
             var eventUser = test.Event.EventUsers
                 .FirstOrDefault(x => x.UserProfileId == test.UserProfileId);
 
-            if (eventUser != null) 
+            if (eventUser != null)
             {
                 var position = _appDbContext.CandidatePositions.FirstOrDefault(x => x.Id == eventUser.PositionId);
 
-                if (position != null) 
+                if (position != null)
                 {
-
                     var candidatePositionNotifications = _appDbContext.CandidatePositionNotifications
                         .Where(x => x.CandidatePositionId == position.Id)
                         .ToList();
-            
+
                     foreach (var item in candidatePositionNotifications)
                     {
                         var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Id == item.UserProfileId);
 
-                        await SendEmailForCandidatePosition(userProfile, test, position?.Name);
+                        await Send(userProfile, "Pozitia candidata", await GetCandidatePositionMessage(test, test.UserProfile.FullName, position?.Name));
                     }
                 }
             }
         }
 
-        private async Task<Unit> Send(UserProfile user, Test test, bool autoCheck)
-        {
-            await _notificationService.PutEmailInQueue(new QueuedEmailData
-            {
-                Subject = "Rezultatul testului",
-                To = user.Email,
-                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
-                ReplacedValues = new Dictionary<string, string>()
-                {
-                    { "{user_name}", user.FullName },
-                    { "{email_message}", await GetTableContent(test, autoCheck) }
-                }
-            });
-
-            return Unit.Value;
-        }
-
-        private async Task<Unit> SendEmailForCandidatePosition(UserProfile user, Test test, string positionName)
-        {
-            await _notificationService.PutEmailInQueue(new QueuedEmailData
-            {
-                Subject = "Pozitia candidata",
-                To = user.Email,
-                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
-                ReplacedValues = new Dictionary<string, string>()
-                {
-                    { "{user_name}", user.FullName },
-                    { "{email_message}", await GetEmailContentForCandidatePosition(test, test.UserProfile.FullName, positionName) }
-                }
-            });
-
-            return Unit.Value;
-        }
-
-        private async Task<string> GetTableContent(Test test, bool autoCheck)
-        {
-            var content = string.Empty;
-
-            if (autoCheck)
-            {
-                content = $@"<p style=""font-size: 22px; font-weight: 300;"">testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
-                            <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>";
-            }
-            else
-            {
-                content += $@"<p style=""font-size: 22px; font-weight: 300;"">toți candidații asignati la evenimentul ""{test.Event.Name}"" au finisat testul.</p>
-                         <p style=""font-size: 22px;font-weight: 300;"">Puteți începe verificarea.</p>";
-            }
-
-            return content;
-        }
-
-        private async Task<string> GetEmailContentForCandidatePosition(Test finalizeTest, string candidateUserProfileName, string positionName) => 
-                         $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{candidateUserProfileName}"", </p>
+        private async Task<string> GetCandidatePositionMessage(Test finalizeTest, string candidateUserProfileName, string positionName) =>
+            $@"<p style=""font-size: 22px; font-weight: 300;"">candidatul ""{candidateUserProfileName}"", </p>
                             <p style=""font-size: 22px;font-weight: 300;"">care a candidat la pozitia ""{positionName}"", 
                             a finalizat testul ""{finalizeTest.TestTemplate.Name}"", din cadrul evenimentului ""{finalizeTest.Event.Name}"".</p>";
+        #endregion
+
+        #region EvaluatorMail
+        private async Task<Unit> SendEmailNotificationToEvaluators(Test testToFinalize)
+        {
+            var eventEvaluators = await _appDbContext.EventEvaluators
+                .Include(x => x.Evaluator)
+                .Include(x => x.Event)
+                .Where(x => x.EventId == testToFinalize.EventId)
+                .ToListAsync();
+
+            foreach (var evaluator in eventEvaluators)
+            {
+                var userTests = _appDbContext.EventUsers
+                    .Include(x => x.Event)
+                    .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.Tests)
+                    .Where(x => x.EventId == testToFinalize.EventId)
+                    .All(x => x.UserProfile.TestsWithEvaluator
+                                  .Where(x => x.EventId == testToFinalize.EventId)
+                                  .All(t => t.TestStatus == TestStatusEnum.Terminated) &&
+                              x.UserProfile.TestsWithEvaluator
+                                  .Where(x => x.EventId == testToFinalize.EventId)
+                                  .Any(t => t.UserProfileId == x.UserProfileId));
+
+                if (userTests)
+                {
+                    await Send(evaluator.Evaluator, "Rezultatul testului", await GetEvaluatorMessage(testToFinalize));
+
+                    await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
+                }
+                else
+                {
+                    return Unit.Value;
+                }
+            }
+
+            return Unit.Value;
+        }
+
+        private async Task<string> GetEvaluatorMessage(Test test) => $@"<p style=""font-size: 22px; font-weight: 300;"">toți candidații asignati la evenimentul ""{test.Event.Name}"" au finisat testul.</p>
+                         <p style=""font-size: 22px;font-weight: 300;"">Puteți începe verificarea.</p>";
+        #endregion
+
+        #region CandidateMail
+        private async Task<Unit> SendEmailNotificationToCandidate(Test testToFinalize)
+        {
+            var candidate = await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == testToFinalize.UserProfileId);
+
+            await _internalNotificationService.AddNotification(candidate.Id, NotificationMessages.YourTestWasVerified);
+
+            await Send(candidate, "Rezultatul testului", await GetCandidateMessage(testToFinalize));
+
+            return Unit.Value;
+        }
+
+        private async Task<string> GetCandidateMessage(Test test) => $@"<p style=""font-size: 22px; font-weight: 300;"">testul ""{test.TestTemplate.Name}"" a fost verificat.</p>
+                            <p style=""font-size: 22px;font-weight: 300;"">Ați acumulat {test.AccumulatedPercentage}% din 100 %.</p>";
+        #endregion
+
+        private async Task Send(UserProfile user, string subject, string message)
+        {
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = subject,
+                To = user.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FullName },
+                    { "{email_message}", message }
+                }
+            });
+        }
     }
 }

@@ -171,10 +171,10 @@ export class PositionAddTestComponent implements OnInit {
   parse() {
     this.setTimeToSearch();
     return new AddEditTest({
-      userProfileId: this.userListToAdd,
+      userProfileIds: this.userListToAdd,
       programmedTime: this.search || null,
       eventId: this.eventId || null,
-      evaluatorId: this.evaluatorList[0] || null,
+      evaluatorIds: this.evaluatorList || [],
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
       testTemplateId: this.testTemplateId || 0,
@@ -186,7 +186,7 @@ export class PositionAddTestComponent implements OnInit {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
-    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length, processType: 2 }).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
       const interval = this.setIntervalGetProcess();

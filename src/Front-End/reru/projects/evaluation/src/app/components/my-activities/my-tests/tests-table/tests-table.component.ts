@@ -19,6 +19,7 @@ export class TestsTableComponent implements OnInit {
   testRowList: Test[] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
+  isLoadingCountedTests: boolean = true;
   filters: any = {};
   enum = TestStatusEnum;
   resultEnum = TestResultStatusEnum;
@@ -146,6 +147,7 @@ export class TestsTableComponent implements OnInit {
   }
 
   getListOfCoutedTests(data) {
+    this.isLoadingCountedTests = true;
     const request = {
       startTime: this.parseDates(data.fromDate),
       endTime: this.parseDates(data.tillDate)
@@ -169,6 +171,9 @@ export class TestsTableComponent implements OnInit {
             }
           }
         }
+      this.isLoadingCountedTests = false;
+      }, () =>{
+      this.isLoadingCountedTests = false;
       }
     )
   }

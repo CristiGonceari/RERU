@@ -1,0 +1,59 @@
+{{- range $index, $microservice := .Values.microservices }}
+{{ if $microservice.service.createService }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $microservice.name }}-service
+spec:
+  selector:
+    app: {{ $microservice.name }}
+  ports:
+   - protocol: TCP
+     port: {{ $microservice.port }}
+     targetPort: {{ $microservice.port }}
+     name: out
+  type: ClusterIP
+{{end }}
+---
+{{ if $microservice.deployment.createDeployment }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $microservice.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ $microservice.name }}
+  replicas: {{ $microservice.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ $microservice.name }}
+    spec: 
+    {{ if $microservice.deployment.useImagePullSecrets}}
+      imagePullSecrets:
+      - name: {{ $.Values.imagePullSecret.name }}
+    {{ end}}
+      volumes:
+      - name: {{ $.Values.name }}-application-settings
+        configMap:
+          name: {{ $.Values.name }}-application-settings
+      containers:
+      - name: {{ $microservice.name }}
+        image: {{ $microservice.deployment.image }}:{{  $microservice.deployment.tag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ $microservice.port }}
+        env:
+        {{- if $microservice.deployment.env }}
+{{ toYaml $microservice.deployment.env | indent 8 }}
+        {{- end }}             
+      {{- if $microservice.deployment.appsettings }}
+        volumeMounts:
+        - name: {{ $.Values.name }}-application-settings
+          mountPath: {{ $.Values.dotnet_microservice.deployment.appsettings }} #need to be changed for fe image
+          subPath: {{ $microservice.deployment.appsettings }}
+      {{- end }}    
+---        
+{{ end }}
+{{- end }}    

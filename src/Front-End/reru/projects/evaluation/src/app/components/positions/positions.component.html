@@ -2,211 +2,204 @@
 </app-page-title>
 
 
-
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-  <div class="d-flex flex-column-fluid">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card card-custom gutter-b">
-            <div class="card-header flex-wrap border-0 py-0">
-              <div class="card-title">
-                <h3 class="card-label" id="documentTitle">
-                  {{ 'position.list' | translate }}
-                </h3>
-              </div>
-              <div class="card-toolbar d-md-flex d-none">
-                <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
-                  <i class="far fa-file-pdf text-white"></i>
-                  {{'button.print' | translate}}
-                </app-confirm-button>
-                <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
-                </app-add-button>
-              </div>
-              <div class="card-toolbar d-md-none d-flex w-100">
-                <app-confirm-button class="btn w-100" width="100%" (click)="getHeaders(getTitle())">
-                  <i class="far fa-file-pdf text-white"></i>
-                  {{'button.print' | translate}}
-                </app-confirm-button>
-                <app-add-button class="btn w-100" width="100%" routerLink="../add-position" [value]="'position.add' | translate">
-                </app-add-button>
-              </div>
-            </div>
-            <div class="card-header border-0 pt-0 pb-0 pr-5">
-              <div class="row w-100">
-                <div class="col-md col-12">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" type="text" name="name" [(ngModel)]="name"
-                      [placeholder]="'button.search-name' | translate" />
-                  </div>
-                </div>
-                <div class="col-md col-12 pt-md-0 pt-2">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input class="form-control" type="text" [(ngModel)]="responsiblePersonName"
-                      name="responsiblePersonName"
-                      [placeholder]="'verify-test.search-responsible-person' | translate" />
-                  </div>
-                </div>
-              </div>
-              <div class="row w-100 mt-2">
-                <div class="col-lg col-12 pt-lg-0 pt-2">
-                  <app-search-medical-column (filter)="setFilter('medicalColumn', $event)" #medicalColumn>
-                  </app-search-medical-column>
-                </div>
-                <div class="col-lg col-12 pt-lg-0 pt-2">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" [owlDateTimeTrigger]="activeDtFrom" [placeholder]="'position.search-from-active-date' | translate"
-                      class="form-control form-control-lg form-control-solid"
-                      [value]="activeFrom | dateFilter:'dd/MM/yyyy HH:mm'">
-                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                      name="date_time" [(ngModel)]="activeFrom" [owlDateTime]="activeDtFrom"
-                      [ngModelOptions]="{standalone: true}" [readonly]="true">
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                    <owl-date-time #activeDtFrom></owl-date-time>
-                  </div>
-                </div>
-                <div class="col-lg col-12 pt-lg-0 pt-2">
-                  <div class="input-group input-group-sm input-group-solid">
-                    <input type="text" [owlDateTimeTrigger]="activeToDate" [placeholder]="'position.search-from-inactive-date' | translate"
-                      class="form-control form-control-lg form-control-solid"
-                      [value]="activeTo | dateFilter:'dd/MM/yyyy HH:mm'">
-                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                      name="date_time" [(ngModel)]="activeTo" [owlDateTime]="activeToDate"
-                      [ngModelOptions]="{standalone: true}" [readonly]="true">
-                    <i class="fas fa-calendar-alt mr-2"></i>
-                    <owl-date-time #activeToDate></owl-date-time>
-                  </div>
-                </div>
-                <div class="col-lg-auto col-12 pt-lg-0 pt-2">
-                  <div class="text-right d-md-block d-none">
-                    <app-button (handle)="resetFilters()" [value]="'button.reset' | translate" class="mr-5">
-                    </app-button>
-                    <app-confirm-button (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
-                    </app-confirm-button>
-                  </div>
-                  <div class="d-md-none d-flex flex-column">
-                    <app-confirm-button class="w-100" width="100%" (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
-                    </app-confirm-button>
-                    <app-button class="w-100 pt-2" width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate">
-                    </app-button>
-                  </div>
-                </div>
+<erp-shared-content>
+  <div class="row">
+    <div class="col">
+      <div class="card card-custom gutter-b erp-shared-desktop-wide">
+        <div class="card-header flex-wrap border-0 py-0">
+          <div class="card-title">
+            <h3 class="card-label" id="documentTitle">
+              {{ 'position.list' | translate }}
+            </h3>
+          </div>
+          <div class="card-toolbar d-md-flex d-none">
+            <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
+              <i class="far fa-file-pdf text-white"></i>
+              {{'button.print' | translate}}
+            </app-confirm-button>
+            <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
+            </app-add-button>
+          </div>
+          <div class="card-toolbar d-md-none d-flex w-100">
+            <app-confirm-button class="btn w-100" width="100%" (click)="getHeaders(getTitle())">
+              <i class="far fa-file-pdf text-white"></i>
+              {{'button.print' | translate}}
+            </app-confirm-button>
+            <app-add-button class="btn w-100" width="100%" routerLink="../add-position" [value]="'position.add' | translate">
+            </app-add-button>
+          </div>
+        </div>
+        <div class="card-header border-0 pt-0 pb-0 pr-5">
+          <div class="row w-100">
+            <div class="col-md col-12">
+              <div class="input-group input-group-sm input-group-solid">
+                <input class="form-control" type="text" name="name" [(ngModel)]="name"
+                  [placeholder]="'button.search-name' | translate" />
               </div>
             </div>
-            <div class="card-body">
-              <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'"
-                [width]="'5rem'" [colorClass]="'text-primary'">
-              </app-loading-spinner>
-              <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
-              <div *ngIf="!isLoading && !downloadFile" id="kt_datatable"
-                class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
-                <table class="datatable table font-size-lg">
-                  <thead class="text-uppercase text-muted">
-                    <tr>
-                      <th scope="col">{{'position.name' | translate}}</th>
-                      <th scope="col">{{'locations.person' | translate}}</th>
-                      <th scope="col">{{'position.column' | translate}}</th>
-                      <th scope="col" style="width: 150px">{{'position.active-from' | translate}}</th>
-                      <th scope="col" style="width: 150px">{{'position.active-to' | translate}}</th>
-                      <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">
-                        {{'position.status' | translate}}</th>
-                      <th scope="col" style="width: 50px"></th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-dark-75">
-                    <tr *ngFor="let position of positions" (dblclick)="navigate(position.id)">
-                      <td class="cursor-pointer" [routerLink]="['../position', position.id]">
-                        <a>{{ position.name }}</a>
-                      </td>
-                      <td>
-                        <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
-                          [routerLink]="['../../user-profile', position.responsiblePersonId]"
-                          style="white-space: nowrap;" *ngIf="position.responsiblePerson">
-                          {{ position.responsiblePerson }}
-                        </p>
-                        <p *ngIf="!position.responsiblePerson">-</p>
-                      </td>
-                      <td>
-                        <a *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] |
-                          translate}}</a>
-                        <a *ngIf="position.medicalColumn==null">-</a>
-                      </td>
-                      <td>
-                        <a *ngIf="position.from">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}</a>
-                        <a *ngIf="!position.from">-</a>
-                      </td>
-                      <td>
-                        <a *ngIf="position.to">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}</a>
-                        <a *ngIf="!position.to">-</a>
-                      </td>
-                      <td class="text-center">
-                        <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
-                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive">
-                        </svg-icon>
-                        <svg-icon *ngIf="position.isActive === true" key="success" [width]="24" [height]="24"
-                          data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active">
-                        </svg-icon>
-                      </td>
-                      <td data-field="Actions" data-autohide-disabled="false"
-                        class="datatable-cell datatable-cell-sort p-3">
-                        <div style="overflow: visible; position: relative; width: 0px">
-                          <div ngbDropdown class="dropdown dropdown-inline" class="p-0">
-                            <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                              <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
-                                <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                  viewBox="0 0 24 24" version="1.1">
-                                  <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                                    <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
-                                    </rect>
-                                    <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                                      fill-opacity="0.7"></rect>
-                                  </g>
-                                </svg>
-                              </span>
-                            </div>
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                              <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
-                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                  [routerLink]="['../position', position.id]">
-                                  {{'categories.view-details' | translate}}
-                                </button>
-                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                  [routerLink]="['../edit-position', position.id]">
-                                  {{ 'button.edit' | translate }}
-                                </button>
-                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                  (click)="editStatus(position.id)">
-                                  <span *ngIf="position.isActive === false">{{ 'statuses.activate' | translate }}</span>
-                                  <span *ngIf="position.isActive === true">{{ 'statuses.inactivate' | translate }}</span>
-                                </button>
-                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
-                                  *ngIf="position.events.length" [routerLink]="['../position', position.id, 'diagram']">
-                                  {{ 'position.position-diagram' | translate }}
-                                </button>
-                                <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
-                                  (click)="openRemoveModal(position.id, position.name)">
-                                  {{'button.delete' | translate}}
-                                </button>
-                              </div>
-                            </div>
+            <div class="col-md col-12 pt-md-0 pt-2">
+              <div class="input-group input-group-sm input-group-solid">
+                <input class="form-control" type="text" [(ngModel)]="responsiblePersonName"
+                  name="responsiblePersonName"
+                  [placeholder]="'verify-test.search-responsible-person' | translate" />
+              </div>
+            </div>
+          </div>
+          <div class="row w-100 mt-2">
+            <div class="col-lg col-12 pt-lg-0 pt-2">
+              <app-search-medical-column (filter)="setFilter('medicalColumn', $event)" #medicalColumn>
+              </app-search-medical-column>
+            </div>
+            <div class="col-lg col-12 pt-lg-0 pt-2">
+              <div class="input-group input-group-sm input-group-solid">
+                <input type="text" [owlDateTimeTrigger]="activeDtFrom" [placeholder]="'position.search-from-active-date' | translate"
+                  class="form-control form-control-lg form-control-solid"
+                  [value]="activeFrom | dateFilter:'dd/MM/yyyy HH:mm'">
+                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                  name="date_time" [(ngModel)]="activeFrom" [owlDateTime]="activeDtFrom"
+                  [ngModelOptions]="{standalone: true}" [readonly]="true">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <owl-date-time #activeDtFrom></owl-date-time>
+              </div>
+            </div>
+            <div class="col-lg col-12 pt-lg-0 pt-2">
+              <div class="input-group input-group-sm input-group-solid">
+                <input type="text" [owlDateTimeTrigger]="activeToDate" [placeholder]="'position.search-from-inactive-date' | translate"
+                  class="form-control form-control-lg form-control-solid"
+                  [value]="activeTo | dateFilter:'dd/MM/yyyy HH:mm'">
+                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                  name="date_time" [(ngModel)]="activeTo" [owlDateTime]="activeToDate"
+                  [ngModelOptions]="{standalone: true}" [readonly]="true">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <owl-date-time #activeToDate></owl-date-time>
+              </div>
+            </div>
+            <div class="col-lg-auto col-12 pt-lg-0 pt-2">
+              <div class="text-right d-md-block d-none">
+                <app-button (handle)="resetFilters()" [value]="'button.reset' | translate" class="mr-5">
+                </app-button>
+                <app-confirm-button (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
+                </app-confirm-button>
+              </div>
+              <div class="d-md-none d-flex flex-column">
+                <app-confirm-button class="w-100" width="100%" (handle)="getPositions({ page: 1 })" [value]="'button.search' | translate">
+                </app-confirm-button>
+                <app-button class="w-100 pt-2" width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate">
+                </app-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'"
+            [width]="'5rem'" [colorClass]="'text-primary'">
+          </app-loading-spinner>
+          <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
+          <div *ngIf="!isLoading && !downloadFile" id="kt_datatable"
+            class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
+            <table class="datatable table font-size-lg">
+              <thead class="text-uppercase text-muted">
+                <tr>
+                  <th scope="col">{{'position.name' | translate}}</th>
+                  <th scope="col">{{'locations.person' | translate}}</th>
+                  <th scope="col">{{'position.column' | translate}}</th>
+                  <th scope="col" style="width: 150px">{{'position.active-from' | translate}}</th>
+                  <th scope="col" style="width: 150px">{{'position.active-to' | translate}}</th>
+                  <th scope="col" style="width: 75px; text-align: center; vertical-align: middle">{{'position.status' | translate}}</th>
+                  <th *ngIf="positions.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody class="text-dark-75">
+                <tr *ngFor="let position of positions" (dblclick)="navigate(position.id)">
+                  <td class="cursor-pointer" [routerLink]="['../position', position.id]">
+                    <a>{{ position.name }}</a>
+                  </td>
+                  <td>
+                    <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                      [routerLink]="['../../user-profile', position.responsiblePersonId]"
+                      style="white-space: nowrap;" *ngIf="position.responsiblePerson">
+                      {{ position.responsiblePerson }}
+                    </p>
+                    <p *ngIf="!position.responsiblePerson">-</p>
+                  </td>
+                  <td>
+                    <a *ngIf="position.medicalColumn!=null">{{'statuses.' + medicalEnum[position.medicalColumn] |
+                      translate}}</a>
+                    <a *ngIf="position.medicalColumn==null">-</a>
+                  </td>
+                  <td>
+                    <a *ngIf="position.from">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}</a>
+                    <a *ngIf="!position.from">-</a>
+                  </td>
+                  <td>
+                    <a *ngIf="position.to">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}</a>
+                    <a *ngIf="!position.to">-</a>
+                  </td>
+                  <td class="text-center">
+                    <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
+                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive">
+                    </svg-icon>
+                    <svg-icon *ngIf="position.isActive === true" key="success" [width]="24" [height]="24"
+                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active">
+                    </svg-icon>
+                  </td>
+                  <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                      <div ngbDropdown class="dropdown dropdown-inline" class="p-0" container="body">
+                        <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                          <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
+                            <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                              viewBox="0 0 24 24" version="1.1">
+                              <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black">
+                                </rect>
+                                <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                                  fill-opacity="0.7"></rect>
+                              </g>
+                            </svg>
+                          </span>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                          <div ngbDropdownMenu [aria-labelledby]="'action' + i" class="p-0">
+                            <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                              [routerLink]="['../position', position.id]">
+                              {{'categories.view-details' | translate}}
+                            </button>
+                            <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                              [routerLink]="['../edit-position', position.id]">
+                              {{ 'button.edit' | translate }}
+                            </button>
+                            <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                              (click)="editStatus(position.id)">
+                              <span *ngIf="position.isActive === false">{{ 'statuses.activate' | translate }}</span>
+                              <span *ngIf="position.isActive === true">{{ 'statuses.inactivate' | translate }}</span>
+                            </button>
+                            <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                              *ngIf="position.events.length" [routerLink]="['../position', position.id, 'diagram']">
+                              {{ 'position.position-diagram' | translate }}
+                            </button>
+                            <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                              (click)="openRemoveModal(position.id, position.name)">
+                              {{'button.delete' | translate}}
+                            </button>
                           </div>
                         </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
-                  [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-                  (sizeChange)="getPositions({ name: keyword, page: 1, itemsPerPage: $event })"
-                  (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})"
-                  *ngIf="positions">
-                </div>
-              </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
+              [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
+              (sizeChange)="getPositions({ name: keyword, page: 1, itemsPerPage: $event })"
+              (pageChange)="getPositions({ name: keyword, page: $event, itemsPerPage: pagination.pageSize})"
+              *ngIf="positions">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</erp-shared-content>

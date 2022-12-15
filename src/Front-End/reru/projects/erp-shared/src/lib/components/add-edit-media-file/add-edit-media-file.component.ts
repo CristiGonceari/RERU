@@ -101,8 +101,13 @@ export class AddEditMediaFileComponent implements OnInit {
           this.description = description;
         });
         this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
+        this.onRemoved();
       }
-      this.attachedFile = event.addedFiles[0];
+
+      if((this.videoFiles || this.imageFiles || this.audioFiles || this.docFiles).length > 0){
+        this.attachedFile = event.addedFiles[0];
+      }
+      
       this.handleFile.emit(this.attachedFile);
     });
   }

@@ -27,6 +27,7 @@ import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
   templateUrl: './test-list-table.component.html',
   styleUrls: ['./test-list-table.component.scss']
 })
+
 export class TestListTableComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   testTemplateName = [];
@@ -63,6 +64,7 @@ export class TestListTableComponent implements OnInit {
   filters: any = {};
   testName: string = '';
   userName: string = '';
+  evaluatorName: string = '';
   userEmail: string = '';
   idnp: string = '';
   testEvent: string = '';
@@ -72,6 +74,9 @@ export class TestListTableComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+
+  isCollpasedRow: boolean[] = []
+  testsByHash: any[] = []
 
   constructor(
     private testService: TestService,
@@ -132,6 +137,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.idnp || '',
       eventName: this.testEvent || '',
       userName: this.userName || '',
+      evaluatorName: this.evaluatorName || '',
       email: this.userEmail || this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null,
@@ -144,11 +150,13 @@ export class TestListTableComponent implements OnInit {
 
     this.testService.getTests(params).subscribe(res => {
       if (res && res.data) {
-        this.testTemplate = res.data.items;
+        this.testTemplate = res.data.items.filter((item, i, arr) => arr.findIndex((t) => t.hashGroupKey == null ? t.id == item.id : t.hashGroupKey == item.hashGroupKey ) === i);
         this.verificationProgress = res.data.items.map(el => el.verificationProgress);
+        this.testsByHash = res.data.items;
         this.testTemplateName = res.data.items.map(it => it.testTemplateName);
         this.score = res.data.items.map(s => s.score);
         this.pagination = res.data.pagedSummary;
+        this.isCollpasedRow.length = res.data.items.length;
         this.isLoading = false;
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
@@ -156,6 +164,28 @@ export class TestListTableComponent implements OnInit {
         }
       }
     });
+  }
+
+  getTestsByHash(hashGroupKey, testId){
+    if(hashGroupKey == null) {
+      return;
+    } 
+    else if(this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey).length <= 1) {
+      return this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey && x.id != testId);
+    }
+
+    return this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey);
+  }
+
+  hasTestHashGroup(hashGroupKey, testId){
+    if(hashGroupKey == null){
+      return 0;
+    }
+    else if(this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey).length <= 1) {
+      return this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey && x.id != testId).length;
+    }
+
+    return this.testsByHash.filter(x => x.hashGroupKey == hashGroupKey).length;
   }
 
   getTestStatuses() {
@@ -284,19 +314,27 @@ export class TestListTableComponent implements OnInit {
 		let headersHtml = document.getElementsByTagName('th');
 		let headersDto = [
       'testTemplateName', 
-      'userName', 
+      'userName',
+      'evaluatorName', 
       'eventName', 
+      'departmentName',
       'locationNames', 
       'testStatus', 
       'verificationProgress', 
-      'result', 
+      'result',
       'accumulatedPercentage', 
       'minPercent'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {
       if(i == 2){
-        this.headersToPrint.push({ value: "idnp", label: "Idnp",isChecked: true})
+        this.headersToPrint.push({ value: "idnp", label: "Idnp", isChecked: true})
+      }
+      if(i == 4){
+         headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
+      }
+      if(i == 5){
+        this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -312,6 +350,7 @@ export class TestListTableComponent implements OnInit {
       idnp: this.idnp || '',
       eventName: this.testEvent || '',
       userName: this.userName || '',
+      evaluatorName: this.evaluatorName || '',
       email: this.userEmail || '',
       programmedTimeFrom: this.searchFrom || null,
       programmedTimeTo: this.searchTo || null,
@@ -369,6 +408,14 @@ export class TestListTableComponent implements OnInit {
 		this.getTests();
 	}
 
+  parseStringLength(name: string): string{
+    if(name.length > 12) {
+     return name.slice(0, 12) + "...";
+    }
+
+    return name;
+  }
+
 	resetFilters(): void {
 		this.filters = {};
 		this.pagination.currentPage = 1;
@@ -376,6 +423,7 @@ export class TestListTableComponent implements OnInit {
     this.testEvent = '';
     this.testLocation = '';
     this.userName = '';
+    this.evaluatorName = '';
     this.userEmail = '';
     this.idnp = '';
     this.dateTimeFrom = '';

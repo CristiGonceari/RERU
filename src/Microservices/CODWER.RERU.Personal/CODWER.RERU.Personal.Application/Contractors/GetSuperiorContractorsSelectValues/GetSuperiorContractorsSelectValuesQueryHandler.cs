@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using CVU.ERP.Common;
 using RERU.Data.Persistence.Context;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
@@ -14,18 +15,20 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetSuperiorContractorsSel
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IDateTime _dateTime;
         private readonly List<int> _inferiors;
 
-        public GetSuperiorContractorsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetSuperiorContractorsSelectValuesQueryHandler(AppDbContext appDbContext, IMapper mapper, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _dateTime = dateTime;
             _inferiors = new List<int>();
         }
 
         public async Task<List<SelectItem>> Handle(GetSuperiorContractorsSelectValuesQuery request, CancellationToken cancellationToken)
         {
-            var now = DateTime.Now;
+            var now = _dateTime.Now;
             _inferiors.Add(request.ContractorId);
             await GetInferiors(request.ContractorId);
 
