@@ -285,7 +285,7 @@
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                             [routerLink]="['../my-activities/test-result', item.id]"
-                                            *ngIf="item.testStatus === status.Verified">
+                                            *ngIf="item.testStatus === status.Verified && item.isEvaluator">
                                             {{ 'button.view' | translate }}
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
