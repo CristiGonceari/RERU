@@ -106,6 +106,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             {
                 await HandleTask(request, userProfileIndexCopy, null, processId, myHashGroupKeyCopy);
             }
+
+            await SendEmailNotificationToEvaluat(_testsIds.First());
         }
 
         private async Task WaitTasks(Task t)
@@ -141,8 +143,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 await UpdateProcesses(processId);
 
                 await GenerateExcelResult(i, addCommand.Data.UserProfileId, true, string.Empty);
-
-                await SendEmailNotificationToEvaluat(testId);
 
                 if (addCommand.Data.EvaluatorId != null)
                 {

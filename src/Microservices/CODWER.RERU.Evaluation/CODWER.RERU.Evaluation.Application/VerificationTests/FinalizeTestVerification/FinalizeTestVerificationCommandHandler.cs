@@ -46,8 +46,6 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
 
             await _appDbContext.SaveChangesAsync();
 
-            await _internalNotificationService.AddNotification(testToFinalize.UserProfileId, NotificationMessages.YourTestWasVerified);
-
             await CalculateEvaluatorsAverage(testToFinalize);
 
             return Unit.Value;
@@ -72,6 +70,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
                     });
 
                     await SendEmailNotification(testToFinalize);
+
+                    await _internalNotificationService.AddNotification(testToFinalize.UserProfileId, NotificationMessages.YourTestWasVerified);
                 }
             }
 

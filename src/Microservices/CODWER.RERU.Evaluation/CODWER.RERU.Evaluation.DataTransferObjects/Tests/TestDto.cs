@@ -27,6 +27,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string TestTemplateName { get; set; }
         public string Rules { get; set; }
         public string VerificationProgress { get; set; }
+        public string CreateById { get; set; }
         public bool ShowUserName { get; set; }
         public bool IsEvaluator { get; set; }
         public bool IsVerificatedAutomat { get; set; }

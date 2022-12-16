@@ -43,19 +43,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
             await _appDbContext.SaveChangesAsync();
 
-            await AutoVerificationTest(testToFinalize);
+            await FinalizeAllTestsWithTheSameHash(testToFinalize);
 
-            if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test)
+            if (testToFinalize.TestTemplate.Mode == TestTemplateModeEnum.Test && testToFinalize.Event != null)
             {
                 await SendEmailNotificationToEvaluators(testToFinalize);
 
-                if (testToFinalize.Event != null)
-                {
-                    await SendEmailPositionResponsiblePerson(testToFinalize);
-                }
+                await SendEmailPositionResponsiblePerson(testToFinalize);
             }
-
-            await FinalizeAllTestsWithTheSameHash(testToFinalize);
 
             return Unit.Value;
         }
@@ -88,8 +83,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
         private async Task FinalizeAllTestsWithTheSameHash(Test testToFinalize)
         {
-            var testsWithTheSameHash = _appDbContext.Tests
-                .Where(x => x.HashGroupKey == testToFinalize.HashGroupKey);
+            var testsWithTheSameHash = _appDbContext.Tests.Where(x => x.HashGroupKey == testToFinalize.HashGroupKey);
 
             if (testsWithTheSameHash.Any())
             {
@@ -147,9 +141,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                 .Where(x => x.EventId == testToFinalize.EventId)
                 .ToListAsync();
 
-            foreach (var evaluator in eventEvaluators)
-            {
-                var userTests = _appDbContext.EventUsers
+            var userTests = _appDbContext.EventUsers
                     .Include(x => x.Event)
                     .Include(x => x.UserProfile)
                     .ThenInclude(x => x.Tests)
@@ -161,15 +153,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                                   .Where(x => x.EventId == testToFinalize.EventId)
                                   .Any(t => t.UserProfileId == x.UserProfileId));
 
-                if (userTests)
+            if (userTests)
+            {
+                foreach (var evaluator in eventEvaluators)
                 {
                     await Send(evaluator.Evaluator, "Rezultatul testului", await GetEvaluatorMessage(testToFinalize));
 
                     await _internalNotificationService.AddNotification(evaluator.EvaluatorId, NotificationMessages.AllCandidatesFinishedTest);
-                }
-                else
-                {
-                    return Unit.Value;
                 }
             }
 

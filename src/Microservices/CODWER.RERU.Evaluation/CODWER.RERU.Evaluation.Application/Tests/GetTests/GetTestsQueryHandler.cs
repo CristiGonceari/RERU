@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Linq.Dynamic.Core;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 {
@@ -100,23 +101,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         {
             foreach (var testDto in paginatedModel.Items)
             {
-                var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUser.Id && x.EventId == testDto.EventId);
-                var testEvaluator = _appDbContext.Tests.FirstOrDefault(x => (x.EvaluatorId == currentUser.Id || x.CreateById == currentUser.Id.ToString()) && x.Id == testDto.Id);
+                var eventEvaluators = _appDbContext.EventEvaluators.Where(x => x.EventId == testDto.EventId);
 
-                if (testEvaluator != null)
+                testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
+
+                if (testDto.EventId != null && eventEvaluators.Any())
                 {
-                    testDto.ShowUserName = testEvaluator.ShowUserName ?? true;
-                    testDto.IsEvaluator = true;
+                    testDto.IsEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUser.Id);
                 }
-                else if (eventEvaluator != null)
+
+                if(testDto.ShowUserName == null)
                 {
-                    testDto.ShowUserName = true;
-                    testDto.IsEvaluator = true;
-                }
-                else
-                {
-                    testDto.ShowUserName = true;
-                    testDto.IsEvaluator = false;
+                    testDto.ShowUserName = eventEvaluators.First().ShowUserName;
                 }
             }
 

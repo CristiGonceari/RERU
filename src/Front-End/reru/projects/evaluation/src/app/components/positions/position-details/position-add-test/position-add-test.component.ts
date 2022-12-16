@@ -269,27 +269,34 @@ export class PositionAddTestComponent implements OnInit {
 
   attachEvaluators(): void {
     this.exceptUserIds = this.usersDiagram.map(x => x.userProfileId);
-    this.openUsersModal(this.evaluatorList, 'radio');
+    this.openUsersModal(this.evaluatorList, 'checkbox', true);
   }
 
   attachUsers(): void {
     this.exceptUserIds = this.evaluatorList;
-    this.openUsersModal(this.userListToAdd, 'checkbox');
+    this.openUsersModal(this.userListToAdd, 'checkbox', false);
   }
 
-  openUsersModal(attachedItems, inputType): void {
+  openUsersModal(attachedItems, inputType, whichUser): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.eventId = this.eventId;
-    modalRef.componentInstance.positionId = this.positionId;
+    modalRef.componentInstance.positionId = whichUser ? null : this.positionId;
     modalRef.componentInstance.attachedItems = [...attachedItems];
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
+    modalRef.componentInstance.whichUser = whichUser;
     modalRef.componentInstance.testTemplateId = inputType == "radio" ? this.testTemplateId : null;
 
     modalRef.result.then(() => {
-      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
-      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      if (whichUser) {
+        console.log("evaluatori", this.evaluatorList)
+        this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
+      }
+      else if(!whichUser) {
+        console.log("useri", this.userListToAdd)
+         this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      }
     }, () => { });
   }
 
