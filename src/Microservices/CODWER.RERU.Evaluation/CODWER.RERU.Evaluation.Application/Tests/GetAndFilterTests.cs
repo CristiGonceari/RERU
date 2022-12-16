@@ -49,7 +49,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     TestPassStatus = t.TestPassStatus,
                     HashGroupKey = t.HashGroupKey,
                     FinalStatusResult = t.FinalStatusResult,
-                    FinalAccumulatedPercentage = t.FinalAccumulatedPercentage
+                    FinalAccumulatedPercentage = t.FinalAccumulatedPercentage,
+                    ShowUserName = t.ShowUserName,
+                    CreateById = t.CreateById
                 })
                 .AsQueryable();
 

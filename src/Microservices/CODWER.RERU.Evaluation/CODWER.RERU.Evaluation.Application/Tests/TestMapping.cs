@@ -41,7 +41,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name))
                 .ForMember(x => x.FinalAccumulatedPercentage, opts => opts.MapFrom(src => src.FinalAccumulatedPercentage))
                 .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
-                .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey));
+                .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey))
+                .ForMember(x => x.CreateById, opts => opts.MapFrom(src => src.CreateById));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());
