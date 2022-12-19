@@ -10,8 +10,8 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221201163445_Latest_Changes")]
-    partial class Latest_Changes
+    [Migration("20221219112732_Add_Fields_For_Evaluation360")]
+    partial class Add_Fields_For_Evaluation360
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -718,8 +718,38 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("AdministrativeActOfStudies")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AdministrativeActService")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("AppointmentDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("CheckComment1")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CheckComment2")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CheckComment3")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CheckComment4")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("CommentsEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CommentsEvaluator")
+                        .HasColumnType("text");
+
                     b.Property<int>("CounterSignerUserProfileId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("CourseName")
+                        .HasColumnType("text");
 
                     b.Property<string>("CreateById")
                         .HasColumnType("text");
@@ -727,8 +757,35 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<DateTime?>("DateAcceptOrRejectEvaluated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateCompletionCounterSigner")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateCompletionGeneralData")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateEvaluatedKnow")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateEvaluationInterview")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateLiftingSanction")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateSanctionApplication")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateSettingIindividualGoals")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("EducationEnum")
+                        .HasColumnType("integer");
 
                     b.Property<int>("EvaluatedUserProfileId")
                         .HasColumnType("integer");
@@ -736,19 +793,229 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int>("EvaluatorUserProfileId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FinalEvaluationQualification")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FinalScorePartialEvaluations")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionCounterSigner")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionEvaluator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FunctionSubdivision")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Goal5")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("KPI1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("KPI5")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameCounterSigner")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NameSurnameEvaluator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need1ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need2ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OtherComments")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PartialEvaluationPeriodFromTo")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PartialEvaluationPeriodUpTo")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("PartialEvaluationScore")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("PerformanceTerm1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm4")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PerformanceTerm5")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PeriodEvaluatedFromTo")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PeriodEvaluatedUpTo")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PeriodRunningActivityFromTo")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("PeriodRunningActivityUpTo")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("Points")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("ProfessionalTrainingActivities")
                         .HasColumnType("integer");
+
+                    b.Property<int?>("ProfessionalTrainingActivitiesType")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationEvaluationObtained2YearsPast")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationEvaluationObtainedPreviousYear")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationQuarter1")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationQuarter2")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationQuarter3")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualificationQuarter4")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QualifierPartialEvaluations")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("Question1")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question10")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question11")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question12")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question13")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question2")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question3")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question4")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question5")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question6")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question7")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question8")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Question9")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("SanctionAppliedEvaluationCourse")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("Score1")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Score2")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Score3")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Score4")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Score5")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("ServiceDuringEvaluationCourse")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("SignatureAcknowledgeEvaluated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("SignatureCounterSigner")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("SignatureEvaluated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("SignatureEvaluator")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("SpecialOrMilitaryGrade")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SpecialOrMilitaryGradeText")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SubdivisionEvaluated")
+                        .HasColumnType("text");
 
                     b.Property<string>("SubdivisionName")
                         .HasColumnType("text");
 
-                    b.Property<int>("Type")
+                    b.Property<int?>("Type")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdateById")
@@ -757,13 +1024,54 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("canAccept")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("canCounterSign")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("canDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("canEvaluate")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("canFinished")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CounterSignerUserProfileId");
 
+                    b.HasIndex("EducationEnum");
+
                     b.HasIndex("EvaluatedUserProfileId");
 
                     b.HasIndex("EvaluatorUserProfileId");
+
+                    b.HasIndex("FinalEvaluationQualification");
+
+                    b.HasIndex("ProfessionalTrainingActivities");
+
+                    b.HasIndex("ProfessionalTrainingActivitiesType");
+
+                    b.HasIndex("QualificationEvaluationObtained2YearsPast");
+
+                    b.HasIndex("QualificationEvaluationObtainedPreviousYear");
+
+                    b.HasIndex("QualificationQuarter1");
+
+                    b.HasIndex("QualificationQuarter2");
+
+                    b.HasIndex("QualificationQuarter3");
+
+                    b.HasIndex("QualificationQuarter4");
+
+                    b.HasIndex("QualifierPartialEvaluations");
+
+                    b.HasIndex("ServiceDuringEvaluationCourse");
+
+                    b.HasIndex("SpecialOrMilitaryGrade");
 
                     b.HasIndex("Status");
 
@@ -4248,6 +4556,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int?>("EventId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("FinalAccumulatedPercentage")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FinalStatusResult")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HashGroupKey")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -4301,6 +4618,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("EvaluatorId");
 
                     b.HasIndex("EventId");
+
+                    b.HasIndex("FinalStatusResult");
 
                     b.HasIndex("LocationId");
 
@@ -4425,6 +4744,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("DeleteTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("HashGroupKey")
+                        .HasColumnType("text");
+
                     b.Property<int>("Index")
                         .HasColumnType("integer");
 
@@ -4466,6 +4788,46 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("Verified");
 
                     b.ToTable("TestQuestions");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.TestQuestionTestAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TestAnswerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TestQuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestAnswerId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.ToTable("TestQuestionsTestAnswers");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplate", b =>
@@ -5112,6 +5474,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 6,
                             Name = "CounterSignReject"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Finished"
                         });
                 });
 
@@ -6200,6 +6567,44 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("EducationEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Secondary"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Higher"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Master"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Doctorate"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -6255,6 +6660,236 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 8,
                             Name = "Email"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("GradeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Soldat"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Caporal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "SergentInferior"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sergent"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "SergentMajor"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Plutonier"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "PlutonierMajor"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "PlutonierAdjutant"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Locotenent"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "LocotenentMajor"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Capitan"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Maior"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "LocotenentColonel"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Colonel"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "GeneralDeBrigada"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "GeneralDeDivizie"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "GeneralDeCorpArmata"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProfessionalTrainingActivitiesEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Perfectiosation"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Specialization"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProfessionalTrainingActivitiesType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Intern"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Extern"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("QualifierEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "VeryGood"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Good"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Satisfied"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Dissatisfied"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ServiceDuringEvaluationCourse");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Employment"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Transfer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Detachment"
                         });
                 });
 
@@ -6928,6 +7563,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("EducationEnum")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RERU.Data.Entities.UserProfile", "EvaluatedUserProfile")
                         .WithMany()
                         .HasForeignKey("EvaluatedUserProfileId")
@@ -6940,17 +7580,75 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FinalEvaluationQualification")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("ProfessionalTrainingActivities")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", null)
+                        .WithMany()
+                        .HasForeignKey("ProfessionalTrainingActivitiesType")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationEvaluationObtained2YearsPast")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationEvaluationObtainedPreviousYear")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationQuarter1")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationQuarter2")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationQuarter3")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualificationQuarter4")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("QualifierPartialEvaluations")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceDuringEvaluationCourse")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("SpecialOrMilitaryGrade")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationStatusEnum>", null)
                         .WithMany()
                         .HasForeignKey("Status")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Type")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CounterSignerUserProfile");
 
@@ -7972,6 +8670,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .WithMany("Tests")
                         .HasForeignKey("EventId");
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.TestResultStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("FinalStatusResult")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RERU.Data.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId");
@@ -8080,6 +8783,25 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("QuestionUnit");
 
                     b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.TestQuestionTestAnswer", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.TestAnswer", "TestAnswer")
+                        .WithMany("TestQuestionsTestAnswers")
+                        .HasForeignKey("TestAnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.TestQuestion", "TestQuestion")
+                        .WithMany("TestQuestionsTestAnswers")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestAnswer");
+
+                    b.Navigation("TestQuestion");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplate", b =>
@@ -8557,9 +9279,63 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -8888,11 +9664,18 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("TestQuestions");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.TestAnswer", b =>
+                {
+                    b.Navigation("TestQuestionsTestAnswers");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.TestQuestion", b =>
                 {
                     b.Navigation("FileTestAnswers");
 
                     b.Navigation("TestAnswers");
+
+                    b.Navigation("TestQuestionsTestAnswers");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplate", b =>

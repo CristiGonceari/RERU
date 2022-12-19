@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 {
-    public class UpdateEvaluationCommand: IRequest<Unit>
+    public class UpdateEvaluationCommand: IRequest<GetEvaluationDto>
     {
         public UpdateEvaluationCommand(int id, EditEvaluationDto evaluation)
         {
