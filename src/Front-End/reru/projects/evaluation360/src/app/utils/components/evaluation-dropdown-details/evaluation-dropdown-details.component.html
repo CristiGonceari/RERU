@@ -92,7 +92,11 @@
         <i class="flaticon2-sheet text-success"></i>
     </a>
     
-    <a href="javascript:;" (click)="delete.emit()" [ngbTooltip]="'button.delete' | translate">
+    <a href="javascript:;" (click)="delete.emit()" *ngIf="evaluation?.canDelete" [ngbTooltip]="'button.delete' | translate">
         <i class="flaticon2-trash text-danger"></i>
+    </a>
+
+    <a [routerLink]="['../acknowledge', evaluation?.id]" *ngIf="evaluation?.canFinished" [ngbTooltip]="'button.accept' | translate">
+        <i class="flaticon2-sheet text-success"></i>
     </a>
 </div>

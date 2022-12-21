@@ -56,7 +56,7 @@ export class EvaluationProcessComponent implements OnInit {
   submit(form: ActionFormModel): void {
     this.isLoading = true;
     if ((form.action === ActionFormEnum.isSave || form.action === ActionFormEnum.isConfirm) && form.data instanceof EvaluationClass) {
-      this.evaluationService[form.action === ActionFormEnum.isConfirm ? 'confirm' : 'update'](parseEvaluation(form.data)).subscribe(() => {
+      this.evaluationService[form.action === ActionFormEnum.isConfirm ? 'confirm' : 'update'](this.evaluation.id, parseEvaluation(form.data)).subscribe(() => {
         this.notificationService.success('Success', 
                                         ActionFormEnum.isConfirm ? 'Fisa a fost trimisă cu success!' : 'Fisa a fost salvata cu succes!', 
                                         NotificationUtil.getDefaultMidConfig());
@@ -77,7 +77,7 @@ export class EvaluationProcessComponent implements OnInit {
     }
 
     if ((form.action === ActionFormEnum.isAccept || form.action === ActionFormEnum.isReject) && form.data instanceof EvaluationAcceptClass) {
-      this.evaluationService[form.action === ActionFormEnum.isAccept ? 'accept' : 'reject'](parseEvaluatedModel(form.data)).subscribe(() => {
+      this.evaluationService[form.action === ActionFormEnum.isAccept ? 'accept' : 'reject'](this.evaluation.id, parseEvaluatedModel(form.data)).subscribe(() => {
         this.notificationService.success('Success', 
                                         `Fisa a fost ${form.action === ActionFormEnum.isAccept?'acceptata':'respinsa'} cu succes!`, 
                                         NotificationUtil.getDefaultMidConfig());
@@ -94,9 +94,9 @@ export class EvaluationProcessComponent implements OnInit {
     }
 
     if ((form.action === ActionFormEnum.isCounterSignAccept || form.action === ActionFormEnum.isCounterSignReject) && form.data instanceof EvaluationCounterSignClass) {
-      this.evaluationService[form.action === ActionFormEnum.isCounterSignAccept ? 'counterSignAccept' : 'counterSignReject'](parseCounterSignModel(form.data)).subscribe(() => {
+      this.evaluationService[form.action === ActionFormEnum.isCounterSignAccept ? 'counterSignAccept' : 'counterSignReject'](this.evaluation.id, parseCounterSignModel(form.data)).subscribe(() => {
         this.notificationService.success('Success', 
-                                        `Fisa a fost ${form.action === ActionFormEnum.isAccept?'contrasemnata':'respinsa'} cu succes!`, 
+                                        `Fisa a fost ${form.action === ActionFormEnum.isCounterSignAccept?'contrasemnata':'respinsa'} cu succes!`, 
                                         NotificationUtil.getDefaultMidConfig());
           this.router.navigate(['../../'], { relativeTo: this.route});
       }, (error) => {
@@ -111,7 +111,7 @@ export class EvaluationProcessComponent implements OnInit {
     }
 
     if (form.action === ActionFormEnum.isAcknowledge) {
-      this.evaluationService.acknowledge({id: form.data.id}).subscribe(() => {
+      this.evaluationService.acknowledge({id: this.evaluation.id}).subscribe(() => {
         this.notificationService.success('Success', 
                                         `Evaluatul a luat cunostinta cu rezultatele finale cu succes!`, 
                                         NotificationUtil.getDefaultMidConfig());

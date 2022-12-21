@@ -59,7 +59,8 @@
 			"3": "Acceptată",
 			"4": "Respinsă",
 			"5": "Acceptată de contrasemnatar",
-			"6": "Respinsă de contrasemnatar"
+			"6": "Respinsă de contrasemnatar",
+      "7": "Finisat"
     },
     "positions": {
       "1": "De executare",

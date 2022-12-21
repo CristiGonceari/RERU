@@ -35,7 +35,7 @@ export class EvaluationsTableComponent implements OnInit {
     }
 
     return this.evaluations.some((el: EvaluationListModel) => {
-      return (el.canDelete || el.canEvaluate || el.canCounterSign || el.canDownload);
+      return (el.canDelete || el.canAccept  || el.canFinished|| el.canEvaluate || el.canCounterSign || el.canDownload);
     })
   }
 
