@@ -61,7 +61,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   testQuestion: AddTestQuestion[] = [];
   testTemplateModel = new TestTemplate();
   testTemplateSettings = new TestTemplateSettings();
-  hashedOptions;
+  hashedOptions = [];
 
   textAnswer: string;
   answerStatus: number;
@@ -113,7 +113,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.summary();
     this.getTestById();
-    this.subscribeForHashedAnswers();
     this.testQuestionService.setData(false);
     this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
   }
@@ -124,7 +123,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   subscribeForHashedAnswers() {
     this.testQuestionService.answerSubject.subscribe(res => {
-      if (res && res != undefined) {
+      if (res && res != undefined && this.hashedOptions.length > 0) {
         const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
         this.hashedOptions[index].answer = res.answer;
         this.hashedOptions.forEach(element => {
@@ -178,6 +177,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   }
 
   ngDoBoostrap() {
+    this.subscribeForHashedAnswers();
     const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
 
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
