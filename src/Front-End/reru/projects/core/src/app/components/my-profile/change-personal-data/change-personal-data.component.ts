@@ -76,6 +76,9 @@ export class ChangePersonalDataComponent implements OnInit {
 			]),
 			phoneNumber: this.fb.control(oldPersonalData.phoneNumber, [
 				Validators.required,
+				Validators.pattern(
+					"^((\\+373-?)|0)?[0-9]{8}$"
+				),
 			]),
 		});
 		this.birthDate = oldPersonalData.birthDate;
@@ -110,7 +113,7 @@ export class ChangePersonalDataComponent implements OnInit {
 					this.description = description;
 					});
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-				window.location.reload();
+				this.subsribeForParams();
 			},
 			err => {
 				this.isLoading = false;

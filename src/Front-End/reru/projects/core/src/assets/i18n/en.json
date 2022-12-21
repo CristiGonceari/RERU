@@ -341,7 +341,8 @@
     "password-length": "8 characters",
     "uppercase-character": "1 uppercase character",
     "number": "1 number",
-    "special-character": "1 special character"
+    "special-character": "1 special character",
+    "password-are-not-the-same": "New password and repeated password should be the same"
   },
   "deactivate-user": {
     "title": "Deactivate user",

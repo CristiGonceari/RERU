@@ -343,7 +343,8 @@
     "password-length": "8 caractere",
     "uppercase-character": "1 caracter majuscul",
     "number": "1 număr",
-    "special-character": "1 caracter special"
+    "special-character": "1 caracter special",
+    "password-are-not-the-same": "Parola noua și parola repetată trebie să coincidă"
   },
   "deactivate-user": {
     "title": "Dezactivarea utilizatorului",

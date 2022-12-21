@@ -59,19 +59,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     .WithErrorCode(ValidationCodes.INEXISTENT_CANDIDATE_IN_EVENT);
             });
 
-            //When(r => !r.EvaluatorId.HasValue && !r.EventId.HasValue, () =>
-            //{
-            //    RuleFor(x => x)
-            //        .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
-            //        .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
-            //});
-
-            //When(r => r.EventId.HasValue && r.EvaluatorId.HasValue, () =>
-            //{
-            //    RuleFor(x => x)
-            //        .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
-            //        .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
-            //});
+            When(r => !r.EvaluatorIds.Any() && !r.EventId.HasValue, () =>
+            {
+                RuleFor(x => x)
+                    .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
+                    .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
+            });
 
             When(r => r.LocationId.HasValue, () =>
             {
@@ -79,21 +72,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
                         ValidationMessages.InvalidReference));
             });
-
-            //When(r => r.EvaluatorIds.Any(), () =>
-            //{
-            //    //RuleFor(x => x.EvaluatorId.Value)
-            //    //    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-            //    //        ValidationMessages.InvalidReference));
-
-            //    RuleFor(x => x.EvaluatorIds)
-            //        .Must(x => x.Any())
-            //        .WithErrorCode(ValidationCodes.INVALID_EVLUATED_USER_LIST);
-
-            //    RuleFor(x => x)
-            //        .Must(x => x.UserProfileIds.Intersect(x.EvaluatorIds).Any())
-            //        .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
-            //});
         }
 
         private async Task<bool> IsOnlyOneAnswerTest(AddTestsCommand data)

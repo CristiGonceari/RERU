@@ -28,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
             var questionCategories = await _appDbContext.TestTemplateQuestionCategories
                 .Include(x => x.QuestionCategory)
                 .Where(x => x.TestTemplateId == request.TestTemplateId)
+                .OrderByDescending(x => x.CreateDate)
                 .ToListAsync();
 
             var answer = _mapper.Map<List<TestTemplateQuestionCategoryDto>>(questionCategories);
@@ -35,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.GetT
 
             answer = testTemplate.CategoriesSequence == SequenceEnum.Strict 
                 ? answer.OrderBy(x => x.CategoryIndex).ToList() 
-                : answer.OrderBy(x => Guid.NewGuid()).ToList();
+                : answer;
 
             return answer;
         }
