@@ -43,14 +43,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount
             for (var dt = request.StartTime.Date; dt <= request.EndTime.Date; dt = dt.AddDays(1))
             {
                 var count = myTests
-                    .Count(t => t.EventId != null
-                    ? t.ProgrammedTime.Date <= dt.Date && dt.Date <= t.EndProgrammedTime.Value.Date
-                    : t.ProgrammedTime.Date == dt.Date.Date);
+                    .Where(t => t.EventId != null
+                    ? t.ProgrammedTime.Date <= dt.Date.Date && dt.Date.Date <= t.EndProgrammedTime.Value.Date
+                    : t.ProgrammedTime.Date == dt.Date.Date).ToList();
+
+                var terminatedTests = count.Where(c => c.EndTime != null && c.EndTime.Value.Date != dt.Date.Date).ToList();
+
+                if (terminatedTests != null)
+                {
+                    foreach (var test in terminatedTests)
+                    {
+                        count.Remove(test);
+                    }
+                }
 
                 var testCount = new TestCount()
                 {
                     Date = dt,
-                    Count = count
+                    Count = count.Count()
                 };
 
                 dates.Add(testCount);

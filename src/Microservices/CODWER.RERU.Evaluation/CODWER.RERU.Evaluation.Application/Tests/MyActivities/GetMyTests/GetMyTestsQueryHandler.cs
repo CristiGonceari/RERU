@@ -40,11 +40,21 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
                 .Where(t => t.UserProfileId == currentUserId &&
                             t.TestTemplate.Mode == TestTemplateModeEnum.Test &&
                             (t.EventId != null
-                                ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
+                                ? t.ProgrammedTime.Date <= request.Date.Date && t.EndProgrammedTime.Value.Date >= request.Date.Date
                                 : t.ProgrammedTime.Date == request.Date.Date))
                 .OrderByDescending(x => x.CreateDate)
                 .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
+
+            var terminatedTests = myTests.Where(c => c.EndTime != null && c.EndTime.Value.Date != request.Date.Date).ToList();
+
+            if (terminatedTests.Count() > 0)
+            {
+                foreach (var test in terminatedTests)
+                {
+                    myTests = myTests.Where(mt => mt.Id != test.Id);
+                }
+            }
 
             if (!string.IsNullOrWhiteSpace(request.TestName))
             {

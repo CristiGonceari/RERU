@@ -34,6 +34,7 @@ namespace CODWER.RERU.Personal.Application.CronJobs
         public void JobForWorkedHours()
         {
             var contractor = _appDbContext.Contractors
+                    .Include(c => c.UserProfile)
                    .Include(c => c.Positions)
                    .InServiceAt(_dateTime.Now);
 
