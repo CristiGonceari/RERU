@@ -2,6 +2,14 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "paths": {
+      "@utils": [
+        "./projects/evaluation360/src/app/utils"
+      ],
+      "@utils/services": [
+        "./projects/evaluation360/src/app/utils/services"
+      ]
+    },
     "outDir": "../../out-tsc/app",
     "types": []
   },

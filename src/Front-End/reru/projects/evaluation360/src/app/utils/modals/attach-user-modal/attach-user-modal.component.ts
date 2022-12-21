@@ -1,11 +1,17 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UserProfileService } from '../../services/user-profile.service';
-import { PaginationModel } from '../../models/pagination.model';
+import { PaginationModel } from '@utils';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchStatusComponent } from './search-status/search-status.component';
 import { SearchRoleComponent } from './search-role/search-role.component';
 import { SearchDepartmentComponent } from './search-department/search-department.component';
 import { ObjectUtil } from '../../util/object.util';
+import { UserModel } from '@utils';
+import { PaginationClass } from '../../models/pagination.model';
+
+export interface AttachUserModel {
+  selectedUsers: number[];
+}
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -13,12 +19,11 @@ import { ObjectUtil } from '../../util/object.util';
   styleUrls: ['./attach-user-modal.component.scss']
 })
 export class AttachUserModalComponent implements OnInit {
-  users = [];
+  users: UserModel[] = [];
   paginatedAttachedIds: boolean = false;
-  pagination: PaginationModel = new PaginationModel();
+  pagination: PaginationModel = new PaginationClass();
   isLoading = true;
   filters = {};
-  showUserName: boolean = true;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
   @ViewChild('fatherName') fatherName: any;
@@ -28,7 +33,7 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
   @Input() exceptUserIds: any;
-  @Input() attachedItems: number[];
+  @Input() attachedItems: number[] = [];
   @Input() inputType: string;
   @Input() eventId: number;
   @Input() positionId: number;
@@ -56,10 +61,8 @@ export class AttachUserModalComponent implements OnInit {
       testTemplateId: this.testTemplateId || null,
       ...this.filters
     });
-    // if(this.testTemplateId == null){
     this.userProfileService.get(params).subscribe(res => {
       if (res && res.data) {
-        this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
         this.users = res.data.items;
         this.pagination = res.data.pagedSummary;
         this.isLoading = false;
@@ -67,61 +70,16 @@ export class AttachUserModalComponent implements OnInit {
     }, () => {
       this.isLoading = false;
     })
-    // } else {
-    //   this.userService.getByTestTemplate(params).subscribe(res => {
-    //     if (res && res.data) {
-    //       this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
-    //       this.users = res.data.items;
-    //       this.pagination = res.data.pagedSummary;
-    //       this.isLoading = false;
-    //     }
-    //   })
-    // }
   }
-
-  // getAssignedUsers(data: any = {}): void {
-  //   let params = {
-  //     page: data.page || this.pagination.currentPage,
-  //     itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-  //     eventId: this.eventId,
-  //     ...this.filters
-  //   }
-  //   this.eventUserService.getAssignedUsers(params).subscribe(res => {
-  //     if (res && res.data) {
-  //       this.users = res.data.items;
-  //       this.pagination = res.data.pagedSummary;
-  //       this.isLoading = false;
-  //     }
-  //   })
-  // }
-
-  // getAssignedEvaluators(data: any = {}): void {
-  //   let params = {
-  //     page: data.page || this.pagination.currentPage,
-  //     itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-  //     eventId: this.eventId,
-  //     testTemplateId: this.testTemplateId || null,
-  //     ...this.filters
-  //   }
-  //   this.eventUserService.getAssignedEvaluators(params).subscribe(res => {
-  //     if (res && res.data) {
-  //       this.users = res.data.items;
-  //       this.pagination = res.data.pagedSummary;
-  //       this.isLoading = false;
-  //     }
-  //   })
-  // }
 
   dismiss(): void {
     this.activeModal.dismiss();
   }
 
   confirm(): void {
-    let data = {
-      attachedItems: this.attachedItems,
-      showUserName: this.showUserName
-    }
-    this.activeModal.close(data);
+    this.activeModal.close({
+      selectedUsers: this.attachedItems,
+    });
   }
 
   checkAll(event): void {
@@ -172,8 +130,4 @@ export class AttachUserModalComponent implements OnInit {
     this.filters = {};
     this.getUsers();
 	}
-  
-  checkEvent(event): void {
-    this.showUserName = event.target.uchecked;
-  }
 }

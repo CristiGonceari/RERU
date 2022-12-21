@@ -1,0 +1,10 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{ 'evaluations.confirmation' | translate }}</h3>
+</div>
+<div class="modal-body py-1 px-7">
+    <p [innerHTML]="'evaluations.are-you-sure-you-want-to-delete-evaluation' | translate"></p>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="submit()">{{'button.confirm' | translate}}</button>
+</div>

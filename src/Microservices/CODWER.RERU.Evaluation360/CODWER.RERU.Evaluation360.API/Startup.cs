@@ -29,8 +29,7 @@ using ServicesSetup = CODWER.RERU.Evaluation360.API.Config.ServicesSetup;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Microsoft.EntityFrameworkCore;
-
-
+using CVU.ERP.Module.Common.Models;
 
 namespace CODWER.RERU.Evaluation360.API
 {
@@ -55,6 +54,7 @@ namespace CODWER.RERU.Evaluation360.API
             services.Configure<SmtpOptions>(this.Configuration.GetSection("Smtp"));
             services.Configure<RabbitMq>(Configuration.GetSection("MessageQueue"));
             services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
+            services.Configure<ModuleConfiguration> (Configuration.GetSection ("Module"));
 
             services.AddModuleServiceProvider(); // before conf AppDbContext
 
@@ -99,6 +99,7 @@ namespace CODWER.RERU.Evaluation360.API
             services.AddControllers()
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
+
 
             services.AddERPModuleServices(Configuration);
             services.AddCommonModuleApplication(Configuration);

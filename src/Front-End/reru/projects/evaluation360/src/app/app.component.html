@@ -1,8 +1,9 @@
-<app-layout [title]="'dashboard.title' | translate" [moduleCode]="'03'" [hasBackground]="true" [config]="appSettings"
+<app-layout *ngIf="!isError" [title]="'dashboard.title' | translate" [moduleCode]="'03'" [hasBackground]="true" [config]="appSettings"
   [languages]="translate.langs" [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
   [letter]="'assets/evaluation-logo.png'" [logo]="'assets/logo_transparent.png'" (navigate)="navigate($event)"
   (changeLanguage)="translate.use($event)" (logout)="logout()">
-  <app-location-back-button *ngIf="!getCurrentLocation()" [value]="'button.back' | translate"></app-location-back-button>
+  <app-location-back-button *ngIf="isNotHomeRoute" [value]="'button.back' | translate"></app-location-back-button>
   <router-outlet></router-outlet>
 </app-layout>
+<router-outlet *ngIf="isError"></router-outlet>
 <simple-notifications [options]="options"></simple-notifications>

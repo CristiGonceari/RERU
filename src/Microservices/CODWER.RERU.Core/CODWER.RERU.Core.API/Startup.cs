@@ -133,6 +133,10 @@ namespace CODWER.RERU.Core.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
+            if (!CurrentEnvironment.IsDevelopment())
+            {
+                services.AddERPModuleServices(Configuration);
+            }
 
 
             services.AddERPModuleServices(Configuration);
