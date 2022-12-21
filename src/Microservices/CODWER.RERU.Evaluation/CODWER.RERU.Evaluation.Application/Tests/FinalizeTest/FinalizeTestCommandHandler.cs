@@ -96,8 +96,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                     await AutoVerificationTest(test);
                 }
             }
-
-            await _appDbContext.SaveChangesAsync();
         }
 
         #region CandidatePositionMail

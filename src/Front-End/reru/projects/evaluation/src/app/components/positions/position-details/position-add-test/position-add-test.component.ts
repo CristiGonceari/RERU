@@ -313,10 +313,10 @@ export class PositionAddTestComponent implements OnInit {
       return this.eventId == null ||
         this.userListToAdd.length <= 0 ||
         (this.testTemplateId == null) ||
-        (this.hasEventEvaluator || this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null)
+        (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0)
     } else {
       return this.userListToAdd.length <= 0 ||
-        (this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null) ||
+        (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0) ||
         (this.testTemplateId) ||
         this.date == null
     }

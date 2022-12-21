@@ -372,10 +372,10 @@ export class AddTestComponent implements OnInit {
       return this.event.value == null ||
       this.userListToAdd.length <= 0 ||
       (this.testTemplate.value == null || this.testTemplate.value == "") ||
-      (this.hasEventEvaluator || this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null)
+      (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0)
     } else {
       return this.userListToAdd.length <= 0 ||
-      (this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null) ||
+      (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0) ||
       (this.testTemplate.value == null || this.testTemplate.value == "") ||
       this.date == null
     }
