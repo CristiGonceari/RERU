@@ -185,9 +185,9 @@
       "1": "Intern",
       "2": "Extern"
     },
-    "course-name": "Denumirea cursului",
-    "period-running-activity-from": "Perioada desfășurării de la",
-    "period-running-activity-to": "Perioada desfășurării până la",
+    "course-name": "Course name",
+    "period-running-activity-from": "Period running activity from",
+    "period-running-activity-to": "Period running activity to",
     "administrative-act-of-course": "Actul administrativ (curs)",
     "modifying-service-during-evaluation-course": {
       "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
