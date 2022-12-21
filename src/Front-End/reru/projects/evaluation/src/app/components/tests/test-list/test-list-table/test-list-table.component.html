@@ -189,8 +189,7 @@
                         </ng-template>
                         <span [ngbTooltip]="departmentAndRoleTipContent">
                             <p *ngIf="item.showUserName" class="text-truncate"> {{ item.departmentName || '-'}}<br>
-                                <span class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName
-                                    || '-'}}</span>
+                                <span *ngIf="item.roleName" class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName }}</span>
                             </p>
                             <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
                         </span>
@@ -278,7 +277,7 @@
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                     <div ngbDropdownMenu aria-labelledby="action1">
-                                        <button *ngIf="item.testStatus === status.Terminated" ngbDropdownItem
+                                        <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator" ngbDropdownItem
                                             [routerLink]="['verify-test', item.id]" [disabled]="!item.isEvaluator"
                                             class="navi-link align-items-baseline px-6">
                                             {{ 'button.verify' | translate }}
@@ -303,7 +302,7 @@
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                             [routerLink]="['../my-activities/test-result', item.id]"
-                                            *ngIf="item.testStatus === status.Verified" [disabled]="!item.isEvaluator">
+                                            *ngIf="item.testStatus === status.Verified && item.isEvaluator">
                                             {{ 'button.view' | translate }}
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
@@ -399,7 +398,7 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button *ngIf="item.testStatus === status.Terminated" ngbDropdownItem
+                                    <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator" ngbDropdownItem
                                         [routerLink]="['verify-test', item.id]" [disabled]="!item.isEvaluator"
                                         class="navi-link align-items-baseline px-6">
                                         {{ 'button.verify' | translate }}
@@ -423,7 +422,7 @@
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         [routerLink]="['../my-activities/test-result', item.id]"
-                                        *ngIf="item.testStatus === status.Verified" [disabled]="!item.isEvaluator">
+                                        *ngIf="item.testStatus === status.Verified && item.isEvaluator">
                                         {{ 'button.view' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem

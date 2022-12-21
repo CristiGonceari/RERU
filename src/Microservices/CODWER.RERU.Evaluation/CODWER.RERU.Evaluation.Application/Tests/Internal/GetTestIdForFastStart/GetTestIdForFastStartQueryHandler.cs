@@ -50,6 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
                             test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
                                                         (test.TestStatus == TestStatusEnum.Programmed || 
                                                          test.TestStatus == TestStatusEnum.AlowedToStart))
+                .OrderByDescending(x => x.CreateDate)
                 .Select(u => _mapper.Map<GetTestForFastStartDto>(u))
                 .ToListAsync();
 

@@ -1,7 +1,12 @@
 <div class="modal-header border-0 pb-0">
     <h3 class="modal-title">{{'evaluations.finish-evaluation' | translate}}</h3>
 </div>
-<div class="modal-body px-7">
+<div class="modal-body px-7" *ngIf="isLoading">
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'6vh'" [height]="'3rem'"
+    [width]="'3rem'" [colorClass]="'text-primary'">
+</app-loading-spinner>
+</div>
+<div class="modal-body px-7" *ngIf="!isLoading">
     <div style="text-align: center;">
         {{'evaluations.finish-evaluation-msg' | translate}}
     </div>
@@ -109,7 +114,10 @@
     </div>
 </div>
 <div class="modal-footer d-flex justify-content-end">
-    <div>
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'3vh'" [height]="'1rem'"
+                        [width]="'1rem'" [colorClass]="'text-primary'">
+        </app-loading-spinner>
+    <div *ngIf="!isLoading">
         <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
            <button  
            *ngIf="qualificationTypeEnum[4] == qualificationTypeEnum[qualificationTypeValue]"
