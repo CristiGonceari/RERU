@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { UserService } from '../../../utils/services/user.service';
 import { ChangePassword } from '../../../utils/models/change-password.model';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
-
+import { ConfirmedValidator } from '../../../utils/form-validator/password.validator';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -42,12 +42,14 @@ export class ChangePasswordComponent implements OnInit {
       this.passwordForm.get(field).touched &&
       this.passwordForm.get(field).hasError(error);
   }
-
+  
   initForm(): void {
     this.passwordForm = this.fb.group({
       oldPassword: this.fb.control('', [Validators.required]),
       newPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].{6,}')]),
       repeatPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].{6,}')])
+    }, { 
+      validator: ConfirmedValidator('newPassword', 'repeatPassword')
     });
     this.isLoading = false;
   }
