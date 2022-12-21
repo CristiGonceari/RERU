@@ -168,14 +168,10 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             //if use mock
             if (erpConfiguration != null && erpConfiguration.UseMockApplicationUser)
             {
-                Console.WriteLine("----------------------------------USING MOCK");
                 services.AddTransient<ICurrentApplicationUserProvider, MockCurrentApplicationUserProvider>();
             }
             else
             {
-                 Console.WriteLine("----------------------------------NOT USING MOCK" + erpConfiguration is null);
-                 Console.WriteLine("----------------------------------NOT USING MOCK" + erpConfiguration?.UseMockApplicationUser);
-                Console.WriteLine("----------------------------------NOT USING MOCK ++++ ");
                 services.AddTransient<ICurrentApplicationUserProvider, CurrentApplicationUserProvider>();
             }
             //

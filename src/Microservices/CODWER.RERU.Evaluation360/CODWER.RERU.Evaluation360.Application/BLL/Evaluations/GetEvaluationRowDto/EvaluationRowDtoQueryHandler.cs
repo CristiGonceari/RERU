@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
             var currentUser = await _currentUserProvider.Get();
 
             //Console.WriteLine("--------------------------------------------"+currentUser.IsAnonymous);
-            Console.WriteLine("--------------------------------------------"+currentUser.Id);
+            // Console.WriteLine("--------------------------------------------"+currentUser.Id);
 
             var currentUserId = int.Parse(currentUser.Id);
         
