@@ -70,6 +70,7 @@
 							<label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip" *ngIf="inputType !== 'radio'">
 								<input type="checkbox" value="" name="option"
 									[checked]="paginatedAttachedIds"
+									[disabled]="!users.length" 
 									(change)="checkAll($event)" />
 								<span></span>
 							</label>
@@ -122,10 +123,10 @@
 
 <div class="modal-footer d-lg-flex d-none">
 	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
-	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
+	<button type="button" class="btn btn-primary" [disabled]="attachedItems.length<1" (click)="confirm()">{{'button.confirm' | translate}}</button>
 </div>
 <div class="modal-footer d-lg-none d-flex">
-	<button type="button" class="btn btn-primary w-100" (click)="confirm()">{{'button.confirm' | translate}}</button>
+	<button type="button" class="btn btn-primary w-100" [disabled]="attachedItems.length<1" (click)="confirm()">{{'button.confirm' | translate}}</button>
 	<button type="button" class="btn btn-secondary w-100 pt-2" (click)="dismiss()">{{'button.cancel' | translate}}</button>
 </div>
 <ng-template #tooltip>
