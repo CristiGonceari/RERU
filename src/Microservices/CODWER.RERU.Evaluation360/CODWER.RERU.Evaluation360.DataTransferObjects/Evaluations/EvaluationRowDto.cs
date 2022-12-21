@@ -14,6 +14,9 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public bool canAccept { set; get; }
         public bool canCounterSign { set; get; }
         public bool canFinished { set; get; }
+        public int EvaluatorUserProfileId { get; set; }
+        public int EvaluatedUserProfileId { get; set; }
+        public int CounterSignerUserProfileId { get; set; }
         // public bool? canDownload { set; get; }
     }
 }

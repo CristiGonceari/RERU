@@ -10,7 +10,7 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221219112732_Add_Fields_For_Evaluation360")]
+    [Migration("20221221150728_Add_Fields_For_Evaluation360")]
     partial class Add_Fields_For_Evaluation360
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1023,21 +1023,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("canAccept")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("canCounterSign")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("canDelete")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("canEvaluate")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("canFinished")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

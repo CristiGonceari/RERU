@@ -9,102 +9,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "EducationEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EducationEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EvaluationStatusEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EvaluationStatusEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EvaluationTypeEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EvaluationTypeEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GradeEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GradeEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProfessionalTrainingActivitiesEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfessionalTrainingActivitiesEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProfessionalTrainingActivitiesType",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfessionalTrainingActivitiesType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QualifierEnum",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QualifierEnum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceDuringEvaluationCourse",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceDuringEvaluationCourse", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Evaluations",
                 columns: table => new
                 {
@@ -116,11 +20,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     Type = table.Column<int>(type: "integer", nullable: true),
                     Points = table.Column<decimal>(type: "numeric", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: true),
-                    canEvaluate = table.Column<bool>(type: "boolean", nullable: false),
-                    canDelete = table.Column<bool>(type: "boolean", nullable: false),
-                    canAccept = table.Column<bool>(type: "boolean", nullable: false),
-                    canCounterSign = table.Column<bool>(type: "boolean", nullable: false),
-                    canFinished = table.Column<bool>(type: "boolean", nullable: false),
                     SubdivisionName = table.Column<string>(type: "text", nullable: true),
                     DateCompletionGeneralData = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     NameSurnameEvaluated = table.Column<string>(type: "text", nullable: true),
@@ -331,109 +230,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "EducationEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 2, "Higher" },
-                    { 4, "Doctorate" },
-                    { 3, "Master" },
-                    { 1, "Secondary" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "EvaluationStatusEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 7, "Finished" },
-                    { 1, "Draft" },
-                    { 5, "CounterSignAccept" },
-                    { 4, "Rejected" },
-                    { 3, "Accepted" },
-                    { 2, "Confirmed" },
-                    { 6, "CounterSignReject" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "EvaluationTypeEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Execution" },
-                    { 2, "Management" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "GradeEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 11, "Capitan" },
-                    { 17, "GeneralDeCorpArmata" },
-                    { 16, "GeneralDeDivizie" },
-                    { 15, "GeneralDeBrigada" },
-                    { 14, "Colonel" },
-                    { 13, "LocotenentColonel" },
-                    { 12, "Maior" },
-                    { 10, "LocotenentMajor" },
-                    { 8, "PlutonierAdjutant" },
-                    { 7, "PlutonierMajor" },
-                    { 6, "Plutonier" },
-                    { 5, "SergentMajor" },
-                    { 4, "Sergent" },
-                    { 3, "SergentInferior" },
-                    { 2, "Caporal" },
-                    { 1, "Soldat" },
-                    { 9, "Locotenent" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProfessionalTrainingActivitiesEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 2, "Specialization" },
-                    { 1, "Perfectiosation" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ProfessionalTrainingActivitiesType",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Intern" },
-                    { 2, "Extern" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "QualifierEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "VeryGood" },
-                    { 2, "Good" },
-                    { 3, "Satisfied" },
-                    { 4, "Dissatisfied" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ServiceDuringEvaluationCourse",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 2, "Transfer" },
-                    { 1, "Employment" },
-                    { 3, "Detachment" }
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EducationEnum_Name",
-                table: "EducationEnum",
-                column: "Name",
-                unique: true);
-
             migrationBuilder.CreateIndex(
                 name: "IX_Evaluations_CounterSignerUserProfileId",
                 table: "Evaluations",
@@ -523,78 +319,12 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 name: "IX_Evaluations_Type",
                 table: "Evaluations",
                 column: "Type");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationStatusEnum_Name",
-                table: "EvaluationStatusEnum",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationTypeEnum_Name",
-                table: "EvaluationTypeEnum",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GradeEnum_Name",
-                table: "GradeEnum",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProfessionalTrainingActivitiesEnum_Name",
-                table: "ProfessionalTrainingActivitiesEnum",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProfessionalTrainingActivitiesType_Name",
-                table: "ProfessionalTrainingActivitiesType",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QualifierEnum_Name",
-                table: "QualifierEnum",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceDuringEvaluationCourse_Name",
-                table: "ServiceDuringEvaluationCourse",
-                column: "Name",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Evaluations");
-
-            migrationBuilder.DropTable(
-                name: "EducationEnum");
-
-            migrationBuilder.DropTable(
-                name: "EvaluationStatusEnum");
-
-            migrationBuilder.DropTable(
-                name: "EvaluationTypeEnum");
-
-            migrationBuilder.DropTable(
-                name: "GradeEnum");
-
-            migrationBuilder.DropTable(
-                name: "ProfessionalTrainingActivitiesEnum");
-
-            migrationBuilder.DropTable(
-                name: "ProfessionalTrainingActivitiesType");
-
-            migrationBuilder.DropTable(
-                name: "QualifierEnum");
-
-            migrationBuilder.DropTable(
-                name: "ServiceDuringEvaluationCourse");
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,41 +30,41 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
             var currentUser = await _currentUserProvider.Get();
 
             //Console.WriteLine("--------------------------------------------"+currentUser.IsAnonymous);
-            //Console.WriteLine("--------------------------------------------"+currentUser.Id);
+            Console.WriteLine("--------------------------------------------"+currentUser.Id);
 
             var currentUserId = int.Parse(currentUser.Id);
+        
             var evaluations = _dbContext.Evaluations
                                     .Include(e=> e.EvaluatedUserProfile)
                                     .Include(e=> e.EvaluatorUserProfile)
                                     .Include(e=> e.CounterSignerUserProfile)
                                     .Where(e => e.EvaluatedUserProfileId == currentUserId ||  e.EvaluatorUserProfileId == currentUserId ||  e.CounterSignerUserProfileId == currentUserId);
-
-            foreach(var e in evaluations)
+        
+            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
+            foreach(var e in  paginatedModel.Items)
             {
-                if (currentUserId == e.EvaluatorUserProfileId && e.Status == EvaluationStatusEnum.Draft) 
+                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = false;
+
+                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 1) 
                 {
-                    e.canEvaluate = true;
-                    e.canDelete = true;
+                    e.canEvaluate = e.canDelete = true;
                 }
 
-                if (currentUserId == e.EvaluatedUserProfileId && e.Status == EvaluationStatusEnum.Confirmed)
+                if (currentUserId == e.EvaluatedUserProfileId && e.Status == 2)
                 { 
                     e.canAccept = true;
                 }
 
-                if (currentUserId == e.CounterSignerUserProfileId && e.Status == EvaluationStatusEnum.Accepted)
+                if (currentUserId == e.CounterSignerUserProfileId && e.Status == 3)
                 { 
                     e.canCounterSign = true;
                 }
 
-                if (currentUserId == e.EvaluatedUserProfileId && e.Status == EvaluationStatusEnum.CounterSignAccept)
+                if (currentUserId == e.EvaluatedUserProfileId && e.Status == 5)
                 { 
                     e.canFinished = true;
                 }
             }
-        
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
-
             return paginatedModel;
         }
     }
