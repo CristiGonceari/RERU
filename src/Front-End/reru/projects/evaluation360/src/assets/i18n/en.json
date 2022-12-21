@@ -59,7 +59,8 @@
 			"3": "Accepted",
 			"4": "Rejected",
 			"5": "Countersign accepted",
-			"6": "Countersign rejected"
+			"6": "Countersign rejected",
+      "7": "Finished"
     },
     "positions": {
       "1": "Execution position",

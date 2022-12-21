@@ -1,16 +1,15 @@
+import { EvaluationModel } from "./evaluation.model";
+
 export interface EvaluationAcceptModel {
-    id: number;
     commentsEvaluated: string;
 }
 
 export interface EvaluationRejectModel extends EvaluationAcceptModel {}
 
 export class EvaluationAcceptClass implements EvaluationAcceptModel {
-    id: number;
     commentsEvaluated: string;
-    constructor(data?: EvaluationAcceptModel) {
+    constructor(data?: EvaluationAcceptModel | EvaluationModel ) {
         if (data) {
-            this.id = data.id;
             this.commentsEvaluated = data.commentsEvaluated;
         } else {
             this.commentsEvaluated = null;

@@ -85,13 +85,11 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
 export const parseEvaluatedModel = (data: EvaluationAcceptModel | EvaluationModel): EvaluationAcceptModel => {
     if (data instanceof EvaluationAcceptClass) {
         return {
-            id: +data.id,
             commentsEvaluated: data.commentsEvaluated
         }
     }
 
     return {
-        id: +data.id,
         commentsEvaluated: null,
     }
 }
@@ -99,7 +97,6 @@ export const parseEvaluatedModel = (data: EvaluationAcceptModel | EvaluationMode
 export const parseCounterSignModel = (data: EvaluationCounterSignModel | EvaluationModel): EvaluationCounterSignModel => {
     if (data instanceof EvaluationCounterSignClass) {
         return {
-            id: +data.id,
             checkComment1: !!data.checkComment1,
             checkComment2: !!data.checkComment2,
             checkComment3: !!data.checkComment3,
@@ -107,9 +104,8 @@ export const parseCounterSignModel = (data: EvaluationCounterSignModel | Evaluat
             otherComments: data.otherComments
         }
     }
-
+    console.log('a ajuns aici la false')
     return {
-        id: +data.id,
         checkComment1: false,
         checkComment2: false,
         checkComment3: false,

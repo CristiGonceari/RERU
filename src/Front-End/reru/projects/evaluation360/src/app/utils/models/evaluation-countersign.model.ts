@@ -1,5 +1,6 @@
+import { EvaluationModel } from "./evaluation.model";
+
 export interface EvaluationCounterSignModel {
-    id: number;
     checkComment1: boolean;
     checkComment2: boolean;
     checkComment3: boolean;
@@ -8,15 +9,13 @@ export interface EvaluationCounterSignModel {
 }
 
 export class EvaluationCounterSignClass implements EvaluationCounterSignModel {
-    id: number;
     checkComment1: boolean;
     checkComment2: boolean;
     checkComment3: boolean;
     checkComment4: boolean;
     otherComments: string;
-    constructor(data?: EvaluationCounterSignModel) {
+    constructor(data?: EvaluationCounterSignModel | EvaluationModel) {
         if (data) {
-            this.id = data.id;
             this.checkComment1 = data.checkComment1;
             this.checkComment2 = data.checkComment2;
             this.checkComment3 = data.checkComment3;

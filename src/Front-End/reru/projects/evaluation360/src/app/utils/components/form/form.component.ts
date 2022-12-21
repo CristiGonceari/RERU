@@ -37,7 +37,6 @@ export class FormComponent implements OnInit {
   @Input() evaluationRole: EvaluationRoleEnum;
   @Output() request: EventEmitter<ActionFormModel> = new EventEmitter<ActionFormModel>();
 
-  // parsedDateCompletionGeneralData: string | Date = '';
   parsedPeriodEvaluatedFromTo: string | Date = '';
   parsedPeriodEvaluatedUpTo: string | Date = '';
   parsedPeriodRunningActivityFromTo: string | Date = '';
@@ -74,7 +73,9 @@ export class FormComponent implements OnInit {
   set isEvaluatorRoleView(value: boolean) {};
 
   get isEvaluatedRoleView(): boolean {
-    return [EvaluationRoleEnum.Evaluated].includes(this.evaluationRole)
+    return [EvaluationRoleEnum.Evaluated, 
+            EvaluationRoleEnum.CounterSigner, 
+            EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
   }
 
   set isEvaluatedRoleView(value: boolean) {};
@@ -113,25 +114,23 @@ export class FormComponent implements OnInit {
     switch(this.evaluationRole) {
       case EvaluationRoleEnum.Evaluator:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
-        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(data), this.evaluationRole);
-        this.counterSignForm = createCounterSignForm(parseCounterSignModel(data), this.evaluationRole);
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
-        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(data), this.evaluationRole);
+        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.CounterSigner:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
-        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(data), this.evaluationRole);
-        this.counterSignForm = createCounterSignForm(parseCounterSignModel(data), this.evaluationRole);
+        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
+        this.counterSignForm = createCounterSignForm(parseCounterSignModel(new EvaluationCounterSignClass(data)), this.evaluationRole);
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.EvaluatedKnow:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
-        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(data), this.evaluationRole);
-        this.counterSignForm = createCounterSignForm(parseCounterSignModel(data), this.evaluationRole);
+        this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
+        this.counterSignForm = createCounterSignForm(parseCounterSignModel(new EvaluationCounterSignClass(data)), this.evaluationRole);
         this.isLoading = false;
         break;
     }
@@ -156,7 +155,6 @@ export class FormComponent implements OnInit {
   }
 
   assignDates(data: EvaluationModel): void {
-    // this.parsedDateCompletionGeneralData = data.dateCompletionGeneralData;
     this.parsedPeriodEvaluatedFromTo = data.periodEvaluatedFromTo; 
     this.parsedPeriodEvaluatedUpTo = data.periodEvaluatedUpTo; 
     this.parsedPeriodRunningActivityFromTo = data.periodRunningActivityFromTo; 

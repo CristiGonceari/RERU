@@ -85,19 +85,17 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
 
 export const createEvaluatedForm = (data: EvaluationAcceptModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.Evaluated) => {
     return fb.group({
-        id: fb.control(data.id),
         commentsEvaluated: fb.control({value: data.commentsEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluated })
     })
 }
 
 export const createCounterSignForm = (data: EvaluationCounterSignModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.CounterSigner) => {
     return fb.group({
-        id: fb.control(data.id),
         checkComment1: fb.control({value: data.checkComment1, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner }),
         checkComment2: fb.control({value: data.checkComment2, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner }),
         checkComment3: fb.control({value: data.checkComment3, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner }),
         checkComment4: fb.control({value: data.checkComment4, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner }),
-        otherComments: fb.control({value: data.otherComments, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner })
+        otherComments: fb.control({value: data.otherComments, disabled: evaluationRoleEnum != EvaluationRoleEnum.CounterSigner }),
     })
 }
 
