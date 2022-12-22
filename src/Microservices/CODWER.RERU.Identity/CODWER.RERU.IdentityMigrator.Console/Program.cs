@@ -37,7 +37,6 @@ namespace CODWER.RERU.IdentityMigrator.Console
                     b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))))
             .ConfigureServices((hostingContext, services)=> services.AddHttpContextAccessor());
 
-
         static void Migrate(IServiceProvider services)
         {
             using var serviceScope = services.CreateScope();
