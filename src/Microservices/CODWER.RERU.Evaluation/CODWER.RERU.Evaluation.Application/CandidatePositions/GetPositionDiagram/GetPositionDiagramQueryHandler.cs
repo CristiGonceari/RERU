@@ -136,7 +136,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
             foreach (var test in tests)
             {
-                if (test.Event.EventUsers.Where(x => x.UserProfileId == userId).Any(x => x.PositionId == positionId))
+                if (test.Event.EventUsers
+                    .Where(x => x.UserProfileId == userId)
+                    .Any(x => x.EventUserCandidatePositions
+                        .Any(x => x.CandidatePositionId == positionId))
+                    )
                 {
                     var mappedTest = _mapper.Map<TestResultDiagramDto>(test);
                     mappedTestList.Add(mappedTest);
