@@ -412,8 +412,9 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.testQuestionSummary = res.data;
             this.pageColor(res.data);
 
-            if (this.testQuestionSummary.every(x => x.isClosed === true))
-              this.submitTest();
+            if (this.testQuestionSummary.every(x => x.isClosed === true)){
+              this.finalizeTest();
+            }
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               this.disableBtn = false;
               const isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
@@ -475,6 +476,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
           this.files = [];
         },
         (error) => {
+          this.isLoading = false;
           error.error.messages.some(x => {
             if (x.code === '03020604' || x.code === '03001503')
               this.finalizeTest();

@@ -109,7 +109,21 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
+
+          <div class="form-group row" *ngIf="testTemplateMode == 2">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                {{'events.evaluator' | translate}}</label>
+            <div class="col-lg-9 col-xl-9">
+                <button class="btn btn-light-primary" (click)="attachEvaluators()"
+                    [disabled]="ceckTestTemplate(testTemplate)"
+                    [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
+                    [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
+                    {{'events.attach-evaluator' | translate}}
+                </button>
+            </div>
+        </div>
+
+          <div class="form-group row" *ngIf="testTemplateMode == 0">
             <label class="col-xl-3 col-lg-3 col-form-label text-right">
               {{'events.evaluator' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
@@ -122,10 +136,6 @@
               <span *ngIf="isTestTemplateOneAnswer" class="label label-lg label-light label-inline h-45px px-5 w-100">
                 {{'tests.test-type-autoverify' | translate}}
               </span>
-              <!-- <span *ngIf="hasEventEvaluator && !isTestTemplateOneAnswer"
-                class="label label-lg label-light label-inline h-45px px-5 w-100">
-                {{'tests.event-has-evaluator' | translate}}
-              </span> -->
             </div>
           </div>
           <div class="form-group row">
