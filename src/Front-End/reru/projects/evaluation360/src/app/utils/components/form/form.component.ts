@@ -171,10 +171,10 @@ export class FormComponent implements OnInit {
   handleFinalQualificationChange(value: number, isInputChange: boolean = false): void {
     if (isInputChange) {
       switch(true) {
-        case value >= 3.51 && value <= 4.00: this.evaluationForm.get('finalEvaluationQualification').patchValue('4');break;
-        case value >= 2.51 && value <= 3.50: this.evaluationForm.get('finalEvaluationQualification').patchValue('3');break;
-        case value >= 1.51 && value <= 2.50: this.evaluationForm.get('finalEvaluationQualification').patchValue('2');break;
-        case value >= 1.00 && value <= 1.50: this.evaluationForm.get('finalEvaluationQualification').patchValue('1');break;
+        case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('4');break;
+        case value >= 2.51 && value <= 3.50: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('3');break;
+        case value >= 1.51 && value <= 2.50: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('2');break;
+        case value >= 1.00 && value <= 1.50: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('1');break;
         default: this.evaluationForm.get('finalEvaluationQualification').patchValue(null);break;
       }
       return
@@ -191,18 +191,18 @@ export class FormComponent implements OnInit {
   calculateAverageCriterias(index: number, isFixed: boolean = true): number {
     if (isFixed) {
       switch(index) {
-        case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm.get(`question${i+1}`)?.value || 0), 0) / 5).toFixed(2);
-        case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+6}`)?.value || 0), 0.00) / 3).toFixed(2);
-        case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 5).toFixed(2);
-        case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+9}`)?.value || 0), 0.00) / 4).toFixed(2);
+        case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm?.get(`question${i+1}`)?.value || 0), 0) / 5).toFixed(2);
+        case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+6}`)?.value || 0), 0.00) / 3).toFixed(2);
+        case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`score${i + 1}`)?.value || 0), 0.00) / 5).toFixed(2);
+        case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4).toFixed(2);
       }
     }
 
     switch(index) {
-      case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm.get(`question${i+1}`)?.value || 0), 0) / 5)
-      case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+6}`)?.value || 0), 0.00) / 3)
-      case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`score${i + 1}`)?.value || 0), 0.00) / 5)
-      case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+9}`)?.value || 0), 0.00) / 4)
+      case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm?.get(`question${i+1}`)?.value || 0), 0) / 5)
+      case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+6}`)?.value || 0), 0.00) / 3)
+      case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`score${i + 1}`)?.value || 0), 0.00) / 5)
+      case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4)
     }
   }
 
@@ -214,8 +214,8 @@ export class FormComponent implements OnInit {
    * pf - pregatirea fizica
    */
   calculateM4(isFixed: boolean = true): number {
-    const pb = +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm.get(`question${i+9}`)?.value || 0), 0.00) / 4);
-    const pf = this.evaluatedForm.get('question13')?.value || 0;
+    const pb = +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4);
+    const pf = this.evaluatedForm?.get('question13')?.value || 0;
     return isFixed ? +((pb + pf) / 2).toFixed(2) : (pb + pf) / 2;
   }
 
@@ -237,7 +237,7 @@ export class FormComponent implements OnInit {
    */
   calculateMf(): number {
     const Mea = this.calculateMea();
-    const Mep = this.evaluationForm.get('partialEvaluationScore')?.value || 0;
+    const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
     
     return (Mea + Mep).toFixed(2); 
   }

@@ -10,6 +10,26 @@
     "change-password": "Смена пароля",
     "logout": "Выход"
   },
+  "user-profile": {
+    "overview": "Обзор профиля",
+    "edit-title": "Обновить свой профиль",
+    "edit-subtitle": "Введите данные вашего профиля",
+    "personal-details": "Персональные данные:",
+    "change-personal-data": "Смена персональных данных",
+    "change-personal-details": "Смена персональных данных профиля:",
+    "logout": "Выход",
+    "logout-msg": "Вы уверенны, что хотите выйти из системы?",
+    "empty-name": "Обязательное поле",
+    "wrong-name": "Поле должно начинаться с символа",
+    "available-modules": "Доступные модули",
+    "user-profile": "Профиль пользователя",
+    "user-details": "Обзор профиля пользователя",
+    "user-email": "Электронная почта",
+    "general-overview": "Общий обзор профиля",
+    "navigate-core-msg": "Вы уверенны, что хотите перейти в раздел общей информации о пользователе?",
+    "search-by-user-state": "Поиск по статусу пользователя",
+    "npp": "Ф.И.О."
+  },
   "notification": {
     "title": {
       "success": "Успешно",
@@ -228,6 +248,10 @@
     "countersigner-function": "Должность проверяющего",
     "highlight": "Подчеркнуть"
   },
+  "statuses": {
+    "Candidate": "Кандидаты",
+    "Employee": "Сотрудники"
+  },
   "button": {
     "back": "Назад",
     "apply": "Применить",
@@ -244,7 +268,9 @@
     "save": "Сохранить",
     "reject": "Отклонить",
     "accept": "Принять",
-    "edit": "Изменить"
+    "edit": "Изменить",
+    "yes": "Да",
+    "no": "Нет"
   },
   "attach-user-modal": {
     "first-name": "Имя",

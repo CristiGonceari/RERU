@@ -10,6 +10,26 @@
     "change-password": "Change password",
     "logout": "Logout"
   },
+  "user-profile": {
+    "overview": "Overview profile",
+    "edit-title": "Edit my profile",
+    "edit-subtitle": "Insert your personal data",
+    "personal-details": "Personal profile details:",
+    "change-personal-data": "Change my personal data",
+    "change-personal-details": "Change personal profile details:",
+    "logout": "Logout",
+    "logout-msg": "Are you sure you want to logout from the system?",
+    "empty-name": "Insert at least one symbol",
+    "wrong-name": "Wrong name , should start with symbol",
+    "available-modules": "Available modules",
+    "user-profile": "User's profile",
+    "user-details": "User profile overview",
+    "user-email": "E-mail",
+    "general-overview": "General user profile overview",
+    "navigate-core-msg": "Are you sure you want to navigate to general user profile overview?",
+    "search-by-user-state": "Search by user state",
+    "npp": "L.F.F."
+  },
   "notification": {
     "title": {
       "success": "Success",
@@ -228,6 +248,10 @@
     "countersigner-function": "Countersigner function",
     "highlight": "Highlight"
   },
+  "statuses": {
+    "Candidate": "Candidates",
+    "Employee": "Employees"
+  },
   "button": {
     "back": "Back",
     "apply": "Apply",
@@ -244,7 +268,9 @@
     "save": "Save",
     "reject": "Reject",
     "accept": "Accept",
-    "edit": "Edit"
+    "edit": "Edit",
+    "yes": "Yes",
+    "no": "No"
   },
   "attach-user-modal": {
     "first-name": "First name",
