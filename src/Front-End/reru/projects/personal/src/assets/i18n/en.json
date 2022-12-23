@@ -37,6 +37,10 @@
     "help": "Help",
     "faq": "Frequent questions"
   },
+  "modal":{
+    "success": "Success",
+    "error": "Error"
+  },
   "my-profile":{
     "title": "My profile",
     "general": "General presentation",
@@ -279,7 +283,9 @@
     "edit-department-details": "Edit department details",
     "are-you-sure-you-want-to-delete-department": "Are you sure you want to delete the department {{name}}?",
     "department-description": "Department description",
-    "type-department-description": "Insert department description"
+    "type-department-description": "Insert department description",
+    "bulk-import-departments-succes": "Departments have been successfully added!",
+    "bulk-import-departments-error": "Departments were not added successfully!"
   },
   "roles": {
     "title": "Roles",
@@ -293,7 +299,9 @@
     "type-new-role-name": "Insert new role name",
     "type-whole-name": "Insert the whole name",
     "type-code": "Insert the code",
-    "edit-role-details": "Edit role details"
+    "edit-role-details": "Edit role details",
+    "bulk-import-roles-succes": "Roles have been successfully added!",
+    "bulk-import-roles-error": "Roles were not added successfully!"
   },
   "positions": {
     "title": "Positions",
