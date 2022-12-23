@@ -71,6 +71,7 @@ export class PositionAddTestComponent implements OnInit {
 
   selectedEventName;
   selectedTestTemplateName;
+  testTemplateMode;
 
   constructor(
     private referenceService: ReferenceService,
@@ -96,6 +97,7 @@ export class PositionAddTestComponent implements OnInit {
       this.selectedEventName = res.data.filter(x => x.eventId == this.eventId).map(x => x.eventName);
 
       this.getActiveTestTemplates(this.eventId)
+      this.getTestTemplate();
     });
   }
 
@@ -140,6 +142,12 @@ export class PositionAddTestComponent implements OnInit {
     }
 
     if (eventId) this.clearTestData()
+  }
+
+  getTestTemplate(){
+    this.testTemplateService.getTestTemplate(this.testTemplateId).subscribe((res) => {
+      this.testTemplateMode = res.data.mode;    
+    })
   }
 
   checkIfIsOneAnswer(testTemplateId, activeTestTemplates) {
