@@ -425,11 +425,11 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               this.getTestQuestions(this.questionIndex);
             } else {
               this.disableBtn = false;
-              if (this.questionIndex < this.count)
-                this.getTestQuestions(this.questionIndex + 1);
-              else {
-                this.getTestQuestions(1);
-              }
+                if (this.questionIndex < this.count){
+                  this.getTestQuestions(this.questionIndex + 1);
+                } else {
+                  this.getTestQuestions(1);
+                }
             }
           });
       }
@@ -488,6 +488,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   submitTest() {
     if (this.testQuestionSummary.every(x => x.isClosed === true)) {
       this.testQuestionService.summary(this.testId).subscribe(() => this.disableNext = true);
+      this.finishTestProcess();
     }
     forkJoin([
       this.translate.get('modal.finish-test'),

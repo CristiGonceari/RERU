@@ -284,7 +284,7 @@
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "empty-phone": "Câmpul este obligatoriu",
-    "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
+    "wrong-phone": "Vă rugăm să furnizați un format valid +373 xxxxxxxx",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statut",

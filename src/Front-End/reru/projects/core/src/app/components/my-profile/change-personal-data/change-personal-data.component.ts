@@ -79,6 +79,8 @@ export class ChangePersonalDataComponent implements OnInit {
 				Validators.pattern(
 					"^((\\+373-?)|0)?[0-9]{8}$"
 				),
+				Validators.maxLength(12), 
+				Validators.minLength(12)
 			]),
 		});
 		this.birthDate = oldPersonalData.birthDate;

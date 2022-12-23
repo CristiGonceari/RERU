@@ -120,6 +120,8 @@ export class EditComponent implements OnInit {
 				Validators.pattern(
 					"^((\\+373-?)|0)?[0-9]{8}$"
 				),
+				Validators.maxLength(12), 
+				Validators.minLength(12)
 			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
