@@ -10,6 +10,26 @@
     "change-password": "Schimbarea parolei",
     "logout": "Ieșire"
   },
+  "user-profile": {
+    "overview": "Vizualizarea profilului",
+    "edit-title": "Editarea profilului personal",
+    "edit-subtitle": "Insertă datele personale",
+    "personal-details": "Datele profilului:",
+    "change-personal-data": "Schimbare datelor profilului personal",
+    "change-personal-details": "Schimbare datelor profilului personal:",
+    "logout": "Ieșire",
+    "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
+    "empty-name": "Câmp obligatoriu, cel puțin 1 caracter",
+    "wrong-name": "Câmp trebue să înceapă cu 1 caracter",
+    "available-modules": "Module disponibile",
+    "user-profile": "Profilul utilizatorului",
+    "user-details": "Vizualizarea profilului utilizatorului",
+    "user-email": "E-mail",
+    "general-overview": "Prezentarea generală a profilului utilizatorului",
+    "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
+    "search-by-user-state": "Căutați după statutul utilizatorului",
+    "npp": "N.P.P."
+  },
   "notification": {
     "title": {
       "success": "Succes",
@@ -228,6 +248,10 @@
     "countersigner-function": "Funcția contrasemnatarului",
     "highlight": "Evidențiază"
   },
+  "statuses": {
+    "Candidate": "Candidați",
+    "Employee": "Angajați"
+  },
   "button": {
     "back": "Înapoi",
     "apply": "Aplică",
@@ -244,7 +268,9 @@
     "save": "Salvează",
     "reject": "Respinge",
     "accept": "Acceptă",
-    "edit": "Modifică"
+    "edit": "Modifică",
+    "yes": "Da",
+    "no": "Nu"
   },
   "attach-user-modal": {
     "first-name": "Prenume",
