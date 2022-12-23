@@ -488,7 +488,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   submitTest() {
     if (this.testQuestionSummary.every(x => x.isClosed === true)) {
       this.testQuestionService.summary(this.testId).subscribe(() => this.disableNext = true);
-      this.finishTestProcess();
     }
     forkJoin([
       this.translate.get('modal.finish-test'),
