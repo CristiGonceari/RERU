@@ -113,12 +113,14 @@ export class AddEditMediaFileComponent implements OnInit {
     });
   }
 
-  onRemoved() {
+  onRemoved(toDelete?: Boolean) {
     this.imageFiles = this.videoFiles = this.audioFiles = this.docFiles = [];
     this.videoUrl = this.audioUrl = this.imageUrl= this.docUrl = null;
     this.attachedFile = null;
     this.fileName = '';
-    // this.handleFile.emit(this.attachedFile)
+    if(toDelete){
+      this.handleFile.emit(this.attachedFile);
+    }
   }
 
   public async readFile(file: File): Promise<string | ArrayBuffer> {

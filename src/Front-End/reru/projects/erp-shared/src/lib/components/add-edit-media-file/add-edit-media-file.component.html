@@ -30,6 +30,6 @@
         <source [src]="docUrl" type="file">
       </doc>
     </ngx-dropzone>
-    <p *ngIf="imageUrl || videoUrl || audioUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved()"> &#215; </p>
+    <p *ngIf="imageUrl || videoUrl || audioUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved(true)"> &#215; </p>
   </div>
 </div>
