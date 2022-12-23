@@ -425,11 +425,11 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               this.getTestQuestions(this.questionIndex);
             } else {
               this.disableBtn = false;
-              if (this.questionIndex < this.count)
-                this.getTestQuestions(this.questionIndex + 1);
-              else {
-                this.getTestQuestions(1);
-              }
+                if (this.questionIndex < this.count){
+                  this.getTestQuestions(this.questionIndex + 1);
+                } else {
+                  this.getTestQuestions(1);
+                }
             }
           });
       }
