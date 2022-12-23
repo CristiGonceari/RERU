@@ -105,6 +105,7 @@ export class AddEditMediaFileComponent implements OnInit {
       }
 
       if((this.videoFiles || this.imageFiles || this.audioFiles || this.docFiles).length > 0){
+        this.fileName = event.addedFiles[0].name;
         this.attachedFile = event.addedFiles[0];
       }
       
@@ -117,7 +118,7 @@ export class AddEditMediaFileComponent implements OnInit {
     this.videoUrl = this.audioUrl = this.imageUrl= this.docUrl = null;
     this.attachedFile = null;
     this.fileName = '';
-    this.handleFile.emit(this.attachedFile)
+    // this.handleFile.emit(this.attachedFile)
   }
 
   public async readFile(file: File): Promise<string | ArrayBuffer> {
@@ -162,9 +163,9 @@ export class AddEditMediaFileComponent implements OnInit {
           }
         } else {
           this.disableBtn.emit(false);
-          const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
           const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], fileName, { type: httpEvent.body.type });
+          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;

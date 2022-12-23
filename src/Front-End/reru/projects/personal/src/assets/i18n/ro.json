@@ -38,6 +38,10 @@
     "help": "Ajutor",
     "faq": "Întrebări frecvente"
   },
+  "modal":{
+    "success": "Succes",
+    "error": "Eroare"
+  },
   "my-profile":{
     "title":"Profilul meu",
     "general":"Prezentare generală",
@@ -280,7 +284,9 @@
     "edit-department-details": "Editează detaliile departamentului",
     "are-you-sure-you-want-to-delete-department": "Sunteți sigur că doriți să ștergeți departamentul <b>{{name}}</b>?",
     "department-description": "Descriere departament",
-    "type-department-description": "Introdu descriere departament"
+    "type-department-description": "Introdu descriere departament",
+    "bulk-import-departments-succes": "Departamentele au fost adaugate cu succes!",
+    "bulk-import-departments-error": "Departamentele nu au fost adaugate cu succes!"
   },
   "roles": {
     "title": "Roluri",
@@ -294,7 +300,9 @@
     "type-new-role-name": "Introdu numele rolului nou",
     "type-whole-name": "Introdu numele întreg",
     "type-code": "Introdu un cod",
-    "edit-role-details": "Editează detaliile rolului"
+    "edit-role-details": "Editează detaliile rolului",
+    "bulk-import-roles-succes": "Rolurile au fost adaugate cu succes!",
+    "bulk-import-roles-error": "Rolurile nu au fost adaugate cu succes!"
   },
   "positions": {
     "title": "Funcții",
