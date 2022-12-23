@@ -299,7 +299,7 @@
     "type-code": "Введите код",
     "edit-role-details": "Изменить детали должности",
     "bulk-import-roles-succes": "Роли успешно добавлены!",
-    "bulk-import-roles-error": "Роли не были успешно добавлены!"
+    "bulk-import-roles-error": "Не удалось добавить pоли!"
   },
   "positions": {
     "title": "Позиции",
