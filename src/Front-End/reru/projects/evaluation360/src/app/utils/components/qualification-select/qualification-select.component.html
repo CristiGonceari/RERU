@@ -1,7 +1,7 @@
 <form *ngIf="formGroup" [formGroup]="formGroup" [ngClass]="{'position-relative': !hasErrorSpace }">
     <select *ngIf="!showNumbers" class="form-control" 
                 [formControlName]="field"
-                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field), 
+                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
                             'is-valid': isValid(formGroup, field)}"
                 (change)="handleChange.emit($event.target.value)"
                 name="field" 
@@ -14,7 +14,7 @@
     </select>
     <select *ngIf="showNumbers" class="form-control" 
                 [formControlName]="field"
-                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field), 
+                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
                             'is-valid': isValid(formGroup, field)}"
                 (change)="handleChange.emit($event.target.value)"
                 name="field" 
@@ -26,6 +26,9 @@
         <option value="1">1 ({{'evaluations.qualification.unsatisfactory' | translate }})</option>
     </select>
     <div *ngIf="isInvalidPattern(formGroup, field)" class="invalid-feedback" [ngClass]="{'position-absolute': !hasErrorSpace }">
+        {{'evaluations.select-a-valid-qualification' | translate}}
+    </div>
+    <div *ngIf="isInvalidRequired(formGroup, field)" class="invalid-feedback" [ngClass]="{'position-absolute': !hasErrorSpace }">
         {{'evaluations.select-a-valid-qualification' | translate}}
     </div>
 </form>

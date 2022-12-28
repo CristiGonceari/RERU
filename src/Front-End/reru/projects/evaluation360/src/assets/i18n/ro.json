@@ -157,10 +157,10 @@
       }
     },
     "counter-signer-comments": {
-      "1": "a fost respectată procedura de evaluare şi cerinţele stabilite de Regulament",
-      "2": "a fost verifică corectitudinea informaţiilor înscrise în fişa de evaluare",
-      "3": "au fost respectate perioadele şi termenele de realizare a procedurilor de evaluare",
-      "4": "aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
+      "1": "A fost respectată procedura de evaluare şi cerinţele stabilite de Regulament",
+      "2": "A fost verifică corectitudinea informaţiilor înscrise în fişa de evaluare",
+      "3": "Au fost respectate perioadele şi termenele de realizare a procedurilor de evaluare",
+      "4": "Aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
     },
     "qualification": {
       "very-good": "Foarte bine (FB)",
@@ -288,6 +288,9 @@
   "message": {
     "no-record": "Nu a fost găsită nicio înregistrare.",
     "there-are-errors-to-be-fixed": "Ați introdus date invalide, verificați forma!",
-    "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020"
+    "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020",
+    "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
+    "date-from-is-more-than": "Data început este mai mare decât data sfârșit.",
+    "date-to-is-less-than": "Data sfârșit este mai mică decât data început."
   }
 }

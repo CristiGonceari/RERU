@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { isInvalidPattern, isValid } from '../../util/forms.util';
+import { isInvalidPattern, isInvalidRequired, isValid } from '../../util/forms.util';
 
 @Component({
   selector: 'app-qualification-select',
@@ -15,9 +15,11 @@ export class QualificationSelectComponent {
 
   @Output() handleChange: EventEmitter<string> = new EventEmitter<string>();
   isInvalidPattern: Function;
+  isInvalidRequired
   isValid: Function;
   constructor() {
     this.isInvalidPattern = isInvalidPattern.bind(this);
+    this.isInvalidRequired = isInvalidRequired.bind(this);
     this.isValid = isValid.bind(this);
    }
 }

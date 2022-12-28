@@ -157,10 +157,10 @@
       }
     },
     "counter-signer-comments": {
-      "1": "the evaluation procedure and the requirements established by the Regulation were respected",
-      "2": "was verifying the correctness of the information entered in the evaluation sheet",
-      "3": "the periods and deadlines for carrying out the evaluation procedures were respected",
-      "4": "the assessments recorded in the evaluation form by the evaluator correspond to reality"
+      "1": "The evaluation procedure and the requirements established by the Regulation were respected",
+      "2": "Was verifying the correctness of the information entered in the evaluation sheet",
+      "3": "The periods and deadlines for carrying out the evaluation procedures were respected",
+      "4": "The assessments recorded in the evaluation form by the evaluator correspond to reality"
     },
     "qualification": {
       "very-good": "Very good (VG)",
@@ -189,46 +189,46 @@
       "status": "Status",
       "actions": "Actions"
     },
-    "subdivision": "Subdiviziunea",
-    "evaluated-name": "Numele, prenumele angajatului",
-    "evaluated-function": "Funcția angajatului",
-    "evaluated-period-from": "Perioada evaluată de la",
-    "evaluated-period-to": "Perioada evaluată până la",
-    "evaluated-subdivision": "Subdiviziunea angajatului",
-    "studies": "Studii",
+    "subdivision": "Subdivision",
+    "evaluated-name": "Name, first name of the employee",
+    "evaluated-function": "The function of the employee",
+    "evaluated-period-from": "The period evaluated from",
+    "evaluated-period-to": "The period evaluated up to",
+    "evaluated-subdivision": "The employee's subdivision",
+    "studies": "Studies",
     "professional-training-activities": {
-      "title": "Activități de formare profesională",
-      "1": "Perfecționare",
-      "2": "Specializare"
+      "title": "Vocational training activities",
+      "1": "Training",
+      "2": "Specialization"
     },
     "professional-training-activities-type": {
-      "1": "Intern",
-      "2": "Extern"
+      "1": "Internal",
+      "2": "External"
     },
     "course-name": "Course name",
     "period-running-activity-from": "Period running activity from",
     "period-running-activity-to": "Period running activity to",
-    "administrative-act-of-course": "Actul administrativ (curs)",
+    "administrative-act-of-course": "Administrative act (course)",
     "modifying-service-during-evaluation-course": {
-      "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
-      "1": "Angajare",
-      "2": "Transferare",
-      "3": "Detașare"
+      "title": "Change in the service report during the evaluated period",
+      "1": "Engagement",
+      "2": "Transfer",
+      "3": "Detachment"
     },
     "function": "Function",
     "appointment-date": "Appointment date",
     "administrative-act-of-service": "Administrative act of studies",
     "partial-evaluations-results": "Partial evaluation results",
     "final-points": "Final score",
-    "calificative": "Calfiicative",
-    "saction-applied-evalution-course": "Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate",
+    "calificative": "Qualifications",
+    "saction-applied-evalution-course": "Disciplinary sanctions applied during the evaluated period",
     "sanction": "Sanction",
-    "sanction-date-applied-from": "Data aplicării <br>sancţiunii (ordinul)",
-    "sanction-date-applied-to": "Data ridicării <br>sancţiunii (ordinul)",
-    "qualifications-evaluation-obtained-yearly-last-2-years": "Calificative de evaluare anuale obţinute în ultimii 2 ani",
+    "sanction-date-applied-from": "Date of application<br> of the sanction (order)",
+    "sanction-date-applied-to": "Date of lifting<br> the sanction (order)",
+    "qualifications-evaluation-obtained-yearly-last-2-years": "Annual evaluation grades obtained in the last 2 years",
     "two-years-ago": "2 years ago",
     "last-year": "Last year",
-    "trimestrial-qualifications-established-against-performance": "Calificativele trimestriale pentru stabilirea sporului pentru performanţă",
+    "trimestrial-qualifications-established-against-performance": "Quarterly grades for determining the performance bonus",
     "trimester": "Trimester",
     "objective": "Objective",
     "indicator": "Indicator",
@@ -288,6 +288,9 @@
   "message": {
     "no-record": "There are no records found.",
     "there-are-errors-to-be-fixed": "You have entered invalid data, please check the form!",
-    "use-date-format": "Use the following date format dd.MM.YYYY, for e.g. 31.08.2020"
+    "use-date-format": "Use the following date format dd.MM.YYYY, for e.g. 31.08.2020",
+    "use-letters-numbers-and-dash": "Please use letters, numbers and symbol -",
+    "date-from-is-more-than": "Start date is bigger than end date.",
+    "date-to-is-less-than": "End date is bigger than start date."
   }
 }
