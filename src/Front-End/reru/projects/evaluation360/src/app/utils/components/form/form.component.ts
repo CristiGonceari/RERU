@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { EvaluationClass, EvaluationModel } from '../../models/evaluation.model';
 import { createEvaluatorForm, 
@@ -6,7 +6,11 @@ import { createEvaluatorForm,
          createCounterSignForm,
          isInvalidPattern,
          isInvalidRequired,
-         isValid, 
+         isValid,
+         isInvalidMin,
+         isInvalidMax,
+         isMoreThan,
+         isInvalidCustom, 
 } from '../../util/forms.util';
 import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
@@ -20,7 +24,7 @@ import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, AfterViewInit {
   isLoading: boolean = true;
 
   evaluationForm: FormGroup;
@@ -54,6 +58,9 @@ export class FormComponent implements OnInit {
   isInvalidPattern: Function;
   isValid: Function;
   isInvalidRequired: Function;
+  isInvalidMin: Function;
+  isInvalidMax: Function;
+  isInvalidCustom: Function;
   parseDate: Function;
   showWarnning: boolean;
   constructor() {
@@ -61,6 +68,9 @@ export class FormComponent implements OnInit {
     this.isValid = isValid.bind(this);
     this.isInvalidRequired = isInvalidRequired.bind(this);
     this.parseDate = parseDate.bind(this);
+    this.isInvalidMin = isInvalidMin.bind(this);
+    this.isInvalidMax = isInvalidMax.bind(this);
+    this.isInvalidCustom = isInvalidCustom.bind(this);
    }
 
   get isEvaluatorRoleView(): boolean {
@@ -108,6 +118,11 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm(this.evaluation);
     this.assignDates(this.evaluation);
+  }
+
+  ngAfterViewInit(): void {
+    // after DOM has loaded assign read-only values
+    this.finalEvalNum.nativeElement.value = this.evaluation.finalEvaluationQualification;
   }
 
   initForm(data: EvaluationModel): void {
@@ -181,6 +196,24 @@ export class FormComponent implements OnInit {
     }
 
     this.finalEvalNum.nativeElement.value = +value;
+  }
+
+  handlePartialScoreChange(value: number, isInputChange: boolean = false): void {
+    if (isInputChange) {
+      switch(true) {
+        case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('qualifierPartialEvaluations')?.patchValue('4');break;
+        case value >= 2.51 && value <= 3.50: this.evaluationForm?.get('qualifierPartialEvaluations')?.patchValue('3');break;
+        case value >= 1.51 && value <= 2.50: this.evaluationForm?.get('qualifierPartialEvaluations')?.patchValue('2');break;
+        case value >= 1.00 && value <= 1.50: this.evaluationForm?.get('qualifierPartialEvaluations')?.patchValue('1');break;
+        default: this.evaluationForm.get('partialEvaluationScore').patchValue(null);break;
+      }
+      this.evaluationForm?.get('partialEvaluationScore')?.patchValue(Math.round(value));
+      this.evaluationForm?.get('qualifierPartialEvaluations').markAsTouched();
+      return
+    }
+
+    this.evaluationForm?.get('partialEvaluationScore')?.patchValue(value);
+    this.evaluationForm?.get('partialEvaluationScore').markAsTouched();
   }
 
   /**

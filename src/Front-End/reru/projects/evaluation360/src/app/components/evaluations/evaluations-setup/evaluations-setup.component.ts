@@ -35,6 +35,9 @@ export class EvaluationsSetupComponent implements OnInit {
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
 		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.inputType = isAttachEvaluated ? 'checkbox' : 'radio';
+		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? ([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
+		modalRef.componentInstance.attachedItems = isAttachEvaluated ? 
+		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
 		modalRef.result.then((data: AttachUserModel) => {
 			if (isAttachEvaluated) {
 				this.evaluationForm.get('evaluatedUserProfileIds').patchValue(data.selectedUsers)

@@ -53,9 +53,10 @@ export class AttachUserModalComponent implements OnInit {
 
   getUsers(data: any = {}): void {
     this.paginatedAttachedIds = false;
-    let params = ObjectUtil.preParseObject({
+    const params = ObjectUtil.preParseObject({
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      exceptUserIds: this.exceptUserIds.length ? this.exceptUserIds : 0,
       eventId: this.eventId && this.positionId ? this.eventId : null,
       positionId: this.eventId && this.positionId ? this.positionId : null,
       testTemplateId: this.testTemplateId || null,

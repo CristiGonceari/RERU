@@ -13,10 +13,12 @@
         <label for="department" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.subdivision' | translate }}: </label>
         <div class="col-lg col-12">
             <input [ngClass]="{'is-valid': isValid(evaluationForm, 'subdivisionName'),
-              'is-invalid': isInvalidPattern(evaluationForm, 'subdivisionName')}" class="form-control" type="text" formControlName="subdivisionName" name="subdivisionName" id="subdivisionName" placeholder="Subdiviziunea">
+              'is-invalid': isInvalidPattern(evaluationForm, 'subdivisionName') || isInvalidRequired(evaluationForm, 'subdivisionName')
+            }" class="form-control" type="text" formControlName="subdivisionName" name="subdivisionName" id="subdivisionName" [placeholder]="'evaluations.subdivision' | translate">
             <div *ngIf="isInvalidPattern(evaluationForm, 'subdivisionName')" class="invalid-feedback position-absolute">
-              Foloseste doar litere, cifre si simbolul -
+              {{ 'message.use-letters-numbers-and-dash' | translate }}
             </div>
+            <div *ngIf="isInvalidRequired(evaluationForm, 'subdivisionName')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
         </div>
       </div>
       <div class="form-group row position-relative">
@@ -28,8 +30,9 @@
       </div>
       <div class="form-group row">
         <label for="functionSubdivision" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.evaluated-function' | translate }}: </label>
-          <div class="col-lg col-12">
-            <input class="form-control" type="text" formControlName="functionSubdivision" name="functionSubdivision" id="functionSubdivision" placeholder="Functia">
+          <div class="col-lg col-12 position-relative">
+            <input class="form-control" type="text" [ngClass]="{'is-invalid': isInvalidRequired(evaluationForm, 'functionSubdivision') }" formControlName="functionSubdivision" name="functionSubdivision" id="functionSubdivision" [placeholder]="'evaluations.evaluated-function' | translate">
+            <div *ngIf="isInvalidRequired(evaluationForm, 'functionSubdivision')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
           </div>
       </div>
       <div class="form-group row">
@@ -38,10 +41,13 @@
             <input class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedFromTo" (ngModelChange)="parseDate($event, 'periodEvaluatedFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="efd" autocomplete="off"
             name="date" />
             <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator"
-            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo'), 'is-valid': isValid(evaluationForm, 'periodEvaluatedFromTo')}"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo') || isInvalidCustom(evaluationForm, 'periodEvaluatedFromTo', 'ismorethan') || 
+            isInvalidRequired(evaluationForm, 'periodEvaluatedFromTo'), 'is-valid': isValid(evaluationForm, 'periodEvaluatedFromTo')}"
             [owlDateTimeTrigger]="efd"  placeholder="00.00.0000" autocomplete="off"
-              class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" (keyup)="parseDate($event.target.value, 'periodEvaluatedFromTo', evaluationForm)" />
-            <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
+              class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" 
+              (keyup)="parseDate($event.target.value, 'periodEvaluatedFromTo', evaluationForm)" />
+            <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo') || isInvalidRequired(evaluationForm, 'periodEvaluatedFromTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
+            <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedFromTo', 'ismorethan')">{{'message.date-from-is-more-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #efd pickerType="calendar"></owl-date-time>
           </div>
       </div>
@@ -61,8 +67,12 @@
       </div> -->
       <div class="form-group row order-1">
         <label for="specialOrMilitaryGrade" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.military-grade.title' | translate }}: </label>
-        <div class="col-lg col-12">
-          <select name="specialOrMilitaryGrade" id="specialOrMilitaryGrade" class="form-control" formControlName="specialOrMilitaryGrade">
+        <div class="col-lg col-12 position-relative">
+          <select name="specialOrMilitaryGrade" id="specialOrMilitaryGrade" class="form-control" formControlName="specialOrMilitaryGrade"
+          [ngClass]="{
+            'is-valid': isValid(evaluationForm, 'specialOrMilitaryGrade'),
+            'is-invalid': isInvalidPattern(evaluationForm, 'specialOrMilitaryGrade') || isInvalidRequired(evaluationForm, 'specialOrMilitaryGrade')
+          }">
             <option value="null">{{ 'button.select' | translate }}</option>
             <option value="1">{{ 'evaluations.military-grade.1' | translate }}</option>
             <option value="2">{{ 'evaluations.military-grade.2' | translate }}</option>
@@ -82,18 +92,25 @@
             <option value="16">{{ 'evaluations.military-grade.16' | translate }}</option>
             <option value="17">{{ 'evaluations.military-grade.17' | translate }}</option>
           </select>
+          <div *ngIf="isInvalidPattern(evaluationForm, 'specialOrMilitaryGrade') || isInvalidRequired(evaluationForm, 'specialOrMilitaryGrade')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
         </div>
       </div>
       <div class="form-group row order-1">
         <label for="subdivisionEvaluated" class="col-lg-3 col-12">{{ 'evaluations.evaluated-subdivision' | translate }}: </label>
-          <div class="col-lg col-12">
-            <input type="text" class="form-control" formControlName="subdivisionEvaluated" name="subdivisionEvaluated" id="subdivisionEvaluated" [placeholder]="'evaluations.evaluated-subdivision' | translate">
+          <div class="col-lg col-12 position-relative">
+            <input type="text" class="form-control"
+            [ngClass]="{
+              'is-valid': isValid(evaluationForm, 'subdivisionEvaluated'),
+              'is-invalid': isInvalidRequired(evaluationForm, 'subdivisionEvaluated')
+            }"
+            formControlName="subdivisionEvaluated" name="subdivisionEvaluated" id="subdivisionEvaluated" [placeholder]="'evaluations.evaluated-subdivision' | translate">
+            <div *ngIf="isInvalidRequired(evaluationForm, 'subdivisionEvaluated')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
           </div>
       </div>
       <div class="form-group row order-1">
         <label for="educationEnum" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.studies' | translate }}: </label>
         <div class="col-lg col-12">
-            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum">
+            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum" [ngClass]="{'is-valid': isValid(evaluationForm, 'educationEnum')}">
               <option value="null">{{'button.select' | translate}}</option>
               <option value="1">{{ 'evaluations.education.1' | translate }}</option>
               <option value="2">{{ 'evaluations.education.2' | translate }}</option>
@@ -103,17 +120,19 @@
         </div>
       </div>
       <div class="form-group row order-xl-1 order-0">
-        <label for="" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.evaluated-period-to' | translate }}: </label>
+        <label for="" class="col-lg-3 col-12">{{ 'evaluations.evaluated-period-to' | translate }}: </label>
           <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodEvaluatedUpTo" (ngModelChange)="parseDate($event, 'periodEvaluatedUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="etd" autocomplete="off"
             name="date" />
             <input [disabled]="isDisabledEvaluator" 
-            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo'), 'is-valid': isValid(evaluationForm, 'periodEvaluatedUpTo')}"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo') || isInvalidCustom(evaluationForm, 'periodEvaluatedUpTo', 'islessthan') || isInvalidRequired(evaluationForm, 'periodEvaluatedUpTo'), 
+            'is-valid': isValid(evaluationForm, 'periodEvaluatedUpTo')}"
             (keyup)="parseDate($event.target.value, 'periodEvaluatedUpTo', evaluationForm)"
             [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPeriodEvaluatedUpTo | date: 'dd.MM.yyyy'" />
-              <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
-            <owl-date-time [disabled]="isDisabledEvaluator" #etd pickerType="calendar"></owl-date-time>
+              <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo') || isInvalidRequired(evaluationForm, 'periodEvaluatedUpTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedUpTo', 'islessthan')">{{'message.date-to-is-less-than' | translate}}</div>
+              <owl-date-time [disabled]="isDisabledEvaluator" #etd pickerType="calendar"></owl-date-time>
           </div>
       </div>
     </div>
@@ -133,19 +152,19 @@
     </div>
   </div> -->
 
-    <div class="form-group row">
-      <div class="col-2">
+    <div class="form-group row gap-4 gap-xl-0">
+      <div class="col-lg-2 col-12">
         {{'evaluations.professional-training-activities.title' | translate}}
       </div>
-      <div class="col">
-        <select class="form-control" formControlName="professionalTrainingActivities" name="professionalTrainingActivities" id="professionalTrainingActivities">
+      <div class="col-lg col-12">
+        <select class="form-control" formControlName="professionalTrainingActivities" [ngClass]="{'is-valid': isValid(evaluationForm, 'professionalTrainingActivities')}" name="professionalTrainingActivities" id="professionalTrainingActivities">
           <option value="null">{{'button.select' | translate }}</option>
           <option value="1"> {{'evaluations.professional-training-activities.1' | translate}}</option>
           <option value="2"> {{'evaluations.professional-training-activities.2' | translate}}</option>
         </select>
       </div>
-      <div class="col">
-        <select class="form-control" formControlName="professionalTrainingActivitiesType" name="professionalTrainingActivitiesType" id="professionalTrainingActivitiesType">
+      <div class="col-lg col-12">
+        <select class="form-control" formControlName="professionalTrainingActivitiesType" [ngClass]="{'is-valid': isValid(evaluationForm, 'professionalTrainingActivitiesType')}" name="professionalTrainingActivitiesType" id="professionalTrainingActivitiesType">
           <option value="null">{{'button.select' | translate }}</option>
           <option value="1">{{'evaluations.professional-training-activities-type.1' | translate}}</option>
           <option value="2">{{'evaluations.professional-training-activities-type.2' | translate}}</option>
@@ -153,52 +172,64 @@
       </div>
     </div>
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="courseName" class="col-2 col-form-label">{{ 'evaluations.course-name' | translate }}: </label>
-          <div class="col">
-            <input class="form-control" type="text" formControlName="courseName" name="courseName" id="courseName" [placeholder]="'evaluations.course-name' | translate">
+          <label for="courseName" class="col-lg-2 col-12 col-form-label">{{ 'evaluations.course-name' | translate }}: </label>
+          <div class="col-lg col-12">
+            <input class="form-control" type="text" formControlName="courseName" [ngClass]="{'is-valid': isValid(evaluationForm, 'courseName')}" name="courseName" id="courseName" [placeholder]="'evaluations.course-name' | translate">
           </div>
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedPeriodRunningActivityFromTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
-          <div class="col position-relative">
+          <label for="parsedPeriodRunningActivityFromTo" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodRunningActivityFromTo" (ngModelChange)="parseDate($event, 'periodRunningActivityFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="praft" autocomplete="off"
             name="parsedPeriodRunningActivityFromTo" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="praft"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'periodRunningActivityFromTo', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodRunningActivityFromTo') || isInvalidCustom(evaluationForm, 'periodRunningActivityFromTo', 'ismorethan'), 'is-valid': isValid(evaluationForm, 'periodRunningActivityFromTo')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="praft"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPeriodRunningActivityFromTo | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'periodRunningActivityFromTo')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'periodRunningActivityFromTo', 'ismorethan')" class="invalid-feedback position-absolute">{{'message.date-from-is-more-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #praft pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedPeriodRunningActivityUpTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
-          <div class="col position-relative">
+          <label for="parsedPeriodRunningActivityUpTo" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPeriodRunningActivityUpTo" (ngModelChange)="parseDate($event, 'periodRunningActivityUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="praut" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="praut"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'periodRunningActivityUpTo', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'periodRunningActivityUpTo') || isInvalidCustom(evaluationForm, 'periodRunningActivityUpTo', 'ismorethan'), 'is-valid': isValid(evaluationForm, 'periodRunningActivityUpTo')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="praut"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPeriodRunningActivityUpTo | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'periodRunningActivityUpTo')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'periodRunningActivityUpTo', 'islessthan')" class="invalid-feedback position-absolute">{{'message.date-to-is-less-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #praut pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="administrativeActOfStudies" class="col-2  col-form-label">{{ 'evaluations.administrative-act-of-course' | translate }}: </label>
-        <div class="col">
-            <input class="form-control" type="text" formControlName="administrativeActOfStudies" name="administrativeActOfStudies" id="administrativeActOfStudies" [placeholder]="'evaluations.administrative-act-of-course' | translate">
+      <label for="administrativeActOfStudies" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.administrative-act-of-course' | translate }}: </label>
+        <div class="col-lg col-12">
+            <input class="form-control" type="text" formControlName="administrativeActOfStudies" 
+            [ngClass]="{'is-valid': isValid(evaluationForm, 'administrativeActOfStudies')}"
+            name="administrativeActOfStudies" id="administrativeActOfStudies" [placeholder]="'evaluations.administrative-act-of-course' | translate">
         </div>
     </div>
 
     <div class="form-group row">
-      <label for="administrativeActOfStudies" class="col-2  col-form-label">{{ 'evaluations.modifying-service-during-evaluation-course.title' | translate }}: </label>
-      <div class="col">
-        <select class="form-control" name="serviceDuringEvaluationCourse" id="serviceDuringEvaluationCourse" formControlName="serviceDuringEvaluationCourse">
+      <label for="serviceDuringEvaluationCourse" class="col-lg-2  col-form-label">{{ 'evaluations.modifying-service-during-evaluation-course.title' | translate }}: </label>
+      <div class="col-lg col-12">
+        <select class="form-control" name="serviceDuringEvaluationCourse"
+        [ngClass]="{'is-valid': isValid(evaluationForm, 'serviceDuringEvaluationCourse')}"
+        id="serviceDuringEvaluationCourse" formControlName="serviceDuringEvaluationCourse">
           <option value="null">{{'button.select' | translate }}</option>
           <option value="1">{{ 'evaluations.modifying-service-during-evaluation-course.1' | translate }}</option>
           <option value="2">{{ 'evaluations.modifying-service-during-evaluation-course.2' | translate }}</option>
@@ -208,31 +239,39 @@
     </div>
 
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="functionEvaluated" class="col-auto  col-form-label">{{ 'evaluations.function' | translate }}: </label>
-          <div class="col">
-              <input class="form-control" type="text" formControlName="functionEvaluated" name="functionEvaluated" id="functionEvaluated" [placeholder]="'evaluations.function' | translate">
+          <div class="col-lg col-12">
+              <input class="form-control" type="text" formControlName="functionEvaluated" 
+              [ngClass]="{'is-valid': isValid(evaluationForm, 'functionEvaluated'), 'is-invalid': isInvalidRequired(evaluationForm, 'functionEvaluated')}"
+              name="functionEvaluated" id="functionEvaluated" [placeholder]="'evaluations.function' | translate">
+              <div *ngIf="isInvalidRequired(evaluationForm, 'functionEvaluated')" class="invalid-feedback">{{'notification.required' | translate}}</div>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="appointmentDate" class="col-4 col-form-label">{{ 'evaluations.appointment-date' | translate }}: </label>
-          <div class="col position-relative">
+          <label for="appointmentDate" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.appointment-date' | translate }}: </label>
+          <div class="col-lg col-12">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedAppointmentDate" (ngModelChange)="parseDate($event, 'appointmentDate', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pad" autocomplete="off"
             name="parsedAppointmentDate" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pad"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'appointmentDate', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'appointmentDate'), 'is-valid': isValid(evaluationForm, 'appointmentDate')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pad"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedAppointmentDate | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'appointmentDate')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #pad pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="administrativeActService" class="col-auto  col-form-label">{{ 'evaluations.administrative-act-of-service' | translate }}: </label>
-          <div class="col">
-              <input class="form-control" type="text" formControlName="administrativeActService" name="administrativeActService" id="administrativeActService" [placeholder]="'evaluations.administrative-act-of-service' | translate">
+          <div class="col-lg col-12">
+              <input class="form-control" type="text" formControlName="administrativeActService"
+              [ngClass]="{'is-valid': isValid(evaluationForm, 'administrativeActService')}"
+              name="administrativeActService" id="administrativeActService" [placeholder]="'evaluations.administrative-act-of-service' | translate">
           </div>
         </div>
       </div>
@@ -245,26 +284,34 @@
     </div>
 
     <div class="row form-group">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedPartialEvaluationPeriodFromTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
-          <div class="col position-relative">
+          <label for="parsedPartialEvaluationPeriodFromTo" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.period-running-activity-from' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPartialEvaluationPeriodFromTo" (ngModelChange)="parseDate($event, 'partialEvaluationPeriodFromTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="epft" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="epft"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'partialEvaluationPeriodFromTo', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'partialEvaluationPeriodFromTo') || isInvalidCustom(evaluationForm, 'partialEvaluationPeriodFromTo', 'ismorethan'),'is-valid': isValid(evaluationForm, 'partialEvaluationPeriodFromTo')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="epft"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPartialEvaluationPeriodFromTo | date: 'dd.MM.yyyy'" />
-            <owl-date-time [disabled]="isDisabledEvaluator" #epft pickerType="calendar"></owl-date-time>
+              <div *ngIf="isInvalidPattern(evaluationForm, 'partialEvaluationPeriodFromTo')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'partialEvaluationPeriodFromTo', 'ismorethan')" class="invalid-feedback position-absolute">{{'message.date-from-is-more-than' | translate}}</div>
+              <owl-date-time [disabled]="isDisabledEvaluator" #epft pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedPartialEvaluationPeriodUpTo" class="col-4 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
-          <div class="col position-relative">
+          <label for="parsedPartialEvaluationPeriodUpTo" class="col-lg-4 col-12 col-form-label">{{ 'evaluations.period-running-activity-to' | translate }}: </label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedPartialEvaluationPeriodUpTo" (ngModelChange)="parseDate($event, 'partialEvaluationPeriodUpTo', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="eput" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="eput"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'partialEvaluationPeriodUpTo', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'partialEvaluationPeriodUpTo') || isInvalidCustom(evaluationForm, 'partialEvaluationPeriodUpTo'), 'is-valid': isValid(evaluationForm, 'partialEvaluationPeriodUpTo')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="eput"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPartialEvaluationPeriodUpTo | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'partialEvaluationPeriodUpTo')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'partialEvaluationPeriodUpTo', 'islessthan')" class="invalid-feedback position-absolute">{{'message.date-to-is-less-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #eput pickerType="calendar"></owl-date-time>
           </div>
         </div>
@@ -272,19 +319,27 @@
     </div>
 
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="partialEvaluationScore" class="col-4  col-form-label">{{'evaluations.final-points' | translate }}: </label>
-          <div class="col">
-              <input class="form-control" type="number" formControlName="partialEvaluationScore" name="partialEvaluationScore" id="partialEvaluationScore" placeholder="Punctaj final">
+          <label for="partialEvaluationScore" class="col-lg-4 col-12  col-form-label">{{'evaluations.final-points' | translate }}: </label>
+          <div class="col-lg col-12">
+              <input class="form-control" type="number" 
+              (input)="handlePartialScoreChange($event.target.value, true)"
+              [ngClass]="{
+                'is-valid': isValid(evaluationForm, 'partialEvaluationScore'),
+                'is-invalid': isInvalidMin(evaluationForm, 'partialEvaluationScore') || isInvalidMax(evaluationForm, 'partialEvaluationScore')
+              }"
+              formControlName="partialEvaluationScore" name="partialEvaluationScore" id="partialEvaluationScore" [placeholder]="'evaluations.final-points' | translate ">
+              <div *ngIf="isInvalidMin(evaluationForm, 'partialEvaluationScore') || isInvalidMax(evaluationForm, 'partialEvaluationScore')" 
+              class="invalid-feedback position-absolute">Punctajul final trebuie sa fie intre 1 si 4</div>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="qualifierPartialEvaluations" class="col-4  col-form-label">{{'evaluations.calificative' | translate }}: </label>
-          <div class="col">
-            <app-qualification-select field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
+          <label for="qualifierPartialEvaluations" class="col-lg-4 col-12  col-form-label">{{'evaluations.calificative' | translate }}: </label>
+          <div class="col-lg col-12">
+            <app-qualification-select (handleChange)="handlePartialScoreChange($event)" field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
       </div>
@@ -297,34 +352,44 @@
     </div>
 
     <div class="form-group row">
-      <label for="sanctionAppliedEvaluationCourse" class="col-2  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
-          <div class="col">
-              <input class="form-control" type="text" formControlName="sanctionAppliedEvaluationCourse" name="sanctionAppliedEvaluationCourse" id="sanctionAppliedEvaluationCourse" placeholder="Sancțiunea">
+      <label for="sanctionAppliedEvaluationCourse" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
+          <div class="col-lg col-12">
+              <input class="form-control" type="text" formControlName="sanctionAppliedEvaluationCourse" 
+              [ngClass]="{'is-valid': isValid(evaluationForm, 'sanctionAppliedEvaluationCourse')}"
+              name="sanctionAppliedEvaluationCourse" id="sanctionAppliedEvaluationCourse" placeholder="Sancțiunea">
           </div>
     </div>
 
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedDateSanctionApplication" class="col-4" [innerHTML]="'evaluations.sanction-date-applied-from' | translate"></label>
-          <div class="col position-relative">
+          <label for="parsedDateSanctionApplication" class="col-lg-4 col-12" [innerHTML]="'evaluations.sanction-date-applied-from' | translate"></label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateSanctionApplication" (ngModelChange)="parseDate($event, 'dateSanctionApplication', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="dsa" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="dsa"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'dateSanctionApplication', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'dateSanctionApplication') || isInvalidCustom(evaluationForm, 'dateSanctionApplication'),'is-valid': isValid(evaluationForm, 'dateSanctionApplication')}" [owlDateTimeTrigger]="dsa"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedDateSanctionApplication | date: 'dd.MM.yyyy'" />
+              <div *ngIf="isInvalidPattern(evaluationForm, 'dateSanctionApplication')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'dateSanctionApplication', 'ismorethan')" class="invalid-feedback">{{'message.date-from-is-more-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #dsa pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="parsedDateLiftingSanction" class="col-4" [innerHTML]="'evaluations.sanction-date-applied-to' | translate"></label>
-          <div class="col position-relative">
+          <label for="parsedDateLiftingSanction" class="col-lg-4 col-12" [innerHTML]="'evaluations.sanction-date-applied-to' | translate"></label>
+          <div class="col-lg col-12 position-relative">
             <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateLiftingSanction" (ngModelChange)="parseDate($event, 'dateLiftingSanction', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="dlfs" autocomplete="off"
             name="date" />
-            <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="dlfs"  placeholder="00.00.0000" autocomplete="off"
+            <input [disabled]="isDisabledEvaluator" 
+            (keyup)="parseDate($event.target.value, 'dateLiftingSanction', evaluationForm)"
+            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'dateLiftingSanction') || isInvalidCustom(evaluationForm, 'dateLiftingSanction'),'is-valid': isValid(evaluationForm, 'dateLiftingSanction')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="dlfs"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedDateLiftingSanction | date: 'dd.MM.yyyy'" />
-            <owl-date-time [disabled]="isDisabledEvaluator" #dlfs pickerType="calendar"></owl-date-time>
+              <div *ngIf="isInvalidPattern(evaluationForm, 'dateLiftingSanction')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'dateLiftingSanction', 'islessthan')" class="invalid-feedback">{{'message.date-to-is-less-than' | translate}}</div>
+              <owl-date-time [disabled]="isDisabledEvaluator" #dlfs pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
@@ -337,18 +402,18 @@
     </div>
 
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="qualificationEvaluationObtained2YearsPast" class="col-4 col-form-label">{{'evaluations.two-years-ago' | translate }}</label>
-          <div class="col">
+          <label for="qualificationEvaluationObtained2YearsPast" class="col-lg-4 col-12 col-form-label">{{'evaluations.two-years-ago' | translate }}</label>
+          <div class="col-lg col-12">
             <app-qualification-select field="qualificationEvaluationObtained2YearsPast" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
-          <label for="qualificationEvaluationObtainedPreviousYear" class="col-4 col-form-label">{{'evaluations.last-year' | translate }}</label>
-          <div class="col">
+          <label for="qualificationEvaluationObtainedPreviousYear" class="col-lg-4 col-12 col-form-label">{{'evaluations.last-year' | translate }}</label>
+          <div class="col-lg col-12">
             <app-qualification-select field="qualificationEvaluationObtainedPreviousYear" [formGroup]="evaluationForm"></app-qualification-select>
           </div>
         </div>
@@ -362,34 +427,34 @@
     </div>
 
     <div class="form-group row">
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="qualificationQuarter1" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} I: </label>
-          <div class="col">
+          <div class="col-lg col-12">
               <app-qualification-select field="qualificationQuarter1" [formGroup]="evaluationForm"></app-qualification-select>
             </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="qualificationQuarter2" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} II: </label>
-          <div class="col">
+          <div class="col-lg col-12">
               <app-qualification-select field="qualificationQuarter2" [formGroup]="evaluationForm"></app-qualification-select>
             </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="qualificationQuarter3" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} III: </label>
-          <div class="col">
+          <div class="col-lg col-12">
               <app-qualification-select field="qualificationQuarter3" [formGroup]="evaluationForm"></app-qualification-select>
             </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-lg col-12">
         <div class="row">
           <label for="qualificationQuarter4" class="col-auto  col-form-label">{{'evaluations.trimester' | translate }} IV: </label>
-          <div class="col">
+          <div class="col-lg col-12">
               <app-qualification-select field="qualificationQuarter4" [formGroup]="evaluationForm"></app-qualification-select>
             </div>
         </div>
@@ -434,9 +499,15 @@
                         <tbody>
                           <tr *ngFor="let item of [1,2,3,4,5]; let i = index">
                             <td class="align-middle">{{i+1}}.</td>
-                            <td><input type="text" class="form-control" [formControlName]="'goal'+(i+1)" [placeholder]="('evaluations.objective' | translate)+' '+(i+1)"></td>
-                            <td><input type="text" class="form-control" [formControlName]="'kpI'+(i+1)" [placeholder]="('evaluations.indicator' | translate)+' '+(i+1)"></td>
-                            <td><input type="text" class="form-control" [formControlName]="'performanceTerm'+(i+1)" [placeholder]="('evaluations.term' | translate)+' '+(i+1)"></td>
+                            <td><input type="text" class="form-control" [formControlName]="'goal'+(i+1)" 
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'goal'+(i+1)) }"
+                              [placeholder]="('evaluations.objective' | translate)+' '+(i+1)"></td>
+                            <td><input type="text" class="form-control" [formControlName]="'kpI'+(i+1)" 
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'kpI'+(i+1)) }"
+                              [placeholder]="('evaluations.indicator' | translate)+' '+(i+1)"></td>
+                            <td><input type="text" class="form-control" [formControlName]="'performanceTerm'+(i+1)" 
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'performanceTerm'+(i+1)) }"
+                              [placeholder]="('evaluations.term' | translate)+' '+(i+1)"></td>
                             <td><app-qualification-select [field]="'score'+(i+1)" [formGroup]="evaluationForm" [showNumbers]="true" [hasErrorSpace]="true"></app-qualification-select></td>
                           </tr>
                         </tbody>
@@ -466,7 +537,10 @@
             </app-qualification-select>
           </div>
           <div class="col-lg-5 col-12 d-flex align-items-center">
-            <input [disabled]="isDisabledEvaluator" #finalEvalNum (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
+            <input [disabled]="isDisabledEvaluator" #finalEvalNum 
+            [ngClass]="{'is-valid': isValid(evaluationForm, 'finalEvaluationQualification'),
+              'is-invalid': isInvalidPattern(evaluationForm, 'finalEvaluationQualification') || isInvalidRequired(evaluationForm, 'finalEvaluationQualification') }"
+            (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
           </div>
     </div>
 
@@ -475,8 +549,12 @@
       <div class="col-lg col-12 position-relative">
         <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateEvaluationInterview" (ngModelChange)="parseDate($event, 'dateEvaluationInterview', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pdei" autocomplete="off"
         name="parsedDateEvaluationInterview" />
-        <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdei"  placeholder="00.00.0000" autocomplete="off"
+        <input [disabled]="isDisabledEvaluator" 
+        [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'dateEvaluationInterview'), 'is-valid': isValid(evaluationForm, 'dateEvaluationInterview') }" 
+        (keyup)="parseDate($event.target.value, 'dateEvaluationInterview', evaluationForm)"
+        [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdei"  placeholder="00.00.0000" autocomplete="off"
           class="form-control" [value]="parsedDateEvaluationInterview | date: 'dd.MM.yyyy'" />
+          <div *ngIf="isInvalidPattern(evaluationForm, 'dateEvaluationInterview')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
         <owl-date-time [disabled]="isDisabledEvaluator" #pdei pickerType="calendar"></owl-date-time>
       </div>
     </div>
@@ -486,8 +564,12 @@
       <div class="col-lg col-12 position-relative">
         <input [disabled]="isDisabledEvaluator" class="position-absolute invisible" [(ngModel)]="parsedDateSettingIindividualGoals" (ngModelChange)="parseDate($event, 'dateSettingIindividualGoals', evaluationForm)" [ngModelOptions]="{standalone: true}" [owlDateTime]="pdsig" autocomplete="off"
         name="parsedDateSettingIindividualGoals" />
-        <input [disabled]="isDisabledEvaluator" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdsig"  placeholder="00.00.0000" autocomplete="off"
+        <input [disabled]="isDisabledEvaluator" [ngClass]="{
+          'is-invalid': isInvalidPattern(evaluationForm, 'dateSettingIindividualGoals'), 'is-valid': isValid(evaluationForm, 'dateSettingIindividualGoals')}" 
+          (keyup)="parseDate($event.target.value, 'dateSettingIindividualGoals', evaluationForm)"
+          [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pdsig"  placeholder="00.00.0000" autocomplete="off"
           class="form-control" [value]="parsedDateSettingIindividualGoals | date: 'dd.MM.yyyy'" />
+          <div *ngIf="isInvalidPattern(evaluationForm, 'dateSettingIindividualGoals')" class="invalid-feedback position-absolute">{{'message.use-date-format' | translate }}</div>
         <owl-date-time [disabled]="isDisabledEvaluator" #pdsig pickerType="calendar"></owl-date-time>
       </div>
     </div>
@@ -505,13 +587,17 @@
               <tr>
                 <td class="align-middle" [ngStyle]="{'width.%': 2}">1.</td>
                 <td>
-                  <input class="form-control" type="text" formControlName="need1ProfessionalDevelopmentEvaluated" name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
+                  <input class="form-control" type="text" formControlName="need1ProfessionalDevelopmentEvaluated" 
+                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need1ProfessionalDevelopmentEvaluated') }"
+                  name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
                 </td>
               </tr>
               <tr>
                 <td class="align-middle" [ngStyle]="{'width.%': 2}">2.</td>
                 <td>
-                  <input class="form-control" type="text" formControlName="need2ProfessionalDevelopmentEvaluated" name="need2ProfessionalDevelopmentEvaluated" id="need2ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
+                  <input class="form-control" type="text" formControlName="need2ProfessionalDevelopmentEvaluated" 
+                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need2ProfessionalDevelopmentEvaluated') }"
+                  name="need2ProfessionalDevelopmentEvaluated" id="need2ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
                 </td>
               </tr>
             </tbody>
@@ -528,7 +614,9 @@
     <div class="form-group row">
       <label for="commentsEvaluator" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluator-comments' | translate}}:</label>
       <div class="col-lg col-12">
-        <textarea [placeholder]="('evaluations.evaluator-comments' | translate)+'...'" class="form-control" type="text" formControlName="commentsEvaluator" name="commentsEvaluator" id="commentsEvaluator"></textarea>
+        <textarea [placeholder]="('evaluations.evaluator-comments' | translate)+'...'" class="form-control" type="text" 
+        [ngClass]="{'is-valid': isValid(evaluationForm, 'commentsEvaluator')}"
+        formControlName="commentsEvaluator" name="commentsEvaluator" id="commentsEvaluator"></textarea>
       </div>
     </div>
 </form>
@@ -543,7 +631,9 @@
   <div class="form-group row">
     <label for="commentsEvaluated" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-comments' | translate}}:</label>
     <div class="col-lg col-12">
-      <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
+      <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" 
+      [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated')}"
+      class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
     </div>
   </div>
 </form>
@@ -586,7 +676,9 @@
   <div class="form-group row">
     <label for="otherComments" class="col-2 col-form-label">{{'evaluations.countersigner-comments' | translate}}:</label>
     <div class="col">
-      <textarea [placeholder]="('evaluations.countersigner-comments' | translate)+'...'" class="form-control" type="text" formControlName="otherComments" name="otherComments" id="otherComments"></textarea>
+      <textarea [placeholder]="('evaluations.countersigner-comments' | translate)+'...'" class="form-control" type="text" 
+      [ngClass]="{'is-valid': isValid(counterSignForm, 'otherComments')}"
+      formControlName="otherComments" name="otherComments" id="otherComments"></textarea>
     </div>
   </div>
 </form>
