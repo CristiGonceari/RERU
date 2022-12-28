@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -60,9 +58,19 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                     e.canCounterSign = true;
                 }
 
+                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 4)
+                { 
+                    e.canEvaluate = true;
+                }
+
                 if (currentUserId == e.EvaluatedUserProfileId && e.Status == 5)
                 { 
                     e.canFinished = true;
+                }
+
+                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 6)
+                { 
+                    e.canEvaluate = true;
                 }
             }
             return paginatedModel;
