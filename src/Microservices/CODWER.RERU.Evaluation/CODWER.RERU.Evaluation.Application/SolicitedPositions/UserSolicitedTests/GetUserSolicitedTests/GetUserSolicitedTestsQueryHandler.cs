@@ -27,7 +27,9 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTes
                 .Include(x => x.CandidatePosition)
                     .ThenInclude(x => x.RequiredDocumentPositions)
                 .Include(x => x.SolicitedVacantPositionUserFiles)
-                .Where(x => x.UserProfileId == request.UserId).AsQueryable();
+                .Where(x => x.UserProfileId == request.UserId)
+                .OrderByDescending(x => x.CreateDate)
+                .AsQueryable();
 
             return await _paginationService.MapAndPaginateModelAsync<SolicitedVacantPosition, SolicitedCandidatePositionDto>(solicitedUserTests, request);
         }

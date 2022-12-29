@@ -28,6 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls
                 .Include(t => t.TestTemplate)
                 .ThenInclude(tt => tt.Settings)
                 .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Poll)
+                .OrderByDescending(x => x.CreateDate)
                 .Select(t => new PollDto
                     {
                         Id = t.TestTemplateId,

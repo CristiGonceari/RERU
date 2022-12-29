@@ -35,6 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedT
                 .Where(t => (t.EvaluatorId == request.UserId ||
                              _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == request.UserId)) && 
                             t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .OrderByDescending(x => x.ProgrammedTime)
                 .AsQueryable();
 
             userTests = await FilterUsersTestsByModuleRole(userTests);
