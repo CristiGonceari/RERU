@@ -10,7 +10,6 @@ using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Persistence.Extensions;
 
-
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram
 {
     public class GetPositionDiagramQueryHandler : IRequestHandler<GetPositionDiagramQuery, PositionDiagramDto>

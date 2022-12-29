@@ -34,6 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.GetTestTemplates
                 eventdb.TestTemplates = await _appDbContext.EventTestTemplates
                 .Include(x => x.TestTemplate)
                 .Where(x => x.EventId == eventdb.EventId)
+                .OrderBy(x => x.CreateDate)
                 .Select(x => _mapper.Map<SelectTestTemplateValueDto>(x))
                 .ToListAsync();
             }

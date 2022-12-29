@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == request.UserId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .OrderByDescending(x => x.CreateDate)
                 .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
