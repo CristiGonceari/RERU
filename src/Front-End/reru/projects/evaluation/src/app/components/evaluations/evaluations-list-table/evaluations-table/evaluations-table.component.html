@@ -7,7 +7,7 @@
     <table class="datatable table erp-shared-table font-size-lg" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{ 'tests.name' | translate }}</th>
+                <th class="text-left" scope="col">{{ 'tests.name' | translate }}</th>
                 <th scope="col" style="width: 200px">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
                 <th scope="col" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' | translate }})</th>
                 <th scope="col" style="width: 150px">{{ 'events.event' | translate }}</th>
@@ -20,7 +20,7 @@
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
             <tr *ngFor="let item of testTemplate">
-                <td>
+                <td class="text-left"> 
                     {{ item.testTemplateName }}
                     <span class="text-dark-50 d-block mb-0">
                         {{ item.endTime | date: 'dd/MM/yyyy, HH:mm'}}

@@ -22,7 +22,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
         public async Task<Unit> Handle(SaveTestQuestionCommand request, CancellationToken cancellationToken)
         {
             var testQuestions = _appDbContext.TestQuestions
-                .Include(x => x.QuestionUnit);
+                .Include(x => x.QuestionUnit)
+                .Include(x => x.Test)
+                    .ThenInclude(x => x.TestTemplate);
 
             var testQuestion = new TestQuestion();
 
@@ -88,8 +90,13 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
 
         private async Task SaveAnswer(TestQuestion testQuestion, int? optionId, string answerValue, AnswerStatusEnum status)
         {
-            var testQuestions = _appDbContext.TestQuestions.Where(x =>
-                x.HashGroupKey == testQuestion.HashGroupKey && x.QuestionUnitId == testQuestion.QuestionUnitId);
+            var testQuestions = _appDbContext.TestQuestions
+                .Where(x => x.HashGroupKey == testQuestion.HashGroupKey && x.QuestionUnitId == testQuestion.QuestionUnitId);
+
+            if (testQuestion.Test.TestTemplate.Mode != TestTemplateModeEnum.Test)
+            {
+                testQuestions = _appDbContext.TestQuestions.Where(x => x.TestId == testQuestion.TestId);
+            }
 
             var answerToAdd = new TestAnswer
             {
