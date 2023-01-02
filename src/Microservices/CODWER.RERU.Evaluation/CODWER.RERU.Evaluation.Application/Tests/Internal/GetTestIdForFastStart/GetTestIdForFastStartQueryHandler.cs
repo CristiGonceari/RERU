@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CVU.ERP.Common;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart
 {
@@ -39,7 +40,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
         {
             var currentUser = await _currentApplicationUserProvider.Get();
 
-            var test = await _appDbContext.Tests
+            var test = _appDbContext.Tests
                 .Include(x => x.TestTemplate.Settings)
                 .Include(x => x.TestTemplate)
                 .Include(x => x.Event)
@@ -51,8 +52,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
                                                         (test.TestStatus == TestStatusEnum.Programmed || 
                                                          test.TestStatus == TestStatusEnum.AlowedToStart))
                 .OrderByDescending(x => x.CreateDate)
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .Select(u => _mapper.Map<GetTestForFastStartDto>(u))
-                .ToListAsync();
+                .ToList();
 
             return test;
         }

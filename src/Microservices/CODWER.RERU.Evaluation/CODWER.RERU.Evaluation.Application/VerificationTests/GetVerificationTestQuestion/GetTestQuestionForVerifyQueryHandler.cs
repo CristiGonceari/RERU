@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
         {
             var test = await _appDbContext.Tests
                 .Include(t => t.TestTemplate)
+                    .ThenInclude(x => x.Settings)
                 .Include(t => t.TestQuestions)
                     .ThenInclude(t => t.QuestionUnit)
                         .ThenInclude(x => x.Options)
