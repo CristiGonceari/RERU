@@ -123,12 +123,25 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   subscribeForHashedAnswers() {
     this.testQuestionService.answerSubject.subscribe(res => {
+      // if (res && res != undefined && this.hashedOptions.length > 0) {
+      //   const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
+      //   this.hashedOptions[index].answer = res.answer;
+      //   this.hashedOptions.forEach(element => {
+      //     this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
+      //   });
+      // }
+
       if (res && res != undefined && this.hashedOptions.length > 0) {
-        const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
-        this.hashedOptions[index].answer = res.answer;
+        res.forEach(element => {
+          const index = this.hashedOptions.findIndex(x => x.id == element.optionId);
+          if (index > -1) {
+            this.hashedOptions[index].answer = element.answer;
+          }
+        });
         this.hashedOptions.forEach(element => {
           this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
         });
+
       }
     })
   }
@@ -257,14 +270,14 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   }
 
   checkSaveAnswer(index) {
-      let isCkecked: boolean = false;
-      isCkecked = this.testOptionsList.some((x) => x.isSelected == true); 
+    let isCkecked: boolean = false;
+    isCkecked = this.testOptionsList.some((x) => x.isSelected == true);
 
-       if (isCkecked) {
-        this.saveAnswers();
-       } else {
-        this.getTestQuestions(index)
-      }
+    if (isCkecked) {
+      this.saveAnswers();
+    } else {
+      this.getTestQuestions(index)
+    }
   }
 
   saveAnswers() {
@@ -308,10 +321,10 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'În progres...')
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'În progres...')
         break;
       case HttpEventType.Response:
         this.fileStatus.requestType = "Done";
@@ -412,7 +425,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.testQuestionSummary = res.data;
             this.pageColor(res.data);
 
-            if (this.testQuestionSummary.every(x => x.isClosed === true)){
+            if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.finalizeTest();
             }
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
@@ -425,11 +438,11 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               this.getTestQuestions(this.questionIndex);
             } else {
               this.disableBtn = false;
-                if (this.questionIndex < this.count){
-                  this.getTestQuestions(this.questionIndex + 1);
-                } else {
-                  this.getTestQuestions(1);
-                }
+              if (this.questionIndex < this.count) {
+                this.getTestQuestions(this.questionIndex + 1);
+              } else {
+                this.getTestQuestions(1);
+              }
             }
           });
       }

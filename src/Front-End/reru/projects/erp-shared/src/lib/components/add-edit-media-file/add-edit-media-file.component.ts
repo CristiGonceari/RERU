@@ -156,7 +156,7 @@ export class AddEditMediaFileComponent implements OnInit {
         this.disableBtn.emit(true);
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Se încarcă...')
         break;
       case HttpEventType.Response:
         if (httpEvent.body instanceof Array) {
