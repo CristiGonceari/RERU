@@ -180,8 +180,8 @@ export class TestsTableComponent implements OnInit {
 
   resetFilters(): void {
     this.filters = {};
-    this.testName.key = '';
-    this.eventName.key = '';
+    this.testName.value = '';
+    this.eventName.value = '';
     this.pagedSummary.currentPage = 1;
     this.getListByDate();
   }

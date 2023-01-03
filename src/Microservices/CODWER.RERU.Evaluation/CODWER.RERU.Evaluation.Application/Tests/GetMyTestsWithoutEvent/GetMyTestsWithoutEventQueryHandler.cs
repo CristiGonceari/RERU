@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 {
@@ -38,6 +39,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == currentUserId && t.Event == null && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.Id)
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
 

@@ -201,6 +201,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 	}
 
 	onSave(): void {
+		this.isLoading = true;
 		if (this.testId) {
 			this.edit();
 		} else {
@@ -231,7 +232,10 @@ export class AddEditTestTemplateComponent implements OnInit {
 				this.description = description;
 			});
 			this.backClicked();
+			this.isLoading = false;
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, err => {
+			this.isLoading = false;
 		});
 	}
 
@@ -252,8 +256,11 @@ export class AddEditTestTemplateComponent implements OnInit {
 			});
 			this.testId = res.data;
 			this.getTestTemplate();
-			this.backClicked()
+			this.backClicked();
+			this.isLoading = false;
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, err => {
+			this.isLoading = false;
 		});
 	}
 
