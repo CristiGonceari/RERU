@@ -1032,6 +1032,7 @@
   },
   "solicited-test": {
     "solicited-tests": "Запрошенные позиции",
+    "solicited-position": "Подать заявку на должность",
     "my-solicited-tests": "Мои запрошенные позиции",
     "solicited-time": "Необходимое время",
     "add-test": "Запросить позицию",

@@ -105,14 +105,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
                 testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
 
-                if (testDto.EventId != null && eventEvaluators.Any())
+                if (testDto.EvaluatorId == null && eventEvaluators.Any())
                 {
-                    testDto.IsEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUser.Id);
-                }
-
-                if(testDto.ShowUserName == null)
-                {
-                    testDto.ShowUserName = eventEvaluators.First().ShowUserName;
+                    testDto.IsEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
                 }
             }
 

@@ -880,8 +880,8 @@
     "required-documents": "Documente necesare",
     "review" : "Revizuie",
     "reject" : "Refuz",
-    "approve" : "Aproba",
-    "waiting" : "Asteptare",
+    "approve" : "Aprobă",
+    "waiting" : "Așteptare",
     "phone-number" : "Numar de contact"
   },
   "message-code": {
@@ -1033,9 +1033,10 @@
   },
   "solicited-test": {
     "solicited-tests": "Pozitii solicitate",
+    "solicited-position": "Solicită poziția",
     "my-solicited-tests": "Pozitiile mele solicitate",
     "solicited-time": "Timp solicitat",
-    "add-test": "Solicita o poziție",
+    "add-test": "Solicită o poziție",
     "remove": "Ștergeți poziția solicitată",
     "remove-msg": "Sigur doriți să ștergeți această poziție solicitată?",
     "succes-remove-msg": "Poziția solicitată a fost ștearsă cu succes",
