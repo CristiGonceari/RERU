@@ -1033,6 +1033,7 @@
   },
   "solicited-test": {
     "solicited-tests": "Solicited position",
+    "solicited-position": "Apply for the position",
     "my-solicited-tests": "My solicited postion",
     "solicited-time": "Solicited time",
     "add-test": "Solicit position",
