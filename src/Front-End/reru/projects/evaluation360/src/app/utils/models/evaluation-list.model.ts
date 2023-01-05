@@ -14,3 +14,13 @@ export interface EvaluationListModel {
     canDelete?: boolean;
     canFinished?: boolean;
 }
+
+export interface EvaluationListQueries {
+    evaluatedName?: string;
+    evaluatorName?: string;
+    counterSignerName?: string;
+    type?: string;
+    status?: string;
+    createDateFrom?: string | Date;
+    createDateTo?: string | Date;
+}

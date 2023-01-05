@@ -41,7 +41,7 @@
       "success": {
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
-        "delete": "A fost sters cu succes!",
+        "delete": "A fost șters cu succes!",
         "login": "Logare cu succes!"
       },
       "error": "A avut loc o eroare!"
@@ -187,7 +187,9 @@
       "evaluation-type": "Tipul evaluării",
       "points": "Punctaj",
       "status": "Statut",
-      "actions": "Acțiuni"
+      "actions": "Acțiuni",
+      "from-date": "De la",
+      "to-date": "Până la"
     },
     "subdivision": "Subdiviziunea",
     "evaluated-name": "Numele, prenumele angajatului",
@@ -270,7 +272,9 @@
     "accept": "Acceptă",
     "edit": "Modifică",
     "yes": "Da",
-    "no": "Nu"
+    "no": "Nu",
+    "search": "Caută",
+    "reset": "Resetează"
   },
   "attach-user-modal": {
     "first-name": "Prenume",
@@ -291,6 +295,7 @@
     "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020",
     "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
     "date-from-is-more-than": "Data început este mai mare decât data sfârșit.",
-    "date-to-is-less-than": "Data sfârșit este mai mică decât data început."
+    "date-to-is-less-than": "Data sfârșit este mai mică decât data început.",
+    "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!"
   }
 }

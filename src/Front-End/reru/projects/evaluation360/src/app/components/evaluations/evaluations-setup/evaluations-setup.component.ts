@@ -7,6 +7,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { EvaluationService } from '../../../utils/services/evaluations.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AttachUserModalComponent, AttachUserModel } from '../../../utils/modals/attach-user-modal/attach-user-modal.component';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
 	selector: 'app-evaluations-setup',
@@ -17,6 +19,16 @@ export class EvaluationsSetupComponent implements OnInit {
 	evaluationForm: FormGroup;
 	counterSignUsers: SelectItem[] = [];
 	evaluatedUsers: SelectItem[] = [];
+	notification = {
+		title: {
+			success: 'Success',
+			error: 'Error',
+		},
+		body: {
+			create: 'S-a inițializat procesul de evaluare cu succes!',
+			error: 'A avut loc o eroare!'
+		}
+	}
 
 	constructor(
 		private readonly fb: FormBuilder,
@@ -25,11 +37,24 @@ export class EvaluationsSetupComponent implements OnInit {
 		private readonly ngZone: NgZone,
 		private readonly router: Router,
 		private readonly route: ActivatedRoute,
-		private readonly modalService: NgbModal
+		private readonly modalService: NgbModal,
+		private readonly translateService: I18nService
 	) {}
 
 	ngOnInit(): void {
 		this.initForm();
+		this.translateData();
+	}
+
+	translateData(): void {
+		forkJoin([
+			this.translateService.get('notification.title.success'),
+			this.translateService.get('message.evaluation-initialized-successfully'),
+			this.translateService.get('notification.title.error'),
+			this.translateService.get('notification.body.error'),
+		]).subscribe(([success, create, error, bodyError ]) => {
+			this.notification = { title: {success, error}, body: { create, error: bodyError }  };
+		})
 	}
 
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
@@ -62,8 +87,8 @@ export class EvaluationsSetupComponent implements OnInit {
 		}
 		this.evaluationService.create(data).subscribe(() => {
 				this.notificationService.success(
-					'Success',
-					'S-a initializat procesul de evaluare cu succes!',
+					this.notification.title.success,
+					this.notification.body.create,
 					NotificationUtil.getDefaultMidConfig()
 				);
 				this.ngZone.run(() => this.router.navigate(['../', 'list'], { relativeTo: this.route }));
@@ -73,7 +98,7 @@ export class EvaluationsSetupComponent implements OnInit {
 					return;
 				}
 
-				this.notificationService.error('Error', 'A server occured!', NotificationUtil.getDefaultMidConfig());
+				this.notificationService.error(this.notification.title.error, this.notification.body.error, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}

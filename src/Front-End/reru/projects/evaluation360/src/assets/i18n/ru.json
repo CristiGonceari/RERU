@@ -187,7 +187,9 @@
       "evaluation-type": "Тип теста",
       "points": "Очки",
       "status": "Статус",
-      "actions": "Действия"
+      "actions": "Действия",
+      "from-date": "От",
+      "to-date": "До"
     },
     "subdivision": "Подразделение",
     "evaluated-name": "Фамилия, имя кандидата",
@@ -291,6 +293,7 @@
     "use-date-format": "Используй формат даты ДД.ММ.ГГГГ, пример 31.08.2020",
     "use-letters-numbers-and-dash": "Используйте только буквы, цифры и символ -",
     "date-from-is-more-than": "Дата начала опережает дата конца.",
-    "date-to-is-less-than": "Дата конца опережает дата начала."
+    "date-to-is-less-than": "Дата конца опережает дата начала.",
+    "evaluation-initialized-successfully": "Процесс тестирования успешно начался!"
   }
 }

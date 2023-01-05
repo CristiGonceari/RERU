@@ -5,7 +5,7 @@ import { EvaluationRoleEnum } from "../models/evaluation-role.enum"
 import { EvaluationModel } from "../models/evaluation.model"
 
 const fb = new FormBuilder();
-const isoDateRegex = new RegExp(/^[0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(02)-(0[1-9]|[12][0-9]))T(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])(\.[0-9]{2,3})?Z?$/)
+export const isoDateRegex = new RegExp(/^[0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(02)-(0[1-9]|[12][0-9]))T(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])(\.[0-9]{2,3})?Z?$/)
 
 export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.Evaluator) => {
     return fb.group({
@@ -25,7 +25,7 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
       periodRunningActivityUpTo: fb.control({value: data?.periodRunningActivityUpTo, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(isoDateRegex), isLessThan.call(this, 'periodRunningActivityFromTo')]),
       administrativeActOfStudies: fb.control({value: data?.administrativeActOfStudies, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       serviceDuringEvaluationCourse: fb.control({value: data?.serviceDuringEvaluationCourse, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}),
-      functionEvaluated: fb.control({value: data?.functionEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required]),
+      functionEvaluated: fb.control({value: data?.functionEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       appointmentDate: fb.control({value: data?.appointmentDate, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       administrativeActService: fb.control({value: data?.administrativeActService, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       partialEvaluationPeriodFromTo: fb.control({value: data?.partialEvaluationPeriodFromTo, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(isoDateRegex), isMoreThan.call(this, 'partialEvaluationPeriodUpTo')]),
