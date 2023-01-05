@@ -238,7 +238,7 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="evaluationForm.get('serviceDuringEvaluationCourse').value">
       <div class="col-lg col-12">
         <div class="row">
           <label for="functionEvaluated" class="col-auto  col-form-label">{{ 'evaluations.function' | translate }}: </label>
@@ -258,10 +258,13 @@
             name="parsedAppointmentDate" />
             <input [disabled]="isDisabledEvaluator" 
             (keyup)="parseDate($event.target.value, 'appointmentDate', evaluationForm)"
-            [ngClass]="{'is-invalid': isInvalidPattern(evaluationForm, 'appointmentDate'), 'is-valid': isValid(evaluationForm, 'appointmentDate')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pad"  placeholder="00.00.0000" autocomplete="off"
+            [ngClass]="{
+              'is-invalid': isInvalidPattern(evaluationForm, 'appointmentDate') || isInvalidRequired(evaluationForm, 'appointmentDate'), 
+              'is-valid': isValid(evaluationForm, 'appointmentDate')}" [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="pad"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedAppointmentDate | date: 'dd.MM.yyyy'" />
               <div *ngIf="isInvalidPattern(evaluationForm, 'appointmentDate')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
-            <owl-date-time [disabled]="isDisabledEvaluator" #pad pickerType="calendar"></owl-date-time>
+              <div *ngIf="isInvalidRequired(evaluationForm, 'appointmentDate')" class="invalid-feedback">{{'notification.required' | translate}}</div>
+              <owl-date-time [disabled]="isDisabledEvaluator" #pad pickerType="calendar"></owl-date-time>
           </div>
         </div>
       </div>
@@ -270,8 +273,9 @@
           <label for="administrativeActService" class="col-auto  col-form-label">{{ 'evaluations.administrative-act-of-service' | translate }}: </label>
           <div class="col-lg col-12">
               <input class="form-control" type="text" formControlName="administrativeActService"
-              [ngClass]="{'is-valid': isValid(evaluationForm, 'administrativeActService')}"
+              [ngClass]="{'is-valid': isValid(evaluationForm, 'administrativeActService'), 'is-invalid': isInvalidRequired(evaluationForm, 'administrativeActService')}"
               name="administrativeActService" id="administrativeActService" [placeholder]="'evaluations.administrative-act-of-service' | translate">
+              <div *ngIf="isInvalidRequired(evaluationForm, 'administrativeActService')" class="invalid-feedback">{{'notification.required' | translate}}</div>
           </div>
         </div>
       </div>
@@ -478,8 +482,12 @@
                   <td class="align-middle" *ngIf="i > 6 && i < 10">{{i - 6}}</td>
                   <td class="align-middle" *ngIf="i > 12 && i < 17">{{i - 10}}</td>
                   <td class="align-middle" *ngIf="i > 17">{{i - 11}}</td>
-                  <td colspan="2" *ngIf="[6, 10, 12, 17].includes(i)" class="align-middle font-weight-bolder">{{'evaluations.criterias.execution.'+(i) | translate}}</td>
-                  <td *ngIf="![6, 10, 11, 12, 17].includes(i)" class="align-middle">{{'evaluations.criterias.execution.'+(i) | translate}}</td>
+                  <td colspan="2" *ngIf="[6, 10, 12, 17].includes(i)" class="align-middle font-weight-bolder">
+                    {{ evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate) }}
+                  </td>
+                  <td *ngIf="![6, 10, 11, 12, 17].includes(i)" class="align-middle">
+                    {{ evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate) }}
+                  </td>
                   <td *ngIf="i != 11">
                     <div *ngIf="![6, 10, 12, 17].includes(i)">
                       <app-qualification-select [hasErrorSpace]="true" [field]="'question'+(i > 17 ? i - 5 : i > 12 ? i - 4 : i > 6 ? i - 1 : i)" [formGroup]="evaluationForm" [showNumbers]="true"></app-qualification-select>
@@ -695,7 +703,7 @@
 </div>
 <div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.CounterSigner" class="d-flex justify-content-center gap-2">
   <button type="button" class="btn btn-secondary" routerLink="../../">{{ 'button.cancel' | translate }}</button>
-  <button [disabled]="counterSignForm.invalid" type="button" class="btn btn-success" (click)="submit(ActionFormEnum.isCounterSignAccept)">{{ 'button.accept' | translate }}</button>
+  <button [disabled]="counterSignForm.invalid || isNotCheckedCounterSigner" type="button" class="btn btn-success" (click)="submit(ActionFormEnum.isCounterSignAccept)">{{ 'button.accept' | translate }}</button>
   <button [disabled]="counterSignForm.invalid" type="button" class="btn btn-danger" (click)="submit(ActionFormEnum.isCounterSignReject)">{{ 'button.reject' | translate }}</button>
 </div>
 <div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.EvaluatedKnow" class="d-flex justify-content-center gap-2">

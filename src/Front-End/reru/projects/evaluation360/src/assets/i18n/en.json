@@ -187,7 +187,9 @@
       "evaluation-type": "Evaluation type",
       "points": "Points",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "from-date": "From date",
+      "to-date": "To date"
     },
     "subdivision": "Subdivision",
     "evaluated-name": "Name, first name of the employee",
@@ -291,6 +293,7 @@
     "use-date-format": "Use the following date format dd.MM.YYYY, for e.g. 31.08.2020",
     "use-letters-numbers-and-dash": "Please use letters, numbers and symbol -",
     "date-from-is-more-than": "Start date is bigger than end date.",
-    "date-to-is-less-than": "End date is bigger than start date."
+    "date-to-is-less-than": "End date is bigger than start date.",
+    "evaluation-initialized-successfully": "The evaluation process has begun successfully!"
   }
 }

@@ -116,7 +116,8 @@ export const parseCounterSignModel = (data: EvaluationCounterSignModel | Evaluat
 
 export const parseDate = (value: Moment | string, formControlName: string, form: FormGroup): void => {
     const nationalDateRegex = new RegExp(/^(0{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1])\.(0{1}[1-9]{1}|1{1}[0-2]{1})\.([1-9]{1}[0-9]{1}[0-9]{1}[0-9]{1})$/);
-    if (typeof value === 'string' && value === '' && !form?.get(formControlName)?.errors?.required) {
+    if (typeof value === 'string' && value === '' && !form.get(formControlName)?.validator(form.get(formControlName))?.hasOwnProperty('required')) {
+        form.get(formControlName).patchValue(null);
         form.get(formControlName).setErrors(null);
         form.get(formControlName).markAsTouched();
         form.get(formControlName).markAsDirty();
@@ -124,20 +125,27 @@ export const parseDate = (value: Moment | string, formControlName: string, form:
     }
 
     if (typeof value === 'string' && !nationalDateRegex.test(value as string)) {
-        form.get(formControlName).setErrors({ pattern: true });
+        if (value) {
+            form.get(formControlName).setErrors({ pattern: true });
+        } else {
+            form.get(formControlName).setErrors({ required: true });
+        }
         form.get(formControlName).markAsTouched();
+        form.get(formControlName).markAsDirty();
         return;
     }
 
-    if (typeof value === 'string') {
-        const date = '12.12.2020'.split('.');
+    if (typeof value === 'string' && nationalDateRegex.test(value as string)) {
+        const date = value.split('.');
         form.get(formControlName).patchValue(new Date(`${date[2]}-${date[1]}-${date[0]}`).toISOString());
         form.get(formControlName).markAsTouched();
+        form.get(formControlName).markAsDirty();
     }
 
     if (typeof value === 'object') {
         const date = moment(value).toDate();
         form.get(formControlName).patchValue(new Date(date).toISOString());
         form.get(formControlName).markAsTouched();
+        form.get(formControlName).markAsDirty();
     }
 }

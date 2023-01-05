@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { EvaluationClass, EvaluationModel } from '../../models/evaluation.model';
 import { createEvaluatorForm, 
          createEvaluatedForm, 
@@ -10,7 +10,8 @@ import { createEvaluatorForm,
          isInvalidMin,
          isInvalidMax,
          isMoreThan,
-         isInvalidCustom, 
+         isInvalidCustom,
+         isoDateRegex, 
 } from '../../util/forms.util';
 import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
@@ -115,6 +116,14 @@ export class FormComponent implements OnInit, AfterViewInit {
     return this.evaluationRole != EvaluationRoleEnum.CounterSigner;
   }
 
+  get isNotCheckedCounterSigner(): boolean {
+    return this.counterSignForm && 
+           !this.counterSignForm.get('checkComment1').value ||
+           !this.counterSignForm.get('checkComment2').value ||
+           !this.counterSignForm.get('checkComment3').value ||
+           !this.counterSignForm.get('checkComment4').value;
+  }
+
   ngOnInit(): void {
     this.initForm(this.evaluation);
     this.assignDates(this.evaluation);
@@ -130,6 +139,7 @@ export class FormComponent implements OnInit, AfterViewInit {
       case EvaluationRoleEnum.Evaluator:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.isLoading = false;
+        this.subscribeForServiceDuringEvaluationCourseChanges();
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
@@ -214,6 +224,30 @@ export class FormComponent implements OnInit, AfterViewInit {
 
     this.evaluationForm?.get('partialEvaluationScore')?.patchValue(value);
     this.evaluationForm?.get('partialEvaluationScore').markAsTouched();
+  }
+
+  subscribeForServiceDuringEvaluationCourseChanges(): void {
+    this.evaluationForm.get('serviceDuringEvaluationCourse').valueChanges.subscribe((value: string) => {
+      if (!isNaN(+value)) {
+        this.evaluationForm.get('functionEvaluated').setValidators([Validators.required]);
+        this.evaluationForm.get('appointmentDate').setValidators([Validators.required, Validators.pattern(isoDateRegex)]);
+        this.evaluationForm.get('administrativeActService').setValidators([Validators.required]);
+        this.evaluationForm.updateValueAndValidity();
+      } else {
+        this.evaluationForm.get('serviceDuringEvaluationCourse').patchValue(null);
+        this.evaluationForm.get('functionEvaluated').patchValue(null);
+        this.evaluationForm.get('appointmentDate').patchValue(null);
+        this.evaluationForm.get('administrativeActService').patchValue(null);
+        this.evaluationForm.get('functionEvaluated').clearValidators();
+        this.evaluationForm.get('appointmentDate').clearValidators();
+        this.evaluationForm.get('administrativeActService').clearValidators();
+        this.evaluationForm.get('functionEvaluated').markAsUntouched();
+        this.evaluationForm.get('appointmentDate').markAsUntouched();
+        this.evaluationForm.get('appointmentDate').markAsPristine();
+        this.evaluationForm.get('administrativeActService').markAsUntouched();
+        this.evaluationForm.updateValueAndValidity();
+      }
+    });
   }
 
   /**
