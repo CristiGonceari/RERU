@@ -1,3 +1,5 @@
+using System;
+
 namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
 {
     public class EvaluationRowDto
@@ -9,6 +11,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public int? Type { set; get; }
         public decimal Points { set; get; }
         public int? Status { set; get; }
+        public DateTime? CreateDate { set; get; }
         public bool canEvaluate { set; get; }
         public bool canDelete { set; get; }
         public bool canAccept { set; get; }
