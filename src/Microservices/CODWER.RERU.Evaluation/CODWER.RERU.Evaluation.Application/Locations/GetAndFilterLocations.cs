@@ -8,7 +8,9 @@ namespace CODWER.RERU.Evaluation.Application.Locations
     {
         public static IQueryable<Location> Filter(AppDbContext appDbContext, string name, string address)
         {
-            var locations = appDbContext.Locations.AsQueryable();
+            var locations = appDbContext.Locations
+                .OrderByDescending(x => x.CreateDate)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
             {

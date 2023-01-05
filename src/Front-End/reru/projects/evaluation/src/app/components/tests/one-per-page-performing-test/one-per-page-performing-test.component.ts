@@ -426,7 +426,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.pageColor(res.data);
 
             if (this.testQuestionSummary.every(x => x.isClosed === true)) {
-              this.finalizeTest();
+              this.submitTest();
             }
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               this.disableBtn = false;
@@ -445,6 +445,9 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               }
             }
           });
+      }, 
+      err => {
+        this.isLoading = false;
       }
     )
   }
@@ -521,10 +524,12 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     modalRef.result.then(
       () => {
         this.finishTestProcess();
-      }, () => {
-        if (this.testQuestionSummary.every(x => x.isClosed === true)) {
-          this.finishTestProcess();
-        }
+      }, 
+      () => {
+        // if (this.testQuestionSummary.every(x => x.isClosed === true)) {
+        //   this.finishTestProcess();
+        // }
+        this.isLoading = false;
       }
     );
   }

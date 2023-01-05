@@ -100,6 +100,7 @@ export class AddEditLocationComponent implements OnInit {
 	}
 
   	onSave(): void {
+		this.isLoading = true;
 		if (this.locationId) {
 			this.editLocation();
 		} else {
@@ -121,7 +122,10 @@ export class AddEditLocationComponent implements OnInit {
 				this.description = description;
 				});
 			this.backClicked();
+			this.isLoading = false;
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, err =>{
+			this.isLoading = false;
 		});
 	}
 
@@ -135,7 +139,16 @@ export class AddEditLocationComponent implements OnInit {
 				this.description = description;
 				});
 			this.backClicked();
+			this.isLoading = false;
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+		}, err =>{
+			this.isLoading = false;
 		});
+	}
+
+	cantAdd(){
+		return this.locationForm.value.name == null ||
+			this.locationForm.value.address == null ||
+			this.locationForm.value.places <= 0;
 	}
 }
