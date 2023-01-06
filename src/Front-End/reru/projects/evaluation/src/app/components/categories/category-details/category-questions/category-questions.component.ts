@@ -65,6 +65,7 @@ export class CategoryQuestionsComponent implements OnInit {
       this.headersToPrint.push({
         value: headersDto[i],
         label: headersHtml[i].innerHTML,
+        isChecked: true
       });
     }
     let printData = {

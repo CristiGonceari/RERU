@@ -71,6 +71,7 @@ export class PositionAddTestComponent implements OnInit {
 
   selectedEventName;
   selectedTestTemplateName;
+  testTemplateMode;
 
   constructor(
     private referenceService: ReferenceService,
@@ -96,6 +97,7 @@ export class PositionAddTestComponent implements OnInit {
       this.selectedEventName = res.data.filter(x => x.eventId == this.eventId).map(x => x.eventName);
 
       this.getActiveTestTemplates(this.eventId)
+      this.getTestTemplate();
     });
   }
 
@@ -142,6 +144,12 @@ export class PositionAddTestComponent implements OnInit {
     if (eventId) this.clearTestData()
   }
 
+  getTestTemplate(){
+    this.testTemplateService.getTestTemplate(this.testTemplateId).subscribe((res) => {
+      this.testTemplateMode = res.data.mode;    
+    })
+  }
+
   checkIfIsOneAnswer(testTemplateId, activeTestTemplates) {
     if (testTemplateId) {
       this.isTestTemplateOneAnswer = activeTestTemplates.find(x => x.testTemplateId === testTemplateId).isOnlyOneAnswer;
@@ -171,10 +179,10 @@ export class PositionAddTestComponent implements OnInit {
   parse() {
     this.setTimeToSearch();
     return new AddEditTest({
-      userProfileId: this.userListToAdd,
+      userProfileIds: this.userListToAdd,
       programmedTime: this.search || null,
       eventId: this.eventId || null,
-      evaluatorId: this.evaluatorList[0] || null,
+      evaluatorIds: this.evaluatorList || [],
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
       testTemplateId: this.testTemplateId || 0,
@@ -186,7 +194,7 @@ export class PositionAddTestComponent implements OnInit {
     this.disableBtn = true
     this.isStartAddingTests = true;
 
-    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileId.length, processType: 2 }).subscribe(res => {
+    this.testService.startAddProcess({ totalProcesses: this.parse().userProfileIds.length, processType: 2 }).subscribe(res => {
       this.processId = res.data;
 
       const interval = this.setIntervalGetProcess();
@@ -269,27 +277,34 @@ export class PositionAddTestComponent implements OnInit {
 
   attachEvaluators(): void {
     this.exceptUserIds = this.usersDiagram.map(x => x.userProfileId);
-    this.openUsersModal(this.evaluatorList, 'radio');
+    this.openUsersModal(this.evaluatorList, 'checkbox', true);
   }
 
   attachUsers(): void {
     this.exceptUserIds = this.evaluatorList;
-    this.openUsersModal(this.userListToAdd, 'checkbox');
+    this.openUsersModal(this.userListToAdd, 'checkbox', false);
   }
 
-  openUsersModal(attachedItems, inputType): void {
+  openUsersModal(attachedItems, inputType, whichUser): void {
     const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.exceptUserIds = this.exceptUserIds;
     modalRef.componentInstance.eventId = this.eventId;
-    modalRef.componentInstance.positionId = this.positionId;
+    modalRef.componentInstance.positionId = whichUser ? null : this.positionId;
     modalRef.componentInstance.attachedItems = [...attachedItems];
     modalRef.componentInstance.inputType = inputType;
     modalRef.componentInstance.page = 'add-test';
+    modalRef.componentInstance.whichUser = whichUser;
     modalRef.componentInstance.testTemplateId = inputType == "radio" ? this.testTemplateId : null;
 
     modalRef.result.then(() => {
-      if (inputType == 'radio') this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
-      else if (inputType == 'checkbox') this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      if (whichUser) {
+        console.log("evaluatori", this.evaluatorList)
+        this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
+      }
+      else if(!whichUser) {
+        console.log("useri", this.userListToAdd)
+         this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
+      }
     }, () => { });
   }
 
@@ -306,10 +321,10 @@ export class PositionAddTestComponent implements OnInit {
       return this.eventId == null ||
         this.userListToAdd.length <= 0 ||
         (this.testTemplateId == null) ||
-        (this.hasEventEvaluator || this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null)
+        (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0)
     } else {
       return this.userListToAdd.length <= 0 ||
-        (this.isTestTemplateOneAnswer ? false : this.evaluatorList[0] == null) ||
+        (this.isTestTemplateOneAnswer ? false : this.evaluatorList.length <= 0) ||
         (this.testTemplateId) ||
         this.date == null
     }

@@ -3,57 +3,66 @@
 	[contentHeight]="'20rem'"
 	[height]="'5rem'"
 	[width]="'5rem'"
-	[colorClass]="'text-primary'">
+	[colorClass]="'text-primary'"
+>
 </app-loading-spinner>
-<div *ngIf="!isLoading" class="table-responsive datatable datatable-default">
+<div *ngIf="!isLoading" class="table-responsive-xl datatable datatable-default">
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Angajatul</th>
-				<th class="text-center">Evaluatorul</th>
-				<th class="text-center">Contrasemnatar</th>
-				<th class="text-center">Tipul evaluarii</th>
-				<th>Actions</th>
+				<th>{{'evaluations.list-table.employee' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.evaluator' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.countersigner' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.evaluation-type' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.points' | translate}}</th>
+				<th class="text-center">{{'evaluations.list-table.status' | translate}}</th>
+				<th *ngIf="isActionsEnabled">{{'evaluations.list-table.actions' | translate}}</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let item of surveys; let i = index; let even = even">
+			<tr
+				*ngFor="let evaluation of evaluations; let i = index"
+				[class.table-warning]="showHighlighted && evaluation.status === EvaluationStatusEnum.Draft"
+				[class.table-success]="showHighlighted && evaluation.status === EvaluationStatusEnum.Confirmed"
+				[class.table-info]="showHighlighted && evaluation.status === EvaluationStatusEnum.Accepted"
+				[class.table-danger]="showHighlighted && evaluation.status === EvaluationStatusEnum.Rejected"
+			>
 				<td class="text-center">
-					<b>{{ item.evaluatedUserLastName }} {{ item.evaluatedUserName }} </b>
-					<br />
-					{{ item.evaluatedUserPositionName }}
-					<br />
-					{{ item.evaluatedUserDepartmentName }}
+					<b>{{ evaluation?.evaluatedName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ item.evaluatorUserName }} {{ item.evaluatorUserLastName }} </b>
-					<br />
-					{{ item.evaluatorUserPositionName }}
-					<br />
-					{{ item.evaluatorUserDepartmentName }}
+					<b>{{ evaluation.evaluatorName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ item.counterSignUserName }} {{ item.counterSignUserLastName }} </b>
-					<br />
-					{{ item.counterSignUserPositionName }}
-					<br />
-					{{ item.counterSignUserDepartmentName }}
-        </td>
-        <td class="text-center">
-          {{'survey.positions.position-'+item.type | translate}}
+					<b>{{ evaluation.counterSignerName }} </b>
 				</td>
-				<td>
-					<app-evaluations-dropdown-details [index]="i" [survey]="item"></app-evaluations-dropdown-details>
+
+				<td class="text-center">
+					{{ 'evaluations.positions.' + evaluation.type | translate }}
+				</td>
+
+				<td class="text-center">
+					{{ evaluation.points }} <br />
+				</td>
+
+				<td class="text-center">
+					{{ 'evaluations.status.' + evaluation.status | translate }}
+				</td>
+				<td *ngIf="isActionsEnabled">
+					<app-evaluation-dropdown-details [index]="i" [evaluation]="evaluation" (delete)="openConfirmEvaluationDeleteModal(evaluation.id)"></app-evaluation-dropdown-details>
 				</td>
 			</tr>
-			<tr *ngIf="!isLoading && (!surveys || !surveys.length)">
-				<td colspan="10" class="text-center">Nu sunt înregistrări la moment</td>
+			<tr *ngIf="!evaluations.length">
+				<td colspan="10" class="text-center">{{ 'message.no-record' | translate }}</td>
 			</tr>
 		</tbody>
 	</table>
 	<div pagination
 		[page]="pagedSummary.currentPage"
+		[totalRecords]="pagedSummary.totalCount"
 		[total]="pagedSummary.totalPages"
+		[size]="pagedSummary.pageSize"
+		(sizeChange)="list({ page: 1, itemsPerPage: $event})"
 		class="datatable-pager datatable-paging-loaded"
 		(pageChange)="list({ page: $event })">
 	</div>

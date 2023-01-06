@@ -20,4 +20,5 @@ namespace CODWER.RERU.Core.Application.Departments
                 .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
         }
     }
+    
 }

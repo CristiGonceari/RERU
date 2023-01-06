@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Persistence.Extensions;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
@@ -34,7 +35,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests
                 .Include(t => t.Location)
                 .Include(t => t.Event)
                 .Where(t => t.UserProfileId == request.UserId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
-                .OrderByDescending(x => x.ProgrammedTime)
+                .OrderByDescending(x => x.CreateDate)
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
             userTests = await FilterUsersTestsByModuleRole(userTests);

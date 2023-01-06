@@ -287,9 +287,9 @@
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
     "finalize-test": "Sigur doriți să finalizați acest test",
     "finalize-poll": "Sigur doriți să finalizați acest sondaj",
-    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebare",
+    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebarea",
     "bulk-uploadMsg": "Încărcați fișierul modificat",
-    "bulk-dropMsg": "Plasați fișierele aici sau faceți clic pentru a încărcare",
+    "bulk-dropMsg": "Plasați fișierele aici sau faceți clic pentru a încărca",
     "bulk-beSureMsg": "Asigurați-vă că încărcați șablonul necesar",
     "status-msg": "Sigur doriți să atribuiți această stare testului dvs.",
     "edit-options": "Nu puteți edita opțiunile.",
@@ -382,6 +382,7 @@
     "min-percentage": "Min. procent de puncte",
     "accumulated-percent": "Procente colectate",
     "test-type-autoverify": "Șablonul de test selectat va fi verificat de sistem",
+    "select-before-event-pls": "Selectați evenimentul necesar",
     "event-has-evaluator": "Evenimentul selectat are evaluatori proprii",
     "asignee": "Asigneaza",
     "user-list-to-add": "Lista de utilizatori asignati",
@@ -399,7 +400,9 @@
     "stop-test-msg": "Sigur doriți să opriți acest test?",
     "please-wait": "Vă rugăm să așteptați până sistemul importa teste pentru utilizatori ...",
     "test-template": "șablon de test",
-    "start-test": "Testul va începe în câteva minute"
+    "test-template-delete-modal": "șablonul de test",
+    "start-test": "Testul va începe în câteva minute",
+    "verified-by-system": "Verificat de sistem"
   },
   "verify-test": {
     "title": "Teste",
@@ -530,12 +533,12 @@
     "document-details": "Detaliile documentului",
     "name": "Nume",
     "must-be-on-candidate": "Obligatoriu la candidare",
-    "document-added-msg": "Document adăugat cu success",
-    "document-edited-msg": "Document editat cu success",
+    "document-added-msg": "Document adăugat cu succes",
+    "document-edited-msg": "Document editat cu succes",
     "required-documents": "Documente necesare",
     "add-document": "Adauga document",
     "mandatory": "Obligatoriu",
-    "success-delete-mgs": "Documentul a fost sters cu success",
+    "success-delete-mgs": "Documentul a fost sters cu succes",
     "want-to-del-msg": "Doriti sa stergeti acest document",
     "document-application": "Gestionarea documentelor"
   },
@@ -669,9 +672,9 @@
     "option7": "Utilizatorul poate vizualiza progresul sondajului",
     "option8": "Utilizatorul nu va putea vedea paginarea",
     "option9": "Utilizatorul poate vizualiza mai multe întrebări pe pagină",
-    "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori posibile",
+    "option10": "Utilizatorul nu va putea continua testul dacă a făcut numărul maxim de erori",
     "option11": "Utilizatorul va primi un email care va contine informatii despre ora si/sau locatia specifica",
-    "option12": "Aveți nevoie de confirmarea administratorului pentru inceperea testului"
+    "option12": "Aveți nevoie de confirmarea administratorului pentru începerea testului"
   },
   "faq": {
     "help": "Ajutor",
@@ -793,6 +796,7 @@
     "import-users": "Import masiv",
     "bulk-message": "Vă rugăm să utilizați formularul nostru special pentru a importa utilizatorii",
     "evaluators": "Evaluatori",
+    "evaluators-e": "evaluatori",
     "evaluator": "Evaluator",
     "attach-evaluator": "Atașați evaluator",
     "detach-evaluator": "Eliminați evaluator",
@@ -814,7 +818,8 @@
     "succes-attach-evaluator-msg": "Evaluator a fost atașat cu succes",
     "succes-detach-evaluator-msg": "Evaluator a fost eliminat cu succes",
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
-    "show-user-name": "Afișează numele utilizatorului"
+    "show-user-name": "Afișează numele utilizatorului",
+    "from-event": "Din eveniment"
   },
   "test-template":{
     "test-template": "Șablon de teste",
@@ -875,8 +880,8 @@
     "required-documents": "Documente necesare",
     "review" : "Revizuie",
     "reject" : "Refuz",
-    "approve" : "Aproba",
-    "waiting" : "Asteptare",
+    "approve" : "Aprobă",
+    "waiting" : "Așteptare",
     "phone-number" : "Numar de contact"
   },
   "message-code": {
@@ -903,12 +908,14 @@
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
     "03000304": "Evaluator inexistent în eveniment",
+    "03000305": "Nu se poate șterge evaluatorul în uz",
     "03000401": "Locația există deja în eveniment",
     "03000501": "Utilizatorul nu este responsabil pentru acest eveniment",
     "03000502": "Evaluatorul și persoana responsabilă nu pot fi aceeași persoană",
     "03000601": "Tipul de test există în eveniment",
     "03000701": "Candidatul nu există în eveniment",
     "03000702": "Candidatul și persoana responsabilă nu pot fi aceeași persoană",
+    "03000703": "Nu se poate șterge candidatul în uz",
     "03000801": "Adresa este necompletată",
     "03000802": "Numărul de calculatoare este necompletat",
     "03000803": "Numărul calculatorului este necompletat",
@@ -1026,9 +1033,10 @@
   },
   "solicited-test": {
     "solicited-tests": "Pozitii solicitate",
+    "solicited-position": "Solicită poziția",
     "my-solicited-tests": "Pozitiile mele solicitate",
     "solicited-time": "Timp solicitat",
-    "add-test": "Solicita o poziție",
+    "add-test": "Solicită o poziție",
     "remove": "Ștergeți poziția solicitată",
     "remove-msg": "Sigur doriți să ștergeți această poziție solicitată?",
     "succes-remove-msg": "Poziția solicitată a fost ștearsă cu succes",

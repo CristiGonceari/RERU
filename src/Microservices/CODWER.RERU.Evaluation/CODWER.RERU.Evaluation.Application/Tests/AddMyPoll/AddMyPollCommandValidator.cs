@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using RERU.Data.Entities;
@@ -11,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
 {
      public class AddMyPollCommandValidator : AbstractValidator<AddMyPollCommand>
     {
-        public AddMyPollCommandValidator(AppDbContext appDbContext)
+        public AddMyPollCommandValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => x.EventId)
                 .SetValidator(x => new ItemMustExistValidator<Event>(appDbContext, ValidationCodes.INVALID_EVENT,
@@ -22,7 +23,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.EventId)
-                .Must(x => appDbContext.Events.First(e => e.Id == x).FromDate <= DateTime.Now && appDbContext.Events.First(e => e.Id == x).TillDate > DateTime.Now)
+                .Must(x => appDbContext.Events.First(e => e.Id == x).FromDate <= dateTime.Now && appDbContext.Events.First(e => e.Id == x).TillDate > dateTime.Now)
                 .WithErrorCode(ValidationCodes.FINISHED_EVENT);
         }
     }

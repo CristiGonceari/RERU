@@ -1,5 +1,4 @@
-﻿using System;
-using CODWER.RERU.Core.Application.Addresses.AddAddress;
+﻿using CODWER.RERU.Core.Application.Addresses.AddAddress;
 using CODWER.RERU.Core.Application.Addresses.GetAddress;
 using CODWER.RERU.Core.Application.Addresses.RemoveAddress;
 using CODWER.RERU.Core.Application.Addresses.UpdateAddress;
@@ -14,13 +13,8 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route("api/[controller]")]
     public class AddressController : BaseController
     {
-        public AddressController(IMediator mediator) : base(mediator) { }
-
-
-        [HttpGet("date")]
-        public async Task<string> GetCurrentTime()
+        public AddressController(IMediator mediator) : base(mediator)
         {
-            return DateTime.Now.ToString();
         }
 
         [HttpGet("{id}")]

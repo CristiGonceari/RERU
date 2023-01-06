@@ -31,8 +31,7 @@
     <div class="card-body">
       <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
       <div *ngIf="!isLoading"
-        class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-        id="kt_datatable">
+        class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable">
         <table class="datatable table font-size-lg" style="overflow: visible">
           <thead class="text-uppercase text-muted">
             <tr>
@@ -40,7 +39,7 @@
               <th scope="col" class="text-center" style="width: 160px">{{ 'questions.number-of-options' | translate }}</th>
               <th scope="col" class="text-right" style="width: 100px">{{ 'tests.status' | translate }}</th>
               <th scope="col" class="text-right" style="width: 155px">{{ 'questions.type' | translate }}</th>
-              <th scope="col" style="width: 48px"></th>
+              <th *ngIf="questionList.length" class="col-1 w-50px">{{'button.actions' | translate}}</th>
             </tr>
           </thead>
           <tbody class="text-dark-75" *ngIf="questionList.length">
@@ -52,11 +51,10 @@
                 <span class="font-size-lg">{{'statuses.' + questionEnum[question.status] | translate}}</span>
               </td>
               <td class="text-right">
-                <span class="font-size-lg" *ngIf="question.questionType">{{'statuses.' + type[question.questionType] |
-                    translate}}</span>
+                <span class="font-size-lg" *ngIf="question.questionType">{{'statuses.' + type[question.questionType] | translate}}</span>
               </td>
-              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                <div style="overflow: visible; position: relative; width: 0px">
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div>
                   <div ngbDropdown class="dropdown dropdown-inline">
                     <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                       <span class="svg-icon svg-icon-md" [id]="'action' + i" ngbDropdownToggle>
@@ -84,10 +82,8 @@
                         </button>
                         <button *ngIf="question.status !== 2" class="navi-link align-items-center px-6 text-muted"
                           (click)="changeStatus(question.id, question.status)" ngbDropdownItem>
-                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 0 || question.status == 2">{{'statuses.activate'
-                              | translate}}</label>
-                          <label style="font-size: 13px;" class="mb-0"
-                            *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
+                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 0 || question.status == 2">{{'statuses.activate' | translate}}</label>
+                          <label style="font-size: 13px;" class="mb-0" *ngIf="question.status == 1">{{'statuses.inactivate' | translate}}</label>
                         </button>
                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem (click)="printQuestionUnitPdf(question.id)">
                           {{ 'button.print' | translate }}

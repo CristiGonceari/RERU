@@ -97,13 +97,13 @@
                 {{ "answers.correct" | translate }}
               </th>
               <th scope="col">{{ "events.name" | translate }}</th>
-              <th scope="col" style="width: 48px"></th>
+              <th *ngIf="status == 0" scope="col" style="width: 48px;">{{'button.actions' | translate}}</th>
             </tr>
           </thead>
-          <tbody class="datatable-body">
+          <tbody class="datatable-body" *ngIf="options.length">
             <tr *ngFor="let item of options; index as i">
               <td>
-                <label [ngClass]="{ 'disabled-area': disable }" class="checkbox checkbox-lg checkbox-inline">
+                <label  class="checkbox checkbox-lg checkbox-inline">
                   <input *ngIf="type == 2" type="checkbox" value="{{ item.id }}" name="option"
                     [checked]="item.isCorrect" (change)="onItemChange($event)" />
                   <input *ngIf="type == 3" type="radio" value="{{ item.id }}" name="option" [checked]="item.isCorrect"
@@ -121,49 +121,48 @@
                   </div>
                 </div>
               </td>
-              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                <div style="overflow: visible; position: relative; width: 0px"
-                  [ngClass]="{ 'invisible-area': disable }">
-                  <div ngbDropdown class="dropdown dropdown-inline" container="body">
-                    <div class="btn btn-sm btn-default btn-hover-default btn-iconmr-2">
-                      <span class="svg-icon svg-icon-md" ngbDropdownToggle>
-                        <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
-                          version="1.1">
-                          <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
-                            <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black"></rect>
-                            <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
-                              fill-opacity="0.7"></rect>
-                          </g>
-                        </svg>
+              <td *ngIf="status == 0" data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div ngbDropdown class="dropdown dropdown-inline" container="body">
+                  <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                    <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                      <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                        version="1.1">
+                        <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                          <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3" fill="black"></rect>
+                          <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3" fill="black"
+                            fill-opacity="0.7"></rect>
+                        </g>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                    <div ngbDropdownMenu aria-labelledby="action1">
+                      <span *ngIf="fromCategory">
+                          <button [routerLink]="['../../option',questionId,'edit',item.id]"
+                              class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                              {{ "button.edit" | translate }}
+                          </button>
                       </span>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                      <div ngbDropdownMenu aria-labelledby="action1" *ngIf="status == 0">
-                        <span *ngIf="fromCategory">
-                            <button [routerLink]="['../../option',questionId,'edit',item.id]"
-                                class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                {{ "button.edit" | translate }}
-                            </button>
-                        </span>
-                        <span *ngIf="!fromCategory">
-                            <button [routerLink]="['../option',questionId,'edit',item.id]"
-                                class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                                {{ "button.edit" | translate }}
-                            </button>
-                        </span>
-                        
-                        <button (click)="openConfirmationDeleteModal(item.id)"
-                          class="navi-link align-items-baseline px-6" ngbDropdownItem>
-                          {{ "button.delete" | translate }}
-                        </button>
-                      </div>
+                      <span *ngIf="!fromCategory">
+                          <button [routerLink]="['../option',questionId,'edit',item.id]"
+                              class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                              {{ "button.edit" | translate }}
+                          </button>
+                      </span>
+                      
+                      <button (click)="openConfirmationDeleteModal(item.id)"
+                        class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                        {{ "button.delete" | translate }}
+                      </button>
                     </div>
                   </div>
                 </div>
               </td>
             </tr>
-            <tr *ngIf="!options.length">
+          </tbody>
+          <tbody class="datatable-body" *ngIf="!options.length">
+            <tr>
               <td colspan="3" style="text-align: center">
                 {{ "message.no-record" | translate }}
               </td>

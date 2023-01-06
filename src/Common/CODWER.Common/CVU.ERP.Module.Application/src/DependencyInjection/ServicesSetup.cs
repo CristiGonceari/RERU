@@ -62,6 +62,9 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             //notification service
             services.AddNotificationService();
 
+            //MNotify services
+            services.AddMNotifyClient(configuration.GetSection("MNotify"));
+
             //storage service
             services.AddStorageService(configuration);
 

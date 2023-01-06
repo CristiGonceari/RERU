@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
@@ -20,7 +21,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.QuestionCount, opts => opts.MapFrom(src => src.TestTemplate.QuestionCount))
                 .ForMember(x => x.AccumulatedPercentage, opts => opts.MapFrom(src => src.AccumulatedPercentage))
                 .ForMember(x => x.TestTemplateName, opts => opts.MapFrom(src => src.TestTemplate.Name))
-                .ForMember(x => x.LocationNames, opts => opts.MapFrom(src => src.Event.EventLocations.Select(el => el.Location.Name)))
+                .ForMember(x => x.LocationNames, opts => opts.MapFrom(src => new List<string>{src.Location.Name, src.Location.Address}))
                 .ForMember(x => x.EventName, opts => opts.MapFrom(src => src.Event.Name))
                 .ForMember(x => x.EvaluatorId, opts => opts.MapFrom(src => src.EvaluatorId))
                 .ForMember(x => x.EventId, opts => opts.MapFrom(src => src.EventId))
@@ -37,7 +38,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.Event.TillDate))
                 .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.UserProfile.Department.Name))
-                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name));
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.UserProfile.Role.Name))
+                .ForMember(x => x.FinalAccumulatedPercentage, opts => opts.MapFrom(src => src.FinalAccumulatedPercentage))
+                .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
+                .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey))
+                .ForMember(x => x.CreateById, opts => opts.MapFrom(src => src.CreateById));
 
             CreateMap<AddEditTestDto, Test>()
                 .ForMember(x => x.Id, opts => opts.Ignore());

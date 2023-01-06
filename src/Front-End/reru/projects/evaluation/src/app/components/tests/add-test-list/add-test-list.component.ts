@@ -9,6 +9,7 @@ export class AddTestListComponent implements OnInit {
 
   testEvent = false;
   event = false;
+  isTestEvent = true;
   
   constructor() { }
 

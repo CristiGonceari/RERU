@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
@@ -22,15 +23,17 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
         private readonly IPersonalStorageClient _personalStorageClient;
+        private readonly IDateTime _dateTime;
         private readonly string _fileName;
 
-        public AddPositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ITemplateConvertor templateConvertor, IStorageFileService storageFileService, IPersonalStorageClient personalStorageClient)
+        public AddPositionCommandHandler(AppDbContext appDbContext, IMapper mapper, ITemplateConvertor templateConvertor, IStorageFileService storageFileService, IPersonalStorageClient personalStorageClient, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
             _personalStorageClient = personalStorageClient;
+            _dateTime = dateTime;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Angajare.html";
         }
 
@@ -77,7 +80,7 @@ namespace CODWER.RERU.Personal.Application.Positions.AddPosition
             var sexType = contractor.Sex == SexTypeEnum.Male ? "domnului" : "doamnei";
 
             myDictionary.Add("{ordin_replace}", position.No);
-            myDictionary.Add("{data_today_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{data_today_replace}", _dateTime.Now.ToString("dd/MM/yyyy"));
             myDictionary.Add("{cererea_replace}",  $"{sexType} {contractor.FirstName} {contractor.LastName}");
             myDictionary.Add("{name_replace}", contractor.FirstName);
             myDictionary.Add("{lastName_replace}", contractor.LastName);

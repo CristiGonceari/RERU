@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarDay } from '../../models/calendar/calendarDay';
 import { Events } from '../../models/calendar/events';
@@ -13,6 +13,7 @@ export class EventCalendarComponent implements OnInit {
   @Output() onDatePicked = new EventEmitter<any>();
   @Output() listOfDates = new EventEmitter<any>();
   @Output() listOfCountedEvents = new EventEmitter<any>();
+  @Input() isLoading: boolean;
 
   public calendar: CalendarDay[] = [];
 
@@ -34,19 +35,20 @@ export class EventCalendarComponent implements OnInit {
   public displayMonth: string;
   public displayYear: number;
   private monthIndex: number = 0;
+  private calendarTotalCells: number = 42;
 
   onChangeMonth;
   countedPlans: Events[] = [];
   onClickedDay;
   dayValue: Date;
-  
+
   currentMonth: boolean = false;
-  isLoading: boolean = true;
 
   firstDayOfMonth;
   lastDayOfMonth;
   todayDay: CalendarDay;
   dates: boolean = false;
+  cellsForDelete = []
 
   constructor(public dialog: MatDialog) { }
 
@@ -55,17 +57,18 @@ export class EventCalendarComponent implements OnInit {
   }
 
   private generateCalendarDays(monthIndex: number): void {
-    
+
     this.calendar = [];
-    
-    if(monthIndex != 0){
-       this.dayValue = new Date(new Date().setDate(1));
+    this.cellsForDelete = [];
+
+    if (monthIndex != 0) {
+      this.dayValue = new Date(new Date().setDate(1));
     }
-    else{
+    else {
       this.dayValue = new Date()
     }
-    
-    let day: Date = new Date(this.dayValue.setMonth(new Date().getMonth() + monthIndex));
+
+    const day: Date = new Date(this.dayValue.setMonth(new Date().getMonth() + monthIndex));
 
     this.onChangeMonth = day.getMonth()
 
@@ -77,29 +80,53 @@ export class EventCalendarComponent implements OnInit {
     this.displayMonth = this.monthNames[day.getMonth()];
     this.displayYear = day.getFullYear();
 
-    let startingDateOfCalendar = this.getStartDateForCalendar(day);
+    let dateToAdd = this.getStartDateForCalendar(day);
 
-    let dateToAdd = startingDateOfCalendar;
-
-    for (let i = 0; i < 42; i++) {
+    for (let i = 0; i < this.calendarTotalCells; i++) {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
     }
+    
+    this.deleteCells();
 
-    for(let calendar of this.calendar){
-      if(calendar.isToday){
-        this.todayDay = calendar
+    for (let calendar of this.calendar) {
+      if (calendar.isToday && calendar.month == day.getMonth() + 1) {
+        this.todayDay = calendar;
       }
     }
 
-    if(this.todayDay != null){
+    if (this.todayDay != null) {
       this.getClickedDay(this.todayDay)
     }
-    else{
-        this.listOfDates.emit(data)
+    else {
+      this.listOfDates.emit(data)
     }
 
     this.getListOfCoutedEvents(data);
+  }
+
+  private deleteCells() {
+    this.cellsForDelete.push(
+      {
+        week: 'firstWeek',
+        forDelete: this.calendar.slice(0, 7).every(el =>
+          new Date(el.date.getFullYear(), el.month) < new Date(this.dayValue.getFullYear(), this.dayValue.getMonth()))
+      },
+      {
+        week: 'lastWeek',
+        forDelete: this.calendar.slice(this.calendarTotalCells - 7).every(el =>
+          new Date(el.date.getFullYear(), el.month) > new Date(this.dayValue.getFullYear(), this.dayValue.getMonth()))
+      },
+    );
+
+    for (let cell of this.cellsForDelete) {
+      if (cell.week == 'firstWeek' && cell.forDelete == true) {
+        this.calendar = this.calendar.slice(7, 42);
+      }
+      if (cell.week == 'lastWeek' && cell.forDelete == true) {
+        this.calendar = this.calendar.slice(0, -7);
+      }
+    };
   }
 
   private getStartDateForCalendar(selectedDate: Date) {
@@ -143,20 +170,20 @@ export class EventCalendarComponent implements OnInit {
     const dates = {
       date: data.date,
       clickedDay: data.clickedDay,
-      page : 1
+      page: 1
     }
-    
+
     this.onDatePicked.emit(dates)
   }
 
-  getListOfCoutedEvents(data): void {
+  getListOfCoutedEvents(data) {
     const request = {
       fromDate: data.fromDate,
       tillDate: data.tillDate,
       calendar: this.calendar
     }
 
-    this.listOfCountedEvents.emit(request)
+    this.listOfCountedEvents.emit(request);
   }
 
 }

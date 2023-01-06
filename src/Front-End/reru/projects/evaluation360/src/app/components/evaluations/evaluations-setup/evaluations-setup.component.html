@@ -1,0 +1,67 @@
+<app-page-title [title]="'evaluations.title' | translate"></app-page-title>
+
+<erp-shared-content>
+	<div class="card card-custom gutter-b erp-shared-desktop-wide">
+		<div class="card-body">
+			<div class="row justify-content-center">
+				<div class="col col-lg-7">
+					<form [formGroup]="evaluationForm">
+						<div class="form-group row">
+							<label class="col-md col-12 col-form-label">{{ 'evaluations.evaluated-employees' | translate }}</label>
+							<div class="col-md col-12">
+								<button class="symbol btn btn-light border-0" (click)="openAttachUserModal(true)"
+									[style.background-color]="evaluationForm.get('evaluatedUserProfileIds')?.value?.length > 0 ? '#C9F7F5': '#FFE2E5'"
+									[style.color]="evaluationForm.get('evaluatedUserProfileIds')?.value?.length > 0 ? '#0bb7af': '#F64E60'">
+									{{'button.attach-evaluateds' | translate}}
+									<i *ngIf="evaluationForm.get('evaluatedUserProfileIds')?.value?.length"
+									class="p-0 bg-danger symbol-badge font-size-smaller h-20px w-20px d-flex justify-content-center align-items-center text-white">{{evaluationForm.get('evaluatedUserProfileIds')?.value?.length}}</i>
+								</button>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md col-12 col-form-label">{{ 'evaluations.countersigner' | translate }}</label>
+							<div class="col-md col-12">
+								<button class="symbol btn btn-light border-0 d-md-inline-block d-none" (click)="openAttachUserModal()"
+									[style.background-color]="evaluationForm.get('counterSignerUserProfileId')?.value ? '#C9F7F5': '#FFE2E5'"
+									[style.color]="evaluationForm.get('counterSignerUserProfileId')?.value ? '#0bb7af': '#F64E60'">
+									{{'button.attach-countersigner' | translate}}
+									<i *ngIf="evaluationForm.get('counterSignerUserProfileId')?.value"
+									class="p-0 bg-danger symbol-badge font-size-smaller h-20px w-20px d-flex justify-content-center align-items-center text-white">1</i>
+								</button>
+								<button class="symbol btn btn-light border-0 d-md-none d-inline-block h-100" (click)="openAttachUserModal()"
+									[style.background-color]="evaluationForm.get('counterSignerUserProfileId')?.value ? '#C9F7F5': '#FFE2E5'"
+									[style.color]="evaluationForm.get('counterSignerUserProfileId')?.value ? '#0bb7af': '#F64E60'">
+									{{'button.attach-countersigner' | translate}}
+									<i *ngIf="evaluationForm.get('counterSignerUserProfileId')?.value"
+									class="p-0 bg-danger symbol-badge font-size-smaller h-20px w-20px d-flex justify-content-center align-items-center text-white">1</i>
+								</button>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="evaluationType" class="col-md col-12 col-form-label">{{ 'evaluations.evaluation-type' | translate }}</label>
+							<div class="col-md col-12">
+								<select class="form-control" id="typr" formControlName="type">
+									<option value="null">{{ 'evaluations.select-evaluation-type' | translate }}</option>
+									<option value="1">{{ 'evaluations.executing-position' | translate }}</option>
+									<option value="2">{{ 'evaluations.managing-position' | translate }}</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col d-md-flex d-none justify-content-center">
+								<button type="button" class="btn btn-primary" [disabled]="evaluationForm.invalid" (click)="submit()">
+									{{ 'button.apply' | translate }}
+								</button>
+							</div>
+							<div class="col d-md-none d-flex d-none justify-content-center">
+								<button type="button" class="btn btn-primary w-100" [disabled]="evaluationForm.invalid" (click)="submit()">
+									{{ 'button.apply' | translate }}
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</erp-shared-content>

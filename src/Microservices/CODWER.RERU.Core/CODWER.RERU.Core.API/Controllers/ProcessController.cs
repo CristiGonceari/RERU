@@ -16,6 +16,7 @@ namespace CODWER.RERU.Core.API.Controllers
         {
         }
 
+        [HttpGet]
         public async Task<List<HistoryProcessesDto>> GetBulkProcessHistory()
         {
             var query = new GetProcessHistoryQuery();

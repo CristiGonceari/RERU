@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.PositionDiagram;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
@@ -110,8 +109,8 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
 
             var tests = _appDbContext.Tests
                 .Include(x => x.Event)
-                    .ThenInclude(x => x.EventUsers)
-                    .ThenInclude(x => x.EventUserCandidatePositions)
+                .ThenInclude(x => x.EventUsers)
+                .ThenInclude(x => x.EventUserCandidatePositions)
                 .Where(x => x.UserProfileId == userId &&
                             x.EventId == eventId &&
                             x.TestTemplateId == testTemplateId)
@@ -120,7 +119,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
 
             foreach (var test in tests)
             {
-                if (test.Event.EventUsers.Where(x => x.UserProfileId == userId).Any(x => x.PositionId == positionId))
+                if (test.Event.EventUsers
+                    .Where(x => x.UserProfileId == userId)
+                    .Any(x => x.EventUserCandidatePositions
+                        .Any(x => x.CandidatePositionId == positionId))
+                   )
                 {
                     var mappedTest = _mapper.Map<TestResultDiagramDto>(test);
                     mappedTestList.Add(mappedTest);

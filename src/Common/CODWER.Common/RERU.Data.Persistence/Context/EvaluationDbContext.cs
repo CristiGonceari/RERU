@@ -49,5 +49,6 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<CandidatePositionNotification> CandidatePositionNotifications { get; set; }
         public virtual DbSet<ArticleEvaluationModuleRole> ArticleEvaluationModuleRoles { get; set; }
         public virtual DbSet<TestTemplateModuleRole> TestTemplateModuleRoles { get; set; }
+        public virtual DbSet<TestQuestionTestAnswer> TestQuestionsTestAnswers { get; set; }
     }
 }

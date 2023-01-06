@@ -9,6 +9,8 @@ import { RoleService } from '../../../utils/services/role.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { saveAs } from 'file-saver';
+import { I18nService } from '../../../utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-roles-table',
@@ -20,9 +22,15 @@ export class RolesTableComponent implements OnInit {
   roles: RoleModel[] = [];
   pagedSummary: PagedSummary = new PagedSummary();
   searchWord: string;
+
+  title: string;
+  description: string;
+
   constructor(private roleService: RoleService,
     private modalService: NgbModal,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+    public translate: I18nService,
+    ) { }
 
   ngOnInit(): void {
     this.list();
@@ -81,9 +89,25 @@ export class RolesTableComponent implements OnInit {
 				const file = new File([blob], fileName, { type: response.body.type });
 				saveAs(file);
 			}
-      this.notificationService.success('Success', 'Roles imported!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('roles.bulk-import-roles-succes'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.list();
-    }, () => {}, () => {
+    }, (error) => {
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('roles.bulk-import-roles-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+    }, () => {
       this.isLoading = false;
     })
   }

@@ -125,7 +125,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             if (ValidateNameOnEdit(roleDto))
             {
-                workSheet.Cells[i, 5].Value = "Error: Nume dublicat";
+                workSheet.Cells[i, 5].Value = "Error: Nume duplicat";
             }
             else
             {
@@ -138,7 +138,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             if (ValidateNameOnCreate(roleDto.Name, ImportTypeEnum.ImportRoles))
             {
-                workSheet.Cells[i, 5].Value = "Error: Nume dublicat";
+                workSheet.Cells[i, 5].Value = "Error: Nume duplicat";
             }
             else
             {
@@ -177,7 +177,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             if (ValidateNameOnEdit(departmentDto))
             {
-                workSheet.Cells[i, 3].Value = "Error: Nume dublicat";
+                workSheet.Cells[i, 3].Value = "Error: Nume duplicat";
             }
             else
             {
@@ -190,7 +190,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         {
             if (ValidateNameOnCreate(departmentDto.Name, ImportTypeEnum.ImportDepartments))
             {
-                workSheet.Cells[i, 3].Value = "Error: Nume dublicat";
+                workSheet.Cells[i, 3].Value = "Error: Nume duplicat";
             }
             else
             {

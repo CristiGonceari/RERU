@@ -3,6 +3,7 @@ using System.Linq;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.Validators.TestValidators;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
@@ -18,10 +19,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
     public class StartTestCommandValidator : AbstractValidator<StartTestCommand>
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public StartTestCommandValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
+        public StartTestCommandValidator(AppDbContext appDbContext, IUserProfileService userProfileService, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
 
             RuleFor(x => x.TestId)
                 .SetValidator(x => new ItemMustExistValidator<Test>(appDbContext, ValidationCodes.INVALID_TEST,
@@ -55,7 +58,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                     When(x => appDbContext.Tests.First(t => t.Id == x.TestId).EventId.HasValue, () =>
                     {
                         RuleFor(x => x.TestId)
-                        .Must(x => appDbContext.Tests.Include(x => x.Event).First(t => t.Id == x).Event.TillDate > DateTime.Now)
+                        .Must(x => appDbContext.Tests.Include(x => x.Event).First(t => t.Id == x).Event.TillDate > dateTime.Now)
                         .WithErrorCode(ValidationCodes.FINISHED_EVENT);
                     });
                 });
@@ -71,7 +74,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                     .ThenInclude(x => x.Settings)
                 .FirstOrDefault(x => x.Id == testId);
 
-            var now = DateTime.Now;
+            var now = _dateTime.Now;
             var programmedTime = test.ProgrammedTime;
 
             var startBefore = test.TestTemplate.Settings.StartBeforeProgrammation;

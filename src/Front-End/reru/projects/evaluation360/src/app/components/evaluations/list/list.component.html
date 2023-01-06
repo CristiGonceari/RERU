@@ -1,17 +1,145 @@
-<app-page-title title="Evaluari"> </app-page-title>
+<app-page-title [title]="'evaluations.title' | translate"> </app-page-title>
 
 <erp-shared-content>
 	<div class="card card-custom erp-shared-desktop-wide">
-		<div class="card-header flex-wrap border-0 pt-6 pb-0">
-			<div class="card-title">
-				<h3 class="card-label font-weight-bolder">Lista</h3>
+		<div class="card-header border-0 pt-6 pb-0">
+			<div class="card-title d-flex gap-5 w-50">
+				<h3 class="card-label font-weight-bolder">{{'evaluations.list' | translate}}</h3>				
 			</div>
-			<div class="card-toolbar">
-				<a [routerLink]="['../../setup']" class="btn btn-success font-weight-bolder">Evaluare noua</a>
+			<div class="card-toolbar flex-column justify-content-between align-items-end d-md-flex d-none">
+				<a routerLink="../setup" class="btn btn-success font-weight-bolder mb-4">{{'evaluations.new-evaluation' | translate}}</a>
+				<!-- <div class="form-group row">
+					<div class="col">
+						<div class="checbox-inline">
+							<label class="checkbox">
+								<input name="includeAll" type="checkbox" [(ngModel)]="includeAll" (ngModelChange)="filterList($event)" [ngModelOptions]="{ standalone: true }">
+								<span class="mr-2"></span> Afișeaza evaluările în curs de procesare
+							</label>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<div class="card-toolbar flex-column w-100 d-md-none d-flex">
+				<a routerLink="../setup" class="btn btn-success w-100 font-weight-bolder mb-4">{{'evaluations.new-evaluation' | translate}}</a>
+			</div>
+			<div class="card-toolbar d-block w-100">
+				<div class="row">
+					<div class="col-xl-auto col-lg-6 col-12">
+						<div class="form-group d-flex align-items-end gap-4 pt-2">
+							<label for="highlight">{{'evaluations.highlight' | translate}}</label>
+							<span class="switch switch-sm switch-icon">
+								<label>
+								 <input #highlight type="checkbox" name="highlight" (change)="handleHighlightChange(highlight?.checked)"/>
+								 <span></span>
+								</label>
+							   </span>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.employee' | translate}}</label>
+							<div class="col-lg col-12">
+								<input class="form-control" type="text" placeholder="Angajat" [(ngModel)]="filters.evaluatedName">
+							</div>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.evaluator' | translate}}</label>
+							<div class="col-lg col-12">
+								<input class="form-control" type="text" placeholder="Evaluator" [(ngModel)]="filters.evaluatorName">
+							</div>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12">{{'evaluations.list-table.countersigner' | translate}}</label>
+							<div class="col-lg col-12">
+								<input class="form-control" type="text" placeholder="Contrasemnatar" [(ngModel)]="filters.counterSignerName">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label" for="">{{'evaluations.list-table.evaluation-type' | translate}}</label>
+							<div class="col-lg col-12">
+								<select class="form-control" [(ngModel)]="filters.type">
+									<option value="">{{'button.select' | translate}}</option>
+									<option value="1">{{ 'evaluations.executing-position' | translate }}</option>
+									<option value="2">{{ 'evaluations.managing-position' | translate }}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.status' | translate}}</label>
+							<div class="col-lg col-12">
+								<select class="form-control" [(ngModel)]="filters.status">
+									<option value="">{{'button.select' | translate}}</option>
+									<option value="1">{{ 'evaluations.status.1' | translate }}</option>
+									<option value="2">{{ 'evaluations.status.2' | translate }}</option>
+									<option value="3">{{ 'evaluations.status.3' | translate }}</option>
+									<option value="4">{{ 'evaluations.status.4' | translate }}</option>
+									<option value="5">{{ 'evaluations.status.5' | translate }}</option>
+									<option value="6">{{ 'evaluations.status.6' | translate }}</option>
+									<option value="7">{{ 'evaluations.status.7' | translate }}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.from-date' | translate}}</label>
+							<div class="col-lg col-12">
+								<input class="position-absolute invisible" [(ngModel)]="parsedCreateDateFrom" (ngModelChange)="parseDate($event, 'createDateFrom')" [ngModelOptions]="{standalone: true}" [owlDateTime]="cdf" autocomplete="off"
+								name="parsedCreateDateFrom" />
+								<input (keyup)="parseDate($event.target.value, 'createDateFrom')" [owlDateTimeTrigger]="cdf"  placeholder="00.00.0000" autocomplete="off"
+								class="form-control" [value]="parsedCreateDateFrom | date: 'dd.MM.yyyy'" />
+								<owl-date-time #cdf pickerType="calendar"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl col-lg-6 col-12">
+						<div class="form-group row d-flex align-items-center">
+							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.to-date' | translate}}</label>
+							<div class="col-lg col-12">
+								<input class="position-absolute invisible" [(ngModel)]="parsedCreateDateTo" (ngModelChange)="parseDate($event, 'createDateTo')" [ngModelOptions]="{standalone: true}" [owlDateTime]="cdt" autocomplete="off"
+								name="parsedCreateDateTo" />
+								<input (keyup)="parseDate($event.target.value, 'createDateTo')" [owlDateTimeTrigger]="cdt"  placeholder="00.00.0000" autocomplete="off"
+								class="form-control" [value]="parsedCreateDateTo | date: 'dd.MM.yyyy'" />
+								<owl-date-time #cdt pickerType="calendar"></owl-date-time>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-xl offset-lg-6 col-lg-6 col-12">
+						<div class="d-lg-flex d-none gap-4 justify-content-end">
+							<app-confirm-button (handle)="filterBy()" [value]="'button.search' | translate"></app-confirm-button>
+							<app-button (handle)="clearFilters()" [value]="'button.reset' | translate"></app-button>
+						</div>
+						<div class="d-lg-none d-flex flex-column gap-4 align-items-center">
+							<app-confirm-button class="w-100" width="100%" (handle)="filterBy()" [value]="'button.search' | translate"></app-confirm-button>
+							<app-button class="w-100" width="100%" (handle)="clearFilters()" [value]="'button.reset' | translate"></app-button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="card-body pt-0">
-			<app-evaluations-table></app-evaluations-table>
+		<div class="card-body">
+			<ul ngbNav #nav="ngbNav" class="nav-tabs">
+				<li ngbNavItem>
+					<a ngbNavLink>{{'evaluations.all-tests' | translate}}</a>
+					<ng-template ngbNavContent>
+						<app-evaluations-table [showHighlighted]="highlight?.checked" [evaluateType]="0"></app-evaluations-table>
+					</ng-template>
+				</li>
+			</ul>
+			<div [ngbNavOutlet]="nav"></div>
 		</div>
 	</div>
 </erp-shared-content>

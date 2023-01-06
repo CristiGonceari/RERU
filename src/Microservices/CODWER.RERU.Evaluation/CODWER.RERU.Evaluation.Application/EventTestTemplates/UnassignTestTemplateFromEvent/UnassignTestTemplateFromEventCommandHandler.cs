@@ -38,7 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.UnassignTestTemp
 
         private async Task LogAction(EventTestTemplate eventTestTemplate)
         {
-            await _loggerService.Log(LogData.AsEvaluation($"Șablonul de test {eventTestTemplate.TestTemplate.Name} a fost detașat de la evenimentul {eventTestTemplate.Event.Name}"));
+            await _loggerService.Log(LogData.AsEvaluation($@"Șablonul de test ""{eventTestTemplate.TestTemplate.Name}"" a fost detașat de la evenimentul ""{eventTestTemplate.Event.Name}"""));
         }
     }
 }

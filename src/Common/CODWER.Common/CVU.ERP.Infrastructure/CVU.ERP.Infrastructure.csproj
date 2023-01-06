@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!--<Import Project="..\CVU.ERP.CodeAnalysis.targets" />-->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Authors>CVU Intelligence</Authors>
-    <Description>CVU Intelligence</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.3.0</Version>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.2.0" />

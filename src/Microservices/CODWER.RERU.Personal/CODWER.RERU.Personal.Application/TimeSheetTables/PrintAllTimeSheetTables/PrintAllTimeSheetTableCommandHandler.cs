@@ -10,6 +10,7 @@ using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.TimeSheetTables;
+using CVU.ERP.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,13 +21,15 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.PrintAllTimeSheetTabl
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly ITimeSheetTableService _timeSheetTableService;
+        private readonly IDateTime _dateTime;
 
-        public PrintAllTimeSheetTableCommandHandler(ITimeSheetTableService timeSheetTableService, AppDbContext appDbContext, IMapper mapper)
+        public PrintAllTimeSheetTableCommandHandler(ITimeSheetTableService timeSheetTableService, AppDbContext appDbContext, IMapper mapper, IDateTime dateTime)
         { 
 
             _timeSheetTableService = timeSheetTableService;
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _dateTime = dateTime;
         }
 
         public async Task<ExportTimeSheetDto> Handle(PrintAllTimeSheetTableCommand request, CancellationToken cancellationToken)
@@ -37,7 +40,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.PrintAllTimeSheetTabl
                 .Include(c => c.Positions)
                 .ThenInclude(p => p.Role)
                 .Include(c => c.TimeSheetTables)
-                .InServiceAt(DateTime.Now)
+                .InServiceAt(_dateTime.Now)
                 .Select(c => new Contractor
                 {
                     Id = c.Id,

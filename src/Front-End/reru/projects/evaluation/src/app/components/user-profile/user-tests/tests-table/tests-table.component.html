@@ -17,7 +17,7 @@
                     {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                 </th>
                 <th scope="col" class="d-none">{{ 'dashboard.min-score' | translate }} %</th>
-                <th scope="col" style="width: 100px;">{{'dashboard.result' | translate}}</th>
+                <th scope="col">{{'dashboard.result' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testRowList.length">
@@ -36,10 +36,28 @@
                 </td>
                 <td>{{'statuses.' + enum[test.testStatus] | translate}}</td>
                 <td>
-                    <p *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
-                    <p *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage }}% / {{test.minPercent}}%</p>
+                    <div *ngIf="test.hashGroupKey != null">
+                        <p class="mb-0" *ngIf="(test.finalResult == resultEnum.NoResult || test.finalResult == null)"> - / {{test.minPercent}}%</p>
+                        <p class="mb-0" *ngIf="test.finalResult != resultEnum.NoResult && test.finalAccumulatedPercentage != null">{{ test.finalAccumulatedPercentage
+                            }}% / {{test.minPercent}}%</p>
+                    </div>
+                    <div *ngIf="test.hashGroupKey == null">
+                        <p class="mb-0" *ngIf="test.result == resultEnum.NoResult"> - / {{test.minPercent}}%</p>
+                        <p class="mb-0" *ngIf="test.result != resultEnum.NoResult">{{ test.accumulatedPercentage
+                            }}% /
+                            {{test.minPercent}}%</p>
+                    </div>
                 </td>
-                <td>{{ translateResultValue(test.resultValue) }}</td>
+                <td>
+                    <div *ngIf="test.hashGroupKey != null">
+                        <p class="mb-0" *ngIf="test.finalResult != null">{{'statuses.' + resultEnum[test.finalResult] | translate}}</p>
+                        <p class="mb-0" *ngIf="test.finalResult == null">-</p>
+                    </div>
+                    <div *ngIf="test.hashGroupKey == null">
+                        <p class="mb-0" *ngIf="test.modeStatus == 0">{{ translateResultValue(test.resultValue) }}</p>
+                    </div>
+                
+                </td>
             </tr>
         </tbody>
         <tbody class="datatable-body" *ngIf="!testRowList.length">

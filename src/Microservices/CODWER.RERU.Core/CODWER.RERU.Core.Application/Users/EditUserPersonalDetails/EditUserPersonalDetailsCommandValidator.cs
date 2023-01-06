@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using CODWER.RERU.Core.Application.Validation;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
@@ -16,7 +17,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
     {
         private readonly AppDbContext _appDbContext;
 
-        public EditUserPersonalDetailsCommandValidator(AppDbContext appDbContext)
+        public EditUserPersonalDetailsCommandValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
 
@@ -45,7 +46,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
                 .WithErrorCode(ValidationCodes.INVALID_USER_PHONE);
 
             RuleFor(r => r.Data.BirthDate)
-                .Must(x => x < DateTime.Now.AddYears(-18))
+                .Must(x => x < dateTime.Now.AddYears(-18))
                 .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
 
             RuleFor(x => x.Data.AccessModeEnum)

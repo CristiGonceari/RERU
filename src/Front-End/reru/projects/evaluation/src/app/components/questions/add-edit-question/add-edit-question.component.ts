@@ -120,7 +120,7 @@ export class AddEditQuestionComponent implements OnInit {
         questionCategoryId: this.formBuilder.control((this.category), [Validators.required]),
         question: this.formBuilder.control(null, [Validators.required]),
         questionPoints: this.formBuilder.control(1, [Validators.required]),
-        questionType: this.formBuilder.control(0, [Validators.required]),
+        questionType: this.formBuilder.control(null, [Validators.required]),
         status: QuestionUnitStatusEnum.Draft
       });
     }

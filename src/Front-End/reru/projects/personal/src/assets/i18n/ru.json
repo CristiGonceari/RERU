@@ -37,6 +37,10 @@
     "help": "Помощь",
     "faq": "Частые вопросы"
   },
+  "modal":{
+    "success": "Успешно",
+    "error": "Ошибка"
+  },
   "my-profile":{
     "title":"Мой профиль",
     "general": "Общая информация",
@@ -277,7 +281,9 @@
     "edit-department-details": "Изменить детали отдела",
     "are-you-sure-you-want-to-delete-department": "Вы уверены, что хотите удалить отдел {{name}}?",
     "department-description": "Описание отдела",
-    "type-department-description": "Введите описание отдела"
+    "type-department-description": "Введите описание отдела",
+    "bulk-import-departments-succes": "Отделы успешно добавлены!",
+    "bulk-import-departments-error": "Не удалось добавить отделы!"
   },
   "roles": {
     "title": "Должности",
@@ -291,7 +297,9 @@
     "type-new-role-name": "Введите новое название должности",
     "type-whole-name": "Введите полное название",
     "type-code": "Введите код",
-    "edit-role-details": "Изменить детали должности"
+    "edit-role-details": "Изменить детали должности",
+    "bulk-import-roles-succes": "Роли успешно добавлены!",
+    "bulk-import-roles-error": "Не удалось добавить pоли!"
   },
   "positions": {
     "title": "Позиции",
@@ -467,7 +475,8 @@
     "reset": "Сброс",
     "upload": "Загрузить",
     "applay": "Применить",
-    "update":"Обновить"
+    "update":"Обновить",
+    "actions": "Действия"
   },
   "entity": {
     "personal": {

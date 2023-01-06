@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th>{{'entity.department.title' | translate}}</th>
-                <th class="text-right">&nbsp;</th>
+                <th *ngIf="departments.length" class="col-1 text-right" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody>

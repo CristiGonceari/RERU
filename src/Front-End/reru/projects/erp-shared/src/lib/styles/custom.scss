@@ -277,24 +277,112 @@ div.wrapper.enclosed {
 /* END erp-shared-table */
 
 /* Custom Gap property*/
-.gap-1 {
-  gap: 0.25rem;
-}
+@for $i from 1 through 5 {
+  .gap-#{$i} {
+      @if $i == 1 {
+        gap: 0.25rem;
+      } @else if $i == 2 {
+        gap: 0.5rem;
+      } @else if $i == 3 {
+        gap: 1rem;
+      } @else if $i == 4 {
+        gap: 1.5rem;
+      } @else if $i == 5 {
+        gap: 3rem;
+      }
+  }
 
-.gap-2 {
-  gap: 0.5rem;
-}
+  .gap-sm-#{$i} {
+    @media screen and (min-width: 576px) {
+      @if $i == 1 {
+        gap: 0.25rem;
+      } @else if $i == 2 {
+        gap: 0.5rem;
+      } @else if $i == 3 {
+        gap: 1rem;
+      } @else if $i == 4 {
+        gap: 1.5rem;
+      } @else if $i == 5 {
+        gap: 3rem;
+      }
+    }
+  }
 
-.gap-3 {
-  gap: 1rem;
-}
+  .gap-md-#{$i} {
+    @media screen and (min-width: 768px) {
+      @if $i == 1 {
+        gap: 0.25rem;
+      } @else if $i == 2 {
+        gap: 0.5rem;
+      } @else if $i == 3 {
+        gap: 1rem;
+      } @else if $i == 4 {
+        gap: 1.5rem;
+      } @else if $i == 5 {
+        gap: 3rem;
+      }
+    }
+  }
 
-.gap-4 {
-  gap: 1.5rem;
-}
+  .gap-lg-#{$i} {
+    @media screen and (min-width: 992px) {
+      @if $i == 1 {
+        gap: 0.25rem;
+      } @else if $i == 2 {
+        gap: 0.5rem;
+      } @else if $i == 3 {
+        gap: 1rem;
+      } @else if $i == 4 {
+        gap: 1.5rem;
+      } @else if $i == 5 {
+        gap: 3rem;
+      }
+    }
+  }
 
-.gap-5 {
-  gap: 3rem;
+  .gap-xl-#{$i} {
+    @media screen and (min-width: 1200px) {
+      @if $i == 1 {
+        gap: 0.25rem;
+      } @else if $i == 2 {
+        gap: 0.5rem;
+      } @else if $i == 3 {
+        gap: 1rem;
+      } @else if $i == 4 {
+        gap: 1.5rem;
+      } @else if $i == 5 {
+        gap: 3rem;
+      }
+    }
+  }
+
+  .gap-0 {
+    gap: 0;
+  }
+
+  .gap-sm-0 {
+    @media screen and (min-width: 576px) {
+      gap: 0;
+    }
+  }
+
+  .gap-md-0 {
+    @media screen and (min-width: 768px) {
+      gap: 0;
+    }
+  }
+
+  .gap-lg-0 {
+    @media screen and (min-width: 992px) {
+      gap: 0;
+    }
+  }
+
+  .gap-xl-0 {
+    @media screen and (min-width: 1200px) {
+      gap: 0;
+    }
+  }
 }
 
 /* END Custom Gap property*/

@@ -1,11 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>CVU Intelligence</Authors>
-    <Description>CVU Intelligence</Description>
-      <Version>1.0.0</Version>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
 </Project>

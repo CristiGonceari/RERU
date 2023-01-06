@@ -26,7 +26,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationT
                 .Include(x => x.TestQuestions)
                     .ThenInclude(x => x.QuestionUnit)
                 .Include(x => x.TestQuestions)
-                    .ThenInclude(x => x.TestAnswers)
+                    .ThenInclude(x => x.TestQuestionsTestAnswers)
+                        .ThenInclude(x => x.TestAnswer)
                 .Include(x => x.TestQuestions)
                     .ThenInclude(x => x.QuestionUnit)
                     .ThenInclude(x => x.Options)
@@ -67,7 +68,12 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoVerificationT
 
         private void CalculateScoreByFormula(TestQuestion testQuestion, TestTemplate testTemplate)
         {
-            var answers = _appDbContext.TestAnswers.Where(x => x.TestQuestionId == testQuestion.Id).ToList();
+            var answers = _appDbContext.TestQuestionsTestAnswers
+                .Include(x => x.TestAnswer)
+                .Where(x => x.TestQuestionId == testQuestion.Id)
+                .Select(x => x.TestAnswer)
+                .ToList();
+
             var correctOptions = testQuestion.QuestionUnit.Options.Where(x => x.IsCorrect).Count();
             var suma = 0;
 

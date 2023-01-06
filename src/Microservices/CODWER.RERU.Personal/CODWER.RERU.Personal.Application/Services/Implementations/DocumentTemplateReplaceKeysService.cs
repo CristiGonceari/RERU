@@ -8,20 +8,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
     public class DocumentTemplateReplaceKeysService : IDocumentTemplateReplaceKeysService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
         private readonly IOptions<EmployerData> config;
 
 
-        public DocumentTemplateReplaceKeysService(AppDbContext appDbContext, IOptions<EmployerData> config)
+        public DocumentTemplateReplaceKeysService(AppDbContext appDbContext, IOptions<EmployerData> config, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             this.config = config;
-
+            _dateTime = dateTime;
         }
         public async Task<Dictionary<string, string>> GetContractorGeneralValues(int contractorId)
         {
@@ -58,7 +60,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
                     {
                         case "{today_date_key}":
 
-                            myDictionary.Add(item, DateTime.Now.ToString());
+                            myDictionary.Add(item, _dateTime.Now.ToString());
                             break;
 
                         case "{c_name_key}":

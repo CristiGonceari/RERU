@@ -17,7 +17,8 @@ export class GoToTestModalComponent implements OnInit {
 
   goToTest(id) {
 		const location = window.location;
-    window.open(`${location.protocol}//${location.host}/#/my-activities/start-test/${id}`, '_self');
+    let locationToRedirect = `${location.protocol}//${location.host}/reru-evaluation/#/my-activities/start-test/${id}`;
+    window.open(locationToRedirect, '_self');
     this.dismiss();
   }
 

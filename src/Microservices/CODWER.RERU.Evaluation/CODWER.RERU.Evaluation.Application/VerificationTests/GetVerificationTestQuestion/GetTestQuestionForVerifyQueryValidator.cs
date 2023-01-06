@@ -44,24 +44,18 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
         {
             var isEvaluator = false;
 
-            var test = _appDbContext.Tests
-                .Include(t => t.TestTemplate)
-                    .ThenInclude(tt => tt.Settings)
-                .Include(t => t.TestQuestions)
-                    .ThenInclude(tq => tq.QuestionUnit)
-                .FirstOrDefault(t => t.Id == data.TestId);
+            var test = _appDbContext.Tests.FirstOrDefault(t => t.Id == data.TestId);
 
-            var eventEvaluators = _appDbContext.EventEvaluators
-                .Include(ee => ee.Event)
-                .Where(x => x.EventId == test.EventId);
+            var eventEvaluators = _appDbContext.EventEvaluators.Where(x => x.EventId == test.EventId);
 
-            if (test != null && test.EvaluatorId != null)
+            if (test != null)
             {
-                isEvaluator = _appDbContext.Tests.Any(t => t.Id == test.Id && t.EvaluatorId == currentUserId);
-            } 
-            else if (test != null && test.EventId != null && eventEvaluators.Any())
-            {
-                isEvaluator = _appDbContext.EventEvaluators.Any(e => e.EventId == test.EventId && e.EvaluatorId == currentUserId);
+                isEvaluator = test.CreateById == currentUserId.ToString() || test.EvaluatorId == currentUserId;
+
+                if (test.EventId != null && eventEvaluators.Any())
+                {
+                    isEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUserId);
+                }
             }
 
             return isEvaluator;

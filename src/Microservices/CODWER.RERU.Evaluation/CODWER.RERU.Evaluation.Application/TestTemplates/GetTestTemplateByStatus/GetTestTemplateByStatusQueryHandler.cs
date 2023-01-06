@@ -21,9 +21,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public GetTestTemplateByStatusQueryHandler(AppDbContext appDbContext, 
-            IMapper mapper, 
-            IMediator mediator, 
+        public GetTestTemplateByStatusQueryHandler(AppDbContext appDbContext,
+            IMapper mapper,
+            IMediator mediator,
             StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext.NewInstance();
@@ -35,9 +35,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         public async Task<List<SelectTestTemplateValueDto>> Handle(GetTestTemplateByStatusQuery request, CancellationToken cancellationToken)
         {
             var testTemplates = _appDbContext.TestTemplates
-                .Include(x => x.Settings)
-                .Where(x => x.Status == request.TestTemplateStatus)
-                .AsQueryable();
+                    .Include(x => x.EventTestTemplates)
+                    .Include(x => x.Settings)
+                    .Where(x => x.Status == request.TestTemplateStatus)
+                    .Include(tt => tt.TestTemplateQuestionCategories)
+                    .AsQueryable();
 
             if (request.Mode != null)
             {
@@ -46,18 +48,14 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
             if (request.EventId.HasValue)
             {
-                testTemplates = testTemplates
-                    .Include(x => x.EventTestTemplates)
-                    .Where(x => x.EventTestTemplates.Any(e => e.EventId == request.EventId));
+                testTemplates = testTemplates.Where(x => x.EventTestTemplates.Any(e => e.EventId == request.EventId));
             }
 
-            var onlyOneAnswerTests = testTemplates.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
+            var selectTestTemplateValueDto = testTemplates.Select(x => _mapper.Map<SelectTestTemplateValueDto>(x)).ToList();
 
-            foreach (var x in onlyOneAnswerTests)
+            foreach (var testTemplateDto in selectTestTemplateValueDto)
             {
-                var testTemplate = testTemplates
-                    .Include(tt => tt.TestTemplateQuestionCategories)
-                    .FirstOrDefault(tt => tt.Id == x.TestTemplateId);
+                var testTemplate = testTemplates.FirstOrDefault(tt => tt.Id == testTemplateDto.TestTemplateId);
 
                 var testTemplateCategories = testTemplate.TestTemplateQuestionCategories
                     .Where(tt => tt.TestTemplateId == testTemplate.Id)
@@ -70,18 +68,18 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                     var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
 
                     questionsList.AddRange(testCategoryQuestionData.Questions);
-                    x.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
+                    testTemplateDto.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
                 }
 
                 if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
                 {
-                    x.IsOnlyOneAnswer = true;
+                    testTemplateDto.IsOnlyOneAnswer = true;
                 }
 
-                x.PrintTest = await CanPrintTest(questionsList);
+                testTemplateDto.PrintTest = await CanPrintTest(questionsList);
             }
 
-            return onlyOneAnswerTests;
+            return selectTestTemplateValueDto;
         }
 
         private async Task<bool> CanPrintTest(List<QuestionUnitDto> questionsList)

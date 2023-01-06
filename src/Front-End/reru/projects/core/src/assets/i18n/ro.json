@@ -284,7 +284,7 @@
     "empty-name": "Câmpul trebuie sa conțină doar litere latine",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "empty-phone": "Câmpul este obligatoriu",
-    "wrong-phone": "Vă rugăm să furnizați un format valid +37311111111",
+    "wrong-phone": "Vă rugăm să furnizați un format valid +373 xxxxxxxx",
     "available-modules": "Module disponibile",
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statut",
@@ -343,7 +343,8 @@
     "password-length": "8 caractere",
     "uppercase-character": "1 caracter majuscul",
     "number": "1 număr",
-    "special-character": "1 caracter special"
+    "special-character": "1 caracter special",
+    "password-are-not-the-same": "Parola noua și parola repetată trebie să coincidă"
   },
   "deactivate-user": {
     "title": "Dezactivarea utilizatorului",
@@ -653,9 +654,9 @@
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
     "biography-data": "Date biografice ale rudelor apropiate candidatului",
-    "birth-place":"Locul nasterii",
-    "birthday-date": "Data nasterii",
-    "residence": "Domiciliu",
+    "birth-place":"Locul nașterii",
+    "birthday-date": "Data nașterii",
+    "residence": "Domiciliul",
     "work-place": "Locul de muncă",
     "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului"
   },

@@ -1,0 +1,34 @@
+<form *ngIf="formGroup" [formGroup]="formGroup" [ngClass]="{'position-relative': !hasErrorSpace }">
+    <select *ngIf="!showNumbers" class="form-control" 
+                [formControlName]="field"
+                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
+                            'is-valid': isValid(formGroup, field)}"
+                (change)="handleChange.emit($event.target.value)"
+                name="field" 
+                id="field">
+        <option value="null">{{'button.select' | translate}}</option>
+        <option value="4">{{'evaluations.qualification.very-good' | translate }}</option>
+        <option value="3">{{'evaluations.qualification.good' | translate }}</option>
+        <option value="2">{{'evaluations.qualification.satisfactory' | translate }}</option>
+        <option value="1">{{'evaluations.qualification.unsatisfactory' | translate }}</option>
+    </select>
+    <select *ngIf="showNumbers" class="form-control" 
+                [formControlName]="field"
+                [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
+                            'is-valid': isValid(formGroup, field)}"
+                (change)="handleChange.emit($event.target.value)"
+                name="field" 
+                id="field">
+        <option value="null">{{'button.select' | translate}}</option>
+        <option value="4">4 ({{'evaluations.qualification.very-good' | translate }})</option>
+        <option value="3">3 ({{'evaluations.qualification.good' | translate }})</option>
+        <option value="2">2 ({{'evaluations.qualification.satisfactory' | translate }})</option>
+        <option value="1">1 ({{'evaluations.qualification.unsatisfactory' | translate }})</option>
+    </select>
+    <div *ngIf="isInvalidPattern(formGroup, field)" class="invalid-feedback" [ngClass]="{'position-absolute': !hasErrorSpace }">
+        {{'evaluations.select-a-valid-qualification' | translate}}
+    </div>
+    <div *ngIf="isInvalidRequired(formGroup, field)" class="invalid-feedback" [ngClass]="{'position-absolute': !hasErrorSpace }">
+        {{'evaluations.select-a-valid-qualification' | translate}}
+    </div>
+</form>

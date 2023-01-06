@@ -14,7 +14,7 @@
                 <th scope="col" class="text-left">{{'solicited-position.required-documents' | translate}}</th>
                 <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col" class="text-left">{{'tests.status' | translate}}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th *ngIf="solicitedTests.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="solicitedTests.length">
@@ -38,12 +38,11 @@
                 <td>{{ item.requiredAttachedFilesCount }}</td>
                 <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                 <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate}}</td>
-                <td data-field="Actions" data-autohide-disabled="false"
-                    class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div  *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                                <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                <span class="svg-icon svg-icon-md" ngbDropdownToggle disabled="true">
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                         viewBox="0 0 24 24" version="1.1">
@@ -57,7 +56,7 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left" *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         [routerLink]="['review', item.id, item.candidatePositionId]">
@@ -67,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+                    <i class="ki ki-check icon-nm"  *ngIf="!(item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait)"></i>
                 </td>
             </tr>
         </tbody>

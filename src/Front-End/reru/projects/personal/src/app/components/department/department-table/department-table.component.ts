@@ -9,6 +9,8 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { ImportDepartmentsModalComponent } from '../../../utils/modals/import-departments-modal/import-departments-modal.component';
 import { saveAs } from 'file-saver';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '@erp/shared';
 
 @Component({
   selector: 'app-department-table',
@@ -24,9 +26,15 @@ export class DepartmentTableComponent implements OnInit {
     currentPage: 1,
     totalPages: 1
   };
+  
+  title: string;
+  description: string
+
   constructor(private departmentService: DepartmentService,
     private modalService: NgbModal,
-    private notificationService: NotificationsService) { }
+    private notificationService: NotificationsService,
+    public translate: I18nService,
+    ) { }
 
   ngOnInit(): void {
     this.list();
@@ -63,9 +71,25 @@ export class DepartmentTableComponent implements OnInit {
 				const file = new File([blob], fileName, { type: response.body.type });
 				saveAs(file);
 			}
-			this.notificationService.success('Success', 'Users Imported!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('departments.bulk-import-departments-succes'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
-		}, () => { }, () => {
+		}, () => {
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('departments.bulk-import-departments-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+     }, () => {
 			this.isLoading = false;
 		})
 	}

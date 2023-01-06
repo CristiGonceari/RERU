@@ -31,6 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
         {
             var test = await _appDbContext.Tests
                 .Include(t => t.TestTemplate)
+                    .ThenInclude(x => x.Settings)
                 .Include(t => t.TestQuestions)
                     .ThenInclude(t => t.QuestionUnit)
                         .ThenInclude(x => x.Options)
@@ -54,12 +55,16 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
             {
                 if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.FreeText)
                 {
-                    answer.AnswerText = _appDbContext.TestAnswers.FirstOrDefault(x => x.TestQuestionId == testQuestion.Id).AnswerValue;
+                    answer.AnswerText = _appDbContext.TestQuestionsTestAnswers
+                        .Include(x => x.TestAnswer)
+                        .FirstOrDefault(x => x.TestQuestionId == testQuestion.Id)?.TestAnswer.AnswerValue;
                 }
                 else
                 {
-                    var savedAnswers = _appDbContext.TestAnswers
+                    var savedAnswers = _appDbContext.TestQuestionsTestAnswers
+                        .Include(x => x.TestAnswer)
                         .Where(x => x.TestQuestionId == testQuestion.Id)
+                        .Select(x => x.TestAnswer)
                         .ToList();
 
                     foreach (var savedAnswer in savedAnswers)

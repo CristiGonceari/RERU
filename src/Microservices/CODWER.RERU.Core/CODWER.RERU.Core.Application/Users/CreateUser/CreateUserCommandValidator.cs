@@ -11,6 +11,7 @@ using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CODWER.RERU.Core.Application.Validators.IDNP;
+using CVU.ERP.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CODWER.RERU.Core.Application.Users.CreateUser
@@ -19,7 +20,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
     {
         private readonly AppDbContext _appDbContext;
 
-        public CreateUserCommandValidator(IValidator<CreateUserDto> createUserDto,  IServiceProvider serviceProvider)
+        public CreateUserCommandValidator(IValidator<CreateUserDto> createUserDto,  IServiceProvider serviceProvider, IDateTime dateTime)
         {
             _appDbContext = serviceProvider.GetRequiredService<AppDbContext>();
 
@@ -57,7 +58,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .WithErrorCode(ValidationCodes.INVALID_USER_PHONE);
 
             RuleFor(r => r.BirthDate)
-                .Must(x => x < DateTime.Now.AddYears(-18))
+                .Must(x => x < dateTime.Now.AddYears(-18))
                 .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
 
             RuleFor(x => x.AccessModeEnum)
