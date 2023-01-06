@@ -4,7 +4,7 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: nginx
-    ingress.kubernetes.io/proxy-body-size: "250m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
     nginx.org/proxy-connect-timeout: "3600"
@@ -17,7 +17,7 @@ ingress_back:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: nginx
-    ingress.kubernetes.io/proxy-body-size: "250m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "250m"
     nginx.org/client-body-timeout: "3600"
     nginx.org/client-max-body-size: 250m
     nginx.org/proxy-connect-timeout: "3600"
