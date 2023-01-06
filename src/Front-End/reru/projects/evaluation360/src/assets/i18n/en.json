@@ -235,12 +235,13 @@
     "objective": "Objective",
     "indicator": "Indicator",
     "term": "Term",
-    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
-    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
-    "evaluation-final-calificative": "Calificativul de evaluare final",
-    "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
-    "individual-objective-established": "Obiective individuale au fost stabilite (data)",
-    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat",
+    "established-score-on-fourth-compartment": "The score established in compartment 4) «Basic training» (M⁴)",
+    "yearly-evaluation-score": "Yearly evaluation score",
+    "yearly-evaluation-score-final": "Yearly final evaluation score (Mf = MEa + Mep1 + MEp2 +...+MEpn)",
+    "evaluation-final-calificative": "Evaluation final calificative",
+    "date-evaluation-interview": "Interview evaluation date",
+    "individual-objective-established": "Established individual objectives (date)",
+    "professional-development-needs-evaluated": "Professional development achievements for employee",
     "evaluator-name": "Name, surname evaluator",
     "evaluator-comments": "Comments evaluator",
     "evaluated-comments": "Comments evaluated",
@@ -248,7 +249,14 @@
     "countersigner-comments": "Countersigner comments",
     "check": "Check",
     "countersigner-function": "Countersigner function",
-    "highlight": "Highlight"
+    "highlight": "Highlight",
+    "fast-setup": "Fast setup",
+    "precomplete-points-with": "Precomplete points with",
+    "set-annual-average-as-4": "Set annual average between 3.51 and 4 (randomly)",
+    "set-annual-average-as-3": "Set annual average between 2.51 and 3.50 (randomly)",
+    "set-annual-average-as-2": "Set annual average between 1.51 and 2.50 (randomly)",
+    "set-annual-average-as-1": "Set annual average between 1.00 and 1.50 (randomly)",
+    "necessity": "Necessity"
   },
   "statuses": {
     "Candidate": "Candidates",
@@ -272,7 +280,9 @@
     "accept": "Accept",
     "edit": "Edit",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "search": "Search",
+    "reset": "Reset"
   },
   "attach-user-modal": {
     "first-name": "First name",

@@ -248,7 +248,14 @@
     "countersigner-comments": "Коментарий проверяющего",
     "check": "Подчеркнуть",
     "countersigner-function": "Должность проверяющего",
-    "highlight": "Подчеркнуть"
+    "highlight": "Подчеркнуть",
+    "fast-setup": "Быстрые настройки",
+    "precomplete-points-with": "Заполнить очки с",
+    "set-annual-average-as-4": "Назначить среднегодовую между 3.51 и 4 (случайный)",
+    "set-annual-average-as-3": "Назначить среднегодовую между 2.51 и 3.50 (случайный)",
+    "set-annual-average-as-2": "Назначить среднегодовую между 1.51 и 2.50 (случайный)",
+    "set-annual-average-as-1": "Назначить среднегодовую между 1.00 и 1.50 (случайный)",
+    "necessity": "Потребность"
   },
   "statuses": {
     "Candidate": "Кандидаты",
@@ -272,7 +279,9 @@
     "accept": "Принять",
     "edit": "Изменить",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "search": "Поиск",
+    "reset": "Сброс"
   },
   "attach-user-modal": {
     "first-name": "Имя",

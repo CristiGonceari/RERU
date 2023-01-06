@@ -152,3 +152,158 @@ export const parseDate = (value: Moment | string, formControlName: string, form:
         form.get(formControlName).markAsDirty();
     }
 }
+
+export async function generateAvgNumbers(requiredAvg) {
+    let max = 4;
+    let min = 1;
+    let M1 = 0, M2 = 0, M3 = 0, M4 = 0;
+
+    if (requiredAvg === 4) {
+      max = 4;
+      min = 3.50;
+    }
+
+    if (requiredAvg === 3) {
+      max = 4;
+      min = 2;
+    }
+
+    if (requiredAvg === 2) {
+      max = 3;
+      min = 1;
+    }
+
+    if (requiredAvg === 1) {
+      max = 2;
+      min = 1;
+    }
+
+    return new Promise((resolve, reject) => {
+      let questions = [
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+      ]
+  
+      let scores = [
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+      ];
+  
+      let generateM1 = () => {
+        return questions.slice(0,4).reduce((acc, curr) => acc + curr, 0) / 5;
+      }
+  
+      let generateM2 = () => {
+        return questions.slice(5,7).reduce((acc, curr) => acc + curr, 0) / 3;
+      }
+  
+      let generateM3 = () => {
+        return scores.reduce((acc, curr) => acc + curr, 0) / scores.length;
+      }
+  
+      let generateM4 = () => {
+        const pb = questions.slice(8,11).reduce((acc, curr) => acc + curr, 0) / 4;
+        const pf = +questions[12];
+  
+        return (pb + pf) / 2;
+      }
+  
+      let checkAvg = (M1, M2, M3, M4) => {
+        const givenAvg = (M1 + M2 + M3 + M4) / 4;
+        switch(requiredAvg) {
+          case 1: 
+            if (givenAvg >= 1 && givenAvg <= 1.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 2: 
+            if (givenAvg >= 1.51 && givenAvg <= 2.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 3: 
+            if (givenAvg >= 2.51 && givenAvg <= 3.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 4: 
+            if (givenAvg >= 3.51 && givenAvg <= 4) {
+              return true;
+            } else {
+              return false;
+            }
+          default: return false;
+        }
+      }
+
+      while(true) {
+        M1 = generateM1();
+        M2 = generateM2();
+        M3 = generateM3();
+        M4 = generateM4();
+
+        if (checkAvg(M1, M2, M3, M4)) {
+          break;
+        }
+  
+        questions = [
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+        ]
+    
+        scores = [
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+        ];
+      }
+  
+      if (requiredAvg === 4) {
+        return resolve({
+          questions: questions.map(el => Math.floor(el)),
+          scores: scores.map(el => Math.floor(el))
+        });
+      }
+
+      return resolve({
+        questions,
+        scores
+      });
+    })
+  }
