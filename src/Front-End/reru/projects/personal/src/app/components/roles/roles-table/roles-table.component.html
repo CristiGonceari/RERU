@@ -8,7 +8,7 @@
                 <th [ngStyle]="{'width.%' : 20}">{{'entity.role.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 15}">{{'entity.role.code' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 15}">{{'entity.role.short-code' | translate}}</th>
-                <th [ngStyle]="{'width.%' : 10}">&nbsp;</th>
+                <th *ngIf="roles.length" class="col-1 text-right" [ngStyle]="{'width.%' : 10}">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody>

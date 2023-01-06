@@ -12,7 +12,7 @@
                     {{'tests.add-test-event-description' | translate}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-add-test [testEvent]="testEvent"></app-add-test>
+            <app-add-test *ngIf="testEvent" [testEvent]="testEvent" [isTestEvent]="isTestEvent"></app-add-test>
         </mat-expansion-panel>
     </mat-accordion>
     <mat-accordion *ngIf="testEvent == false">
@@ -25,7 +25,7 @@
                     {{'tests.add-test-description' | translate}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-add-test></app-add-test>
+            <app-add-test *ngIf="event" [testEvent]="testEvent"></app-add-test>
         </mat-expansion-panel>
     </mat-accordion>
 </erp-shared-content>

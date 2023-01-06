@@ -1,14 +1,17 @@
 export interface UserModel {
-    code: string;
-    departmentId: number;
-    email: string;
-    fatherName: string;
     id: number;
-    isAuthenticated: boolean;
+    firstName: string;
     lastName: string;
-    name: string;
-    organizationId: number;
-    positionId: number;
-    roleId: number;
+    fatherName: string;
+    email: string;
+    idnp: string;
+    departmentColaboratorId: number;
+    departmentName: string;
+    roleColaboratorId: number;
+    roleName: string;
+    userStatusEnum: number;
+    accessModeEnum: number;
+    permissions: string[];
+    candidatePositionNames: string[];
+    fullName: string[];
 }
-

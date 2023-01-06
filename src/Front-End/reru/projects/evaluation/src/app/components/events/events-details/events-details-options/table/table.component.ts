@@ -87,11 +87,7 @@ export class TableComponent implements OnInit {
           this.pagination = res.data.pagedSummary;
           this.isLoading = false;
           this.testTemplates = true;
-          forkJoin([
-            this.translate.get('tests.test-template')
-          ]).subscribe(([currentDeleteName]) => {
-            this.currentDeleteName = currentDeleteName;
-          });
+          this.getNameForDeleteModal(this.category);
         }
       });
     }
@@ -103,11 +99,7 @@ export class TableComponent implements OnInit {
           this.pagination = res.data.pagedSummary;
           this.isLoading = false;
           this.locations = true;
-          forkJoin([
-            this.translate.get('locations.location')
-          ]).subscribe(([currentDeleteName]) => {
-            this.currentDeleteName = currentDeleteName;
-          });
+          this.getNameForDeleteModal(this.category);
         }
       })
     }
@@ -147,7 +139,27 @@ export class TableComponent implements OnInit {
     }
   }
 
+  getNameForDeleteModal(category: string) {
+    if (category == "test-types") {
+      forkJoin([
+        this.translate.get('tests.test-template-delete-modal')
+      ]).subscribe(([currentDeleteName]) => {
+        this.currentDeleteName = currentDeleteName;
+      });
+    } else if (category == "locations") {
+      forkJoin([
+        this.translate.get('locations.location')
+      ]).subscribe(([currentDeleteName]) => {
+        this.currentDeleteName = currentDeleteName;
+      });
+    } else {
+      this.currentDeleteName = null;
+    }
+  }
+
   openConfirmationDeleteModal(eventId: number, itemId): void {
+    this.getNameForDeleteModal(this.category);
+
     forkJoin([
       this.translate.get('modal.delete'),
       this.translate.get('modal.delete-msg'),
@@ -253,8 +265,9 @@ export class TableComponent implements OnInit {
         this.description = description;
       });
       this.isLoading = false;
+      this.list();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    }, () => { }, () => this.list());
+    }, (err) => { this.list(); this.isLoading = false; });
   }
 
   sendEmail(): void {
@@ -272,10 +285,10 @@ export class TableComponent implements OnInit {
     let params = {
       eventId: +this.importedId,
       evaluatorId: data.attachedItems || this.fields,
-      showUserName: data.showUserName
+      // showUserName: data.showUserName
     }
     this.isLoading = true;
-    this.eventService.attachEvaluator(params).subscribe(() => {
+    this.eventService.attachEvaluator(params).subscribe((res) => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('events.succes-attach-detach-evaluator-msg'),
@@ -284,8 +297,9 @@ export class TableComponent implements OnInit {
         this.description = description;
       });
       this.isLoading = false;
+      this.list();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-    }, () => { }, () => this.list());
+    }, (err) => { this.list(); this.isLoading = false; });
   }
 
 }

@@ -10,7 +10,6 @@ using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Persistence.Extensions;
 
-
 namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagram
 {
     public class GetPositionDiagramQueryHandler : IRequestHandler<GetPositionDiagramQuery, PositionDiagramDto>
@@ -136,7 +135,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
             foreach (var test in tests)
             {
-                if (test.Event.EventUsers.Where(x => x.UserProfileId == userId).Any(x => x.PositionId == positionId))
+                if (test.Event.EventUsers
+                    .Where(x => x.UserProfileId == userId)
+                    .Any(x => x.EventUserCandidatePositions
+                        .Any(x => x.CandidatePositionId == positionId))
+                    )
                 {
                     var mappedTest = _mapper.Map<TestResultDiagramDto>(test);
                     mappedTestList.Add(mappedTest);

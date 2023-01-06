@@ -8,6 +8,7 @@ using CVU.ERP.Module.Common.MessageCodes;
 using FluentValidation;
 using System;
 using System.Linq;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Personal.Application.Vacations.AddContractorVacation
 {
@@ -15,7 +16,7 @@ namespace CODWER.RERU.Personal.Application.Vacations.AddContractorVacation
     {
         private readonly AppDbContext _appDbContext;
 
-        public AddVacationCommandValidator(AppDbContext appDbContext)
+        public AddVacationCommandValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
 
@@ -40,7 +41,7 @@ namespace CODWER.RERU.Personal.Application.Vacations.AddContractorVacation
                 .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.Data)
-                .Must(x => x.FromDate >= DateTime.Now.Date)
+                .Must(x => x.FromDate >= dateTime.Now.Date)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT)
                 .WithMessage(ValidationMessages.InvalidInput);
 

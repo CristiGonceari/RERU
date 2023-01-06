@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore
 {
@@ -31,6 +32,17 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScor
                 .Where(x => x.TestId == request.TestId);
 
             var questionPointsSum = (int) testquestions.Select(x => x.QuestionUnit.QuestionPoints).Sum();
+
+            if(test.TestQuestions.Any(x => x.AnswerStatus != AnswerStatusEnum.Answered))
+            {
+                var notAnsweredQuestions = test.TestQuestions.Where(x => x.AnswerStatus != AnswerStatusEnum.Answered);
+
+                foreach(var testquestion in notAnsweredQuestions)
+                {
+                    testquestion.Points = 0;
+                    testquestion.Verified = VerificationStatusEnum.Verified;
+                }
+            }
 
             if (test.TestQuestions.All(x =>
                 x.Verified == VerificationStatusEnum.Verified ||

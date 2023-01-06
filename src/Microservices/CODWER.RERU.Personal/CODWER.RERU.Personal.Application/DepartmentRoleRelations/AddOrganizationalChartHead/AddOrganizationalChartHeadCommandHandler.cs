@@ -50,7 +50,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizati
                 .Include(x => x.OrganizationalChart)
                 .FirstAsync(x => x.Id == departmentRoleRelation.Id);
 
-            await _loggerService.Log(LogData.AsPersonal($@"O nouă relație a fost adăugata în fruntea organigramei ""{organigram.OrganizationalChart.Name}""", departmentRoleRelation));
+            await _loggerService.Log(LogData.AsPersonal($@"O nouă relație a fost adăugată în fruntea organigramei ""{organigram.OrganizationalChart.Name}""", departmentRoleRelation));
         }
 
         private ParentDepartmentChildDepartment NewDepartmentToDepartmentRelation(AddOrganizationalChartHeadCommand request)

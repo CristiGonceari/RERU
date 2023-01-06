@@ -21,6 +21,18 @@ export class HashOptionInputComponent implements AfterViewInit{
   }
 
   handleChange(answer: string) {
-    this.service.answerSubject.next({ optionId: this.optionid, answer: answer });
+    const currentValue = this.service.answerSubject.value;
+    let updatedValue;
+    if(currentValue == null){
+      updatedValue = [{ optionId: this.optionid, answer: answer }];
+    }
+    else {
+      updatedValue = [...currentValue, { optionId: this.optionid, answer: answer }];
+    }
+    this.service.answerSubject.next(updatedValue);
   }
+
+  // handleChange(answer: string) {
+  //   this.service.answerSubject.next({ optionId: this.optionid, answer: answer });
+  // }
 }

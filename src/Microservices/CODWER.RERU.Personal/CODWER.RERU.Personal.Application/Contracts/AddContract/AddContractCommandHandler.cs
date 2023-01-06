@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using RERU.Data.Entities.PersonalEntities.ContractorEvents;
 using FileTypeEnum = CVU.ERP.StorageService.Entities.FileTypeEnum;
 
@@ -25,19 +26,22 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
         private readonly IStorageFileService _storageFileService;
         private readonly IPersonalStorageClient _personalStorageClient;
         private readonly EmployerData _employerData;
+        private readonly IDateTime _dateTime;
 
         public AddContractCommandHandler(AppDbContext appDbContext, 
             IMapper mapper, 
             ITemplateConvertor templateConvertor, 
             IOptions<EmployerData> options, 
             IStorageFileService storageFileService, 
-            IPersonalStorageClient personalStorageClient)
+            IPersonalStorageClient personalStorageClient,
+            IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
             _personalStorageClient = personalStorageClient;
+            _dateTime = dateTime;
             _employerData = options.Value;
         }
 
@@ -94,9 +98,9 @@ namespace CODWER.RERU.Personal.Application.Contracts.AddContract
 
             myDictionary.Add("{nr_contract_replace}", contract.No);
 
-            myDictionary.Add("{day_replace}", DateTime.Now.ToString("dd"));
-            myDictionary.Add("{month_replace}", DateTime.Now.ToString("MM"));
-            myDictionary.Add("{year_replace}", DateTime.Now.ToString("yyyy"));
+            myDictionary.Add("{day_replace}", _dateTime.Now.ToString("dd"));
+            myDictionary.Add("{month_replace}", _dateTime.Now.ToString("MM"));
+            myDictionary.Add("{year_replace}", _dateTime.Now.ToString("yyyy"));
 
             myDictionary.Add("{salariatName}", contractor.FirstName);
             myDictionary.Add("{salariatLastName}", contractor.LastName);

@@ -7,7 +7,7 @@
     <table class="datatable table erp-shared-table font-size-lg" *ngIf="!isLoading && !downloadFile">
         <thead class="text-uppercase text-muted">
             <tr>
-                <th scope="col">{{ 'tests.name' | translate }}</th>
+                <th class="text-left" scope="col">{{ 'tests.name' | translate }}</th>
                 <th scope="col" style="width: 200px">{{ 'verify-test.student' | translate }} ({{ 'user-profile.npp' | translate }})</th>
                 <th scope="col" style="width: 200px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' | translate }})</th>
                 <th scope="col" style="width: 150px">{{ 'events.event' | translate }}</th>
@@ -15,12 +15,12 @@
                 <th scope="col" style="width: 150px">{{ 'events.location' | translate }}</th>
                 <th scope="col" style="width: 150px">{{ 'verify-test.status' | translate }}</th>
                 <th scope="col" style="width: 160px">{{ 'verify-test.result' | translate }}</th>
-                <th scope="col" style="width: 48px"></th>
+                <th *ngIf="testTemplate.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="testTemplate.length">
             <tr *ngFor="let item of testTemplate">
-                <td>
+                <td class="text-left"> 
                     {{ item.testTemplateName }}
                     <span class="text-dark-50 d-block mb-0">
                         {{ item.endTime | date: 'dd/MM/yyyy, HH:mm'}}
@@ -63,12 +63,13 @@
                     <span class="font-size-lg" *ngIf="!item.eventName">-</span>
                 </td>
                 <td class="department-td">
-                    <ng-template #tipContent width='600px' height='60px'>
+                    <ng-template #departmentAndRoleTipContent width='600px' height='60px'>
                         <dl class="list-group nav list-inline">
                             <dt>
-                                <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="4px" height="4px" viewBox="0 0 24 24" version="1.1">
+                                <span class="svg-icon svg-icon-primary svg-icon-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="4px" height="4px"
+                                        viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <polygon points="0 0 24 0 24 24 0 24" />
                                             <path
@@ -80,13 +81,15 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span style="text-transform:uppercase;">{{ 'departments.department' | translate }} :</span>
-                                <p class="tooltip-text">{{ item.departmentName || '-'}}</p>
+                                <span style="text-transform:uppercase;" class="text-left">{{ 'departments.department' | translate }}
+                                    :</span>
+                                <p class="tooltip-text text-dark-50 font-size-lg font-weight-light">{{ item.departmentName || '-' }}</p>
                             </dt>
                             <dt>
-                                <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="4px" height="4px" viewBox="0 0 24 24" version="1.1">
+                                <span class="svg-icon svg-icon-primary svg-icon-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="4px" height="4px"
+                                        viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <rect x="0" y="0" width="24" height="24" />
                                             <path
@@ -110,24 +113,18 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span style="text-transform:uppercase;">{{ 'user-roles.role' | translate }} :</span>
-                                <p class="tooltip-text">{{ item.roleName || '-' }}</p>
+                                <span style="text-transform:uppercase;" class="text-left">{{ 'user-roles.role' | translate }} :</span>
+                                <p class="tooltip-text tooltip-text text-dark-50 font-size-lg font-weight-light">{{ item.roleName || '-' }}</p>
                             </dt>
                         </dl>
-
                     </ng-template>
-                    <span [ngbTooltip]="tipContent">
-                        <div class="row">
-                            <div class="col-5 p-0">
-                                <p class="font-size-lg text-truncate">{{ item.departmentName || '-'}}</p>
-                            </div>
-                            <div class="col-2 p-0">
-                                <p class="text-center">/</p>
-                            </div>
-                            <div class="col-5 p-0">
-                                <p class="font-size-lg text-truncate">{{ item.roleName || '-'}}</p>
-                            </div>
-                        </div>
+                    <span [ngbTooltip]="departmentAndRoleTipContent" *ngIf="item.departmentName">
+                        <p class="text-truncate"> {{ item.departmentName || '-'}}<br>
+                            <span *ngIf="item.roleName" class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName }}</span>
+                        </p>
+                    </span>
+                    <span *ngIf="!item.departmentName">
+                        <p class="text-truncate"> - </p>
                     </span>
                 </td>
                 <td class="text-center">
@@ -136,9 +133,9 @@
                 </td>
                 <td>{{'statuses.' + status[item.testStatus] | translate}}</td>
                 <td>{{ translateResultValue(item.resultValue) }}</td>
-                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-                    <div style="overflow: visible; position: relative; width: 0px">
-                        <div ngbDropdown class="dropdown dropdown-inline">
+                <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                    <div>
+                        <div ngbDropdown class="dropdown dropdown-inline" container="body">
                             <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

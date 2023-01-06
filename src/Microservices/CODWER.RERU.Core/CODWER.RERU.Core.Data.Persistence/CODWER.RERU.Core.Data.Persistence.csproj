@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +25,6 @@
     <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Entities\RERU.Data.Entities.csproj" />
     <ProjectReference Include="..\..\..\Common\CODWER.Common\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
-    <ProjectReference Include="..\CODWER.RERU.Core.Data.Entities\CODWER.RERU.Core.Data.Entities.csproj" />
   </ItemGroup>
 
   

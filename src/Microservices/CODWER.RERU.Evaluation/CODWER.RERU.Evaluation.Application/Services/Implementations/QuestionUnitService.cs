@@ -198,6 +198,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     return await GenerateStandartAnswerTemplate(questionType);
                 case QuestionTypeEnum.HashedAnswer:
                     return await GenerateHashedTemplate($"{questionType.ToString()}Template");
+                case QuestionTypeEnum.FileAnswer:
                 default:
                     return null;
             }
@@ -205,84 +206,78 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<byte[]> GenerateHashedTemplate(string workSheetName)
         {
-            using (var p = new ExcelPackage())
-            {
-                var ws = p.Workbook.Worksheets.Add(workSheetName);
-                ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.HashedAnswer}";
-                ws.Cells["B1"].Value = "Category FirstName";
-                ws.Cells["C1"].Value = "Question with answer";
-                ws.Cells["D1"].Value = "Points (greater than 0)";
-                ws.Cells["E1"].Value = "Tags (comma separated)";
-                ws.Cells["F1"].Value = "Note: Please use right answer between tags [answer][/answer], whith no spaces at the beginning and at the end";
+            using var p = new ExcelPackage();
+            var ws = p.Workbook.Worksheets.Add(workSheetName);
+            ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.HashedAnswer}";
+            ws.Cells["B1"].Value = "Category FirstName";
+            ws.Cells["C1"].Value = "Question with answer";
+            ws.Cells["D1"].Value = "Points (greater than 0)";
+            ws.Cells["E1"].Value = "Tags (comma separated)";
+            ws.Cells["F1"].Value = "Note: Please use right answer between tags [answer][/answer], with no spaces at the beginning and at the end";
 
-                ws.Column(1).AutoFit();
-                ws.Column(2).AutoFit();
-                ws.Column(3).Width = 100;
-                ws.Column(4).AutoFit();
-                ws.Column(5).AutoFit();
-                ws.Column(6).Width = 50;
+            ws.Column(1).AutoFit();
+            ws.Column(2).AutoFit();
+            ws.Column(3).Width = 100;
+            ws.Column(4).AutoFit();
+            ws.Column(5).AutoFit();
+            ws.Column(6).Width = 50;
 
-                ws.Cells["F1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells["F1"].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);                
-                ws.Cells["A1:F1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["F1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells["F1"].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);                
+            ws.Cells["A1:F1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                return await p.GetAsByteArrayAsync();
-            }
+            return await p.GetAsByteArrayAsync();
         }
 
         private async Task<byte[]> GenerateFreeTextTemplate(string workSheetName)
         {
-            using (var p = new ExcelPackage())
-            {
-                var ws = p.Workbook.Worksheets.Add(workSheetName);
-                ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.FreeText}";
-                ws.Cells["B1"].Value = "Category FirstName";
-                ws.Cells["C1"].Value = "Question";
-                ws.Cells["D1"].Value = "Points (greater than 0)";
-                ws.Cells["E1"].Value = "Tags (comma separated)";
+            using var p = new ExcelPackage();
+            var ws = p.Workbook.Worksheets.Add(workSheetName);
+            ws.Cells["A1"].Value = $"QuestionType={(int)QuestionTypeEnum.FreeText}";
+            ws.Cells["B1"].Value = "Category FirstName";
+            ws.Cells["C1"].Value = "Question";
+            ws.Cells["D1"].Value = "Points (greater than 0)";
+            ws.Cells["E1"].Value = "Tags (comma separated)";
 
-                ws.Column(1).AutoFit();
-                ws.Column(2).AutoFit();
-                ws.Column(3).Width = 75;
-                ws.Column(4).AutoFit();
-                ws.Column(5).Width = 50;
-                ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(1).AutoFit();
+            ws.Column(2).AutoFit();
+            ws.Column(3).Width = 75;
+            ws.Column(4).AutoFit();
+            ws.Column(5).Width = 50;
+            ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                return await p.GetAsByteArrayAsync();
-            }
+            return await p.GetAsByteArrayAsync();
         }
 
         private async Task<byte[]> GenerateStandartAnswerTemplate(QuestionTypeEnum questionType)
         {
-            using (var p = new ExcelPackage())
-            {
-                var ws = p.Workbook.Worksheets.Add($"{questionType.ToString()}Template");
-                ws.Cells["A1"].Value = $"QuestionType={(int)questionType}";
-                ws.Cells["B1"].Value = "Category FirstName";
-                ws.Cells["C1"].Value = "Question";
-                ws.Cells["D1"].Value = "Answer";
-                ws.Cells["E1"].Value = "Is Right? (Yes-1, No-0)";
-                ws.Cells["F1"].Value = "Points (greater than 0)";
-                ws.Cells["G1"].Value = "Tags (comma separated)";
-                ws.Cells["J1"].Value = "Note: One answer per row. New question Must be in one line with first answer. In Column D Please use only digits 0 1";
+            using var p = new ExcelPackage();
+            var ws = p.Workbook.Worksheets.Add($"{questionType.ToString()}Template");
+            ws.Cells["A1"].Value = $"QuestionType={(int)questionType}";
+            ws.Cells["B1"].Value = "Category FirstName";
+            ws.Cells["C1"].Value = "Question";
+            ws.Cells["D1"].Value = "Answer";
+            ws.Cells["E1"].Value = "Is Right? (Yes-1, No-0)";
+            ws.Cells["F1"].Value = "Points (greater than 0)";
+            ws.Cells["G1"].Value = "Tags (comma separated)";
+            ws.Cells["J1"].Value = "Note: One answer per row. New question Must be in one line with first answer. In Column D Please use only digits 0 1";
 
-                ws.Column(1).AutoFit();
-                ws.Column(2).AutoFit();
-                ws.Column(3).Width = 50;
-                ws.Column(4).Width = 50;
-                ws.Column(5).AutoFit();
-                ws.Column(6).AutoFit();
-                ws.Column(7).AutoFit();
-                ws.Column(8).Width = 60;
-                ws.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells["J1"].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);
-                ws.Cells["J1"].Style.WrapText = true;
+            ws.Column(1).AutoFit();
+            ws.Column(2).AutoFit();
+            ws.Column(3).Width = 50;
+            ws.Column(4).Width = 50;
+            ws.Column(5).AutoFit();
+            ws.Column(6).AutoFit();
+            ws.Column(7).AutoFit();
+            ws.Column(8).Width = 60;
+            ws.Cells["J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells["J1"].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);
+            ws.Cells["J1"].Style.WrapText = true;
 
-                ws.Cells["A1:J1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                ws.Cells["A1:J1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A1:J1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["A1:J1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                return await p.GetAsByteArrayAsync();
-            }
+            return await p.GetAsByteArrayAsync();
         }
 
         public async Task<byte[]> BulkQuestionsUpload(IFormFile input)
@@ -293,7 +288,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 using (var package = new ExcelPackage(stream))
                 {
                     ExcelWorksheet ws = package.Workbook.Worksheets[0];
-                    var questionType = (QuestionTypeEnum)Int32.Parse(ws.Cells["A1"].Value.ToString().Replace("QuestionType=", ""));
+                    var questionType = (QuestionTypeEnum)Int32.Parse(ws.Cells["A1"].Value.ToString()?.Replace("QuestionType=", ""));
                     
                     switch (questionType)
                     {
@@ -335,7 +330,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 ws.Cells[error.Key].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 ws.Cells[error.Key].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
             }
-            p.Save();
+            await p.SaveAsync();
 
             var backCounter = 0;
             foreach (var rowToDelete in _rowsToDelete.Distinct().OrderBy(x => x)) 
@@ -343,7 +338,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 ws.DeleteRow(rowToDelete - backCounter);
                 backCounter++;
             }
-            p.Save();
+            await p.SaveAsync();
             return await p.GetAsByteArrayAsync();
         }
 
@@ -375,16 +370,20 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         private async Task UploadOneOrMultiplyAnswer(ExcelWorksheet ws, QuestionTypeEnum questionType)
         {
             var rowCount = ws.Dimension.Rows;
-            AddQuestionUnitExcelDto questionToAdd = null; 
+            AddQuestionUnitExcelDto questionToAdd = null;
 
             for (int row = 2; row <= rowCount; row++)
             {
                 var questionText = (ws.Cells[row, 3].Value ?? string.Empty).ToString();
                 var answerText = (ws.Cells[row, 4].Value ?? string.Empty).ToString();
 
+                var isRowEmpty = IsEmptyRow(ws, row, 1);
+
+                if (isRowEmpty) continue;
+
                 if (!string.IsNullOrWhiteSpace(questionText))
                 {
-                    if (questionToAdd != null && questionToAdd.AddOptions != null && questionToAdd.AddOptions.Count > 0)  
+                    if (questionToAdd is {AddOptions.Count: > 0})  
                     {
                         //here is new question. Save what we have and reset all
                         await SaveQuestionAndOptions(questionToAdd);
@@ -408,7 +407,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
                 else 
                 {
-                    if (!questionToAdd.Error)
+                    if (questionToAdd is {Error: false})
                     {
                         var option = ParseOption(ws, row, questionToAdd);
 
@@ -463,7 +462,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                    errors += $"\nCant' find Category '{ws.Cells[row, 2].Value}' in Database ";
             }
 
-            var questionText = ws.Cells[row, 3].Value.ToString().Trim();
+            var questionText = ws.Cells[row, 3].Value.ToString()?.Trim();
             if (String.IsNullOrWhiteSpace(questionText))
             {
                 if (string.IsNullOrWhiteSpace(errors))
@@ -536,20 +535,18 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             try
             {
                 var isCorrectText = (ws.Cells[row, 5].Value ?? string.Empty).ToString();
-                if (isCorrectText.Equals("1"))
+                switch (isCorrectText)
                 {
-                    isCorrect = true;
+                    case "1":
+                        isCorrect = true;
+                        break;
+                    case "0":
+                        isCorrect = false;
+                        break;
+                    default:
+                        _errors.Add($"{column}{row}", "Can't parse if Answer right or wrong. Only '1' and '0' are allowed!");
+                        return new AddOptionExcelDto { Error = true };
                 }
-                else if(isCorrectText.Equals("0"))
-                {
-                    isCorrect = false;
-                }
-                else
-                {
-                    _errors.Add($"{column}{row}", "Can't parse if Answer right or wrong. Only '1' and '0' are allowed!");
-                    return new AddOptionExcelDto { Error = true };
-                }
-                
             }
             catch
             {
@@ -569,41 +566,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             };
         }
 
-        private string GetTagColumn(QuestionTypeEnum questionType)
-        {
-            if (questionType == QuestionTypeEnum.FreeText || questionType == QuestionTypeEnum.HashedAnswer)
-            {
-                return "E";
-            }
-            else
-            {
-                return "G";
-            }
-        }
+        private string GetTagColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "E" : "G";
 
-        private string GetPointsColumn(QuestionTypeEnum questionType)
-        {
-            if (questionType == QuestionTypeEnum.FreeText || questionType == QuestionTypeEnum.HashedAnswer)
-            {
-                return "D";
-            }
-            else
-            {
-                return "F";
-            }
-        }
+        private string GetPointsColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "D" : "F";
 
-        private string GetColumnFromType(QuestionTypeEnum questionType)
-        {
-            if(questionType==QuestionTypeEnum.FreeText || questionType == QuestionTypeEnum.HashedAnswer)
-            {
-                return "F";
-            }
-            else
-            {
-                return "J";
-            }  
-        }
+        private string GetColumnFromType(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "F" : "J";
 
         private async Task SaveQuestionAndOptions(AddQuestionUnitExcelDto questionToAdd)
         {
@@ -644,13 +611,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 var column = GetColumnFromType(questionToAdd.QuestionType);
 
-                if (questionToAdd.QuestionType == QuestionTypeEnum.OneAnswer && questionToAdd.AddOptions.Where(x => x.OptionDto.IsCorrect == true).Count() != 1)
+                if (questionToAdd.QuestionType == QuestionTypeEnum.OneAnswer && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) != 1)
                 {
                     _errors.Add($"{column}{questionToAdd.Row}", $"Question Type 'One Answer' allows 1 right answer!");
                     return null;
                 }
 
-                if (questionToAdd.QuestionType == QuestionTypeEnum.MultipleAnswers && questionToAdd.AddOptions.Where(x => x.OptionDto.IsCorrect == true).Count() < 1)
+                if (questionToAdd.QuestionType == QuestionTypeEnum.MultipleAnswers && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) < 1)
                 {
                     _errors.Add($"{column}{questionToAdd.Row}", $"Question Type 'MultipleAnswers' should have more than 1 correct answer!");
                     return null;
@@ -710,5 +677,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             await _mediator.Send(new DeleteOptionCommand { Id = id });
         }
+
+        private  bool IsEmptyRow (ExcelWorksheet ws, int row, int startColumn) => ws.Cells[row, startColumn, row, ws.Cells.End.Column].All(c => c.Value == null);
     }
 }

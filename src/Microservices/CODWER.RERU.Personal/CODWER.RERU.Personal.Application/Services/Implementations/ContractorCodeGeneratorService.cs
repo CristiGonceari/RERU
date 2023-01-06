@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
@@ -9,15 +10,17 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
     public class ContractorCodeGeneratorService : IContractorCodeGeneratorService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDateTime _dateTime;
 
-        public ContractorCodeGeneratorService(AppDbContext appDbContext)
+        public ContractorCodeGeneratorService(AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
+            _dateTime = dateTime;
         }
 
         public Task<string> Next() // total 10 digits
         {
-            var currentDate = DateTime.Now;
+            var currentDate = _dateTime.Now;
             var firstDigit = "0";   //1 digit
             var year = currentDate.Year.ToString().Substring(2);    //  2 digit
             var month = currentDate.Month.ToString("00");           //  2 digit

@@ -10,7 +10,7 @@
                 <th scope="col">{{'faq.name' | translate}}</th>
                 <th scope="col" class="d-none">{{'faq.content' | translate}}</th>
                 <th scope="col" style="text-align:center; width: 150px">{{'faq.contains-media' | translate}}</th>
-                <th scope="col" style="width: 48px" class="text-right">&nbsp;</th>
+                <th *ngIf="articles.length" class="col-1 text-right" [ngStyle]="{'width.%' : 10}">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="articles">

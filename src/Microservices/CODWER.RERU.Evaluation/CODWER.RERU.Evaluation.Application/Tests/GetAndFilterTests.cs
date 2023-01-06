@@ -26,6 +26,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     .ThenInclude(x => x.TestTemplateModuleRoles)
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
+                .ThenBy(x => x.HashGroupKey)
                 .Select(t => new Test
                 {
                     Id = t.Id,
@@ -45,7 +46,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     ProgrammedTime = t.ProgrammedTime,
                     EndTime = t.EndTime,
                     TestTemplateId = t.TestTemplateId,
-                    TestPassStatus = t.TestPassStatus
+                    TestPassStatus = t.TestPassStatus,
+                    HashGroupKey = t.HashGroupKey,
+                    FinalStatusResult = t.FinalStatusResult,
+                    FinalAccumulatedPercentage = t.FinalAccumulatedPercentage,
+                    ShowUserName = t.ShowUserName,
+                    CreateById = t.CreateById
                 })
                 .AsQueryable();
 

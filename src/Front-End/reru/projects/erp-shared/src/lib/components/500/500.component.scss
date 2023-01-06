@@ -1,4 +1,8 @@
 .error.error-6 {
+    height: 100vh;
+    @media screen and (max-width: 525px) {
+        height: 100%;
+    }
 	.error-title {
 		font-size: 5rem !important;
         @media screen and (min-width: 767px) {

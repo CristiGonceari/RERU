@@ -48,45 +48,48 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getUsers(data: any = {}): void {
-    if (this.eventId && this.positionId == null && this.inputType == 'checkbox' && this.page == 'add-test') this.getAssignedUsers(data);
-    else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && !this.whichUser) this.getAssignedUsers(data);
-    else if (this.eventId && this.inputType == 'checkbox' && this.page == 'add-evaluation' && this.whichUser) this.getAssignedEvaluators(data);
-    else {
-      let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
-      this.paginatedAttachedIds = false;
-      let params = {
-        page: data.page || this.pagination.currentPage,
-        itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
-        exceptUserIds: exceptIds,
-        eventId: this.eventId && this.positionId ? this.eventId : null,
-        positionId: this.eventId && this.positionId ? this.positionId : null,
-        testTemplateId: this.testTemplateId || null,
-        ...this.filters
-      }
-      if(this.testTemplateId == null){
-        this.userService.get(params).subscribe(res => {
-          if (res && res.data) {
-            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
-            this.users = res.data.items;
-            this.pagination = res.data.pagedSummary;
-            this.isLoading = false;
-          }
-        })
-      } else {
-        this.userService.getByTestTemplate(params).subscribe(res => {
-          if (res && res.data) {
-            this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
-            this.users = res.data.items;
-            this.pagination = res.data.pagedSummary;
-            this.isLoading = false;
-          }
-        })
-      }
-     
+    if (this.eventId && this.positionId == null && (this.page == 'add-test' || this.page == 'add-evaluation') && !this.whichUser) this.getAssignedUsers(data);
+    else if (this.eventId && this.positionId == null && (this.page == 'add-test' || this.page == 'add-evaluation') && this.whichUser) this.getAssignedEvaluators(data);
+    else this.getAllUsers(data);
+  }
+
+  getAllUsers(data: any = {}){
+    console.log("getUserss")
+    let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
+    this.paginatedAttachedIds = false;
+    let params = {
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      exceptUserIds: exceptIds,
+      eventId: this.eventId && this.positionId ? this.eventId : null,
+      positionId: this.eventId && this.positionId ? this.positionId : null,
+      testTemplateId: this.testTemplateId || null,
+      ...this.filters
+    }
+    if(this.testTemplateId == null){
+
+      this.userService.get(params).subscribe(res => {
+        if (res && res.data) {
+          this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+          this.users = res.data.items;
+          this.pagination = res.data.pagedSummary;
+          this.isLoading = false;
+        }
+      })
+    } else {
+      this.userService.getByTestTemplate(params).subscribe(res => {
+        if (res && res.data) {
+          this.paginatedAttachedIds = res.data.items.map(el => el.id).some(r=> this.attachedItems.includes(r))
+          this.users = res.data.items;
+          this.pagination = res.data.pagedSummary;
+          this.isLoading = false;
+        }
+      })
     }
   }
 
   getAssignedUsers(data: any = {}): void {
+    console.log("getAssignedUsers")
     let params = {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
@@ -103,6 +106,8 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getAssignedEvaluators(data: any = {}): void {
+    console.log("getAssignedEvaluators")
+
     let params = {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
@@ -126,7 +131,7 @@ export class AttachUserModalComponent implements OnInit {
   confirm(): void {
     let data = {
       attachedItems: this.attachedItems,
-      showUserName: this.showUserName
+      // showUserName: this.showUserName
     }
     this.activeModal.close(data);
   }
@@ -147,8 +152,8 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   checkInput(event): void {
-    if (this.inputType == 'checkbox') this.onItemChange(event);
-    else this.attachedItems[0] = +event.target.value;
+    this.onItemChange(event);
+    // else this.attachedItems[0] = +event.target.value;
   }
 
   onItemChange(event): void {

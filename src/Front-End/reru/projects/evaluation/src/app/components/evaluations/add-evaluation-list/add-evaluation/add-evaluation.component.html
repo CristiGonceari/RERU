@@ -38,14 +38,14 @@
         <div class="form" id="kt_contact_add_form">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="form-group row" *ngIf="testEvent">
+                    <div class="form-group row" *ngIf="isTestEvent">
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'events.event' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
                             <select class="form-control form-control-lg form-control-solid"
-                                (change)="getActiveTestTemplate()" (change)="getActiveLocations()"
-                                (ngModelChange)="onChange($event)" [(ngModel)]="event.value" name="searchEvent">
-                                <option value="">{{'questions.select' | translate}}</option>
+                                (change)="getActiveTestTemplateWithEvent()" (change)="getActiveLocations()"
+                                 [(ngModel)]="event.value" name="searchEvent">
+                                <option [value]="0" selected>{{'questions.select' | translate}}</option>
                                 <option *ngFor="let item of eventsList" [ngValue]="item.eventId">
                                     {{ item.eventName }}
                                 </option>
@@ -55,7 +55,12 @@
                     <div class="form-group row" *ngIf="showEventCard">
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'events.event-overview' | translate}}</label>
-                        <div class="card ml-5 col-lg-8 col-xl-8">
+                           
+                        <div class="card ml-5 col-lg-8 col-xl-8 erp-shared-desktop-wide">
+                            <app-loading-spinner class="card-body" 
+                            *ngIf="isLoading" [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'"
+                            [colorClass]="'text-primary'">
+                        </app-loading-spinner>
                             <div class="card-body" *ngIf="!isLoading">
                                 <div class="form-group row align-items-center mb-2">
                                     <label
@@ -87,7 +92,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" *ngIf="isTestEvent">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                            {{'verify-test.select-test-type' | translate}}
+                        </label>
+                        <div class="col-lg-9 col-xl-9">
+                            <span *ngIf="hasSelectedEvent" class="label label-lg label-light label-inline h-45px px-5 w-100">
+                                {{'tests.select-before-event-pls' | translate}}
+                              </span>
+                            <app-loading-spinner class="form-control form-control-lg form-control-solid" 
+                                *ngIf="isLoading && !hasSelectedEvent" [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'"
+                                [colorClass]="'text-primary'">
+                            </app-loading-spinner>
+                            <select class="form-control form-control-lg form-control-solid" name="test" *ngIf="!isLoading && !hasSelectedEvent"
+                                [(ngModel)]="testTemplate.value">
+                                <option [value]="0" selected>{{'questions.select' | translate}}</option>
+                                <option *ngFor="let testTemplate of selectActiveTestsWithEvent"
+                                    [ngValue]="testTemplate.testTemplateId">
+                                    {{testTemplate.testTemplateName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="!isTestEvent">
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'verify-test.select-test-type' | translate}}
                         </label>
@@ -98,8 +125,8 @@
                             </app-loading-spinner>
                             <select class="form-control form-control-lg form-control-solid" name="test" *ngIf="!isLoading"
                                 [(ngModel)]="testTemplate.value">
-                                <option value="">{{'questions.select' | translate}}</option>
-                                <option *ngFor="let testTemplate of selectActiveTests"
+                                <option [value]="0" selected>{{'questions.select' | translate}}</option>
+                                <option *ngFor="let testTemplate of selectActiveTestsWithoutEvent"
                                     [ngValue]="testTemplate.testTemplateId">
                                     {{testTemplate.testTemplateName}}
                                 </option>
@@ -161,14 +188,13 @@
                         </label>
                         <div class="col-lg-9 col-xl-9">
                             <select class="form-control form-control-lg form-control-solid" name="test"
-                                [(ngModel)]="locationId">
-                                <option value="">{{'locations.address' | translate}}</option>
-                                <option *ngFor="let location of selectActiveLocations" [ngValue]="location.id">
-                                    {{location.address}}
+                                [(ngModel)]="locationSelect.value">
+                                <option [value]="0" selected>{{'questions.select' | translate}}</option>
+                                <option *ngFor="let location of selectActiveLocations" [ngValue]="location.value">
+                                    {{location.label}}
                                 </option>
                             </select>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
@@ -20,6 +21,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly ITemplateConvertor _templateConvertor;
         private readonly IStorageFileService _storageFileService;
         private readonly IPersonalStorageClient _personalStorageClient;
+        private readonly IDateTime _dateTime;
         private readonly EmployerData _employerData;
         private readonly string _fileName;
 
@@ -27,12 +29,14 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             AppDbContext appDbContext, 
             ITemplateConvertor templateConvertor, 
             IStorageFileService storageFileService, 
+            IDateTime dateTime,
             IOptions<EmployerData> options, 
             IPersonalStorageClient personalStorageClient)
         {
             _appDbContext = appDbContext;
             _templateConvertor = templateConvertor;
             _storageFileService = storageFileService;
+            _dateTime = dateTime;
             _personalStorageClient = personalStorageClient;
             _employerData = options.Value;
             _fileName = "ContractorTemplates/Orders/Ordin Cu Privire La Concediu.html";
@@ -72,12 +76,12 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             myDictionary.Add("{company_replace}", _employerData.Name);
 
-            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(DateTime.Now)?.Role.Name);
+            myDictionary.Add("{functia_replace}", contractor.GetCurrentPositionOnData(_dateTime.Now)?.Role.Name);
 
             myDictionary.Add("{from_replace}", vacation.FromDate.ToString("dd/MM/yyyy"));
             myDictionary.Add("{to_replace}", vacation.ToDate != null ? vacation.ToDate?.ToString("dd/MM/yyyy") : vacation.FromDate.ToString("dd/MM/yyyy"));
 
-            myDictionary.Add("{data_replace}", DateTime.Now.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{data_replace}", _dateTime.Now.ToString("dd/MM/yyyy"));
 
             myDictionary.Add("{count_days_replace}", vacation.CountDays.ToString());
             myDictionary.Add("{age_replace}", vacation.ChildAge.ToString());

@@ -201,14 +201,14 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.AssignUserToEvent
         {
             var eventUser = await GetEventUser(evUser.Id);
 
-            await _loggerService.Log(LogData.AsEvaluation($"{eventUser.UserProfile.FullName} a fost atașat/ă la evenimentul {eventUser.Event.Name} în rol de candidat "));
+            await _loggerService.Log(LogData.AsEvaluation($@"{eventUser.UserProfile.FullName} a fost atașat/ă la evenimentul ""{eventUser.Event.Name}"" în rol de candidat "));
         }
 
         private async Task LogAction(List<EventUser> eventUsers)
         {
             foreach (var item in eventUsers)
             {
-                await _loggerService.Log(LogData.AsEvaluation($"{item.UserProfile.FullName} a fost detașat/ă de la evenimentul {item.Event.Name} in rol de candidat"));
+                await _loggerService.Log(LogData.AsEvaluation($@"{item.UserProfile.FullName} a fost detașat/ă de la evenimentul ""{item.Event.Name}"" în rol de candidat"));
             }
         }
 

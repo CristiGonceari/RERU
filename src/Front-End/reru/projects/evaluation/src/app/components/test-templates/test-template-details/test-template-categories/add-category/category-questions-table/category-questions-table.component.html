@@ -1,9 +1,10 @@
-<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+<app-loading-spinner *ngIf="isLoading2" [contentHeight]="'10vh'" [height]="'3rem'" [width]="'3rem'"
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
-<div *ngIf="!isLoading && questions.length" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
-id="kt_datatable">
+<div *ngIf="!isLoading2 && questions.length"
+    class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    id="kt_datatable">
     <div class="card-title">
         <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
     </div>
@@ -15,18 +16,21 @@ id="kt_datatable">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
                                 translate}}</label>
-                            <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions" (ngModelChange)="onChangeSelection($event)">
+                            <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions"
+                                (ngModelChange)="onChangeSelection($event)">
                                 <option selected value='0' class="default-option"> {{ 'button.all' | translate }}
                                 </option>
                                 <option value='1'> {{ 'questions.select' | translate }} </option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-5]="selectQuestions == 0">
+                    <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1"
+                        [class.col-lg-5]="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
                                 translate}}</label>
-                            <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions" (ngModelChange)="onChangeSequence($event)">
+                            <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions"
+                                (ngModelChange)="onChangeSequence($event)">
                                 <option selected value='0' class="default-option"> {{'button.random' | translate}}
                                 </option>
                                 <option value='1'> {{'button.ordered' | translate}}
@@ -34,7 +38,8 @@ id="kt_datatable">
                             </select>
                         </div>
                     </div>
-                    <div class="col-6 pr-0" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-5]="selectQuestions == 0">
+                    <div class="col-6 pr-0" [class.col-lg-4]="selectQuestions == 1"
+                        [class.col-lg-5]="selectQuestions == 0">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
                             <div class="input-group">
@@ -51,14 +56,17 @@ id="kt_datatable">
             </div>
             <div class="col-lg-2 col-6 mt-auto ml-9">
                 <div class="w-100">
-                    <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount" [value]="'button.preview' | translate"
-                        [width]="'100%'">
+                    <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount"
+                        [value]="'button.preview' | translate" [width]="'100%'">
                     </app-confirm-button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    <app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'3rem'" [width]="'3rem'"
+        [colorClass]="'text-primary'">
+    </app-loading-spinner>
+    <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
         id="kt_datatable">
         <table class="datatable table font-size-lg" style="overflow: visible">
             <thead class="text-uppercase text-muted">
@@ -95,18 +103,20 @@ id="kt_datatable">
         <div class="text-right border-top pt-7">
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <app-confirm-button class="btn h-35px mr-5" [value]="'button.refresh' | translate" *ngIf="preview" (handle)="refresh()"></app-confirm-button>
+                    <app-confirm-button class="btn h-35px mr-5" [value]="'button.refresh' | translate" *ngIf="preview"
+                        (handle)="refresh()"></app-confirm-button>
                 </div>
                 <div class="d-flex">
                     <app-button class="btn mr-2" [value]="'button.reset' | translate" (handle)="reset()"></app-button>
-                    <app-add-button class="btn" [disabled]="!preview" [value]="'button.confirm' | translate" (handle)="addQuestions(itemsToAdd)"></app-add-button>
+                    <app-add-button class="btn" [disabled]="!preview" [value]="'button.confirm' | translate"
+                        (handle)="addQuestions(itemsToAdd)"></app-add-button>
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
-    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage" 
-        *ngIf="questions.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount" [size]="pagination.pageSize"
-        (sizeChange)="list({ page: 1, itemsPerPage: $event })"
+    <div pagination class="datatable-pager datatable-paging-loaded" [page]="pagination.currentPage"
+        *ngIf="questions.length" [total]="pagination.totalPages" [totalRecords]="pagination.totalCount"
+        [size]="pagination.pageSize" (sizeChange)="list({ page: 1, itemsPerPage: $event })"
         (pageChange)="list({ page: $event, itemsPerPage: pagination.pageSize })">
     </div>
 </div>

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.reru_core_fe.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.reru_core_fe.name }}
+  replicas: {{ .Values.reru_core_fe.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.reru_core_fe.name }}
+    spec:
+      volumes:
+      - name: {{ .Values.name }}-application-settings
+        configMap:
+          name: {{ .Values.name }}-application-settings
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret.name }}
+      containers:
+      - name: {{ .Values.reru_core_fe.name }}
+        image: {{ .Values.reru_core_fe.image.repository }}:{{ .Values.tag }}
+        imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: {{ .Values.timeZone }}        
+        {{- if .Values.microservice.deployment.env }}
+{{ toYaml .Values.microservice.deployment.env | indent 8 }}
+        {{- end }}          
+        ports:
+        - containerPort: {{ .Values.microservice.port }}
+
+        volumeMounts:
+          - name: {{ .Values.name }}-application-settings
+            mountPath: {{ .Values.angular_microservice.deployment.appsettings }}
+            subPath: reru_core_fe.appsettings.json

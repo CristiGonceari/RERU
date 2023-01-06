@@ -1,8 +1,12 @@
-﻿using CODWER.RERU.Evaluation360.Application.Permissions;
+﻿using CODWER.RERU.Evaluation360.Application.BLL.Services;
+using CODWER.RERU.Evaluation360.Application.Permissions;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Module.Common.Providers;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation360.Application.DependencyInjection
 {
@@ -20,6 +24,9 @@ namespace CODWER.RERU.Evaluation360.Application.DependencyInjection
             services
                 .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
                 .AddScoped(typeof(PlatformConfig));
+            
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IInternalNotificationService, InternalNotificationService>();
         }
     }
 }

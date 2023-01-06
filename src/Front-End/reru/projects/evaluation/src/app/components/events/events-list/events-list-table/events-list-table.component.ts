@@ -23,6 +23,7 @@ export class EventsListTableComponent implements OnInit {
 	pagination: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
 	isLoadingCalendar: boolean = true;
+	isLoadingCountedTests: boolean = true;
 	title: string;
 	description: string;
 	no: string;
@@ -189,6 +190,8 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getListOfCoutedEvents(data) {
+		this.isLoadingCountedTests = true;
+		
 		const request = {
 			fromDate: this.parseDates(data.fromDate),
 			tillDate: this.parseDates(data.tillDate)
@@ -210,6 +213,9 @@ export class EventsListTableComponent implements OnInit {
 					}
 				}
 			}
+			this.isLoadingCountedTests = false;
+		}, () => {
+			this.isLoadingCountedTests = false;
 		})
 	}
 

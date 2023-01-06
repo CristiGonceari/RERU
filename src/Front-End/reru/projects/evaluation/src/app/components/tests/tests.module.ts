@@ -26,6 +26,7 @@ import { AddTestListComponent } from './add-test-list/add-test-list.component';
 import { TestListTableComponent } from './test-list/test-list-table/test-list-table.component';
 import { SearchResultComponent } from './test-list/search-result/search-result.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     MatCheckboxModule, 
     MatProgressBarModule,
     NgxDropzoneModule,
+    NgbCollapseModule
   ],
   schemas: [
 		CUSTOM_ELEMENTS_SCHEMA

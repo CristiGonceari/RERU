@@ -18,6 +18,7 @@ export class EvaluatedTestsTableComponent {
   testRowList: Test[] = [];
   pagedSummary: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
+  isLoadingCountedTests: boolean = true;
 
   enum = TestStatusEnum;
   resultEnum = TestResultStatusEnum;
@@ -143,6 +144,8 @@ export class EvaluatedTestsTableComponent {
   }
 
   getListOfCoutedTests(data) {
+    this.isLoadingCountedTests = true;
+
     const request = {
       startTime: this.parseDates(data.fromDate),
       endTime: this.parseDates(data.tillDate),
@@ -164,6 +167,9 @@ export class EvaluatedTestsTableComponent {
           }
         }
       }
-    });
+      this.isLoadingCountedTests = false;
+    }, () => {
+      this.isLoadingCountedTests = false;
+    })
   }
 }

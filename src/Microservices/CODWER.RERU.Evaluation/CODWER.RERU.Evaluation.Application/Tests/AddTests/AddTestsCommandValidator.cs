@@ -31,7 +31,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .SetValidator(x => new ItemMustExistValidator<TestTemplate>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.UserProfileId)
+            RuleFor(x => x.UserProfileIds)
                 .Must(x => x.Any())
                 .WithErrorCode(ValidationCodes.INVALID_EVLUATED_USER_LIST);
 
@@ -59,18 +59,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                     .WithErrorCode(ValidationCodes.INEXISTENT_CANDIDATE_IN_EVENT);
             });
 
-            When(r => !r.EvaluatorId.HasValue && !r.EventId.HasValue, () =>
+            When(r => !r.EvaluatorIds.Any() && !r.EventId.HasValue, () =>
             {
                 RuleFor(x => x)
                     .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
                     .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
-            });
-
-            When(r => r.EventId.HasValue && r.EvaluatorId.HasValue, () =>
-            {
-                RuleFor(x => x)
-                    .Must(x => !appDbContext.EventEvaluators.Any(e => e.EventId == x.EventId))
-                    .WithErrorCode(ValidationCodes.EXISTENT_EVALUATOR_IN_EVENT);
             });
 
             When(r => r.LocationId.HasValue, () =>
@@ -78,17 +71,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 RuleFor(x => x.LocationId.Value)
                     .SetValidator(x => new ItemMustExistValidator<Location>(appDbContext, ValidationCodes.INVALID_LOCATION,
                         ValidationMessages.InvalidReference));
-            });
-
-            When(r => r.EvaluatorId.HasValue, () =>
-            {
-                RuleFor(x => x.EvaluatorId.Value)
-                    .SetValidator(x => new ItemMustExistValidator<UserProfile>(appDbContext, ValidationCodes.INVALID_USER,
-                        ValidationMessages.InvalidReference));
-
-                RuleFor(x => x)
-                    .Must(x => x.UserProfileId.All(u => x.EvaluatorId != u))
-                    .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
             });
         }
 
@@ -105,7 +87,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         {
             var result = false;
 
-            foreach (var userId in data.UserProfileId)
+            foreach (var userId in data.UserProfileIds)
             {
                 result = _appDbContext.EventUsers.Any(et => et.EventId == data.EventId && et.UserProfileId == userId);
 

@@ -13,6 +13,7 @@ import { __values } from 'tslib';
   styleUrls: ['./evaluation-result-modal.component.scss']
 })
 export class EvaluationResultModalComponent implements OnInit {
+  isLoading: boolean = true;
   testId;
   testTemplateId;
   qualificationTypeEnum =  QualifyingTypeEnum;
@@ -66,6 +67,7 @@ export class EvaluationResultModalComponent implements OnInit {
   getTestTemplate(id: any){
     this.testTemplateService.getTestTemplate(id).subscribe(res => {
       this.qualificationTypeValue = res.data.qualifyingType;
+      this.isLoading = false;
     })
   }
  

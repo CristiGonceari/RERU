@@ -14,6 +14,7 @@ import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events
 export class PollsTableComponent implements OnInit {
   polls = [];
   @Input() id: number;
+  isLoadingCountedTests: boolean = true;
   isLoading: boolean = true;
   enum = MyPollStatusEnum;
   testEnum = TestStatusEnum;
@@ -53,6 +54,8 @@ export class PollsTableComponent implements OnInit {
   }
 
   getListOfCoutedTests(data) {
+    this.isLoadingCountedTests = true;
+
     const request = {
       startTime: this.parseDates(data.fromDate),
       endTime: this.parseDates(data.tillDate)
@@ -76,6 +79,9 @@ export class PollsTableComponent implements OnInit {
             }
           }
         }
+        this.isLoadingCountedTests = false;
+      }, () => {
+        this.isLoadingCountedTests = false;
       }
     )
   }

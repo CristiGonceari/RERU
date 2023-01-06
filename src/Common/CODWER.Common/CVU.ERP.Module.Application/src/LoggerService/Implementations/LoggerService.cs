@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
 using CVU.ERP.ServiceProvider.Models;
 
 namespace CVU.ERP.Module.Application.LoggerService.Implementations
@@ -20,9 +21,11 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
     {
         private readonly LoggingDbContext _localLoggingDbContext;
         private readonly IEnumerable<ICurrentApplicationUserProvider> _userProvider;
-        public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, LoggingDbContext loggingDbContext)
+        private readonly IDateTime _dateTime;
+        public LoggerService(IEnumerable<ICurrentApplicationUserProvider> userProvider, LoggingDbContext loggingDbContext, IDateTime dateTime)
         {
             _localLoggingDbContext = loggingDbContext;
+            _dateTime = dateTime;
             _userProvider = userProvider;
         }
 
@@ -42,7 +45,7 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
                 UserIdentifier = "",
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseEvent(),
                 EventMessage = data.EventMessage,
-                Date = DateTime.Now,
+                Date = _dateTime.Now,
                 JsonMessage = data.SerializedObject
             };
 
@@ -77,7 +80,7 @@ namespace CVU.ERP.Module.Application.LoggerService.Implementations
                 UserIdentifier = coreUser.Id,
                 Event = !string.IsNullOrWhiteSpace(data.Event) ? data.Event : ParseEvent(),
                 EventMessage = ParseEventMessage(data.EventMessage, coreUser),
-                Date = DateTime.Now,
+                Date = _dateTime.Now,
                 JsonMessage = data.SerializedObject
             };
 

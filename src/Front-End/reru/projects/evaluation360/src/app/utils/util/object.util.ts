@@ -20,4 +20,13 @@ export class ObjectUtil {
   public static isDateStruct(data): boolean {
     return data && data.year && data.month && !!data.day;
   }
+
+  public static capitalizeProperties(object): any {
+    for(let prop in object) {
+      object[prop.charAt(0).toUpperCase() + prop.slice(1)] = object[prop];
+      delete object[prop];
+    }
+
+    return object;
+  }
 }

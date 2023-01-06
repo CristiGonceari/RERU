@@ -52,7 +52,7 @@ namespace CODWER.RERU.Personal.Application.TimeSheetTables.AddTimeSheetTableValu
 
         private async Task LogAction(TimeSheetTable timeSheetTable)
         {
-            await _loggerService.Log(LogData.AsPersonal($@"Tabela de pontaj a fost populata cu date pe data de ""{timeSheetTable.Date:g}""", timeSheetTable));
+            await _loggerService.Log(LogData.AsPersonal($@"Tabela de pontaj a fost populată cu date pe data de ""{timeSheetTable.Date:g}""", timeSheetTable));
         }
     }
 }

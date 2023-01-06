@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Common;
+using RERU.Data.Persistence.Extensions;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStart
 {
@@ -17,38 +19,42 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
     {
         private readonly AppDbContext _appDbContext;
         private readonly ICurrentApplicationUserProvider _currentApplicationUserProvider;
+        private readonly IDateTime _dateTime;
         private readonly DateTime _timeRangeBeforeStart;
         private readonly DateTime _timeRangeAfterStart;
         private readonly IMapper _mapper;
 
         public GetTestIdForFastStartQueryHandler(AppDbContext appDbContext, 
             IMapper mapper, 
-            ICurrentApplicationUserProvider currentApplicationUserProvider)
+            ICurrentApplicationUserProvider currentApplicationUserProvider, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
             _currentApplicationUserProvider = currentApplicationUserProvider;
-            _timeRangeBeforeStart = DateTime.Now.AddMinutes(15);
-            _timeRangeAfterStart = DateTime.Now.AddMinutes(-1);
+            _dateTime = dateTime;
+            _timeRangeBeforeStart = _dateTime.Now.AddMinutes(15);
+            _timeRangeAfterStart = _dateTime.Now.AddMinutes(-1);
         }
 
         public async Task<List<GetTestForFastStartDto>> Handle(GetTestIdForFastStartQuery request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentApplicationUserProvider.Get();
 
-            var test = await _appDbContext.Tests
+            var test = _appDbContext.Tests
                 .Include(x => x.TestTemplate.Settings)
                 .Include(x => x.TestTemplate)
                 .Include(x => x.Event)
                 .Where(test => test.UserProfileId == int.Parse(currentUser.Id) &&
                                (test.Event == null ?
                                         test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart :
-                                        test.Event.FromDate <= DateTime.Now && test.Event.TillDate >= DateTime.Now) &&
+                                        test.Event.FromDate <= _dateTime.Now && test.Event.TillDate >= _dateTime.Now) &&
                             test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
                                                         (test.TestStatus == TestStatusEnum.Programmed || 
                                                          test.TestStatus == TestStatusEnum.AlowedToStart))
+                .OrderByDescending(x => x.CreateDate)
+                .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .Select(u => _mapper.Map<GetTestForFastStartDto>(u))
-                .ToListAsync();
+                .ToList();
 
             return test;
         }

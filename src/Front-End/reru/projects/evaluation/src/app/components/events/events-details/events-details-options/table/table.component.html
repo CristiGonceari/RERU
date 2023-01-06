@@ -1,6 +1,6 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-<div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
   id="kt_datatable">
   <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
@@ -12,15 +12,15 @@
       <tr *ngIf="testTemplates">
         <th scope="col">{{'events.name' | translate}}</th>
         <th scope="col" style="width: 120px;" class="text-left">{{'tests.questions-to-use-count' | translate}}</th>
-        <th scope="col" style="width: 100px;" class="text-left">{{'tests.time' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th scope="col" style="width: 100px;" class="text-left">{{'tests.time-min' | translate}}</th>
+        <th  class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
       </tr>
       <tr *ngIf="locations">
         <th scope="col">{{'locations.name' | translate}}</th>
         <th scope="col" style="width: 300px;" class="text-left">{{'locations.address' | translate}}</th>
         <th scope="col" style="width: 200px;" class="text-left">{{'questions.type' | translate}}</th>
         <th scope="col" style="width: 100px;" class="text-left">{{'locations.places' | translate}}</th>
-        <th scope="col" style="width: 48px"></th>
+        <th class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
       </tr>
       <tr *ngIf="evaluators">
         <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
@@ -44,7 +44,7 @@
         <td>{{item.places}}</td>
         <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
           <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
+            <div ngbDropdown class="dropdown dropdown-inline"  container="body">
               <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                   <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
@@ -76,18 +76,18 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="datatable-body" *ngIf="fields.length && testTemplates">
+    <tbody class="datatable-body" style="table-layout: fixed;" *ngIf="fields.length && testTemplates">
       <tr *ngFor="let item of fields">
         <td class="cursor-pointer text-hover-primary" [routerLink]="['../../../../test-type/type-details', item.id]">
           {{item.name}}</td>
-        <td>{{item.questionCount}}</td>
-        <td>
+        <td class="text-center">{{item.questionCount}}</td>
+        <td class="text-center">
           <span *ngIf="item.duration == 0">-</span>
           <span *ngIf="item.duration > 0">{{item.duration}}</span>
         </td>
-        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
-          <div style="overflow: visible; position: relative; width: 0px">
-            <div ngbDropdown class="dropdown dropdown-inline">
+        <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+          <div>
+            <div ngbDropdown class="dropdown dropdown-inline" container="body">
               <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                 <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                   <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"

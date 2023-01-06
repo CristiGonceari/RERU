@@ -5,5 +5,6 @@ namespace CVU.ERP.Common
     public interface IDateTime
     {
         DateTime Now { get; }
+        DateTime Today { get; }
     }
 }

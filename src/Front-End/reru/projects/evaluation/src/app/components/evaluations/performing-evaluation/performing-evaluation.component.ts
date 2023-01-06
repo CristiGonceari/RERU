@@ -21,6 +21,9 @@ import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/fi
 import { saveAs } from 'file-saver';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
+import { NotificationUtil } from '../../../utils/util/notification.util';
+import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-performing-evaluation',
@@ -91,7 +94,8 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
-    private styleNodesService: StyleNodesService
+    private styleNodesService: StyleNodesService,
+    private notificationService: NotificationsService,
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.testId = params.id;
@@ -160,7 +164,18 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   }
 
   setFile(event){
+    if(event.addedFiles[0]){
       this.files[0] = event.addedFiles[0];
+    }else{
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('media.invalid-type'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
+    }
   }
 
   onRemove(event): void {

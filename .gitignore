@@ -363,3 +363,5 @@ FodyWeavers.xsd
 
 # Visual Studio Code cashe
 .vscode/
+config-codwer.yml
+config-mcloud.yml

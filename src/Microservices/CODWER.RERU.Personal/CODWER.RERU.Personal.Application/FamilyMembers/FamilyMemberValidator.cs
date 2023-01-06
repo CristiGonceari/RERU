@@ -6,6 +6,7 @@ using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.FamilyComponents;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 
@@ -13,7 +14,7 @@ namespace CODWER.RERU.Personal.Application.FamilyMembers
 {
     public class FamilyMemberValidator : AbstractValidator<AddEditFamilyMemberDto>
     {
-        public FamilyMemberValidator(AppDbContext appDbContext)
+        public FamilyMemberValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x=>x.FirstName)
                 .NotEmpty()
@@ -26,7 +27,7 @@ namespace CODWER.RERU.Personal.Application.FamilyMembers
                 .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.Birthday)
-                .Must(x => x > DateTime.Now.AddYears(-100))
+                .Must(x => x > dateTime.Now.AddYears(-100))
                 .WithErrorCode(ValidationCodes.INVALID_INPUT)
                 .WithMessage(ValidationMessages.InvalidInput);
 

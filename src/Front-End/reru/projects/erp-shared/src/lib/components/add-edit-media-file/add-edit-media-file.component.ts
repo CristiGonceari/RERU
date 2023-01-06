@@ -101,18 +101,26 @@ export class AddEditMediaFileComponent implements OnInit {
           this.description = description;
         });
         this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultConfig());
+        this.onRemoved();
       }
-      this.attachedFile = event.addedFiles[0];
+
+      if((this.videoFiles || this.imageFiles || this.audioFiles || this.docFiles).length > 0){
+        this.fileName = event.addedFiles[0].name;
+        this.attachedFile = event.addedFiles[0];
+      }
+      
       this.handleFile.emit(this.attachedFile);
     });
   }
 
-  onRemoved() {
+  onRemoved(toDelete?: Boolean) {
     this.imageFiles = this.videoFiles = this.audioFiles = this.docFiles = [];
     this.videoUrl = this.audioUrl = this.imageUrl= this.docUrl = null;
     this.attachedFile = null;
     this.fileName = '';
-    this.handleFile.emit(this.attachedFile)
+    if(toDelete){
+      this.handleFile.emit(this.attachedFile);
+    }
   }
 
   public async readFile(file: File): Promise<string | ArrayBuffer> {
@@ -148,7 +156,7 @@ export class AddEditMediaFileComponent implements OnInit {
         this.disableBtn.emit(true);
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Downloading...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Se încarcă...')
         break;
       case HttpEventType.Response:
         if (httpEvent.body instanceof Array) {
@@ -157,9 +165,9 @@ export class AddEditMediaFileComponent implements OnInit {
           }
         } else {
           this.disableBtn.emit(false);
-          const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          this.fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
           const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-          const file = new File([blob], fileName, { type: httpEvent.body.type });
+          const file = new File([blob], this.fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;

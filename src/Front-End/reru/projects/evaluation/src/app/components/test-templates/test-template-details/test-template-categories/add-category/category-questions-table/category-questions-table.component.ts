@@ -25,6 +25,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   @Input() timeLimit;
   @Input() setLimit;
   isLoading: boolean = false;
+  isLoading2: boolean = false;
   questionStatus = QuestionUnitStatusEnum;
   qType = QuestionUnitTypeEnum;
   questions: QuestionUnit[] = [];
@@ -107,7 +108,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
 
   onChangeSelection(event){
     this.selectQuestions = event;
-    this.reset()
+    this.reset();
   }
 
   onChangeSequence(event){
@@ -115,6 +116,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   previewQuestions() {
+    this.isLoading = true;
     this.selectedQuestions = [];
 
     let params = {
@@ -131,13 +133,16 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
         if (res && res.data) {
           this.questions = res.data;
           this.preview = true;
+          this.isLoading = false;
         }
       }, err => {
         this.reset();
+        this.isLoading = false;
       })
   }
 
   addQuestions(questions) {
+    this.isLoading = true;
     if(this.selectQuestions === 1) {
       let idList = questions.map(x => x.questionUnitId);
       this.questiosToAdd = Object.keys(idList).map((id, index) => {
@@ -160,7 +165,8 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
       testCategoryQuestions: this.questions,
       timeLimit: this.setLimit ? this.timeLimit : null
     }
-    this.questionCategoryService.add(params).subscribe(res => {
+    this.questionCategoryService.add(params).subscribe(
+      res => {
       if (res && res.data) {
         forkJoin([
           this.translate.get('modal.success'),
@@ -169,9 +175,13 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
           this.title = title;
           this.description = description;
           });
+        this.isLoading = false;
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.router.navigate(['test-type/type-details', this.testTemplateId, 'categories'])
       }
+    },
+    err => {
+      this.isLoading = false;
     })
   }
 
@@ -183,6 +193,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   list(data: any = {}): void {
+    this.isLoading2 = true;
     let params = {
       categoryId: this.questionCategoryId,
       type: this.questionType,
@@ -192,6 +203,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     this.questionService.getActiveQuestions(params).subscribe(res => {
       this.questions = res.data.items;
       this.pagination = res.data.pagedSummary;
+      this.isLoading2 = false;
     })
   }
 
@@ -199,6 +211,7 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
     this.list();
     this.preview = false;
     this.questionCount = null;
+    this.selectedQuestions = [];
   }
 
   refresh(): void {
@@ -206,9 +219,11 @@ export class CategoryQuestionsTableComponent implements OnInit, OnDestroy {
   }
 
   getQuestionCategory(id): void {
+    this.isLoading = true;
     this.referenceService.getQuestionCategory().subscribe(res => {
       this.questionCategoryName = res.data.filter(el => el.value === id).map(name => name.label);
     });
+    this.isLoading = false;
   }
 
   ngOnDestroy(): void {

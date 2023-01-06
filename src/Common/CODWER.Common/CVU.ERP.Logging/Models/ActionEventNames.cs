@@ -5,7 +5,7 @@
         public static readonly string CreateUser = "Adăugare utilizator";
         public static readonly string EditUserPersonalDetails = "Actualizare utilizator";
         public static readonly string InregistrateUser = "Înregistrare utilizator";
-        public static readonly string RemoveUser = "utilizator";
+        public static readonly string RemoveUser = "Ștergere utilizator";
         public static readonly string ResetUserPassword = "Resetarea parolei";
         public static readonly string AddCandidatePosition = "Adăugare poziție vacantă";
         public static readonly string DeleteCandidatePosition = "Ștergere poziție vacantă";
