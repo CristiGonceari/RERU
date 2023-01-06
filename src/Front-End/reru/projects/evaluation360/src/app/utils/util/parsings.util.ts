@@ -78,6 +78,9 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         dateSettingIindividualGoals: data.dateSettingIindividualGoals,
         need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated,
         need2ProfessionalDevelopmentEvaluated: data.need2ProfessionalDevelopmentEvaluated,
+        need3ProfessionalDevelopmentEvaluated: data.need3ProfessionalDevelopmentEvaluated,
+        need4ProfessionalDevelopmentEvaluated: data.need4ProfessionalDevelopmentEvaluated,
+        need5ProfessionalDevelopmentEvaluated: data.need5ProfessionalDevelopmentEvaluated,
         commentsEvaluator: data.commentsEvaluator,
     }
 }

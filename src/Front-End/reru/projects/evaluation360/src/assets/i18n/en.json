@@ -294,6 +294,8 @@
     "use-letters-numbers-and-dash": "Please use letters, numbers and symbol -",
     "date-from-is-more-than": "Start date is bigger than end date.",
     "date-to-is-less-than": "End date is bigger than start date.",
-    "evaluation-initialized-successfully": "The evaluation process has begun successfully!"
+    "evaluation-initialized-successfully": "The evaluation process has begun successfully!",
+    "doesnt-need-countersign": "Doesn't need countersign (for recruits of high rank)",
+    "final-points-should-be-between-1-and-4": "The final points should be between 1 and 4"
   }
 }

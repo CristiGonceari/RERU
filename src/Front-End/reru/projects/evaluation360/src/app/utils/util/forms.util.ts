@@ -79,13 +79,16 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
       dateSettingIindividualGoals: fb.control({value: data?.dateSettingIindividualGoals, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(isoDateRegex)]),
       need1ProfessionalDevelopmentEvaluated: fb.control({value: data?.need1ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       need2ProfessionalDevelopmentEvaluated: fb.control({value: data?.need2ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need3ProfessionalDevelopmentEvaluated: fb.control({value: data?.need3ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need4ProfessionalDevelopmentEvaluated: fb.control({value: data?.need4ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need5ProfessionalDevelopmentEvaluated: fb.control({value: data?.need5ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       commentsEvaluator: fb.control({value: data?.commentsEvaluator, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
     })
 }
 
 export const createEvaluatedForm = (data: EvaluationAcceptModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.Evaluated) => {
     return fb.group({
-        commentsEvaluated: fb.control({value: data.commentsEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluated })
+        commentsEvaluated: fb.control({value: data.commentsEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluated }, [Validators.required])
     })
 }
 

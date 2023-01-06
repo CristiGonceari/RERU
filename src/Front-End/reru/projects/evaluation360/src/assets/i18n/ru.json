@@ -294,6 +294,8 @@
     "use-letters-numbers-and-dash": "Используйте только буквы, цифры и символ -",
     "date-from-is-more-than": "Дата начала опережает дата конца.",
     "date-to-is-less-than": "Дата конца опережает дата начала.",
-    "evaluation-initialized-successfully": "Процесс тестирования успешно начался!"
+    "evaluation-initialized-successfully": "Процесс тестирования успешно начался!",
+    "doesnt-need-countersign": "Контрподпись не требуется  (для высокопоставленных лиц)",
+    "final-points-should-be-between-1-and-4": "Окончательные баллы должны быть между 1 и 4"
   }
 }
