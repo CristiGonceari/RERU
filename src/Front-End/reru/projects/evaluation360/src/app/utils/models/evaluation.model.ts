@@ -70,6 +70,9 @@ export interface EvaluationModel {
 	dateSettingIindividualGoals: string | Date;
 	need1ProfessionalDevelopmentEvaluated: string;
 	need2ProfessionalDevelopmentEvaluated: string;
+	need3ProfessionalDevelopmentEvaluated: string;
+	need4ProfessionalDevelopmentEvaluated: string;
+	need5ProfessionalDevelopmentEvaluated: string;
 	commentsEvaluator: string;
 
 	/* Read-onlyy mode */
@@ -158,6 +161,9 @@ export class EvaluationClass implements EvaluationModel {
 	dateSettingIindividualGoals: string | Date;
 	need1ProfessionalDevelopmentEvaluated: string;
 	need2ProfessionalDevelopmentEvaluated: string;
+	need3ProfessionalDevelopmentEvaluated: string;
+	need4ProfessionalDevelopmentEvaluated: string;
+	need5ProfessionalDevelopmentEvaluated: string;
 	commentsEvaluator: string;
 	constructor(evaluation?: EvaluationModel) {
 		if (evaluation) {
@@ -232,6 +238,9 @@ export class EvaluationClass implements EvaluationModel {
 			this.dateSettingIindividualGoals = evaluation.dateSettingIindividualGoals;
 			this.need1ProfessionalDevelopmentEvaluated = evaluation.need1ProfessionalDevelopmentEvaluated;
 			this.need2ProfessionalDevelopmentEvaluated = evaluation.need2ProfessionalDevelopmentEvaluated;
+			this.need3ProfessionalDevelopmentEvaluated = evaluation.need3ProfessionalDevelopmentEvaluated;
+			this.need4ProfessionalDevelopmentEvaluated = evaluation.need4ProfessionalDevelopmentEvaluated;
+			this.need5ProfessionalDevelopmentEvaluated = evaluation.need5ProfessionalDevelopmentEvaluated;
 			this.commentsEvaluator = evaluation.commentsEvaluator;
 		}
 	}

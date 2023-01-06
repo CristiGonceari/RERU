@@ -325,6 +325,14 @@
     <div class="form-group row">
       <div class="col-lg col-12">
         <div class="row">
+          <label for="qualifierPartialEvaluations" class="col-lg-4 col-12  col-form-label">{{'evaluations.calificative' | translate }}: </label>
+          <div class="col-lg col-12">
+            <app-qualification-select (handleChange)="handlePartialScoreChange($event)" field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-12">
+        <div class="row">
           <label for="partialEvaluationScore" class="col-lg-4 col-12  col-form-label">{{'evaluations.final-points' | translate }}: </label>
           <div class="col-lg col-12">
               <input class="form-control" type="number" 
@@ -335,15 +343,7 @@
               }"
               formControlName="partialEvaluationScore" name="partialEvaluationScore" id="partialEvaluationScore" [placeholder]="'evaluations.final-points' | translate ">
               <div *ngIf="isInvalidMin(evaluationForm, 'partialEvaluationScore') || isInvalidMax(evaluationForm, 'partialEvaluationScore')" 
-              class="invalid-feedback position-absolute">Punctajul final trebuie sa fie intre 1 si 4</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg col-12">
-        <div class="row">
-          <label for="qualifierPartialEvaluations" class="col-lg-4 col-12  col-form-label">{{'evaluations.calificative' | translate }}: </label>
-          <div class="col-lg col-12">
-            <app-qualification-select (handleChange)="handlePartialScoreChange($event)" field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
+              class="invalid-feedback position-absolute">{{'message.final-points-should-be-between-1-and-4' | translate }}</div>
           </div>
         </div>
       </div>
@@ -351,7 +351,7 @@
 
     <div class="form-group row">
       <div class="col">
-        <p class="m-0"> Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate </p>
+        <p class="m-0"> {{'evaluations.saction-applied-evalution-course' | translate }} </p>
       </div>
     </div>
 
@@ -531,6 +531,10 @@
                   <td class="font-weight-bolder" colspan="2">{{'evaluations.yearly-evaluation-score' | translate }}:</td>
                   <td class="text-center">{{calculateMea()}}</td>
                 </tr>
+                <tr>
+                  <td class="font-weight-bolder" colspan="2">{{'evaluations.yearly-evaluation-score-final' | translate }}:</td>
+                  <td class="text-center">{{calculateMf()}}</td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -592,22 +596,24 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="align-middle" [ngStyle]="{'width.%': 2}">1.</td>
-                <td>
-                  <input class="form-control" type="text" formControlName="need1ProfessionalDevelopmentEvaluated" 
-                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need1ProfessionalDevelopmentEvaluated') }"
-                  name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
-                </td>
-              </tr>
-              <tr>
-                <td class="align-middle" [ngStyle]="{'width.%': 2}">2.</td>
-                <td>
-                  <input class="form-control" type="text" formControlName="need2ProfessionalDevelopmentEvaluated" 
-                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need2ProfessionalDevelopmentEvaluated') }"
-                  name="need2ProfessionalDevelopmentEvaluated" id="need2ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
-                </td>
-              </tr>
+              <ng-container *ngFor="let i of [1,2,3,4,5]">
+                <tr *ngIf="i == 1">
+                  <td class="align-middle" [ngStyle]="{'width.%': 2}">{{i}}.</td>
+                  <td>
+                    <input class="form-control" type="text" [formControlName]="'need'+i+'ProfessionalDevelopmentEvaluated'" 
+                    [ngClass]="{'is-valid': isValid(evaluationForm, 'need1ProfessionalDevelopmentEvaluated') }"
+                    name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
+                  </td>
+                </tr>
+                <tr *ngIf="i > 1 && !!evaluationForm.get('need'+(i-1)+'ProfessionalDevelopmentEvaluated')?.value">
+                  <td class="align-middle" [ngStyle]="{'width.%': 2}">{{i}}.</td>
+                  <td>
+                    <input class="form-control" type="text" [formControlName]="'need'+i+'ProfessionalDevelopmentEvaluated'" 
+                    [ngClass]="{'is-valid': isValid(evaluationForm, 'need1ProfessionalDevelopmentEvaluated') }"
+                    name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
@@ -640,8 +646,9 @@
     <label for="commentsEvaluated" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-comments' | translate}}:</label>
     <div class="col-lg col-12">
       <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" 
-      [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated')}"
+      [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated'), 'is-invalid': isInvalidRequired(evaluatedForm, 'commentsEvaluated')}"
       class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
+      <div *ngIf="isInvalidRequired(evaluatedForm, 'commentsEvaluated')" class="invalid-feedback">{{'notification.required' | translate}}</div>
     </div>
   </div>
 </form>

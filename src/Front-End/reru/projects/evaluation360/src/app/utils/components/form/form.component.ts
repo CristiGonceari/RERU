@@ -282,7 +282,8 @@ export class FormComponent implements OnInit, AfterViewInit {
    */
   calculateM4(isFixed: boolean = true): number {
     const pb = +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4);
-    const pf = this.evaluatedForm?.get('question13')?.value || 0;
+    const pf = +this.evaluationForm?.get('question13')?.value || 0;
+
     return isFixed ? +((pb + pf) / 2).toFixed(2) : (pb + pf) / 2;
   }
 
@@ -293,7 +294,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     const m1 = +this.calculateAverageCriterias(6, false)
     const m2 = +this.calculateAverageCriterias(10, false)
     const m3 = this.calculateAverageCriterias(12, false);
-    const m4 = this.calculateM4();
+    const m4 = this.calculateM4(false);
 
     return isFixed ? +((m1 + m2 + m3 + m4) / 4).toFixed(2) : (m1 + m2 + m3 + m4) / 4; 
   }
@@ -302,10 +303,10 @@ export class FormComponent implements OnInit, AfterViewInit {
    * 
    * @returns {number} Evaluare anuala final (Mf)
    */
-  calculateMf(): number {
-    const Mea = this.calculateMea();
-    const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
+  calculateMf(isFixed: boolean = true): number | string {
+    const Mea = this.calculateMea(false);
+    const Mep = +this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
     
-    return (Mea + Mep).toFixed(2); 
+    return isFixed ? (Mea + Mep / 2).toFixed(2) : Mea + Mep / 2; 
   }
 }

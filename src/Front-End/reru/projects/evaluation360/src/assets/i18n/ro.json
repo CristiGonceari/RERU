@@ -163,10 +163,10 @@
       "4": "Aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
     },
     "qualification": {
-      "very-good": "Foarte bine (FB)",
-      "good": "Bine (B)",
-      "satisfactory": "Satisfăcător",
-      "unsatisfactory": "Nesatisfăcător"
+      "very-good": "Foarte bine (FB - 3.51 - 4)",
+      "good": "Bine (B 2.51 - 3.50)",
+      "satisfactory": "Satisfăcător (1.51 - 2.50)",
+      "unsatisfactory": "Nesatisfăcător (1.00 - 1.50)"
     },
     "are-you-sure-you-want-to-delete-evaluation": "Sunteți sigur că doriți să ștergeți evaluarea?",
     "confirmation": "Confirmare",
@@ -236,7 +236,8 @@
     "indicator": "Indicator",
     "term": "Termen",
     "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
-    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
+    "yearly-evaluation-score": "Punctajul la evaluarea anuală (MEa = M¹ + M² + M³ + M⁴)",
+    "yearly-evaluation-score-final": "Punctajul la evaluarea anuală final (Mf = MEa + Mep1 + MEp2 +...+MEpn)",
     "evaluation-final-calificative": "Calificativul de evaluare final",
     "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
     "individual-objective-established": "Obiective individuale au fost stabilite (data)",
@@ -296,6 +297,8 @@
     "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
     "date-from-is-more-than": "Data început este mai mare decât data sfârșit.",
     "date-to-is-less-than": "Data sfârșit este mai mică decât data început.",
-    "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!"
+    "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!",
+    "doesnt-need-countersign": "Nu necesită contrasemnare (pentru persoane cu rang înalt)",
+    "final-points-should-be-between-1-and-4": "Punctajul final trebuie sa fie intre 1 și 4"
   }
 }

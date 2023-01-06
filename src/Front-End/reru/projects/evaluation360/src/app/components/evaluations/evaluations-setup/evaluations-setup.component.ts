@@ -29,6 +29,7 @@ export class EvaluationsSetupComponent implements OnInit {
 			error: 'A avut loc o eroare!'
 		}
 	}
+	hasCounterSigner: boolean;
 
 	constructor(
 		private readonly fb: FormBuilder,
@@ -55,6 +56,12 @@ export class EvaluationsSetupComponent implements OnInit {
 		]).subscribe(([success, create, error, bodyError ]) => {
 			this.notification = { title: {success, error}, body: { create, error: bodyError }  };
 		})
+	}
+
+	handleCounterSignChange(value: boolean): void {
+		if (value) {
+			this.counterSignUsers.length = 0;
+		}
 	}
 
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
