@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,6 +48,8 @@ const commonComponents = [
     MaterialModule,
     SharedModule,
     OwlDateTimeModule,
+    NgbTooltipModule,
+    NgbDropdownModule,
     OwlMomentDateTimeModule
   ],
   exports: [

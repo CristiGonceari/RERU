@@ -3,7 +3,7 @@
                 [formControlName]="field"
                 [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
                             'is-valid': isValid(formGroup, field)}"
-                (change)="handleChange.emit($event.target.value)"
+                (change)="handleChangeQualification($event.target.value)"
                 name="field" 
                 id="field">
         <option value="null">{{'button.select' | translate}}</option>
@@ -16,7 +16,7 @@
                 [formControlName]="field"
                 [ngClass]="{'is-invalid': isInvalidPattern(formGroup, field) || isInvalidRequired(formGroup, field), 
                             'is-valid': isValid(formGroup, field)}"
-                (change)="handleChange.emit($event.target.value)"
+                (change)="handleChangeQualification($event.target.value)"
                 name="field" 
                 id="field">
         <option value="null">{{'button.select' | translate}}</option>

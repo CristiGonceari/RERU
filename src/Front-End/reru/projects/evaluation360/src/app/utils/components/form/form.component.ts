@@ -13,7 +13,7 @@ import { createEvaluatorForm,
          isInvalidCustom,
          isoDateRegex, 
 } from '../../util/forms.util';
-import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../util/parsings.util';
+import { parseEvaluatedModel, parseCounterSignModel, parseDate, generateAvgNumbers } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
 import { EvaluationTypeEnum } from '../../models/type.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
@@ -140,6 +140,7 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.isLoading = false;
         this.subscribeForServiceDuringEvaluationCourseChanges();
+        this.subscribeForObjectivesChanges();
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
@@ -205,7 +206,7 @@ export class FormComponent implements OnInit, AfterViewInit {
       return
     }
 
-    this.finalEvalNum.nativeElement.value = +value;
+    this.finalEvalNum.nativeElement.value = +value || null;
   }
 
   handlePartialScoreChange(value: number, isInputChange: boolean = false): void {
@@ -248,6 +249,34 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.evaluationForm.updateValueAndValidity();
       }
     });
+  }
+
+  subscribeForObjectivesChanges(): void {
+    for(let i = 1; i < 6; i++) {
+      this.evaluationForm.get('score'+i).valueChanges.subscribe((value: number)=> {
+        if (!isNaN(+value)) {
+          this.evaluationForm.get('goal'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('kpI'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('performanceTerm'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('goal'+i).patchValue(this.evaluationForm.get('goal'+i).value || null);
+          this.evaluationForm.get('goal'+i).markAsTouched();
+          this.evaluationForm.get('kpI'+i).patchValue(this.evaluationForm.get('kpI'+i).value || null);
+          this.evaluationForm.get('kpI'+i).markAsTouched();
+          this.evaluationForm.get('performanceTerm'+i).patchValue(this.evaluationForm.get('performanceTerm'+i).value || null);
+          this.evaluationForm.get('performanceTerm'+i).markAsTouched();
+        } else {
+          this.evaluationForm.get('goal'+i).clearValidators();
+          this.evaluationForm.get('kpI'+i).clearValidators();
+          this.evaluationForm.get('performanceTerm'+i).clearValidators();
+          this.evaluationForm.get('goal'+i).markAsUntouched();
+          this.evaluationForm.get('goal'+i).updateValueAndValidity();
+          this.evaluationForm.get('kpI'+i).markAsUntouched();
+          this.evaluationForm.get('kpI'+i).updateValueAndValidity();
+          this.evaluationForm.get('performanceTerm'+i).markAsUntouched();
+          this.evaluationForm.get('performanceTerm'+i).updateValueAndValidity();
+        }
+      });
+    }
   }
 
   /**
@@ -307,6 +336,44 @@ export class FormComponent implements OnInit, AfterViewInit {
     const Mea = this.calculateMea(false);
     const Mep = +this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
     
-    return isFixed ? (Mea + Mep / 2).toFixed(2) : Mea + Mep / 2; 
+    if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
+      return isFixed ? ((Mea + Mep) / 2).toFixed(2) : (Mea + Mep) / 2; 
+    }
+
+    return isFixed ? (Mea).toFixed(2) : Mea;
+  }
+
+  precompleteWith(btn, value: number): void {
+    for(let i = 1; i < 14; i++) {
+      this.evaluationForm.get('question'+i).patchValue(+value);
+      this.evaluationForm.get('question'+i).markAsTouched();
+
+      if (i > 0 && i < 6) {
+        this.evaluationForm.get('score'+i).patchValue(+value);
+        this.evaluationForm.get('score'+i).markAsTouched();
+      }
+    }
+    btn.click();
+  }
+
+async randomCompleteForAvg(btn, value) {
+  new Promise((resolve, reject) => {
+    this.isLoading = true;
+    btn.click();
+    return setTimeout(() => resolve(true), 300);
+  }).then(() => {
+    return generateAvgNumbers(+value);
+    }).then((result: any) => {
+      for(let i = 1; i < 14; i++) {
+        this.evaluationForm.get('question'+i).patchValue(result.questions[i - 1]);
+        this.evaluationForm.get('question'+i).markAsTouched();
+  
+        if (i > 0 && i < 6) {
+          this.evaluationForm.get('score'+i).patchValue(result.scores[i - 1]);
+          this.evaluationForm.get('score'+i).markAsTouched();
+        }
+      }
+      this.isLoading = false;
+    })
   }
 }
