@@ -282,7 +282,8 @@
     "yes": "Da",
     "no": "Nu",
     "search": "Caută",
-    "reset": "Resetează"
+    "reset": "Resetează",
+    "print": "Imprimă"
   },
   "attach-user-modal": {
     "first-name": "Prenume",
@@ -307,5 +308,11 @@
     "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!",
     "doesnt-need-countersign": "Nu necesită contrasemnare (pentru persoane cu rang înalt)",
     "final-points-should-be-between-1-and-4": "Punctajul final trebuie sa fie intre 1 și 4"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare."
   }
 }

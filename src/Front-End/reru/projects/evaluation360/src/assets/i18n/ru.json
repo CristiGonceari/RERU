@@ -281,7 +281,8 @@
     "yes": "Да",
     "no": "Нет",
     "search": "Поиск",
-    "reset": "Сброс"
+    "reset": "Сброс",
+    "print": "Печать"
   },
   "attach-user-modal": {
     "first-name": "Имя",
