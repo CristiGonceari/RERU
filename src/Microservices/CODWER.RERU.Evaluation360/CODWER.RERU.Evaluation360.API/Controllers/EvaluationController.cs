@@ -13,6 +13,8 @@ using CVU.ERP.Common.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.PrintEvaluations;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -93,5 +95,24 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             var command = new EvaluatedKnowCommand(id);
             await Sender.Send(command);
         }
+        
+        [HttpPut("print-evaluations")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintEvaluationsPdf([FromBody] PrintEvaluationsCommand command)
+        {
+            var result = await Sender.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        /*[HttpGet("getPDF")]
+        public async Task<IActionResult> GetPDF([FromQuery] string source, string evaluationName)
+        {
+            var result = await _getReplacedKeys.GetPdf(source, evaluationName);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }*/
     }
 }
