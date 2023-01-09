@@ -282,7 +282,8 @@
     "yes": "Yes",
     "no": "No",
     "search": "Search",
-    "reset": "Reset"
+    "reset": "Reset",
+    "print": "Print"
   },
   "attach-user-modal": {
     "first-name": "First name",
