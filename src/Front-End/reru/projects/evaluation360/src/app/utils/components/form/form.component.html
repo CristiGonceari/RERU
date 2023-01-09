@@ -169,7 +169,8 @@
       <div class="form-group row order-1">
         <label for="educationEnum" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.studies' | translate }}: </label>
         <div class="col-lg col-12">
-            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum" [ngClass]="{'is-valid': isValid(evaluationForm, 'educationEnum')}">
+            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum" 
+            [ngClass]="{'is-valid': isValid(evaluationForm, 'educationEnum'), 'is-invalid': isInvalidPattern(evaluationForm, 'educationEnum')}">
               <option value="null">{{'button.select' | translate}}</option>
               <option value="1">{{ 'evaluations.education.1' | translate }}</option>
               <option value="2">{{ 'evaluations.education.2' | translate }}</option>
