@@ -232,6 +232,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
                     RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
+                    ResetPassPageUrl= _platformConfig.ResetPassPageUrl,
                     PositionsPageUrl = _platformConfig.PositionsPageUrl
                 };
 
@@ -276,6 +277,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 Username = context?.LoginHint,
                 ExternalProviders = providers.ToArray(),
                 RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
+                ResetPassPageUrl = _platformConfig.ResetPassPageUrl,
                 PositionsPageUrl = _platformConfig.PositionsPageUrl
             };
         }

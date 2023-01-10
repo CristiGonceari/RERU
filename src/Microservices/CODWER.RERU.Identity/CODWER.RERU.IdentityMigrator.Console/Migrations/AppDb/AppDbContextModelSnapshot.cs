@@ -857,6 +857,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("Need2ProfessionalDevelopmentEvaluated")
                         .HasColumnType("text");
 
+                    b.Property<string>("Need3ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need4ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need5ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
                     b.Property<string>("OtherComments")
                         .HasColumnType("text");
 

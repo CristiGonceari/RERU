@@ -55,7 +55,7 @@ export class PrintModalComponent implements OnInit {
 
   print(): void {
 
-    var fields = this.tableData.fields.filter((el) => el.isChecked == true);
+    const fields = this.tableData.fields.filter((el) => el.isChecked == true);
     
     this.tableData.fields = fields;
     this.tableData.tableExportFormat = this.selectedFormat;

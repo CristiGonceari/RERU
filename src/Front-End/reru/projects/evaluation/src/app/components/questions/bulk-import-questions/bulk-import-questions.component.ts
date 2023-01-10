@@ -10,10 +10,11 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./bulk-import-questions.component.scss']
 })
 export class BulkImportQuestionsComponent implements OnInit {
-  selectedTypeName: string = QuestionUnitTypeEnum[1];
+  	selectedTypeName: string = QuestionUnitTypeEnum[1];
 	selectedTypeId = 1;
 	questionTypes: string[];
 	files: File[] = [];
+	isLoading: boolean = false;
 
 	constructor(
 		public activeModal: NgbActiveModal,
@@ -54,13 +55,14 @@ export class BulkImportQuestionsComponent implements OnInit {
 	}
 
 	onConfirm(): void {
+		this.isLoading = true;
 		const formData = new FormData();
 		formData.append('file', this.files[0]);
 		this.questionService.bulkUpload(formData).subscribe(
 			(res) => {
 				const blob = new Blob([res.body], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 				this.questionService.uploadQuestions.next();
-				
+				this.isLoading = false;
 				if(res.body.size > 0) {
 					const file = new File([blob], 'error.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
 					saveAs(file);
