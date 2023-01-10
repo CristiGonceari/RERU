@@ -38,6 +38,31 @@
     "upload-files": "Drop file here or click to upload",
     "personal-file-msg": "To complete the personal file, please download it by accessing the button below. After filling in the personal file, upload it in the area below together with the other necessary documents. Filling the form is mandatory"
   },
+  "reset-pass": {
+    "card-header-main": "Find your account",
+    "card-header-profile-overview": "Reset your password",
+    "card-header-email-verification": "Enter security code",
+    "card-body-main": "Please enter your email to search for your account.",
+    "card-body-main-email": "Email",
+    "card-body-profile-overview": "Do you want to get the code to reset your password?",
+    "card-body-email-verification": "Please check your email for a message with your code. Your code is 4 numbers long.",
+    "card-body-email-verification-code": "Enter code",
+    "card-body-email-verification-send-code": "We sent your code to:",
+    "card-body-email-verification-resend-code": "Didn't get a code?",
+    "card-body-reseted-password": "Your password has been sent to your email successfully!",
+    "card-footer-main": {
+      "button-cancel": "Cancel",
+      "button-next": "Search"
+    },
+    "card-footer-profile-overview": {
+      "button-cancel": "Not you?",
+      "button-next": "Continue"
+    },
+    "card-footer-email-verification": {
+      "button-cancel": "Cancel",
+      "button-next": "Continue"
+    }
+  },
   "vacant-positions-page": {
     "title": "Vacant positions page",
     "details": "Vacant position details",
@@ -98,7 +123,13 @@
         "login": "Login successfully!"
       },
       "error": "There has been an error!",
-      "pls-select-role": "Please select a role!"
+      "pls-select-role": "Please select a role!",
+      "get-user-success": "Existing email",
+      "get-user-error": "Email does not exist",
+      "email-verification-success": "The security code has been sent successfully",
+      "email-verification-error": "The security code was not sent",
+      "reset-password-success": "The password has been successfully reset",
+      "reset-password-error": "The password has not been reset"
     }
   },
   "modules": {
