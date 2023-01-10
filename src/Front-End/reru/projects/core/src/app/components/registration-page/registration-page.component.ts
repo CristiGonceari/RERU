@@ -147,7 +147,7 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   verifyEmailCode() {
-    this.inregistrationService.verifyEmail({ email: this.userForm.value.email }).subscribe(res => {
+    this.inregistrationService.verifyEmail({ email: this.userForm.value.email , forReset: false }).subscribe(res => {
       this.modalRef = this.modalService.open(VerifyEmailCodeModalComponent, { centered: true, size: 'md' });
     });
   }

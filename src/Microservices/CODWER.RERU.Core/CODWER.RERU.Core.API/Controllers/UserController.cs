@@ -15,8 +15,11 @@ using CODWER.RERU.Core.Application.Users.EditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetEditUserPersonalDetails;
 using CODWER.RERU.Core.Application.Users.GetPersonalData;
 using CODWER.RERU.Core.Application.Users.GetUserDetails;
+using CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail;
 using CODWER.RERU.Core.Application.Users.RemoveUser;
 using CODWER.RERU.Core.Application.Users.ResetUserPassword;
+using CODWER.RERU.Core.Application.Users.ResetUserPasswordByEmailCode;
+using CODWER.RERU.Core.Application.Users.SendEmailVerificationCode;
 using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
@@ -45,6 +48,12 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task<UserDetailsOverviewDto> GetUserDetails ([FromRoute] int id) 
         {
             return Mediator.Send (new GetUserDetailsQuery (id));
+        }
+
+        [HttpGet("personal-details/{email}")]
+        public Task<UserDetailsOverviewDto> GetUserPersonalDetails([FromRoute] string email)
+        {
+            return Mediator.Send(new GetUserDetailsByEmailQuery(email));
         }
 
         [HttpGet ("{id:int}/for-remove")]
@@ -184,6 +193,18 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task DeactivateUser ([FromRoute] int id) 
         {
             return Mediator.Send (new DeactivateUserCommand (id));
+        }
+
+        [HttpPost("verify-code")]
+        public Task<int> VerifyEmail([FromBody] SendEmailVerificationCodeCommand command)
+        {
+            return Mediator.Send(command);
+        }
+
+        [HttpPatch("reset-user-password")]
+        public Task<Unit> ResetUserPassword([FromBody] ResetUserPasswordByEmailCodeCommand command)
+        {
+            return Mediator.Send(command);
         }
     }
 }

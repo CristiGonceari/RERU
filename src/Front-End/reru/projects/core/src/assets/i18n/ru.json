@@ -38,6 +38,31 @@
     "upload-files": "Перетащите файл сюда или нажмите, чтобы загрузить",
     "personal-file-msg": "Чтобы заполнить файл с личными данными, скачайте его, нажав кнопку ниже. После заполнения личных данных загрузите файл в область ниже вместе с другими необходимыми документами."
   },
+  "reset-pass": {
+    "card-header-main": "Поиск аккаунта",
+    "card-header-profile-overview": "Восстановление пароля",
+    "card-header-email-verification": "Введите код безопасности",
+    "card-body-main": "Чтобы найти свой аккаунт, введите ваш электронный адрес.",
+    "card-body-main-email": "Электронный адрес",
+    "card-body-profile-overview": "Bы хотите получить код для сброса пароля?",
+    "card-body-email-verification": "Сообщение с 4-значным кодом отправлено на ваш электронный адрес.",
+    "card-body-email-verification-code": "Введите код",
+    "card-body-email-verification-send-code": "Мы отправили код на:",
+    "card-body-email-verification-resend-code": "Не получили код?",
+    "card-body-reseted-password": "Ваш пароль был успешно отправлен на вашу электронную почту",
+    "card-footer-main": {
+      "button-cancel": "Отмена",
+      "button-next": "Поиск"
+    },
+    "card-footer-profile-overview": {
+      "button-cancel": "Это не вы?",
+      "button-next": "Продолжить"
+    },
+    "card-footer-email-verification": {
+      "button-cancel": "Отмена",
+      "button-next": "Продолжить"
+    }
+  },
   "vacant-positions-page": {
     "title": "Страница вакантных должностей",
     "details": "Сведения о вакантной должности",
@@ -102,7 +127,13 @@
         "login": "Успешная авторизация!"
       },
       "error": "Произошла ошибка!",
-      "pls-select-role": "Пожалуйста выберите роль!"
+      "pls-select-role": "Пожалуйста выберите роль!",
+      "get-user-success": "Существующий адрес электронной почты",
+      "get-user-error": "Электронная почта не существует",
+      "email-verification-success": "Код безопасности успешно отправлен",
+      "email-verification-error": "Код безопасности не был отправлен",
+      "reset-password-success": "Пароль успешно сброшен",
+      "reset-password-error": "Пароль не был сброшен"
     }
   },
   "modules": {
