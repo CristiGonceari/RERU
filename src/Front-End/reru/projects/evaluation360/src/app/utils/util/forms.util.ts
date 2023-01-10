@@ -14,7 +14,7 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
       evaluatedName: fb.control({value: data?.evaluatedName, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator }, [Validators.required]),
       functionSubdivision: fb.control({value: data?.functionSubdivision, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^[A-Za-z- ]+$/)]),
       subdivisionEvaluated: fb.control({value: data?.subdivisionEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/[A-Za-z- ]*/)]),
-      specialOrMilitaryGrade: fb.control({value: data?.specialOrMilitaryGrade, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^\d$/i)]),
+      specialOrMilitaryGrade: fb.control({value: data?.specialOrMilitaryGrade, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^\d\d?$/i)]),
       periodEvaluatedFromTo: fb.control({value: data?.periodEvaluatedFromTo, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(isoDateRegex), isMoreThan.call(this, 'periodEvaluatedUpTo')]),
       periodEvaluatedUpTo: fb.control({value: data?.periodEvaluatedUpTo, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(isoDateRegex), isLessThan.call(this, 'periodEvaluatedFromTo')]),
       educationEnum: fb.control({value: data?.educationEnum, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
@@ -69,23 +69,26 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
       performanceTerm3: fb.control({value: data?.performanceTerm3, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       performanceTerm4: fb.control({value: data?.performanceTerm4, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       performanceTerm5: fb.control({value: data?.performanceTerm5, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
-      score1: fb.control({value: data?.score1, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d$/i)]),
-      score2: fb.control({value: data?.score2, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d$/i)]),
-      score3: fb.control({value: data?.score3, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d$/i)]),
-      score4: fb.control({value: data?.score4, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d$/i)]),
-      score5: fb.control({value: data?.score5, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d$/i)]),
+      score1: fb.control({value: data?.score1, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d?$/i)]),
+      score2: fb.control({value: data?.score2, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d?$/i)]),
+      score3: fb.control({value: data?.score3, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d?$/i)]),
+      score4: fb.control({value: data?.score4, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d?$/i)]),
+      score5: fb.control({value: data?.score5, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(/^\d?$/i)]),
       finalEvaluationQualification: fb.control({value: data?.finalEvaluationQualification, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^\d$/i)]),
       dateEvaluationInterview: fb.control({value: data?.dateEvaluationInterview, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(isoDateRegex)]),
       dateSettingIindividualGoals: fb.control({value: data?.dateSettingIindividualGoals, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.pattern(isoDateRegex)]),
       need1ProfessionalDevelopmentEvaluated: fb.control({value: data?.need1ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       need2ProfessionalDevelopmentEvaluated: fb.control({value: data?.need2ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need3ProfessionalDevelopmentEvaluated: fb.control({value: data?.need3ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need4ProfessionalDevelopmentEvaluated: fb.control({value: data?.need4ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
+      need5ProfessionalDevelopmentEvaluated: fb.control({value: data?.need5ProfessionalDevelopmentEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       commentsEvaluator: fb.control({value: data?.commentsEvaluator, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
     })
 }
 
 export const createEvaluatedForm = (data: EvaluationAcceptModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.Evaluated) => {
     return fb.group({
-        commentsEvaluated: fb.control({value: data.commentsEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluated })
+        commentsEvaluated: fb.control({value: data.commentsEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluated }, [Validators.required])
     })
 }
 

@@ -2,6 +2,65 @@
   [colorClass]="'text-primary'">
 </app-loading-spinner>
 
+<div ngbDropdown container="body" *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.Evaluator">
+  <button #btn id="fastSetupDropdown" ngbDropdownToggle [ngbTooltip]="'evaluations.fast-setup' | translate" type="button" class="pulse pulse-primary btn btn-clean btn-hover-light-primary btn-sm btn-icon position-absolute top-0 right-0">
+    <i class="ki ki-bold-more-hor"></i>
+    <span class="pulse-ring"></span>
+  </button>
+  <div ngbDropdownMenu class="dropdown-menu dropdown-menu-lg" aria-labelledby="fastSetupDropdown">
+    <ul class="navi flex-column navi-hover py-2" >
+      <li class="navi-item">
+          <a (click)="precompleteWith(btn, 1)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon-time-1 text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.precomplete-points-with' | translate }} 1</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="precompleteWith(btn, 2)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon-time-1 text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.precomplete-points-with' | translate }} 2</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="precompleteWith(btn, 3)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon-time-1 text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.precomplete-points-with' | translate }} 3</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="precompleteWith(btn, 4)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon-time-1 text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.precomplete-points-with' | translate }} 4</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="randomCompleteForAvg(btn, 4)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon2-graphic text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.set-annual-average-as-4' | translate }}</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="randomCompleteForAvg(btn, 3)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon2-graphic text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.set-annual-average-as-3' | translate }}</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="randomCompleteForAvg(btn, 2)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon2-graphic text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.set-annual-average-as-2' | translate }}</span>
+          </a>
+      </li>
+      <li class="navi-item">
+          <a (click)="randomCompleteForAvg(btn, 1)" href="javascript:void(0)" class="navi-link">
+              <span class="navi-icon"><i class="flaticon2-graphic text-dark-65"></i></span>
+              <span class="navi-text text-dark-65">{{'evaluations.set-annual-average-as-1' | translate }}</span>
+          </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <h2 *ngIf="!isLoading && evaluation.type === EvaluationTypeEnum.Execution" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.execution-assessment-sheet' | translate"></h2>
 <h2 *ngIf="!isLoading && evaluation.type === EvaluationTypeEnum.Management" class="font-weight-bolder text-center pb-5" [innerHTML]="'evaluations.managing-assessment-sheet' | translate"></h2>
 
@@ -110,7 +169,8 @@
       <div class="form-group row order-1">
         <label for="educationEnum" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.studies' | translate }}: </label>
         <div class="col-lg col-12">
-            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum" [ngClass]="{'is-valid': isValid(evaluationForm, 'educationEnum')}">
+            <select name="educationEnum" id="educationEnum" class="form-control" formControlName="educationEnum" 
+            [ngClass]="{'is-valid': isValid(evaluationForm, 'educationEnum'), 'is-invalid': isInvalidPattern(evaluationForm, 'educationEnum')}">
               <option value="null">{{'button.select' | translate}}</option>
               <option value="1">{{ 'evaluations.education.1' | translate }}</option>
               <option value="2">{{ 'evaluations.education.2' | translate }}</option>
@@ -325,6 +385,14 @@
     <div class="form-group row">
       <div class="col-lg col-12">
         <div class="row">
+          <label for="qualifierPartialEvaluations" class="col-lg-4 col-12  col-form-label">{{'evaluations.calificative' | translate }}: </label>
+          <div class="col-lg col-12">
+            <app-qualification-select (handleChange)="handlePartialScoreChange($event)" field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-12">
+        <div class="row">
           <label for="partialEvaluationScore" class="col-lg-4 col-12  col-form-label">{{'evaluations.final-points' | translate }}: </label>
           <div class="col-lg col-12">
               <input class="form-control" type="number" 
@@ -335,15 +403,7 @@
               }"
               formControlName="partialEvaluationScore" name="partialEvaluationScore" id="partialEvaluationScore" [placeholder]="'evaluations.final-points' | translate ">
               <div *ngIf="isInvalidMin(evaluationForm, 'partialEvaluationScore') || isInvalidMax(evaluationForm, 'partialEvaluationScore')" 
-              class="invalid-feedback position-absolute">Punctajul final trebuie sa fie intre 1 si 4</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg col-12">
-        <div class="row">
-          <label for="qualifierPartialEvaluations" class="col-lg-4 col-12  col-form-label">{{'evaluations.calificative' | translate }}: </label>
-          <div class="col-lg col-12">
-            <app-qualification-select (handleChange)="handlePartialScoreChange($event)" field="qualifierPartialEvaluations" [formGroup]="evaluationForm"></app-qualification-select>
+              class="invalid-feedback position-absolute">{{'message.final-points-should-be-between-1-and-4' | translate }}</div>
           </div>
         </div>
       </div>
@@ -351,7 +411,7 @@
 
     <div class="form-group row">
       <div class="col">
-        <p class="m-0"> Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate </p>
+        <p class="m-0"> {{'evaluations.saction-applied-evalution-course' | translate }} </p>
       </div>
     </div>
 
@@ -478,16 +538,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let i of questions">
-                  <td class="align-middle" *ngIf="i < 6">{{i}}</td>
-                  <td class="align-middle" *ngIf="i > 6 && i < 10">{{i - 6}}</td>
-                  <td class="align-middle" *ngIf="i > 12 && i < 17">{{i - 10}}</td>
-                  <td class="align-middle" *ngIf="i > 17">{{i - 11}}</td>
-                  <td colspan="2" *ngIf="[6, 10, 12, 17].includes(i)" class="align-middle font-weight-bolder">
-                    {{ evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate) }}
-                  </td>
-                  <td *ngIf="![6, 10, 11, 12, 17].includes(i)" class="align-middle">
-                    {{ evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate) }}
-                  </td>
+                  <td class="align-middle" *ngIf="i < 6">{{i}}.</td>
+                  <td class="align-middle" *ngIf="i > 6 && i < 10">{{i - 6}}.</td>
+                  <td class="align-middle" *ngIf="i > 12 && i < 17">{{i - 12}}.</td>
+                  <td class="align-middle" *ngIf="i > 17">{{i - 13}}.</td>
+                  <td colspan="2" *ngIf="[6, 10, 12, 17].includes(i)" class="align-middle font-weight-bolder" 
+                  [innerHTML]="evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate)"></td>
+                  <td *ngIf="![6, 10, 11, 12, 17].includes(i)" class="align-middle" 
+                  [innerHTML]="evaluation.type === EvaluationTypeEnum.Execution ? ('evaluations.criterias.execution.'+(i) | translate) : ('evaluations.criterias.management.'+(i) | translate)"></td>
                   <td *ngIf="i != 11">
                     <div *ngIf="![6, 10, 12, 17].includes(i)">
                       <app-qualification-select [hasErrorSpace]="true" [field]="'question'+(i > 17 ? i - 5 : i > 12 ? i - 4 : i > 6 ? i - 1 : i)" [formGroup]="evaluationForm" [showNumbers]="true"></app-qualification-select>
@@ -508,14 +566,20 @@
                           <tr *ngFor="let item of [1,2,3,4,5]; let i = index">
                             <td class="align-middle">{{i+1}}.</td>
                             <td><input type="text" class="form-control" [formControlName]="'goal'+(i+1)" 
-                              [ngClass]="{'is-valid': isValid(evaluationForm, 'goal'+(i+1)) }"
-                              [placeholder]="('evaluations.objective' | translate)+' '+(i+1)"></td>
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'goal'+(i+1)), 'is-invalid': isInvalidRequired(evaluationForm, 'goal'+(i+1)) }"
+                              [placeholder]="('evaluations.objective' | translate)+' '+(i+1)">
+                              <div *ngIf="isInvalidRequired(evaluationForm, 'goal'+(i+1))" class="invalid-feedback">{{'notification.required' | translate}}</div>
+                            </td>
                             <td><input type="text" class="form-control" [formControlName]="'kpI'+(i+1)" 
-                              [ngClass]="{'is-valid': isValid(evaluationForm, 'kpI'+(i+1)) }"
-                              [placeholder]="('evaluations.indicator' | translate)+' '+(i+1)"></td>
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'kpI'+(i+1)), 'is-invalid': isInvalidRequired(evaluationForm, 'kpI'+(i+1)) }"
+                              [placeholder]="('evaluations.indicator' | translate)+' '+(i+1)">
+                              <div *ngIf="isInvalidRequired(evaluationForm, 'kpI'+(i+1))" class="invalid-feedback">{{'notification.required' | translate}}</div>
+                            </td>
                             <td><input type="text" class="form-control" [formControlName]="'performanceTerm'+(i+1)" 
-                              [ngClass]="{'is-valid': isValid(evaluationForm, 'performanceTerm'+(i+1)) }"
-                              [placeholder]="('evaluations.term' | translate)+' '+(i+1)"></td>
+                              [ngClass]="{'is-valid': isValid(evaluationForm, 'performanceTerm'+(i+1)), 'is-invalid': isInvalidRequired(evaluationForm, 'performanceTerm'+(i+1)) }"
+                              [placeholder]="('evaluations.term' | translate)+' '+(i+1)">
+                              <div *ngIf="isInvalidRequired(evaluationForm, 'performanceTerm'+(i+1))" class="invalid-feedback">{{'notification.required' | translate}}</div>
+                            </td>
                             <td><app-qualification-select [field]="'score'+(i+1)" [formGroup]="evaluationForm" [showNumbers]="true" [hasErrorSpace]="true"></app-qualification-select></td>
                           </tr>
                         </tbody>
@@ -524,12 +588,16 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="font-weight-bolder" colspan="2">{{'evaluations.established-score-on-fourth-compartment' | translate }}:</td>
+                  <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.established-score-on-fourth-compartment' | translate"></td>
                   <td class="text-center">{{calculateM4()}}</td>
                 </tr>
                 <tr>
-                  <td class="font-weight-bolder" colspan="2">{{'evaluations.yearly-evaluation-score' | translate }}:</td>
+                  <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.yearly-evaluation-score' | translate"></td>
                   <td class="text-center">{{calculateMea()}}</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.yearly-evaluation-score-final' | translate"></td>
+                  <td class="text-center">{{calculateMf()}}</td>
                 </tr>
             </tbody>
           </table>
@@ -588,26 +656,28 @@
           <table class="table">
             <thead>
               <tr>
-                <th colspan="2">{{'evaluations.professional-development-needs-evaluated' | translate}}</th>
+                <th colspan="2" [innerHTML]="'evaluations.professional-development-needs-evaluated' | translate"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="align-middle" [ngStyle]="{'width.%': 2}">1.</td>
-                <td>
-                  <input class="form-control" type="text" formControlName="need1ProfessionalDevelopmentEvaluated" 
-                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need1ProfessionalDevelopmentEvaluated') }"
-                  name="need1ProfessionalDevelopmentEvaluated" id="need1ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
-                </td>
-              </tr>
-              <tr>
-                <td class="align-middle" [ngStyle]="{'width.%': 2}">2.</td>
-                <td>
-                  <input class="form-control" type="text" formControlName="need2ProfessionalDevelopmentEvaluated" 
-                  [ngClass]="{'is-valid': isValid(evaluationForm, 'need2ProfessionalDevelopmentEvaluated') }"
-                  name="need2ProfessionalDevelopmentEvaluated" id="need2ProfessionalDevelopmentEvaluated" placeholder="Necesitate">
-                </td>
-              </tr>
+              <ng-container *ngFor="let i of [1,2,3,4,5]">
+                <tr *ngIf="i == 1">
+                  <td class="align-middle" [ngStyle]="{'width.%': 2}">{{i}}.</td>
+                  <td>
+                    <input class="form-control" type="text" [formControlName]="'need'+i+'ProfessionalDevelopmentEvaluated'" 
+                    [ngClass]="{'is-valid': isValid(evaluationForm, 'need'+i+'ProfessionalDevelopmentEvaluated') }"
+                    [name]="'need'+i+'ProfessionalDevelopmentEvaluated'" [id]="'need'+i+'ProfessionalDevelopmentEvaluated'" [placeholder]="'evaluations.necessity' | translate">
+                  </td>
+                </tr>
+                <tr *ngIf="i > 1 && !!evaluationForm.get('need'+(i-1)+'ProfessionalDevelopmentEvaluated')?.value">
+                  <td class="align-middle" [ngStyle]="{'width.%': 2}">{{i}}.</td>
+                  <td>
+                    <input class="form-control" type="text" [formControlName]="'need'+i+'ProfessionalDevelopmentEvaluated'" 
+                    [ngClass]="{'is-valid': isValid(evaluationForm, 'need'+i+'ProfessionalDevelopmentEvaluated') }"
+                    [name]="'need'+i+'ProfessionalDevelopmentEvaluated'" [id]="'need'+i+'ProfessionalDevelopmentEvaluated'" [placeholder]="'evaluations.necessity' | translate">
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
@@ -640,8 +710,9 @@
     <label for="commentsEvaluated" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-comments' | translate}}:</label>
     <div class="col-lg col-12">
       <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" 
-      [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated')}"
+      [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated'), 'is-invalid': isInvalidRequired(evaluatedForm, 'commentsEvaluated')}"
       class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
+      <div *ngIf="isInvalidRequired(evaluatedForm, 'commentsEvaluated')" class="invalid-feedback">{{'notification.required' | translate}}</div>
     </div>
   </div>
 </form>

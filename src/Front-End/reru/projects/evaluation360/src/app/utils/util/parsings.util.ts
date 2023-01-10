@@ -13,46 +13,46 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         // dateCompletionGeneralData: data.dateCompletionGeneralData,
         functionSubdivision: data.functionSubdivision,
         subdivisionEvaluated: data.subdivisionEvaluated,
-        specialOrMilitaryGrade: +data.specialOrMilitaryGrade,
+        specialOrMilitaryGrade: +data.specialOrMilitaryGrade || null,
         periodEvaluatedFromTo: data.periodEvaluatedFromTo,
         periodEvaluatedUpTo: data.periodEvaluatedUpTo,
-        educationEnum: +data.educationEnum,
-        professionalTrainingActivities: +data.professionalTrainingActivities,
-        professionalTrainingActivitiesType: +data?.professionalTrainingActivitiesType,
+        educationEnum: +data.educationEnum || null,
+        professionalTrainingActivities: +data.professionalTrainingActivities || null,
+        professionalTrainingActivitiesType: +data?.professionalTrainingActivitiesType || null,
         courseName: data?.courseName,
         periodRunningActivityFromTo: data?.periodRunningActivityFromTo,
         periodRunningActivityUpTo: data?.periodRunningActivityUpTo,
         administrativeActOfStudies: data?.administrativeActOfStudies,
-        serviceDuringEvaluationCourse: +data?.serviceDuringEvaluationCourse,
+        serviceDuringEvaluationCourse: +data?.serviceDuringEvaluationCourse || null,
         functionEvaluated: data?.functionEvaluated,
         appointmentDate: data?.appointmentDate,
         administrativeActService: data?.administrativeActService,
         partialEvaluationPeriodFromTo: data?.partialEvaluationPeriodFromTo,
         partialEvaluationPeriodUpTo: data?.partialEvaluationPeriodUpTo,
         partialEvaluationScore: data?.partialEvaluationScore,
-        qualifierPartialEvaluations: +data?.qualifierPartialEvaluations,
+        qualifierPartialEvaluations: +data?.qualifierPartialEvaluations || null,
         sanctionAppliedEvaluationCourse: data?.sanctionAppliedEvaluationCourse,
         dateSanctionApplication: data?.dateSanctionApplication,
         dateLiftingSanction: data?.dateLiftingSanction,
-        qualificationEvaluationObtained2YearsPast: +data?.qualificationEvaluationObtained2YearsPast,
-        qualificationEvaluationObtainedPreviousYear: +data?.qualificationEvaluationObtainedPreviousYear,
-        qualificationQuarter1: +data?.qualificationQuarter1,
-        qualificationQuarter2: +data?.qualificationQuarter2,
-        qualificationQuarter3: +data?.qualificationQuarter3,
-        qualificationQuarter4: +data?.qualificationQuarter4,
-        question1: +data?.question1,
-        question2: +data?.question2,
-        question3: +data?.question3,
-        question4: +data?.question4,
-        question5: +data?.question5,
-        question6: +data?.question6,
-        question7: +data?.question7,
-        question8: +data?.question8,
-        question9: +data?.question9,
-        question10: +data?.question10,
-        question11: +data?.question11,
-        question12: +data?.question12,
-        question13: +data?.question13,
+        qualificationEvaluationObtained2YearsPast: +data?.qualificationEvaluationObtained2YearsPast || null,
+        qualificationEvaluationObtainedPreviousYear: +data?.qualificationEvaluationObtainedPreviousYear || null,
+        qualificationQuarter1: +data?.qualificationQuarter1 || null,
+        qualificationQuarter2: +data?.qualificationQuarter2 || null,
+        qualificationQuarter3: +data?.qualificationQuarter3 || null,
+        qualificationQuarter4: +data?.qualificationQuarter4 || null,
+        question1: +data?.question1 || null,
+        question2: +data?.question2 || null,
+        question3: +data?.question3 || null,
+        question4: +data?.question4 || null,
+        question5: +data?.question5 || null,
+        question6: +data?.question6 || null,
+        question7: +data?.question7 || null,
+        question8: +data?.question8 || null,
+        question9: +data?.question9 || null,
+        question10: +data?.question10 || null,
+        question11: +data?.question11 || null,
+        question12: +data?.question12 || null,
+        question13: +data?.question13 || null,
         goal1: data.goal1,
         goal2: data.goal2,
         goal3: data.goal3,
@@ -68,16 +68,19 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         performanceTerm3: data.performanceTerm3,
         performanceTerm4: data.performanceTerm4,
         performanceTerm5: data.performanceTerm5,
-        score1: +data.score1,
-        score2: +data.score2,
-        score3: +data.score3,
-        score4: +data.score4,
-        score5: +data.score5,
-        finalEvaluationQualification: +data.finalEvaluationQualification,
+        score1: +data.score1 || null,
+        score2: +data.score2 || null,
+        score3: +data.score3 || null,
+        score4: +data.score4 || null,
+        score5: +data.score5 || null,
+        finalEvaluationQualification: +data.finalEvaluationQualification || null,
         dateEvaluationInterview: data.dateEvaluationInterview,
         dateSettingIindividualGoals: data.dateSettingIindividualGoals,
         need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated,
         need2ProfessionalDevelopmentEvaluated: data.need2ProfessionalDevelopmentEvaluated,
+        need3ProfessionalDevelopmentEvaluated: data.need3ProfessionalDevelopmentEvaluated,
+        need4ProfessionalDevelopmentEvaluated: data.need4ProfessionalDevelopmentEvaluated,
+        need5ProfessionalDevelopmentEvaluated: data.need5ProfessionalDevelopmentEvaluated,
         commentsEvaluator: data.commentsEvaluator,
     }
 }
@@ -149,3 +152,158 @@ export const parseDate = (value: Moment | string, formControlName: string, form:
         form.get(formControlName).markAsDirty();
     }
 }
+
+export async function generateAvgNumbers(requiredAvg) {
+    let max = 4;
+    let min = 1;
+    let M1 = 0, M2 = 0, M3 = 0, M4 = 0;
+
+    if (requiredAvg === 4) {
+      max = 4;
+      min = 3.50;
+    }
+
+    if (requiredAvg === 3) {
+      max = 4;
+      min = 2;
+    }
+
+    if (requiredAvg === 2) {
+      max = 3;
+      min = 1;
+    }
+
+    if (requiredAvg === 1) {
+      max = 2;
+      min = 1;
+    }
+
+    return new Promise((resolve, reject) => {
+      let questions = [
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+  
+        Math.floor(Math.random() * (max - min + 1)) + min,
+      ]
+  
+      let scores = [
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+        Math.floor(Math.random() * (max - min + 1)) + min,
+      ];
+  
+      let generateM1 = () => {
+        return questions.slice(0,4).reduce((acc, curr) => acc + curr, 0) / 5;
+      }
+  
+      let generateM2 = () => {
+        return questions.slice(5,7).reduce((acc, curr) => acc + curr, 0) / 3;
+      }
+  
+      let generateM3 = () => {
+        return scores.reduce((acc, curr) => acc + curr, 0) / scores.length;
+      }
+  
+      let generateM4 = () => {
+        const pb = questions.slice(8,11).reduce((acc, curr) => acc + curr, 0) / 4;
+        const pf = +questions[12];
+  
+        return (pb + pf) / 2;
+      }
+  
+      let checkAvg = (M1, M2, M3, M4) => {
+        const givenAvg = (M1 + M2 + M3 + M4) / 4;
+        switch(requiredAvg) {
+          case 1: 
+            if (givenAvg >= 1 && givenAvg <= 1.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 2: 
+            if (givenAvg >= 1.51 && givenAvg <= 2.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 3: 
+            if (givenAvg >= 2.51 && givenAvg <= 3.50) {
+              return true;
+            } else {
+              return false;
+            }
+          case 4: 
+            if (givenAvg >= 3.51 && givenAvg <= 4) {
+              return true;
+            } else {
+              return false;
+            }
+          default: return false;
+        }
+      }
+
+      while(true) {
+        M1 = generateM1();
+        M2 = generateM2();
+        M3 = generateM3();
+        M4 = generateM4();
+
+        if (checkAvg(M1, M2, M3, M4)) {
+          break;
+        }
+  
+        questions = [
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+  
+          Math.floor(Math.random() * (max - min + 1)) + min,
+        ]
+    
+        scores = [
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+          Math.floor(Math.random() * (max - min + 1)) + min,
+        ];
+      }
+  
+      if (requiredAvg === 4) {
+        return resolve({
+          questions: questions.map(el => Math.floor(el)),
+          scores: scores.map(el => Math.floor(el))
+        });
+      }
+
+      return resolve({
+        questions,
+        scores
+      });
+    })
+  }

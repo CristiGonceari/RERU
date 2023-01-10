@@ -15,6 +15,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         public bool AllowRememberLogin { get; set; } = true;
         public bool EnableLocalLogin { get; set; } = true;
         public string RegistrationPageUrl { get; set; }
+        public string ResetPassPageUrl { get; set; }
         public string PositionsPageUrl { get; set; }
 
         public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();

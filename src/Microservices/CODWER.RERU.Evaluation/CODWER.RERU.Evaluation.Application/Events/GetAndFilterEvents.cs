@@ -12,9 +12,8 @@ namespace CODWER.RERU.Evaluation.Application.Events
         {
             var events = appDbContext.Events
                 .Include(x => x.EventLocations)
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
-
-            
 
             if (!string.IsNullOrWhiteSpace(name))
             {

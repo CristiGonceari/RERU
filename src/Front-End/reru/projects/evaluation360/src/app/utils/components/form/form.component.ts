@@ -13,7 +13,7 @@ import { createEvaluatorForm,
          isInvalidCustom,
          isoDateRegex, 
 } from '../../util/forms.util';
-import { parseEvaluatedModel, parseCounterSignModel, parseDate } from '../../util/parsings.util';
+import { parseEvaluatedModel, parseCounterSignModel, parseDate, generateAvgNumbers } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
 import { EvaluationTypeEnum } from '../../models/type.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
@@ -140,6 +140,7 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.isLoading = false;
         this.subscribeForServiceDuringEvaluationCourseChanges();
+        this.subscribeForObjectivesChanges();
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
@@ -205,7 +206,7 @@ export class FormComponent implements OnInit, AfterViewInit {
       return
     }
 
-    this.finalEvalNum.nativeElement.value = +value;
+    this.finalEvalNum.nativeElement.value = +value || null;
   }
 
   handlePartialScoreChange(value: number, isInputChange: boolean = false): void {
@@ -250,6 +251,34 @@ export class FormComponent implements OnInit, AfterViewInit {
     });
   }
 
+  subscribeForObjectivesChanges(): void {
+    for(let i = 1; i < 6; i++) {
+      this.evaluationForm.get('score'+i).valueChanges.subscribe((value: number)=> {
+        if (!isNaN(+value)) {
+          this.evaluationForm.get('goal'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('kpI'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('performanceTerm'+i).setValidators([Validators.required]);
+          this.evaluationForm.get('goal'+i).patchValue(this.evaluationForm.get('goal'+i).value || null);
+          this.evaluationForm.get('goal'+i).markAsTouched();
+          this.evaluationForm.get('kpI'+i).patchValue(this.evaluationForm.get('kpI'+i).value || null);
+          this.evaluationForm.get('kpI'+i).markAsTouched();
+          this.evaluationForm.get('performanceTerm'+i).patchValue(this.evaluationForm.get('performanceTerm'+i).value || null);
+          this.evaluationForm.get('performanceTerm'+i).markAsTouched();
+        } else {
+          this.evaluationForm.get('goal'+i).clearValidators();
+          this.evaluationForm.get('kpI'+i).clearValidators();
+          this.evaluationForm.get('performanceTerm'+i).clearValidators();
+          this.evaluationForm.get('goal'+i).markAsUntouched();
+          this.evaluationForm.get('goal'+i).updateValueAndValidity();
+          this.evaluationForm.get('kpI'+i).markAsUntouched();
+          this.evaluationForm.get('kpI'+i).updateValueAndValidity();
+          this.evaluationForm.get('performanceTerm'+i).markAsUntouched();
+          this.evaluationForm.get('performanceTerm'+i).updateValueAndValidity();
+        }
+      });
+    }
+  }
+
   /**
    * Calculating M1 - index 6, M2 - index 10, M3 - index 12, Pb - index 17
    * @returns {number} Media (M1, M2, M3, Pb)
@@ -282,7 +311,8 @@ export class FormComponent implements OnInit, AfterViewInit {
    */
   calculateM4(isFixed: boolean = true): number {
     const pb = +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4);
-    const pf = this.evaluatedForm?.get('question13')?.value || 0;
+    const pf = +this.evaluationForm?.get('question13')?.value || 0;
+
     return isFixed ? +((pb + pf) / 2).toFixed(2) : (pb + pf) / 2;
   }
 
@@ -293,7 +323,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     const m1 = +this.calculateAverageCriterias(6, false)
     const m2 = +this.calculateAverageCriterias(10, false)
     const m3 = this.calculateAverageCriterias(12, false);
-    const m4 = this.calculateM4();
+    const m4 = this.calculateM4(false);
 
     return isFixed ? +((m1 + m2 + m3 + m4) / 4).toFixed(2) : (m1 + m2 + m3 + m4) / 4; 
   }
@@ -302,10 +332,48 @@ export class FormComponent implements OnInit, AfterViewInit {
    * 
    * @returns {number} Evaluare anuala final (Mf)
    */
-  calculateMf(): number {
-    const Mea = this.calculateMea();
-    const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
+  calculateMf(isFixed: boolean = true): number | string {
+    const Mea = this.calculateMea(false);
+    const Mep = +this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
     
-    return (Mea + Mep).toFixed(2); 
+    if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
+      return isFixed ? ((Mea + Mep) / 2).toFixed(2) : (Mea + Mep) / 2; 
+    }
+
+    return isFixed ? (Mea).toFixed(2) : Mea;
+  }
+
+  precompleteWith(btn, value: number): void {
+    for(let i = 1; i < 14; i++) {
+      this.evaluationForm.get('question'+i).patchValue(+value);
+      this.evaluationForm.get('question'+i).markAsTouched();
+
+      if (i > 0 && i < 6) {
+        this.evaluationForm.get('score'+i).patchValue(+value);
+        this.evaluationForm.get('score'+i).markAsTouched();
+      }
+    }
+    btn.click();
+  }
+
+async randomCompleteForAvg(btn, value) {
+  new Promise((resolve, reject) => {
+    this.isLoading = true;
+    btn.click();
+    return setTimeout(() => resolve(true), 300);
+  }).then(() => {
+    return generateAvgNumbers(+value);
+    }).then((result: any) => {
+      for(let i = 1; i < 14; i++) {
+        this.evaluationForm.get('question'+i).patchValue(result.questions[i - 1]);
+        this.evaluationForm.get('question'+i).markAsTouched();
+  
+        if (i > 0 && i < 6) {
+          this.evaluationForm.get('score'+i).patchValue(result.scores[i - 1]);
+          this.evaluationForm.get('score'+i).markAsTouched();
+        }
+      }
+      this.isLoading = false;
+    })
   }
 }

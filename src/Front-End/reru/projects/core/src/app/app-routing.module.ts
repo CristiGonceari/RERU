@@ -28,6 +28,10 @@ const routes: Routes = [
 		path: 'vacant-positions-page',
 		loadChildren: () => import('./components/vacant-positions-page/vacant-positions-page.module').then(m => m.VacantPositionsPageModule)
 	},
+	{
+		path: 'reset-password',
+		loadChildren: () => import('./components/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+	},
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent},
 	{
 		path: '',

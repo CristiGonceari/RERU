@@ -59,9 +59,13 @@ export class EvaluationService extends AbstractService {
     return this.http.put<Response<string>>(`${this.baseUrl}/${this.routeUrl}/${data.id}/evaluated-know`, data);
   }
 
-   listMine(data: HttpParams | { [param: string] : string }): Observable<ResponseArray<EvaluationListModel>> {
-     return this.http.get<ResponseArray<EvaluationListModel>>(`${this.baseUrl}/${this.routeUrl}/mine`, { params: data });
-   }
+  listMine(data: HttpParams | { [param: string] : string }): Observable<ResponseArray<EvaluationListModel>> {
+    return this.http.get<ResponseArray<EvaluationListModel>>(`${this.baseUrl}/${this.routeUrl}/mine`, { params: data });
+  }
+
+  printEvaluations(data: { [param: string] : string }): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${this.routeUrl}/print-evaluations`, data, { responseType: 'blob', observe: 'response' });
+  }
 
   download(id: number) {
     return this.http.get(`${this.baseUrl}/export/${id}`, { responseType: 'blob' as 'json', observe: 'response'}).subscribe((response: HttpResponse<Blob>) => {
