@@ -15,6 +15,7 @@ using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation;
 using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.PrintEvaluations;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using CODWER.RERU.Evaluation360.Application.BLL.Services;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -22,6 +23,13 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
     [Route("api/[controller]")]
     public class EvaluationController : BaseController
     {
+        private readonly IPdfService _pdfService;
+
+        public EvaluationController(IPdfService pdfService)
+        {
+            _pdfService = pdfService;
+        }
+
         [HttpGet("mine")]
         public async Task<PaginatedModel<EvaluationRowDto>> EvaluationRowDto([FromQuery] EvaluationRowDtoQuery query)
         {
@@ -105,11 +113,12 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
 
             return File(result.Content, result.ContentType, result.Name);
         }
-
-        /*[HttpGet("getPDF")]
-        public async Task<IActionResult> GetPDF([FromQuery] string source, string evaluationName)
+        
+        /*[HttpGet("evaluation-pdf/{evaluationId}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> GetTestPdf([FromRoute] int evaluationId)
         {
-            var result = await _getReplacedKeys.GetPdf(source, evaluationName);
+            var result = await _pdfService.PrintEvaluationPdf(evaluationId);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
