@@ -552,7 +552,8 @@
     "01000602": "Departament nevalid",
     "01000107": "Email dublicat in sistem",
     "01000909": "Interval de timp nevalid",
-    "01000116": "Parolă veche incorectă"
+    "01000116": "Parolă veche incorectă",
+    "01000105": "Utilizator inexistent"
   },
   "print": {
     "print-table": "Printare tabel",

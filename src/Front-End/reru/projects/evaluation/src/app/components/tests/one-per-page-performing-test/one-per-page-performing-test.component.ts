@@ -269,17 +269,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkSaveAnswer(index) {
-    let isCkecked: boolean = false;
-    isCkecked = this.testOptionsList.some((x) => x.isSelected == true);
-
-    if (isCkecked) {
-      this.saveAnswers();
-    } else {
-      this.getTestQuestions(index)
-    }
-  }
-
   saveAnswers() {
     this.disableBtn = true;
     this.isLoading = true;

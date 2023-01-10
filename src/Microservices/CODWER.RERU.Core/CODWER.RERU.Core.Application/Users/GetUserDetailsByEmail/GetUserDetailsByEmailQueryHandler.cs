@@ -22,6 +22,7 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    FatherName = user.FatherName,
                     MediaFileId = user.MediaFileId,
                     PhoneNumber = user.PhoneNumber.Remove(4,5).Insert(4,"*****")
             };
