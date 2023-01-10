@@ -33,9 +33,7 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPasswordByEmailCode
         public async Task<Unit> Handle(ResetUserPasswordByEmailCodeCommand request, CancellationToken cancellationToken)
         {
 
-            //var emailVerification = AppDbContext.EmailVerifications.Where
-            var userProfile = await AppDbContext
-              .UserProfiles
+            var userProfile = await AppDbContext.UserProfiles
                   .Include(up => up.Identities)
                   .FirstOrDefaultAsync(up => up.Email == request.Email);
 
