@@ -342,7 +342,8 @@ data:
       },
       "PlatformConfig": {
         "RegistrationPageUrl": "http://reru-stage.codwer.com/#/registration-page",
-        "PositionsPageUrl": "http://reru-stage.codwer.com/#/vacant-positions-page"
+        "PositionsPageUrl": "http://reru-stage.codwer.com/#/vacant-positions-page",
+        "ResetPassPageUrl": "http://reru.codwer.com/#/reset-password"
       }
     }
 

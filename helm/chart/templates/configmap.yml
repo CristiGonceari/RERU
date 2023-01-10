@@ -403,7 +403,8 @@ data:
       },
       "PlatformConfig": {
         "RegistrationPageUrl": "http://reru.codwer.com/#/registration-page",
-        "PositionsPageUrl": "http://reru.codwer.com/#/vacant-positions-page"
+        "PositionsPageUrl": "http://reru.codwer.com/#/vacant-positions-page",
+        "ResetPassPageUrl": "http://reru.codwer.com/#/reset-password"
       }
     }
 
