@@ -25,9 +25,9 @@ export class UserService extends AbstractService {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}`, data);
 	}
 
-	addUserAvatar(data): Observable<any> {
+	addUserAvatar(data, isReportingProgress = false): Observable<any> {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}/avatar`, data, { 
-			reportProgress: true,
+			reportProgress: isReportingProgress,
 			observe: 'events',
 			responseType: 'blob' as 'json'
 		});
