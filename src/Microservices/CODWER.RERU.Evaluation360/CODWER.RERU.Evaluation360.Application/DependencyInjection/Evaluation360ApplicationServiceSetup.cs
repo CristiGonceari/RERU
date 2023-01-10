@@ -25,8 +25,9 @@ namespace CODWER.RERU.Evaluation360.Application.DependencyInjection
                 .AddScoped(typeof(IModulePermissionProvider), typeof(ModulePermissionProvider))
                 .AddScoped(typeof(PlatformConfig));
             
-            services.AddTransient<INotificationService, NotificationService>();
-            services.AddTransient<IInternalNotificationService, InternalNotificationService>();
+            services.AddTransient<INotificationService, NotificationService>()
+                .AddTransient<IInternalNotificationService, InternalNotificationService>()
+                .AddTransient<IPdfService, PdfService>();
         }
     }
 }
