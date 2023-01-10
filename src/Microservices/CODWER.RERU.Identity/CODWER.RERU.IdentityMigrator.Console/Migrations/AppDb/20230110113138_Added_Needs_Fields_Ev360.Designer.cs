@@ -10,8 +10,8 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221222083003_Added_Evaluation360_Fields")]
-    partial class Added_Evaluation360_Fields
+    [Migration("20230110113138_Added_Needs_Fields_Ev360")]
+    partial class Added_Needs_Fields_Ev360
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -857,6 +857,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("Need2ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need3ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need4ProfessionalDevelopmentEvaluated")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Need5ProfessionalDevelopmentEvaluated")
                         .HasColumnType("text");
 
                     b.Property<string>("OtherComments")
