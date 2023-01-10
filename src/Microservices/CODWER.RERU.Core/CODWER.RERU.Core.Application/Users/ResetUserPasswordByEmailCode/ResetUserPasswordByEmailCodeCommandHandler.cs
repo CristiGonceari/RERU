@@ -49,15 +49,15 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPasswordByEmailCode
                     }
                 }
 
-                await LogAction(userProfile);
+                //await LogAction(userProfile);
             }
 
             return Unit.Value;
         }
 
-        private async Task LogAction(UserProfile userProfile)
-        {
-            await _loggerService.Log(LogData.AsCore($@"Parola utilizatorului ""{userProfile.FullName}"" a fost resetată", userProfile));
-        }
+        //private async Task LogAction(UserProfile userProfile)
+        //{
+        //    await _loggerService.Log(LogData.AsCore($@"Parola utilizatorului ""{userProfile.FullName}"" a fost resetată", userProfile));
+        //}
     }
 }
