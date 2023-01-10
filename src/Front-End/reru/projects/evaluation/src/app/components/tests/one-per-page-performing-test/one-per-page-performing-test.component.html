@@ -202,7 +202,7 @@
                                     </button>
     
                                     <button class="btn btn-icon page-link" *ngFor="let page of pager"
-                                        (click)="checkSaveAnswer(page)" [disabled]="disableNext"
+                                        (click)="getTestQuestions(page)" [disabled]="disableNext"
                                         [class.active-page]="page === questionIndex"
                                         [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page)}">
                                         {{page}}

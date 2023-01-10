@@ -4,7 +4,10 @@
       <span class="h1" aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <app-loading-spinner *ngIf="isLoading" class="modal-body" [contentHeight]="'15vh'" [height]="'5rem'" [width]="'5rem'"
+    [colorClass]="'text-primary'">
+</app-loading-spinner>
+  <div class="modal-body" *ngIf="!isLoading">
     <div class="card card-custom bg-light-primary p-7">
       <div class="d-flex align-items-center">
         <div class="d-flex flex-column w-100">
