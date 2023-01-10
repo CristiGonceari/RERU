@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             //await _internalNotificationService.AddNotification(evaluation.EvaluatedUserProfileId,"");
             await SendEmailNotification(evaluation.EvaluatedUserProfileId);
-            evaluation.Status = EvaluationStatusEnum.Confirmed;
+            evaluation.Status = EvaluationStatusEnum.Confirmată;
             evaluation.DateCompletionGeneralData = System.DateTime.Now;
             evaluation.SignatureEvaluator = true;
             await _dbContext.SaveChangesAsync();

@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             await SendEmailNotification(evaluation.CounterSignerUserProfileId);
-            evaluation.Status = EvaluationStatusEnum.Accepted;
+            evaluation.Status = EvaluationStatusEnum.Acceptată;
             evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
             evaluation.SignatureEvaluated = true;
             _mapper.Map(request.Evaluation, evaluation); 

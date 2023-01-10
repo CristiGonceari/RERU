@@ -16,6 +16,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
                 ;
 
+            CreateMap<Evaluation, PrintTableEvaluationsDto>()
+                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
+                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
+                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
+                ;
+
             CreateMap<Evaluation, GetEvaluationDto>()
                 .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
                 .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
@@ -28,7 +34,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
             CreateMap<CreateEvaluationsCommand, Evaluation>()
                 .ForMember(dest=> dest.EvaluatorUserProfileId, opts=> opts.Ignore())
                 .ForMember(dest=> dest.EvaluatedUserProfileId, opts=> opts.Ignore())
-                .ForMember(dest=> dest.Status, opts=> opts.MapFrom(src=> EvaluationStatusEnum.Draft))
+                .ForMember(dest=> dest.Status, opts=> opts.MapFrom(src=> EvaluationStatusEnum.Schiță))
                 ;
 
             CreateMap<EditEvaluationDto, Evaluation>()

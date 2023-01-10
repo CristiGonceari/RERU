@@ -55,7 +55,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
             var res = Parse(source);
             
-            return FileDataDto.GetPdf("Evaluation360.pdf", res);
+            return FileDataDto.GetPdf("EvaluareaAnualăFinală.pdf", res);
         }
 
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
