@@ -47,7 +47,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             string source;
             var myDictionary = new Dictionary<string, string>();
             
-            path = new FileInfo("Templates/Evaluation360/Evaluation360.html").FullName;
+            path = new FileInfo("PdfTemplates/Evaluation360.html").FullName;
             myDictionary = GetDictionary(evaluation);
 
             source = await File.ReadAllTextAsync(path);

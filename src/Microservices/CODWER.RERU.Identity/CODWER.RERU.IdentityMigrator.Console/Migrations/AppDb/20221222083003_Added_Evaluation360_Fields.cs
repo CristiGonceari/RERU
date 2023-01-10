@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
-    public partial class Added_Evaluations360_Fields : Migration
+    public partial class  Added_Evaluation360_Fields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
