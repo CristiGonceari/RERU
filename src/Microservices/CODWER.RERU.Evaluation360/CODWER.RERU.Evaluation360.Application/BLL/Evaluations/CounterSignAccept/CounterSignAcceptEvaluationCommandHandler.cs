@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
             await SendEmailNotification(evaluation.EvaluatedUserProfileId);
-            evaluation.Status = EvaluationStatusEnum.CounterSignAccept;
+            evaluation.Status = EvaluationStatusEnum.Contrasemnată;
             evaluation.DateCompletionCounterSigner = System.DateTime.Now;
             evaluation.SignatureCounterSigner = true;
             _mapper.Map(request.Evaluation, evaluation); 

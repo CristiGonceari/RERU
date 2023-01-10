@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
@@ -7,6 +8,7 @@ using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -15,11 +17,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.PrintEvaluations
 public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCommand, FileDataDto>
 {
     private readonly AppDbContext _appDbContext;
-    private readonly IExportData<Evaluation, EvaluationRowDto> _printer;
+    private readonly IExportData<Evaluation, PrintTableEvaluationsDto> _printer;
     private readonly ICurrentApplicationUserProvider _currentUserProvider;
 
     public PrintEvaluationsCommandHandler(AppDbContext appDbContext, 
-        IExportData<Evaluation, EvaluationRowDto> printer, 
+        IExportData<Evaluation, PrintTableEvaluationsDto> printer, 
         ICurrentApplicationUserProvider currentUserProvider)
     {
         _appDbContext = appDbContext;
@@ -80,7 +82,7 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
 
         if (request.Type.HasValue) 
         {
-            evaluations = evaluations.Where(x => (int)x.Type == request.Type);
+            evaluations = evaluations.Where(x => x.Type == request.Type); 
         }
 
         if (request.Points.HasValue)
@@ -90,12 +92,12 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
 
         if (request.Status.HasValue)
         {
-            evaluations = evaluations.Where(x => (int)x.Status == request.Status);
+            evaluations = evaluations.Where(x => x.Status == request.Status);
         }
 
         var result = _printer.ExportTableSpecificFormat(new TableData<Evaluation>
         {
-            Name = "Evaluations",
+            Name = "Evaluări360",
             Items = evaluations,
             Fields = request.Fields,
             Orientation = request.Orientation,
