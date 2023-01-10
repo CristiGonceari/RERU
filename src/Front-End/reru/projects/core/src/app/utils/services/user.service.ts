@@ -37,6 +37,10 @@ export class UserService extends AbstractService {
 		return this.http.get<Response<User>>(`${this.coreUrl}/${this.routeUrl}/${id}`);
 	}
 
+	getUserPersonalDetails(email: string): Observable<Response<User>> {
+		return this.http.get<Response<User>>(`${this.coreUrl}/${this.routeUrl}/personal-details/${email}`);
+	}
+
 	getEditUserPersonalDetails(id: number): Observable<Response<EditUserPersonalDetails>> {
 		return this.http.get<Response<EditUserPersonalDetails>>(
 			`${this.coreUrl}/${this.routeUrl}/${id}/personal-details/edit`
@@ -112,5 +116,13 @@ export class UserService extends AbstractService {
 
 	setPassword(data): Observable<any> {
 		return this.http.put(`${this.coreUrl}/${this.routeUrl}/set-password`, data);
+	}
+
+	verifyEmail(data): Observable<any> {
+		return this.http.post(`${this.coreUrl}/${this.routeUrl}/verify-code`, data);
+	}
+
+	resetPasswordByEmailCode(data): Observable<any> {
+		return this.http.patch(`${this.coreUrl}/${this.routeUrl}/reset-user-password`, data);
 	}
 }

@@ -6,7 +6,6 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -29,12 +28,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
             var currentUser = await _currentUserProvider.Get();
             var currentUserId = int.Parse(currentUser.Id);
 
-            //Console.WriteLine("--------------------------------------------"+currentUser.IsAnonymous);
-            // Console.WriteLine("--------------------------------------------"+currentUser.Id);
-
-            //var filterData = GetFilterData(request);
-            //var filter = GetAndFilterEvaluations.Filter(_dbContext, filterData, currentUserId);
-        
             var evaluations = _dbContext.Evaluations
                                     .Include(e=> e.EvaluatedUserProfile)
                                     .Include(e=> e.EvaluatorUserProfile)
@@ -99,11 +92,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                 evaluations = evaluations.Where(x => x.CreateDate.Date <= request.CreateDateTo.Value.Date);
             }
         
-            //var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(filter, request);
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
             foreach(var e in  paginatedModel.Items)
             {
-                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = false;
+                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = e.canDownload =false;
 
                 if (currentUserId == e.EvaluatorUserProfileId && e.Status == 1) 
                 {
@@ -134,18 +126,13 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                 { 
                     e.canEvaluate = true;
                 }
+                
+                if ((currentUserId == e.EvaluatorUserProfileId || currentUserId == e.CounterSignerUserProfileId) && e.Status == 7)
+                { 
+                    e.canDownload = true;
+                }
             }
             return paginatedModel;
         }
-
-        private EvaluationRowDto GetFilterData(EvaluationRowDtoQuery request) => new EvaluationRowDto
-        {
-            EvaluatedName = request.EvaluatedName,
-            EvaluatorName = request.EvaluatorName,
-            CounterSignerName = request.CounterSignerName,
-            Type = request.Type,
-            Status = request.Status,
-            CreateDate = request.CreateDateFrom
-        };
     }
 }

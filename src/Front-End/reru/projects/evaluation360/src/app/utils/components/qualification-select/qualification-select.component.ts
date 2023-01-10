@@ -13,7 +13,7 @@ export class QualificationSelectComponent {
   @Input() showNumbers: boolean;
   @Input() hasErrorSpace: boolean;
 
-  @Output() handleChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() handleChange: EventEmitter<number|null> = new EventEmitter<number|null>();
   isInvalidPattern: Function;
   isInvalidRequired
   isValid: Function;
@@ -21,5 +21,15 @@ export class QualificationSelectComponent {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isInvalidRequired = isInvalidRequired.bind(this);
     this.isValid = isValid.bind(this);
+   }
+
+   handleChangeQualification(value: number): void {
+    if (isNaN(+value)) {
+      this.formGroup.get(this.field).patchValue(null, { emitEvent: false });
+      this.handleChange.emit(null);
+      return;
+    }
+
+    this.handleChange.emit(+value);
    }
 }

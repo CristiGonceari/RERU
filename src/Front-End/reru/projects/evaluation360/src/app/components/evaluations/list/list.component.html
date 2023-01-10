@@ -6,8 +6,12 @@
 			<div class="card-title d-flex gap-5 w-50">
 				<h3 class="card-label font-weight-bolder">{{'evaluations.list' | translate}}</h3>				
 			</div>
-			<div class="card-toolbar flex-column justify-content-between align-items-end d-md-flex d-none">
-				<a routerLink="../setup" class="btn btn-success font-weight-bolder mb-4">{{'evaluations.new-evaluation' | translate}}</a>
+			<div class="card-toolbar d-md-flex d-none gap-4">
+				<app-confirm-button (click)="openPrintModal()">
+					<i class="far fa-file-pdf text-white icon-nm"></i>
+					{{'button.print' | translate}}
+				</app-confirm-button>
+				<a routerLink="../setup" class="btn btn-success font-weight-bolder">{{'evaluations.new-evaluation' | translate}}</a>
 				<!-- <div class="form-group row">
 					<div class="col">
 						<div class="checbox-inline">
@@ -19,7 +23,11 @@
 					</div>
 				</div> -->
 			</div>
-			<div class="card-toolbar flex-column w-100 d-md-none d-flex">
+			<div class="card-toolbar flex-column w-100 d-md-none d-flex gap-2">
+				<app-confirm-button class="w-100" width="100%" classes="w-100" (click)="openPrintModal()">
+					<i class="far fa-file-pdf text-white"></i>
+					{{'button.print' | translate}}
+				</app-confirm-button>
 				<a routerLink="../setup" class="btn btn-success w-100 font-weight-bolder mb-4">{{'evaluations.new-evaluation' | translate}}</a>
 			</div>
 			<div class="card-toolbar d-block w-100">
@@ -119,11 +127,17 @@
 				<div class="row">
 					<div class="col-xl offset-lg-6 col-lg-6 col-12">
 						<div class="d-lg-flex d-none gap-4 justify-content-end">
-							<app-confirm-button (handle)="filterBy()" [value]="'button.search' | translate"></app-confirm-button>
+							<app-confirm-button (handle)="filterBy()">
+								<i class="flaticon-search-1 text-white icon-nm"></i>
+								{{'button.search' | translate}}
+							</app-confirm-button>
 							<app-button (handle)="clearFilters()" [value]="'button.reset' | translate"></app-button>
 						</div>
 						<div class="d-lg-none d-flex flex-column gap-4 align-items-center">
-							<app-confirm-button class="w-100" width="100%" (handle)="filterBy()" [value]="'button.search' | translate"></app-confirm-button>
+							<app-confirm-button class="w-100" width="100%" (handle)="filterBy()">
+								<i class="flaticon-search-1 text-white icon-nm"></i>
+								{{'button.search' | translate}}
+							</app-confirm-button>
 							<app-button class="w-100" width="100%" (handle)="clearFilters()" [value]="'button.reset' | translate"></app-button>
 						</div>
 					</div>

@@ -377,13 +377,15 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 var questionText = (ws.Cells[row, 3].Value ?? string.Empty).ToString();
                 var answerText = (ws.Cells[row, 4].Value ?? string.Empty).ToString();
 
+                var categoryText = (ws.Cells[row, 2].Value ?? string.Empty).ToString();
+
                 var isRowEmpty = IsEmptyRow(ws, row, 1);
 
                 if (isRowEmpty) continue;
 
-                if (!string.IsNullOrWhiteSpace(questionText))
+                if (!string.IsNullOrWhiteSpace(categoryText) || !string.IsNullOrWhiteSpace(questionText))
                 {
-                    if (questionToAdd is {AddOptions.Count: > 0})  
+                    if (questionToAdd != null && questionToAdd.AddOptions != null && questionToAdd.AddOptions.Count > 0)
                     {
                         //here is new question. Save what we have and reset all
                         await SaveQuestionAndOptions(questionToAdd);
@@ -407,7 +409,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
                 else 
                 {
-                    if (questionToAdd is {Error: false})
+                    if (!questionToAdd.Error)
                     {
                         var option = ParseOption(ws, row, questionToAdd);
 
@@ -462,8 +464,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                    errors += $"\nCant' find Category '{ws.Cells[row, 2].Value}' in Database ";
             }
 
-            var questionText = ws.Cells[row, 3].Value.ToString()?.Trim();
-            if (String.IsNullOrWhiteSpace(questionText))
+            var questionText = (ws.Cells[row, 3].Value ?? string.Empty).ToString();;
+            if (string.IsNullOrWhiteSpace(questionText))
             {
                 if (string.IsNullOrWhiteSpace(errors))
                     errors = $"Question is empty";

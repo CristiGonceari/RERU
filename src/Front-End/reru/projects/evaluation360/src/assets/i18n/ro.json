@@ -112,8 +112,8 @@
       "16": "General de divizie",
       "17": "General de Corp de Armata"
     },
-    "execution-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcție de execuție",
-    "managing-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcție de conducere",
+    "execution-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcții de execuție",
+    "managing-assessment-sheet": "FIȘĂ DE EVALUARE <br>a angajatului care exercită funcții de conducere",
     "criterias": {
       "execution": {
         "1": "Capacitatea de a realiza deplin sarcinile de serviciu",
@@ -141,18 +141,18 @@
         "3": "Capacitatea de control și supraveghere a modului de executare a deciziilor",
         "4": "Capacitatea de a motiva și de a încuraja activitatea personalului, menţinerea unui climat optim de muncă",
         "5": "Capacitatea de a dezvolta abilitățile profesionale ale personalului",
-        "6": "Punctajul stabilit la compartimentul 1) “Competenţa managerială” (M¹)",
+        "6": "Punctajul stabilit la compartimentul 1) “Competenţa managerială” (M¹):<br><small>(constituie media aritmetică obţinută din suma punctajului a celor 5 criterii de evaluare)</small>",
         "7": "Capacitatea de a promova normele de conduită şi de a asiguaă respectarea acestora de către subalterni",
         "8": "Capacitatea de a promova și a consolida prin propria prestație imaginea publică a instituției pe care o reprezintă;",
         "9": "Sancțiuni disciplinare (Se va puncta: avertisment/observaţie – 2 puncte; alte sancţiuni – 1 puncte; lipsa – 3 sau 4, după caz)",
-        "10": "Punctajul stabilit la compartimentul 2) “Conduita de serviciu” (M²)",
+        "10": "Punctajul stabilit la compartimentul 2) “Conduita de serviciu” (M²):<br><small>(constituie media aritmetică obţinută din suma punctajului a celor 3 criterii de evaluare)</small>",
         "11": "",
-        "12": "Punctajul stabilit la compartimentul 3) “Obiective individuale” (M³):",
+        "12": "Punctajul stabilit la compartimentul 3) “Obiective individuale” (M³):<br><small>(constituie media aritmetică obţinută din suma punctajului la obiectivele individuale stabilite)</small>",
         "13": "Pregătirea generală",
         "14": "Pregătirea de specialitate",
         "15": "Instrucţia tragerii (TS – după caz)",
         "16": "Intervenţia profesională (Normative de luptă, SPÎGF)",
-        "17": "Media aritmetică de la compartimentele pregătirii de bază 1 – 4: (Pb)",
+        "17": "Media aritmetică de la compartimentele pregătirii de bază 1 – 4: (Pb)<br><small>(constituie media aritmetică obţinută din suma punctajului a celor 4 compartimente ale pregătirii de bază)</small>",
         "18": "Pregătirea fizică: (Pf)"
       }
     },
@@ -163,10 +163,10 @@
       "4": "Aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
     },
     "qualification": {
-      "very-good": "Foarte bine (FB)",
-      "good": "Bine (B)",
-      "satisfactory": "Satisfăcător",
-      "unsatisfactory": "Nesatisfăcător"
+      "very-good": "Foarte bine (FB - 3.51 - 4)",
+      "good": "Bine (B 2.51 - 3.50)",
+      "satisfactory": "Satisfăcător (1.51 - 2.50)",
+      "unsatisfactory": "Nesatisfăcător (1.00 - 1.50)"
     },
     "are-you-sure-you-want-to-delete-evaluation": "Sunteți sigur că doriți să ștergeți evaluarea?",
     "confirmation": "Confirmare",
@@ -235,12 +235,13 @@
     "objective": "Obiectiv",
     "indicator": "Indicator",
     "term": "Termen",
-    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)",
-    "yearly-evaluation-score": "Punctajul la evaluarea anuală",
+    "established-score-on-fourth-compartment": "Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M⁴)<br><small>(constituie media aritmetică obţinută din suma mediei la cele 4 compartimente ale pregătirii de bază (Pb) şi punctajul la pregătirea fizică (Pf)</small>",
+    "yearly-evaluation-score": "Punctajul la evaluarea anuală (MEa = M¹ + M² + M³ + M⁴)<br><small>(constituie media aritmetică obţinută din mediile stabilite la compartimentele 1) – 4)</small>",
+    "yearly-evaluation-score-final": "Punctajul la evaluarea anuală final (Mf = MEa + Mep¹ + MEp² +...+MEpn)<br><small>(unde Mf este media finală, MEa este media la evaluarea anuală, MEp¹ este media la evaluarea parțială, MEp² este media la a doua evaluare parțială, MEp n după caz alte evaluări parțiale)</small>",
     "evaluation-final-calificative": "Calificativul de evaluare final",
     "date-evaluation-interview": "Data desfăşurării interviului de evaluare",
     "individual-objective-established": "Obiective individuale au fost stabilite (data)",
-    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat",
+    "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat<br><small>(pe domenii de instruire)</small>",
     "evaluator-name": "Nume, prenume evaluator",
     "evaluator-comments": "Comentarii evaluator",
     "evaluated-comments": "Comentarii angajat",
@@ -248,7 +249,14 @@
     "countersigner-comments": "Comentarii contrasemnatar",
     "check": "Bifați",
     "countersigner-function": "Funcția contrasemnatarului",
-    "highlight": "Evidențiază"
+    "highlight": "Evidențiază",
+    "fast-setup": "Ajustări rapide",
+    "precomplete-points-with": "Precompletează punctaj cu",
+    "set-annual-average-as-4": "Media anuală între 3.51 și 4 (aleatoriu)",
+    "set-annual-average-as-3": "Media anuală între 2.51 și 3.50 (aleatoriu)",
+    "set-annual-average-as-2": "Media anuală între 1.51 și 2.50 (aleatoriu)",
+    "set-annual-average-as-1": "Media anuală între 1.00 și 1.50 (aleatoriu)",
+    "necessity": "Necesitate"
   },
   "statuses": {
     "Candidate": "Candidați",
@@ -274,7 +282,8 @@
     "yes": "Da",
     "no": "Nu",
     "search": "Caută",
-    "reset": "Resetează"
+    "reset": "Resetează",
+    "print": "Imprimă"
   },
   "attach-user-modal": {
     "first-name": "Prenume",
@@ -296,6 +305,14 @@
     "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
     "date-from-is-more-than": "Data început este mai mare decât data sfârșit.",
     "date-to-is-less-than": "Data sfârșit este mai mică decât data început.",
-    "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!"
+    "evaluation-initialized-successfully": "Procesul de evaluare inițializat cu succes!",
+    "doesnt-need-countersign": "Nu necesită contrasemnare (pentru persoane cu rang înalt)",
+    "final-points-should-be-between-1-and-4": "Punctajul final trebuie sa fie intre 1 și 4"
+  },
+  "print": {
+    "print-table": "Printare tabel",
+    "sorted-by": "Sortat după",
+    "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
+    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare."
   }
 }

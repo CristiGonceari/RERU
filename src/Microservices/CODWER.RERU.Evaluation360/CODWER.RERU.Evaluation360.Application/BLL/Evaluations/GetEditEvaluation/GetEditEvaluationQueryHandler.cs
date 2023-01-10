@@ -23,10 +23,13 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
         {
             var evaluation = await _dbContext.Evaluations
                 .Include(e=> e.EvaluatedUserProfile)
+                    .ThenInclude(r=>r.Role)
                 .Include(e=> e.EvaluatorUserProfile)
+                    .ThenInclude(r=>r.Role)
                 .Include(e=> e.CounterSignerUserProfile)
+                    .ThenInclude(r=>r.Role)
                 .FirstOrDefaultAsync(e=> e.Id == request.Id);
-
+            
             return _mapper.Map<GetEvaluationDto>(evaluation);
         }
     }

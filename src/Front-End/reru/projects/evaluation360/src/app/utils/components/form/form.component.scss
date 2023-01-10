@@ -1,3 +1,6 @@
 :host {
     font-family: Arial, Helvetica, sans-serif;
+    .dropdown-toggle.nav-link:after, .dropdown-toggle.btn:after {
+        display: none;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ObjectUtil, EvaluationListModel } from '@utils';
 import { EvaluationService,  } from '@utils/services';
@@ -13,7 +13,7 @@ import { EvaluationStatusEnum } from '../../../utils/models/evaluation-status.en
   templateUrl: './evaluations-table.component.html',
   styleUrls: ['./evaluations-table.component.scss']
 })
-export class EvaluationsTableComponent implements OnInit {
+export class EvaluationsTableComponent implements OnInit, AfterViewInit {
   @Input() evaluateType: number;
   @Input() showHighlighted: boolean;
   isLoading: boolean = true;
@@ -21,12 +21,17 @@ export class EvaluationsTableComponent implements OnInit {
   pagedSummary: PaginationModel = new PaginationClass();
   includeAll: boolean;
   EvaluationStatusEnum = EvaluationStatusEnum;
+  headersHtml: HTMLCollectionOf<HTMLTableCellElement>;
   constructor(private evaluationService: EvaluationService,
               private modalService: NgbModal,
               private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.processTypeEvaluation(+this.evaluateType);
+  }
+
+  ngAfterViewInit(): void {
+    this.headersHtml = document.getElementsByTagName('th');
   }
 
   get isActionsEnabled(): boolean {

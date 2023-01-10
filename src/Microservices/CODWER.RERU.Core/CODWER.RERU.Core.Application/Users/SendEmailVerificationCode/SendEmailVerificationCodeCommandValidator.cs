@@ -12,9 +12,19 @@ namespace CODWER.RERU.Core.Application.Users.SendEmailVerificationCode
         {
             _appDbContext = appDbContext;
 
-            RuleFor(x => x.Email)
+            When(x => x.ForReset == false, () =>
+            {
+                RuleFor(x => x.Email)
                 .Must(x => !DublicateEmail(x))
                 .WithErrorCode(ValidationCodes.DUPLICATE_EMAIL_IN_SYSTEM);
+            });
+
+            When(x => x.ForReset == true, () =>
+            {
+                RuleFor(x => x.Email)
+                .Must(x => DublicateEmail(x))
+                .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
+            });
         }
 
         private bool DublicateEmail(string email)
