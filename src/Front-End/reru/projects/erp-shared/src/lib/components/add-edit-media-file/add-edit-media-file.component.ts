@@ -171,7 +171,7 @@ export class AddEditMediaFileComponent implements OnInit {
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
             else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('doc')) this.docUrl = fileContents;
+            else if (blob.type.includes('application')) this.docUrl = fileContents;
             else if (blob.type.includes('audio')) {
               this.audioUrl = fileContents;
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);
