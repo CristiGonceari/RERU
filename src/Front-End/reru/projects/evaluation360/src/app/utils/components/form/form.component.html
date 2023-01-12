@@ -550,7 +550,10 @@
                     <div *ngIf="![6, 10, 12, 17].includes(i)">
                       <app-qualification-select [hasErrorSpace]="true" [field]="'question'+(i > 17 ? i - 5 : i > 12 ? i - 4 : i > 6 ? i - 1 : i)" [formGroup]="evaluationForm" [showNumbers]="true"></app-qualification-select>
                     </div>
-                    <div *ngIf="[6, 10, 12, 17].includes(i)" class="text-center">{{calculateAverageCriterias(i)}}</div>
+                    <div *ngIf="6 === i" class="text-center">{{ M1$ | async | number : '1.2-2' }}</div>
+                    <div *ngIf="10 === i" class="text-center">{{ M2$ | async | number : '1.2-2'  }}</div>
+                    <div *ngIf="12 === i" class="text-center">{{ M3$ | async | number : '1.2-2' }}</div>
+                    <div *ngIf="17 === i" class="text-center">{{ Pb$ | async | number : '1.2-2' }}</div>
                   </td>
                   <td *ngIf="i === 11" colspan="3">
                     <div class="table-responsive-xl">
@@ -589,15 +592,15 @@
                 </tr>
                 <tr>
                   <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.established-score-on-fourth-compartment' | translate"></td>
-                  <td class="text-center">{{calculateM4()}}</td>
+                  <td class="text-center">{{ M4$ | async | number : '1.2-2' }}</td>
                 </tr>
                 <tr>
                   <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.yearly-evaluation-score' | translate"></td>
-                  <td class="text-center">{{calculateMea()}}</td>
+                  <td class="text-center">{{ Mea$ | async | number : '1.2-2' }}</td>
                 </tr>
                 <tr>
                   <td class="font-weight-bolder" colspan="2" [innerHTML]="'evaluations.yearly-evaluation-score-final' | translate"></td>
-                  <td class="text-center">{{calculateMf()}}</td>
+                  <td class="text-center">{{ Mf$ | async | number : '1.2-2' }}</td>
                 </tr>
             </tbody>
           </table>
@@ -687,6 +690,10 @@
       <label class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluator-name' | translate}}:</label>
       <div class="col-lg col-12 d-flex align-items-center">
         {{evaluation?.evaluatorName || '-'}}
+      </div>
+      <label class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluator-function' | translate}}:</label>
+      <div class="col-lg col-12 d-flex align-items-center">
+        {{evaluation?.functionEvaluator || '-'}}
       </div>
     </div>
     <div class="form-group row">

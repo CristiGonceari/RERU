@@ -8,6 +8,7 @@ import { Response, ResponseArray } from '../models/response.model';
 import { EvaluationListModel } from '../models/evaluation-list.model';
 import { EvaluationAcceptModel, EvaluationRejectModel } from '../models/evaluation-accept.model';
 import { EvaluationCounterSignModel } from '../models/evaluation-countersign.model';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -68,19 +69,13 @@ export class EvaluationService extends AbstractService {
   }
 
   download(id: number) {
-    return this.http.get(`${this.baseUrl}/export/${id}`, { responseType: 'blob' as 'json', observe: 'response'}).subscribe((response: HttpResponse<Blob>) => {
-      if (window.navigator && (window.navigator as any).msSaveOrOpenBlob ) {
-        return (window.navigator as any).msSaveOrOpenBlob(response.body);
-      } else {
-        const url = window.URL.createObjectURL(response.body);
-        let a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-      }
+    return this.http.get(`${this.baseUrl}/${this.routeUrl}/evaluation-pdf/${id}`, { responseType: 'blob' as 'json', observe: 'response'}).subscribe((response: HttpResponse<Blob>) => {
+      if (response) {
+        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], fileName, { type: response.body.type });
+				saveAs(file);
+			}
     });
   }
 }

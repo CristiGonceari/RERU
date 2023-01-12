@@ -9,7 +9,6 @@ import { createEvaluatorForm,
          isValid,
          isInvalidMin,
          isInvalidMax,
-         isMoreThan,
          isInvalidCustom,
          isoDateRegex, 
 } from '../../util/forms.util';
@@ -19,6 +18,8 @@ import { EvaluationTypeEnum } from '../../models/type.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
 import { EvaluationAcceptClass } from '../../models/evaluation-accept.model';
 import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.model';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -64,6 +65,29 @@ export class FormComponent implements OnInit, AfterViewInit {
   isInvalidCustom: Function;
   parseDate: Function;
   showWarnning: boolean;
+  isEvaluatorRoleView: boolean;
+  isEvaluatedRoleView: boolean;
+  isCounterSignerView: boolean;
+  isEvaluatedKnowView: boolean;
+  isDisabledEvaluator: boolean;
+  isDisabledEvaluated: boolean;
+  isDisabledCounterSigner: boolean;
+  isNotCheckedCounterSigner: boolean;
+
+  M1: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  M1$: Observable<number> = this.M1.asObservable();
+  M2: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  M2$: Observable<number> = this.M2.asObservable();
+  M3: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  M3$: Observable<number> = this.M3.asObservable();
+  Pb: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  Pb$: Observable<number> = this.Pb.asObservable();
+  M4: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  M4$: Observable<number> = this.M4.asObservable();
+  Mea: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  Mea$: Observable<number> = this.Mea.asObservable();
+  Mf: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  Mf$: Observable<number> = this.Mf.asObservable();
   constructor() {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isValid = isValid.bind(this);
@@ -74,63 +98,36 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.isInvalidCustom = isInvalidCustom.bind(this);
    }
 
-  get isEvaluatorRoleView(): boolean {
-    return [EvaluationRoleEnum.Evaluator,
-            EvaluationRoleEnum.Evaluated,
-            EvaluationRoleEnum.CounterSigner,
-            EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
-  }
-
-  set isEvaluatorRoleView(value: boolean) {};
-
-  get isEvaluatedRoleView(): boolean {
-    return [EvaluationRoleEnum.Evaluated, 
-            EvaluationRoleEnum.CounterSigner, 
-            EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
-  }
-
-  set isEvaluatedRoleView(value: boolean) {};
-
-  get isCounterSignerView(): boolean {
-    if (this.counterSignForm && !this.evaluation.counterSignerName) {
-      return false;
-    }
-
-    return [EvaluationRoleEnum.CounterSigner,
-            EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
-  }
-
-  set isCounterSignerView(value: boolean) {};
-
-  get isEvaluatedKnowView(): boolean {
-    return [EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
-  }
-
-  set isEvaluatedKnowView(value: boolean) {};
-
-  get isDisabledEvaluator(): boolean {
-    return this.evaluationRole != EvaluationRoleEnum.Evaluator;
-  }
-
-  get isDisabledEvaluated(): boolean {
-    return this.evaluationRole != EvaluationRoleEnum.Evaluated;
-  }
-
-  get isDisabledCounterSigner(): boolean {
-    return this.evaluationRole != EvaluationRoleEnum.CounterSigner;
-  }
-
-  get isNotCheckedCounterSigner(): boolean {
-    return this.counterSignForm && 
-           !this.counterSignForm.get('checkComment1').value ||
-           !this.counterSignForm.get('checkComment2').value ||
-           !this.counterSignForm.get('checkComment3').value ||
-           !this.counterSignForm.get('checkComment4').value;
-  }
-
   ngOnInit(): void {
     this.initForm(this.evaluation);
     this.assignDates(this.evaluation);
+
+    this.isEvaluatorRoleView = [EvaluationRoleEnum.Evaluator,
+      EvaluationRoleEnum.Evaluated,
+      EvaluationRoleEnum.CounterSigner,
+      EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole);
+
+    this.isEvaluatedRoleView = [EvaluationRoleEnum.Evaluated, 
+      EvaluationRoleEnum.CounterSigner, 
+      EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
+
+    this.isCounterSignerView = !this.evaluation.counterSignerName ? false : [EvaluationRoleEnum.CounterSigner,
+        EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
+
+    this.isEvaluatedKnowView = [EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole);
+
+    this.isDisabledEvaluator = this.evaluationRole != EvaluationRoleEnum.Evaluator;
+
+    this.isDisabledEvaluated = this.evaluationRole != EvaluationRoleEnum.Evaluated;
+
+    this.isDisabledCounterSigner = this.evaluationRole != EvaluationRoleEnum.CounterSigner;
+
+    this.isNotCheckedCounterSigner = this.counterSignForm && 
+                                    !this.counterSignForm?.get('checkComment1').value ||
+                                    !this.counterSignForm?.get('checkComment2').value ||
+                                    !this.counterSignForm?.get('checkComment3').value ||
+                                    !this.counterSignForm?.get('checkComment4').value;
+    
   }
 
   ngAfterViewInit(): void {
@@ -145,6 +142,13 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
         this.subscribeForServiceDuringEvaluationCourseChanges();
         this.subscribeForObjectivesChanges();
+        this.subscribeForM1Changes();
+        this.subscribeForM2Changes();
+        this.subscribeForM3Changes();
+        this.subscribeForPbChanges();
+        this.subscribeForM4Changes();
+        this.subscribeForMeaChanges();
+        this.subscribeForMfChanges();
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
@@ -164,6 +168,93 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
         break;
     }
+  }
+
+  subscribeForM1Changes(): void {
+    combineLatest([
+        this.evaluationForm.get('question1').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question2').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question3').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question4').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question5').valueChanges.pipe(startWith('')),
+      ]).subscribe(() => {
+        this.M1.next(+(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm?.get(`question${i+1}`)?.value || 0), 0) / 5));
+      });
+  }
+
+  subscribeForM2Changes(): void {
+    combineLatest([
+        this.evaluationForm.get('question6').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question7').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question8').valueChanges.pipe(startWith(''))
+      ]).subscribe(() => {
+        this.M2.next(+(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+6}`)?.value || 0), 0.00) / 3));
+      });
+  }
+
+  subscribeForM3Changes(): void {
+    combineLatest([
+        this.evaluationForm.get('score1').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('score2').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('score3').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('score4').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('score5').valueChanges.pipe(startWith(''))
+      ]).subscribe(() => {
+        this.M3.next(+(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`score${i + 1}`)?.value || 0), 0.00) / 5));
+      });
+  }
+
+  subscribeForPbChanges(): void {
+    combineLatest([
+        this.evaluationForm.get('question9').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question10').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question11').valueChanges.pipe(startWith('')),
+        this.evaluationForm.get('question12').valueChanges.pipe(startWith(''))
+      ]).subscribe(() => {
+        this.Pb.next(+(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4));
+      });
+  }
+
+  subscribeForM4Changes(): void {
+    combineLatest([
+        this.Pb$,
+        this.evaluationForm.get('question13').valueChanges.pipe(startWith(''))
+      ]).subscribe(([pb]) => {
+        const pf = +this.evaluationForm?.get('question13')?.value || 0;
+        this.M4.next((pb + pf) / 2);
+      });
+  }
+
+  subscribeForMeaChanges(): void {
+    combineLatest([
+      this.M1$,
+      this.M2$,
+      this.M3$,
+      this.M4$,
+    ]).subscribe(([m1, m2, m3, m4]) => {
+      this.Mea.next((m1 + m2 + m3 + m4) / 4);
+    });
+  }
+
+  subscribeForMfChanges(): void {
+    combineLatest([
+      this.Mea$,
+      this.evaluationForm?.get('partialEvaluationScore')?.valueChanges.pipe(startWith(''))
+    ]).subscribe(([mea]) => {
+      if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
+        const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
+        this.handleFinalQualificationChange((mea + Mep) / 2);
+        this.handleFinalQualificationChange(Math.round((mea + Mep) / 2), true);
+        this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
+        this.Mf.next((mea + Mep) / 2);
+        return;
+      }
+
+      this.handleFinalQualificationChange(mea);
+      this.handleFinalQualificationChange(Math.round(mea), true);
+      this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
+      this.Mf.next(mea);
+    });
   }
 
   submit(action: ActionFormType): void {
@@ -188,7 +279,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.parsedPeriodEvaluatedFromTo = data.periodEvaluatedFromTo; 
     this.parsedPeriodEvaluatedUpTo = data.periodEvaluatedUpTo; 
     this.parsedPeriodRunningActivityFromTo = data.periodRunningActivityFromTo; 
-    this.parsedPeriodRunningActivityUpTo = data.periodEvaluatedUpTo; 
+    this.parsedPeriodRunningActivityUpTo = data.periodRunningActivityUpTo; 
     this.parsedPartialEvaluationPeriodFromTo = data.partialEvaluationPeriodFromTo; 
     this.parsedPartialEvaluationPeriodUpTo = data.partialEvaluationPeriodUpTo; 
     this.parsedDateSanctionApplication = data.dateSanctionApplication; 
@@ -210,7 +301,9 @@ export class FormComponent implements OnInit, AfterViewInit {
       return
     }
 
-    this.finalEvalNum.nativeElement.value = +value || null;
+    if (this.finalEvalNum) {
+      this.finalEvalNum.nativeElement.value = +value || null;
+    }
   }
 
   handlePartialScoreChange(value: number, isInputChange: boolean = false): void {
@@ -281,70 +374,6 @@ export class FormComponent implements OnInit, AfterViewInit {
         }
       });
     }
-  }
-
-  /**
-   * Calculating M1 - index 6, M2 - index 10, M3 - index 12, Pb - index 17
-   * @returns {number} Media (M1, M2, M3, Pb)
-   * isFixed = defaults true for UI
-   */
-  calculateAverageCriterias(index: number, isFixed: boolean = true): number {
-    if (isFixed) {
-      switch(index) {
-        case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm?.get(`question${i+1}`)?.value || 0), 0) / 5).toFixed(2);
-        case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+6}`)?.value || 0), 0.00) / 3).toFixed(2);
-        case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`score${i + 1}`)?.value || 0), 0.00) / 5).toFixed(2);
-        case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4).toFixed(2);
-      }
-    }
-
-    switch(index) {
-      case 6: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc + (+this.evaluationForm?.get(`question${i+1}`)?.value || 0), 0) / 5)
-      case 10: return +(Array.from(Array(3).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+6}`)?.value || 0), 0.00) / 3)
-      case 12: return +(Array.from(Array(5).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`score${i + 1}`)?.value || 0), 0.00) / 5)
-      case 17: return +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4)
-    }
-  }
-
-  /**
-   * 
-   * @returns {number} Pregatirea de baza (M4)
-   * 
-   * pb - pregatirea de baza (1-4)
-   * pf - pregatirea fizica
-   */
-  calculateM4(isFixed: boolean = true): number {
-    const pb = +(Array.from(Array(4).keys()).reduce((acc, _, i) => acc +(+this.evaluationForm?.get(`question${i+9}`)?.value || 0), 0.00) / 4);
-    const pf = +this.evaluationForm?.get('question13')?.value || 0;
-
-    return isFixed ? +((pb + pf) / 2).toFixed(2) : (pb + pf) / 2;
-  }
-
-  /**
-   * Punctajul la evaluarea anuala (MEa)
-   */
-  calculateMea(isFixed: boolean = true): number {
-    const m1 = +this.calculateAverageCriterias(6, false)
-    const m2 = +this.calculateAverageCriterias(10, false)
-    const m3 = this.calculateAverageCriterias(12, false);
-    const m4 = this.calculateM4(false);
-
-    return isFixed ? +((m1 + m2 + m3 + m4) / 4).toFixed(2) : (m1 + m2 + m3 + m4) / 4; 
-  }
-
-  /**
-   * 
-   * @returns {number} Evaluare anuala final (Mf)
-   */
-  calculateMf(isFixed: boolean = true): number | string {
-    const Mea = this.calculateMea(false);
-    const Mep = +this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
-    
-    if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
-      return isFixed ? ((Mea + Mep) / 2).toFixed(2) : (Mea + Mep) / 2; 
-    }
-
-    return isFixed ? (Mea).toFixed(2) : Mea;
   }
 
   precompleteWith(btn, value: number): void {
