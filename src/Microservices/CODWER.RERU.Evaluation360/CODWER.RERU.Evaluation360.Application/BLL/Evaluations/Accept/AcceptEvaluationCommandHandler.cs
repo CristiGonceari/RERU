@@ -28,17 +28,21 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
         public async Task<Unit> Handle(AcceptEvaluationCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
-            await SendEmailNotification(evaluation.CounterSignerUserProfileId);
-            evaluation.Status = EvaluationStatusEnum.Acceptată;
-            evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
-            evaluation.SignatureEvaluated = true;
-            _mapper.Map(request.Evaluation, evaluation); 
-            await _dbContext.SaveChangesAsync();
+            
+            if (evaluation.CounterSignerUserProfileId != null)
+            {
+                await SendEmailNotification(evaluation.CounterSignerUserProfileId);
+                evaluation.Status = EvaluationStatusEnum.Acceptată;
+                evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
+                evaluation.SignatureEvaluated = true;
+                _mapper.Map(request.Evaluation, evaluation);
+                await _dbContext.SaveChangesAsync();
+            }
 
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(int CounterSignerUserProfileId)
+        private async Task<Unit> SendEmailNotification(int? CounterSignerUserProfileId)
         {
             var user = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == CounterSignerUserProfileId);
 

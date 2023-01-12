@@ -9,7 +9,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public int Id { set; get; }
         public string EvaluatedName { set; get; }
         public string EvaluatorName { set; get; }
-        public string CounterSignerName { set; get; }
+        public string? CounterSignerName { set; get; }
         public EvaluationTypeEnum? Type { set; get; }
         
         public string? SubdivisionName { set; get; }
