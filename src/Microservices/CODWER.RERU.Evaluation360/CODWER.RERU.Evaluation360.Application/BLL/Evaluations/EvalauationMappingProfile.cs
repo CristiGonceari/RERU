@@ -11,21 +11,21 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
         public EvalauationMappingProfile()
         {
             CreateMap<Evaluation, EvaluationRowDto>()
-                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
-                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
-                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
+                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.LastName} {src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.LastName} {src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.LastName} {src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.FatherName}" ))
                 ;
 
             CreateMap<Evaluation, PrintTableEvaluationsDto>()
-                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
-                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
-                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
+                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.LastName} {src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.LastName} {src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.LastName} {src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.FatherName}" ))
                 ;
 
             CreateMap<Evaluation, GetEvaluationDto>()
-                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.LastName}" ))
-                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.LastName}" ))
-                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.LastName}" ))
+                .ForMember(dest=> dest.EvaluatorName, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.LastName} {src.EvaluatorUserProfile.FirstName} {src.EvaluatorUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.EvaluatedName, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.LastName} {src.EvaluatedUserProfile.FirstName} {src.EvaluatedUserProfile.FatherName}" ))
+                .ForMember(dest=> dest.CounterSignerName, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.LastName} {src.CounterSignerUserProfile.FirstName} {src.CounterSignerUserProfile.FatherName}" ))
                 .ForMember(dest=> dest.FunctionSubdivision, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.Role.Name}"))
                 .ForMember(dest=> dest.FunctionEvaluator, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.Role.Name}"))
                 .ForMember(dest=> dest.FunctionCounterSigner, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.Role.Name}"))

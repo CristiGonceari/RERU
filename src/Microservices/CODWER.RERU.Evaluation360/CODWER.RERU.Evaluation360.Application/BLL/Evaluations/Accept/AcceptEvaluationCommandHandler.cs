@@ -9,6 +9,9 @@ using CODWER.RERU.Evaluation360.Application.BLL.Services;
 using System.Collections.Generic;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow;
+using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update;
+using CVU.ERP.MessageQueue;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
 {
@@ -17,12 +20,14 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly ISender _sender;
 
-        public AcceptEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper, INotificationService notificationService)
+        public AcceptEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper, INotificationService notificationService, ISender sender)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _notificationService = notificationService;
+            _sender = sender;
         }
 
         public async Task<Unit> Handle(AcceptEvaluationCommand request, CancellationToken cancellationToken)
@@ -38,6 +43,17 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
                 _mapper.Map(request.Evaluation, evaluation);
                 await _dbContext.SaveChangesAsync();
             }
+            else
+            {
+                evaluation.Status = EvaluationStatusEnum.Acceptată;
+                evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
+                evaluation.SignatureEvaluated = true;
+                await _sender.Send(new EvaluatedKnowCommand(request.Id));
+                //_mapper.Map(request.Evaluation, evaluation);
+                await _dbContext.SaveChangesAsync();
+            }
+
+
 
             return Unit.Value;
         }

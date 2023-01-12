@@ -28,7 +28,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
         public async Task<Unit> Handle(CounterSignRejectEvaluationCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
-            await SendEmailNotification(evaluation.EvaluatorUserProfileId);
+            await SendEmailNotificationToEvaluator(evaluation.EvaluatorUserProfileId);
+            await SendEmailNotificationToEvaluated(evaluation.EvaluatedUserProfileId);
             evaluation.Status = EvaluationStatusEnum.Respinsă_contrasemnatar;
             evaluation.DateCompletionCounterSigner = System.DateTime.Now;
             evaluation.SignatureCounterSigner = true;
@@ -38,7 +39,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(int EvaluatorUserProfileId)
+        private async Task<Unit> SendEmailNotificationToEvaluator(int EvaluatorUserProfileId)
         {
             var user = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == EvaluatorUserProfileId);
 
@@ -50,16 +51,42 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", user.FirstName + " " + user.LastName + " " + user.FatherName },
-                    { "{email_message}", await GetTableContent() }
+                    { "{email_message}", await GetEvaluatorTableContent() }
                 }
             });
 
             return Unit.Value;
         }
 
-        private async Task<string> GetTableContent()
+        private async Task<Unit> SendEmailNotificationToEvaluated(int EvaluatorUserProfileId)
+        {
+            var user = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == EvaluatorUserProfileId);
+
+            await _notificationService.PutEmailInQueue(new QueuedEmailData
+            {
+                Subject = "Invitație la eveniment",
+                To = user.Email,
+                HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
+                ReplacedValues = new Dictionary<string, string>()
+                {
+                    { "{user_name}", user.FirstName + " " + user.LastName + " " + user.FatherName },
+                    { "{email_message}", await GetEvaluatedTableContent() }
+                }
+            });
+
+            return Unit.Value;
+        }
+
+        private async Task<string> GetEvaluatorTableContent()
         {
             var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost respinsa de catre contrasemnatar, rugam sa reevaluati angajatul.</p>";
+
+            return content;
+        }
+
+        private async Task<string> GetEvaluatedTableContent()
+        {
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost respinsa de catre contrasemnatar, urmeaza evaluatorul sa indeplineasca reevaluarea, asteptati in curand acest eveniment.</p>";
 
             return content;
         }
