@@ -22,7 +22,7 @@ namespace RERU.Data.Entities.Evaluation360
         public UserProfile CounterSignerUserProfile { set; get; }
 
         public EvaluationTypeEnum? Type { set; get; }
-        public decimal Points { set; get; }
+        public decimal? Points { set; get; }
         public EvaluationStatusEnum? Status {set;get;}
         
         public string? SubdivisionName { set; get; }

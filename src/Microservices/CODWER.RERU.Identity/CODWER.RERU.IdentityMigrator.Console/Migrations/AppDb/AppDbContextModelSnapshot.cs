@@ -905,7 +905,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("PeriodRunningActivityUpTo")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<decimal>("Points")
+                    b.Property<decimal?>("Points")
                         .HasColumnType("numeric");
 
                     b.Property<int?>("ProfessionalTrainingActivities")

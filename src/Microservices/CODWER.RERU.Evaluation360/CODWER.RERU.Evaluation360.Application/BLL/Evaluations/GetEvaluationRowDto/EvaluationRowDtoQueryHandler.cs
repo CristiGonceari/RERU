@@ -77,7 +77,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                 else if (mf >= 2.51m && mf <= 3.5m) e.FinalEvaluationQualification = QualifierEnum.Good;
                 else if (mf >= 3.51m && mf <= 4m) e.FinalEvaluationQualification = QualifierEnum.VeryGood;
 
-                e.Points = mf.Value;
+                e.Points = mf;
             }
 
             await _dbContext.SaveChangesAsync();

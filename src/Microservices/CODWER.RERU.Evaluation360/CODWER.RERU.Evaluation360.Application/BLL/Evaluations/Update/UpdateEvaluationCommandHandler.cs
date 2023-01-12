@@ -63,7 +63,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
             else if (mf >= 2.51m && mf <= 3.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Good;
             else if (mf >= 3.51m && mf <= 4m) evaluation.FinalEvaluationQualification = QualifierEnum.VeryGood;
             
-            evaluation.Points = mf.Value;
+            evaluation.Points = mf;
 
             _mapper.Map(request.Evaluation, evaluation);
             await _dbContext.SaveChangesAsync();
