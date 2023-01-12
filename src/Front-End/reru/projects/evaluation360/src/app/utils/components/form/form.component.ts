@@ -92,6 +92,10 @@ export class FormComponent implements OnInit, AfterViewInit {
   set isEvaluatedRoleView(value: boolean) {};
 
   get isCounterSignerView(): boolean {
+    if (this.counterSignForm && !this.evaluation.counterSignerName) {
+      return false;
+    }
+
     return [EvaluationRoleEnum.CounterSigner,
             EvaluationRoleEnum.EvaluatedKnow].includes(this.evaluationRole)
   }
