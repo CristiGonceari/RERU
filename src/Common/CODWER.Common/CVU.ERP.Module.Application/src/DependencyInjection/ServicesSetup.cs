@@ -126,7 +126,10 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
             //export data table services 
             services.AddExportTableServices();
-          
+
+            //storage service
+            services.AddStorageService(configuration);
+
             services.AddTransient<ICoreClient, CoreClient>();
             services.AddTransient<IApplicationUserProvider, ModuleApplicationUserProvider>();
 
