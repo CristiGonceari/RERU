@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CVU.ERP.Module.Application.ImportProcesses;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses
 {
