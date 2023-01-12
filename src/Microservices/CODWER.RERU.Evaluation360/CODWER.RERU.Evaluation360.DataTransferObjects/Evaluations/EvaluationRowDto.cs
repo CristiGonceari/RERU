@@ -7,9 +7,9 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public int Id { set; get; }
         public string EvaluatedName { set; get; }
         public string EvaluatorName { set; get; }
-        public string CounterSignerName { set; get; }
+        public string? CounterSignerName { set; get; }
         public int? Type { set; get; }
-        public decimal Points { set; get; }
+        public decimal? Points { set; get; }
         public int? Status { set; get; }
         public DateTime? CreateDate { set; get; }
         public bool canEvaluate { set; get; }
@@ -20,6 +20,6 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations
         public bool canDownload { set; get; }
         public int EvaluatorUserProfileId { get; set; }
         public int EvaluatedUserProfileId { get; set; }
-        public int CounterSignerUserProfileId { get; set; }
+        public int? CounterSignerUserProfileId { get; set; }
     }
 }
