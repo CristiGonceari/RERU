@@ -1,6 +1,6 @@
 ﻿using RERU.Data.Entities.Enums;
 
-namespace CVU.ERP.Module.Application.ImportProcesses
+namespace CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels
 {
     public class ProcessDataDto
     {

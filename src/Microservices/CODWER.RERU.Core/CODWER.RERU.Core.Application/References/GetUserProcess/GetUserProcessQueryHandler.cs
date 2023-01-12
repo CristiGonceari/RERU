@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CVU.ERP.Module.Application.ImportProcesses;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;

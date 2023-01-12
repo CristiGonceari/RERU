@@ -17,12 +17,12 @@ using CODWER.RERU.Evaluation.Application.References.GetRequiredDocumentsValue;
 using CODWER.RERU.Evaluation.Application.References.GetRolesValue;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
-using CVU.ERP.Module.Application.ImportProcesses;
 using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CODWER.RERU.Evaluation.Application.References.GetAllEventsValues;
 using CODWER.RERU.Evaluation.Application.References.GetLocationsSelectValues;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {

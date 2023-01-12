@@ -30,4 +30,8 @@
     <ProjectReference Include="..\..\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ImportProcesses\" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,11 @@
+using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Infrastructure.Email;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Module.Application.ExceptionHandlers;
 using CVU.ERP.Module.Application.Infrastructure;
+using CVU.ERP.Module.Application.LoggerService.Implementations;
 using CVU.ERP.Module.Application.StorageFileServices.Implementations;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.Module.Application.TableExportServices.Implementations;
@@ -13,6 +15,8 @@ using CVU.ERP.Module.Common.Models;
 using CVU.ERP.Notifications.DependencyInjection;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Services.Implementations;
+using CVU.ERP.ServiceProvider;
+using CVU.ERP.ServiceProvider.Clients;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Context;
 using CVU.ERP.StorageService.DependencyInjection;
@@ -31,10 +35,8 @@ using RestSharp;
 using src.ExceptionHandlers;
 using System;
 using System.Reflection;
-using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
-using CVU.ERP.Module.Application.LoggerService.Implementations;
-using CVU.ERP.ServiceProvider;
-using CVU.ERP.ServiceProvider.Clients;
+using CVU.ERP.Module.Application.ImportProcessServices;
+using CVU.ERP.Module.Application.ImportProcessServices.Implementations;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -73,6 +75,9 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
             //export data table services 
             services.AddExportTableServices();
+
+            //import process service
+            services.AddTransient<IImportProcessService, ImportProcessService>();
 
             return services;
         }
@@ -115,7 +120,6 @@ namespace CVU.ERP.Module.Application.DependencyInjection
             //
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<IModuleClient, ModuleClient>();
-
 
             //log service 
             services.AddTransient(typeof(ILoggerService<>), typeof(LoggerService<>));
