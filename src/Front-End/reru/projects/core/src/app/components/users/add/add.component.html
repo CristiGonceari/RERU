@@ -80,29 +80,26 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
-                    translate}}</label>
-                  <div class="col-lg-9 col-xl-9" style="height: 44px;">
-                    <input type="text" [owlDateTimeTrigger]="startDate"
-                      class="form-control form-control-lg form-control-solid"
-                      [value]="birthDate | dateFilter:'dd/MM/yyyy'">
-                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                      name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
-                      [ngModelOptions]="{standalone: true}" [readonly]="true">
-                    <owl-date-time #startDate pickerType="calendar"></owl-date-time>
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.email' | translate }}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" name="email" type="email"
+                      formControlName="email"
+                      [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+                    <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
+                        class="fv-help-block">
+                        {{ 'login.email-is-required' | translate }}</div>
+                      <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
+                        class="fv-help-block">
+                        {{ 'login.please-use-valid-email' | translate }}</div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label mt-1">{{ 'table.profile-photo' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9 mt-1">
-                    <div *ngIf="fileId">
-                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                        (disableBtn)="disableBtn"></app-add-edit-media-file>
-                    </div>
-                    <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
-                    </div>
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
+                      name="emailNotification" type="checkbox" formControlName="emailNotification" />
                   </div>
                 </div>
               </diV>
@@ -125,19 +122,16 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.email' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" name="email" type="email"
-                      formControlName="email"
-                      [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
-                    <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
-                      <div *ngIf="hasError('email', 'required')" data-field="email" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'login.email-is-required' | translate }}</div>
-                      <div *ngIf="hasError('email', 'email')" data-field="email" data-validator="notEmpty"
-                        class="fv-help-block">
-                        {{ 'login.please-use-valid-email' | translate }}</div>
-                    </div>
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
+                    translate}}</label>
+                  <div class="col-lg-9 col-xl-9" style="height: 44px;">
+                    <input type="text" [owlDateTimeTrigger]="startDate"
+                      class="form-control form-control-lg form-control-solid"
+                      [value]="birthDate | dateFilter:'dd/MM/yyyy'">
+                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                      name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
+                      [ngModelOptions]="{standalone: true}" [readonly]="true">
+                    <owl-date-time #startDate pickerType="calendar"></owl-date-time>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -178,10 +172,16 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
-                  <div class="col-lg-9 col-xl-9">
-                    <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
-                      name="emailNotification" type="checkbox" formControlName="emailNotification" />
+                  <label class="col-xl-3 col-lg-3 col-form-label mt-1">{{ 'table.profile-photo' | translate }}</label>
+                  <div class="col-lg-9 col-xl-9 mt-1">
+                    <div *ngIf="fileId">
+                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
+                        (disableBtn)="disableBtn"></app-add-edit-media-file>
+                    </div>
+                    <div *ngIf="!fileId">
+                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                      </app-add-edit-media-file>
+                    </div>
                   </div>
                 </div>
               </div>
