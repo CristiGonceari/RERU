@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserForRemove;
 using CODWER.RERU.Core.Application.Users.ActivateUser;
 using CODWER.RERU.Core.Application.Users.AddUserAvatar;
@@ -24,13 +23,11 @@ using CODWER.RERU.Core.Application.Users.SetPassword;
 using CODWER.RERU.Core.DataTransferObjects.Password;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using CVU.ERP.Module.Application.ImportProcesses;
-using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
-using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
-using CVU.ERP.Module.Application.ImportProcesses.StartImportProcess;
+using CVU.ERP.Module.Application.ImportProcessServices;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RERU.Data.Persistence.Context;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -38,10 +35,11 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route ("api/[controller]")]
     public class UserController : BaseController
     {
-        private readonly AppDbContext _appDbContext;
-        public UserController(IMediator mediator, AppDbContext appDbContext) : base(mediator)
+        private readonly IImportProcessService _importProcessService;
+
+        public UserController(IMediator mediator,  IImportProcessService importProcessService) : base(mediator)
         {
-            _appDbContext = appDbContext;
+            _importProcessService = importProcessService;
         }
 
         [HttpGet ("{id:int}")]
@@ -116,26 +114,22 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpPost]
         [Route("process")]
-        public async Task<int> StartAddProcess([FromBody] StartImportProcessCommand command)
+        public async Task<int> StartAddProcess([FromBody] StartProcessDto startProcessDto)
         {
-            return await Mediator.Send(command);
+            return await _importProcessService.StartImportProcess(startProcessDto);
         }
 
         [HttpGet("process/{id}")]
         public async Task<ProcessDataDto> GetImportProcess([FromRoute] int id)
         {
-            var query = new GetImportProcessQuery() { ProcessId = id };
-
-            return await Mediator.Send(query);
+            return await _importProcessService.GetImportProcess(id);
         }
 
         [HttpGet("process-result/{fileId}")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetFile([FromRoute] string fileId)
         {
-            var query = new GetImportResultQuery { FileId = fileId };
-
-            var result = await Mediator.Send(query);
+            var result = await _importProcessService.GetImportResult(fileId);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

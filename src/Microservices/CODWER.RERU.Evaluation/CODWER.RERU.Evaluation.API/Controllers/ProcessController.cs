@@ -1,11 +1,11 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.TestImportProcesses.GetProcessHistory;
 using CODWER.RERU.Evaluation.DataTransferObjects.BulkProcesses;
+using CVU.ERP.Module.Application.ImportProcessServices;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CVU.ERP.Module.Application.ImportProcesses.StopAllProcesses;
-using MediatR;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -13,6 +13,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     [Route("api/[controller]")]
     public class ProcessController : BaseController
     {
+        private readonly IImportProcessService _importProcessService;
+
+        public ProcessController(IImportProcessService importProcessService)
+        {
+            _importProcessService = importProcessService;
+        }
+
         [HttpGet]
         public async Task<List<HistoryProcessDto>> GetBulkProcessHistory()
         {
@@ -24,9 +31,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpGet("close")]
         public async Task<Unit> CloseAllProcesses()
         {
-            var command = new StopAllProcessesCommand();
-
-            return await Mediator.Send(command);
+            return await _importProcessService.StopAllProcesses();
         }
     }
 }

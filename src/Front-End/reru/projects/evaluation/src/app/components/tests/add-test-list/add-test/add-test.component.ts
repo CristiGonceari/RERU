@@ -349,11 +349,9 @@ export class AddTestComponent implements OnInit {
     modalRef.componentInstance.testTemplateId = inputType == "radio" ? +this.testTemplate.value : null;
     modalRef.result.then(() => {
       if (whichUser) {
-        console.log("evaluatori", this.evaluatorList)
         this.evaluatorList = modalRef.result.__zone_symbol__value.attachedItems;
       }
       else if(!whichUser) {
-        console.log("useri", this.userListToAdd)
          this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
       }
     }, () => { });

@@ -169,15 +169,19 @@ export class EditComponent implements OnInit {
 					request.append('Data.File.File', this.attachedFile);
 					request.append('Data.File.Type', this.fileType.toString());
 					request.append('Data.UserId', res.data);
-					this.userService.addUserAvatar(request).subscribe(() => {
-						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-						this.isLoading = false;
+					this.userService.addUserAvatar(request).subscribe((response) => {
+						if (response.ok) {
+							this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+							this.isLoading = false;
+						}
 					})
 				} else {
 					request.append('Data.UserId', res.data);
-					this.userService.addUserAvatar(request).subscribe(() => {
-						this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-						this.isLoading = false;
+					this.userService.addUserAvatar(request).subscribe((response) => {
+						if (response.ok) {
+							this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+							this.isLoading = false;
+						}
 					})
 				}
 				this.backClicked();

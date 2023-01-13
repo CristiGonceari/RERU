@@ -76,11 +76,11 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         finalEvaluationQualification: +data.finalEvaluationQualification || null,
         dateEvaluationInterview: data.dateEvaluationInterview,
         dateSettingIindividualGoals: data.dateSettingIindividualGoals,
-        need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated,
-        need2ProfessionalDevelopmentEvaluated: data.need2ProfessionalDevelopmentEvaluated,
-        need3ProfessionalDevelopmentEvaluated: data.need3ProfessionalDevelopmentEvaluated,
-        need4ProfessionalDevelopmentEvaluated: data.need4ProfessionalDevelopmentEvaluated,
-        need5ProfessionalDevelopmentEvaluated: data.need5ProfessionalDevelopmentEvaluated,
+        need1ProfessionalDevelopmentEvaluated: data.need1ProfessionalDevelopmentEvaluated || null,
+        need2ProfessionalDevelopmentEvaluated: data.need2ProfessionalDevelopmentEvaluated || null,
+        need3ProfessionalDevelopmentEvaluated: data.need3ProfessionalDevelopmentEvaluated || null,
+        need4ProfessionalDevelopmentEvaluated: data.need4ProfessionalDevelopmentEvaluated || null,
+        need5ProfessionalDevelopmentEvaluated: data.need5ProfessionalDevelopmentEvaluated || null,
         commentsEvaluator: data.commentsEvaluator,
     }
 }

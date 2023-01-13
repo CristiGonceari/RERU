@@ -743,7 +743,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("CommentsEvaluator")
                         .HasColumnType("text");
 
-                    b.Property<int>("CounterSignerUserProfileId")
+                    b.Property<int?>("CounterSignerUserProfileId")
                         .HasColumnType("integer");
 
                     b.Property<string>("CourseName")
@@ -905,7 +905,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("PeriodRunningActivityUpTo")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<decimal>("Points")
+                    b.Property<decimal?>("Points")
                         .HasColumnType("numeric");
 
                     b.Property<int?>("ProfessionalTrainingActivities")
@@ -5440,37 +5440,37 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 1,
-                            Name = "Draft"
+                            Name = "Schiță"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Confirmed"
+                            Name = "Confirmată"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Accepted"
+                            Name = "Acceptată"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Rejected"
+                            Name = "Respinsă"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "CounterSignAccept"
+                            Name = "Contrasemnată"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "CounterSignReject"
+                            Name = "Respinsă_contrasemnatar"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Finished"
+                            Name = "Finisată"
                         });
                 });
 
@@ -5493,12 +5493,12 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 1,
-                            Name = "Execution"
+                            Name = "Execuție"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Management"
+                            Name = "Conducere"
                         });
                 });
 
@@ -7551,9 +7551,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 {
                     b.HasOne("RERU.Data.Entities.UserProfile", "CounterSignerUserProfile")
                         .WithMany()
-                        .HasForeignKey("CounterSignerUserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CounterSignerUserProfileId");
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
                         .WithMany()

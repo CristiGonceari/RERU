@@ -1,4 +1,4 @@
-﻿using CVU.ERP.Module.Application.ImportProcesses;
+﻿using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using System.Collections.Generic;
 

@@ -7,13 +7,13 @@ using CODWER.RERU.Core.Application.References.GetUserProcess;
 using CODWER.RERU.Core.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
-using CVU.ERP.Module.Application.ImportProcesses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RERU.Data.Entities.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.References.GetCoreRoles;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
 namespace CODWER.RERU.Core.API.Controllers
 {

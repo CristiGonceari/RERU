@@ -236,11 +236,11 @@ export class EvaluationClass implements EvaluationModel {
 			this.finalEvaluationQualification = +evaluation.finalEvaluationQualification || null;
 			this.dateEvaluationInterview = evaluation.dateEvaluationInterview;
 			this.dateSettingIindividualGoals = evaluation.dateSettingIindividualGoals;
-			this.need1ProfessionalDevelopmentEvaluated = evaluation.need1ProfessionalDevelopmentEvaluated;
-			this.need2ProfessionalDevelopmentEvaluated = evaluation.need2ProfessionalDevelopmentEvaluated;
-			this.need3ProfessionalDevelopmentEvaluated = evaluation.need3ProfessionalDevelopmentEvaluated;
-			this.need4ProfessionalDevelopmentEvaluated = evaluation.need4ProfessionalDevelopmentEvaluated;
-			this.need5ProfessionalDevelopmentEvaluated = evaluation.need5ProfessionalDevelopmentEvaluated;
+			this.need1ProfessionalDevelopmentEvaluated = evaluation.need1ProfessionalDevelopmentEvaluated || null;
+			this.need2ProfessionalDevelopmentEvaluated = evaluation.need2ProfessionalDevelopmentEvaluated || null;
+			this.need3ProfessionalDevelopmentEvaluated = evaluation.need3ProfessionalDevelopmentEvaluated || null;
+			this.need4ProfessionalDevelopmentEvaluated = evaluation.need4ProfessionalDevelopmentEvaluated || null;
+			this.need5ProfessionalDevelopmentEvaluated = evaluation.need5ProfessionalDevelopmentEvaluated || null;
 			this.commentsEvaluator = evaluation.commentsEvaluator;
 		}
 	}

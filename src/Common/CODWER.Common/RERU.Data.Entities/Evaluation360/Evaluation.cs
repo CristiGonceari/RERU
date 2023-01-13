@@ -10,7 +10,7 @@ namespace RERU.Data.Entities.Evaluation360
     {
         public int EvaluatedUserProfileId { set; get; }
         public int EvaluatorUserProfileId { set; get; }
-        public int CounterSignerUserProfileId { set; get; }
+        public int? CounterSignerUserProfileId { set; get; }
 
         [ForeignKey(nameof(EvaluatedUserProfileId))]
         public UserProfile EvaluatedUserProfile { set; get; }
@@ -22,7 +22,7 @@ namespace RERU.Data.Entities.Evaluation360
         public UserProfile CounterSignerUserProfile { set; get; }
 
         public EvaluationTypeEnum? Type { set; get; }
-        public decimal Points { set; get; }
+        public decimal? Points { set; get; }
         public EvaluationStatusEnum? Status {set;get;}
         
         public string? SubdivisionName { set; get; }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Evaluation360;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRowDto
@@ -35,6 +38,49 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                                     .Where(e => e.EvaluatedUserProfileId == currentUserId ||  e.EvaluatorUserProfileId == currentUserId ||  e.CounterSignerUserProfileId == currentUserId)
                                     .OrderByDescending(e => e.CreateDate)
                                     .AsQueryable();
+
+            var ev = _dbContext.Evaluations;
+            foreach (var e in ev)
+            {
+                List<decimal?> listForM1 = new List<decimal?> {e.Question1, e.Question2, e.Question3, e.Question4, e.Question5};
+                decimal? m1 = listForM1.Average();
+
+                List<decimal?> listForM2 = new List<decimal?> {e.Question6, e.Question7, e.Question8};
+                decimal? m2 = listForM2.Average();
+
+                List<decimal?> listForM3 = new List<decimal?> {e.Score1, e.Score2, e.Score3, e.Score4, e.Score5};
+                decimal? m3 = listForM3.Average();
+
+                List<decimal?> listForPb = new List<decimal?> {e.Question9, e.Question10, e.Question11, e.Question12};
+                decimal? pb = listForPb.Average();
+
+                List<decimal?> listForM4 = new List<decimal?> {e.Question13, pb};
+                decimal? m4 = listForM4.Average();
+
+                List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
+                decimal? mea = listForMea.Average();
+
+                decimal? mf;
+
+                if (e.PartialEvaluationScore != null)
+                {
+                    List<decimal?> listForMf = new List<decimal?> {mea, e.PartialEvaluationScore};
+                    mf = listForMf.Average();
+                }
+                else
+                {
+                    mf = mea;
+                }
+
+                if (mf >= 1 && mf <= 1.5m) e.FinalEvaluationQualification = QualifierEnum.Dissatisfied;
+                else if (mf >= 1.51m && mf <= 2.5m) e.FinalEvaluationQualification = QualifierEnum.Satisfied;
+                else if (mf >= 2.51m && mf <= 3.5m) e.FinalEvaluationQualification = QualifierEnum.Good;
+                else if (mf >= 3.51m && mf <= 4m) e.FinalEvaluationQualification = QualifierEnum.VeryGood;
+
+                e.Points = mf;
+            }
+
+            await _dbContext.SaveChangesAsync();
 
             if (!string.IsNullOrWhiteSpace(request.EvaluatedName))
             {
@@ -95,7 +141,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
             foreach(var e in  paginatedModel.Items)
             {
-                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = e.canDownload =false;
+                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = e.canDownload = false;
 
                 if (currentUserId == e.EvaluatorUserProfileId && e.Status == 1) 
                 {

@@ -53,10 +53,9 @@ using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
-using CVU.ERP.Module.Application.ImportProcesses;
-using CVU.ERP.Module.Application.ImportProcesses.GetImportProcess;
-using CVU.ERP.Module.Application.ImportProcesses.GetImportResult;
-using CVU.ERP.Module.Application.ImportProcesses.StartImportProcess;
+using CVU.ERP.Module.Application.ImportProcessServices;
+using RERU.Data.Entities.Enums;
+using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -65,10 +64,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     public class TestController : BaseController
     {
         private readonly IGetTestDocumentReplacedKeys _getTestDocumentReplacedKeys;
+        private readonly IImportProcessService _importProcessService;
 
-        public TestController(IGetTestDocumentReplacedKeys getTestDocumentReplacedKeys)
+        public TestController(IGetTestDocumentReplacedKeys getTestDocumentReplacedKeys, IImportProcessService importProcessService)
         {
             _getTestDocumentReplacedKeys = getTestDocumentReplacedKeys;
+            _importProcessService = importProcessService;
         }
 
         [HttpGet("{id}")]
@@ -189,26 +190,22 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         }
 
         [HttpPost("process")]
-        public async Task<int> StartAddProcess([FromBody] StartImportProcessCommand command)
+        public async Task<int> StartAddProcess([FromBody] StartProcessDto startProcessDto)
         {
-            return await Mediator.Send(command);
+            return await _importProcessService.StartImportProcess(startProcessDto);
         }
 
         [HttpGet("process/{id}")]
         public async Task<ProcessDataDto> GetImportProcess([FromRoute] int id)
         {
-            var query = new GetImportProcessQuery() { ProcessId = id };
-
-            return await Mediator.Send(query);
+            return await _importProcessService.GetImportProcess(id);
         }
 
         [HttpGet("process-result/{fileId}")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetFile([FromRoute] string fileId)
         {
-            var query = new GetImportResultQuery {FileId = fileId};
-
-            var result = await Mediator.Send(query);
+            var result = await _importProcessService.GetImportResult(fileId);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

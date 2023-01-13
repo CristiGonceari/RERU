@@ -11,7 +11,6 @@ namespace CODWER.RERU.Core.API.Controllers
     [Route ("api/[controller]")]
     public class ModuleController : BaseController 
     {
-
         public ModuleController (IMediator mediator) : base (mediator) { }
 
         [HttpGet]
