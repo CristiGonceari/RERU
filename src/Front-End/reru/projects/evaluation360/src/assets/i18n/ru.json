@@ -242,6 +242,7 @@
     "individual-objective-established": "Установлены индивидуальные цели (дата)",
     "professional-development-needs-evaluated": "Потребности в профессиональном развитии оцениваемого сотрудника",
     "evaluator-name": "Фамилия, имя оценщика",
+    "evaluator-function": "Должность оценщика",
     "evaluator-comments": "Коментарий оценщика",
     "evaluated-comments": "Коментарий кандидата",
     "countersigner-name": "Фамилия, имя проверяющего",

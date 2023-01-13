@@ -34,7 +34,7 @@
 					<b>{{ evaluation.evaluatorName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ evaluation.counterSignerName }} </b>
+					<b>{{ evaluation.counterSignerName || '-' }} </b>
 				</td>
 
 				<td class="text-center">
@@ -42,7 +42,7 @@
 				</td>
 
 				<td class="text-center">
-					{{ evaluation.points }} <br />
+					{{ evaluation.points || '-' }} <br />
 				</td>
 
 				<td class="text-center">
