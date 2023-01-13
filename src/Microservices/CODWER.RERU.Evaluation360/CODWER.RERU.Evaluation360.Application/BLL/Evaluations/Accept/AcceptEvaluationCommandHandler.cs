@@ -49,7 +49,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
                 evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
                 evaluation.SignatureEvaluated = true;
                 await _sender.Send(new EvaluatedKnowCommand(request.Id));
-                //_mapper.Map(request.Evaluation, evaluation);
+                _mapper.Map(request.Evaluation, evaluation);
                 await _dbContext.SaveChangesAsync();
             }
 
