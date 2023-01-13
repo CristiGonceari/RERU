@@ -123,6 +123,13 @@ export class EditComponent implements OnInit {
 				Validators.maxLength(12), 
 				Validators.minLength(12)
 			]),
+			email: this.fb.control((user && user.email) || "", [
+				Validators.required,
+				Validators.email
+			]),
+			emailNotification: this.fb.control(false,  [
+				Validators.required
+			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || 0, [Validators.required]),
@@ -146,6 +153,8 @@ export class EditComponent implements OnInit {
 			firstName: this.userForm.value.firstName,
 			lastName: this.userForm.value.lastName,
 			fatherName: this.userForm.value.fatherName,
+			email: this.userForm.value.email,
+			emailNotification: this.userForm.value.emailNotification,
 			birthDate: this.date || null,
 			phoneNumber: this.userForm.value.phoneNumber,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId || null,

@@ -82,6 +82,13 @@ export class ChangePersonalDataComponent implements OnInit {
 				Validators.maxLength(12), 
 				Validators.minLength(12)
 			]),
+			email: this.fb.control(oldPersonalData.email, [
+				Validators.required,
+				Validators.email
+			]),
+			emailNotification: this.fb.control(false,  [
+				Validators.required
+			])
 		});
 		this.birthDate = oldPersonalData.birthDate;
 		this.isLoading = false;
@@ -102,6 +109,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	}
 
 	changePersonalData(): void {
+		this.isLoading = true;
 		this.setBirthDate();
 		const personalDataForUpdate = this.parseRequest(this.personalDataForm.value);
 
@@ -114,6 +122,7 @@ export class ChangePersonalDataComponent implements OnInit {
 					this.title = title;
 					this.description = description;
 					});
+				this.isLoading = false;
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.subsribeForParams();
 			},
