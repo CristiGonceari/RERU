@@ -42,7 +42,7 @@
 				</td>
 
 				<td class="text-center">
-					{{ evaluation.points || '-' }} <br />
+					{{ (evaluation.points | number : '1.2-2')  || '-' }} <br />
 				</td>
 
 				<td class="text-center">

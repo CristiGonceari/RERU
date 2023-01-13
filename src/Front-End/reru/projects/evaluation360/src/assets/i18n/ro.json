@@ -215,7 +215,8 @@
       "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
       "1": "Angajare",
       "2": "Transferare",
-      "3": "Detașare"
+      "3": "Detașare",
+      "4": "Neschimbat"
     },
     "function": "Funcția",
     "appointment-date": "Data numirii",
