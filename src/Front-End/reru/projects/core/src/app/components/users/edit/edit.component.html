@@ -78,16 +78,26 @@
                   </div>
                 </div>
                 <div class="form-group row mb-10">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.email' | translate }}</label>
                   <div class="col-lg-9 col-xl-9">
-                    <div *ngIf="fileId">
-                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                        (disableBtn)="disableBtn"></app-add-edit-media-file>
+                    <input class="form-control form-control-lg form-control-solid" name="email" type="text"
+                      formControlName="email"
+                      [ngClass]="{'is-invalid': hasErrors('email'), 'is-valid': userForm.get('email').valid}" />
+                    <div *ngIf="hasErrors('email')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('email', 'required')" data-field="email"
+                        data-validator="notEmpty" class="fv-help-block">
+                        {{ 'login.email-is-required' | translate }}</div>
+                      <div *ngIf="hasError('email', 'pattern')" data-field="email"
+                        data-validator="notEmpty" class="fv-help-block">
+                        {{ 'login.please-use-valid-email' | translate }}</div>
                     </div>
-                    <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
-                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'pages.users.send-email' | translate }}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
+                      name="emailNotification" type="checkbox" formControlName="emailNotification" />
                   </div>
                 </div>
               </div>
@@ -145,6 +155,19 @@
                       <option *ngFor="let item of accessModes" [value]="item.value">{{'statuses.' + item.label |
                         translate}}</option>
                     </select>
+                  </div>
+                </div>
+                <div class="form-group row mb-10">
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <div *ngIf="fileId">
+                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
+                        (disableBtn)="disableBtn"></app-add-edit-media-file>
+                    </div>
+                    <div *ngIf="!fileId">
+                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
+                      </app-add-edit-media-file>
+                    </div>
                   </div>
                 </div>
               </div>
