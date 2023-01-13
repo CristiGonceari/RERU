@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using CODWER.RERU.Core.Application.Validation;
 using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common;
+using CVU.ERP.Common.Validation;
 using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.Users.ChangePersonalData {
@@ -19,6 +20,13 @@ namespace CODWER.RERU.Core.Application.Users.ChangePersonalData {
             RuleFor(r => r.User.BirthDate)
                 .Must(x => x < dateTime.Now.AddYears(-18))
                 .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
+
+            RuleFor(x => x.User.Email).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_EMAIL)
+                .EmailAddress()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
         }
     }
 }

@@ -53,6 +53,13 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
                 .NotNull()
                 .WithErrorCode(ValidationCodes.EMPTY_ACCESS_MODE);
 
+            RuleFor(x => x.Data.Email).NotEmpty()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.EMPTY_USER_EMAIL)
+                .EmailAddress()
+                .WithMessage(ValidationMessages.InvalidInput)
+                .WithErrorCode(ValidationCodes.INVALID_EMAIL_FORMAT);
+
             When(x => x.Data.DepartmentColaboratorId != null, () =>
             {
                 RuleFor(x => x.Data.DepartmentColaboratorId.Value).Custom(CheckExistentDepartment);
