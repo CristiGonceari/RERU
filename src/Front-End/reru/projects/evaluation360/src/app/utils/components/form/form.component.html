@@ -294,6 +294,7 @@
           <option value="1">{{ 'evaluations.modifying-service-during-evaluation-course.1' | translate }}</option>
           <option value="2">{{ 'evaluations.modifying-service-during-evaluation-course.2' | translate }}</option>
           <option value="3">{{ 'evaluations.modifying-service-during-evaluation-course.3' | translate }}</option>
+          <option value="4">{{ 'evaluations.modifying-service-during-evaluation-course.4' | translate }}</option>
         </select>
       </div>
     </div>
@@ -616,7 +617,7 @@
             </app-qualification-select>
           </div>
           <div class="col-lg-5 col-12 d-flex align-items-center">
-            <input [disabled]="isDisabledEvaluator" #finalEvalNum 
+            <input [disabled]="true" #finalEvalNum 
             [ngClass]="{'is-valid': isValid(evaluationForm, 'finalEvaluationQualification'),
               'is-invalid': isInvalidPattern(evaluationForm, 'finalEvaluationQualification') || isInvalidRequired(evaluationForm, 'finalEvaluationQualification') }"
             (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
@@ -716,7 +717,7 @@
   <div class="form-group row">
     <label for="commentsEvaluated" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluated-comments' | translate}}:</label>
     <div class="col-lg col-12">
-      <textarea [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" 
+      <textarea #commentsEvaluated [placeholder]="('evaluations.evaluated-comments' | translate)+'...'" 
       [ngClass]="{'is-valid': isValid(evaluatedForm, 'commentsEvaluated'), 'is-invalid': isInvalidRequired(evaluatedForm, 'commentsEvaluated')}"
       class="form-control" type="text" formControlName="commentsEvaluated" name="commentsEvaluated" id="commentsEvaluated"></textarea>
       <div *ngIf="isInvalidRequired(evaluatedForm, 'commentsEvaluated')" class="invalid-feedback">{{'notification.required' | translate}}</div>

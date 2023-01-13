@@ -215,7 +215,8 @@
       "title": "Change in the service report during the evaluated period",
       "1": "Engagement",
       "2": "Transfer",
-      "3": "Detachment"
+      "3": "Detachment",
+      "4": "Default"
     },
     "function": "Function",
     "appointment-date": "Appointment date",

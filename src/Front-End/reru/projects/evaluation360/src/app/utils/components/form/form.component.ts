@@ -39,6 +39,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   ActionFormEnum = ActionFormEnum;
 
   @ViewChild('finalEvalNum') finalEvalNum: ElementRef;
+  @ViewChild('commentsEvaluated') commentsEvaluated: ElementRef;
   @Input() evaluation: EvaluationModel;
   @Input() evaluationRole: EvaluationRoleEnum;
   @Output() request: EventEmitter<ActionFormModel> = new EventEmitter<ActionFormModel>();
@@ -133,6 +134,16 @@ export class FormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // after DOM has loaded assign read-only values
     this.finalEvalNum.nativeElement.value = this.evaluation.finalEvaluationQualification;
+    this.focusEvaluatedCommentsArea();
+  }
+
+  focusEvaluatedCommentsArea(): void {
+    if (this.evaluationRole === EvaluationRoleEnum.Evaluated) {
+      this.commentsEvaluated.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        this.commentsEvaluated.nativeElement.focus();
+      }, 500);
+    }
   }
 
   initForm(data: EvaluationModel): void {
@@ -142,32 +153,39 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
         this.subscribeForServiceDuringEvaluationCourseChanges();
         this.subscribeForObjectivesChanges();
-        this.subscribeForM1Changes();
-        this.subscribeForM2Changes();
-        this.subscribeForM3Changes();
-        this.subscribeForPbChanges();
-        this.subscribeForM4Changes();
-        this.subscribeForMeaChanges();
-        this.subscribeForMfChanges();
+        this.subscribeForQualificationsChanges();
         break;
       case EvaluationRoleEnum.Evaluated:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
+        this.subscribeForQualificationsChanges();
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.CounterSigner:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
         this.counterSignForm = createCounterSignForm(parseCounterSignModel(new EvaluationCounterSignClass(data)), this.evaluationRole);
+        this.subscribeForQualificationsChanges();
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.EvaluatedKnow:
         this.evaluationForm = createEvaluatorForm(data, this.evaluationRole);
         this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
         this.counterSignForm = createCounterSignForm(parseCounterSignModel(new EvaluationCounterSignClass(data)), this.evaluationRole);
+        this.subscribeForQualificationsChanges();
         this.isLoading = false;
         break;
     }
+  }
+
+  private subscribeForQualificationsChanges(): void {
+    this.subscribeForM1Changes();
+    this.subscribeForM2Changes();
+    this.subscribeForM3Changes();
+    this.subscribeForPbChanges();
+    this.subscribeForM4Changes();
+    this.subscribeForMeaChanges();
+    this.subscribeForMfChanges();
   }
 
   subscribeForM1Changes(): void {
@@ -243,14 +261,14 @@ export class FormComponent implements OnInit, AfterViewInit {
     ]).subscribe(([mea]) => {
       if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
         const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
-        this.handleFinalQualificationChange((mea + Mep) / 2);
+        this.handleFinalQualificationChange(Math.round((mea + Mep) / 2));
         this.handleFinalQualificationChange(Math.round((mea + Mep) / 2), true);
         this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
         this.Mf.next((mea + Mep) / 2);
         return;
       }
 
-      this.handleFinalQualificationChange(mea);
+      this.handleFinalQualificationChange(Math.round(mea));
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);
@@ -265,13 +283,13 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
     this.showWarnning = false;
     switch(action) {
-      case ActionFormEnum.isSave: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.value)}); break;
-      case ActionFormEnum.isConfirm: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.value)}); break;
-      case ActionFormEnum.isAccept: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.value)}); break;
-      case ActionFormEnum.isReject: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.value)}); break;
-      case ActionFormEnum.isCounterSignAccept: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.value)}); break;
-      case ActionFormEnum.isCounterSignReject: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.value)}); break;
-      case ActionFormEnum.isAcknowledge: this.request.emit({ action, data: this.evaluationForm.value}); break;
+      case ActionFormEnum.isSave: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.getRawValue())}); break;
+      case ActionFormEnum.isConfirm: this.request.emit({ action, data: new EvaluationClass(this.evaluationForm.getRawValue())}); break;
+      case ActionFormEnum.isAccept: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.getRawValue())}); break;
+      case ActionFormEnum.isReject: this.request.emit({ action, data: new  EvaluationAcceptClass(this.evaluatedForm.getRawValue())}); break;
+      case ActionFormEnum.isCounterSignAccept: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.getRawValue())}); break;
+      case ActionFormEnum.isCounterSignReject: this.request.emit({ action, data: new  EvaluationCounterSignClass(this.counterSignForm.getRawValue())}); break;
+      case ActionFormEnum.isAcknowledge: this.request.emit({ action, data: this.evaluationForm.getRawValue()}); break;
     }
   }
 
