@@ -114,7 +114,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
         
-        /*[HttpGet("evaluation-pdf/{evaluationId}")]
+        [HttpGet("evaluation-pdf/{evaluationId}")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> GetTestPdf([FromRoute] int evaluationId)
         {
@@ -122,6 +122,6 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
-        }*/
+        }
     }
 }

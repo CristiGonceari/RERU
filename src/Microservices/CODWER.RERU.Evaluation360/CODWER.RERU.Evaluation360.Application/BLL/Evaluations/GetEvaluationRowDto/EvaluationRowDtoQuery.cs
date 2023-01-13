@@ -10,7 +10,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
     {
         public string EvaluatedName { set; get; }
         public string EvaluatorName { set; get; }
-        public string CounterSignerName { set; get; }
+        public string? CounterSignerName { set; get; }
         public int? Type { set; get; }
         public int? Status { set; get; }
         public DateTime? CreateDateFrom { set; get; }

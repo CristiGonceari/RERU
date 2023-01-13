@@ -185,7 +185,7 @@ export class RegistrationPageComponent implements OnInit {
       }
       request.append('Data.UserId', res.data);
 
-      this.userService.addUserAvatar(request).subscribe((res) => {
+      this.userService.addUserAvatar(request, true).subscribe((res) => {
         this.reportProggress(res);
       })
 

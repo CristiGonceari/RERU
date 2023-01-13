@@ -22,7 +22,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow
         public async Task<Unit> Handle(EvaluatedKnowCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
-            evaluation.Status = EvaluationStatusEnum.Finished;
+            evaluation.Status = EvaluationStatusEnum.Finisată;
             evaluation.DateEvaluatedKnow = System.DateTime.Now;
             evaluation.SignatureAcknowledgeEvaluated = true;
             await _dbContext.SaveChangesAsync();

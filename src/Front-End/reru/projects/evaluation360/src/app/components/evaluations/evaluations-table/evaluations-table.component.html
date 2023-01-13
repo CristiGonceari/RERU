@@ -24,8 +24,8 @@
 				*ngFor="let evaluation of evaluations; let i = index"
 				[class.table-warning]="showHighlighted && evaluation.status === EvaluationStatusEnum.Draft"
 				[class.table-success]="showHighlighted && evaluation.status === EvaluationStatusEnum.Confirmed"
-				[class.table-info]="showHighlighted && evaluation.status === EvaluationStatusEnum.Accepted"
-				[class.table-danger]="showHighlighted && evaluation.status === EvaluationStatusEnum.Rejected"
+				[class.table-info]="showHighlighted && (evaluation.status === EvaluationStatusEnum.Accepted || evaluation.status === EvaluationStatusEnum.AcceptCounterSign)"
+				[class.table-danger]="showHighlighted && (evaluation.status === EvaluationStatusEnum.Rejected || evaluation.status === EvaluationStatusEnum.RejectCounterSign)"
 			>
 				<td class="text-center">
 					<b>{{ evaluation?.evaluatedName }} </b>
@@ -34,7 +34,7 @@
 					<b>{{ evaluation.evaluatorName }} </b>
 				</td>
 				<td class="text-center">
-					<b>{{ evaluation.counterSignerName }} </b>
+					<b>{{ evaluation.counterSignerName || '-' }} </b>
 				</td>
 
 				<td class="text-center">
@@ -42,7 +42,7 @@
 				</td>
 
 				<td class="text-center">
-					{{ evaluation.points }} <br />
+					{{ (evaluation.points | number : '1.2-2')  || '-' }} <br />
 				</td>
 
 				<td class="text-center">

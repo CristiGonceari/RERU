@@ -215,7 +215,8 @@
       "title": "Modificarea raportului de serviciul pe parcursul perioadei evaluate",
       "1": "Angajare",
       "2": "Transferare",
-      "3": "Detașare"
+      "3": "Detașare",
+      "4": "Neschimbat"
     },
     "function": "Funcția",
     "appointment-date": "Data numirii",
@@ -243,6 +244,7 @@
     "individual-objective-established": "Obiective individuale au fost stabilite (data)",
     "professional-development-needs-evaluated": "Necesităţi de dezvoltare profesională a angajatului evaluat<br><small>(pe domenii de instruire)</small>",
     "evaluator-name": "Nume, prenume evaluator",
+    "evaluator-function": "Funcția evaluatorului",
     "evaluator-comments": "Comentarii evaluator",
     "evaluated-comments": "Comentarii angajat",
     "countersigner-name": "Nume, prenume contrasemnatar",
