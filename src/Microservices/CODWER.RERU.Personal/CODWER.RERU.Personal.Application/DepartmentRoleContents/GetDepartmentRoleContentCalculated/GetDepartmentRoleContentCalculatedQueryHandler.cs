@@ -27,17 +27,17 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
         {
             var now = _dateTime.Now;
 
-            var positions = _appDbContext.Positions
+            var positions = _appDbContext.UserProfiles
                 .Include(p => p.Contractor)
                 .Include(p => p.Department)
                 .Include(p => p.Role)
-                .Where(p => p.DepartmentId == request.DepartmentId)
-                .ToList()
-                .Where(p =>
-                    ((p.FromDate == null && p.ToDate == null)
-                     || (p.ToDate == null && p.FromDate != null && p.FromDate < now)
-                     || (p.FromDate == null && p.ToDate != null && p.ToDate > now)
-                     || (p.FromDate != null && p.ToDate != null && p.FromDate < now && p.ToDate > now)));
+                .Where(p => p.Department.Id == request.DepartmentId)
+                .ToList();
+                //.Where(p =>
+                //    ((p.FromDate == null && p.ToDate == null)
+                //     || (p.ToDate == null && p.FromDate != null && p.FromDate < now)
+                //     || (p.FromDate == null && p.ToDate != null && p.ToDate > now)
+                //     || (p.FromDate != null && p.ToDate != null && p.FromDate < now && p.ToDate > now)));
 
             var departmentContent = positions
                 .GroupBy(p => p.Department) // group by department
@@ -53,11 +53,11 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
                             OrganizationRoleId = rfd.Key.Id,
                             OrganizationRoleName = rfd.Key.Name,
 
-                            OrganizationRoleCount = rfd.ToList().Select(c => c.ContractorId).Distinct().Count(),
+                            OrganizationRoleCount = rfd.ToList().Select(c => c.Contractor.Id).Distinct().Count(),
                             ContractorIds = rfd.ToList().Select(c => new SelectItem
                             {
-                                Label = c.Contractor.GetFullName(),
-                                Value = c.ContractorId.ToString()
+                                Label = c.Contractor.UserProfile.FullName,
+                                Value = c.Contractor.Id.ToString()
                             }).Distinct().ToList()
                         }).ToList()
                 }).ToList();
