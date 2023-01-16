@@ -51,19 +51,19 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
             Test test3 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InstructiaTragerii);
             Test test4 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InterventiaProfesionala);
 
-            if (test1.AccumulatedPercentage != null)
+            if (test1 != null)
             {
                 evaluation.Question9 = ConvertToPoints(test1.AccumulatedPercentage);
             }
-            if (test2.AccumulatedPercentage != null)
+            if (test2 != null)
             {
                 evaluation.Question10 = ConvertToPoints(test2.AccumulatedPercentage);
             }
-            if (test3.AccumulatedPercentage != null)
+            if (test3 != null)
             {
                 evaluation.Question11 = ConvertToPoints(test3.AccumulatedPercentage);
             }
-            if (test4.AccumulatedPercentage != null)
+            if (test4 != null)
             {
                 evaluation.Question12 = ConvertToPoints(test4.AccumulatedPercentage);
             }

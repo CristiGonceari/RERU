@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
-using CODWER.RERU.Evaluation360.Application.BLL.Services;
 using System.Collections.Generic;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
@@ -18,7 +17,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
 
-        public RejectEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper, ISender sender, INotificationService notificationService)
+        public RejectEvaluationCommandHandler(
+            AppDbContext dbContext, 
+            IMapper mapper, 
+            ISender sender, 
+            INotificationService notificationService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -28,28 +31,31 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
         public async Task<Unit> Handle(RejectEvaluationCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
-            await SendEmailNotification(evaluation.EvaluatorUserProfileId);
+            
             evaluation.Status = EvaluationStatusEnum.Respinsă;
             evaluation.DateAcceptOrRejectEvaluated = System.DateTime.Now;
             evaluation.SignatureEvaluated = true;
+
             _mapper.Map(request.Evaluation, evaluation); 
+
             await _dbContext.SaveChangesAsync();
+            await SendEmailNotification(evaluation.EvaluatorUserProfileId);
 
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(int EvaluatorUserProfileId)
+        private async Task<Unit> SendEmailNotification(int evaluatorUserProfileId)
         {
-            var user = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == EvaluatorUserProfileId);
+            var evaluator = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatorUserProfileId);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Invitație la eveniment",
-                To = user.Email,
+                Subject = "Revizuire Evaluare de performanță",
+                To = evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
-                    { "{user_name}", user.FirstName + " " + user.LastName + " " + user.FatherName },
+                    { "{user_name}", evaluator.FullName },
                     { "{email_message}", await GetTableContent() }
                 }
             });

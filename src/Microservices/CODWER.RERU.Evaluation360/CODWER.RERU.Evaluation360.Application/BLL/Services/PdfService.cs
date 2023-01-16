@@ -100,7 +100,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{Type}", evaluation.Type.ToString()); //TODO: de schimbat in viitorul apropiat
+            myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString()); //TODO: de schimbat in viitorul apropiat
             myDictionary.Add("{SubdivisionName}", evaluation.SubdivisionName);
             myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{NameSurnameEvaluated}", evaluation.NameSurnameEvaluated);  
