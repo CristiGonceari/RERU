@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.PersonalEntities.Enums;
 
 namespace RERU.Data.Entities.Evaluation360
 {
@@ -49,16 +48,16 @@ namespace RERU.Data.Entities.Evaluation360
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
         public decimal? PartialEvaluationScore { set; get; }
         public string? FinalScorePartialEvaluations { set; get; }
-        public QualifierEnum? QualifierPartialEvaluations { set; get; }
+        public QualifiersEnum? QualifierPartialEvaluations { set; get; }
         public string? SanctionAppliedEvaluationCourse { set; get; }
         public DateTime? DateSanctionApplication { set; get; }
         public DateTime? DateLiftingSanction { set; get; }
-        public QualifierEnum? QualificationEvaluationObtained2YearsPast { set; get; }
-        public QualifierEnum? QualificationEvaluationObtainedPreviousYear { set; get; }
-        public QualifierEnum? QualificationQuarter1 { set; get; }
-        public QualifierEnum? QualificationQuarter2 { set; get; }
-        public QualifierEnum? QualificationQuarter3 { set; get; }
-        public QualifierEnum? QualificationQuarter4 { set; get; }
+        public QualifiersEnum? QualificationEvaluationObtained2YearsPast { set; get; }
+        public QualifiersEnum? QualificationEvaluationObtainedPreviousYear { set; get; }
+        public QualifiersEnum? QualificationQuarter1 { set; get; }
+        public QualifiersEnum? QualificationQuarter2 { set; get; }
+        public QualifiersEnum? QualificationQuarter3 { set; get; }
+        public QualifiersEnum? QualificationQuarter4 { set; get; }
         public decimal? Question1 { set; get; }
         public decimal? Question2 { set; get; }
         public decimal? Question3 { set; get; }
@@ -92,7 +91,7 @@ namespace RERU.Data.Entities.Evaluation360
         public decimal? Question11 { set; get; }
         public decimal? Question12 { set; get; }
         public decimal? Question13 { set; get; }
-        public QualifierEnum? FinalEvaluationQualification { set; get; }
+        public QualifiersEnum? FinalEvaluationQualification { set; get; }
         public DateTime? DateEvaluationInterview { set; get; }
         public DateTime? DateSettingIindividualGoals { set; get; }
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }

@@ -8,7 +8,6 @@ using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -20,7 +19,8 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
     private readonly IExportData<Evaluation, PrintTableEvaluationsDto> _printer;
     private readonly ICurrentApplicationUserProvider _currentUserProvider;
 
-    public PrintEvaluationsCommandHandler(AppDbContext appDbContext, 
+    public PrintEvaluationsCommandHandler(
+        AppDbContext appDbContext, 
         IExportData<Evaluation, PrintTableEvaluationsDto> printer, 
         ICurrentApplicationUserProvider currentUserProvider)
     {

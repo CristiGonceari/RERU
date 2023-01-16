@@ -13,7 +13,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public EvaluatedKnowCommandHandler(AppDbContext dbContext, IMapper mapper)
+        public EvaluatedKnowCommandHandler(
+            AppDbContext dbContext, 
+            IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -22,9 +24,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.EvaluatedKnow
         public async Task<Unit> Handle(EvaluatedKnowCommand request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id);
+            
             evaluation.Status = EvaluationStatusEnum.Finisată;
             evaluation.DateEvaluatedKnow = System.DateTime.Now;
             evaluation.SignatureAcknowledgeEvaluated = true;
+            
             await _dbContext.SaveChangesAsync();
 
             return Unit.Value;

@@ -8,8 +8,8 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities.Enums;
 using RERU.Data.Entities.Evaluation360;
-using RERU.Data.Entities.PersonalEntities.Enums;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRowDto
@@ -19,7 +19,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
         private readonly AppDbContext _dbContext;
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IPaginationService _paginationService;
-        public EvaluationRowDtoQueryHandler(AppDbContext dbContext, ICurrentApplicationUserProvider currentUserProvider, IPaginationService paginationService)
+        public EvaluationRowDtoQueryHandler(
+            AppDbContext dbContext, 
+            ICurrentApplicationUserProvider currentUserProvider, 
+            IPaginationService paginationService)
         {
             _dbContext = dbContext;
             _currentUserProvider = currentUserProvider;
@@ -39,46 +42,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                                     .OrderByDescending(e => e.CreateDate)
                                     .AsQueryable();
 
-            var ev = _dbContext.Evaluations;
-            foreach (var e in ev)
-            {
-                List<decimal?> listForM1 = new List<decimal?> {e.Question1, e.Question2, e.Question3, e.Question4, e.Question5};
-                decimal? m1 = listForM1.Average();
-
-                List<decimal?> listForM2 = new List<decimal?> {e.Question6, e.Question7, e.Question8};
-                decimal? m2 = listForM2.Average();
-
-                List<decimal?> listForM3 = new List<decimal?> {e.Score1, e.Score2, e.Score3, e.Score4, e.Score5};
-                decimal? m3 = listForM3.Average();
-
-                List<decimal?> listForPb = new List<decimal?> {e.Question9, e.Question10, e.Question11, e.Question12};
-                decimal? pb = listForPb.Average();
-
-                List<decimal?> listForM4 = new List<decimal?> {e.Question13, pb};
-                decimal? m4 = listForM4.Average();
-
-                List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
-                decimal? mea = listForMea.Average();
-
-                decimal? mf;
-
-                if (e.PartialEvaluationScore != null)
-                {
-                    List<decimal?> listForMf = new List<decimal?> {mea, e.PartialEvaluationScore};
-                    mf = listForMf.Average();
-                }
-                else
-                {
-                    mf = mea;
-                }
-
-                if (mf >= 1 && mf <= 1.5m) e.FinalEvaluationQualification = QualifierEnum.Dissatisfied;
-                else if (mf >= 1.51m && mf <= 2.5m) e.FinalEvaluationQualification = QualifierEnum.Satisfied;
-                else if (mf >= 2.51m && mf <= 3.5m) e.FinalEvaluationQualification = QualifierEnum.Good;
-                else if (mf >= 3.51m && mf <= 4m) e.FinalEvaluationQualification = QualifierEnum.VeryGood;
-
-                e.Points = mf;
-            }
+            CalculatePoints(evaluations);
 
             await _dbContext.SaveChangesAsync();
 
@@ -133,52 +97,107 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                 evaluations = evaluations.Where(x => x.CreateDate.Date >= request.CreateDateFrom.Value.Date);
             }
 
-            if (request.CreateDateTo.HasValue )
+            if (request.CreateDateTo.HasValue)
             {
                 evaluations = evaluations.Where(x => x.CreateDate.Date <= request.CreateDateTo.Value.Date);
             }
         
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
-            foreach(var e in  paginatedModel.Items)
+            
+            SetPermissions(paginatedModel, currentUserId);
+
+            return paginatedModel;
+        }
+
+        private QualifiersEnum GetQualification(decimal? mf)
+        {
+            if (mf >= 1m && mf <= 1.5m) return QualifiersEnum.Dissatisfied;
+            else if (mf >= 1.51m && mf <= 2.5m) return QualifiersEnum.Satisfied;
+            else if (mf >= 2.51m && mf <= 3.5m) return QualifiersEnum.Good;
+            else if (mf >= 3.51m && mf <= 4m) return QualifiersEnum.VeryGood;
+            else throw new ArgumentOutOfRangeException("mf", "Value not within valid range for qualification.");
+        }
+
+        private void CalculatePoints(IQueryable<Evaluation> evaluations)
+        {
+            foreach (var evaluation in evaluations)
             {
-                e.canAccept = e.canCounterSign = e.canFinished = e.canEvaluate = e.canDelete = e.canDownload = false;
+                List<decimal?> listForM1 = new List<decimal?> {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
+                decimal? m1 = listForM1.Average();
 
-                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 1) 
+                List<decimal?> listForM2 = new List<decimal?> {evaluation.Question6, evaluation.Question7, evaluation.Question8};
+                decimal? m2 = listForM2.Average();
+
+                List<decimal?> listForM3 = new List<decimal?> {evaluation.Score1, evaluation.Score2, evaluation.Score3, evaluation.Score4, evaluation.Score5};
+                decimal? m3 = listForM3.Average();
+
+                List<decimal?> listForPb = new List<decimal?> {evaluation.Question9, evaluation.Question10, evaluation.Question11, evaluation.Question12};
+                decimal? pb = listForPb.Average();
+
+                List<decimal?> listForM4 = new List<decimal?> {evaluation.Question13, pb};
+                decimal? m4 = listForM4.Average();
+
+                List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
+                decimal? mea = listForMea.Average();
+
+                decimal? mf = 0;
+
+                if (evaluation.PartialEvaluationScore != null)
                 {
-                    e.canEvaluate = e.canDelete = true;
+                    List<decimal?> listForMf = new List<decimal?> {mea, evaluation.PartialEvaluationScore};
+                    mf = listForMf.Average();
+                }
+                else
+                {
+                    mf = mea;
                 }
 
-                if (currentUserId == e.EvaluatedUserProfileId && e.Status == 2)
-                { 
-                    e.canAccept = true;
+                if (mf != null) evaluation.FinalEvaluationQualification = GetQualification(mf);
+                evaluation.Points = mf;
+            }
+        }
+
+        private void SetPermissions(PaginatedModel<EvaluationRowDto> paginatedModel, int currentUserId)
+        {
+            foreach(var evaluation in paginatedModel.Items)
+            {
+                evaluation.canAccept = evaluation.canCounterSign = evaluation.canFinished = evaluation.canEvaluate = evaluation.canDelete = evaluation.canDownload = false;
+
+                if (currentUserId == evaluation.EvaluatorUserProfileId && evaluation.Status == 1) 
+                {
+                    evaluation.canEvaluate = evaluation.canDelete = true;
                 }
 
-                if (currentUserId == e.CounterSignerUserProfileId && e.Status == 3)
-                { 
-                    e.canCounterSign = true;
+                if (currentUserId == evaluation.EvaluatedUserProfileId && evaluation.Status == 2)
+                {
+                    evaluation.canAccept = true;
                 }
 
-                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 4)
-                { 
-                    e.canEvaluate = true;
+                if (currentUserId == evaluation.CounterSignerUserProfileId && evaluation.Status == 3)
+                {   
+                    evaluation.canCounterSign = true;
                 }
 
-                if (currentUserId == e.EvaluatedUserProfileId && e.Status == 5)
-                { 
-                    e.canFinished = true;
+                if (currentUserId == evaluation.EvaluatorUserProfileId && evaluation.Status == 4)
+                {    
+                    evaluation.canEvaluate = true;
                 }
 
-                if (currentUserId == e.EvaluatorUserProfileId && e.Status == 6)
-                { 
-                    e.canEvaluate = true;
+                if (currentUserId == evaluation.EvaluatedUserProfileId && evaluation.Status == 5)
+                {   
+                    evaluation.canFinished = true;
+                }
+
+                if (currentUserId == evaluation.EvaluatorUserProfileId && evaluation.Status == 6)
+                {    
+                    evaluation.canEvaluate = true;
                 }
                 
-                if ((currentUserId == e.EvaluatorUserProfileId || currentUserId == e.CounterSignerUserProfileId) && e.Status == 7)
-                { 
-                    e.canDownload = true;
+                if ((currentUserId == evaluation.EvaluatorUserProfileId || currentUserId == evaluation.CounterSignerUserProfileId) && evaluation.Status == 7)
+                {   
+                    evaluation.canDownload = true;
                 }
             }
-            return paginatedModel;
         }
     }
 }
