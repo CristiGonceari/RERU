@@ -794,6 +794,7 @@
     "attempts": "Попытки",
     "search-event": "Поиск по событию",
     "search-location": "Поиск по локации",
+    "search-colaborator-id": "Поиск по colaboratorId",
     "search-from": "Поиск с даты",
     "search-to": "Поиск на дату",
     "import-users": "Массовый импорт",

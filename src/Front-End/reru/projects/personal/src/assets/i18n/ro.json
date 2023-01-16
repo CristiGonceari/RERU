@@ -482,6 +482,7 @@
     "actions": "Acțiuni"
   },
   "entity": {
+    "colaborator-id": "ColaboratorId",
     "personal": {
       "single": "Angajat",
       "name": "Nume (Familia)",

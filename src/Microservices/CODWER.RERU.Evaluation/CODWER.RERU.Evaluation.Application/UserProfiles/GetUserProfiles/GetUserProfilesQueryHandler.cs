@@ -88,6 +88,11 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 items = items.Where(x => x.Role.Id == request.RoleId);
             }
 
+            if (!string.IsNullOrEmpty(request.ColaboratorId))
+            {
+                items = items.Where(x => x.DepartmentColaboratorId.ToString().Contains(request.ColaboratorId));
+            }
+
             if (request.ExceptUserIds.Count>0)
             {
                 items = items.Where(x => !request.ExceptUserIds.Contains(x.Id));

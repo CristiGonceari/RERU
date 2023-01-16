@@ -23,6 +23,10 @@
 			<erp-shared-search-input (handleSearch)="setFilter('email', $event)"
 				[placeholder]="'user-profile.user-email'  | translate" #email></erp-shared-search-input>
 		</div>
+		<div class="col-lg col-12 pt-lg-0 pt-2">
+			<erp-shared-search-input (handleSearch)="setFilter('colaboratorId', $event)"
+				[placeholder]="'login.colaborator-id'  | translate" #colaboratorId></erp-shared-search-input>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg col-12 pt-lg-0 pt-2">

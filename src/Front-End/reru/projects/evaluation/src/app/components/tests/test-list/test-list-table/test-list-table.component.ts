@@ -69,6 +69,7 @@ export class TestListTableComponent implements OnInit {
   idnp: string = '';
   testEvent: string = '';
   testLocation: string = '';
+  colaboratorId: number;
 
   title: string;
 	description: string;
@@ -136,6 +137,7 @@ export class TestListTableComponent implements OnInit {
       locationKeyword: this.testLocation || '',
       idnp: this.idnp || '',
       eventName: this.testEvent || '',
+      colaboratorId: this.colaboratorId || null,
       userName: this.userName || '',
       evaluatorName: this.evaluatorName || '',
       email: this.userEmail || this.userEmail || '',

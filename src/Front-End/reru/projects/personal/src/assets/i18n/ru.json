@@ -479,6 +479,7 @@
     "actions": "Действия"
   },
   "entity": {
+    "colaborator-id": "ColaboratorId",
     "personal": {
       "single": "Сотрудник",
       "name": "Имя",

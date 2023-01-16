@@ -163,6 +163,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 tests = tests.Where(x => x.UserProfile.Department.Id == request.DepartmentId);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.ColaboratorId))
+            {
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId.ToString().Contains(request.ColaboratorId));
+            }
+
             if (request.RoleId.HasValue)
             {
                 tests = tests.Where(x => x.UserProfile.Role.Id == request.RoleId);

@@ -54,7 +54,6 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getAllUsers(data: any = {}){
-    console.log("getUserss")
     let exceptIds = this.exceptUserIds.length ? this.exceptUserIds : 0;
     this.paginatedAttachedIds = false;
     let params = {
@@ -89,7 +88,6 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getAssignedUsers(data: any = {}): void {
-    console.log("getAssignedUsers")
     let params = {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
@@ -106,8 +104,6 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   getAssignedEvaluators(data: any = {}): void {
-    console.log("getAssignedEvaluators")
-
     let params = {
       page: data.page || this.pagination.currentPage,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
