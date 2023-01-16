@@ -29,6 +29,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
 
             var positions = _appDbContext.Positions
                 .Include(p => p.Contractor)
+                .ThenInclude(x => x.UserProfile)
                 .Include(p => p.Department)
                 .Include(p => p.Role)
                 .Where(p => p.DepartmentId == request.DepartmentId)
@@ -56,7 +57,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
                             OrganizationRoleCount = rfd.ToList().Select(c => c.ContractorId).Distinct().Count(),
                             ContractorIds = rfd.ToList().Select(c => new SelectItem
                             {
-                                Label = c.Contractor.GetFullName(),
+                                Label = c.Contractor.UserProfile.FullName,
                                 Value = c.ContractorId.ToString()
                             }).Distinct().ToList()
                         }).ToList()
