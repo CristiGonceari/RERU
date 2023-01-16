@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using CVU.ERP.Common.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
@@ -22,7 +24,9 @@ namespace CODWER.RERU.Core.Application.Roles.GetRolesValue
 
         public async Task<List<SelectItem>> Handle(GetRolesValueQuery request, CancellationToken cancellationToken)
         {
-            var departments = await _appDbContext.Roles.ToListAsync();
+            var departments = await _appDbContext.Roles
+                .OrderBy(x => x.Name)
+                .ToListAsync();
 
             return _mapper.Map<List<SelectItem>>(departments);
         }
