@@ -21,6 +21,8 @@ export class TestListComponent implements OnInit {
   @ViewChild('idnp') idnp: any;
   @ViewChild('selectedStatus') selectedStatus: any;
   @ViewChild('selectedResult') selectedResult: any;
+  @ViewChild('colaboratorId') colaboratorId: any;
+
 
   constructor(
     private modalService: NgbModal,

@@ -23,5 +23,6 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
         public List<int> ExceptUserIds { get; set; }
         public int EventId { get; set; }
         public int PositionId { get; set; }
+        public string ColaboratorId { get; set; }
     }
 }

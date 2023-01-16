@@ -20,5 +20,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
         public TestTemplateModeEnum Mode { get; set; }
+        public string ColaboratorId { get; set; }
+
     }
 }
