@@ -31,15 +31,25 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
                 .Include(p => p.Contractor)
                 .Include(p => p.Department)
                 .Include(p => p.Role)
-                .Where(p => p.Department.Id == request.DepartmentId)
-                .ToList();
-                //.Where(p =>
-                //    ((p.FromDate == null && p.ToDate == null)
-                //     || (p.ToDate == null && p.FromDate != null && p.FromDate < now)
-                //     || (p.FromDate == null && p.ToDate != null && p.ToDate > now)
-                //     || (p.FromDate != null && p.ToDate != null && p.FromDate < now && p.ToDate > now)));
+                .AsQueryable();
+            //.Where(p =>
+            //    ((p.FromDate == null && p.ToDate == null)
+            //     || (p.ToDate == null && p.FromDate != null && p.FromDate < now)
+            //     || (p.FromDate == null && p.ToDate != null && p.ToDate > now)
+            //     || (p.FromDate != null && p.ToDate != null && p.FromDate < now && p.ToDate > now)));
+
+            if (request.Type == 1)
+            {
+                positions = positions.Where(p => p.Department.Id == request.Id);
+            }
+            else if (request.Type == 2)
+            {
+                positions = positions.Where(p => p.Role.Id == request.Id);
+
+            }
 
             var departmentContent = positions
+                .ToList()
                 .GroupBy(p => p.Department) // group by department
                 .Select(drc => new DepartmentRoleContentDto
                 {
@@ -53,11 +63,11 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
                             OrganizationRoleId = rfd.Key.Id,
                             OrganizationRoleName = rfd.Key.Name,
 
-                            OrganizationRoleCount = rfd.ToList().Select(c => c.Contractor.Id).Distinct().Count(),
+                            OrganizationRoleCount = rfd.ToList().Select(c => c.Id).Distinct().Count(),
                             ContractorIds = rfd.ToList().Select(c => new SelectItem
                             {
-                                Label = c.Contractor.UserProfile.FullName,
-                                Value = c.Contractor.Id.ToString()
+                                Label = c.FullName,
+                                Value = c.Id.ToString()
                             }).Distinct().ToList()
                         }).ToList()
                 }).ToList();

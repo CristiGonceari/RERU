@@ -21,8 +21,8 @@ export class DepartmentContentService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.routeUrl}/template/${id}`);
   }
 
-  getCalculated(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${this.routeUrl}/calculated/${id}`);
+  getCalculated(id: number, type: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.routeUrl}/calculated/${id}/${type}`);
   }
 
   getDasboard(id: number): Observable<any> {

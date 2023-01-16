@@ -5,6 +5,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
 {
     public class GetDepartmentRoleContentCalculatedQuery : IRequest<DepartmentRoleContentDto>
     {
-        public int DepartmentId { get; set; }
+        public int Id { get; set; }
+        public int Type { get; set; }
     }
 }
