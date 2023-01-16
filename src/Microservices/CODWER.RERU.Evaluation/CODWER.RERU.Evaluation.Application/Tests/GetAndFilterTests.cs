@@ -165,7 +165,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (!string.IsNullOrWhiteSpace(request.ColaboratorId))
             {
-                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId.ToString().Contains(request.ColaboratorId));
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId.ToString().StartsWith(request.ColaboratorId));
             }
 
             if (request.RoleId.HasValue)

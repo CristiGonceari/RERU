@@ -90,7 +90,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
 
             if (!string.IsNullOrEmpty(request.ColaboratorId))
             {
-                items = items.Where(x => x.DepartmentColaboratorId.ToString().Contains(request.ColaboratorId));
+                items = items.Where(x => x.DepartmentColaboratorId.ToString().StartsWith(request.ColaboratorId));
             }
 
             if (request.ExceptUserIds.Count>0)
