@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -7,7 +8,8 @@ using CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Entities.Enums;
+using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
@@ -18,7 +20,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
         private readonly IMapper _mapper;
         private readonly ISender _sender;
 
-        public UpdateEvaluationCommandHandler(AppDbContext dbContext, IMapper mapper, ISender sender)
+        public UpdateEvaluationCommandHandler(
+            AppDbContext dbContext, 
+            IMapper mapper, 
+            ISender sender)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -29,6 +34,27 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id );
 
+            CalculatePoints(evaluation);
+
+            _mapper.Map(request.Evaluation, evaluation);
+
+            await _dbContext.SaveChangesAsync();
+            await _sender.Send(new GetEditEvaluationQuery(request.Id));
+
+            return _mapper.Map<GetEvaluationDto>(evaluation);
+        }
+
+        private QualifiersEnum GetQualification(decimal? mf)
+        {
+            if (mf >= 1m && mf <= 1.5m) return QualifiersEnum.Dissatisfied;
+            else if (mf >= 1.51m && mf <= 2.5m) return QualifiersEnum.Satisfied;
+            else if (mf >= 2.51m && mf <= 3.5m) return QualifiersEnum.Good;
+            else if (mf >= 3.51m && mf <= 4m) return QualifiersEnum.VeryGood;
+            else throw new ArgumentOutOfRangeException("mf", "Value not within valid range for qualification.");
+        }
+
+        private void CalculatePoints(Evaluation evaluation)
+        {
             List<decimal?> listForM1 = new List<decimal?> {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
             decimal? m1 = listForM1.Average();
 
@@ -45,32 +71,22 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
             decimal? m4 = listForM4.Average();
 
             List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
-            decimal? mea = listForMea.Sum();
+            decimal? mea = listForMea.Average();
+
             decimal? mf;
 
             if (evaluation.PartialEvaluationScore != null)
             {
                 List<decimal?> listForMf = new List<decimal?> {mea, evaluation.PartialEvaluationScore};
-                mf = listForMf.Sum();
+                mf = listForMf.Average();
             }
             else
             {
                 mf = mea;
             }
 
-            if (mf >= 1 && mf <= 1.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Dissatisfied;
-            else if (mf >= 1.51m && mf <= 2.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Satisfied;
-            else if (mf >= 2.51m && mf <= 3.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Good;
-            else if (mf >= 3.51m && mf <= 4m) evaluation.FinalEvaluationQualification = QualifierEnum.VeryGood;
-            
+            evaluation.FinalEvaluationQualification = GetQualification(mf);
             evaluation.Points = mf;
-
-            _mapper.Map(request.Evaluation, evaluation);
-            await _dbContext.SaveChangesAsync();
-
-            await _sender.Send(new GetEditEvaluationQuery(request.Id));
-
-            return _mapper.Map<GetEvaluationDto>(evaluation);
         }
     }
 }

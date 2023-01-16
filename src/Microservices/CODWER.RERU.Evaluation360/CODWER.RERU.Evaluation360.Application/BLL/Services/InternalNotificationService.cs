@@ -26,6 +26,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             };
 
             using var db = _appDbContext.NewInstance();
+
             await db.Notifications.AddAsync(notificationToAdd);
             await db.SaveChangesAsync();
         }
@@ -33,6 +34,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
         public async Task<List<Notification>> GetMyNotifications(int myUserProfileId)
         {
             using var db = _appDbContext.NewInstance();
+            
             return await db.Notifications
                 .Where(x => x.UserProfileId == myUserProfileId && x.Seen == false)
                 .ToListAsync();

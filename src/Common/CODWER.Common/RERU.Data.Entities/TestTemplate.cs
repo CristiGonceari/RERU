@@ -30,6 +30,8 @@ namespace RERU.Data.Entities
 
         public Guid PdfFileId { get; set; }
 
+        public BasicTestTemplateEnum? BasicTestTemplate { get; set; }
+
         public virtual ICollection<Test> Tests { get; set; }
         public virtual ICollection<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
         public virtual ICollection<EventTestTemplate> EventTestTemplates { get; set; }

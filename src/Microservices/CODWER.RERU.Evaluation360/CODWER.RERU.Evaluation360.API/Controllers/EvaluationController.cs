@@ -58,6 +58,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task UpdateEvaluation([FromRoute] int id, [FromBody] EditEvaluationDto dto)
         {
             var command = new UpdateEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -65,6 +66,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task ConfirmEvaluation([FromRoute] int id, [FromBody] EditEvaluationDto dto)
         {
             var command = new ConfirmEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -72,6 +74,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task AcceptEvaluation([FromRoute] int id, [FromBody] AcceptRejectEvaluationDto dto)
         {
             var command = new AcceptEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -79,6 +82,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task RejectEvaluation([FromRoute] int id, [FromBody] AcceptRejectEvaluationDto dto)
         {
             var command = new RejectEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -86,6 +90,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task CounterSignAccept([FromRoute] int id, [FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
             var command = new CounterSignAcceptEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -94,6 +99,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task CounterSignReject([FromRoute] int id, [FromBody] CounterSignAcceptRejectEvaluationDto dto)
         {
             var command = new CounterSignRejectEvaluationCommand(id, dto);
+
             await Sender.Send(command);
         }
 
@@ -101,6 +107,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task EvaluatedKnow([FromRoute] int id)
         {
             var command = new EvaluatedKnowCommand(id);
+
             await Sender.Send(command);
         }
         
@@ -109,6 +116,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task<IActionResult> PrintEvaluationsPdf([FromBody] PrintEvaluationsCommand command)
         {
             var result = await Sender.Send(command);
+
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
@@ -119,6 +127,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task<IActionResult> GetTestPdf([FromRoute] int evaluationId)
         {
             var result = await _pdfService.PrintEvaluationPdf(evaluationId);
+            
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
