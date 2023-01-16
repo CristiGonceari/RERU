@@ -88,87 +88,87 @@ export class AppComponent implements OnInit, AfterViewInit {
     </g>
 </svg>`,
 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/organigram',
-// 			name: '',
-// 			// permission: 'P02002101',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-//     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-//         <rect x="0" y="0" width="24" height="24"/>
-//         <path d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z" fill="#000000" fill-rule="nonzero"/>
-//         <path d="M7,11.4648712 L7,17 C7,18.1045695 7.8954305,19 9,19 L15,19 L15,21 L9,21 C6.790861,21 5,19.209139 5,17 L5,8 L5,7 L7,7 L7,8 C7,9.1045695 7.8954305,10 9,10 L15,10 L15,12 L9,12 C8.27142571,12 7.58834673,11.8052114 7,11.4648712 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
-//         <path d="M18,22 C19.1045695,22 20,21.1045695 20,20 C20,18.8954305 19.1045695,18 18,18 C16.8954305,18 16,18.8954305 16,20 C16,21.1045695 16.8954305,22 18,22 Z M18,24 C15.790861,24 14,22.209139 14,20 C14,17.790861 15.790861,16 18,16 C20.209139,16 22,17.790861 22,20 C22,22.209139 20.209139,24 18,24 Z" fill="#000000" fill-rule="nonzero"/>
-//         <path d="M18,13 C19.1045695,13 20,12.1045695 20,11 C20,9.8954305 19.1045695,9 18,9 C16.8954305,9 16,9.8954305 16,11 C16,12.1045695 16.8954305,13 18,13 Z M18,15 C15.790861,15 14,13.209139 14,11 C14,8.790861 15.790861,7 18,7 C20.209139,7 22,8.790861 22,11 C22,13.209139 20.209139,15 18,15 Z" fill="#000000" fill-rule="nonzero"/>
-//     </g>
-// </svg>`,
-// 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/reports',
-// 			name: '',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-//     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-//         <rect x="0" y="0" width="24" height="24"/>
-//         <rect fill="#000000" opacity="0.3" x="12" y="4" width="3" height="13" rx="1.5"/>
-//         <rect fill="#000000" opacity="0.3" x="7" y="9" width="3" height="8" rx="1.5"/>
-//         <path d="M5,19 L20,19 C20.5522847,19 21,19.4477153 21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 C4.55228475,3 5,3.44771525 5,4 L5,19 Z" fill="#000000" fill-rule="nonzero"/>
-//         <rect fill="#000000" opacity="0.3" x="17" y="11" width="3" height="6" rx="1.5"/>
-//     </g>
-// </svg>`,
-// 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/time-sheet',
-// 			name: '',
-// 			// permission: 'P02002601',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-// 			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-// 				<rect x="0" y="0" width="24" height="24"/>
-// 				<rect fill="#000000" opacity="0.3" x="4" y="4" width="4" height="4" rx="1"/>
-// 				<path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#000000"/>
-// 			</g>
-// 		</svg>`,
-// 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/documents-templates',
-// 			name: '',
-// 			// permission: 'P02002801',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-// 			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-// 				<polygon points="0 0 24 0 24 24 0 24"/>
-// 				<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
-// 				<rect fill="#000000" x="6" y="11" width="9" height="2" rx="1"/>
-// 				<rect fill="#000000" x="6" y="15" width="5" height="2" rx="1"/>
-// 			</g>
-// 		</svg>`,
-// 		},
-// 		{
-// 			type: SidebarItemType.SECTION,
-// 			url: '',
-// 			name: '',
-// 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/nomenclature',
-// 			name: '',
-// 			// permission: 'P02001501',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-//     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-//         <rect x="0" y="0" width="24" height="24"/>
-//         <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000"/>
-//         <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3"/>
-//     </g>
-// </svg>`,
-// 		},
-// 		{
-// 			type: SidebarItemType.ITEM,
-// 			url: '/configurations',
-// 			name: '',
-// 			// permission: 'P02002001',
-// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <rect x="0" y="0" width="24" height="24"/> <path d="M5,8.6862915 L5,5 L8.6862915,5 L11.5857864,2.10050506 L14.4852814,5 L19,5 L19,9.51471863 L21.4852814,12 L19,14.4852814 L19,19 L14.4852814,19 L11.5857864,21.8994949 L8.6862915,19 L5,19 L5,15.3137085 L1.6862915,12 L5,8.6862915 Z M12,15 C13.6568542,15 15,13.6568542 15,12 C15,10.3431458 13.6568542,9 12,9 C10.3431458,9 9,10.3431458 9,12 C9,13.6568542 10.3431458,15 12,15 Z" fill="#000000"/> </g></svg>`,
-// 		},
+		{
+			type: SidebarItemType.ITEM,
+			url: '/organigram',
+			name: '',
+			// permission: 'P02002101',
+			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <path d="M6,7 C7.1045695,7 8,6.1045695 8,5 C8,3.8954305 7.1045695,3 6,3 C4.8954305,3 4,3.8954305 4,5 C4,6.1045695 4.8954305,7 6,7 Z M6,9 C3.790861,9 2,7.209139 2,5 C2,2.790861 3.790861,1 6,1 C8.209139,1 10,2.790861 10,5 C10,7.209139 8.209139,9 6,9 Z" fill="#000000" fill-rule="nonzero"/>
+        <path d="M7,11.4648712 L7,17 C7,18.1045695 7.8954305,19 9,19 L15,19 L15,21 L9,21 C6.790861,21 5,19.209139 5,17 L5,8 L5,7 L7,7 L7,8 C7,9.1045695 7.8954305,10 9,10 L15,10 L15,12 L9,12 C8.27142571,12 7.58834673,11.8052114 7,11.4648712 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+        <path d="M18,22 C19.1045695,22 20,21.1045695 20,20 C20,18.8954305 19.1045695,18 18,18 C16.8954305,18 16,18.8954305 16,20 C16,21.1045695 16.8954305,22 18,22 Z M18,24 C15.790861,24 14,22.209139 14,20 C14,17.790861 15.790861,16 18,16 C20.209139,16 22,17.790861 22,20 C22,22.209139 20.209139,24 18,24 Z" fill="#000000" fill-rule="nonzero"/>
+        <path d="M18,13 C19.1045695,13 20,12.1045695 20,11 C20,9.8954305 19.1045695,9 18,9 C16.8954305,9 16,9.8954305 16,11 C16,12.1045695 16.8954305,13 18,13 Z M18,15 C15.790861,15 14,13.209139 14,11 C14,8.790861 15.790861,7 18,7 C20.209139,7 22,8.790861 22,11 C22,13.209139 20.209139,15 18,15 Z" fill="#000000" fill-rule="nonzero"/>
+    </g>
+</svg>`,
+		},
+		// 		{
+		// 			type: SidebarItemType.ITEM,
+		// 			url: '/reports',
+		// 			name: '',
+		// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+		//     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		//         <rect x="0" y="0" width="24" height="24"/>
+		//         <rect fill="#000000" opacity="0.3" x="12" y="4" width="3" height="13" rx="1.5"/>
+		//         <rect fill="#000000" opacity="0.3" x="7" y="9" width="3" height="8" rx="1.5"/>
+		//         <path d="M5,19 L20,19 C20.5522847,19 21,19.4477153 21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 C4.55228475,3 5,3.44771525 5,4 L5,19 Z" fill="#000000" fill-rule="nonzero"/>
+		//         <rect fill="#000000" opacity="0.3" x="17" y="11" width="3" height="6" rx="1.5"/>
+		//     </g>
+		// </svg>`,
+		// 		},
+		// 		{
+		// 			type: SidebarItemType.ITEM,
+		// 			url: '/time-sheet',
+		// 			name: '',
+		// 			// permission: 'P02002601',
+		// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+		// 			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		// 				<rect x="0" y="0" width="24" height="24"/>
+		// 				<rect fill="#000000" opacity="0.3" x="4" y="4" width="4" height="4" rx="1"/>
+		// 				<path d="M5,10 L7,10 C7.55228475,10 8,10.4477153 8,11 L8,13 C8,13.5522847 7.55228475,14 7,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 L14,7 C14,7.55228475 13.5522847,8 13,8 L11,8 C10.4477153,8 10,7.55228475 10,7 L10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,10 L13,10 C13.5522847,10 14,10.4477153 14,11 L14,13 C14,13.5522847 13.5522847,14 13,14 L11,14 C10.4477153,14 10,13.5522847 10,13 L10,11 C10,10.4477153 10.4477153,10 11,10 Z M17,4 L19,4 C19.5522847,4 20,4.44771525 20,5 L20,7 C20,7.55228475 19.5522847,8 19,8 L17,8 C16.4477153,8 16,7.55228475 16,7 L16,5 C16,4.44771525 16.4477153,4 17,4 Z M17,10 L19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 L17,14 C16.4477153,14 16,13.5522847 16,13 L16,11 C16,10.4477153 16.4477153,10 17,10 Z M5,16 L7,16 C7.55228475,16 8,16.4477153 8,17 L8,19 C8,19.5522847 7.55228475,20 7,20 L5,20 C4.44771525,20 4,19.5522847 4,19 L4,17 C4,16.4477153 4.44771525,16 5,16 Z M11,16 L13,16 C13.5522847,16 14,16.4477153 14,17 L14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 L10,17 C10,16.4477153 10.4477153,16 11,16 Z M17,16 L19,16 C19.5522847,16 20,16.4477153 20,17 L20,19 C20,19.5522847 19.5522847,20 19,20 L17,20 C16.4477153,20 16,19.5522847 16,19 L16,17 C16,16.4477153 16.4477153,16 17,16 Z" fill="#000000"/>
+		// 			</g>
+		// 		</svg>`,
+		// 		},
+		// 		{
+		// 			type: SidebarItemType.ITEM,
+		// 			url: '/documents-templates',
+		// 			name: '',
+		// 			// permission: 'P02002801',
+		// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+		// 			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		// 				<polygon points="0 0 24 0 24 24 0 24"/>
+		// 				<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+		// 				<rect fill="#000000" x="6" y="11" width="9" height="2" rx="1"/>
+		// 				<rect fill="#000000" x="6" y="15" width="5" height="2" rx="1"/>
+		// 			</g>
+		// 		</svg>`,
+		// 		},
+		// 		{
+		// 			type: SidebarItemType.SECTION,
+		// 			url: '',
+		// 			name: '',
+		// 		},
+		// 		{
+		// 			type: SidebarItemType.ITEM,
+		// 			url: '/nomenclature',
+		// 			name: '',
+		// 			// permission: 'P02001501',
+		// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+		//     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+		//         <rect x="0" y="0" width="24" height="24"/>
+		//         <path d="M4,9.67471899 L10.880262,13.6470401 C10.9543486,13.689814 11.0320333,13.7207107 11.1111111,13.740321 L11.1111111,21.4444444 L4.49070127,17.526473 C4.18655139,17.3464765 4,17.0193034 4,16.6658832 L4,9.67471899 Z M20,9.56911707 L20,16.6658832 C20,17.0193034 19.8134486,17.3464765 19.5092987,17.526473 L12.8888889,21.4444444 L12.8888889,13.6728275 C12.9050191,13.6647696 12.9210067,13.6561758 12.9368301,13.6470401 L20,9.56911707 Z" fill="#000000"/>
+		//         <path d="M4.21611835,7.74669402 C4.30015839,7.64056877 4.40623188,7.55087574 4.5299008,7.48500698 L11.5299008,3.75665466 C11.8237589,3.60013944 12.1762411,3.60013944 12.4700992,3.75665466 L19.4700992,7.48500698 C19.5654307,7.53578262 19.6503066,7.60071528 19.7226939,7.67641889 L12.0479413,12.1074394 C11.9974761,12.1365754 11.9509488,12.1699127 11.9085461,12.2067543 C11.8661433,12.1699127 11.819616,12.1365754 11.7691509,12.1074394 L4.21611835,7.74669402 Z" fill="#000000" opacity="0.3"/>
+		//     </g>
+		// </svg>`,
+		// 		},
+		// 		{
+		// 			type: SidebarItemType.ITEM,
+		// 			url: '/configurations',
+		// 			name: '',
+		// 			// permission: 'P02002001',
+		// 			icon: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <rect x="0" y="0" width="24" height="24"/> <path d="M5,8.6862915 L5,5 L8.6862915,5 L11.5857864,2.10050506 L14.4852814,5 L19,5 L19,9.51471863 L21.4852814,12 L19,14.4852814 L19,19 L14.4852814,19 L11.5857864,21.8994949 L8.6862915,19 L5,19 L5,15.3137085 L1.6862915,12 L5,8.6862915 Z M12,15 C13.6568542,15 15,13.6568542 15,12 C15,10.3431458 13.6568542,9 12,9 C10.3431458,9 9,10.3431458 9,12 C9,13.6568542 10.3431458,15 12,15 Z" fill="#000000"/> </g></svg>`,
+		// 		},
 		{
 			type: SidebarItemType.SECTION,
 			url: '',
@@ -211,7 +211,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		return this.router.url !== '/';
 	}
 
-	set isNotHomeRoute(value) {}
+	set isNotHomeRoute(value) { }
 
 	ngOnInit(): void {
 		this.translateData();
@@ -230,8 +230,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.sidebarItems[index] && this.router.navigate([this.localize.translateRoute(this.sidebarItems[index].url)]);
 	}
 
-	getCurrentLocation(){
-		if(this.router.url === '/'){
+	getCurrentLocation() {
+		if (this.router.url === '/') {
 			return true;
 		} else {
 			return false;
@@ -246,7 +246,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.translate.get('sidebar.personal'),
 			this.translate.get('sidebar.departments'),
 			this.translate.get('sidebar.roles'),
-			// this.translate.get('sidebar.organization-chart'),
+			this.translate.get('sidebar.organization-chart'),
 			// this.translate.get('sidebar.reports'),
 			// this.translate.get('sidebar.time-sheet-table'),
 			// this.translate.get('sidebar.documentsTemplates'),
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 				personal,
 				departments,
 				roles,
-				// organizationChart,
+				organizationChart,
 				// reports,
 				// pontajdata,
 				// configuration,
@@ -279,15 +279,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.sidebarItems[3].name = personal;
 				this.sidebarItems[4].name = departments;
 				this.sidebarItems[5].name = roles;
-				// this.sidebarItems[6].name = organizationChart;
+				this.sidebarItems[6].name = organizationChart;
 				// this.sidebarItems[7].name = reports;
 				// this.sidebarItems[8].name = pontajdata;
 				// this.sidebarItems[9].name = configuration;
 				// this.sidebarItems[10].name = documentsTemplates;
 				// this.sidebarItems[11].name = nomenclatures;
 				// this.sidebarItems[12].name = configurations;
-				this.sidebarItems[6].name = help;
-				this.sidebarItems[7].name = faq;
+				this.sidebarItems[7].name = help;
+				this.sidebarItems[8].name = faq;
 			}
 		);
 	}
