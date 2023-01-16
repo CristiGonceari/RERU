@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -127,7 +127,6 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             var emailResult = await _userManager.SetEmailAsync(identityUser, newEmail);
 
-            var password = _passwordGenerator.Generate(); 
             await _userManager.UpdateNormalizedEmailAsync(identityUser);
 
             if (usernameResult.Succeeded && emailResult.Succeeded)
@@ -138,12 +137,11 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                     {
                         Subject = "Update account",
                         To = identityUser.Email,
-                        HtmlTemplateAddress = "Templates/UserRegister.html",
+                        HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                         ReplacedValues = new Dictionary<string, string>()
                         {
-                            { "{FirstName}", userName },
-                            { "{Password}", password },
-                            { "{Login}", newEmail }
+                            { "{user_name}", userName },
+                            { "{email_message}", "a fost editat email-ul dumneavoastră de conectare: " + newEmail }
                         }
                     });
                 }
@@ -153,7 +151,8 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
 
             if (usernameResult.Errors.Any())
             {
-                throw new UpdateIdentityFailedException(usernameResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+                var e = new UpdateIdentityFailedException(usernameResult.Errors.Select(re => $"{re.Code}: {re.Description}").ToArray());
+                throw new Exception(e.Errors.First());
             }
 
             if (emailResult.Errors.Any())

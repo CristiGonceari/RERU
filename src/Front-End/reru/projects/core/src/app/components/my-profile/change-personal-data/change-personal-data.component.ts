@@ -126,7 +126,18 @@ export class ChangePersonalDataComponent implements OnInit {
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.subsribeForParams();
 			},
-			err => {
+			(err) => {
+				let lol: string = err.error.messages[0].messageText;
+				if(lol.includes("DuplicateUserName")){
+					forkJoin([
+						this.translate.get('modal.error'),
+					]).subscribe(([title]) => {
+						this.title = title;
+						this.description = "Email duplicat";
+					});
+					this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				}
+
 				this.isLoading = false;
 			}
 		);
