@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System;
 using Wkhtmltopdf.NetCore;
 using RERU.Data.Entities.Enums;
+using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 {
@@ -59,7 +60,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
             var res = Parse(source);
             
-            return FileDataDto.GetPdf($"{evaluation.NameSurnameEvaluated}EvaluareaAnuală360.pdf", res);
+            return FileDataDto.GetPdf($"{evaluation.EvaluatedUserProfile.FullName}EvaluareaAnuală360.pdf", res);
         }
 
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
@@ -103,9 +104,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString()); //TODO: de schimbat in viitorul apropiat
             myDictionary.Add("{SubdivisionName}", evaluation.SubdivisionName);
             myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd/MM/yyyy"));  
-            myDictionary.Add("{NameSurnameEvaluated}", evaluation.NameSurnameEvaluated);  
+            myDictionary.Add("{NameSurnameEvaluated}", evaluation.EvaluatedUserProfile.FullName);  
             myDictionary.Add("{SubdivisionEvaluated}", evaluation.SubdivisionEvaluated);
-            myDictionary.Add("{FunctionSubdivision}", evaluation.FunctionSubdivision);
+            myDictionary.Add("{FunctionSubdivision}", evaluation.EvaluatedUserProfile.Role.Name);
             myDictionary.Add("{SpecialOrMilitaryGrade}", evaluation.SpecialOrMilitaryGrade.ToString());
             myDictionary.Add("{SpecialOrMilitaryGradeText}", evaluation.SpecialOrMilitaryGradeText);
             myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd/MM/yyyy")); 
@@ -186,11 +187,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{CommentsEvaluator}", evaluation.CommentsEvaluator);
             myDictionary.Add("{CommentsEvaluated}", evaluation.CommentsEvaluated);
             myDictionary.Add("{DateAccepEvaluated}", evaluation.DateAcceptOrRejectEvaluated?.ToString("dd/MM/yyyy"));
-            myDictionary.Add("{NameSurnameEvaluator}", evaluation.NameSurnameEvaluator);
-            myDictionary.Add("{FunctionEvaluator}", evaluation.FunctionEvaluator);
+            myDictionary.Add("{NameSurnameEvaluator}", evaluation.EvaluatorUserProfile.FullName);
+            myDictionary.Add("{FunctionEvaluator}", evaluation.EvaluatorUserProfile.Role.Name);
             myDictionary.Add("{OtherComments}", evaluation.OtherComments);
-            myDictionary.Add("{NameSurnameCounterSigner}", evaluation.NameSurnameCounterSigner);
-            myDictionary.Add("{FunctionCounterSigner}", evaluation.FunctionCounterSigner);
+            myDictionary.Add("{NameSurnameCounterSigner}", evaluation.CounterSignerUserProfile.FullName);
+            myDictionary.Add("{FunctionCounterSigner}", evaluation.CounterSignerUserProfile.Role.Name);
             myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd/MM/yyyy"));
 

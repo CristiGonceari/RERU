@@ -26,8 +26,6 @@ namespace RERU.Data.Entities.Evaluation360
         
         public string? SubdivisionName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
-        public string? NameSurnameEvaluated { set; get; }
-        public string? FunctionSubdivision { set; get; }
         public string? SubdivisionEvaluated { set; get; }
         public GradeEnum? SpecialOrMilitaryGrade { set; get; }
         public String? SpecialOrMilitaryGradeText { set; get; }
@@ -103,16 +101,12 @@ namespace RERU.Data.Entities.Evaluation360
         public string? CommentsEvaluated { set; get; }
         public DateTime? DateAcceptOrRejectEvaluated { set; get; }
         public bool? SignatureEvaluated { set; get; }
-        public string? NameSurnameEvaluator { set; get; }
-        public string? FunctionEvaluator { set; get; }
         public bool? SignatureEvaluator { set; get; }
         public bool? CheckComment1 { set; get; }
         public bool? CheckComment2 { set; get; }
         public bool? CheckComment3 { set; get; }
         public bool? CheckComment4 { set; get; }
         public string? OtherComments { set; get; }
-        public string? NameSurnameCounterSigner { set; get; }
-        public string? FunctionCounterSigner { set; get; }
         public DateTime? DateCompletionCounterSigner { set; get; }
         public bool? SignatureCounterSigner { set; get; }
         public DateTime? DateEvaluatedKnow { set; get; }

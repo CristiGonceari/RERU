@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.DataTransferObjects.UserProfile;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
@@ -18,19 +19,25 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
+        private readonly ICurrentApplicationUserProvider _currentUserProvider;
 
-        public GetUserProfilesQueryHandler(AppDbContext appDbContext, IPaginationService paginationService)
+        public GetUserProfilesQueryHandler(
+            AppDbContext appDbContext, 
+            IPaginationService paginationService,
+            ICurrentApplicationUserProvider currentUserProvider)
         {
             _appDbContext = appDbContext;
             _paginationService = paginationService;
+            _currentUserProvider = currentUserProvider;
         }
 
         public async Task<PaginatedModel<UserProfileDto>> Handle(GetUserProfilesQuery request, CancellationToken cancellationToken)
         {
-            // var currentUser = await _userProfileService.GetCurrentUserProfileDto();
+            var currentUser = await _currentUserProvider.Get();
+            int currentUserId = int.Parse(currentUser.Id);
 
             var items = _appDbContext.UserProfiles
-                .Where(x => x.IsActive)
+                .Where(x => x.IsActive && x.Id != currentUserId)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
                 .Include(up => up.Role)

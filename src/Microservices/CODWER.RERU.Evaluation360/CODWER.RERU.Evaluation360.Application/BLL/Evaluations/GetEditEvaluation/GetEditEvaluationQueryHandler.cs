@@ -38,14 +38,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
                 .OrderByDescending(e => e.CreateDate)
                 .FirstOrDefaultAsync(e => e.Id == request.Id);
 
-            evaluation.NameSurnameEvaluated = evaluation.EvaluatedUserProfile.FullName;
-            evaluation.NameSurnameEvaluator = evaluation.EvaluatorUserProfile.FullName;
-
-            if (evaluation.CounterSignerUserProfileId != null)
-            {
-                evaluation.NameSurnameCounterSigner = evaluation.CounterSignerUserProfile.FullName;
-            }
-
             Test test1 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireGenerala);
             Test test2 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireDeSpecialitate);
             Test test3 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InstructiaTragerii);
