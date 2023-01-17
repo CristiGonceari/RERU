@@ -1,4 +1,4 @@
-namespace RERU.Data.Entities.PersonalEntities.Enums
+namespace RERU.Data.Entities.Enums
 {
     public enum ProfessionalTrainingActivitiesEnum
     {

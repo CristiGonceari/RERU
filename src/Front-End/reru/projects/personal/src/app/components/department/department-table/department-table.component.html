@@ -5,13 +5,17 @@
     <table class="table erp-table">
         <thead>
             <tr>
+                <th>{{'entity.colaborator-id' | translate}}</th>
                 <th>{{'entity.department.title' | translate}}</th>
                 <th *ngIf="departments.length" class="col-1 text-right" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of departments; let i = index; let even = even">
-                <td [ngStyle]="{'width.%' : 80}" [routerLink]="['../', item.id]" class="pointer">
+                <td [ngStyle]="{'width.%' : 20}" [routerLink]="['../', item.id]" class="pointer">
+                    <div class="text-dark-75 mb-0">{{item.colaboratorId}}</div>
+                </td>
+                <td [ngStyle]="{'width.%' : 60}" [routerLink]="['../', item.id]" class="pointer">
                     <div class="text-dark-75 mb-0">{{item.name}}</div>
                 </td>
                 <td [ngStyle]="{'width.%' : 20}" class="text-right">

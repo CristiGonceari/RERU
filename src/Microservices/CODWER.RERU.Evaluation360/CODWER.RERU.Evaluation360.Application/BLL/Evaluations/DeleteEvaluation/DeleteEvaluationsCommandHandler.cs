@@ -15,7 +15,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IMapper _mapper;
 
-        public DeleteEvaluationCommandHandller(AppDbContext dbContext,  ICurrentApplicationUserProvider currentUserProvider, IMapper mapper)
+        public DeleteEvaluationCommandHandller(
+            AppDbContext dbContext,  
+            ICurrentApplicationUserProvider currentUserProvider, 
+            IMapper mapper)
         {
             _dbContext = dbContext;
             _currentUserProvider = currentUserProvider;
@@ -24,9 +27,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.DeleteEvaluation
         public async Task<Unit> Handle(DeleteEvaluationQuery request, CancellationToken cancellationToken)
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e => e.Id == request.Id);
+            
             _dbContext.Evaluations.Remove(evaluation);
             
             await _dbContext.SaveChangesAsync();
+
             return Unit.Value;
         }
     }

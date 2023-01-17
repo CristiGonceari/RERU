@@ -54,7 +54,7 @@ export class DetailsComponent implements OnInit {
   }
 
   openOrganigramActionModal(event): void {
-    this.departmentContentService.getCalculated(event.id).subscribe(response => {
+    this.departmentContentService.getCalculated(event.id, event.type).subscribe(response => {
       const modalRef = this.modalService.open(OrganigramActionModalComponent);
       modalRef.componentInstance.type = +event.type;
       modalRef.componentInstance.id = this.organigram.id;

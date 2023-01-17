@@ -481,6 +481,7 @@
     "actions": "Actions"
   },
   "entity": {
+    "colaborator-id": "Code",
     "personal": {
       "single": "Employee",
       "name": "Name",

@@ -147,6 +147,7 @@ export class EditComponent implements OnInit {
 	}
 
 	editUser(): void {
+		this.isLoading = true;
 		this.setBirthDate();
 		let data = {
 			id: this.userForm.value.id,
@@ -194,6 +195,20 @@ export class EditComponent implements OnInit {
 					})
 				}
 				this.backClicked();
+			}, 
+			(err) => {
+				let lol: string = err.error.messages[0].messageText;
+				if(lol.includes("DuplicateUserName")){
+					forkJoin([
+						this.translate.get('modal.error'),
+					]).subscribe(([title]) => {
+						this.title = title;
+						this.description = "Email duplicat";
+					});
+					this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				}
+
+				this.isLoading = false;
 			}
 		);
 	}

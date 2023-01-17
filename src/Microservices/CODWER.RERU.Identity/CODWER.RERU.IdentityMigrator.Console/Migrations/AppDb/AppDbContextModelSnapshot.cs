@@ -4829,6 +4829,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<int?>("BasicTestTemplate")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CategoriesSequence")
                         .HasColumnType("integer");
 
@@ -4878,6 +4881,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasicTestTemplate");
 
                     b.HasIndex("CategoriesSequence");
 
@@ -5421,6 +5426,82 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.BasicTestTemplateEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("BasicTestTemplateEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "PregatireGenerala"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "PregatireDeSpecialitate"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "InstructiaTragerii"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "InterventiaProfesionala"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EducationEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("EducationEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Secondary"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Higher"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Master"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Doctorate"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -5499,6 +5580,109 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "Conducere"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("GradeEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Soldat"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Caporal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "SergentInferior"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sergent"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "SergentMajor"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Plutonier"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "PlutonierMajor"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "PlutonierAdjutant"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Locotenent"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "LocotenentMajor"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Capitan"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Maior"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "LocotenentColonel"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Colonel"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "GeneralDeBrigada"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "GeneralDeDivizie"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "GeneralDeCorpArmata"
                         });
                 });
 
@@ -5770,6 +5954,100 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "BulkAddTests"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProfessionalTrainingActivitiesEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Perfectiosation"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Specialization"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesType>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProfessionalTrainingActivitiesType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Intern"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Extern"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("QualifiersEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dissatisfied"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Satisfied"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Good"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "VeryGood"
                         });
                 });
 
@@ -6059,6 +6337,44 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 1,
                             Name = "Strict"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ServiceDuringEvaluationCourse");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Employment"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Transfer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Detachment"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Default"
                         });
                 });
 
@@ -6559,44 +6875,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("EducationEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Secondary"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Higher"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Master"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Doctorate"
-                        });
-                });
-
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -6652,236 +6930,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 8,
                             Name = "Email"
-                        });
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("GradeEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Soldat"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Caporal"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "SergentInferior"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Sergent"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "SergentMajor"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Plutonier"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "PlutonierMajor"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "PlutonierAdjutant"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Locotenent"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "LocotenentMajor"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Capitan"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Maior"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "LocotenentColonel"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Colonel"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "GeneralDeBrigada"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "GeneralDeDivizie"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "GeneralDeCorpArmata"
-                        });
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ProfessionalTrainingActivitiesEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Perfectiosation"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Specialization"
-                        });
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ProfessionalTrainingActivitiesType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Intern"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Extern"
-                        });
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("QualifierEnum");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "VeryGood"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Good"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Satisfied"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Dissatisfied"
-                        });
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ServiceDuringEvaluationCourse");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Employment"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Transfer"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Detachment"
                         });
                 });
 
@@ -7553,7 +7601,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .WithMany()
                         .HasForeignKey("CounterSignerUserProfileId");
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EducationEnum>", null)
                         .WithMany()
                         .HasForeignKey("EducationEnum")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -7570,62 +7618,62 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("FinalEvaluationQualification")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesEnum>", null)
                         .WithMany()
                         .HasForeignKey("ProfessionalTrainingActivities")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesType>", null)
                         .WithMany()
                         .HasForeignKey("ProfessionalTrainingActivitiesType")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationEvaluationObtained2YearsPast")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationEvaluationObtainedPreviousYear")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationQuarter1")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationQuarter2")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationQuarter3")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualificationQuarter4")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualifierPartialEvaluations")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", null)
                         .WithMany()
                         .HasForeignKey("ServiceDuringEvaluationCourse")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", null)
                         .WithMany()
                         .HasForeignKey("SpecialOrMilitaryGrade")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -8796,6 +8844,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplate", b =>
                 {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.BasicTestTemplateEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("BasicTestTemplate")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SequenceEnum>", null)
                         .WithMany()
                         .HasForeignKey("CategoriesSequence")
@@ -8990,6 +9043,24 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.BasicTestTemplateEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.BasicTestTemplateEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EducationEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EducationEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationStatusEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationStatusEnum>", null)
@@ -9002,6 +9073,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -9065,6 +9145,33 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProcessesEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesType>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ProfessionalTrainingActivitiesType>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -9137,6 +9244,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SequenceEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SequenceEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -9269,63 +9385,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.EducationEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.FieldTypeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.GradeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ProfessionalTrainingActivitiesType>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.QualifierEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.ServiceDuringEvaluationCourse>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

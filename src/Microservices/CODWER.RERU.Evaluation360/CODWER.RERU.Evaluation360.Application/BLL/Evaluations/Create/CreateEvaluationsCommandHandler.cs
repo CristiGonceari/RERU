@@ -14,7 +14,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IMapper _mapper;
 
-        public CreateEvaluationsCommandHandler(AppDbContext dbContext,  ICurrentApplicationUserProvider currentUserProvider, IMapper mapper)
+        public CreateEvaluationsCommandHandler(
+            AppDbContext dbContext,  
+            ICurrentApplicationUserProvider currentUserProvider, 
+            IMapper mapper)
         {
             _dbContext = dbContext;
             _currentUserProvider = currentUserProvider;
@@ -23,19 +26,20 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Create
         public async Task<Unit> Handle(CreateEvaluationsCommand request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentUserProvider.Get();
-            var currentuserId = int.Parse(currentUser.Id);
+            var currentUserId = int.Parse(currentUser.Id);
             
             foreach(var evaluatedUserId in request.EvaluatedUserProfileIds)
             {
                 var newEvaluation = _mapper.Map<Evaluation>(request);
                 
                 newEvaluation.EvaluatedUserProfileId = evaluatedUserId;
-                newEvaluation.EvaluatorUserProfileId = currentuserId;
+                newEvaluation.EvaluatorUserProfileId = currentUserId;
 
                 _dbContext.Evaluations.Add(newEvaluation);
             }
           
            await _dbContext.SaveChangesAsync();
+           
            return Unit.Value;
         }
         
