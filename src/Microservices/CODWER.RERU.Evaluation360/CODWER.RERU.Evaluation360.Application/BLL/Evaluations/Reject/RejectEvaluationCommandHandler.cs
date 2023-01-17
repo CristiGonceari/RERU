@@ -8,6 +8,8 @@ using RERU.Data.Persistence.Context;
 using System.Collections.Generic;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
+using CVU.ERP.Common.DataTransferObjects.Config;
+using RERU.Data.Entities.Evaluation360;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
 {
@@ -39,33 +41,36 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
             _mapper.Map(request.Evaluation, evaluation); 
 
             await _dbContext.SaveChangesAsync();
-            await SendEmailNotification(evaluation.EvaluatorUserProfileId);
+            await SendEmailNotification(evaluation.EvaluatorUserProfileId, evaluation.EvaluatedUserProfileId);
 
             return Unit.Value;
         }
 
-        private async Task<Unit> SendEmailNotification(int evaluatorUserProfileId)
+        private async Task<Unit> SendEmailNotification(int evaluatorUserProfileId, int evaluatedUserProfileId)
         {
             var evaluator = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatorUserProfileId);
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Revizuire Evaluare de performanță",
+                Subject = "Respingere de către evaluat a evaluării de performanță",
                 To = evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
                 {
                     { "{user_name}", evaluator.FullName },
-                    { "{email_message}", await GetTableContent() }
+                    { "{email_message}", await GetTableContent(evaluatedUserProfileId) }
                 }
             });
 
             return Unit.Value;
         }
 
-        private async Task<string> GetTableContent()
+        private async Task<string> GetTableContent(int evaluatedUserProfileId)
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost respinsa de catre evaluat, rugam sa reevaluati angajatul.</p>";
+            var evaluated = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatedUserProfileId);
+
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">în cadrul evaluării de performanță, angajatul {evaluated.FullName} a respins evaluarea,
+                sunteți invitat/ă să reevaluați angajatul. </p><br>";
 
             return content;
         }
