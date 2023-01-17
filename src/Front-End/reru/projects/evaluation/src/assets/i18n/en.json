@@ -1012,7 +1012,8 @@
     "03002201": "You can not delete used candidate position",
     "03002107": "Empty position name",
     "03002109": "Empty medical column",
-    "03001506": "Evaluated were not assigned"
+    "03001506": "Evaluated were not assigned",
+    "03002105": "Invalid document template"
   },
   "login": {
     "colaborator-id": "Collaborator ID",

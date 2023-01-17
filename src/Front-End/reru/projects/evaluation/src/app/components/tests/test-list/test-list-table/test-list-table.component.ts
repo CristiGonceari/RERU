@@ -400,7 +400,7 @@ export class TestListTableComponent implements OnInit {
 		const modalRef: any = this.modalService.open(GenerateDocumentModalComponent, { centered: true, size:'xl', windowClass: 'my-class', scrollable: true });
 		modalRef.componentInstance.id = id;
 		modalRef.componentInstance.testName = name;
-		modalRef.componentInstance.fileType = 2;
+		modalRef.componentInstance.fileType = 3;
 		modalRef.result.then((response) => (response), () => {});
 	}
   

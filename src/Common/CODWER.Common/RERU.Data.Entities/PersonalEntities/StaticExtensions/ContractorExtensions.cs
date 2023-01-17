@@ -43,29 +43,29 @@ namespace RERU.Data.Entities.PersonalEntities.StaticExtensions
             if (toSearch.Count == 1)
             {
                 return items.Where(x =>
-                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.FatherName.ToLower().Contains(toSearch.First().ToLower()));
+                    x.UserProfile.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.FatherName.ToLower().Contains(toSearch.First().ToLower()));
             }
 
             if (toSearch.Count == 2)
             {
                 return items.Where(x =>
-                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.FirstName.ToLower().Contains(toSearch.Last().ToLower())
-                    || x.LastName.ToLower().Contains(toSearch.Last().ToLower()));
+                    x.UserProfile.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.UserProfile.LastName.ToLower().Contains(toSearch.Last().ToLower()));
             }
 
             if (toSearch.Count == 3)
             {
                 return items.Where(x =>
-                    x.FirstName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.LastName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.FatherName.ToLower().Contains(toSearch.First().ToLower())
-                    || x.FirstName.ToLower().Contains(toSearch.Last().ToLower())
-                    || x.LastName.ToLower().Contains(toSearch.Last().ToLower())
-                    || x.FatherName.ToLower().Contains(toSearch.Last().ToLower()));
+                    x.UserProfile.FirstName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.LastName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.FatherName.ToLower().Contains(toSearch.First().ToLower())
+                    || x.UserProfile.FirstName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.UserProfile.LastName.ToLower().Contains(toSearch.Last().ToLower())
+                    || x.UserProfile.FatherName.ToLower().Contains(toSearch.Last().ToLower()));
             }
 
             return items;

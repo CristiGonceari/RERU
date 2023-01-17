@@ -33,6 +33,7 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
         public string OrganizationRoleName { get; set; }
 
         public string EmployerState { get; set; }
+        public string UserState { get; set; }
 
         public bool HasUserProfile { get; set; }
         public bool HasAvatar { get; set; }

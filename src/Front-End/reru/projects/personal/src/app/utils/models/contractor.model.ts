@@ -44,6 +44,7 @@ export interface Contractor {
     toDate?: string;
     departmentId?: number;
     avatar?: AvatarModel[];
+    userStatus?: number;
 
     currentPosition?: {
         id?: number;

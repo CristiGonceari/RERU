@@ -16,9 +16,9 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
         //position fields
         //public int PositionId { get; set; }
         //public DateTime? FromDate { get; set; }
-        //public int? DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public string DepartmentName { get; set; }
-        //public int? OrganizationRoleId { get; set; }
+        public int? OrganizationRoleId { get; set; }
         public string OrganizationRoleName { get; set; }
         public List<ContactRowDto> Contacts { get; set; }
 

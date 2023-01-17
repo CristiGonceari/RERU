@@ -22,7 +22,7 @@
                     <app-last-department-label [item]="item"></app-last-department-label>
                 </td>
                 <td class="text-center">
-                    {{ item.idnp }}
+                    {{ item.idnp || '-' }}
                 </td>
                 <td class="text-right">
                     <app-personal-dropdown-details [index]="i" 
@@ -48,7 +48,12 @@
             </td></tr>
         </tbody>
     </table>
-    <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize" (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        class="datatable-pager datatable-paging-loaded" (pageChange)="list({ page: $event })">
+    <div pagination 
+    [page]="pagedSummary.currentPage" 
+    [total]="pagedSummary.totalPages" 
+    [size]="pagedSummary.pageSize"
+    [totalRecords]="pagedSummary.totalCount"
+    (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+    (pageChange)="list({ page: $event })" class="datatable-pager datatable-paging-loaded">
     </div>
 </div>
