@@ -67,7 +67,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             ProgrammedTimeTo = request.ProgrammedTimeTo,
             EvaluatorName = request.EvaluatorName,
             RoleId = request.RoleId,
-            DepartmentId = request.DepartmentId
+            DepartmentId = request.DepartmentId,
+            ColaboratorId = request.ColaboratorId,
         };
 
         private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)

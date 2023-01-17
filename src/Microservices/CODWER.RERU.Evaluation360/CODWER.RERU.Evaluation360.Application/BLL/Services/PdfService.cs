@@ -9,7 +9,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 using Wkhtmltopdf.NetCore;
-using RERU.Data.Entities.PersonalEntities.Enums;
+using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 {
@@ -59,7 +59,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
             var res = Parse(source);
             
-            return FileDataDto.GetPdf("EvaluareaAnualăFinală.pdf", res);
+            return FileDataDto.GetPdf($"{evaluation.NameSurnameEvaluated}EvaluareaAnuală360.pdf", res);
         }
 
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
@@ -93,21 +93,21 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
                 mf = mea;
             }
 
-            if (mf >= 1 && mf <= 1.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Dissatisfied;
-            else if (mf >= 1.51m && mf <= 2.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Satisfied;
-            else if (mf >= 2.51m && mf <= 3.5m) evaluation.FinalEvaluationQualification = QualifierEnum.Good;
-            else if (mf >= 3.51m && mf <= 4m) evaluation.FinalEvaluationQualification = QualifierEnum.VeryGood;
+            if (mf >= 1 && mf <= 1.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Dissatisfied;
+            else if (mf >= 1.51m && mf <= 2.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Satisfied;
+            else if (mf >= 2.51m && mf <= 3.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Good;
+            else if (mf >= 3.51m && mf <= 4m) evaluation.FinalEvaluationQualification = QualifiersEnum.VeryGood;
 
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{Type}", evaluation.Type.ToString()); //TODO: de schimbat in viitorul apropiat
+            myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString()); //TODO: de schimbat in viitorul apropiat
             myDictionary.Add("{SubdivisionName}", evaluation.SubdivisionName);
             myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{NameSurnameEvaluated}", evaluation.NameSurnameEvaluated);  
             myDictionary.Add("{SubdivisionEvaluated}", evaluation.SubdivisionEvaluated);
             myDictionary.Add("{FunctionSubdivision}", evaluation.FunctionSubdivision);
             myDictionary.Add("{SpecialOrMilitaryGrade}", evaluation.SpecialOrMilitaryGrade.ToString());
-            myDictionary.Add("{SpecialOrMilitaryGradeText}", evaluation.SpecialOrMilitaryGradeText.ToString());
+            myDictionary.Add("{SpecialOrMilitaryGradeText}", evaluation.SpecialOrMilitaryGradeText);
             myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd/MM/yyyy")); 
             myDictionary.Add("{PeriodEvaluatedUpTo}", evaluation.PeriodEvaluatedUpTo?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{EducationEnum}", evaluation.EducationEnum.ToString());  
@@ -174,6 +174,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{pb}", pb.ToString());
             myDictionary.Add("{mea}", mea.ToString());
             myDictionary.Add("{mf}", mf.ToString());
+            myDictionary.Add("{ScoringRange}", ScoringRange(mf));
             myDictionary.Add("{FinalEvaluationQualification}", evaluation.FinalEvaluationQualification.ToString());
             myDictionary.Add("{DateEvaluationInterview}", evaluation.DateEvaluationInterview?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{DateSettingIindividualGoals}", evaluation.DateSettingIindividualGoals?.ToString("dd/MM/yyyy"));
@@ -192,19 +193,17 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{FunctionCounterSigner}", evaluation.FunctionCounterSigner);
             myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd/MM/yyyy"));
-            myDictionary.Add("{tr_area_replace}", GetTableContent(evaluation));
-
 
             return myDictionary;
         }
 
-        private string GetTableContent(Evaluation evaluation)
+        private string ScoringRange(decimal? mf)
         {
-            var content = string.Empty;
-
-            content += $@"";
-
-            return content;
+            if (mf >= 1 && mf <= 1.5m) return "între 1,00 şi 1,50";
+            else if (mf >= 1.51m && mf <= 2.5m) return "între 1,51 şi 2,50";
+            else if (mf >= 2.51m && mf <= 3.5m) return "între 2,51 şi 3,50";
+            else if (mf >= 3.51m && mf <= 4m) return "între 3,51 şi 4,00";
+            else throw new ArgumentOutOfRangeException("");
         }
 
         private string ReplaceKeys(string source, Dictionary<string, string> myDictionary)

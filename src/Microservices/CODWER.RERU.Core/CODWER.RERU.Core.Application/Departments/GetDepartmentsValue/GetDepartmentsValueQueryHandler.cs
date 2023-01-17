@@ -24,7 +24,9 @@ namespace CODWER.RERU.Core.Application.Departments.GetDepartmentsValue
 
         public async Task<List<SelectItem>> Handle(GetDepartmentsValueQuery request, CancellationToken cancellationToken)
         {
-            var departments = await _appDbContext.Departments.ToListAsync();
+            var departments = await _appDbContext.Departments
+                .OrderBy(x => x.Name)
+                .ToListAsync();
 
             return _mapper.Map<List<SelectItem>>(departments);
         }

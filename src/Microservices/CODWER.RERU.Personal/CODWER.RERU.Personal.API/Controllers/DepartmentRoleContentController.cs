@@ -33,10 +33,10 @@ namespace CODWER.RERU.Personal.API.Controllers
             return result;
         }
 
-        [HttpGet("calculated/{departmentId}")]
-        public async Task<DepartmentRoleContentDto> GetDepartmentRoleContentCalculated([FromRoute] int departmentId)
+        [HttpGet("calculated/{id}/{type}")]
+        public async Task<DepartmentRoleContentDto> GetDepartmentRoleContentCalculated([FromRoute] int id, int type)
         {
-            var query = new GetDepartmentRoleContentCalculatedQuery { DepartmentId = departmentId };
+            var query = new GetDepartmentRoleContentCalculatedQuery { Id = id, Type = type };
             var result = await Mediator.Send(query);
 
             return result;

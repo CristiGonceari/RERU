@@ -796,6 +796,7 @@
     "attempts": "Attempts",
     "search-event": "Search by event",
     "search-location": "Search by location",
+    "search-colaborator-id": "Search by code",
     "search-from": "Search from date",
     "search-to": "Search to date",
     "import-users": "Bulk import users",

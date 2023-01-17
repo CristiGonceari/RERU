@@ -22,7 +22,7 @@
             <tbody>
                 <ng-container *ngFor="let item of list" >
                     <tr *ngFor="let contractor of item.contractorIds">
-                        <td><a (click)="close()" [routerLink]="['personal', contractor.value]">{{contractor.label}}</a></td>
+                        <td><a>{{contractor.label}}</a></td>
                         <td style="cursor: pointer; color: #FFA800;" (click)="navigationContainer(item)">{{item.organizationRoleName}}</td>
                     </tr>
                 </ng-container>
