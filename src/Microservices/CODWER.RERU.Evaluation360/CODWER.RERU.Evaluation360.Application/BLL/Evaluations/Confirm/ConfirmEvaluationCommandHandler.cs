@@ -85,7 +85,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
                 <p> 5. Listați evaluarea până la final, completați rubrica obligatorie: ""Comentariile angajatului evaluat"" </p>
                 <p> 6. Tastați ""Acceptă"" sau ""Respinge"" </p><br>
                 
-                <p> În cazul în care se alege ""Respinge"", evaluatorul va re-evalua evaluarea și veți fi notificat pe email despre statutul evaluării. </p>";
+                <p> În cazul în care se alege ""Respinge"", evaluatorul va reevalua evaluarea și veți fi notificat pe email despre statutul evaluării. </p>";
 
             return content;
         }

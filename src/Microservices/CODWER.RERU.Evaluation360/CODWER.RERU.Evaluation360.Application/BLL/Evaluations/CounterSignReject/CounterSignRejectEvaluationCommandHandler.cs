@@ -71,7 +71,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Revizuire Evaluare de performanță",
+                Subject = "Respingere de către contrasemnatar a evaluării de performanță",
                 To = evaluated.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -93,7 +93,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
 
         private async Task<string> GetEvaluatedTableContent()
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost respinsa de catre contrasemnatar, urmeaza evaluatorul sa indeplineasca reevaluarea, asteptati in curand acest eveniment.</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost respinsa de catre contrasemnatar, urmează ca evaluatorul să facă reevaluarea și să fiți notificat pe email despre statutul evaluării.</p>";
 
             return content;
         }
