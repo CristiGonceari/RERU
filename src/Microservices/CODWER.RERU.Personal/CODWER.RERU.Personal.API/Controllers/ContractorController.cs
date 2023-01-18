@@ -99,7 +99,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpPatch("edit-avatar")]
-        public async Task<Unit> EditContractorAvatar([FromForm] EditContractorAvatarCommand command)
+        public async Task<string> EditContractorAvatar([FromForm] EditContractorAvatarCommand command)
         {
             return await Mediator.Send(command); 
         }

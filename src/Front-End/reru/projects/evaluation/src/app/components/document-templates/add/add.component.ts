@@ -10,6 +10,9 @@ import { DocumentKeyEnum } from '../../../utils/models/document-template/documen
 import { DocumentTemplateKeys } from '../../../utils/models/document-template/document-template-keys.model';
 import { ReferenceService } from '../../../utils/services/reference/reference.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
+import { saveAs } from 'file-saver';
+import { ObjectUtil } from '../../../utils/util/object.util';
+import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
 
 @Component({
   selector: 'app-add',
@@ -22,8 +25,8 @@ export class AddComponent implements OnInit {
   filterForm: FormGroup;
   editorValue: string = '';
   title: string;
-  fileType = new SelectItem();
-  forEditFileType: any;
+  fileType = new SelectItem({value: "0", label: "Select"});
+  forEditFileType: any = [];
   editor: string[] =[];
   wordButton: any;
   isAdded: boolean = false;
@@ -33,13 +36,17 @@ export class AddComponent implements OnInit {
   constructor(
     private documentTemplateService: DocumentTemplateService,
     private referenceService: ReferenceService,
+    private testTemplate: TestTemplateService,
     private location: Location,
     private notificationService: NotificationsService,
     private activatedRoute: ActivatedRoute,
-    // private fileService: FileService ,
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
+
+    this.getTemplateType();
+
     this.activatedRoute.params.subscribe(params => {
       this.documentId = params.id;
     });
@@ -47,10 +54,9 @@ export class AddComponent implements OnInit {
       this.getDocument();
       
     } else {
-      this.isLoading = false;
     }
-    this.getTemplateType();
   }
+  
  
   addWordButtonToCkEditor(word){
     this.isAdded = true;
@@ -73,7 +79,6 @@ export class AddComponent implements OnInit {
         this.title = res.data.name;
         this.editorValue = res.data.value;
         this.forEditFileType = res.data.fileType;
-        this.isLoading = false;
         this.getListOfKeys(res.data.fileType);
       }
     })
@@ -82,6 +87,7 @@ export class AddComponent implements OnInit {
   getTemplateType(){
     this.referenceService.getDocumentTemplateType().subscribe((res) => {
       this.fileType = res.data;
+      this.isLoading = false;
     })
   }
 
@@ -120,25 +126,21 @@ export class AddComponent implements OnInit {
     }
   }
 
+  ckEditorContentToPdf(): void {
+      const request= ObjectUtil.preParseObject({
+        source: this.editorValue,
+        testTemplateName: this.title
+      })
+      this.testTemplate.printDocument(request).subscribe(response => {
+        const fileName = this.title;
+        const blob = new Blob([response.body], { type: response.body.type });
+        const file = new File([blob], fileName, { type: response.body.type });
+        saveAs(file);
+        this.isLoading = false; 
+      });
+  }
+
   backCancel() {
     this.location.back();
   }
-
-  // ckEditorContentToPdf(): void {
-  //   this.isLoading = true;
-    
-  //   this.fileService.getPdfFromString(this.editorValue).subscribe(response => {
-    
-  //     let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-      
-  //     if (response.body.type === 'application/pdf') {
-  //       fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
-  //     }
-
-  //     const blob = new Blob([response.body], { type: response.body.type });
-  //     const file = new File([blob], fileName, { type: response.body.type });
-  //     saveAs(file);
-  //     this.isLoading = false;
-  //   });
-  // }
 }

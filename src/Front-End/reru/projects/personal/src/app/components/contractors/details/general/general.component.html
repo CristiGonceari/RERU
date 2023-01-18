@@ -147,7 +147,7 @@
                   <path d="M8.4,18 C5.0862915,18 2.4,15.3137085 2.4,12 C2.4,8.6862915 5.0862915,6 8.4,6 C11.7137085,6 14.4,8.6862915 14.4,12 C14.4,15.3137085 11.7137085,18 8.4,18 Z" fill="#000000"/>
               </g>
           </svg></span>
-            {{ 'Cetatenie' }}</label>
+          {{'personal.citizenship' | translate}}</label>
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="sex" id="role" type="number"
                 formControlName="candidateCitizenshipId">
@@ -165,7 +165,7 @@
                   <path d="M8.4,18 C5.0862915,18 2.4,15.3137085 2.4,12 C2.4,8.6862915 5.0862915,6 8.4,6 C11.7137085,6 14.4,8.6862915 14.4,12 C14.4,15.3137085 11.7137085,18 8.4,18 Z" fill="#000000"/>
               </g>
           </svg></span>
-            {{'Nationalitate' | translate}}</label>
+            {{'personal.nationality' | translate}}</label>
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="sex" id="role" type="number"
               formControlName="candidateNationalityId">
@@ -183,7 +183,7 @@
                   <path d="M8.4,18 C5.0862915,18 2.4,15.3137085 2.4,12 C2.4,8.6862915 5.0862915,6 8.4,6 C11.7137085,6 14.4,8.6862915 14.4,12 C14.4,15.3137085 11.7137085,18 8.4,18 Z" fill="#000000"/>
               </g>
           </svg></span>
-            {{'Nivelul de cunoastere a limbii nationale' | translate}}</label>
+            {{'personal.level-of-language' | translate}}</label>
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="stateLanguageLevel" id="role"
                 type="number" formControlName="stateLanguageLevel">
@@ -226,14 +226,14 @@
             <button (click)="openGenerateOrderModal()" type="button" class="btn btn-light-primary font-weight-bold btn-sm pulse pulse-primary">{{'personal.generate-order' | translate}}<span class="pulse-ring"></span></button>
           </div>
         </div> -->
-        <div *ngIf="contractor.hasUserProfile" class="form-group row">
+        <!-- <div *ngIf="contractor.hasUserProfile" class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">{{'personal.reset-password-information' | translate}}</label>
           <div class="col-lg-9 col-xl-6">
             <button (click)="openResetPasswordModal()" type="button" class="btn btn-light-primary font-weight-bold btn-sm">{{'personal.reset-password' | translate}}</button>
             <p class="form-text text-muted py-2">{{'personal.reset-password-description' | translate}} 
               <a href="javascript:;" class="font-weight-boldk">{{'word.learn-more' | translate}}</a>.</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </form>
 </div>

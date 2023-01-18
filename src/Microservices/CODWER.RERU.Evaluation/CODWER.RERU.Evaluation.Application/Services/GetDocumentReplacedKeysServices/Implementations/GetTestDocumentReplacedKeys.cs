@@ -247,12 +247,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 return testValue;
             }
-            else 
-            {
-                var finalKeyName = keyName.Substring(1, keyName.Length - 2);
 
-                return finalKeyName + " nu este setata";
-            }
+            var finalKeyName = keyName.Substring(1, keyName.Length - 2);
+
+            return finalKeyName + " nu este setata";
         }
     }
 }

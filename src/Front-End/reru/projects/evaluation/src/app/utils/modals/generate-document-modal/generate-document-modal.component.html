@@ -1,28 +1,32 @@
 <div class="modal-header border-0 pb-0">
-    <h3 class="modal-title">{{'documents-templates.generate-document'| translate}}</h3>
+  <h3 class="modal-title">{{'documents-templates.generate-document'| translate}}</h3>
 </div>
 <div class="modal-body px-7">
   <div class="separator separator-dashed my-5"></div>
   <div class="row ">
-      <div class="col-md-8 mb-5">
-        <select class="form-control" [(ngModel)]="selectedDocument" (ngModelChange)="retrieveDocuments($event)">
-          <option class="default-option text-muted" selected [value]="undefined">{{ 'documents-templates.select-document' | translate }}
-          </option>
-          <option *ngFor="let document of documents" [value]="document.id">{{ document.name }}</option>
+    <div class="col-md-8 mb-5">
+      <select class="form-control" [(ngModel)]="selectedDocument" (ngModelChange)="retrieveDocuments($event)">
+        <option class="default-option text-muted" selected="true" [value]="0">{{ 'documents-templates.select-document' |
+          translate }}
+        </option>
+        <option *ngFor="let document of documents" [value]="document.id">{{ document.name }}</option>
       </select>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-success button-wdth">
-          <i class="flaticon2-pie-chart"></i>
-          <small>{{'documents-templates.test-convert'| translate}}</small>
-        </button>
-      </div>
     </div>
-    <ck-editor *ngIf="selectedDocument != 0" ngDefaultControl="true" (ngModelChange)="changeValue($event)" #editor name="editor" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
-      [config]="{height: 1134, width: 794}" [editor]="Editor" [fullPage]="true" debounce="300">
-    </ck-editor>
-</div> 
+    <div class="col-md-4">
+      <button class="btn btn-success button-wdth" (click)="ckEditorContentToPdf()">
+        <i class="flaticon2-pie-chart"></i>
+        <small>{{'documents-templates.test-convert'| translate}}</small>
+      </button>
+    </div>
+  </div>
+      <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+      [colorClass]="'text-primary'">
+      </app-loading-spinner>
+  <ck-editor *ngIf="isSelectedDocument && !isLoading" #editor name="editor1" [(ngModel)]="editorValue" (ngModelChange)="changeValue($event)" skin="moono-lisa"
+    language="en" [config]="{height: 1134, width: 794}" [fullPage]="true" debounce="300" style="height: 1200px;">
+  </ck-editor>
+</div>
 <div class="modal-footer border-0 pt-0">
-    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
-    <button type="button" class="btn btn-success" (click)="ckEditorContentToPdf()">{{'button.print' | translate}}</button>
-</div> 
+  <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+  <button type="button" class="btn btn-success" (click)="ckEditorContentToPdf()">{{'button.print' | translate}}</button>
+</div>

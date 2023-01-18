@@ -86,6 +86,15 @@
       "Dismissed": "Dismissed",
       "Candidate": "Candidate"
     },
+    "user-state": {
+      "Employee": "Employee",
+      "Candidate": "Candidate"
+    },
+    "citizenship": "Citizenship",
+    "nationality": "Nationality",
+    "level-of-language": "Level of knowledge the matern language",
+    "get-only-candidates": "Only candidates",
+    "get-only-empoyees": "Onlu employees",
     "are-you-sure-you-want-to-dismiss-contractor": "Are you sure you want to dismiss the contractor <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contact-from-contractor": "Are you sure you want to delete the contact <b>{{type}} {{value}}</b> from employee <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contractor": "Are you sure you want to delete the contractor <b>{{name}}</b>?",

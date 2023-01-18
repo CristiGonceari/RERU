@@ -8,7 +8,9 @@ namespace CODWER.RERU.Personal.Application.UserProfiles
     {
         public UserProfileMappingProfile()
         {
-            CreateMap<UserProfile, UserProfileDto>();
+            CreateMap<UserProfile, UserProfileDto>()
+                .ForMember(r => r.UserId, opts => opts.MapFrom(op => op.Id))
+                .ForMember(r => r.ContractorId, opts => opts.MapFrom(op => op.Contractor.Id));
         }
     }
 }

@@ -797,16 +797,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("FinalScorePartialEvaluations")
                         .HasColumnType("text");
 
-                    b.Property<string>("FunctionCounterSigner")
-                        .HasColumnType("text");
-
                     b.Property<string>("FunctionEvaluated")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FunctionEvaluator")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FunctionSubdivision")
                         .HasColumnType("text");
 
                     b.Property<string>("Goal1")
@@ -840,15 +831,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<string>("KPI5")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameSurnameCounterSigner")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameSurnameEvaluated")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameSurnameEvaluator")
                         .HasColumnType("text");
 
                     b.Property<string>("Need1ProfessionalDevelopmentEvaluated")

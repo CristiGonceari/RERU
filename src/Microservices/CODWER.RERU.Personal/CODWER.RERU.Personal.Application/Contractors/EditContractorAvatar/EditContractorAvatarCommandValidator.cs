@@ -14,6 +14,11 @@ namespace CODWER.RERU.Personal.Application.Contractors.EditContractorAvatar
             RuleFor(x => x.Data.ContractorId)
                 .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.CONTRACTOR_NOT_FOUND, 
                     ValidationMessages.NotFound));
+
+            RuleFor(x => x.Data.FileDto)
+                .NotEmpty()
+                .WithErrorCode(ValidationCodes.NULL_OR_EMPTY_INPUT)
+                .WithMessage(ValidationMessages.InvalidInput);
         }
     }
 }
