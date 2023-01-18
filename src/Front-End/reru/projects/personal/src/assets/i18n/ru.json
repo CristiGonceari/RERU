@@ -87,6 +87,15 @@
       "Dismissed": "Уволен",
       "Candidate": "Кандидат"
     },
+    "user-state": {
+      "Emplyee": "Кандидат",
+      "Candidate": "Сотрудник"
+    },
+    "citizenship": "Гражданство",
+    "nationality": "Национальность",
+    "level-of-language": "Уровень знания родного языка",
+    "get-only-candidates": "Только кандидаты",
+    "get-only-empoyees": "Только сотрудники",
     "are-you-sure-you-want-to-dismiss-contractor": "Вы уверены что хотите уволить рабочего <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contact-from-contractor": "Вы уверены что хотите удалить контакт {{type}} {{value}} сотрудника {{name}}",
     "are-you-sure-you-want-to-delete-contractor": "Вы уверены что хотите удалить сотрудника <b>{{name}}</b>?",

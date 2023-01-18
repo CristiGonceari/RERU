@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -27,6 +27,7 @@ import { DataService } from '../data.service';
 })
 export class GeneralComponent implements OnInit {
   @ViewChild('instance', { static: true }) instance: NgbTypeahead;
+  @Output() getAvatar: EventEmitter<void> = new EventEmitter<void>();
   @Input() contractor: Contractor;
   
   originalContractor: Contractor;
@@ -49,7 +50,7 @@ export class GeneralComponent implements OnInit {
   registrationFluxStep;
   registrationFluxStepId;
 
-  sexEnum: SelectItem[] = [{ label: "", value: "" }];
+  sexEnum: SelectItem[] = [{ label: "Select", value: "null" }];
   stateLanguageLevelEnum: SelectItem[] = [{ label: "", value: "" }];
 
   nationalities;
@@ -272,6 +273,7 @@ export class GeneralComponent implements OnInit {
   openUploadProfilePhoto(): void {
     const modalRef = this.modalService.open(AddPhotoModalComponent, { centered: true, backdrop: 'static' });
     modalRef.componentInstance.contractorId = this.originalContractor.id;
+    modalRef.result.then(() => this.getAvatar.emit(), () => { });
   }
 
   checkFile(event) {

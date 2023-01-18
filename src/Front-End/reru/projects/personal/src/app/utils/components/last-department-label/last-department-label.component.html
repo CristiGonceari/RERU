@@ -1,2 +1,8 @@
-<span *ngIf="item?.employerState === employerState.IN_SERVICE">{{item?.departmentName}}</span>
-<span *ngIf="item?.employerState === employerState.DISMISSED"><span class="last-position-label">{{'personal.last-department' | translate}}:</span><br>{{item?.departmentName}}</span>
+<span class="pointer" *ngIf="item?.employerState === employerState.IN_SERVICE" 
+[routerLink]="['../../department/', item.departmentId]" >
+    {{ item?.departmentName || '-'}}
+</span>
+<span class="pointer" *ngIf="item?.employerState === employerState.DISMISSED" [routerLink]="['../../department/', item.departmentId]">
+    <span class="last-position-label ">{{'personal.last-department' | translate}}:</span><br>
+    {{item?.departmentName || '-'}}
+</span>

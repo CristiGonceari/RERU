@@ -14,7 +14,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { TransferNewPositionModalComponent } from '../../../utils/modals/transfer-new-position-modal/transfer-new-position-modal.component';
 import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-position-modal/add-old-position-modal.component';
 import { PagedSummary } from '../../../utils/models/paged-summary.model';
-
+import { UserStatus } from '../../../utils/models/user-status.enum';
 @Component({
   selector: 'app-contractors-table',
   templateUrl: './contractors-table.component.html',
@@ -22,11 +22,18 @@ import { PagedSummary } from '../../../utils/models/paged-summary.model';
 })
 export class ContractorsTableComponent implements OnInit {
   contractors: Contractor[];
-  pagedSummary: PagedSummary = new PagedSummary();
+  pagedSummary: PagedSummary = {
+    totalCount: 0,
+    pageSize: 0,
+    currentPage: 1,
+    totalPages: 1
+  };
+
   isLoading: boolean = true;
   employerStates: number;
   keyword: string;
   filters: any = {};
+  userStatus: number;
   constructor(private contractorService: ContractorService,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
@@ -41,7 +48,8 @@ export class ContractorsTableComponent implements OnInit {
     data = ObjectUtil.preParseObject({
       ...data,
       page: data.page || this.pagedSummary.currentPage,
-      employerStates: data.employerStates || this.employerStates || 1,
+      userStatus: data.userStatus || this.userStatus || UserStatus.All,
+      employerStates: data.employerStates || this.employerStates || 0,
       keyword: data.keyword || this.keyword,
       itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize,
       ...this.filters
@@ -197,5 +205,4 @@ export class ContractorsTableComponent implements OnInit {
   setFilter(field: string, value): void {
     this.filters[field] = value;
   }
-
 }
