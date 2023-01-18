@@ -10,7 +10,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { ImportDepartmentsModalComponent } from '../../../utils/modals/import-departments-modal/import-departments-modal.component';
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
-import { I18nService } from '@erp/shared';
+import { I18nService, PrintModalComponent } from '@erp/shared';
 
 @Component({
   selector: 'app-department-table',
@@ -29,6 +29,10 @@ export class DepartmentTableComponent implements OnInit {
   
   title: string;
   description: string
+  headersToPrint: any[] = [];
+  filters: any = {};
+  printTranslates: string[];
+  downloadFile: boolean = false;
 
   constructor(private departmentService: DepartmentService,
     private modalService: NgbModal,
@@ -92,6 +96,56 @@ export class DepartmentTableComponent implements OnInit {
      }, () => {
 			this.isLoading = false;
 		})
+	}
+
+  getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['colaboratorId', 'name'];
+		for (let i = 0; i < headersHtml.length - 1; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+		}
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			...this.filters
+		};
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+  translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i = 0; i < this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+  printTable(data): void {
+		this.downloadFile = true;
+		let fileName: string;
+		this.departmentService.print(data).subscribe(response => {
+			if (response) {
+				fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0];
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], data.tableName, { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 
   // openConfirmationDeleteModal(department: DepartmentModel): void {
