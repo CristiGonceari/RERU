@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentD
             var summary = new DepartmentRoleContentDto();
 
             var template = await _mediator.Send(new GetDepartmentRoleContentTemplateQuery {DepartmentId = request.DepartmentId});
-            var actual = await _mediator.Send(new GetDepartmentRoleContentCalculatedQuery { Id = request.DepartmentId});
+            var actual = await _mediator.Send(new GetDepartmentRoleContentCalculatedQuery { Id = request.DepartmentId, Type = 1});
 
             foreach (var templateElement in template.Roles)
             {
