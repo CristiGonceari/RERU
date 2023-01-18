@@ -491,7 +491,7 @@
     "actions": "Acțiuni"
   },
   "entity": {
-    "colaborator-id": "Cod",
+    "colaborator-id": "Cod colaborator",
     "personal": {
       "single": "Angajat",
       "name": "Nume (Familia)",

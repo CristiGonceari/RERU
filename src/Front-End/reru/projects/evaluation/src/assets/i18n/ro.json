@@ -791,7 +791,7 @@
     "attempts": "Încercări",
     "search-event": "Căutați după eveniment",
     "search-location": "Căutați după locație",
-    "search-colaborator-id": "Căutați după cod",
+    "search-colaborator-id": "Căutați după cod colaborator departament",
     "search-from": "Căutați din data",
     "search-to": "Căutați până la data",
     "import-users": "Import masiv",
@@ -1012,7 +1012,7 @@
     "03002105": "Șablon de document inexistent"
   },
   "login": {
-    "colaborator-id": "Colaborator ID",
+    "colaborator-id": "Cod departament",
     "welcome": "Bine ați venit la Codwer Testing",
     "first-name": "Prenume",
     "last-name": "Nume",
