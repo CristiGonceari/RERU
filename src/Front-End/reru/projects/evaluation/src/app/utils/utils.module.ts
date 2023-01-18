@@ -17,7 +17,7 @@ import { AttachUserModalComponent } from './components/attach-user-modal/attach-
 import { SearchStatusComponent } from './components/attach-user-modal/search-status/search-status.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-modal/convert-pdf-document-modal.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CKEditorModule as NewCKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GenerateDocumentModalComponent } from './modals/generate-document-modal/generate-document-modal.component';
 import { AddTestHistoryModalComponent } from './modals/add-test-history-modal/add-test-history-modal.component';
 import { ViewUsersModalComponent } from './modals/view-users-modal/view-users-modal.component';
@@ -28,6 +28,8 @@ import { ReviewSolicitedVacandPositionModalComponent } from './modals/review-sol
 import { SearchDepartmentComponent } from './components/search-department/search-department.component';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { ViewPositionDiagramModalComponent } from './modals/view-position-diagram-modal/view-position-diagram-modal.component';
+import { CKEditorModule as OldCKEditorModule } from 'ngx-ckeditor';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { ViewPositionDiagramModalComponent } from './modals/view-position-diagra
     ReactiveFormsModule,
     NgxDropzoneModule,
     SharedModule,
-    CKEditorModule,
+    OldCKEditorModule,
+    NewCKEditorModule,
     OwlDateTimeModule,
     OwlMomentDateTimeModule
   ],

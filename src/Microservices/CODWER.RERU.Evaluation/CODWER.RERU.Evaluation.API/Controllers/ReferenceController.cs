@@ -8,6 +8,7 @@ using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.EnumConverters;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.References.GetAddTestProcesses;
 using CODWER.RERU.Evaluation.Application.References.GetDepartmentsValue;
@@ -187,7 +188,9 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var items = EnumConverter<FileTypeEnum>.SelectValues;
 
-            return items;
+            var evaluationDocuments = items.Where(x => x.Label.Contains("test")).ToList();
+
+            return evaluationDocuments;
         }
 
         [HttpGet("medical-enum/select-values")]

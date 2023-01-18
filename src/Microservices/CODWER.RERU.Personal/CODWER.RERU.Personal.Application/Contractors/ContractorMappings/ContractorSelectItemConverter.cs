@@ -10,8 +10,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
         {
             return new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("department", new DepartmentNameConverter().Convert(sourceMember, context)),
-                new KeyValuePair<string, string>("position", new RoleConverter().Convert(sourceMember,context))
+                new("department", new DepartmentNameConverter().Convert(sourceMember, context)),
+                new("position", new RoleConverter().Convert(sourceMember,context))
             };
         }
     }

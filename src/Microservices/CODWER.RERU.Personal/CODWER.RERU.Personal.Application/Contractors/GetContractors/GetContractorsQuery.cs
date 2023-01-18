@@ -3,6 +3,7 @@ using CODWER.RERU.Personal.Application.Enums;
 using CODWER.RERU.Personal.Application.Permissions;
 using RERU.Data.Entities.PersonalEntities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.Contractors;
+using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.Application.Attributes;
 using MediatR;
@@ -32,6 +33,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
         public string Keyword { get; set; }
         public EmployersStateEnum EmployerStates { get; set; }
+        public UserStatusEnum? UserStatus { get; set; }
 
         public DateTime? EmploymentDateFrom { get; set; }
         public DateTime? EmploymentDateTo { get; set; }

@@ -88,6 +88,15 @@
       "Dismissed": "Eliberat",
       "Candidate": "Candidat"
     },
+     "user-state": {
+      "Emplyee": "Angajat",
+      "Candidate": "Candidat"
+    },
+    "citizenship": "Cetăţenie",
+    "nationality": "Naționalitate",
+    "level-of-language": "Nivelul de cunoaștere a limbii materne",
+    "get-only-candidates": "Doar candidați",
+    "get-only-empoyees": "Doar angajați",
     "are-you-sure-you-want-to-dismiss-contractor": "Ești sigur că vrei să eliberezi din funcție angajatul <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contact-from-contractor": "Ești sigur că vrei să ștergi contactul <b>{{type}} {{value}}</b> de la angajatul <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contractor": "Ești sigur că vrei să ștergi angajatul <b>{{name}}</b>?",

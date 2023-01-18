@@ -11,7 +11,7 @@ export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: E
     return fb.group({
       id: fb.control({value: data?.id, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
       subdivisionName: fb.control({value: data?.subdivisionName, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^[A-Za-z0-9- ]+$/)]),
-      evaluatedName: fb.control({value: data?.evaluatedName, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator }, [Validators.required]),
+      evaluatedName: fb.control({value: data?.evaluatedName, disabled: true }, [Validators.required]),
       functionSubdivision: fb.control({value: data?.functionSubdivision, disabled: true }, [Validators.required, Validators.pattern(/^[A-Za-z- ]+$/)]),
       subdivisionEvaluated: fb.control({value: data?.subdivisionEvaluated, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/[A-Za-z- ]*/)]),
       specialOrMilitaryGrade: fb.control({value: data?.specialOrMilitaryGrade, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, [Validators.required, Validators.pattern(/^\d\d?$/i)]),

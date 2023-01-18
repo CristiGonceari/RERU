@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Revizuire Evaluare de performanță",
+                Subject = "Finalizare Evaluare de performanță",
                 To = evaluated.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()

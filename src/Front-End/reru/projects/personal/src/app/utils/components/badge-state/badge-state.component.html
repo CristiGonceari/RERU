@@ -1,13 +1,13 @@
 <div *ngIf="state" class="mt-2">
     <ng-container [ngSwitch]="state">
-        <span *ngSwitchCase="'InService'" class="label label-light-success label-inline font-weight-bold label-xl w-100px">
-            {{'personal.state.'+state | translate}}
-        </span>
-        <span *ngSwitchCase="'Dismissed'" class="label label-light-danger label-inline font-weight-bold label-xl w-100px">
-            {{'personal.state.'+state | translate}}
+        <span *ngSwitchCase="'Employee'" class="label label-light-success label-inline font-weight-bold label-xl w-100px">
+            {{'personal.user-state.'+state | translate}}
         </span>
         <span *ngSwitchCase="'Candidate'" class="label label-light-warning label-inline font-weight-bold label-xl w-100px">
-            {{'personal.state.'+state | translate}}
+            {{'personal.user-state.'+state | translate}}
         </span>
+        <!-- <span *ngSwitchCase="'Candidate'" class="label label-light-warning label-inline font-weight-bold label-xl w-100px">
+            {{'personal.state.'+state | translate}}
+        </span> -->
     </ng-container>
 </div>

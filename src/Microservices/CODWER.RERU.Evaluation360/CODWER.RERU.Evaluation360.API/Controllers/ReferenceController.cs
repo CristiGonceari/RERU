@@ -29,9 +29,9 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             return await Sender.Send(query);
         }
         [HttpGet("user-status/select-items")]
-        public Task<List<SelectItem>> GetUserEnum()
+        public Task<UserStatusEnum> GetUserEnum()
         {
-            var items = EnumConverter<UserStatusEnum>.SelectValues;
+            var items = UserStatusEnum.Employee;
 
             return Task.FromResult(items);
         }

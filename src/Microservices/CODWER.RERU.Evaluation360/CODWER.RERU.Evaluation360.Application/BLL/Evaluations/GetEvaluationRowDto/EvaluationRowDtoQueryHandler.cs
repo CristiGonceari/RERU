@@ -44,8 +44,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
 
             CalculatePoints(evaluations);
 
-            await _dbContext.SaveChangesAsync();
-
             if (!string.IsNullOrWhiteSpace(request.EvaluatedName))
             {
                 var toSearch = request.EvaluatedName.Split(' ').ToList();
@@ -103,7 +101,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
             }
         
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Evaluation, EvaluationRowDto>(evaluations, request);
-            
+
+            await _dbContext.SaveChangesAsync();
+
             SetPermissions(paginatedModel, currentUserId);
 
             return paginatedModel;

@@ -7,11 +7,12 @@ import { ObjectUtil } from '../../util/object.util';
 import { saveAs } from 'file-saver';
 import { DocumentTemplate } from '../../models/document-template/document-templates.model';
 import { TestService } from '../../services/test/test.service';
-
+import { CKEditorModule } from 'ngx-ckeditor';
+import { map } from 'rxjs/operators'
 @Component({
   selector: 'app-generate-document-modal',
   templateUrl: './generate-document-modal.component.html',
-  styleUrls: ['./generate-document-modal.component.scss']
+  styleUrls: ['./generate-document-modal.component.scss'],
 })
 export class GenerateDocumentModalComponent implements OnInit {
 
@@ -22,6 +23,7 @@ export class GenerateDocumentModalComponent implements OnInit {
   @Output() editedCkeditorValue :EventEmitter<string> = new EventEmitter<string>();
   
   isLoading: boolean = true;
+  isSelectedDocument: boolean = false;
   documents: DocumentTemplate[] = [];
 
   pagination: PaginationModel = new PaginationModel();
@@ -51,8 +53,18 @@ export class GenerateDocumentModalComponent implements OnInit {
   }
 
   retrieveDocuments(evt): void {
+    this.isLoading = true;
+    this.selectedDocument = evt;
     
-    if(this.fileType == 1){
+    if(evt == 0) {
+      this.isSelectedDocument = false;
+      return;
+    }
+    else {
+    this.isSelectedDocument = true;
+    }
+
+    if(this.fileType == 2){
       const request= ObjectUtil.preParseObject({
         testTemplateId: this.id,
         documentTemplateId: this.selectedDocument
@@ -88,6 +100,10 @@ export class GenerateDocumentModalComponent implements OnInit {
     })
     this.documentService.list(request).subscribe(response => {
       if (response.success) {
+        let mappedItems = response.data.items.map((item) => {
+          return {Label: item.name, Value: item.id}
+        })
+
         this.documents = response.data.items || [];
         this.pagination = response.data.pagedSummary;
         this.isLoading = false;

@@ -36,6 +36,9 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
         {
             var contractor = await _appDbContext.Contractors
                 .Include(x=>x.UserProfile)
+                    .ThenInclude(x => x.Department)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.Role)
                 .Include(x=>x.Bulletin)
                 .Include(x => x.Studies)
                 .Include(r => r.Positions)
@@ -49,7 +52,13 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                 .Include(x => x.Avatar)
                 .Select(c => new Contractor
                 {
-                    UserProfile = c.UserProfile,
+                    UserProfile = new UserProfile
+                    {
+                        Department = c.UserProfile.Department,
+                        Role = c.UserProfile.Role,
+                        DepartmentColaboratorId = c.UserProfile.DepartmentColaboratorId,
+                        RoleColaboratorId = c.UserProfile.RoleColaboratorId
+                    },
                     Id = c.Id,
                     Code = c.Code,
                     FirstName = c.FirstName,
@@ -77,26 +86,17 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     KinshipRelationCriminalData = c.KinshipRelationCriminalData,
                     KinshipRelationWithUserProfiles = c.KinshipRelationWithUserProfiles,
                     MilitaryObligations = c.MilitaryObligations,
-                    Autobiography = c.Autobiography
+                    Autobiography = c.Autobiography,
                 })
                 .FirstAsync(rt => rt.Id == request.Id);
 
 
             var mappedContractor = _mapper.Map<ContractorDetailsDto>(contractor);
 
-            //mappedContractor.HasUserProfile = await GetUserProfile(contractor.UserProfile);
             mappedContractor.HasEmploymentRequest = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.request);
             mappedContractor.HasIdentityDocuments = await _personalStorageClient.HasFile(request.Id, FileTypeEnum.identityfiles);
 
             return mappedContractor;
         }
-
-        private async Task<bool> GetUserProfile(UserProfile userProfile)
-        {
-            //return userProfile != null && await _coreClient.ExistUserInCore(userProfile.UserId);
-            return true;
-        }
-
-        
     }
 }
