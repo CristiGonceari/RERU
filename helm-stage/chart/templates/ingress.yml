@@ -7,7 +7,7 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-    ingress.kubernetes.io/rewrite-target: "/"
+    ingress.kubernetes.io/rewrite-target: "https://reru.mai.gov.md/"
 spec:
   rules:
   - host: {{ .Values.reru_public_gateway.ingress.host }}
