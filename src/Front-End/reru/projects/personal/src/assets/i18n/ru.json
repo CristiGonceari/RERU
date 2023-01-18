@@ -488,7 +488,7 @@
     "actions": "Действия"
   },
   "entity": {
-    "colaborator-id": "Код",
+    "colaborator-id": "Код colaborator",
     "personal": {
       "single": "Сотрудник",
       "name": "Имя",

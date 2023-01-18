@@ -796,7 +796,7 @@
     "attempts": "Attempts",
     "search-event": "Search by event",
     "search-location": "Search by location",
-    "search-colaborator-id": "Search by code",
+    "search-colaborator-id": "Search by colaborator departamanet code",
     "search-from": "Search from date",
     "search-to": "Search to date",
     "import-users": "Bulk import users",
@@ -1016,7 +1016,7 @@
     "03002105": "Invalid document template"
   },
   "login": {
-    "colaborator-id": "Collaborator ID",
+    "colaborator-id": "Department code",
     "welcome": "Welcome to Codwer Testing",
     "first-name": "First name",
     "last-name": "Last name",
