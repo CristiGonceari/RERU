@@ -49,7 +49,7 @@ export class OrganigramService extends AbstractService {
     return this.http.delete(`${this.baseUrl}/${this.relationRoute}/${id}`);
   }
 
-  excellImport(data, id): Observable<any> {
+  excelImport(data, id): Observable<any> {
     return this.http.put(`${this.baseUrl}/${this.relationRoute}/excel-import/${id}`, data, {
 			responseType: 'blob',
 			observe: 'response',

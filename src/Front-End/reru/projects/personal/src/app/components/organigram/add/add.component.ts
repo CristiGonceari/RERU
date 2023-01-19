@@ -102,7 +102,7 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
       const form = new FormData();
       form.append('File', this.uploadForm.value.file);
 
-      this.organigramService.excellImport(form, this.organigramForm.value.organizationalChartId).subscribe(res => {
+      this.organigramService.excelImport(form, this.organigramForm.value.organizationalChartId).subscribe(res => {
 
         const fileName = res.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
         const blob = new Blob([res.body], { type: res.body.type });

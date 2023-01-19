@@ -115,6 +115,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             return result;
         }
+
         private async Task<int> AddDepartmentRoleRelation(int parentDepartmentId, int childDepartmentId, int organizationalChartId) 
         { 
             
