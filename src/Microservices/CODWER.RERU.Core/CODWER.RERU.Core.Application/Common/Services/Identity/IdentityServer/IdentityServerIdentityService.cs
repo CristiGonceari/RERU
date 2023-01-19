@@ -78,7 +78,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             _services,
             _logger);
 
-        public async Task<string> Create(UserProfile userProfile, bool notify)
+        public async Task<string> Create(UserProfile userProfile, bool notify, string password)
         {
             var identityUser = new ERPIdentityUser()
             {
@@ -87,7 +87,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 //UserName = RemoveDiacritics(userProfile.FullName.Replace(" ", string.Empty).ToLower())
             };
 
-            var password = _passwordGenerator.Generate();
+            //var password = _passwordGenerator.Generate();
             var response = await _userManager.CreateAsync(identityUser, password);
 
             if (response.Succeeded)
@@ -101,9 +101,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                         HtmlTemplateAddress = "Templates/UserRegister.html",
                         ReplacedValues = new Dictionary<string, string>()
                         {
-                            { "{FirstName}", userProfile.FullName },
-                            { "{Password}", password },
-                            { "{Login}", userProfile.Email }
+                            { "{FirstName}", userProfile.FullName }
                         }
                     });
                 }
@@ -178,28 +176,27 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
             }
         }
 
-        public async Task ResetPassword(string id)
+        public async Task ResetPassword(string id, string password, bool sendEmail = true)
         {
             var user = await _userManager.FindByIdAsync(id);
 
             if (user != null)
             {
-                var password = _passwordGenerator.Generate();
+                //var password = userPassword ?? _passwordGenerator.Generate();
 
                 await _userManager.RemovePasswordAsync(user);
                 await _userManager.AddPasswordAsync(user, password);
 
-                await _notificationService.PutEmailInQueue(new QueuedEmailData
+                if (sendEmail)
                 {
-                    Subject = "Reset Password",
-                    To = user.Email,
-                    HtmlTemplateAddress = "Templates/ResetPassword.html",
-                    ReplacedValues = new Dictionary<string, string>()
+                    await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        { "{Password}", password },
-                        { "{Login}", user.Email }
-                    }
-                });
+                        Subject = "Reset Password",
+                        To = user.Email,
+                        HtmlTemplateAddress = "Templates/ResetPassword.html",
+                        ReplacedValues = new Dictionary<string, string>()
+                    });
+                }
             }
         }
 

@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using CODWER.RERU.Core.Application.Common.Handlers;
+﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
+using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
-using CVU.ERP.ServiceProvider.Clients;
 using MediatR;
 using RERU.Data.Entities;
 using RERU.Data.Entities.PersonalEntities;
@@ -20,20 +19,16 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
     {
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<InregistrateUserCommandHandler> _loggerService;
-        private readonly IEvaluationClient _evaluationClient;
-        private readonly IMapper _mapper;
+        private readonly IPasswordGenerator _passwordGenerator;
 
         public InregistrateUserCommandHandler(ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices,
-            ILoggerService<InregistrateUserCommandHandler> loggerService,
-            IEvaluationClient evaluationClient,
-            IMapper mapper)
+            ILoggerService<InregistrateUserCommandHandler> loggerService, IPasswordGenerator passwordGenerator)
             : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
-            _evaluationClient = evaluationClient;
-            _mapper = mapper;
+            _passwordGenerator = passwordGenerator;
         }
 
         public async Task<int> Handle(InregistrateUserCommand request, CancellationToken cancellationToken)
@@ -53,11 +48,12 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 
             var userProfile = Mapper.Map<UserProfile>(newUser);
             userProfile.Contractor = new Contractor() { UserProfile = userProfile };
-            
 
             var defaultRoles = AppDbContext.Modules
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
+            
+            var password = _passwordGenerator.Generate();
 
             foreach (var role in defaultRoles)
             {
@@ -69,7 +65,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 
             foreach (var identityService in _identityServices)
             {
-                var identifier = await identityService.Create(userProfile, request.EmailNotification);
+                var identifier = await identityService.Create(userProfile, request.EmailNotification, password);
 
                 if (!string.IsNullOrEmpty(identifier))
                 {
