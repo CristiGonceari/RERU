@@ -90,6 +90,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 		},
 		{
 			type: SidebarItemType.ITEM,
+			url: '/employee-functions',
+			name: '',
+			// permission: 'P02001601',
+			icon: `<span class="svg-icon svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Home/Commode1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				<rect x="0" y="0" width="24" height="24"/>
+				<path d="M5.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L5.5,11 C4.67157288,11 4,10.3284271 4,9.5 L4,5.5 C4,4.67157288 4.67157288,4 5.5,4 Z M11,6 C10.4477153,6 10,6.44771525 10,7 C10,7.55228475 10.4477153,8 11,8 L13,8 C13.5522847,8 14,7.55228475 14,7 C14,6.44771525 13.5522847,6 13,6 L11,6 Z" fill="#000000" opacity="0.3"/>
+				<path d="M5.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M11,15 C10.4477153,15 10,15.4477153 10,16 C10,16.5522847 10.4477153,17 11,17 L13,17 C13.5522847,17 14,16.5522847 14,16 C14,15.4477153 13.5522847,15 13,15 L11,15 Z" fill="#000000"/>
+			</g>
+		</svg><!--end::Svg Icon--></span>`,
+		},
+		{
+			type: SidebarItemType.ITEM,
 			url: '/organigram',
 			name: '',
 			// permission: 'P02002101',
@@ -246,6 +259,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.translate.get('sidebar.personal'),
 			this.translate.get('sidebar.departments'),
 			this.translate.get('sidebar.roles'),
+			this.translate.get('sidebar.employee-functions'),
 			this.translate.get('sidebar.organization-chart'),
 			// this.translate.get('sidebar.reports'),
 			// this.translate.get('sidebar.time-sheet-table'),
@@ -263,6 +277,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 				personal,
 				departments,
 				roles,
+				employeeFunctions,
 				organizationChart,
 				// reports,
 				// pontajdata,
@@ -279,15 +294,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.sidebarItems[3].name = personal;
 				this.sidebarItems[4].name = departments;
 				this.sidebarItems[5].name = roles;
-				this.sidebarItems[6].name = organizationChart;
+				this.sidebarItems[6].name = employeeFunctions;
+				this.sidebarItems[7].name = organizationChart;
 				// this.sidebarItems[7].name = reports;
 				// this.sidebarItems[8].name = pontajdata;
 				// this.sidebarItems[9].name = configuration;
 				// this.sidebarItems[10].name = documentsTemplates;
 				// this.sidebarItems[11].name = nomenclatures;
 				// this.sidebarItems[12].name = configurations;
-				this.sidebarItems[7].name = help;
-				this.sidebarItems[8].name = faq;
+				this.sidebarItems[8].name = help;
+				this.sidebarItems[9].name = faq;
 			}
 		);
 	}

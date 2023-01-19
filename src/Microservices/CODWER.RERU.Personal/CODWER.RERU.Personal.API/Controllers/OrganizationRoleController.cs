@@ -1,17 +1,14 @@
-﻿using System.Threading.Tasks;
-using CODWER.RERU.Personal.API.Config;
-using CODWER.RERU.Personal.Application.OrganizationRoles.AddOrganizationRole;
+﻿using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRole;
 using CODWER.RERU.Personal.Application.OrganizationRoles.GetOrganizationRoles;
 using CODWER.RERU.Personal.Application.OrganizationRoles.ImportOrganizationRoles;
-using CODWER.RERU.Personal.Application.OrganizationRoles.RemoveOrganizationRole;
-using CODWER.RERU.Personal.Application.OrganizationRoles.UpdateOrganizationRole;
+using CODWER.RERU.Personal.Application.OrganizationRoles.PrintOrganizationRoles;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CODWER.RERU.Personal.DataTransferObjects.OrganizationRoles;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.API.Controllers
 {
@@ -68,6 +65,17 @@ namespace CODWER.RERU.Personal.API.Controllers
             var command = new ImportRolesCommand { Data = dto };
 
             var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintRoles([FromBody] PrintOrganizationRolesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

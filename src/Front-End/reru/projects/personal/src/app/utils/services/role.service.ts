@@ -40,4 +40,11 @@ export class RoleService extends AbstractService {
 			observe: 'response',
 		});
 	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

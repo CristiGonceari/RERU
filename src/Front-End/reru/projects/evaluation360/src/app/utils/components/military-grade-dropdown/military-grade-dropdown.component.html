@@ -1,0 +1,32 @@
+<div *ngIf="formGroup">
+    <div [formGroup]="formGroup">
+        <ng-template #rt let-i="index" let-r="result" let-t="term" class="d-flex flex-column">
+            <div class="d-flex flex-column">
+                {{ r | militaryGrade: militaryGradesTranslation : militaryGradesTitles }}
+                <ngb-highlight [result]="r.label" [term]="t"></ngb-highlight>
+            </div>
+        </ng-template>
+        
+        <input id="typeahead-template"
+                #instance="ngbTypeahead"
+                (focus)="focus$.next($event.target.value)" 
+                (click)="click$.next($event.target.value)"
+                [placeholder]="'button.select' | translate"
+                [disabled]="isDisabled"
+                type="text" 
+                class="form-control" 
+                [editable]="false"
+                [ngbTypeahead]="search"
+                [ngClass]="{
+                    'is-valid': isValid(formGroup, 'specialOrMilitaryGrade'),
+                    'is-invalid': isInvalidPattern(formGroup, 'specialOrMilitaryGrade') || isInvalidRequired(formGroup, 'specialOrMilitaryGrade')
+                  }"
+                [(ngModel)]="selectedMilitaryGrade"
+                [ngModelOptions]="{standalone: true}"
+                (selectItem)="setMilitaryGrade($event)"
+                [resultTemplate]="rt"
+                [inputFormatter]="formatter" />
+        <div *ngIf="isInvalidPattern(formGroup, 'specialOrMilitaryGrade') || isInvalidRequired(formGroup, 'specialOrMilitaryGrade')" 
+             class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
+    </div>
+</div>

@@ -21,6 +21,7 @@
     "departments": "Departamente",
     "departments-description": "Departamente, functii, functii actuale, rezumat",
     "roles": "Roluri",
+    "employee-functions": "Funcțiile angajaților",
     "roles-description": "Roluri, liste, roluri coduri",
     "positions": "Funcții",
     "vacations": "Concedii",
@@ -313,6 +314,22 @@
     "bulk-import-roles-succes": "Rolurile au fost adaugate cu succes!",
     "bulk-import-roles-error": "Rolurile nu au fost adaugate cu succes!"
   },
+  "employee-functions": {
+    "title": "Funcțiile angajaților",
+    "title-description-list": "Lista funcții angajați",
+    "add-employee-function": "Adăugare funcție",
+    "adding-employee-function": "Adaugă funcție",
+    "new-employee-function": "Funcție noua",
+    "type-employee-function-data": "Introdu datele funcției",
+    "employee-function-details": "Detaliile funcției",
+    "employee-function-name": "Numele funcției",
+    "type-new-employee-function-name": "Introdu numele funcției noi",
+    "type-whole-name": "Introdu numele întreg",
+    "type-code": "Introdu un cod",
+    "edit-employee-function-details": "Editează detaliile funcției",
+    "bulk-import-employee-functions-succes": "Funcțiile angajaților au fost adaugate cu succes!",
+    "bulk-import-employee-functions-error": "Funcțiile angajaților nu au fost adaugate cu succes!"
+  },
   "positions": {
     "title": "Funcții",
     "title-description-list": "Lista funcțiilor",
@@ -491,7 +508,7 @@
     "actions": "Acțiuni"
   },
   "entity": {
-    "colaborator-id": "Cod",
+    "colaborator-id": "Cod colaborator",
     "personal": {
       "single": "Angajat",
       "name": "Nume (Familia)",
@@ -547,6 +564,14 @@
       "code": "Cod",
       "short-code": "Cod scurt",
       "no": "Nr"
+    },
+    "employee-functions": {
+      "title": "Funcția",
+      "name": "Nume",
+      "file": "Fișier",
+      "code": "Cod",
+      "no": "Nu",
+      "type": "Tipul"
     },
     "position": {
       "title": "Funcția",

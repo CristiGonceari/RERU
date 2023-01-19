@@ -3,6 +3,7 @@
     public enum ImportTypeEnum
     {
         ImportDepartments = 1,
-        ImportRoles = 2
+        ImportRoles = 2,
+        ImportUsers = 3,
     }
 }

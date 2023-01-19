@@ -41,8 +41,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             for (var i = 1; i <= _totalRows; i++)
             {
                 if (!string.IsNullOrEmpty(_workSheet.Cells[i, 1]?.Value?.ToString() ?? string.Empty) && 
-                    !string.IsNullOrEmpty(_workSheet.Cells[i, 2]?.Value?.ToString() ?? string.Empty)
-                    )
+                    !string.IsNullOrEmpty(_workSheet.Cells[i, 2]?.Value?.ToString() ?? string.Empty))
                 {
                     await AddEditData(type, i);
                 }
@@ -75,7 +74,6 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
             else
             {
                 _departments = _appDbContext.Departments.Select(x => new Department { ColaboratorId = x.ColaboratorId, Name = x.Name }).ToList();
-
             }
         }
 
@@ -85,12 +83,10 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
 
             if (type == ImportTypeEnum.ImportRoles)
             {
-
                 await AddEditRole(_workSheet, colaboratorId, i);
             }
             else
             {
-
                 await AddEditDepartment(_workSheet, colaboratorId, i);
             }
         }

@@ -794,7 +794,7 @@
     "attempts": "Попытки",
     "search-event": "Поиск по событию",
     "search-location": "Поиск по локации",
-    "search-colaborator-id": "Поиск по коду",
+    "search-colaborator-id": "Поиск по коду colaborator отделение",
     "search-from": "Поиск с даты",
     "search-to": "Поиск на дату",
     "import-users": "Массовый импорт",
@@ -1015,7 +1015,7 @@
     "03002105": "Неверный шаблон документа"
   },
   "login": {
-    "colaborator-id": "ID Cоавтора",
+    "colaborator-id": "Kод отдела",
     "welcome": "Добро пожаловать в Codwer Testing",
     "first-name": "Имя",
     "last-name": "Фамилия",

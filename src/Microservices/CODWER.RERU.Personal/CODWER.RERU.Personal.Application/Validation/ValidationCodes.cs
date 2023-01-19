@@ -87,6 +87,9 @@
         //organization roles
         public static string ORGANIZATION_ROLE_NOT_FOUND = "02002501";
 
+        //employee functions
+        public static string EMPLOYEE_FUNCTION_NOT_NOUD = "02002501";
+
         //organization roles relations
         public static string ORGANIZATION_ROLE_RELATION_NOT_FOUND = "02002601";
 

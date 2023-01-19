@@ -21,6 +21,7 @@
     "departments": "Departments",
     "departments-description": "Departments, roles, actual positions, summary",
     "roles": "Roles",
+    "employee-functions": "Employee functions",
     "roles-description": "Roles, lists, role codes",
     "vacations": "Vacations",
     "organization-chart": "Organigrams",
@@ -312,6 +313,22 @@
     "bulk-import-roles-succes": "Roles have been successfully added!",
     "bulk-import-roles-error": "Roles were not added successfully!"
   },
+  "employee-functions": {
+    "title": "Employee functions",
+    "title-description-list": "Employee function's list",
+    "add-employee-function": "Add employee function",
+    "adding-employee-function": "Adding employee function",
+    "new-employee-function": "New employee function",
+    "type-employee-function-data": "Insert employee function data",
+    "employee-function-details": "Employee function details",
+    "employee-function-name": "Employee function name",
+    "type-new-employee-function-name": "Insert new Employee function name",
+    "type-whole-name": "Insert the whole name",
+    "type-code": "Insert the code",
+    "edit-employee-function-details": "Edit Employee function details",
+    "bulk-import-employee-functions-succes": "Employee function have been successfully added!",
+    "bulk-import-employee-functions-error": "Employee function were not added successfully!"
+  },
   "positions": {
     "title": "Positions",
     "title-description-list": "Positions list",
@@ -490,7 +507,7 @@
     "actions": "Actions"
   },
   "entity": {
-    "colaborator-id": "Code",
+    "colaborator-id": "Colaborator code",
     "personal": {
       "single": "Employee",
       "name": "Name",
@@ -546,6 +563,14 @@
       "code": "Code",
       "short-code": "Short code",
       "no": "No"
+    },
+    "employee-functions": {
+      "title": "Function",
+      "name": "Name",
+      "file": "File",
+      "code": "Code",
+      "no": "No",
+      "type": "Type"
     },
     "contractor-type": {
       "title": "Contractor type",
