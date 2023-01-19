@@ -1,12 +1,12 @@
 using CODWER.RERU.Evaluation360.API.Config;
-using Microsoft.AspNetCore.Mvc;
 using CODWER.RERU.Evaluation360.Application.References.GetDepartmentsValue;
 using CODWER.RERU.Evaluation360.Application.References.GetRolesValue;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.DataTransferObjects.Users;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CVU.ERP.Common.EnumConverters;
 using System.Linq;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
@@ -33,27 +33,9 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task<SelectItem> GetUserEnum()
         {
             var items = EnumConverter<UserStatusEnum>.SelectValues;
+            var filteredList = items.Where(x => x.Label == UserStatusEnum.Employee.ToString());
 
-            return items;
+            return (SelectItem)filteredList;
         }
-
-        public static class EnumConverter<TEnum> where TEnum : Enum
-        {
-            public static SelectItem SelectValues
-            {
-                get
-                {
-                    return Enum.GetValues(typeof(TEnum)).OfType<TEnum>().ToList()
-                        .Select(item => new SelectItem
-                            {
-                                Label = item.ToString(),
-                                Value = Convert.ToInt32(item).ToString()
-                            })
-                        .OrderBy(i => i.Label)
-                        .Where(i => i.Label == UserStatusEnum.Employee.ToString())
-                        .FirstOrDefault();
-                }
-            }
-        }
-    }
+     }
 }
