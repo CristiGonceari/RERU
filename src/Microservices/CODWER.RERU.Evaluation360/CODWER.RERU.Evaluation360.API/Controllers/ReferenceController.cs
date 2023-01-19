@@ -5,8 +5,9 @@ using CODWER.RERU.Evaluation360.Application.References.GetRolesValue;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
-using CVU.ERP.Common.EnumConverters;
 using CVU.ERP.Common.DataTransferObjects.Users;
+using System;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -29,11 +30,30 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             return await Sender.Send(query);
         }
         [HttpGet("user-status/select-items")]
-        public Task<UserStatusEnum> GetUserEnum()
+        public async Task<SelectItem> GetUserEnum()
         {
-            var items = UserStatusEnum.Employee;
+            var items = EnumConverter<UserStatusEnum>.SelectValues;
 
-            return Task.FromResult(items);
+            return items;
+        }
+
+        public static class EnumConverter<TEnum> where TEnum : Enum
+        {
+            public static SelectItem SelectValues
+            {
+                get
+                {
+                    return Enum.GetValues(typeof(TEnum)).OfType<TEnum>().ToList()
+                        .Select(item => new SelectItem
+                            {
+                                Label = item.ToString(),
+                                Value = Convert.ToInt32(item).ToString()
+                            })
+                        .OrderBy(i => i.Label)
+                        .Where(i => i.Label == "Employee")
+                        .FirstOrDefault();
+                }
+            }
         }
     }
 }
