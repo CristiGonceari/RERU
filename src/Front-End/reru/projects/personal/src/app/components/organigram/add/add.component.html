@@ -8,65 +8,118 @@
                         data-wizard-clickable="true">
                         <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
                             <div class="col">
-                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm" autocomplete="off">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm"
+                                    autocomplete="off">
                                     <div class="pb-5">
                                         <h3 class="mb-10 font-weight-bolder text-dark">
                                             {{'organigram.new-organigram' | translate}}</h3>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group row">
-                                                    <label class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organigram-name' | translate}}</label>
+                                                    <label
+                                                        class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organigram-name' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-10">
-                                                        <input class="form-control form-control-solid" type="text" formControlName="name" [placeholder]="'organigram.organigram-name' | translate" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="type" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organgiram-head-type' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-10">
-                                                        <select autocomplete="off" class="form-control form-control-solid" name="type" id="type" formControlName="type">
-                                                            <option value="null">Selectează</option>
-                                                            <option value="1">Departament</option>
-                                                            <option value="2">Funcție</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="headId" class="col-xl-2 col-lg-3 col-form-label ">{{'organigram.organigram-head' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-10">
-                                                        <input class="form-control form-control-solid ngb-typeahead-window" 
-                                                        name="headId" 
-                                                        autocomplete="off" 
-                                                        type="text" 
-                                                        [editable]='false'
-                                                        [placeholder]="'organigram.organigram-head'  | translate" 
-                                                        id="headId"
-                                                        [(ngModel)]="selectedItem"
-                                                        (ngModelChange)="selectHead($event)"
-                                                        [ngModelOptions]="{ standalone: true }"
-                                                        [ngbTypeahead]="searchHead" 
-                                                        (focus)="focus$.next($any($event).target.value)"
-                                                        (click)="click$.next($any($event).target.value)"
-                                                        #instance="ngbTypeahead"
-                                                        [inputFormatter]="formatter" 
-                                                        [resultFormatter]="formatter" />
+                                                        <input class="form-control form-control-solid" type="text"
+                                                            formControlName="name"
+                                                            [placeholder]="'organigram.organigram-name' | translate"
+                                                            autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label for="fromDate"
                                                         class="col-xl-2 col-lg-3 col-form-label">{{'vacation.start-date' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-10">
-                                                        <app-date [parent]="organigramForm" [date]="'fromDate'" [placeholder]="'vacation.type-start-date' | translate"></app-date>
+                                                        <app-date [parent]="organigramForm" [date]="'fromDate'"
+                                                            [placeholder]="'vacation.type-start-date' | translate">
+                                                        </app-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="type" class="col-xl-2 col-lg-3 col-form-label">{{'Tip de creare' | translate}}</label>
+                                                    <div class="col-lg-9 col-xl-10">
+                                                        <select autocomplete="off"
+                                                            class="form-control form-control-solid" name="createType"
+                                                            formControlName="createType">
+                                                            <option value="null">Selectează</option>
+                                                            <option value="1">Manual</option>
+                                                            <option value="2">Importă</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col" *ngIf="organigramForm.value.createType == 1">
+                                                    <div class="form-group row">
+                                                        <label for="type"
+                                                            class="col-xl-2 col-lg-3 col-form-label">{{'organigram.organgiram-head-type' | translate}}</label>
+                                                        <div class="col-lg-9 col-xl-10">
+                                                            <select autocomplete="off" disabled='true'
+                                                                class="form-control form-control-solid" name="type"
+                                                                id="type" formControlName="type">
+                                                                <option value="null">Selectează</option>
+                                                                <option value="1">Departament</option>
+                                                                <option value="2">Funcție</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="headId"
+                                                            class="col-xl-2 col-lg-3 col-form-label ">{{'organigram.organigram-head' | translate}}</label>
+                                                        <div class="col-lg-9 col-xl-10">
+                                                            <input
+                                                                class="form-control form-control-solid ngb-typeahead-window"
+                                                                name="headId" autocomplete="off" type="text"
+                                                                [editable]='false'
+                                                                [placeholder]="'organigram.organigram-head'  | translate"
+                                                                id="headId" 
+                                                                [(ngModel)]="selectedItem"
+                                                                (ngModelChange)="selectHead($event)"
+                                                                [ngModelOptions]="{ standalone: true }"
+                                                                [ngbTypeahead]="searchHead"
+                                                                (focus)="focus$.next($any($event).target.value)"
+                                                                (click)="click$.next($any($event).target.value)"
+                                                                #instance="ngbTypeahead" 
+                                                                [inputFormatter]="formatter"
+                                                                [resultFormatter]="formatter" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col" *ngIf="organigramForm.value.createType == 2">
+                                                    <div class="justify-content-center ml-auto border" style="width: 84%;">
+                                                        <div class="mb-3 row justify-content-center">
+                                                        <img class="img-thumbnail"
+                                                            src="../../../../assets//Import-Organigram.jpg"
+                                                            alt="functions-example">
+                                                    </div>
+                                                    <div class="w-75 m-auto">
+                                                        <form [formGroup]="uploadForm">
+                                                            <div class="form-group row">
+                                                                <label for="file"
+                                                                    class="col-form-label col-auto">{{'document.file' | translate}}:</label>
+                                                                <div class="col">
+                                                                    <input (change)="setFile($event)" class="form-control"
+                                                                        type="file" name="file" id="file">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row"
+                                                                *ngIf="uploadForm.get('file').errors && uploadForm.get('file').errors.fileEmpty">
+                                                                <div class="col">
+                                                                    <p class="text-primary text-center">
+                                                                        {{'validations.file-is-empty' | translate}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" routerLink="../" class="btn btn-secondary font-weight-bold mr-2">
+                                        <button type="button" routerLink="../"
+                                            class="btn btn-secondary font-weight-bold mr-2">
                                             {{'button.cancel' | translate}}
                                         </button>
                                         <button type="button" class="btn btn-success font-weight-bold"
-                                            [disabled]="organigramForm.invalid" (click)="submit()">
+                                            [disabled]="validateButton(organigramForm.value.createType)" (click)="submit()">
                                             {{'organigram.add-organigram' | translate}}
                                         </button>
                                     </div>
