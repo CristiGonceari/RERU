@@ -8,9 +8,9 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.ImportDepartm
 {
     public class ImportDepartmentRoleRelationCommandHandler : IRequestHandler<ImportDepartmentRoleRelationCommand, FileDataDto>
     {
-        private readonly IExcelImportDepartmentRoleRelationService _service;
+        private readonly IImportDepartmentOrganizationalChartService _service;
 
-        public ImportDepartmentRoleRelationCommandHandler(IExcelImportDepartmentRoleRelationService service)
+        public ImportDepartmentRoleRelationCommandHandler(IImportDepartmentOrganizationalChartService service)
         {
             _service = service;
         }
