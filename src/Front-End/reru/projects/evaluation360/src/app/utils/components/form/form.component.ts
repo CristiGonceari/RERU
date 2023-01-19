@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { EvaluationClass, EvaluationModel } from '../../models/evaluation.model';
 import { createEvaluatorForm, 
@@ -89,7 +89,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   Mea$: Observable<number> = this.Mea.asObservable();
   Mf: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   Mf$: Observable<number> = this.Mf.asObservable();
-  constructor() {
+  constructor(private readonly ngZone: NgZone) {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isValid = isValid.bind(this);
     this.isInvalidRequired = isInvalidRequired.bind(this);
@@ -140,9 +140,11 @@ export class FormComponent implements OnInit, AfterViewInit {
   focusEvaluatedCommentsArea(): void {
     if (this.evaluationRole === EvaluationRoleEnum.Evaluated) {
       this.commentsEvaluated.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => {
-        this.commentsEvaluated.nativeElement.focus();
-      }, 500);
+      this.ngZone.runOutsideAngular(() => {
+        setTimeout(() => {
+          this.commentsEvaluated.nativeElement.focus();
+        }, 500);
+      })
     }
   }
 
@@ -348,20 +350,28 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.evaluationForm.get('functionEvaluated').setValidators([Validators.required]);
         this.evaluationForm.get('appointmentDate').setValidators([Validators.required, Validators.pattern(isoDateRegex)]);
         this.evaluationForm.get('administrativeActService').setValidators([Validators.required]);
-        this.evaluationForm.updateValueAndValidity();
+        
+        this.evaluationForm.get('functionEvaluated').updateValueAndValidity();
+        this.evaluationForm.get('appointmentDate').updateValueAndValidity();
+        this.evaluationForm.get('administrativeActService').updateValueAndValidity();
       } else {
         this.evaluationForm.get('serviceDuringEvaluationCourse').patchValue(null);
         this.evaluationForm.get('functionEvaluated').patchValue(null);
         this.evaluationForm.get('appointmentDate').patchValue(null);
         this.evaluationForm.get('administrativeActService').patchValue(null);
+
         this.evaluationForm.get('functionEvaluated').clearValidators();
         this.evaluationForm.get('appointmentDate').clearValidators();
         this.evaluationForm.get('administrativeActService').clearValidators();
+
         this.evaluationForm.get('functionEvaluated').markAsUntouched();
         this.evaluationForm.get('appointmentDate').markAsUntouched();
         this.evaluationForm.get('appointmentDate').markAsPristine();
         this.evaluationForm.get('administrativeActService').markAsUntouched();
-        this.evaluationForm.updateValueAndValidity();
+
+        this.evaluationForm.get('functionEvaluated').updateValueAndValidity();
+        this.evaluationForm.get('appointmentDate').updateValueAndValidity();
+        this.evaluationForm.get('administrativeActService').updateValueAndValidity();
       }
     });
   }
@@ -408,7 +418,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
 async randomCompleteForAvg(btn, value) {
-  new Promise((resolve, reject) => {
+  new Promise((resolve, _) => {
     this.isLoading = true;
     btn.click();
     return setTimeout(() => resolve(true), 300);
