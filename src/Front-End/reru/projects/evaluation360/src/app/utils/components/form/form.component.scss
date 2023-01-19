@@ -3,4 +3,10 @@
     .dropdown-toggle.nav-link:after, .dropdown-toggle.btn:after {
         display: none;
     }
+
+    .typeahead-group-header {
+        padding: 3px 20px;
+        border-bottom: 1px solid black;
+        font-weight: bold;
+      }
 }

@@ -127,31 +127,7 @@
       <div class="form-group row order-1">
         <label for="specialOrMilitaryGrade" class="col-lg-3 col-12 col-form-label">{{ 'evaluations.military-grade.title' | translate }}: </label>
         <div class="col-lg col-12 position-relative">
-          <select name="specialOrMilitaryGrade" id="specialOrMilitaryGrade" class="form-control" formControlName="specialOrMilitaryGrade"
-          [ngClass]="{
-            'is-valid': isValid(evaluationForm, 'specialOrMilitaryGrade'),
-            'is-invalid': isInvalidPattern(evaluationForm, 'specialOrMilitaryGrade') || isInvalidRequired(evaluationForm, 'specialOrMilitaryGrade')
-          }">
-            <option value="null">{{ 'button.select' | translate }}</option>
-            <option value="1">{{ 'evaluations.military-grade.1' | translate }}</option>
-            <option value="2">{{ 'evaluations.military-grade.2' | translate }}</option>
-            <option value="3">{{ 'evaluations.military-grade.3' | translate }}</option>
-            <option value="4">{{ 'evaluations.military-grade.4' | translate }}</option>
-            <option value="5">{{ 'evaluations.military-grade.5' | translate }}</option>
-            <option value="6">{{ 'evaluations.military-grade.6' | translate }}</option>
-            <option value="7">{{ 'evaluations.military-grade.7' | translate }}</option>
-            <option value="8">{{ 'evaluations.military-grade.8' | translate }}</option>
-            <option value="9">{{ 'evaluations.military-grade.9' | translate }}</option>
-            <option value="10">{{ 'evaluations.military-grade.10' | translate }}</option>
-            <option value="11">{{ 'evaluations.military-grade.11' | translate }}</option>
-            <option value="12">{{ 'evaluations.military-grade.12' | translate }}</option>
-            <option value="13">{{ 'evaluations.military-grade.13' | translate }}</option>
-            <option value="14">{{ 'evaluations.military-grade.14' | translate }}</option>
-            <option value="15">{{ 'evaluations.military-grade.15' | translate }}</option>
-            <option value="16">{{ 'evaluations.military-grade.16' | translate }}</option>
-            <option value="17">{{ 'evaluations.military-grade.17' | translate }}</option>
-          </select>
-          <div *ngIf="isInvalidPattern(evaluationForm, 'specialOrMilitaryGrade') || isInvalidRequired(evaluationForm, 'specialOrMilitaryGrade')" class="invalid-feedback position-absolute">{{'notification.required' | translate}}</div>
+          <military-grade-dropdown [formGroup]="evaluationForm"></military-grade-dropdown>
         </div>
       </div>
       <div class="form-group row order-1">

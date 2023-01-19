@@ -1,0 +1,24 @@
+:host {
+    ::ng-deep  {
+      ngb-typeahead-window {
+        max-width: 100%;
+        width: calc(100% - 25px);
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        &::-webkit-scrollbar {
+          cursor: pointer;
+          width: 5px !important;
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #898989;
+        }
+      }
+      .dropdown-item.active, .dropdown-item:active {
+        background: #CCC;
+      }
+    }
+}
