@@ -33,7 +33,7 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<MaiFunctions> MaiFunctions { get; set; }
+        public virtual DbSet<EmployeeFunction> EmployeeFunctions { get; set; }
 
         public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
 

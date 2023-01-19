@@ -36,6 +36,8 @@
 
         public const string ACCESS_GENERAL_LA_ROLURI = "P02001601";
 
+        public const string ACCESS_GENERAL_LA_FUNCTII = "P02003001";
+
         public const string ACCESS_GENERAL_LA_PENALIZARI = "P02001701";
 
         public const string ACCESS_GENERAL_LA_POZITII = "P02001801";

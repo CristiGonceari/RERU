@@ -72,7 +72,7 @@ namespace CODWER.RERU.Personal.API.Controllers
 
         [HttpPut("print")]
         [IgnoreResponseWrap]
-        public async Task<IActionResult> PrintQuestionUnits([FromBody] PrintOrganizationRolesCommand command)
+        public async Task<IActionResult> PrintRoles([FromBody] PrintOrganizationRolesCommand command)
         {
             var result = await Mediator.Send(command);
 
