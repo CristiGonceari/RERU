@@ -5158,6 +5158,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("MediaFileId")
                         .HasColumnType("text");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 

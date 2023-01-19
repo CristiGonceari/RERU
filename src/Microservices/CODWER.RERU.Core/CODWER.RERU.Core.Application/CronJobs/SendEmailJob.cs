@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CODWER.RERU.Core.Application.Users.SaveUserPasswordByEmail;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.Interfaces;
 using CVU.ERP.Notifications.Enums;
 using CVU.ERP.Notifications.Services;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
@@ -19,11 +21,13 @@ namespace CODWER.RERU.Core.Application.CronJobs
         private readonly AppDbContext _appDbContext;
         private readonly IEmailSenderService _emailSenderService;
         private readonly PlatformConfig _platformConfig;
+        private readonly IMediator _mediator;
 
-        public SendEmailJob(AppDbContext appDbContext, IOptions<PlatformConfig> conf, IEmailSenderService emailSenderService)
+        public SendEmailJob(AppDbContext appDbContext, IOptions<PlatformConfig> conf, IEmailSenderService emailSenderService, IMediator mediator)
         {
             _appDbContext = appDbContext.NewInstance();
             _emailSenderService = emailSenderService;
+            _mediator = mediator;
             _platformConfig = conf.Value;
         }
 
@@ -36,6 +40,16 @@ namespace CODWER.RERU.Core.Application.CronJobs
                     .Where(en => en.IsSend == false && en.InUpdateProcess == false && !string.IsNullOrEmpty(en.To))
                     .Take(30)  // 30 per minute
                     .ToList();
+
+                foreach (var email in emails)
+                {
+                    var resetPassword = new SaveUserPasswordByEmailCommand()
+                    {
+                        Email = email.To
+                    };
+
+                    await _mediator.Send(resetPassword);
+                }
 
                 Log($"START Email CronJob for {emails.Count} items");
 
@@ -114,6 +128,8 @@ namespace CODWER.RERU.Core.Application.CronJobs
 
         private async Task<EmailData> GetEmailObject(EmailNotification email)
         {
+            var userPassword = (await _appDbContext.UserProfiles.FirstOrDefaultAsync(x => x.Email == email.To))?.Password;
+
             var template = await GetFileContent(email.HtmlTemplateAddress);
 
             template = email.Properties
@@ -122,7 +138,7 @@ namespace CODWER.RERU.Core.Application.CronJobs
             return new EmailData
             {
                 subject = email.Subject,
-                body = $"{template} {GetEmailBodyFooter()}",
+                body = $"{template} {GetEmailBodyFooter(email.To, userPassword)}",
                 from = "Do Not Reply",
                 to = email.To
             };
@@ -167,8 +183,10 @@ namespace CODWER.RERU.Core.Application.CronJobs
         private async Task<string> GetFileContent(string path)
             => await File.ReadAllTextAsync(new FileInfo(path).FullName);
 
-        private string GetEmailBodyFooter() =>
-            @$"<p style=""font-size: 22px;font-weight: 300;"">Link aplicație: </p><p style=""font-size: 22px;font-weight: 300;"">{_platformConfig.BaseUrl}</p>";
+        private string GetEmailBodyFooter(string email, string password) =>
+             @$"<p><span style=""font-size: 16px;font-weight: 300;"">Link aplicație: </span><span style=""font-size: 16px;font-weight: 300;"">{_platformConfig.BaseUrl}</span></p>
+                <p><span style=""font-size: 16px;font-weight: 300;"">Login: </span><span style=""font-size: 16px;font-weight: 300;"">{email}</span></p>
+                <p><span style=""font-size: 16px;font-weight: 300;"">Parola: </span><span style=""font-size: 16px;font-weight: 300; color: red;"">{password}</span></p> ";
 
         private void Log(string msg) => Console.WriteLine(msg);
     }

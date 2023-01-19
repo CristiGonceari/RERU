@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
+using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
@@ -20,16 +21,19 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         private readonly ILoggerService<CreateUserCommandHandler> _loggerService;
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IPasswordGenerator _passwordGenerator;
 
         public CreateUserCommandHandler(
             IEnumerable<IIdentityService> identityServices, 
             ILoggerService<CreateUserCommandHandler> loggerService, 
             IMapper mapper,
-            AppDbContext appDbContext)
+            AppDbContext appDbContext, 
+            IPasswordGenerator passwordGenerator)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
             _mapper = mapper;
+            _passwordGenerator = passwordGenerator;
             _appDbContext = appDbContext.NewInstance();
         }
 
@@ -57,6 +61,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
 
+            var password = _passwordGenerator.Generate();
+
             foreach (var role in defaultRoles)
             {
                 userProfile.ModuleRoles.Add(new UserProfileModuleRole
@@ -67,7 +73,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             foreach (var identityService in _identityServices)
             {
-                var identifier = await identityService.Create(userProfile, request.EmailNotification);
+                var identifier = await identityService.Create(userProfile, request.EmailNotification, password);
 
                 if (!string.IsNullOrEmpty(identifier))
                 {
@@ -78,6 +84,8 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                     });
                 }
             }
+
+            userProfile.Password = password;
 
             _appDbContext.UserProfiles.Add(userProfile);
             await _appDbContext.SaveChangesAsync();

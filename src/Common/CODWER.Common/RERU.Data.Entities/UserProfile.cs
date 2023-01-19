@@ -45,6 +45,7 @@ namespace RERU.Data.Entities
         public bool IsActive { set; get; }
         public DateTime? TokenLifetime { get; set; }
         public AccessModeEnum? AccessModeEnum { get; set; }
+        public string Password { get; set; }
 
         public int? DepartmentColaboratorId { get; set; }
         public Department Department { get; set; }
