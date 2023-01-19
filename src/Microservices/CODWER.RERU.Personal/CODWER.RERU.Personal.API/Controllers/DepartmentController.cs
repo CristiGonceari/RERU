@@ -1,15 +1,12 @@
 ﻿using CODWER.RERU.Personal.API.Config;
-using CODWER.RERU.Personal.Application.Departments.AddDepartment;
 using CODWER.RERU.Personal.Application.Departments.BulkImportDepartments;
 using CODWER.RERU.Personal.Application.Departments.GetDepartment;
 using CODWER.RERU.Personal.Application.Departments.GetDepartments;
-using CODWER.RERU.Personal.Application.Departments.RemoveDepartment;
-using CODWER.RERU.Personal.Application.Departments.UpdateDepartment;
+using CODWER.RERU.Personal.Application.Departments.PrintDepartments;
 using CODWER.RERU.Personal.DataTransferObjects.Departments;
 using CODWER.RERU.Personal.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -68,6 +65,17 @@ namespace CODWER.RERU.Personal.API.Controllers
             var command = new BulkImportDepartmentsCommand { Data = dto };
 
             var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintDepartments([FromBody] PrintDepartmentsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);

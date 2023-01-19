@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
+using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
 using CVU.ERP.Logging;
 using CVU.ERP.Logging.Models;
 using MediatR;
@@ -18,14 +19,16 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
         private readonly IEnumerable<IIdentityService> _identityServices;
         private readonly ILoggerService<ResetUserPasswordCommandHandler> _loggerService;
         private const string DEFAULT_IDENTITY_SERVICE = "local";
+        private readonly IPasswordGenerator _passwordGenerator;
 
         public ResetUserPasswordCommandHandler(
             ICommonServiceProvider commonServiceProvider,
             IEnumerable<IIdentityService> identityServices, 
-            ILoggerService<ResetUserPasswordCommandHandler> loggerService) : base(commonServiceProvider)
+            ILoggerService<ResetUserPasswordCommandHandler> loggerService, IPasswordGenerator passwordGenerator) : base(commonServiceProvider)
         {
             _identityServices = identityServices;
             _loggerService = loggerService;
+            _passwordGenerator = passwordGenerator;
         }
 
         public async Task<Unit> Handle(ResetUserPasswordCommand request, CancellationToken cancellationToken)
@@ -37,15 +40,20 @@ namespace CODWER.RERU.Core.Application.Users.ResetUserPassword
 
             if (userProfile != null)
             {
+                var password = _passwordGenerator.Generate();
+
                 var identityService = _identityServices.FirstOrDefault(@is => @is.Type == DEFAULT_IDENTITY_SERVICE);
                 if (identityService != null)
                 {
                     var identity = userProfile.Identities.FirstOrDefault(upi => upi.Type == DEFAULT_IDENTITY_SERVICE);
                     if (identity != null)
                     {
-                        await identityService.ResetPassword(identity.Identificator);
+                        await identityService.ResetPassword(identity.Identificator, password);
                     }
                 }
+
+                userProfile.Password = password;
+                await AppDbContext.SaveChangesAsync();
 
                 await LogAction(userProfile);
             }

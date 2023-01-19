@@ -63,19 +63,19 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.CreateInternalUserP
                     }
                 }
 
-                foreach (var identityService in _identityServices)
-                {
-                    var identifier = await identityService.Create(userProfile, request.Data.NotifyAccountCreated);
+                //foreach (var identityService in _identityServices)
+                //{
+                //    var identifier = await identityService.Create(userProfile, request.Data.NotifyAccountCreated);
 
-                    if (!string.IsNullOrEmpty(identifier))
-                    {
-                        userProfile.Identities.Add(new UserProfileIdentity
-                        {
-                            Identificator = identifier,
-                            Type = identityService.Type
-                        });
-                    }
-                }
+                //    if (!string.IsNullOrEmpty(identifier))
+                //    {
+                //        userProfile.Identities.Add(new UserProfileIdentity
+                //        {
+                //            Identificator = identifier,
+                //            Type = identityService.Type
+                //        });
+                //    }
+                //}
 
                 AppDbContext.UserProfiles.Add(userProfile);
                 await AppDbContext.SaveChangesAsync();

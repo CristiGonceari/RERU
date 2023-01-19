@@ -27,18 +27,18 @@ namespace CODWER.RERU.Core.Application.UserProfiles.Internal.ResetPassword
                     .Include(up => up.Identities)
                     .FirstOrDefaultAsync(up => up.Id == request.UserProfileId);
 
-            if (userProfile != null)
-            {
-                var identityService = _identityServices.FirstOrDefault(@is => @is.Type == DEFAULT_IDENTITY_SERVICE);
-                if (identityService != null)
-                {
-                    var identity = userProfile.Identities.FirstOrDefault(upi => upi.Type == DEFAULT_IDENTITY_SERVICE);
-                    if (identity != null)
-                    {
-                        await identityService.ResetPassword(identity.Identificator);
-                    }
-                }
-            }
+            //if (userProfile != null)
+            //{
+            //    var identityService = _identityServices.FirstOrDefault(@is => @is.Type == DEFAULT_IDENTITY_SERVICE);
+            //    if (identityService != null)
+            //    {
+            //        var identity = userProfile.Identities.FirstOrDefault(upi => upi.Type == DEFAULT_IDENTITY_SERVICE);
+            //        if (identity != null)
+            //        {
+            //            await identityService.ResetPassword(identity.Identificator);
+            //        }
+            //    }
+            //}
             return Unit.Value;
         }
     }

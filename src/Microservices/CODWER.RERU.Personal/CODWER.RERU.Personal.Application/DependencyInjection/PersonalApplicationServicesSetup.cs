@@ -37,9 +37,10 @@ namespace CODWER.RERU.Personal.Application.DependencyInjection
                 .AddScoped(typeof(ITimeSheetTableService), typeof(TimeSheetTableService))
                 .AddScoped(typeof(IDocumentTemplateReplaceKeysService), typeof(DocumentTemplateReplaceKeysService))
                 .AddScoped(typeof(IImportDepartmentsAndRolesService), typeof(ImportDepartmentsAndRolesService))
+                .AddScoped(typeof(IImportEmployeeFunctionsService), typeof(ImportEmployeeFunctionsService))
                 .AddScoped(typeof(IAssignRolesToArticle), typeof(AssignRolesToArticleService))
-                .AddScoped(typeof(IPersonalStorageClient), typeof(PersonalStorageClient));
-                ;
+                .AddScoped(typeof(IPersonalStorageClient), typeof(PersonalStorageClient))
+                .AddScoped(typeof(IImportDepartmentOrganizationalChartService), typeof(ImportDepartmentOrganizationalChartService));
         }
     }
 }

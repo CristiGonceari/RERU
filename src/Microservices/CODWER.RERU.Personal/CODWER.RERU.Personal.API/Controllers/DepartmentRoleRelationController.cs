@@ -4,8 +4,11 @@ using CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddDepartmentRole
 using CODWER.RERU.Personal.Application.DepartmentRoleRelations.AddOrganizationalChartHead;
 using CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetDepartmentRoleRelations;
 using CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizationalChartContent;
+using CODWER.RERU.Personal.Application.DepartmentRoleRelations.ImportDepartmentRoleRelation;
 using CODWER.RERU.Personal.Application.DepartmentRoleRelations.RemoveDepartmentRoleRelation;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations.Get;
+using CODWER.RERU.Personal.DataTransferObjects.Files;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +60,18 @@ namespace CODWER.RERU.Personal.API.Controllers
                 });
 
             return result;
+        }
+
+        [HttpPut("excel-import/{id}")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> ImportFromExcelFile([FromForm] ExcelDataDto file, [FromRoute] int id)
+        {
+            var command = new ImportDepartmentRoleRelationCommand { Data = file, OrganizationalChartId = id };
+
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

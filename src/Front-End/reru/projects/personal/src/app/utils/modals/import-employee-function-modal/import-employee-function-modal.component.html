@@ -1,0 +1,27 @@
+<div class="modal-header border-0 pb-0">
+    <h3 class="modal-title">{{'button.import' | translate}}</h3>
+</div>
+<app-loading-spinner [contentHeight]="'10rem'" *ngIf="isLoading" [colorClass]="'text-primary'"></app-loading-spinner>
+<div class="modal-body px-7" *ngIf="!isLoading">
+    <div class="mb-3 row justify-content-center">
+        <img class="img-thumbnail" src="assets\Import-Employee-functions-example.jpg" alt="import-example">
+    </div>
+    <form [formGroup]="uploadForm">
+        <div class="form-group row">
+            <label for="file" class="col-form-label col-auto">{{'document.file' | translate}}:</label>
+            <div class="col">
+                <input (change)="setFile($event)" class="form-control" type="file" name="file" id="file">
+            </div>
+        </div>
+        <div class="row" *ngIf="uploadForm.get('file').errors && uploadForm.get('file').errors.fileEmpty">
+            <div class="col">
+                <p class="text-primary text-center">{{'validations.file-is-empty' | translate}}</p>
+            </div>
+        </div>
+    </form>
+    <p class="form-text text-muted py-2">{{'personal.import-role-description' | translate}}.</p>
+</div>
+<div class="modal-footer border-0 pt-0">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" [disabled]="uploadForm.invalid" (click)="close()">{{'button.add' | translate}}</button>
+</div>
