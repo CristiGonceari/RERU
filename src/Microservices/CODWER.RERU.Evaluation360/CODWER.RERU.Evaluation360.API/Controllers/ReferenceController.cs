@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
                                 Value = Convert.ToInt32(item).ToString()
                             })
                         .OrderBy(i => i.Label)
-                        .Where(i => i.Label == "Employee")
+                        .Where(i => i.Label == UserStatusEnum.Employee.ToString())
                         .FirstOrDefault();
                 }
             }
