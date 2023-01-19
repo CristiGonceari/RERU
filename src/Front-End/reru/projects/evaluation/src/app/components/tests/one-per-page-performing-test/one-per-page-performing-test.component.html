@@ -97,10 +97,8 @@
                         <div class="ml-5 w-100">
                             {{ option.answer }}
                             <div *ngIf="option.mediaFileId" class="form-group row align-items-center">
-                                <div class="col-lg-6 col-xl-3">
-                                    <div class="w-100">
-                                        <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
-                                    </div>
+                                <div class="col">
+                                    <app-get-media-file [fileId]="option.mediaFileId"></app-get-media-file>
                                 </div>
                             </div>
                         </div>

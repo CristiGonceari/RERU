@@ -122,9 +122,9 @@
               {{'verify-test.select-test-type' | translate}}
             </label>
             <div class="col-xl-9 col-lg-8">
-              <app-loading-spinner class="form-control form-control-lg form-control-solid" *ngIf="isLoading"
-                [contentHeight]="'1vh'" [height]="'1rem'" [width]="'1rem'" [colorClass]="'text-primary'">
-              </app-loading-spinner>
+              <div *ngIf="isLoading" class="spinner spinner-primary spinner-center">
+                <input class="form-control form-control-solid form-control-lg p-2" disabled/>
+              </div>
               <select class="form-control form-control-solid" name="test" *ngIf="!isLoading"
                 [(ngModel)]="testTemplate.value" (ngModelChange)="checkIfIsOneAnswer($event)">
                 <option [value]="0" selected>{{'questions.select' | translate}}</option>
