@@ -52,6 +52,7 @@ import { EditStydyModalComponent } from './modals/edit-stydy-modal/edit-stydy-mo
 import { DeleteStudyModalComponent } from './modals/delete-study-modal/delete-study-modal.component';
 import { AskGenerateOrderModalComponent } from './modals/ask-generate-order-modal/ask-generate-order-modal.component';
 import { ImportRoleModalComponent } from './modals/import-role-modal/import-role-modal.component';
+import { ImportEmployeeFunctionModalComponent } from './modals/import-employee-function-modal/import-employee-function-modal.component';
 import { DeleteInstructionModalComponent } from './modals/delete-instruction-modal/delete-instruction-modal.component';
 import { ViewDatePipe } from './pipes/view-date.pipe';
 import { AddInstructionModalComponent } from './modals/add-instruction-modal/add-instruction-modal.component';
@@ -150,6 +151,7 @@ const commonComponents = [
   ConvertPdfDocumentModalComponent,
   CkEditorConfigComponent,
   ImportDepartmentsModalComponent,
+  ImportEmployeeFunctionModalComponent,
   DateFilterPipe
 ];
 

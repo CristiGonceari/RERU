@@ -39,6 +39,11 @@ const routes: Routes = [
 		loadChildren: () => import('./components/roles/roles.module').then(m => m.RolesModule),
 		canActivate: [AuthenticationGuard],
 	},
+	{
+		path: 'employee-functions',
+		loadChildren: () => import('./components/employee-function/employee-function.module').then(m => m.EmployeeFunctionModule),
+		canActivate: [AuthenticationGuard],
+	},
 
 	{
 		path: 'vacation',

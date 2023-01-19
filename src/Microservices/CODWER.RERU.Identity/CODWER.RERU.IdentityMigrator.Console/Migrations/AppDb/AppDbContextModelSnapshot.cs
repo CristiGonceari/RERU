@@ -709,6 +709,47 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("EmailVerifications");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.EmployeeFunction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int?>("ColaboratorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("EmployeeFunctions");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Evaluation360.Evaluation", b =>
                 {
                     b.Property<int>("Id")
@@ -1714,47 +1755,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("LocationResponsiblePersons");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.MaiFunctions", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int?>("ColaboratorId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DeleteTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdateById")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Type");
-
-                    b.ToTable("MaiFunctions");
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.MaterialStatus", b =>
@@ -7621,6 +7621,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.EmployeeFunction", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Type")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.Evaluation360.Evaluation", b =>
                 {
                     b.HasOne("RERU.Data.Entities.UserProfile", "CounterSignerUserProfile")
@@ -7954,15 +7963,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Location");
 
                     b.Navigation("UserProfile");
-                });
-
-            modelBuilder.Entity("RERU.Data.Entities.MaiFunctions", b =>
-                {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.EvaluationTypeEnum>", null)
-                        .WithMany()
-                        .HasForeignKey("Type")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RERU.Data.Entities.MaterialStatus", b =>
