@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services.Implementations
 {
-    public  class ExcelImportDepartmentRoleRelationService : IExcelImportDepartmentRoleRelationService
+    public  class ImportDepartmentOrganizationalChartService : IImportDepartmentOrganizationalChartService
     {
         private readonly AppDbContext _appDbContext;
         private ExcelWorksheet _workSheet;
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Personal.Application.Services.Implementations
         private readonly IMediator _mediator;
 
 
-        public ExcelImportDepartmentRoleRelationService(AppDbContext appDbContext, IMediator mediator)
+        public ImportDepartmentOrganizationalChartService(AppDbContext appDbContext, IMediator mediator)
         {
             _appDbContext = appDbContext;
             _mediator = mediator;

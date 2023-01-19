@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace CODWER.RERU.Personal.Application.Services
 {
-    public interface IExcelImportDepartmentRoleRelationService
+    public interface IImportDepartmentOrganizationalChartService
     {
         public Task<FileDataDto> ImportDepartmentToDepartmentRelation(IFormFile data, int organizationalChartId);
 
