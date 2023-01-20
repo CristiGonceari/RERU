@@ -29,26 +29,6 @@ export class UserListComponent {
   processesData: any;
 
   ngOnInit(): void {
-    this.referenceService.getProcesses().subscribe(res => {
-      this.processesData = res.data;
-
-      if (this.processesData && !this.processesData.isDone) {
-        this.interval = setInterval(() => {
-          this.referenceService.getProcesses().subscribe(res => {
-            this.processesData = res.data;
-
-            if (this.processesData.length <= 0) {
-              clearInterval(this.interval);
-            }
-          })
-        }, 10 * 1000);
-      }
-    })
-  }
-
-  getPercents(item) {
-    const percents = Math.round(item.done * 100 / item.total)
-    return `${percents} %`;
   }
 
   clearFilters(): void {
