@@ -11,20 +11,6 @@
         </h3>
       </div>
       <div class="card-toolbar d-md-flex d-none">
-        <button class="btn btn-light-primary font-weight-bold mr-2" [disabled]
-          ngbTooltip="{{item.done}} \ {{item.total}}" *ngFor="let item of processesData; let i = index"
-          style="width: 125px;">
-          <div class="container">
-            <div class="row">
-              <div class="col" style="padding: 0;">
-                <app-loading-spinner [contentHeight]="'2vh'" [height]="'1rem'" [width]="'1rem'"
-                  [colorClass]="'text-primary'">
-                </app-loading-spinner>
-              </div>
-              <div class="col" style="font-size: 10px; padding: 0;"> {{ getPercents(item) }}</div>
-            </div>
-          </div>
-        </button>
         <button class="btn btn-light-warning font-weight-bold mr-2" (click)="openHistoryModal()">
           <i class="far fa-file-excel"></i>
           {{ 'processes.history' | translate }}
