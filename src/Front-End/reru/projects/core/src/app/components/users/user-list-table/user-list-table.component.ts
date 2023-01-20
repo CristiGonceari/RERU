@@ -103,11 +103,28 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-', 'userName', 'idnp', 'email', 'departmentName', 'roleName', 'userStatusEnum', 'accessModeEnum', 'isActive'];
+		let headersDto = ['-','userName','lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName','departmentColaboratorId', 'roleName', 'roleColaboratorId', 'birthday', 'phoneNumber', 'userStatusEnum', 'accessModeEnum', 'isActive' ];
 
-		for (let i = 1; i < headersHtml.length - 1; i++) {
-			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true})
+		for (let i = 1; i <= headersHtml.length-2; i++) {
+			if(i == 2){
+				this.headersToPrint.push({ value: "lastName", label: "Nume", isChecked: true})
+			} else if(i == 3){
+				this.headersToPrint.push({ value: "firstName", label: "Prenume", isChecked: true})
+			} else if(i == 4){
+				this.headersToPrint.push({ value: "fatherName", label: "Patronimic", isChecked: true})
+			} else if(i == 8){
+				this.headersToPrint.push({ value: "departmentColaboratorId", label: "Id Department", isChecked: true})
+			} else if(i == 10){
+				this.headersToPrint.push({ value: "roleColaboratorId", label: "Id Rol", isChecked: true})
+			} else if(i == 11){
+				this.headersToPrint.push({ value: "birthday", label: "Data nașterii", isChecked: true})
+			} else if(i == 12){
+				this.headersToPrint.push({ value: "phoneNumber", label: "Nr. telefon", isChecked: true})
+			} else {
+				this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true})
+			}
 		}
+
 		let printData = {
 			tableName: name,
 			fields: this.headersToPrint,

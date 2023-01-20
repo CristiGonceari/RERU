@@ -13,7 +13,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
         public string Email { get; set; }
         public string Idnp { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
+        public DateTime? BirthDate { get; set; }
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
