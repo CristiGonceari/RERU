@@ -231,7 +231,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
-                Birthday = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
+                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
                 PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
