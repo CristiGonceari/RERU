@@ -298,11 +298,11 @@
   },
   "user": {
     "edit-title": "Editarea utilizatorului",
-    "delete-title": "Stergerea utilizatorului",
+    "delete-title": "Ștergerea utilizatorului",
     "block-title": "Blocare/Deblocare",
-    "remove-sure": "Sunteți sigur(-ă) că doriți să stergeți acest utilizator?",
+    "remove-sure": "Sunteți sigur(-ă) că doriți să ștergeți acest utilizator?",
     "succes-remove": "Utilizatorul a fost șters cu succes!",
-    "succes-edit": "Utilizatorul a fost editat cu success!",
+    "succes-edit": "Utilizatorul a fost editat cu succes!",
     "succes-create": "Utilizatorul a fost creat cu succes!",
     "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ...",
     "birthday": "Data nașterii",
@@ -371,7 +371,7 @@
   },
   "remove-module": {
     "title": "Ștergerea modulului",
-    "sure": "Sunteți sigur(-ă) că doriți să stergeți modulul?"
+    "sure": "Sunteți sigur(-ă) că doriți să ștergeți modulul?"
   },
   "dashboard": {
     "enclosed-mode":"Mod restrâns"

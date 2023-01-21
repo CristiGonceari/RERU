@@ -33,9 +33,9 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
         public async Task<SelectItem> GetUserEnum()
         {
             var items = EnumConverter<UserStatusEnum>.SelectValues;
-            var filteredList = items.Where(x => x.Label == UserStatusEnum.Employee.ToString());
+            var filteredList = items.Where(x => x.Label == UserStatusEnum.Employee.ToString()).First();
 
-            return (SelectItem)filteredList;
+            return filteredList;
         }
      }
 }

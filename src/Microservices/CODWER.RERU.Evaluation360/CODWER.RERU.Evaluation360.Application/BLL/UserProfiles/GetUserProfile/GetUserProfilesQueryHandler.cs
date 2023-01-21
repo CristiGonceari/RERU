@@ -40,7 +40,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
                 .Where(x => x.IsActive && x.Id != currentUserId)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
-                .Include(up => up.Role)
+                .Include(up => up.EmployeeFunctions)
                 .Include(up => up.Department)
                 .OrderByFullName()
                 .AsQueryable();
@@ -90,7 +90,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
 
             if (request.RoleId.HasValue)
             {
-                items = items.Where(x => x.Role.Id == request.RoleId);
+                items = items.Where(x => x.EmployeeFunctions.ColaboratorId == request.RoleId);
             }
 
             if (request.ExceptUserIds?.Count>0)

@@ -36,11 +36,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
         {
             var evaluation = _appDbContext.Evaluations
                 .Include(e => e.EvaluatedUserProfile)
-                    .ThenInclude(e => e.Role)
+                    .ThenInclude(e => e.EmployeeFunctions)
                 .Include(e => e.EvaluatorUserProfile)
-                    .ThenInclude(e => e.Role)
+                    .ThenInclude(e => e.EmployeeFunctions)
                 .Include(e => e.CounterSignerUserProfile)
-                    .ThenInclude(e => e.Role)
+                    .ThenInclude(e => e.EmployeeFunctions)
                 .FirstOrDefault(e => e.Id == evaluationId);
 
             return await GetPdf(evaluation);
@@ -94,10 +94,24 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
                 mf = mea;
             }
 
-            if (mf >= 1 && mf <= 1.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Dissatisfied;
-            else if (mf >= 1.51m && mf <= 2.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Satisfied;
-            else if (mf >= 2.51m && mf <= 3.5m) evaluation.FinalEvaluationQualification = QualifiersEnum.Good;
-            else if (mf >= 3.51m && mf <= 4m) evaluation.FinalEvaluationQualification = QualifiersEnum.VeryGood;
+            string scoringRange = "";
+
+            if (mf >= 1 && mf <= 1.5m) {
+                evaluation.FinalEvaluationQualification = QualifiersEnum.Dissatisfied;
+                scoringRange = "între 1,00 şi 1,50";
+            }
+            else if (mf >= 1.51m && mf <= 2.5m) {
+                evaluation.FinalEvaluationQualification = QualifiersEnum.Satisfied;
+                scoringRange = "între 1,51 şi 2,50";
+            }
+            else if (mf >= 2.51m && mf <= 3.5m) {
+                evaluation.FinalEvaluationQualification = QualifiersEnum.Good;
+                scoringRange = "între 2,51 şi 3,50";
+            }
+            else if (mf >= 3.51m && mf <= 4m) {
+                evaluation.FinalEvaluationQualification = QualifiersEnum.VeryGood;
+                scoringRange = "între 3,51 şi 4,00";
+            }
 
             var myDictionary = new Dictionary<string, string>();
 
@@ -106,7 +120,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{NameSurnameEvaluated}", evaluation.EvaluatedUserProfile.FullName);  
             myDictionary.Add("{SubdivisionEvaluated}", evaluation.SubdivisionEvaluated);
-            myDictionary.Add("{FunctionSubdivision}", evaluation.EvaluatedUserProfile.Role.Name);
+            myDictionary.Add("{FunctionSubdivision}", evaluation.EvaluatedUserProfile.EmployeeFunctions.Name);
             myDictionary.Add("{SpecialOrMilitaryGrade}", evaluation.SpecialOrMilitaryGrade.ToString());
             myDictionary.Add("{SpecialOrMilitaryGradeText}", evaluation.SpecialOrMilitaryGradeText);
             myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd/MM/yyyy")); 
@@ -175,7 +189,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{pb}", pb.ToString());
             myDictionary.Add("{mea}", mea.ToString());
             myDictionary.Add("{mf}", mf.ToString());
-            myDictionary.Add("{ScoringRange}", ScoringRange(mf));
+            myDictionary.Add("{ScoringRange}", scoringRange);
             myDictionary.Add("{FinalEvaluationQualification}", evaluation.FinalEvaluationQualification.ToString());
             myDictionary.Add("{DateEvaluationInterview}", evaluation.DateEvaluationInterview?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{DateSettingIindividualGoals}", evaluation.DateSettingIindividualGoals?.ToString("dd/MM/yyyy"));
@@ -188,23 +202,14 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{CommentsEvaluated}", evaluation.CommentsEvaluated);
             myDictionary.Add("{DateAccepEvaluated}", evaluation.DateAcceptOrRejectEvaluated?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{NameSurnameEvaluator}", evaluation.EvaluatorUserProfile.FullName);
-            myDictionary.Add("{FunctionEvaluator}", evaluation.EvaluatorUserProfile.Role.Name);
+            myDictionary.Add("{FunctionEvaluator}", evaluation.EvaluatorUserProfile.EmployeeFunctions.Name);
             myDictionary.Add("{OtherComments}", evaluation.OtherComments);
             myDictionary.Add("{NameSurnameCounterSigner}", evaluation.CounterSignerUserProfile.FullName);
-            myDictionary.Add("{FunctionCounterSigner}", evaluation.CounterSignerUserProfile.Role.Name);
+            myDictionary.Add("{FunctionCounterSigner}", evaluation.CounterSignerUserProfile.EmployeeFunctions.Name);
             myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd/MM/yyyy"));
 
             return myDictionary;
-        }
-
-        private string ScoringRange(decimal? mf)
-        {
-            if (mf >= 1 && mf <= 1.5m) return "între 1,00 şi 1,50";
-            else if (mf >= 1.51m && mf <= 2.5m) return "între 1,51 şi 2,50";
-            else if (mf >= 2.51m && mf <= 3.5m) return "între 2,51 şi 3,50";
-            else if (mf >= 3.51m && mf <= 4m) return "între 3,51 şi 4,00";
-            else throw new ArgumentOutOfRangeException("");
         }
 
         private string ReplaceKeys(string source, Dictionary<string, string> myDictionary)
