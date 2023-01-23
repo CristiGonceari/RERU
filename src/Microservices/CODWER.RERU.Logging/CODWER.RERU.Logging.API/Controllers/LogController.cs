@@ -5,10 +5,12 @@ using CODWER.RERU.Logging.Application.GetSelectValues.GetEventSelectValues;
 using CODWER.RERU.Logging.Application.GetSelectValues.GetProjectSelectValues;
 using CODWER.RERU.Logging.DataTransferObjects;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CODWER.RERU.Logging.Application.PrintLogs;
 
 namespace CODWER.RERU.Logging.API.Controllers
 {
@@ -44,6 +46,17 @@ namespace CODWER.RERU.Logging.API.Controllers
         public async Task<Unit> DeletePlan([FromRoute] int years)
         {
             return await Mediator.Send(new DeleteLoggingValuesCommand { PeriodOfYears = years });
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintArticlesPdf([FromBody] PrintLogsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
