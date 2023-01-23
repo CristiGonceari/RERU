@@ -36,7 +36,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles
                 Status = request.Status,
                 UserStatusEnum = request.UserStatusEnum,
                 DepartmentId = request.DepartmentId,
-                RoleId = request.RoleId
+                RoleId = request.RoleId,
+                FunctionId = request.FunctionId
             };
 
             var currentUser = await _currentUserProvider.Get();

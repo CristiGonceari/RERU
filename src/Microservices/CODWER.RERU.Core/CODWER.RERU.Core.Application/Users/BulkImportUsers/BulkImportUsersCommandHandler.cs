@@ -142,11 +142,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 await UpdateProcesses(request.ProcessId);
 
-                workSheet.Cells[i, 11].Value = "Editat";
+                workSheet.Cells[i, 12].Value = "Editat";
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
+                workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
                 Console.WriteLine(e);
             }
         }
@@ -161,11 +161,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 await UpdateProcesses(request.ProcessId);
 
-                workSheet.Cells[i, 11].Value = "Adăugat";
+                workSheet.Cells[i, 12].Value = "Adăugat";
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 11].Value = $"Error: {e.Message}";
+                workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
                 Console.WriteLine(e);
             }
         }
@@ -199,7 +199,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(delimiters, StringSplitOptions.None);
+            var dateStrings = DateTime.Parse(workSheet.Cells[i, 10]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(delimiters, StringSplitOptions.None);
 
             return new CreateUserCommand
             {
@@ -210,9 +210,10 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 Email = workSheet.Cells[i, 5]?.Value?.ToString(),
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "False"),
+                FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0"),
+                EmailNotification = bool.Parse(workSheet.Cells[i, 9]?.Value?.ToString() ?? "False"),
                 BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
-                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
+                PhoneNumber = workSheet.Cells[i, 11]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
         }
@@ -220,7 +221,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(delimiters, StringSplitOptions.None);
+            var dateStrings = DateTime.Parse(workSheet.Cells[i, 10]?.Value?.ToString()).ToString("MM.dd.yyyy")?.Split(delimiters, StringSplitOptions.None);
 
             return new EditUserFromColaboratorCommand()
             {
@@ -232,9 +233,10 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 Email = workSheet.Cells[i, 5]?.Value?.ToString(),
                 DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0"),
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
-                EmailNotification = bool.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "True"),
+                FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0"),
+                EmailNotification = bool.Parse(workSheet.Cells[i, 9]?.Value?.ToString() ?? "True"),
                 BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
-                PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
+                PhoneNumber = workSheet.Cells[i, 11]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
         }

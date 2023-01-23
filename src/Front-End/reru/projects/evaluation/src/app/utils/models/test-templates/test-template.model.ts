@@ -1,3 +1,4 @@
+import { BasicTemplateEnum } from "../../enums/basic-template.enum";
 import { SequenceTypeEnum } from "../../enums/sequence-type.enum";
 import { TestTemplateModeEnum } from "../../enums/test-template-mode.enum";
 import { TestTemplateStatusEnum } from "../../enums/test-template-status.enum";
@@ -13,4 +14,5 @@ export class TestTemplate {
     status: TestTemplateStatusEnum;
     mode: TestTemplateModeEnum;
     roles: any[]
+    basicTestTemplate?: BasicTemplateEnum | null;
 }

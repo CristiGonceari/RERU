@@ -67,6 +67,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             ProgrammedTimeTo = request.ProgrammedTimeTo,
             EvaluatorName = request.EvaluatorName,
             RoleId = request.RoleId,
+            FunctionId = request.FunctionId,
             DepartmentId = request.DepartmentId,
             ColaboratorId = request.ColaboratorId,
         };

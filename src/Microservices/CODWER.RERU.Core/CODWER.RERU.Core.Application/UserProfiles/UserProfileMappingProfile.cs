@@ -19,6 +19,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             CreateMap<UserProfile, UserProfileDto>()
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(src => src.EmployeeFunction.Name))
                 .ForMember(x => x.Birthday, opts => opts.MapFrom(src => src.BirthDate))
                 .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
                 .ForMember(x => x.AccessModeEnum, opts => opts.MapFrom(src => src.AccessModeEnum != null ? src.AccessModeEnum : AccessModeEnum.OnlyCandidates))

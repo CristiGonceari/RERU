@@ -51,7 +51,7 @@ export class UserListTableComponent implements OnInit {
 	userStatusEnum = UserStatusEnum;
 
 	fileName: string;
-  	fileStatus = { requestType: '', percent: 1 }
+	fileStatus = { requestType: '', percent: 1 }
 	isLoadingMedia: boolean = false;
 
 	constructor(
@@ -103,25 +103,27 @@ export class UserListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['-','userName','lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName','departmentColaboratorId', 'roleName', 'roleColaboratorId', 'birthday', 'phoneNumber', 'userStatusEnum', 'accessModeEnum', 'isActive' ];
-
-		for (let i = 1; i <= headersHtml.length-2; i++) {
-			if(i == 2){
-				this.headersToPrint.push({ value: "lastName", label: "Nume", isChecked: true})
-			} else if(i == 3){
-				this.headersToPrint.push({ value: "firstName", label: "Prenume", isChecked: true})
-			} else if(i == 4){
-				this.headersToPrint.push({ value: "fatherName", label: "Patronimic", isChecked: true})
-			} else if(i == 8){
-				this.headersToPrint.push({ value: "departmentColaboratorId", label: "Id Department", isChecked: true})
-			} else if(i == 10){
-				this.headersToPrint.push({ value: "roleColaboratorId", label: "Id Rol", isChecked: true})
-			} else if(i == 11){
-				this.headersToPrint.push({ value: "birthday", label: "Data nașterii", isChecked: true})
-			} else if(i == 12){
-				this.headersToPrint.push({ value: "phoneNumber", label: "Nr. telefon", isChecked: true})
+		let headersDto = ['-', 'userName', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'departmentColaboratorId', 'roleName', 'roleColaboratorId','functionName' ,'functionColaboratorId', 'birthday', 'phoneNumber', 'userStatusEnum', 'accessModeEnum', 'isActive'];
+         
+		for (let i = 1; i <= headersHtml.length - 2; i++) {
+			if (i == 2) {
+				this.headersToPrint.push({ value: "lastName", label: "Nume", isChecked: true })
+			} else if (i == 3) {
+				this.headersToPrint.push({ value: "firstName", label: "Prenume", isChecked: true })
+			} else if (i == 4) {
+				this.headersToPrint.push({ value: "fatherName", label: "Patronimic", isChecked: true })
+			} else if (i == 8) {
+				this.headersToPrint.push({ value: "departmentColaboratorId", label: "Id Department", isChecked: true })
+			} else if (i == 10) {
+				this.headersToPrint.push({ value: "roleColaboratorId", label: "Id Rol", isChecked: true })
+			} else if (i == 12) {
+				this.headersToPrint.push({ value: "functionColaboratorId", label: "Id Funcție angajat", isChecked: true })
+			} else if (i == 13) {
+				this.headersToPrint.push({ value: "birthday", label: "Data nașterii", isChecked: true })
+			} else if (i == 14) {
+				this.headersToPrint.push({ value: "phoneNumber", label: "Nr. telefon", isChecked: true })
 			} else {
-				this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true})
+				this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 			}
 		}
 
@@ -219,20 +221,20 @@ export class UserListTableComponent implements OnInit {
 					forkJoin([
 						this.translate.get('notification.title.success'),
 						this.translate.get('bulk-import-users.succes-msg'),
-					  ]).subscribe(([title, description]) => {
+					]).subscribe(([title, description]) => {
 						this.title = title;
 						this.description = description;
-					  });
-					  this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+					});
+					this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				} else {
 					forkJoin([
 						this.translate.get('notification.title.error'),
 						this.translate.get('bulk-import-users.error-msg'),
-					  ]).subscribe(([title, description]) => {
+					]).subscribe(([title, description]) => {
 						this.title = title;
 						this.description = description;
-					  });
-					  this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+					});
+					this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				}
 				this.isStartAddingUsers = false;
 				clearInterval(interval);
@@ -379,9 +381,9 @@ export class UserListTableComponent implements OnInit {
 		window.open(`http://${host}/reru-evaluation/#/user-profile/${id}/overview`, '_self')
 	}
 
-	getUserDataSheet(id: number){
+	getUserDataSheet(id: number) {
 		this.isLoadingMedia = true;
-		
+
 		const params = {
 			userProfileId: id
 		}
@@ -396,46 +398,46 @@ export class UserListTableComponent implements OnInit {
 			});
 			this.reportProggress(event);
 		},
-		(error) =>{
-			forkJoin([
-				this.translate.get('modal.error'),
-				this.translate.get('downloand-message.error-dosier'),
-			]).subscribe(([title, description]) => {
-				this.title = title;
-				this.description = description;
-			});
-			this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			this.isLoadingMedia = false;
-		})
+			(error) => {
+				forkJoin([
+					this.translate.get('modal.error'),
+					this.translate.get('downloand-message.error-dosier'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+				});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				this.isLoadingMedia = false;
+			})
 	}
 
 	private reportProggress(httpEvent: HttpEvent<Blob>): void {
 		switch (httpEvent.type) {
-		  case HttpEventType.Sent:
-			this.fileStatus.percent = 1;
-			break;
-		  case HttpEventType.UploadProgress:
-			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-		  break;
-		  case HttpEventType.DownloadProgress:
-			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-			break;
-		  case HttpEventType.Response:
-			this.fileStatus.requestType = "Done";
-			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+			case HttpEventType.Sent:
+				this.fileStatus.percent = 1;
+				break;
+			case HttpEventType.UploadProgress:
+				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				break;
+			case HttpEventType.DownloadProgress:
+				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				break;
+			case HttpEventType.Response:
+				this.fileStatus.requestType = "Done";
+				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
-			const fileName = httpEvent.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].slice(1, -1);
-			const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-			const file = new File([blob], fileName, { type: httpEvent.body.type });
-			saveAs(file);
-			this.isLoadingMedia = false;
-			break;
+				const fileName = httpEvent.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].slice(1, -1);
+				const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+				const file = new File([blob], fileName, { type: httpEvent.body.type });
+				saveAs(file);
+				this.isLoadingMedia = false;
+				break;
 		}
-	  }
-	
-	  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+	}
+
+	updateStatus(loaded: number, total: number | undefined, requestType: string) {
 		this.fileStatus.requestType = requestType;
 		this.fileStatus.percent = Math.round(100 * loaded / total);
-	  }
+	}
 
 }

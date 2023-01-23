@@ -16,6 +16,8 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.UserProfile
         public string DepartmentName { get; set; }
         public int? RoleColaboratorId { get; set; }
         public string RoleName { get; set; }
+        public int? FunctionColaboratorId { get; set; }
+        public string FunctionName { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
         public AccessModeEnum? AccessModeEnum { get; set; }
         public IEnumerable<string> Permissions { get; set; }

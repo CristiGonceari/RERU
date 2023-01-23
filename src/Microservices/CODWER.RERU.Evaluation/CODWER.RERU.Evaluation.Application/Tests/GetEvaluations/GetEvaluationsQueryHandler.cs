@@ -41,7 +41,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
                 ProgrammedTimeTo = request.ProgrammedTimeTo,
                 EvaluatorName = request.EvaluatorName,
                 DepartmentId = request.DepartmentId,
-                RoleId = request.RoleId
+                RoleId = request.RoleId,
+                FunctionId = request.FunctionId
             };
 
             var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);

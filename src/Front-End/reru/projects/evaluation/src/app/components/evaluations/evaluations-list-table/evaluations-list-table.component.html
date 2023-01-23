@@ -84,6 +84,9 @@
                                 <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
                             </div>
                             <div class="col">
+                                <app-search-employee-function (filter)="testsTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
+                             </div>
+                            <div class="col">
                                 <div class="text-right">
                                     <app-button (handle)="clearFields(); testsTable.resetFilters(); testsTable.getTests({ page: 1 })" [value]="'button.reset' | translate"
                                         class="mr-5"></app-button>

@@ -146,6 +146,18 @@
                 </div>
                 <div class="form-group row align-items-center mb-9">
                   <label class="col-xl-3 col-lg-3 col-form-label">
+                    {{ 'user-roles.employee-function' | translate }}
+                  </label>
+                  <div class="col-lg-9 col-xl-9">
+                    <select class="form-control form-control-lg form-control-solid" name="functionColaboratorId"
+                      id="role" type="number" formControlName="functionColaboratorId">
+                      <option value="null">{{'module-access.select' | translate}}</option>
+                      <option *ngFor="let item of employeeFunctions" [value]="item.value">{{ item.label }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row align-items-center mb-9">
+                  <label class="col-xl-3 col-lg-3 col-form-label">
                     {{ 'user-profile.access-mode' | translate }}
                   </label>
                   <div class="col-lg-9 col-xl-9">

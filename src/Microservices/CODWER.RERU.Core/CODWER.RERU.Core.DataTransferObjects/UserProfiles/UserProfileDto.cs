@@ -21,6 +21,8 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string DepartmentName { get; set; }
         public int? RoleColaboratorId { get; set; }
         public string RoleName { get; set; }
+        public int? FunctionColaboratorId { get; set; }
+        public string FunctionName { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
         public AccessModeEnum AccessModeEnum { get; set; }
         public bool IsActive { set; get; }

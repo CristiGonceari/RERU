@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { BasicTemplateEnum } from '../../../utils/enums/basic-template.enum';
 
 @Component({
 	selector: 'add-edit-test-templates',
@@ -31,6 +32,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 	testTemplate: TestTemplate;
 	title: string;
 	description: string;
+	basicTemplateEnum = BasicTemplateEnum;
 
 	tags: any[] = [];
 	placeHolder = '+ Rol';
@@ -52,7 +54,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 			mode: new FormControl(),
 			qualifyingType: new FormControl(),
 			minPercent: new FormControl(),
-			status: new FormControl()
+			status: new FormControl(),
+			basicTestTemplate: new FormControl(null)
 		});
 		this.onTextChange();
 		this.getMode();
@@ -121,6 +124,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate || null)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -135,6 +139,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate || null)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -151,6 +156,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			} else if (this.modeId == 1) {
 				this.testForm = this.formBuilder.group({
@@ -159,6 +165,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					mode: this.formBuilder.control(this.modeId, [Validators.required],),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			} else {
 				this.testForm = this.formBuilder.group({
@@ -168,6 +175,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			}
 		}
@@ -223,7 +231,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 		if (this.modeId == 0) this.testForm.value.qualifyingType = 1;
 		if (this.modeId == 1) this.testForm.value.qualifyingType = 5;
 
-		this.testTemplateService.editTestTemplate({ data: this.testForm.value }).subscribe(() => {
+		this.testTemplateService.editTestTemplate({ data: this.preParseRequest(this.testForm.value) }).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
 				this.translate.get('tests.succes-update-msg'),
@@ -245,7 +253,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 		if (this.modeId == 0) this.testForm.value.qualifyingType = 1;
 		if (this.modeId == 1) this.testForm.value.qualifyingType = 5;
 
-		this.testTemplateService.addTestTemplate({ data: this.testForm.value }).subscribe(res => {
+		this.testTemplateService.addTestTemplate({ data: this.preParseRequest(this.testForm.value) }).subscribe(res => {
 
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -262,6 +270,13 @@ export class AddEditTestTemplateComponent implements OnInit {
 		}, err => {
 			this.isLoading = false;
 		});
+	}
+
+	private preParseRequest(data: TestTemplate): TestTemplate {
+		return {
+			...data,
+			basicTestTemplate: !isNaN(data?.basicTestTemplate) ? data.basicTestTemplate : null
+		}
 	}
 
 	backClicked() {

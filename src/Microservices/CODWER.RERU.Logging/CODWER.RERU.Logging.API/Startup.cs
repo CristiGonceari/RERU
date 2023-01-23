@@ -3,6 +3,7 @@ using CODWER.RERU.Logging.Application.DependencyInjection;
 using CODWER.RERU.Logging.Application.Validations;
 using CODWER.RERU.Logging.Persistence;
 using CODWER.RERU.Logging.Persistence.DbSeeder;
+using Newtonsoft.Json.Serialization;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Logging.Context;
 using CVU.ERP.Module;
@@ -20,6 +21,8 @@ using System.Reflection;
 using CVU.ERP.Common;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
 
@@ -67,6 +70,9 @@ namespace CODWER.RERU.Logging.API
             //services.AddModuleApplicationServices();
             services.AddLoggingSetup(Configuration);
 
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
             services.AddSwaggerGen(c =>
             {

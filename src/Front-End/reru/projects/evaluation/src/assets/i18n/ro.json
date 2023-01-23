@@ -402,7 +402,14 @@
     "test-template": "șablon de test",
     "test-template-delete-modal": "șablonul de test",
     "start-test": "Testul va începe în câteva minute",
-    "verified-by-system": "Verificat de sistem"
+    "verified-by-system": "Verificat de sistem",
+    "basic-template-dropdown": {
+      "title": "Șablon",
+      "1": "Pregătire generală",
+      "2": "Pregătire de specialitate",
+      "3": "Instrucțiunea tragerii",
+      "4": "Intervenția profesională"
+    }
   },
   "verify-test": {
     "title": "Teste",
@@ -1117,6 +1124,8 @@
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
     "user-role-details": "Detaliile rolului",
-    "search-role": "Căutați după rolul evaluatului"
+    "search-role": "Căutați după rolul evaluatului",
+    "employee-function": "Funcție angajat",
+    "search-by-function": "Căutați după funcție"
   }
 }

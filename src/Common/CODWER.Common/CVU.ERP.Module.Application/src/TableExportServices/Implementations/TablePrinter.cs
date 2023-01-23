@@ -108,6 +108,8 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
 
                     th, td {
                         padding: 15px;
+                        word-break: break-all;
+                        max-width:400px;
                     }
 
                     p {

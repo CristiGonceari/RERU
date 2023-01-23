@@ -15,6 +15,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
         public string Idnp { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
 
         public bool EventUsers { get; set; }
