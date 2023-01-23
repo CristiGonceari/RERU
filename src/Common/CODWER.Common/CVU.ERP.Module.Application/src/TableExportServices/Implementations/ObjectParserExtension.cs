@@ -20,7 +20,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
             switch (result)
             {
                 case DateTime:
-                    result = Convert.ToDateTime(result).ToString("dd/MM/yyyy, HH:mm");
+                    result = Convert.ToDateTime(result).ToString("dd.MM.yyyy, HH:mm");
                     break;
                 case List<string>:
                     result = result.ParseDataByListOfStrings();

@@ -29,7 +29,8 @@ namespace CODWER.RERU.Logging.Application.Articles.PrintArticles
                 Name = request.TableName,
                 Items = articles,
                 Fields = request.Fields,
-                Orientation = request.Orientation
+                Orientation = request.Orientation,
+                ExportFormat = request.TableExportFormat
             });
 
             return result;
