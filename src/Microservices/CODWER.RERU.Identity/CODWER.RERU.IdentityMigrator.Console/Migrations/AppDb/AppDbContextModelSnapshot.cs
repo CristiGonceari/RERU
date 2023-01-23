@@ -717,6 +717,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .UseIdentityByDefaultColumn();
 
                     b.Property<int?>("ColaboratorId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("CreateById")
@@ -9160,7 +9161,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasOne("RERU.Data.Entities.EmployeeFunction", "EmployeeFunction")
                         .WithMany()
-                        .HasForeignKey("FunctionColaboratorId");
+                        .HasForeignKey("FunctionColaboratorId")
+                        .HasPrincipalKey("ColaboratorId");
 
                     b.HasOne("RERU.Data.Entities.PersonalEntities.Role", "Role")
                         .WithMany()

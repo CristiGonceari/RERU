@@ -7,6 +7,6 @@ namespace RERU.Data.Entities
     {
         public string Name { set; get; }
         public EvaluationTypeEnum Type { set; get; }
-        public int ColaboratorId { set; get; }
+        public int? ColaboratorId { set; get; }
     }
 }
