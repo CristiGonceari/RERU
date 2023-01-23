@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microservices\CODWER.RERU.Core\CODWER.RERU.Core.DataTransferObjects\CODWER.RERU.Core.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\..\..\Microservices\CODWER.RERU.Personal\CODWER.RERU.Personal.DataTransferObjects\CODWER.RERU.Personal.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
