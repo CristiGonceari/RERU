@@ -65,6 +65,12 @@ namespace RERU.Data.Persistence.Context
                 .HasForeignKey(up => up.RoleColaboratorId)
                 .HasPrincipalKey(r => r.ColaboratorId);
 
+            modelBuilder.Entity<UserProfile>()
+                .HasOne(up => up.EmployeeFunctions)
+                .WithMany()
+                .HasForeignKey(up => up.FunctionColaboratorId)
+                .HasPrincipalKey(r => r.ColaboratorId);
+
             modelBuilder.Entity<Contractor>()
                         .Ignore(b => b.FirstName)
                         .Ignore(b => b.LastName)

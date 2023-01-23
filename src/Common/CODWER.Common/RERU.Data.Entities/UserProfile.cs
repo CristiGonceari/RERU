@@ -54,12 +54,10 @@ namespace RERU.Data.Entities
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
 
-
         public int? FunctionColaboratorId { get; set; }
 
         [ForeignKey(nameof(FunctionColaboratorId))]
         public EmployeeFunction EmployeeFunction { set; get; }
-
 
         [JsonIgnore]
         public Contractor Contractor { get; set; }
