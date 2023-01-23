@@ -1124,6 +1124,8 @@
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
     "user-role-details": "Detaliile rolului",
-    "search-role": "Căutați după rolul evaluatului"
+    "search-role": "Căutați după rolul evaluatului",
+    "employee-function": "Funcție angajat",
+    "search-by-function": "Căutați după funcție"
   }
 }

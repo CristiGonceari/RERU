@@ -15,6 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
         public string Idnp { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
         public int EventId { get; set; }
     }

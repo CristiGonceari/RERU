@@ -29,6 +29,7 @@ import { SearchDepartmentComponent } from './components/search-department/search
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { ViewPositionDiagramModalComponent } from './modals/view-position-diagram-modal/view-position-diagram-modal.component';
 import { CKEditorModule as OldCKEditorModule } from 'ngx-ckeditor';
+import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { CKEditorModule as OldCKEditorModule } from 'ngx-ckeditor';
     SearchStatusComponent,
     SearchDepartmentComponent,
     SearchRoleComponent,
-    ViewPositionDiagramModalComponent
+    ViewPositionDiagramModalComponent,
+    SearchEmployeeFunctionComponent
   ],
   imports: [
     HttpClientModule,
@@ -79,7 +81,9 @@ import { CKEditorModule as OldCKEditorModule } from 'ngx-ckeditor';
     EventCalendarComponent,
     DateFilterPipe,
     SearchDepartmentComponent,
-    SearchRoleComponent
+    SearchRoleComponent,
+    SearchEmployeeFunctionComponent
+
   ]
 })
 export class UtilsModule { }

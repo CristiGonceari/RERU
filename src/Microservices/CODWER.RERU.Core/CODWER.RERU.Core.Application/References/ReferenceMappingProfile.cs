@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CODWER.RERU.Core.DataTransferObjects.SelectValues;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using RERU.Data.Entities;
 
 namespace CODWER.RERU.Core.Application.References
@@ -32,6 +33,10 @@ namespace CODWER.RERU.Core.Application.References
               .ForMember(x => x.Value, opts => opts.MapFrom(sv => sv.Id))
               .ForMember(x => x.Label, opts => opts.MapFrom(sv => sv.Name))
               .ForMember(x => x.TranslateId, opts => opts.MapFrom(sv => sv.TranslateId));
+
+            CreateMap<EmployeeFunction, SelectItem>()
+                .ForMember(x => x.Value, opts => opts.MapFrom(sv => sv.ColaboratorId.ToString()))
+                .ForMember(x => x.Label, opts => opts.MapFrom(sv => sv.Name));
         }
     }
 }

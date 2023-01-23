@@ -14,6 +14,7 @@ import { UserRoleService } from '../../../utils/services/user-role.service';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { AccessModeEnum } from '../../../utils/models/access-mode.enum';
+import { ReferenceService } from '../../../utils/services/reference.service';
 
 @Component({
   selector: 'app-add',
@@ -33,6 +34,7 @@ export class AddComponent implements OnInit {
   departments: SelectItem[] = [{ label: '', value: '' }];
   roles: SelectItem[] = [{ label: '', value: '' }];
   accessModes: SelectItem[] = [{ label: '', value: '' }];
+  employeeFunctions: SelectItem[] = [{ label: '', value: '' }];
   accesModeEnum = AccessModeEnum;
 
   birthDate: Date;
@@ -50,13 +52,15 @@ export class AddComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private departmentService: DepartmentService,
-    private roleService: UserRoleService
+    private roleService: UserRoleService,
+    private referenceService: ReferenceService,
   ) { }
 
   ngOnInit(): void {
     this.getAccessMode();
     this.getDepartments();
     this.getRoles();
+    this.getEmployeeFunctions();
     this.initForm();
     if (this.userId) this.get();
   }
@@ -67,6 +71,10 @@ export class AddComponent implements OnInit {
 
   getRoles(){
     this.roleService.getValues().subscribe(res => this.roles = res.data);
+  }
+
+  getEmployeeFunctions(){
+    this.referenceService.getEmployeeFunctionsSelectValues().subscribe(res => this.employeeFunctions = res.data);
   }
 
   getAccessMode(){
@@ -102,6 +110,7 @@ export class AddComponent implements OnInit {
       phoneNumber: this.fb.control("+373", [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$"), Validators.maxLength(12), Validators.minLength(12)]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
+      functionColaboratorId: this.fb.control(null, [Validators.required]),
       emailNotification: this.fb.control(false, [Validators.required]),
       accessModeEnum: this.fb.control(null, [Validators.required])
     });
@@ -128,6 +137,7 @@ export class AddComponent implements OnInit {
       idnp: this.userForm.value.idnp,
       departmentColaboratorId: this.userForm.value.departmentColaboratorId,
       roleColaboratorId: this.userForm.value.roleColaboratorId,
+      functionColaboratorId: this.userForm.value.functionColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
       birthDate: this.date || null,
       phoneNumber: this.userForm.value.phoneNumber,

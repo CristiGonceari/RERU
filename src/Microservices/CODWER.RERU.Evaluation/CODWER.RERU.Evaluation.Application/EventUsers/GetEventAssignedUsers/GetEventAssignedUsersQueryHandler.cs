@@ -35,12 +35,15 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)
                      .ThenInclude(x => x.Role)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.EmployeeFunction)
                 .Where(x => x.EventId == request.EventId)
                 .AsQueryable();
 
             var userProfiles = _appDbContext.UserProfiles
                 .Include(up => up.Role)
                 .Include(up => up.Department)
+                .Include(up => up.EmployeeFunction)
                 .OrderByFullName()
                 .AsQueryable();
 
@@ -79,6 +82,11 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
             if (request.RoleId.HasValue)
             {
                 userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.EmployeeFunction.Id == request.FunctionId);
             }
 
             if (request.UserStatusEnum.HasValue)

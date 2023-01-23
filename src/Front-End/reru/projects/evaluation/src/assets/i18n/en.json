@@ -1124,6 +1124,8 @@
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
     "user-role-details": "Role details",
-    "search-role": "Search by evaluat role"
+    "search-role": "Search by evaluat role",
+    "employee-function": "Employee function",
+    "search-by-function": "Search by function"
   }
 }
