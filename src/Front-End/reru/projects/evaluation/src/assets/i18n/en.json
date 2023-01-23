@@ -403,7 +403,14 @@
     "test-template": "test template",
     "start-test": "Test is going to start in few minutes",
     "verified-by-system": "Verified by the system",
-    "test-template-delete-modal": "test template"
+    "test-template-delete-modal": "test template",
+    "basic-template-dropdown": {
+      "title": "Template",
+      "1": "General training",
+      "2": "Specialized training",
+      "3": "Shooting instruction",
+      "4": "Professional intervention"
+    }
   },
   "verify-test": {
     "title": "Tests",
