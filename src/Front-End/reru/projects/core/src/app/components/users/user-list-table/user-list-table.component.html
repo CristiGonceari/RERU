@@ -42,6 +42,7 @@
         <th scope="col" class="d-none"></th>
         <th scope="col"> {{ 'user-roles.role' | translate }} </th>
         <th scope="col" class="d-none"></th>
+        <th scope="col"> {{ 'user-roles.employee-function' | translate }} </th>
         <th scope="col" class="d-none"></th>
         <th scope="col" class="d-none"></th>
         <th scope="col" style="text-align: center;"> {{ 'table.posture' | translate }} </th>
@@ -73,6 +74,10 @@
         <td [class.no-actions]="!viewDetails">
           <span class="font-size-lg" *ngIf="user.roleName">{{ user.roleName }}</span>
           <span class="font-size-lg" *ngIf="!user.roleName">-</span>
+        </td>
+        <td [class.no-actions]="!viewDetails">
+          <span class="font-size-lg" *ngIf="user.functionName">{{ user.functionName }}</span>
+          <span class="font-size-lg" *ngIf="!user.functionName">-</span>
         </td>
         <td style="text-align: center;" [class.no-actions]="!viewDetails">{{'user-profile.' + userStatusEnum[user.userStatusEnum] | translate}}</td>
         <td style="text-align: center;" [class.no-actions]="!viewDetails">{{'statuses.' + accessMode[user.accessModeEnum] | translate}}</td>

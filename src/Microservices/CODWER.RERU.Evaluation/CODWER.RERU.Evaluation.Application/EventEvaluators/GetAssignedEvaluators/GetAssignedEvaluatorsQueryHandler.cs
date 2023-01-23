@@ -38,6 +38,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
             var userProfiles = _appDbContext.UserProfiles
                                             .Include(up => up.Role)
                                             .Include(up => up.Department)
+                                            .Include(up => up.EmployeeFunction)
                                             .Include(up => up.EventUsers)
                                             .OrderByFullName()
                                             .AsQueryable();
@@ -86,6 +87,11 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
             if (request.RoleId.HasValue)
             {
                 userProfiles = userProfiles.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.EmployeeFunction.Id == request.FunctionId);
             }
 
             return userProfiles;

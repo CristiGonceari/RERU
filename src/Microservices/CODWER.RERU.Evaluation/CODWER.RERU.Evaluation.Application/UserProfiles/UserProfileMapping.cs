@@ -22,6 +22,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles
                 .ForMember(x => x.DepartmentColaboratorId, opts => opts.MapFrom(src => src.DepartmentColaboratorId))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(src => src.EmployeeFunction.Name))
                 .ForMember(x => x.RoleColaboratorId, opts => opts.MapFrom(src => src.RoleColaboratorId));
 
             CreateMap<UserProfileDto, InternalUserProfileCreate>()

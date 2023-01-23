@@ -15,6 +15,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModul
         public string Idnp { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public UserStatusEnum? UserStatusEnum { get; set; }
 
         public int TestTemplateId { get; set; }

@@ -14,6 +14,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
         public DateTime? BirthDate { get; set; }
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
+        public int? FunctionColaboratorId { get; set; }
         public AccessModeEnum? AccessModeEnum { get; set; }
         public bool EmailNotification { get; set; }
         public string MediaFileId { get; set; }

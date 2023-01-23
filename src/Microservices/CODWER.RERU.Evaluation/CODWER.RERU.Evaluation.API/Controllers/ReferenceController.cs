@@ -22,6 +22,7 @@ using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CODWER.RERU.Evaluation.Application.References.GetAllEventsValues;
+using CODWER.RERU.Evaluation.Application.References.GetEmployeeFunctionsValue;
 using CODWER.RERU.Evaluation.Application.References.GetLocationsSelectValues;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
@@ -221,6 +222,14 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<SelectItem>> GetDepartments()
         {
             var query = new GetDepartmentsValuesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("employee-functions/select-values")]
+        public async Task<List<SelectItem>> GetEmployeeFunctions()
+        {
+            var query = new GetEmployeeFunctionsQuery();
 
             return await Mediator.Send(query);
         }

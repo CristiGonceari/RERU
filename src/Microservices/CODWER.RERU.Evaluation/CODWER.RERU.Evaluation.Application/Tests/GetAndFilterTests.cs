@@ -20,6 +20,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)
                     .ThenInclude(x => x.Role)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.EmployeeFunction)
                 .Include(t => t.Evaluator)
                 .Include(t => t.Location)
                 .Include(t => t.TestTemplate)
@@ -171,6 +173,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             if (request.RoleId.HasValue)
             {
                 tests = tests.Where(x => x.UserProfile.Role.Id == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                tests = tests.Where(x => x.UserProfile.EmployeeFunction.Id == request.FunctionId);
             }
 
             return tests;

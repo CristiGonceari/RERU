@@ -15,6 +15,7 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             var userProfiles = appDbContext.UserProfiles
                 .Include(x => x.Department)
                 .Include(x => x.Role)
+                .Include(x => x.EmployeeFunction)
                 .OrderBy(up => up.LastName)
                 .ThenBy(up => up.FirstName)
                 .AsQueryable();
@@ -72,6 +73,11 @@ namespace CODWER.RERU.Core.Application.UserProfiles
             if (request.RoleId.HasValue)
             {
                 userProfiles = userProfiles.Where(x => x.Role.ColaboratorId == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                userProfiles = userProfiles.Where(x => x.EmployeeFunction.ColaboratorId == request.FunctionId);
             }
 
             if (request.UserStatusEnum.HasValue)

@@ -38,6 +38,10 @@ export class ReferenceService extends AbstractService{
     return this.http.get(`${this.coreUrl}/${this.urlRoute}/registration-flux-steps/select-values`);
   }
 
+  getEmployeeFunctionsSelectValues(): Observable<any>{
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/employee-functions/select-values`);
+  }
+
   getStudyFrequencyEnum(): Observable<any>{
     return this.http.get(`${this.coreUrl}/${this.urlRoute}/studies-frequency/select-values`);
   }

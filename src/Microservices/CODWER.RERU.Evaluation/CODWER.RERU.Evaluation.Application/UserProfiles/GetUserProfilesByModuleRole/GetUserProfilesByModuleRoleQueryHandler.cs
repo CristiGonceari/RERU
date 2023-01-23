@@ -44,6 +44,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModul
                 .Include(up => up.EventUsers)
                 .Include(up => up.Role)
                 .Include(up => up.Department)
+                .Include(up => up.EmployeeFunction)
                 .Include(up => up.ModuleRoles)
                 .OrderByFullName()
                 .AsQueryable();
@@ -117,6 +118,11 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfilesByModul
             if (request.RoleId.HasValue)
             {
                 items = items.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                items = items.Where(x => x.EmployeeFunction.Id == request.FunctionId);
             }
 
             if (request.ExceptUserIds.Count > 0)

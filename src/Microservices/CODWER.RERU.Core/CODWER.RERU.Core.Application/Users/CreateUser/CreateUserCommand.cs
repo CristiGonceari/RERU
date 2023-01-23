@@ -15,6 +15,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
         public DateTime? BirthDate { get; set; }
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
+        public int? FunctionColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
         public AccessModeEnum? AccessModeEnum { get; set; }
     }

@@ -13,6 +13,7 @@ using RERU.Data.Entities.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.References.GetCoreRoles;
+using CODWER.RERU.Core.Application.References.GetEmployeeFunctions;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -45,6 +46,14 @@ namespace CODWER.RERU.Core.API.Controllers
         public async Task<List<SelectValue>> GetCandidateNationalities()
         {
             var query = new GetCandidateNationalitesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("employee-functions/select-values")]
+        public async Task<List<SelectItem>> GetEmployeFunctionsSelectValue()
+        {
+            var query = new GetEmployeeFunctionsQuery();
 
             return await Mediator.Send(query);
         }
