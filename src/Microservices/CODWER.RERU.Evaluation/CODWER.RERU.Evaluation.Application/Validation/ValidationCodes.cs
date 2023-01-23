@@ -182,5 +182,11 @@
 
         //solicited vacant position
         public static string INVALID_SOLICITED_VACANT_POSITION_ID = "03002200";
+
+        //department
+        public static string INVALID_DEPARTMENT_ID = "03003001";
+
+        //organigram
+        public static string INVALID_ORGANIGRAM_ID = "03004001";
     }
 }
