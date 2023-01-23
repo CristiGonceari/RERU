@@ -27,7 +27,7 @@ namespace RERU.Data.Entities.Evaluation360
         public string? SubdivisionName { set; get; }
         public DateTime? DateCompletionGeneralData { set; get; }
         public string? SubdivisionEvaluated { set; get; }
-        public GradeEnum? SpecialOrMilitaryGrade { set; get; }
+        public GradesEnum? SpecialOrMilitaryGrade { set; get; }
         public String? SpecialOrMilitaryGradeText { set; get; }
         public DateTime? PeriodEvaluatedFromTo { set; get; }
         public DateTime? PeriodEvaluatedUpTo { set; get; }
