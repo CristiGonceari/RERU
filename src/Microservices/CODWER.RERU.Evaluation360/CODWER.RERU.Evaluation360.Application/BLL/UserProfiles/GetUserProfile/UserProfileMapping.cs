@@ -14,8 +14,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.UserProfiles.GetUserProfile
                 .ForMember(x => x.DepartmentColaboratorId, opts => opts.MapFrom(src => src.DepartmentColaboratorId))
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(src => src.Department.Name))
                 .ForMember(x => x.RoleName, opts => opts.MapFrom(src => src.Role.Name))
-                .ForMember(x => x.RoleColaboratorId, opts => opts.MapFrom(src => src.RoleColaboratorId));
-
+                .ForMember(x => x.RoleColaboratorId, opts => opts.MapFrom(src => src.Role.ColaboratorId))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(src => src.EmployeeFunction.Name))
+                .ForMember(x => x.FunctionColaboratorId, opts => opts.MapFrom(src => src.EmployeeFunction.ColaboratorId))
+                ;
         }
     }
 }

@@ -403,7 +403,14 @@
     "test-template": "test template",
     "start-test": "Test is going to start in few minutes",
     "verified-by-system": "Verified by the system",
-    "test-template-delete-modal": "test template"
+    "test-template-delete-modal": "test template",
+    "basic-template-dropdown": {
+      "title": "Template",
+      "1": "General training",
+      "2": "Specialized training",
+      "3": "Shooting instruction",
+      "4": "Professional intervention"
+    }
   },
   "verify-test": {
     "title": "Tests",
@@ -1117,6 +1124,8 @@
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
     "user-role-details": "Role details",
-    "search-role": "Search by evaluat role"
+    "search-role": "Search by evaluat role",
+    "employee-function": "Employee function",
+    "search-by-function": "Search by function"
   }
 }

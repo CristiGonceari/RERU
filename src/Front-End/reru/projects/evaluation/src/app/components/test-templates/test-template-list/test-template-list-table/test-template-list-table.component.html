@@ -14,6 +14,7 @@
                     <th scope="col" class="text-center" style="width: 100px">{{'tests.time-min' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 130px">{{'verify-test.min-points' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 75px">{{'tests.mode' | translate}}</th>
+                    <th scope="col" class="text-center" style="width: 75px">{{'tests.basic-template-dropdown.title' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 150px">{{'test-template.qualifying-type' | translate}}</th>
                     <th scope="col" class="text-center" style="width: 75px">{{'tests.status' | translate}}</th>
                     <th *ngIf="testTemplateList.length" class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
@@ -33,6 +34,7 @@
                         <span class="font-size-lg" *ngIf="testTemplate.minPercent == 0">-</span>
                     </td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
+                    <td>{{('tests.basic-template-dropdown.'+ testTemplate.basicTestTemplate | translate) || '-'}}</td>
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType != null">{{'statuses.' + qualifyingType[testTemplate.qualifyingType] | translate}}</td>
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType == null">-</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>

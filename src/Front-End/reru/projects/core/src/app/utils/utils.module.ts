@@ -17,6 +17,7 @@ import { NgbDateFRParserFormatter } from './services/date-parse-formatter.servic
 import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/bulletin-address-modal.component';
 import { SearchDepartmentComponent } from './components/search-department/search-department.component';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
+import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
 
 const commonComponents = [
   DateComponent,
@@ -30,7 +31,8 @@ const commonComponents = [
   DateFilterPipe,
   BulletinAddressModalComponent,
   SearchDepartmentComponent,
-  SearchRoleComponent
+  SearchRoleComponent,
+  SearchEmployeeFunctionComponent
 ];
 
 @NgModule({

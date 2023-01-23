@@ -35,6 +35,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                                             .ThenInclude(mr => mr.Module)
                                             .Include(up => up.Role)
                                             .Include(up => up.Department)
+                                            .Include(up => up.EmployeeFunction)
                                             .Include(up => up.SolicitedVacantPositions.OrderByDescending(svp => svp.CreateDate))
                                             .ThenInclude(up => up.CandidatePosition)
                                             .ThenInclude(up => up.RequiredDocumentPositions)
@@ -99,9 +100,9 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 1, 2, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
             _row = _row + 2;
 
-            workSheet.Cells[_row, 1, 11, 2].Merge = true;
-            workSheet.Cells[_row, 1, 11, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
-            workSheet.Cells[_row, 3, 11, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            workSheet.Cells[_row, 1, 12, 2].Merge = true;
+            workSheet.Cells[_row, 1, 12, 2].Style.Border.BorderAround(ExcelBorderStyle.Medium);
+            workSheet.Cells[_row, 3, 12, 8].Style.Border.BorderAround(ExcelBorderStyle.Medium);
 
             workSheet.Cells[_row, 3].Value = "Numele:";
             workSheet.Cells[_row, 3].Style.Fill.SetBackground(_color);
@@ -152,18 +153,25 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             workSheet.Cells[_row, 4, 9, 8].Merge = true;
             _row++;
 
+            workSheet.Cells[_row, 3].Value = "Funcție:";
+            workSheet.Cells[_row, 3].Style.Fill.SetBackground(_color);
+            workSheet.Cells[_row, 3].Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
+            workSheet.Cells[_row, 4, 10, 8].Value = string.IsNullOrEmpty(userProfile.EmployeeFunction?.Name) ? " - - - - -" : userProfile.EmployeeFunction?.Name;
+            workSheet.Cells[_row, 4, 10, 8].Merge = true;
+            _row++;
+
             workSheet.Cells[_row, 3].Value = "Departament:";
             workSheet.Cells[_row, 3].Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
             workSheet.Cells[_row, 3].Style.Fill.SetBackground(_color);
-            workSheet.Cells[_row, 4, 10, 8].Value = string.IsNullOrEmpty(userProfile.Department?.Name) ? " - - - - -" : userProfile.Department?.Name;
-            workSheet.Cells[_row, 4, 10, 8].Merge = true;
+            workSheet.Cells[_row, 4, 11, 8].Value = string.IsNullOrEmpty(userProfile.Department?.Name) ? " - - - - -" : userProfile.Department?.Name;
+            workSheet.Cells[_row, 4, 11, 8].Merge = true;
             _row++;
 
             workSheet.Cells[_row, 3].Value = "Mod Acces:";
             workSheet.Cells[_row, 3].Style.Fill.SetBackground(_color);
             workSheet.Cells[_row, 3].Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
-            workSheet.Cells[_row, 4, 11, 8].Value = string.IsNullOrEmpty(userProfile.AccessModeEnum.ToString()) ? " - - - - -" : userProfile.AccessModeEnum.ToString();
-            workSheet.Cells[_row, 4, 11, 8].Merge = true;
+            workSheet.Cells[_row, 4, 12, 8].Value = string.IsNullOrEmpty(userProfile.AccessModeEnum.ToString()) ? " - - - - -" : userProfile.AccessModeEnum.ToString();
+            workSheet.Cells[_row, 4, 12, 8].Merge = true;
             _row++;
 
             return workSheet;

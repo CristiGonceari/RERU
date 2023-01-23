@@ -37,6 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
                 .Include(up => up.EventUsers)
                 .Include(up => up.Role)
                 .Include(up => up.Department)
+                .Include(up => up.EmployeeFunction)
                 .OrderByFullName()
                 .AsQueryable();
 
@@ -86,6 +87,11 @@ namespace CODWER.RERU.Evaluation.Application.UserProfiles.GetUserProfiles
             if (request.RoleId.HasValue)
             {
                 items = items.Where(x => x.Role.Id == request.RoleId);
+            }
+
+            if (request.FunctionId.HasValue)
+            {
+                items = items.Where(x => x.EmployeeFunction.Id == request.FunctionId);
             }
 
             if (!string.IsNullOrEmpty(request.ColaboratorId))

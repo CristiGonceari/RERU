@@ -37,6 +37,7 @@ using System;
 using System.Reflection;
 using CVU.ERP.Module.Application.ImportProcessServices;
 using CVU.ERP.Module.Application.ImportProcessServices.Implementations;
+using CVU.ERP.OrganigramService.DependencyInjection;
 
 namespace CVU.ERP.Module.Application.DependencyInjection
 {
@@ -78,6 +79,10 @@ namespace CVU.ERP.Module.Application.DependencyInjection
 
             //import process service
             services.AddTransient<IImportProcessService, ImportProcessService>();
+
+            //organigram-services
+            services.AddOrganigramService();
+
 
             return services;
         }

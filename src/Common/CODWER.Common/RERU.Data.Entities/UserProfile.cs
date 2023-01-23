@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using CVU.ERP.Common.Data.Entities;
 using RERU.Data.Entities.Enums;
@@ -52,6 +53,11 @@ namespace RERU.Data.Entities
 
         public int? RoleColaboratorId { get; set; }
         public Role Role { get; set; }
+
+        public int? FunctionColaboratorId { get; set; }
+
+        [ForeignKey(nameof(FunctionColaboratorId))]
+        public EmployeeFunction EmployeeFunction { set; get; }
 
         [JsonIgnore]
         public Contractor Contractor { get; set; }

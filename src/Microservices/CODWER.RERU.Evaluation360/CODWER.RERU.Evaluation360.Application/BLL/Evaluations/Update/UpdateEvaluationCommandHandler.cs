@@ -34,19 +34,19 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
         {
             var evaluation = await _dbContext.Evaluations.FirstOrDefaultAsync(e=> e.Id == request.Id );
 
-            CalculatePoints(evaluation);
-
             _mapper.Map(request.Evaluation, evaluation);
 
             await _dbContext.SaveChangesAsync();
             await _sender.Send(new GetEditEvaluationQuery(request.Id));
+
+            CalculatePoints(evaluation);
 
             return _mapper.Map<GetEvaluationDto>(evaluation);
         }
 
         private QualifiersEnum GetQualification(decimal? mf)
         {
-            if (mf >= 1m && mf <= 1.5m) return QualifiersEnum.Dissatisfied;
+            if (mf >= 0m && mf <= 1.5m) return QualifiersEnum.Dissatisfied;
             else if (mf >= 1.51m && mf <= 2.5m) return QualifiersEnum.Satisfied;
             else if (mf >= 2.51m && mf <= 3.5m) return QualifiersEnum.Good;
             else if (mf >= 3.51m && mf <= 4m) return QualifiersEnum.VeryGood;

@@ -30,11 +30,11 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
         {
             var evaluation = await _dbContext.Evaluations
                 .Include(e => e.EvaluatedUserProfile)
-                    .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.EmployeeFunction)
                 .Include(e => e.EvaluatorUserProfile)
-                    .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.EmployeeFunction)
                 .Include(e => e.CounterSignerUserProfile)
-                    .ThenInclude(r => r.Role)
+                    .ThenInclude(r => r.EmployeeFunction)
                 .OrderByDescending(e => e.CreateDate)
                 .FirstOrDefaultAsync(e => e.Id == request.Id);
 
