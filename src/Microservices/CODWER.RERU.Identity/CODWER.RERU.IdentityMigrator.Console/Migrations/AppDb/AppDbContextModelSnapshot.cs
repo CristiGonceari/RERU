@@ -5184,6 +5184,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("FunctionColaboratorId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Idnp")
                         .HasColumnType("text");
 
@@ -5228,6 +5231,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("AccessModeEnum");
 
                     b.HasIndex("DepartmentColaboratorId");
+
+                    b.HasIndex("FunctionColaboratorId");
 
                     b.HasIndex("RoleColaboratorId");
 
@@ -5609,7 +5614,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradesEnum>", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer");
@@ -5622,93 +5627,233 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("GradeEnum");
+                    b.ToTable("GradesEnum");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "Soldat"
+                            Name = "General_colonel"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Caporal"
+                            Name = "General_locotenent"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "SergentInferior"
+                            Name = "General_maior"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Sergent"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "SergentMajor"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Plutonier"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "PlutonierMajor"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "PlutonierAdjutant"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Locotenent"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "LocotenentMajor"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Capitan"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Maior"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "LocotenentColonel"
-                        },
-                        new
-                        {
-                            Id = 14,
                             Name = "Colonel"
                         },
                         new
                         {
+                            Id = 5,
+                            Name = "Locotenent_colonel"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Maior"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Capitan"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Locotenent_major"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Locotenent_sublocotenent"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Plutonier_adjutant"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Plutonier_major"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Plutonier"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Sergent_major"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Sergent"
+                        },
+                        new
+                        {
                             Id = 15,
-                            Name = "GeneralDeBrigada"
+                            Name = "Sergent_inferior_caporal_soldat"
                         },
                         new
                         {
                             Id = 16,
-                            Name = "GeneralDeDivizie"
+                            Name = "Agent"
                         },
                         new
                         {
                             Id = 17,
-                            Name = "GeneralDeCorpArmata"
+                            Name = "Agent_superior"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Name = "Agent_principal"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Name = "Agent_sef_adjunct"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "Agent_sef"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Name = "Agent_sef_principal"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Name = "Inspector"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Name = "Inspector_superior"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Name = "Inspector_principal"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Name = "Comisar"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Name = "Comisar_principal"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Name = "Comisar_sef"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Name = "Chestor"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Name = "Chestor_sef"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Name = "Chestor_general"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Name = "Sergent_inferior_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Name = "Sergent_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Name = "Sergent_major_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Name = "Plutonier_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Name = "Plutonier_major_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Name = "Plutonier_adjutant_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Name = "Locotenent_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Name = "Locotenent_major_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Name = "Capitan_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Name = "Maior_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Name = "Locotenent_colonel_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Name = "Colonel_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Name = "General_maior_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Name = "General_locotenent_al_serviciului_intern"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Name = "General_colonel_al_serviciului_intern"
                         });
                 });
 
@@ -7708,7 +7853,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("ServiceDuringEvaluationCourse")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradesEnum>", null)
                         .WithMany()
                         .HasForeignKey("SpecialOrMilitaryGrade")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -9013,12 +9158,18 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasForeignKey("DepartmentColaboratorId")
                         .HasPrincipalKey("ColaboratorId");
 
+                    b.HasOne("RERU.Data.Entities.EmployeeFunction", "EmployeeFunction")
+                        .WithMany()
+                        .HasForeignKey("FunctionColaboratorId");
+
                     b.HasOne("RERU.Data.Entities.PersonalEntities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleColaboratorId")
                         .HasPrincipalKey("ColaboratorId");
 
                     b.Navigation("Department");
+
+                    b.Navigation("EmployeeFunction");
 
                     b.Navigation("Role");
                 });
@@ -9114,9 +9265,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", b =>
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradesEnum>", b =>
                 {
-                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradeEnum>", null)
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.GradesEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

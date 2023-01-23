@@ -15,7 +15,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
         public DateTime? DateCompletionGeneralData { set; get; }
         public string? FunctionSubdivision { set; get; }
         public string? SubdivisionEvaluated { set; get; }
-        public GradeEnum? SpecialOrMilitaryGrade { set; get; }
+        public GradesEnum? SpecialOrMilitaryGrade { set; get; }
         public DateTime? PeriodEvaluatedFromTo { set; get; }
         public DateTime? PeriodEvaluatedUpTo { set; get; }
         public EducationEnum? EducationEnum { set; get; }
