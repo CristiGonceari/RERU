@@ -66,7 +66,7 @@ namespace RERU.Data.Persistence.Context
                 .HasPrincipalKey(r => r.ColaboratorId);
 
             modelBuilder.Entity<UserProfile>()
-                .HasOne(up => up.EmployeeFunctions)
+                .HasOne(up => up.EmployeeFunction)
                 .WithMany()
                 .HasForeignKey(up => up.FunctionColaboratorId)
                 .HasPrincipalKey(r => r.ColaboratorId);
