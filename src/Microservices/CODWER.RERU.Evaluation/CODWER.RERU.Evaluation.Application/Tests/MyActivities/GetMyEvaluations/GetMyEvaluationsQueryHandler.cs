@@ -53,6 +53,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluations
                                          || x.UserProfile.FatherName.ToLower().Contains(request.EvaluatedName.ToLower())
                                          || x.UserProfile.Idnp.ToLower().Contains(request.EvaluatedName.ToLower()));
             }
+            
+            if (!string.IsNullOrWhiteSpace(request.EvaluationName))
+            {
+                myEvaluations = myEvaluations.Where(x => x.TestTemplate.Name.ToLower().Contains(request.EvaluationName.ToLower()));
+            }
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myEvaluations, request);
         }

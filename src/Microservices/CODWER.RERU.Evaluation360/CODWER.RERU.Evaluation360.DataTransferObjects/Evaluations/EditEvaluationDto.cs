@@ -74,5 +74,8 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
         public DateTime? DateSettingIindividualGoals { set; get; }
         public string? Need1ProfessionalDevelopmentEvaluated { set; get; }
         public string? Need2ProfessionalDevelopmentEvaluated { set; get; }
+        public string? Need3ProfessionalDevelopmentEvaluated { set; get; }
+        public string? Need4ProfessionalDevelopmentEvaluated { set; get; }
+        public string? Need5ProfessionalDevelopmentEvaluated { set; get; }
         public string? CommentsEvaluator { set; get; }
     }
