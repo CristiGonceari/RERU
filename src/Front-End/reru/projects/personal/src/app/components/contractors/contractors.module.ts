@@ -32,6 +32,7 @@ import { SearchByDepartmentComponent } from './list/search-by-department/search-
 import { RequestToEmployDataFormComponent } from './add/request-to-employ-data-form/request-to-employ-data-form.component';
 import { ContractorsTableComponent } from './contractors-table/contractors-table.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
+import { EmployeeFunctionComponent } from './list/employee-function/employee-function.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-dat
     EmployeePositionComponent,
     SearchByDepartmentComponent,
     RequestToEmployDataFormComponent,
-    ContractorsTableComponent
+    ContractorsTableComponent,
+    EmployeeFunctionComponent
   ],
   imports: [
     CommonModule,

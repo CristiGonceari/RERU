@@ -90,7 +90,7 @@
       "Candidate": "Candidat"
     },
      "user-state": {
-      "Emplyee": "Angajat",
+      "Employee": "Angajat",
       "Candidate": "Candidat"
     },
     "citizenship": "Cetăţenie",
@@ -571,17 +571,20 @@
       "file": "Fișier",
       "code": "Cod",
       "no": "Nu",
-      "type": "Tipul"
+      "type": "Tipul",
+      "search-funciton": "Selectează funcție",
+      "last-function": "Ultima funcție"
     },
     "position": {
-      "title": "Funcția",
+      "title": "Rol",
       "from-date": "Din data",
       "generated-date": "Data generării",
       "work-hours": "Ore lucrate pe zi",
       "role": "Funcția",
       "department": "Departament",
       "probation-day-period": "Durata stagierii",
-      "work-place": "Locul de muncă (adresa)"
+      "work-place": "Locul de muncă (adresa)",
+      "search-position": "Selectează rol"
     },
     "contractor-type": {
       "title": "Tip angajat",

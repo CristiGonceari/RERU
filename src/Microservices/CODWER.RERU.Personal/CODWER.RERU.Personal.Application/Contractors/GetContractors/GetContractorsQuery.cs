@@ -38,5 +38,6 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
         public DateTime? EmploymentDateFrom { get; set; }
         public DateTime? EmploymentDateTo { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
     }
 }
