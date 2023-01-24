@@ -89,7 +89,7 @@
       "Candidate": "Кандидат"
     },
     "user-state": {
-      "Emplyee": "Кандидат",
+      "Employee": "Кандидат",
       "Candidate": "Сотрудник"
     },
     "citizenship": "Гражданство",
@@ -568,7 +568,9 @@
       "file": "Файл",
       "code": "Код",
       "no": "Нет",
-      "type": "Тип"
+      "type": "Тип",
+      "search-funciton": "Выберите функцию",
+      "last-function": "Последняя функция"
     },
     "contractor-type": {
       "title": "Тип сотрудника",
@@ -599,7 +601,8 @@
       "role": "Функция",
       "department": "Отдел",
       "probation-day-period": "Испытательный срок",
-      "work-place": "Место работы (адрес)"
+      "work-place": "Место работы (адрес)",
+      "search-position": "Выберите роль"
     },
     "organigram": {
       "name": "Название",

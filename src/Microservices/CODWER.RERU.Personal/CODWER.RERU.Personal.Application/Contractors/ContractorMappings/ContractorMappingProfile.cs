@@ -38,6 +38,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(op => op.UserProfile.Department.Name))
                 .ForMember(x => x.OrganizationRoleId, opts => opts.MapFrom(op => op.UserProfile.Role.Id))
                 .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(op => op.UserProfile.Role.Name))
+                .ForMember(x => x.FunctionId, opts => opts.MapFrom(op => op.UserProfile.EmployeeFunction.Id))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(op => op.UserProfile.EmployeeFunction.Name))
                 //.ForMember(x => x.OrganizationRoleName, opts => opts.ConvertUsing(new RoleConverter(), op => op))
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op));
 
@@ -49,6 +51,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.ContractorMappings
                 .ForMember(x => x.DepartmentName, opts => opts.MapFrom(op => op.UserProfile.Department.Name))
                 //.ForMember(x => x.DepartmentName, opts => opts.ConvertUsing(new DepartmentNameConverter(), op => op))
                 .ForMember(x => x.OrganizationRoleName, opts => opts.MapFrom(op => op.UserProfile.Role.Name))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(op => op.UserProfile.EmployeeFunction.Name))
                 //.ForMember(x => x.OrganizationRoleName, opts => opts.ConvertUsing(new RoleConverter(), op => op))
                 .ForMember(x => x.Contacts, opts => opts.MapFrom(op => op.Contacts))
                 .ForMember(x => x.EmployerState, opts => opts.ConvertUsing(new EmployerStateConverter(), op => op))

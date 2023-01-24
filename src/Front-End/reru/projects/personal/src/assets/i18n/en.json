@@ -570,7 +570,9 @@
       "file": "File",
       "code": "Code",
       "no": "No",
-      "type": "Type"
+      "type": "Type",
+      "search-funciton": "Select funciton",
+      "last-function": "Last function"
     },
     "contractor-type": {
       "title": "Contractor type",
@@ -601,7 +603,8 @@
       "role": "Position",
       "department": "Department",
       "probation-day-period": "Probation day period",
-      "work-place": "Work place (address)"
+      "work-place": "Work place (address)",
+      "search-position": "Select role"
     },
     "organigram": {
       "name": "Name",

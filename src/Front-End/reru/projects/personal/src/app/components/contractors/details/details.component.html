@@ -28,6 +28,9 @@
               <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
                 <app-last-department-label [item]="contractor"></app-last-department-label>
               </div>
+              <div class="text-muted pointer" >
+                <app-last-employee-function-label [item]="contractor"></app-last-employee-function-label>
+              </div>
             </div>
           </div>
           <div class="d-flex flex-column" *ngIf="fileId">
