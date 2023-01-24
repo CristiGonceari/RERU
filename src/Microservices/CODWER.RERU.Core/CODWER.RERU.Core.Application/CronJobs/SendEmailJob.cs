@@ -41,6 +41,9 @@ namespace CODWER.RERU.Core.Application.CronJobs
                     .Take(30)  // 30 per minute
                     .ToList();
 
+                await SetEmailsInUpdateProcess(emails);
+
+
                 foreach (var email in emails)
                 {
                     var resetPassword = new SaveUserPasswordByEmailCommand()
@@ -52,8 +55,6 @@ namespace CODWER.RERU.Core.Application.CronJobs
                 }
 
                 Log($"START Email CronJob for {emails.Count} items");
-
-                await SetEmailsInUpdateProcess(emails);
 
                 var emailsToSend = await MapEmails(emails);
 
@@ -186,7 +187,8 @@ namespace CODWER.RERU.Core.Application.CronJobs
         private string GetEmailBodyFooter(string email, string password) =>
              @$"<p><span style=""font-size: 16px;font-weight: 300;"">Link aplicație: </span><span style=""font-size: 16px;font-weight: 300;"">{_platformConfig.BaseUrl}</span></p>
                 <p><span style=""font-size: 16px;font-weight: 300;"">Login: </span><span style=""font-size: 16px;font-weight: 300;"">{email}</span></p>
-                <p><span style=""font-size: 16px;font-weight: 300;"">Parola: </span><span style=""font-size: 16px;font-weight: 300; color: red;"">{password}</span></p> ";
+                <p><span style=""font-size: 16px;font-weight: 300;"">Parola: </span><span style=""font-size: 16px;font-weight: 300; color: red;"">{password}</span></p>
+                <p><span style=""font-size: 16px;font-weight: 300;"">Vă rugăm să nu răspundeți acestui mesaj!</p>";
 
         private void Log(string msg) => Console.WriteLine(msg);
     }
