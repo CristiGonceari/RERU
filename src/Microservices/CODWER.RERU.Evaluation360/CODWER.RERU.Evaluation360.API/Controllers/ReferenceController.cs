@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CVU.ERP.Common.EnumConverters;
 using System.Linq;
+using CODWER.RERU.Evaluation360.Application.References.GetEmployeeFunctions;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -22,6 +23,7 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
 
             return await Sender.Send(query);
         }
+
         [HttpGet("roles/select-items")]
         public async Task<List<SelectItem>> GetRoles()
         {
@@ -29,6 +31,15 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
 
             return await Sender.Send(query);
         }
+
+        [HttpGet("employee-functions/select-items")]
+        public async Task<List<SelectItem>> GetEmployeFunctions()
+        {
+            var query = new GetEmployeeFunctionsQuery();
+
+            return await Sender.Send(query);
+        }
+
         [HttpGet("user-status/select-items")]
         public async Task<SelectItem> GetUserEnum()
         {
