@@ -230,8 +230,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             var excelFile = await GetExcelFile(package);
 
-            //var fileId = await _storageFileService.AddFile(excelFile.Name, FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
-            var fileId = "000000000-0000000";
+            var fileId = await _storageFileService.AddFile(excelFile.Name, FileTypeEnum.procesfile, excelFile.ContentType, excelFile.Content);
 
             var process = db.Processes.First(x => x.Id == processId);
 

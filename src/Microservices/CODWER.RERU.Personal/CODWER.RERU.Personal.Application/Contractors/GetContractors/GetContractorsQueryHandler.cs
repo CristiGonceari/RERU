@@ -47,6 +47,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
                 .Include(c => c.UserProfile)
                     .ThenInclude(x => x.Department)
                 .Include(c => c.UserProfile)
+                    .ThenInclude(x => x.EmployeeFunction)
+                .Include(c => c.UserProfile)
                     .ThenInclude(x => x.Role)
                 .Include(r => r.Positions)
                     .ThenInclude(p => p.Department)
@@ -93,6 +95,11 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
             {
                 items = items.Where(x =>
                     x.Positions.All(p => p.DepartmentId == request.DepartmentId));
+            }
+
+            if (request.FunctionId != null)
+            {
+                items = items.Where(x => x.UserProfile.EmployeeFunction.Id == request.FunctionId);
             }
 
             return items;
