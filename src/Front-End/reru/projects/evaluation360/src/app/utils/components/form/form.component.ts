@@ -122,13 +122,20 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.isDisabledEvaluated = this.evaluationRole != EvaluationRoleEnum.Evaluated;
 
     this.isDisabledCounterSigner = this.evaluationRole != EvaluationRoleEnum.CounterSigner;
+  }
 
-    this.isNotCheckedCounterSigner = this.counterSignForm && 
-                                    !this.counterSignForm?.get('checkComment1').value ||
-                                    !this.counterSignForm?.get('checkComment2').value ||
-                                    !this.counterSignForm?.get('checkComment3').value ||
-                                    !this.counterSignForm?.get('checkComment4').value;
-    
+  subscribeForCounterSignerChanges(): void {
+    combineLatest([
+      this.counterSignForm.get('checkComment1').valueChanges.pipe(startWith('')),
+      this.counterSignForm.get('checkComment2').valueChanges.pipe(startWith('')),
+      this.counterSignForm.get('checkComment3').valueChanges.pipe(startWith('')),
+      this.counterSignForm.get('checkComment4').valueChanges.pipe(startWith(''))
+    ]).subscribe(() => {
+      this.isNotCheckedCounterSigner = !this.counterSignForm.get('checkComment1').value ||
+                                      !this.counterSignForm.get('checkComment2').value ||
+                                      !this.counterSignForm.get('checkComment3').value ||
+                                      !this.counterSignForm.get('checkComment4').value;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -168,6 +175,7 @@ export class FormComponent implements OnInit, AfterViewInit {
         this.evaluatedForm = createEvaluatedForm(parseEvaluatedModel(new EvaluationAcceptClass(data)), this.evaluationRole);
         this.counterSignForm = createCounterSignForm(parseCounterSignModel(new EvaluationCounterSignClass(data)), this.evaluationRole);
         this.subscribeForQualificationsChanges();
+        this.subscribeForCounterSignerChanges();
         this.isLoading = false;
         break;
       case EvaluationRoleEnum.EvaluatedKnow:
