@@ -9,6 +9,11 @@
             </app-loading-spinner>
             <div class="row mb-5 mt-0">
                 <div class="col-xl col-12">
+                    <erp-shared-search-input (handleSearch)="setFilter('evaluationName', $event)"
+                        [placeholder]="'verify-test.search-test-name' | translate" #evaluationName>
+                    </erp-shared-search-input>
+                </div>
+                <div class="col-xl col-12">
                     <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
                         [placeholder]="'verify-test.search-student' | translate" #evaluatedName>
                     </erp-shared-search-input>

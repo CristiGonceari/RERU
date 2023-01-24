@@ -7,6 +7,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluations
 {
     public class GetMyEvaluationsQuery : PaginatedQueryParameter, IRequest<PaginatedModel<TestDto>>
     {
+        public string EvaluationName { get; set; }
         public string EvaluatedName { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
