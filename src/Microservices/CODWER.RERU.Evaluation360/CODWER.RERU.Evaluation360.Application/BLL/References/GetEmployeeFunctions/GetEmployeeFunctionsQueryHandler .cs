@@ -13,11 +13,13 @@ namespace CODWER.RERU.Evaluation360.Application.References.GetEmployeeFunctions
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+
         public GetEmployeeFunctionsQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _mapper = mapper;
         }
+        
         public async Task<List<SelectItem>> Handle(GetEmployeeFunctionsQuery request, CancellationToken cancellationToken)
         {
             var employeeFunctions = _appDbContext.EmployeeFunctions
