@@ -39,6 +39,8 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)
                     .ThenInclude(x => x.Role)
+                .Include(x => x.UserProfile)
+                    .ThenInclude(x => x.EmployeeFunction)
                 .Include(x=>x.Bulletin)
                 .Include(x => x.Studies)
                 .Include(r => r.Positions)
@@ -57,7 +59,9 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                         Department = c.UserProfile.Department,
                         Role = c.UserProfile.Role,
                         DepartmentColaboratorId = c.UserProfile.DepartmentColaboratorId,
-                        RoleColaboratorId = c.UserProfile.RoleColaboratorId
+                        RoleColaboratorId = c.UserProfile.RoleColaboratorId,
+                        EmployeeFunction = c.UserProfile.EmployeeFunction,
+                        FunctionColaboratorId = c.UserProfile.FunctionColaboratorId
                     },
                     Id = c.Id,
                     Code = c.Code,
