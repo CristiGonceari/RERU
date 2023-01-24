@@ -13,6 +13,7 @@ using CVU.ERP.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using RERU.Data.Persistence.Context;
 using ISession = CODWER.RERU.Evaluation.Application.Interfaces.ISession;
+using CVU.ERP.OrganigramService.DependencyInjection;
 
 namespace CODWER.RERU.Evaluation.API.Config
 {
@@ -60,6 +61,9 @@ namespace CODWER.RERU.Evaluation.API.Config
             services.AddScoped<ISession, Session>();
 
             services.AddEvaluationApplication(currentEnvironment);
+
+            //organigram-services
+            services.AddOrganigramService();
         }
 
         #endregion
