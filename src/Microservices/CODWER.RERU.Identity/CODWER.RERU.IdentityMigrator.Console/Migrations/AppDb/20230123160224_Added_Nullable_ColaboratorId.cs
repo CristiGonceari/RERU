@@ -14,7 +14,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 name: "ColaboratorId",
                 table: "EmployeeFunctions",
                 type: "integer",
-                nullable: true,
+                nullable: false,
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "integer",
