@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Respins de evaluat",
+                Subject = "Respingerea Evaluarii de performanță",
                 To = evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
