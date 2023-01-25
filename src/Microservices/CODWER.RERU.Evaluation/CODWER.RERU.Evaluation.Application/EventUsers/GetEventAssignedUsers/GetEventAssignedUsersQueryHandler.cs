@@ -86,7 +86,7 @@ namespace CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers
 
             if (request.FunctionId.HasValue)
             {
-                userProfiles = userProfiles.Where(x => x.EmployeeFunction.Id == request.FunctionId);
+                userProfiles = userProfiles.Where(x => x.EmployeeFunction.ColaboratorId == request.FunctionId);
             }
 
             if (request.UserStatusEnum.HasValue)
