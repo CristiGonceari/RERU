@@ -106,7 +106,9 @@ export class UserListTableComponent implements OnInit {
 		let headersDto = ['-', 'userName', 'lastName', 'firstName', 'fatherName', 'idnp', 'email', 'departmentName', 'departmentColaboratorId', 'roleName', 'roleColaboratorId','functionName' ,'functionColaboratorId', 'birthday', 'phoneNumber', 'userStatusEnum', 'accessModeEnum', 'isActive'];
          
 		for (let i = 1; i <= headersHtml.length - 2; i++) {
-			if (i == 2) {
+			if (i == 1) {
+				this.headersToPrint.push({ value: "userName", label: "Numele utilizatorului (N.P.P.)", isChecked: true })
+			} else if (i == 2) {
 				this.headersToPrint.push({ value: "lastName", label: "Nume", isChecked: true })
 			} else if (i == 3) {
 				this.headersToPrint.push({ value: "firstName", label: "Prenume", isChecked: true })
