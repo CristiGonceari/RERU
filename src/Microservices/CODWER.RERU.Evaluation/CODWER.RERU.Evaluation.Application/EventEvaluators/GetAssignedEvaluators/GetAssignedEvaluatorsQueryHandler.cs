@@ -91,7 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.GetAssignedEvaluato
 
             if (request.FunctionId.HasValue)
             {
-                userProfiles = userProfiles.Where(x => x.EmployeeFunction.Id == request.FunctionId);
+                userProfiles = userProfiles.Where(x => x.EmployeeFunction.ColaboratorId == request.FunctionId);
             }
 
             return userProfiles;

@@ -99,7 +99,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractors
 
             if (request.FunctionId != null)
             {
-                items = items.Where(x => x.UserProfile.EmployeeFunction.Id == request.FunctionId);
+                items = items.Where(x => x.UserProfile.EmployeeFunction.ColaboratorId == request.FunctionId);
             }
 
             return items;
