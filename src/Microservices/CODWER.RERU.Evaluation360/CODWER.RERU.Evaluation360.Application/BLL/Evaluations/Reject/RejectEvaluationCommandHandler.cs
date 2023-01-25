@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Respingere Evaluarii de performanță",
+                Subject = "Respingerea Evaluarii de performanță",
                 To = evaluator.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Reject
         {
             var evaluated = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatedUserProfileId);
 
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">în cadrul evaluării de performanță, angajatul {evaluated.FullName} a respins evaluarea,
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;""> în cadrul evaluării de performanță, angajatul {evaluated.FullName} a respins evaluarea,
                 sunteți invitat/ă să reevaluați angajatul. </p><br>";
 
             return content;
