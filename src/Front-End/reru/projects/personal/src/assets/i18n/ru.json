@@ -502,7 +502,8 @@
     "upload": "Загрузить",
     "applay": "Применить",
     "update":"Обновить",
-    "actions": "Действия"
+    "actions": "Действия",
+    "export": "Экспорт"
   },
   "entity": {
     "colaborator-id": "Код colaborator",

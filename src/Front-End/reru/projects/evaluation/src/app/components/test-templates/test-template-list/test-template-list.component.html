@@ -10,10 +10,9 @@
             <h3 class="card-label" id="title">{{'test-template.test-template' | translate}}</h3>
           </div>
           <div class="card-toolbar d-lg-flex d-none">
-            <app-confirm-button class="btn mr-3" (click)="testTable.getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{'button.print' | translate}}
-            </app-confirm-button>
+            <erp-shared-export-button class="btn mr-3" (click)="testTable.getHeaders(getTitle())">
+              {{'button.export' | translate}}
+            </erp-shared-export-button>
             <app-add-button class="btn" [routerLink]="['add-test-type']" [value]="'tests.add-test-template' | translate"></app-add-button>
           </div>
         </div>
@@ -22,10 +21,9 @@
             <h3 class="card-label" id="title">{{'test-template.test-template' | translate}}</h3>
           </div>
           <div class="card-toolbar flex-column">
-            <app-confirm-button width="100%" class="btn w-100" (click)="testTable.getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{'button.print' | translate}}
-            </app-confirm-button>
+            <erp-shared-export-button width="100%" class="w-100" (click)="testTable.getHeaders(getTitle())">
+              {{'button.export' | translate}}
+            </erp-shared-export-button>
             <app-add-button width="100%" class="btn w-100" [routerLink]="['add-test-type']" [value]="'tests.add-test-template' | translate"></app-add-button>
           </div>
         </div>

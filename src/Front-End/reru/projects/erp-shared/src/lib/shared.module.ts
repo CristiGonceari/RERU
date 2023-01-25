@@ -52,6 +52,8 @@ import { ContentComponent } from './components/content/content.component';
 import { Exception404Component } from './components/404/404.component';
 import { Exception500Component } from './components/500/500.component';
 import { FormsModule } from '@angular/forms';
+import { ImportButtonComponent } from './components/buttons/import-button/import-button.component';
+import { ExportButtonComponent } from './components/buttons/export-button/export-button.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -80,7 +82,9 @@ const commonExports = [
 	ShowImageModalComponent,
 	ContentComponent,
 	Exception404Component,
-	Exception500Component
+	Exception500Component,
+	ExportButtonComponent,
+	ImportButtonComponent
 ];
 @NgModule({
 	declarations: [

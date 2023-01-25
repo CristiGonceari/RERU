@@ -31,10 +31,9 @@
 						</ng-template>
 						<ng-template ngbPanelContent>
 							<div class="card-toolbar" style="text-align: right;">
-                                <app-confirm-button class="btn mr-3" (click)="eventsTable.getHeaders(getTitle())">
-                                    <i class="far fa-file-pdf text-white"></i>
-                                    {{'button.print' | translate}}
-                                </app-confirm-button>
+								<erp-shared-export-button class="mr-3" (click)="eventsTable.getHeaders(getTitle())">
+                                    {{'button.export' | translate}}
+								</erp-shared-export-button>
                             </div>
 							<app-tests-by-event [id]="event.id" #eventsTable></app-tests-by-event>
 						</ng-template>

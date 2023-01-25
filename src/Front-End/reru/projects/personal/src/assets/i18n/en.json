@@ -504,7 +504,8 @@
     "upload": "Upload",
     "applay": "Apply filter",
     "update":"Update",
-    "actions": "Actions"
+    "actions": "Actions",
+    "export": "Export"
   },
   "entity": {
     "colaborator-id": "Colaborator code",
