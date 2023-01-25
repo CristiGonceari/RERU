@@ -177,7 +177,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (request.FunctionId.HasValue)
             {
-                tests = tests.Where(x => x.UserProfile.EmployeeFunction.Id == request.FunctionId);
+                tests = tests.Where(x => x.UserProfile.EmployeeFunction.ColaboratorId == request.FunctionId);
             }
 
             return tests;
