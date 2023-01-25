@@ -140,7 +140,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{PartialEvaluationPeriodUpTo}", evaluation.PartialEvaluationPeriodUpTo?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{PartialEvaluationScore}", evaluation.PartialEvaluationScore.ToString());  
             myDictionary.Add("{QualifierPartialEvaluations}", evaluation.QualifierPartialEvaluations.ToString());  
-            myDictionary.Add("{SanctionAppliedEvaluationCourse}", evaluation.SanctionAppliedEvaluationCourse);  
+            myDictionary.Add("{SanctionAppliedEvaluationCourse}", evaluation.SanctionApplied.ToString());  
             myDictionary.Add("{DateSanctionApplication}", evaluation.DateSanctionApplication?.ToString("dd/MM/yyyy"));  
             myDictionary.Add("{DateLiftingSanction}", evaluation.DateLiftingSanction?.ToString("dd/MM/yyyy"));
             myDictionary.Add("{QualificationEvaluationObtained2YearsPast}", evaluation.QualificationEvaluationObtained2YearsPast.ToString());

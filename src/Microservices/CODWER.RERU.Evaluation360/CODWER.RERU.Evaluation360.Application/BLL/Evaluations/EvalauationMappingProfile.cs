@@ -29,6 +29,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.FunctionSubdivision, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.EmployeeFunction.Name}"))
                 .ForMember(dest=> dest.FunctionEvaluator, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.EmployeeFunction.Name}"))
                 .ForMember(dest=> dest.FunctionCounterSigner, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.EmployeeFunction.Name}"))
+                .ForMember(dest=> dest.SanctionAppliedEvaluationCourse, opts=> opts.MapFrom(src=> $"{src.SanctionApplied}"))
                 ;
 
             CreateMap<CreateEvaluationsCommand, Evaluation>()
