@@ -12,6 +12,8 @@ export * from './lib/components/page-title/page-title.component';
 export * from './lib/components/layout/layout.component';
 export * from './lib/components/buttons/add-button/add-button.component';
 export * from './lib/components/buttons/confirm-button/confirm-button.component';
+export * from './lib/components/buttons/export-button/export-button.component';
+export * from './lib/components/buttons/import-button/import-button.component';
 export * from './lib/components/buttons/button/button.component';
 export * from './lib/components/buttons/delete-button/delete-button.component';
 export * from './lib/components/svg-icon/svg-icon.component';

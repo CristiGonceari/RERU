@@ -9,15 +9,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class PrintModalComponent implements OnInit {
   exportTableFormat: any[] = [
     {
-      label: 'Pdf',
+      label: 'Pdf (.pdf)',
       value: 0,
     },
     {
-      label: 'Excel',
+      label: 'Excel (.xlsx)',
       value: 1,
     },
     {
-      label: 'Xml',
+      label: 'Xml (.xml)',
       value: 2,
     },
   ];
