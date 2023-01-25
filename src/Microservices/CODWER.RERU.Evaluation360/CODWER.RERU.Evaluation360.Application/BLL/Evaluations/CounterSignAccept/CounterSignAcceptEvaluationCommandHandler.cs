@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Finalizare Evaluare de performanță",
+                Subject = "Revizuire Evaluare de performanță",
                 To = evaluated.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -65,7 +65,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignAccep
 
         private async Task<string> GetTableContent()
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">evaluarea a fost acceptata de catre contrasemnatar, rugam sa luati cunostinta cu evaluarea</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;""> în cadrul evaluării de performanță, evaluarea a fost acceptată de către contrasemnatar, rugam să luați cunostință cu rezultatul final. </p>";
 
             return content;
         }
