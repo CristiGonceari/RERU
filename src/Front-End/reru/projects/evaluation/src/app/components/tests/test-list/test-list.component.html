@@ -17,10 +17,9 @@
               <i class="far fa-file-excel"></i>
               {{ 'processes.history' | translate }}
             </button>
-            <app-confirm-button class="btn mr-3" (click)="testsTable.getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{ "button.print" | translate }}
-            </app-confirm-button>
+            <erp-shared-export-button class="mr-3" (click)="testsTable.getHeaders(getTitle())">
+              {{ "button.export" | translate }}
+            </erp-shared-export-button>
             <app-add-button class="btn my-auto mr-5" [routerLink]="['add-test']"
               [value]="'tests.new-test' | translate"></app-add-button>
           </div>
@@ -29,10 +28,9 @@
               <i class="far fa-file-excel"></i>
               {{ 'processes.history' | translate }}
             </button>
-            <app-confirm-button class="btn w-100 pt-2" width="100%" (click)="testsTable.getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{ "button.print" | translate }}
-            </app-confirm-button>
+            <erp-shared-export-button class="w-100 pt-2" width="100%" (click)="testsTable.getHeaders(getTitle())">
+              {{ "button.export" | translate }}
+            </erp-shared-export-button>
             <app-add-button class="btn my-auto w-100 pt-2" width="100%" [routerLink]="['add-test']"
               [value]="'tests.new-test' | translate"></app-add-button>
           </div>

@@ -198,7 +198,8 @@
     "import": "Importa",
     "loading": "Se încarcă",
     "next": "Următorul",
-    "finish": "Finalizează"
+    "finish": "Finalizează",
+    "export": "Exportă"
   },
   "bulk-import-users": {
     "succes-msg" : "Utilizatorii au fost importați cu succes",

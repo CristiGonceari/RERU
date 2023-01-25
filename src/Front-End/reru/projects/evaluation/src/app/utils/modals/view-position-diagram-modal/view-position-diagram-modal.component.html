@@ -83,16 +83,13 @@
         </div>
         <div class="col-12 p-0 child-footer">
             <div class="modal-footer p-0 pr-10">
-                <app-confirm-button class="btn mr-3" (click)="printPositionDiagram()">
-                    <i class="far fa-file-pdf text-white"></i>
-                    {{'button.print' | translate}} (pdf)
-                </app-confirm-button>
-                <button (click)="getPositionDiagramExcel()" type="button" class="btn btn-success px-4 py-0 mr-2">
-                    <i class="far fa-file-excel text-white"></i>
+                <erp-shared-export-button class="mr-3" (click)="printPositionDiagram()">
+                    {{'button.export' | translate}} (pdf)
+                </erp-shared-export-button>
+                <erp-shared-export-button (click)="getPositionDiagramExcel()" type="button" class="mr-2">
                     {{'button.export' | translate}} (xlsx)
-                </button>
-                <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' |
-                    translate}}</button>
+                </erp-shared-export-button>
+                <button type="button" class="btn btn-secondary" (click)="close()">{{'button.close' | translate}}</button>
             </div>
         </div>
     </div>

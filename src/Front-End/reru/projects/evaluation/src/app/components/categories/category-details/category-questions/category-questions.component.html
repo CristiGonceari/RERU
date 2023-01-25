@@ -3,10 +3,9 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title font-weight-bolder" id="title">{{'questions.questions' | translate}}</div>
       <div class="card-toolbar">
-        <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
-          <i class="far fa-file-pdf text-white"></i>
-          {{'button.print' | translate}}
-        </app-confirm-button>
+        <erp-shared-export-button class="btn mr-3" (click)="getHeaders(getTitle())">
+          {{'button.export' | translate}}
+        </erp-shared-export-button>
         <div class="dropdown dropdown-inline my-auto" ngbDropdown>
           <app-add-button class="btn my-auto" id="action1" ngbDropdownToggle
             [value]="'questions.add-question' | translate">

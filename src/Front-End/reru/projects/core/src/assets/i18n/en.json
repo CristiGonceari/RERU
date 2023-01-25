@@ -195,7 +195,8 @@
     "import": "Import",
     "loading": "Loading",
     "next": "Next",
-    "finish": "Finish"
+    "finish": "Finish",
+    "export": "Export"
   },
   "bulk-import-users": {
     "succes-msg" : "Users were successfully imported",

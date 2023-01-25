@@ -13,18 +13,16 @@
             </h3>
           </div>
           <div class="card-toolbar d-md-flex d-none">
-            <app-confirm-button class="btn mr-3" (click)="getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{'button.print' | translate}}
-            </app-confirm-button>
+            <erp-shared-export-button class="mr-3" (click)="getHeaders(getTitle())">
+              {{'button.export' | translate}}
+            </erp-shared-export-button>
             <app-add-button class="btn" routerLink="../add-position" [value]="'position.add' | translate">
             </app-add-button>
           </div>
           <div class="card-toolbar d-md-none d-flex w-100">
-            <app-confirm-button class="btn w-100" width="100%" (click)="getHeaders(getTitle())">
-              <i class="far fa-file-pdf text-white"></i>
-              {{'button.print' | translate}}
-            </app-confirm-button>
+            <erp-shared-export-button class="w-100" width="100%" (click)="getHeaders(getTitle())">
+              {{'button.export' | translate}}
+            </erp-shared-export-button>
             <app-add-button class="btn w-100" width="100%" routerLink="../add-position" [value]="'position.add' | translate">
             </app-add-button>
           </div>

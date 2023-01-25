@@ -26,12 +26,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             if (evaluationRoles != null)
             {
-                foreach (var evaluationRole in evaluationRoles)
+                foreach (var evaluationRole in evaluationRoles.Where(evaluationRole => evaluationRole.Value != 0))
                 {
-                    if (evaluationRole.Value != 0)
-                    {
-                        await AddArticleRole(evaluationRole.Value.Value, articleId);
-                    }
+                    await AddArticleRole(evaluationRole.Value.Value, articleId);
                 }
             }
 

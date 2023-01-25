@@ -505,7 +505,8 @@
     "upload": "Încarcă",
     "applay": "Aplică filtru",
     "update":"Actualizează",
-    "actions": "Acțiuni"
+    "actions": "Acțiuni",
+    "export": "Exportă"
   },
   "entity": {
     "colaborator-id": "Cod colaborator",
