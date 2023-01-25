@@ -74,7 +74,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Acceptare Evaluare de performanta",
+                Subject = "Contrasemnare Evaluare de performanță",
                 To = counterSigner.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -92,10 +92,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Accept
             var evaluator = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatorUserProfileId);
             var evaluated = await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatedUserProfileId);
 
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;"">în cadrul evaluării de performanță, a angajatului {evaluated.FullName},  efectuată de {evaluator.FullName} 
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;""> în cadrul evaluării de performanță, a angajatului {evaluated.FullName},  efectuată de {evaluator.FullName}, 
                 sunteți invitat/ă să contrasemnați evaluarea. </p><br>
 
-                < p > În cazul în care se alege ""Respinge"", evaluatorul va re - evalua evaluarea și veți fi notificat pe email despre statutul evaluării. </ p > ";
+                <p> Notă: În cazul în care se alege ""Respinge"", evaluatorul va reevalua evaluarea și veți fi notificat pe email despre statutul evaluării. </p> ";
 
             return content;
         }
