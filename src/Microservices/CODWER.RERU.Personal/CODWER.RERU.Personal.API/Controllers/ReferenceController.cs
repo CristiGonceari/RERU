@@ -19,6 +19,7 @@ using RERU.Data.Entities.Enums;
 using CODWER.RERU.Personal.DataTransferObjects.SelectValues;
 using CODWER.RERU.Personal.Application.References.GetCandidateCitizenshipes;
 using CODWER.RERU.Personal.Application.References.GetCandidateNationalites;
+using CODWER.RERU.Personal.Application.References.GetEmployeeFunctions;
 using CODWER.RERU.Personal.Application.References.GetStudyTypes;
 using CODWER.RERU.Personal.Application.References.GetModernLanguages;
 using CODWER.RERU.Personal.Application.References.GetMaterialStatusType;
@@ -171,6 +172,14 @@ namespace CODWER.RERU.Personal.API.Controllers
         public async Task<List<SelectValue>> GetCandidateNationalities()
         {
             var query = new GetCandidateNationalitesQuery();
+
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("employee-functions/select-values")]
+        public async Task<List<SelectItem>> GetEmployeeFunctions()
+        {
+            var query = new GetEmployeeFunctionsQuery();
 
             return await Mediator.Send(query);
         }

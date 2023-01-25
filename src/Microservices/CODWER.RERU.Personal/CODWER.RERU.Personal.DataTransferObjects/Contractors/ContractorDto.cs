@@ -20,6 +20,8 @@ namespace CODWER.RERU.Personal.DataTransferObjects.Contractors
         public string DepartmentName { get; set; }
         public int? OrganizationRoleId { get; set; }
         public string OrganizationRoleName { get; set; }
+        public int? FunctionId { get; set; }
+        public string FunctionName { get; set; }
         public List<ContactRowDto> Contacts { get; set; }
 
 

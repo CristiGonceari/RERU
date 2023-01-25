@@ -44,6 +44,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserFromColaborator
                 Email = request.Email,
                 DepartmentColaboratorId = request.DepartmentColaboratorId == 0 ? null : request.DepartmentColaboratorId,
                 RoleColaboratorId = request.RoleColaboratorId == 0 ? null : request.RoleColaboratorId,
+                FunctionColaboratorId = request.FunctionColaboratorId == 0 ? null : request.FunctionColaboratorId,
                 EmailNotification = request.EmailNotification,
                 AccessModeEnum = request.AccessModeEnum
             };

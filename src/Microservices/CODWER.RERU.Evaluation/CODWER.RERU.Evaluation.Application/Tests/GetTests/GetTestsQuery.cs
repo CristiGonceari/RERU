@@ -24,6 +24,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         public DateTime? ProgrammedTimeTo { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public string ColaboratorId { get; set; }
     }
 }

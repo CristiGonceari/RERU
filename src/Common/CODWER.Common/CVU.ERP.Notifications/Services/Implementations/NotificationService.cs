@@ -32,7 +32,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     IsSend = false,
                     InUpdateProcess = false,
                     HtmlTemplateAddress = email.HtmlTemplateAddress,
-                    Type = (byte)type,
+                    Type = (byte)NotificationType.MNotifyNotification,
                     Created = _dateTime.Now,
 
                     Properties = email.ReplacedValues.Select(x => new EmailNotificationProperty

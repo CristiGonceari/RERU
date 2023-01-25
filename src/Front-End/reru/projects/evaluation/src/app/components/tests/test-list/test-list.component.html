@@ -11,6 +11,7 @@
               {{ "verify-test.title" | translate }}
             </h3>
           </div>
+
           <div class="card-toolbar d-md-flex d-none">
             <button class="btn btn-light-warning font-weight-bold mr-3" (click)="openHistoryModal()">
               <i class="far fa-file-excel"></i>
@@ -126,6 +127,9 @@
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <app-search-role (filter)="testsTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+            </div>
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
+               <app-search-employee-function (filter)="testsTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
             </div>
             <div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
               <div class="text-right">

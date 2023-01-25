@@ -31,6 +31,7 @@ import { DeleteNomenclatureModalComponent } from './modals/delete-nomenclature-m
 import { ConfirmResetPasswordModalComponent } from './modals/confirm-reset-password-modal/confirm-reset-password-modal.component';
 import { LastOrganizationRoleLabelComponent } from './components/last-organization-role-label/last-organization-role-label.component';
 import { LastDepartmentLabelComponent } from './components/last-department-label/last-department-label.component';
+import { LastEmployeeFunctionLabelComponent } from './components/last-employee-function-label/last-employee-function-label.component';
 import { DepartmentContentModalComponent } from './modals/department-content-modal/department-content-modal.component';
 import { DeleteDepartmentContentModalComponent } from './modals/delete-department-content-modal/delete-department-content-modal.component';
 import { AddHolidayModalComponent } from './modals/add-holiday-modal/add-holiday-modal.component';
@@ -108,6 +109,7 @@ const commonComponents = [
   ConfirmResetPasswordModalComponent,
   LastOrganizationRoleLabelComponent,
   LastDepartmentLabelComponent,
+  LastEmployeeFunctionLabelComponent,
   DepartmentContentModalComponent,
   DeleteDepartmentContentModalComponent,
   AddHolidayModalComponent,
@@ -225,7 +227,8 @@ const commonComponents = [
     ConvertPdfDocumentModalComponent,
     CkEditorConfigComponent,
     ImportDepartmentsModalComponent,
-    DateFilterPipe
+    DateFilterPipe,
+    LastEmployeeFunctionLabelComponent,
   ],
 })
 export class UtilsModule { }

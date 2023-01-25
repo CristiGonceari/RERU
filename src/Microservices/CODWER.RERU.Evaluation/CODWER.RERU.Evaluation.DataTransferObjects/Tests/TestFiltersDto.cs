@@ -17,6 +17,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string Idnp { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
         public TestTemplateModeEnum Mode { get; set; }

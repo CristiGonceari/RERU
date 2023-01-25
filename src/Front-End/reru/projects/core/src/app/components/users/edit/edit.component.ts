@@ -12,6 +12,7 @@ import { DepartmentService } from '../../../utils/services/department.service';
 import { UserRoleService } from '../../../utils/services/user-role.service';
 import { UserProfileService } from '../../../utils/services/user-profile.service';
 import { SelectItem } from '../../../utils/models/select-item.model';
+import { ReferenceService } from '../../../utils/services/reference.service';
 
 @Component({
 	selector: 'app-edit',
@@ -31,6 +32,7 @@ export class EditComponent implements OnInit {
 	departments: SelectItem[] = [{ label: '', value: '' }];
 	roles: SelectItem[] = [{ label: '', value: '' }];
 	accessModes: SelectItem[] = [{ label: '', value: '' }];
+	employeeFunctions: SelectItem[] = [{ label: '', value: '' }];
 
 	birthDate: Date;
 	date: string;
@@ -46,7 +48,8 @@ export class EditComponent implements OnInit {
 		private router: Router,
 		private location: Location,
 		private departmentService: DepartmentService,
-		private roleService: UserRoleService
+		private roleService: UserRoleService,
+		private referenceService: ReferenceService,
 	) { }
 
 	ngOnInit(): void {
@@ -54,6 +57,7 @@ export class EditComponent implements OnInit {
 		this.getAccessMode();
 		this.getDepartments();
 		this.getRoles();
+		this.getEmployeeFunctions();
 	}
 
 	getDepartments() {
@@ -62,6 +66,10 @@ export class EditComponent implements OnInit {
 
 	getRoles() {
 		this.roleService.getValues().subscribe(res => this.roles = res.data);
+	}
+
+	getEmployeeFunctions(){
+		this.referenceService.getEmployeeFunctionsSelectValues().subscribe(res => this.employeeFunctions = res.data);
 	}
 
 	getAccessMode() {
@@ -132,6 +140,7 @@ export class EditComponent implements OnInit {
 			]),
 			departmentColaboratorId: this.fb.control((user && user.departmentColaboratorId) || null, Validators.required),
 			roleColaboratorId: this.fb.control((user && user.roleColaboratorId) || null, [Validators.required]),
+			functionColaboratorId: this.fb.control((user && user.functionColaboratorId) || null, [Validators.required]),
 			accessModeEnum: this.fb.control((user && user.accessModeEnum) || 0, [Validators.required]),
 		});
 
@@ -160,6 +169,7 @@ export class EditComponent implements OnInit {
 			phoneNumber: this.userForm.value.phoneNumber,
 			departmentColaboratorId: +this.userForm.value.departmentColaboratorId || null,
 			roleColaboratorId: +this.userForm.value.roleColaboratorId || null,
+			functionColaboratorId: +this.userForm.value.functionColaboratorId || null,
 			accessModeEnum: this.userForm.value.accessModeEnum
 		}
 

@@ -117,6 +117,9 @@
           <app-search-role (filter)="userTable.setFilter('roleId',  $event)" #roleId></app-search-role>
         </div>
         <div class="col-lg col-12 pt-lg-0 pt-2">
+          <app-search-employee-function (filter)="userTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
+        </div>
+        <div class="col-lg col-12 pt-lg-0 pt-2">
           <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
           </app-search-status>
         </div>

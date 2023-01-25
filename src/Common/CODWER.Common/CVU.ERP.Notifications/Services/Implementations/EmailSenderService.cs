@@ -79,7 +79,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                 },
                 Priority = NotificationPriority.Medium,
                 ShortBody = new NotificationContent { Romanian = "Notificare SI RERU al MAI " },
-                Subject = new NotificationContent { Romanian = $"{data.subject} - Do Not Reply" },
+                Subject = new NotificationContent { Romanian = data.subject },
 
             };
 

@@ -13,6 +13,8 @@ export interface Contractor {
     departmentName?: string;
     organizationRoleId?: number;
     organizationRoleName?: string;
+    functionId?: number;
+    functionName?: string;
     sex: number;
     stateLanguageLevel: number;
     candidateCitizenshipId: number;

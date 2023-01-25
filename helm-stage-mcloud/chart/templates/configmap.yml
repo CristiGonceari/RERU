@@ -343,7 +343,7 @@ data:
       "PlatformConfig": {
         "RegistrationPageUrl": "https://reru.mai.gov.md/#/registration-page",
         "PositionsPageUrl": "https://reru.mai.gov.md/#/vacant-positions-page",
-        "ResetPassPageUrl": "http://reru.codwer.com/#/reset-password"
+        "ResetPassPageUrl": "https://reru.mai.gov.md/#/reset-password"
       }
     }
 

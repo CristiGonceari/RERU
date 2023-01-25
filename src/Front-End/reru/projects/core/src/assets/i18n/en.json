@@ -622,7 +622,9 @@
     "succes-edit-msg": "Role was successfully edited",
     "user-role-data": "Enter the role details and confirm",
     "user-role-details": "Role details",
-    "search-role": "Search by role"
+    "search-role": "Search by role",
+    "employee-function": "Employee function",
+    "search-by-function": "Search by function"
   },
   "general-datas":{
     "general-data":"General Data",

@@ -18,6 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
         public string EventName { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public int? FunctionId { get; set; }
         public DateTime? ProgrammedTimeFrom { get; set; }
         public DateTime? ProgrammedTimeTo { get; set; }
     }
