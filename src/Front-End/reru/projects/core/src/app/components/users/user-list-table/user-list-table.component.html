@@ -32,17 +32,18 @@
     <thead class="text-uppercase text-muted">
       <tr>
         <th scope="col" class="w-50px"></th>
-        <th scope="col"> {{ 'table.username' | translate }} ({{ 'table.npp' | translate }})</th>
+        <th scope="col"> {{ 'table.username' | translate }} ({{ 'table.npp' | translate }}) / {{ 'table.idnp' | translate }}</th>
         <th scope="col" class="d-none"></th>
         <th scope="col" class="d-none"></th>
         <th scope="col" class="d-none"></th>
-        <th scope="col"> {{ 'table.idnp' | translate }} </th>
+        <th scope="col" class="d-none"> {{ 'table.idnp' | translate }} </th>
         <th scope="col"> {{ 'table.email' | translate }} </th>
         <th scope="col"> {{ 'departments.department' | translate }} </th>
         <th scope="col" class="d-none"></th>
         <th scope="col"> {{ 'user-roles.role' | translate }} </th>
         <th scope="col" class="d-none"></th>
         <th scope="col"> {{ 'user-roles.employee-function' | translate }} </th>
+        <th scope="col" class="d-none"></th>
         <th scope="col" class="d-none"></th>
         <th scope="col" class="d-none"></th>
         <th scope="col" style="text-align: center;"> {{ 'table.posture' | translate }} </th>
@@ -61,11 +62,21 @@
           </div>
         </td>
         <td [class.no-actions]="!viewDetails">
-          <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
+          <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
+              [routerLink]="['../../user-profile', user.id, 'overview']">
+              {{ user.userName }}
+              <br>
+              <span class="text-dark-50 font-size-lg font-weight-light">{{ user.idnp }}</span>
+          </p>
+          <!-- <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
             {{ user.userName }}
-          </a>
+            <span *ngIf="user.idnp">
+             (idnp: {{ user.idnp }})
+            </span>
+            
+          </a> -->
         </td>
-        <td [class.no-actions]="!viewDetails"> {{ user.idnp }} </td>
+        <!-- <td [class.no-actions]="!viewDetails"> {{ user.idnp }} </td> -->
         <td [class.no-actions]="!viewDetails"> {{ user.email }} </td>
         <td [class.no-actions]="!viewDetails">
           <span class="font-size-lg" *ngIf="user.departmentName">{{ user.departmentName }}</span>
