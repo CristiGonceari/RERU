@@ -15,7 +15,7 @@
     </div>
     <div class="card-header border-0 pt-0 pb-0 pr-5">
       <div class="row w-100">
-        <div class="col-lg-4 col-12 mb-2">
+        <div class="col-lg-3 col-12 mb-2">
           <app-search (handleRewrite)="contractorsTable.setKeyword($event)" (handleSearch)="contractorsTable.list({keyword: $event, page: 1})"></app-search>
         </div>
         <div class="col-lg-2 col-12 mb-2">
@@ -30,7 +30,10 @@
         <div class="col-lg-2 col-12 mb-lg-0 mb-2">
           <app-employee-position (handleChangeRole)="contractorsTable.setFilter('organizationRoleId', $event)"></app-employee-position>
         </div>
-        <div class="col-lg-3 col-12 mt-lg-0 mt-3">
+        <div class="col-lg-2 col-12 mb-lg-0 mb-2">
+          <app-employee-function (handleChangeFunction)="contractorsTable.setFilter('functionId', $event)"></app-employee-function>
+        </div>
+        <div class="col-lg-2 col-12 mt-lg-0 mt-3">
           <app-filter-employee-state (filter)="contractorsTable.userStatus = $event.target.value"></app-filter-employee-state>
         </div>
         <div class="col-lg-1 col-12 mb-2">

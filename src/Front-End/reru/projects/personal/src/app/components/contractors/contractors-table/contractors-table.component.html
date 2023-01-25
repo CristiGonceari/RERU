@@ -8,6 +8,7 @@
                 <th [ngStyle]="{'width.%' : 30}">{{'entity.nomenclature.name' | translate}} ({{'entity.personal.npp' | translate}})</th>
                 <th [ngStyle]="{'width.%' : 20}" class="text-center">{{'entity.role.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.department.title' | translate}}</th>
+                <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.employee-functions.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.personal.idnp' | translate}}</th>
                 <th>&nbsp;</th>
             </tr>
@@ -20,6 +21,9 @@
                 </td>
                 <td class="text-center">
                     <app-last-department-label [item]="item"></app-last-department-label>
+                </td>
+                <td class="text-center">
+                    <app-last-employee-function-label [item]="item"></app-last-employee-function-label>
                 </td>
                 <td class="text-center">
                     {{ item.idnp || '-' }}

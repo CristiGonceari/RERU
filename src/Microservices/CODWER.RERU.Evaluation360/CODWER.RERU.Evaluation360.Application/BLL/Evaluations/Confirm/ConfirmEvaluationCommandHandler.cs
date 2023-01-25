@@ -10,6 +10,7 @@ using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using RERU.Data.Entities.Evaluation360;
+using System;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 {
@@ -57,7 +58,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Revizuire Evaluare de performanță",
+                Subject = "Revizuire Evaluare de performanta",
                 To = evaluated.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()
@@ -66,6 +67,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
                     { "{email_message}", await GetTableContent(evaluation.EvaluatorUserProfileId) }
                 }
             });
+
+            Console.WriteLine("-----------------------" + evaluated.Email);
 
             return Unit.Value;
         }

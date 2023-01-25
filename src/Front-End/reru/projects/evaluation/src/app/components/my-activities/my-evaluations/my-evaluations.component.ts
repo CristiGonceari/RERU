@@ -32,6 +32,7 @@ export class MyEvaluationsComponent implements OnInit {
 	printTranslates: any[];
 	title: string;
 	filters: any = {};
+	evaluationName: string;
 	searchFrom: string;
 	searchTo: string;
 
@@ -54,6 +55,7 @@ export class MyEvaluationsComponent implements OnInit {
 	getUserTests(data: any = {}) {
 		this.setTimeToSearch();
 		const params: any = ObjectUtil.preParseObject({
+			evaluationName: this.filters.evaluationName || '',
 			evaluatedName: this.filters.evaluatedName || '',
 			fromDate: this.searchFrom || '',
 			toDate: this.searchTo || '',
@@ -94,6 +96,7 @@ export class MyEvaluationsComponent implements OnInit {
 	resetFilters(): void {
 		this.filters = {};
 		this.evaluatedName.key = '';
+		this.evaluationName = '';
 		this.searchFrom = '';
 		this.searchTo = '';
 		this.fromDate = '';

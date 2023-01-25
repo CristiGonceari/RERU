@@ -117,4 +117,8 @@ export class ReferenceService extends AbstractService {
   getArticleRoles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/article-roles/select-values`);
   }
+
+  getEmployeeFunctions(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/employee-functions/select-values`);
+  }
 }

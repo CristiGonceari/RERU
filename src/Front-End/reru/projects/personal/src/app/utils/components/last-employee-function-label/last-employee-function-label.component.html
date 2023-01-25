@@ -1,0 +1,7 @@
+<span class="pointer" *ngIf="item?.employerState === employerState.IN_SERVICE" [routerLink]="['../../employee-functions', item.functionId]" >
+    {{ item?.functionName || '-'}}
+</span>
+<span class="pointer" *ngIf="item?.employerState === employerState.DISMISSED" [routerLink]="['../../employee-functions/', item.functionId]">
+    <span class="last-position-label ">{{'entity.employee-functions.last-function' | translate}}:</span><br>
+    {{item?.functionName || '-'}}
+</span>

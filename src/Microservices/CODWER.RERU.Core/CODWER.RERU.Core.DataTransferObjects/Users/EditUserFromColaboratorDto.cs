@@ -17,6 +17,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.Users
         public int? CandidatePositionId { set; get; }
         public int? DepartmentColaboratorId { get; set; }
         public int? RoleColaboratorId { get; set; }
+        public int? FunctionColaboratorId { get; set; }
         public bool EmailNotification { get; set; }
         public AccessModeEnum AccessModeEnum { get; set; }
     }
