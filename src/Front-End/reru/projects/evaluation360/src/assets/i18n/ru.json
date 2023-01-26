@@ -65,13 +65,14 @@
   },
   "evaluations": {
     "title": "Тестирование",
+    "manage-evaluations": "Управление оценками",
     "evaluated-employees": "Кандидаты",
     "countersigner": "Проверяющиe",
-    "evaluation-type": "Тип теста",
+    "evaluation-type": "Выполняемая  должность",
     "select-evaluated-person": "Выбери кандидата",
     "select-countersigner": "Выбери проверяющего",
-    "select-evaluation-type": "Выбери тип теста",
-    "executing-position": "Исполнительная функция",
+    "select-evaluation-type": "Выбери выполняемую должность",
+    "executing-position": "Исполнительная должность",
     "managing-position": "Управляющая должность",
     "status": {
       "1": "Черновик",

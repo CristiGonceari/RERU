@@ -65,12 +65,13 @@
   },
   "evaluations": {
     "title": "Evaluation",
+    "manage-evaluations": "Manage evaluations",
     "evaluated-employees": "Evaluated employees",
     "countersigner": "Countersigner",
-    "evaluation-type": "Evaluation type",
+    "evaluation-type": "Performed function ",
     "select-evaluated-person": "Select evaluated employee",
     "select-countersigner": "Select countersigner",
-    "select-evaluation-type": "Select evaluation type",
+    "select-evaluation-type": "Select performed function ",
     "executing-position": "Executing function",
     "managing-position": "Managing function",
     "status": {
