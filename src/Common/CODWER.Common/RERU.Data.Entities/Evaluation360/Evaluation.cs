@@ -47,7 +47,7 @@ namespace RERU.Data.Entities.Evaluation360
         public decimal? PartialEvaluationScore { set; get; }
         public string? FinalScorePartialEvaluations { set; get; }
         public QualifiersEnum? QualifierPartialEvaluations { set; get; }
-        public string? SanctionAppliedEvaluationCourse { set; get; }
+        public SanctionEnum? SanctionApplied { set; get; }
         public DateTime? DateSanctionApplication { set; get; }
         public DateTime? DateLiftingSanction { set; get; }
         public QualifiersEnum? QualificationEvaluationObtained2YearsPast { set; get; }
