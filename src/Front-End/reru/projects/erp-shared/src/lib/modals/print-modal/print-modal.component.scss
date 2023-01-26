@@ -34,3 +34,7 @@ input[type=checkbox]:checked+label {
 .max-with{
     max-width: 20%;
 }
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container, .mat-select-panel {
+    z-index: 99999 !important;
+ }
