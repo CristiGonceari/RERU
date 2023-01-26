@@ -327,8 +327,10 @@
     "search-department": "Caută departament",
     "search-role": "Caută rol",
     "search-user-status": "Caută după statutul utilizatorului",
+    "search-function": "Caută după funcție",
     "department": "Departament",
     "role": "Rol",
+    "function": "Funcție",
     "npp": "N.P.P."
   },
   "message": {

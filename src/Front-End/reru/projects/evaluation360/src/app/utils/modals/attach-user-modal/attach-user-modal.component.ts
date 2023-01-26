@@ -8,6 +8,7 @@ import { SearchDepartmentComponent } from './search-department/search-department
 import { ObjectUtil } from '../../util/object.util';
 import { UserModel } from '@utils';
 import { PaginationClass } from '../../models/pagination.model';
+import { SearchFunctionComponent } from './search-function/search-function.component';
 
 export interface AttachUserModel {
   selectedUsers: number[];
@@ -32,6 +33,7 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
+  @ViewChild(SearchFunctionComponent) functionId: SearchFunctionComponent;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[] = [];
   @Input() inputType: string;
@@ -126,6 +128,7 @@ export class AttachUserModalComponent implements OnInit {
     this.idnp.key = '';
     this.email.key = '';
     this.departmentId.department = '';
+    this.functionId.function = '';
     this.roleId.role = '';
     this.userStatusEnum.userStatus = '';
     this.filters = {};

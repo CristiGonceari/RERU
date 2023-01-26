@@ -327,8 +327,10 @@
     "search-department": "Search department",
     "search-role": "Search role",
     "search-user-status": "Search by user status",
+    "search-function": "Search by function",
     "department": "Department",
     "role": "Role",
+    "function": "Function",
     "npp": "F.L.F."
   },
   "message": {
