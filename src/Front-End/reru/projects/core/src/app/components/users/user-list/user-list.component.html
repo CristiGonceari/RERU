@@ -18,11 +18,11 @@
         <erp-shared-export-button class="mr-2" (click)="userTable.getHeaders(getTitle())">
           {{'button.export' | translate}}
         </erp-shared-export-button>
-        <app-add-button class="btn mr-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
-        </app-add-button>
         <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="mr-2">
           {{'button.import' | translate}}
         </erp-shared-import-button>
+        <app-add-button class="btn mr-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
+        </app-add-button>
       </div>
       <div class="card-toolbar d-md-none d-flex w-100">
         <button class="btn btn-light-primary font-weight-bold mr-3" [disabled]
@@ -46,11 +46,11 @@
         <erp-shared-export-button class="w-100 mb-3" width="100%" (click)="userTable.getHeaders(getTitle())">
           {{'button.export' | translate}}
         </erp-shared-export-button>
-        <app-add-button class="btn w-100 mb-3" width="100%" routerLink="../new" *permission="'P00000013'"
-          [value]="'button.add-user' | translate"></app-add-button>
         <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="w-100 mb-3">
           {{'button.import' | translate}}
         </erp-shared-import-button>
+        <app-add-button class="btn w-100 mb-3" width="100%" routerLink="../new" *permission="'P00000013'"
+          [value]="'button.add-user' | translate"></app-add-button>
       </div>
     </div>
     <div class="card-header border-0 pt-0 pb-0 pr-5">
