@@ -28,10 +28,13 @@
 		<div class="col-lg col-12 pt-lg-0 pt-2">
 			<app-search-department (filter)="setFilter('departmentId',  $event)" #departmentId></app-search-department>
 		</div>
-		<div class="col-lg col-12 pt-lg-0 pt-2">
+		<div class="col-sm-2 col-12 pt-lg-0 pt-2">
 			<app-search-role (filter)="setFilter('roleId',  $event)" #roleId></app-search-role>
 		</div>
 		<div class="col-lg col-12 pt-lg-0 pt-2">
+			<app-search-function (filter)="setFilter('functionId',  $event)" #functionId></app-search-function>
+		</div>
+		<div class="col-sm-4 col-12 pt-lg-0 pt-2">
 			<app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status>
 		</div>
 		<div class="d-lg-block d-none col-lg-auto col-12 pt-lg-0 pt-2">
@@ -66,6 +69,7 @@
 					<th scope="col"> {{ 'attach-user-modal.email' | translate }} </th>
 					<th scope="col"> {{ 'attach-user-modal.department' | translate }} </th>
 					<th scope="col"> {{ 'attach-user-modal.role' | translate }} </th>
+					<th scope="col"> {{ 'attach-user-modal.function' | translate }} </th>
 				</tr>
 			</thead>
 			<tbody class="datatable-body">
@@ -87,6 +91,10 @@
 					<td> 
 						<span *ngIf="!user.roleName">-</span> 
 						<span *ngIf="user.roleName">{{ user.roleName }}</span>
+					</td>
+					<td> 
+						<span *ngIf="!user.functionName">-</span> 
+						<span *ngIf="user.functionName">{{ user.functionName }}</span>
 					</td>
 				</tr>
 			</tbody>

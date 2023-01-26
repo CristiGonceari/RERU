@@ -24,4 +24,8 @@ export class ReferenceService extends AbstractService {
 	listUserStatuses(): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.routeUrl}/user-status/select-items`);
 	}
+
+	listFunctions(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.routeUrl}/employee-functions/select-items`);
+	}
 }

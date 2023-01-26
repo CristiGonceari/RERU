@@ -326,8 +326,10 @@
     "search-department": "Пойск департамента",
     "search-role": "Пойск позиций",
     "search-user-status": "Поиск по статусу пользователя",
+    "search-function": "Поиск по функции",
     "department": "Департамент",
     "role": "Позиция",
+    "function": "Функция",
     "npp": "И.Ф.О."
   },
   "message": {

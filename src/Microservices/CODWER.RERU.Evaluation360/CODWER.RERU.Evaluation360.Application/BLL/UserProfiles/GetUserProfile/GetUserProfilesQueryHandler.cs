@@ -96,7 +96,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
 
             if (request.FunctionId.HasValue)
             {
-                items = items.Where(x => x.EmployeeFunction.ColaboratorId == request.FunctionId);
+                items = items.Where(x => x.EmployeeFunction.Id == request.FunctionId); 
             }
 
             if (request.ExceptUserIds?.Count>0)
