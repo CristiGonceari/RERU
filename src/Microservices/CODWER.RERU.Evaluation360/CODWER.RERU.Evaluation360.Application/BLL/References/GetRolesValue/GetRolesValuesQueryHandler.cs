@@ -23,9 +23,11 @@ namespace CODWER.RERU.Evaluation360.Application.References.GetRolesValue
 
         public async Task<List<SelectItem>> Handle(GetRolesValuesQuery request, CancellationToken cancellationToken)
         {
-            var roles = _appDbContext.Roles.AsQueryable();
+               var roles = _appDbContext.Roles
+                   .OrderBy(x => x.Name)
+                   .AsQueryable();
 
-            return await roles.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
-        }
+               return await roles.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
+          }
     }
 }

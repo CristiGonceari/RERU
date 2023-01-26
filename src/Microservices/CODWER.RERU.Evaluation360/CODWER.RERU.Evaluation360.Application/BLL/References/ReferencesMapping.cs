@@ -14,11 +14,11 @@ namespace CODWER.RERU.Evaluation360.Application.Departments
                 .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
 
             CreateMap<Role, SelectItem>()
-                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.Id.ToString()))
+                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.ColaboratorId.ToString()))
                 .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
 
             CreateMap<EmployeeFunction, SelectItem>()
-                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.Id.ToString()))
+                .ForMember(destination => destination.Value, options => options.MapFrom(src => src.ColaboratorId.ToString()))
                 .ForMember(destination => destination.Label, options => options.MapFrom(src => src.Name));
         }
     }

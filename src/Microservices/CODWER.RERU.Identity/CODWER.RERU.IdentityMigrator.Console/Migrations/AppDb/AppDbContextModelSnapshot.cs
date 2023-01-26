@@ -998,8 +998,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<decimal?>("Question9")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("SanctionAppliedEvaluationCourse")
-                        .HasColumnType("text");
+                    b.Property<int?>("SanctionApplied")
+                        .HasColumnType("integer");
 
                     b.Property<decimal?>("Score1")
                         .HasColumnType("numeric");
@@ -1084,6 +1084,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("QualificationQuarter4");
 
                     b.HasIndex("QualifierPartialEvaluations");
+
+                    b.HasIndex("SanctionApplied");
 
                     b.HasIndex("ServiceDuringEvaluationCourse");
 
@@ -6423,6 +6425,59 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SanctionEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Without"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Warning"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Reprimand"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "HarshRebuke"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Downgrade"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Demotion"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Dismissal"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ScoreFormulaEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -7847,6 +7902,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualifierPartialEvaluations")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("SanctionApplied")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", null)
@@ -9405,6 +9465,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RoleTypeEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.RoleTypeEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
