@@ -6444,37 +6444,37 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 1,
-                            Name = "Nu_sunt"
+                            Name = "Without"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Avertisment"
+                            Name = "Warning"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Mustrare"
+                            Name = "Reprimand"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Mustrare_aspră"
+                            Name = "HarshRebuke"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Retrogradare_cu_un_grad_special"
+                            Name = "Downgrade"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Retrogradare_în_funcţie"
+                            Name = "Demotion"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Concediere_din_funcţia_publică_cu_statut_special"
+                            Name = "Dismissal"
                         });
                 });
 

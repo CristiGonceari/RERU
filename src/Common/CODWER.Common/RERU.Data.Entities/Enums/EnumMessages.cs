@@ -60,6 +60,33 @@ namespace RERU.Data.Entities.Enums
         public const string Class = "Clasă";
         public const string ComputerClass = "Clasă cu calculatoare";
 
+        public const string Secondary = "Medii";
+        public const string Higher = "Superioare";
+        public const string Master = "Masterat";
+        public const string Doctorate = "Doctorat";
+
+        public const string Perfectiosation = "Perfecționare";
+        public const string Specialization = "Specializare";
+
+        public const string Employment = "Angajare";
+        public const string Transfer = "Transferare";
+        public const string Detachment = "Detașare";
+        public const string Default = "Neschimbat";
+
+        public const string Dissatisfied = "Nesatisfăcător";
+        public const string Satisfied = "Satisfăcător";
+        public const string Good = "Bine";
+        public const string VeryGood = "Foarte bine";
+
+        public const string Without = "Nu sunt";
+        public const string Warning = "Avertisment";
+        public const string Reprimand = "Mustrare";
+        public const string HarshRebuke = "Mustrare aspră";
+        public const string Downgrade = "Retrogradare cu un grad special";
+        public const string Demotion = "Retrogradare în funcţie";
+        public const string Dismissal = "Concediere din funcţia publică cu statut special";
+
+
         public static string Translate(TestStatusEnum testStatus)
         {
             return testStatus switch
@@ -211,6 +238,67 @@ namespace RERU.Data.Entities.Enums
                 TestingLocationType.Class => New,
                 TestingLocationType.ComputerClass => Refused,
                 _ => "-"
+            };
+        }
+
+        public static string Translate(EducationEnum? education)
+        {
+            return education switch
+            {
+                 EducationEnum.Doctorate => Doctorate,
+                 EducationEnum.Higher => Higher,
+                 EducationEnum.Master => Master,
+                 EducationEnum.Secondary => Secondary,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(ProfessionalTrainingActivitiesEnum? professionalTrainingActivities)
+        {
+            return professionalTrainingActivities switch
+            {
+                 ProfessionalTrainingActivitiesEnum.Perfectiosation => Perfectiosation,
+                 ProfessionalTrainingActivitiesEnum.Specialization => Specialization,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(ServiceDuringEvaluationCourse? serviceDuringEvaluationCourse)
+        {
+            return serviceDuringEvaluationCourse switch
+            {
+                 ServiceDuringEvaluationCourse.Employment => Employment,
+                 ServiceDuringEvaluationCourse.Transfer => Transfer,
+                 ServiceDuringEvaluationCourse.Detachment => Detachment,
+                 ServiceDuringEvaluationCourse.Default => Default,
+                 _ => "-"
+            };
+        }
+
+        public static string Translate(QualifiersEnum? qualifiersEnum)
+        {
+            return qualifiersEnum switch
+            {
+                 QualifiersEnum.Dissatisfied => Dissatisfied,
+                 QualifiersEnum.Satisfied => Satisfied,
+                 QualifiersEnum.Good => Good,
+                 QualifiersEnum.VeryGood => VeryGood,
+                 _ => "-"
+            };
+        }
+
+        public static string Translate(SanctionEnum? sanctionEnum)
+        {
+            return sanctionEnum switch
+            {
+                 SanctionEnum.Without => Without,
+                 SanctionEnum.Warning => Warning,
+                 SanctionEnum.Reprimand => Reprimand,
+                 SanctionEnum.HarshRebuke => HarshRebuke,
+                 SanctionEnum.Downgrade => Downgrade,
+                 SanctionEnum.Demotion => Demotion,
+                 SanctionEnum.Dismissal => Dismissal,
+                 _ => "-"
             };
         }
     }
