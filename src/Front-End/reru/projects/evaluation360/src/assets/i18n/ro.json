@@ -65,12 +65,13 @@
   },
   "evaluations": {
     "title": "Evaluare",
+    "manage-evaluations": "Gestionarea evaluărilor",
     "evaluated-employees": "Angajații evaluați",
     "countersigner": "Contrasemnatar",
-    "evaluation-type": "Tipul evaluat",
+    "evaluation-type": "Funcția exercitată",
     "select-evaluated-person": "Selectează angajatul evaluat",
     "select-countersigner": "Selectează contrasemnatarul",
-    "select-evaluation-type": "Selectează tipul evaluat",
+    "select-evaluation-type": "Selectează funcția exercitată",
     "executing-position": "Funcție de execuție",
     "managing-position": "Funcție de conducere",
     "status": {
@@ -202,7 +203,7 @@
     "are-you-sure-you-want-to-delete-evaluation": "Sunteți sigur că doriți să ștergeți evaluarea?",
     "confirmation": "Confirmare",
     "select-a-valid-qualification": "Selectează o calificare",
-    "all-tests": "Toate testele",
+    "all-tests": " Evaluări",
     "list": "Lista",
     "new-evaluation": "Evaluare nouă",
     "list-table": {
@@ -327,8 +328,10 @@
     "search-department": "Caută departament",
     "search-role": "Caută rol",
     "search-user-status": "Caută după statutul utilizatorului",
+    "search-function": "Caută după funcție",
     "department": "Departament",
     "role": "Rol",
+    "function": "Funcție",
     "npp": "N.P.P."
   },
   "message": {

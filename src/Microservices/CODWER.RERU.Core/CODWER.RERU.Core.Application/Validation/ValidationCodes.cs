@@ -117,5 +117,9 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string CONTRACTOR_HAS_GENERAL_DATA = "01008004";
         public static string CANDIDATE_CITIZENSHIP_NOT_FOUND = "01008001";
         public static string CANDIDATE_NATIONALITY_NOT_FOUND = "01008002";
+
+        //Organigram
+        public static string INVALID_ORGANIGRAM_ID = "01009001";
+
     }
 }

@@ -3,8 +3,10 @@
 <erp-shared-content>
 	<div class="card card-custom erp-shared-desktop-wide">
 		<div class="card-header border-0 pt-6 pb-0">
-			<div class="card-title d-flex gap-5 w-50">
-				<h3 class="card-label font-weight-bolder">{{'evaluations.list' | translate}}</h3>				
+			<div class="card-title d-flex">
+				<h3 class="card-label font-weight-bolder m-0">{{'evaluations.list' | translate}}</h3>
+				<div class="subheader-separator-custom mx-3 bg-gray-200"></div>	
+				<h3 class="text-muted mb-0">{{'evaluations.manage-evaluations' | translate}}</h3>
 			</div>
 			<div class="card-toolbar d-md-flex d-none gap-4">
 				<erp-shared-export-button (click)="openPrintModal()">

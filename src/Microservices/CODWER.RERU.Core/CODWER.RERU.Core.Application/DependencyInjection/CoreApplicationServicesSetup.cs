@@ -1,6 +1,5 @@
 using CODWER.RERU.Core.Application.Common.ExceptionHandlers.Response;
 using CODWER.RERU.Core.Application.Common.Providers;
-using CODWER.RERU.Core.Application.Common.Services;
 using CODWER.RERU.Core.Application.Common.Services.Identity;
 using CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer;
 using CODWER.RERU.Core.Application.Common.Services.PasswordGenerator;
@@ -12,6 +11,7 @@ using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Module.Application.DependencyInjection;
 using CVU.ERP.Module.Common.ExceptionHandlers;
 using CVU.ERP.Module.Common.Providers;
+using CVU.ERP.OrganigramService.DependencyInjection;
 using CVU.ERP.ServiceProvider;
 using CVU.ERP.ServiceProvider.Clients;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +47,9 @@ namespace CODWER.RERU.Core.Application.DependencyInjection
             services.AddTransient<IExportUserProfileData, ExportUserProfileDataService>();
 
             services.AddScoped(typeof(PlatformConfig));
+
+            //organigram service
+            services.AddOrganigramService();
 
             return services;
         }

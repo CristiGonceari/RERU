@@ -22,10 +22,15 @@ namespace CVU.ERP.OrganigramService.Services.Implementations
                 .Where(oc => oc.FromDate.Value.Date <= DateTime.Now.Date)
                 .OrderBy(oc => oc.FromDate)
                 .LastOrDefault();
-                
 
-            var head = await GetHead(lastActiveOrganigram.Id);
+            OrganigramHead head = new OrganigramHead();
 
+            if (lastActiveOrganigram != null)
+            {
+                head = await GetHead(lastActiveOrganigram.Id);
+
+            }
+            
             return head;
         }
 

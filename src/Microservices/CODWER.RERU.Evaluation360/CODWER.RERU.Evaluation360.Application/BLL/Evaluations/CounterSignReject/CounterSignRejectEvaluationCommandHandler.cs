@@ -93,7 +93,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.CounterSignRejec
 
         private async Task<string> GetEvaluatedTableContent()
         {
-            var content = $@"<p style=""font-size: 22px; font-weight: 300;""> în cadrul evaluării de performanță, evaluarea a fost respinsă de către contrasemnatar, urmează ca evaluatorul să facă reevaluarea și să fiți notificat pe email despre statutul evaluării.</p>";
+            var content = $@"<p style=""font-size: 22px; font-weight: 300;""> în cadrul evaluării de performanță, evaluarea a fost respinsă de către contrasemnatar, urmează ca evaluatorul să facă reevaluarea și să fiți notificat/ă pe email despre statutul evaluării.</p>";
 
             return content;
         }

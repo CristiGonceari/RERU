@@ -21,6 +21,7 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
 import { QualificationSelectComponent } from './components/qualification-select/qualification-select.component';
 import { MilitaryGradeDropdownComponent } from './components/military-grade-dropdown/military-grade-dropdown.component';
 import { MilitaryGradePipe } from './pipes/military-grade.pipe';
+import { SearchFunctionComponent } from './modals/attach-user-modal/search-function/search-function.component';
 
 const commonComponents = [
   EvaluationDropdownDetailsComponent,
@@ -39,6 +40,7 @@ const commonComponents = [
     QualificationSelectComponent,
     MilitaryGradeDropdownComponent,
     MilitaryGradePipe,
+    SearchFunctionComponent,
   ],
   imports: [
     HttpClientModule,
