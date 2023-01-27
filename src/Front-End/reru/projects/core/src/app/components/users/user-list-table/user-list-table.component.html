@@ -68,15 +68,7 @@
               <br>
               <span class="text-dark-50 font-size-lg font-weight-light">{{ user.idnp }}</span>
           </p>
-          <!-- <a [routerLink]="['../../user-profile', user.id, 'overview']" class="font-size-lg text-dark-50 text-hover-dark-75" >
-            {{ user.userName }}
-            <span *ngIf="user.idnp">
-             (idnp: {{ user.idnp }})
-            </span>
-            
-          </a> -->
         </td>
-        <!-- <td [class.no-actions]="!viewDetails"> {{ user.idnp }} </td> -->
         <td [class.no-actions]="!viewDetails"> {{ user.email }} </td>
         <td [class.no-actions]="!viewDetails">
           <span class="font-size-lg" *ngIf="user.departmentName">{{ user.departmentName }}</span>
