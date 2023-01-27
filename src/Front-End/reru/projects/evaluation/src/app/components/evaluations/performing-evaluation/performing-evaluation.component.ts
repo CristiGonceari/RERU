@@ -105,7 +105,6 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.summary();
     this.getTestById();
-    this.subscribeForHashedAnswers();
     this.testQuestionService.setData(false);
     this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
   }
@@ -116,9 +115,13 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
 
   subscribeForHashedAnswers() {
     this.testQuestionService.answerSubject.subscribe(res => {
-      if (res && res != undefined) {
-        const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
-        this.hashedOptions[index].answer = res.answer;
+      if (res && res != undefined && this.hashedOptions.length > 0) {
+        res.forEach(element => {
+          const index = this.hashedOptions.findIndex(x => x.id == element.optionId);
+          if (index > -1) {
+            this.hashedOptions[index].answer = element.answer;
+          }
+        });
         this.hashedOptions.forEach(element => {
           this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
         });
@@ -183,6 +186,7 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
 	}
 
   ngDoBoostrap() {
+    this.subscribeForHashedAnswers();
     const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
 
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
