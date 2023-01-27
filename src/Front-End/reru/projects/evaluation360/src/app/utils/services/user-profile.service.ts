@@ -16,6 +16,10 @@ export class UserProfileService extends AbstractService {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/my`);
   }
 
+  getCurrentUserProfile(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/current-user`);
+  }
+
   getUser(id): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
   }
