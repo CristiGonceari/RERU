@@ -55,7 +55,6 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   handleChangeAttachedUsers(data: { attachedUsers: number[], checked: boolean }): void {
-    console.log('came in table', data);
     // check if the user exist in the list, then proceed
     if (this.users.some(user => data.attachedUsers.includes(user.id))) {
       if (data.checked) {
