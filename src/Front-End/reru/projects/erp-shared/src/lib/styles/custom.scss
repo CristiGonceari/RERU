@@ -392,3 +392,14 @@ ngx-dropzone {
   font-family: Arial;
 } 
 /* END NGX-DROPZONE */
+
+/* Bootstrap Modal classes */
+ngb-modal-window.full-size-modal {
+  div.modal-dialog {
+    max-width: calc(100% - 30px);
+    div.modal-content {
+      height: calc(100vh - 47px);
+    }
+  }
+}
+/* Bootstrap Modal classes */

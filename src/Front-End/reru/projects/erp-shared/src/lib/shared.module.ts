@@ -52,6 +52,13 @@ import { ContentComponent } from './components/content/content.component';
 import { Exception404Component } from './components/404/404.component';
 import { Exception500Component } from './components/500/500.component';
 import { FormsModule } from '@angular/forms';
+import { AttachUserModalComponent } from './modals/attach-user-modal/attach-user-modal.component';
+import { SelectComponent } from './components/select/select.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TreeComponent } from './components/tree/tree.component';
+import { WarningAlertModalComponent } from './modals/warning-alert-modal/warning-alert-modal.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -80,7 +87,8 @@ const commonExports = [
 	ShowImageModalComponent,
 	ContentComponent,
 	Exception404Component,
-	Exception500Component
+	Exception500Component,
+	AttachUserModalComponent
 ];
 @NgModule({
 	declarations: [
@@ -88,7 +96,10 @@ const commonExports = [
 		ViewIconComponent,
 		LayoutContentComponent,
 		UploadFileModalComponent,
-		GoToTestModalComponent
+		GoToTestModalComponent,
+		SelectComponent,
+		TreeComponent,
+		WarningAlertModalComponent
 	],
 	imports: [
 		CommonModule,
@@ -96,6 +107,9 @@ const commonExports = [
 		HttpClientModule,
 		translateModule,
 		NgbModule,
+		MatTreeModule,
+		MatCheckboxModule,
+		MatProgressBarModule,
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
