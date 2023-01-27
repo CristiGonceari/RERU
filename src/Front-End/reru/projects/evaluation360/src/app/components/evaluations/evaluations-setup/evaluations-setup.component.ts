@@ -7,8 +7,10 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { EvaluationService } from '../../../utils/services/evaluations.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18nService } from '../../../utils/services/i18n.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { AttachUserModalComponent } from '@erp/shared';
+import { ReferenceService } from '../../../utils/services/reference.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-evaluations-setup',
@@ -19,6 +21,11 @@ export class EvaluationsSetupComponent implements OnInit {
 	evaluationForm: FormGroup;
 	counterSignUsers: SelectItem[] = [];
 	evaluatedUsers: SelectItem[] = [];
+	roles: SelectItem[];
+	departments: SelectItem[];
+	userStatuses: SelectItem[];
+	functions: SelectItem[];
+	isLoading: boolean = true;
 	notification = {
 		title: {
 			success: 'Success',
@@ -39,12 +46,29 @@ export class EvaluationsSetupComponent implements OnInit {
 		private readonly router: Router,
 		private readonly route: ActivatedRoute,
 		private readonly modalService: NgbModal,
-		private readonly translateService: I18nService
+		private readonly translateService: I18nService,
+		private readonly referenceService: ReferenceService
 	) {}
 
 	ngOnInit(): void {
+		this.retrieveModalDropdowns();
 		this.initForm();
 		this.translateData();
+	}
+
+	retrieveModalDropdowns(): void {
+		forkJoin([
+			this.referenceService.listDepartments().pipe(catchError(() => of([]))),
+			this.referenceService.listRoles().pipe(catchError(() => of([]))),
+			this.referenceService.listUserStatuses().pipe(catchError(() => of([]))),
+			this.referenceService.listFunctions().pipe(catchError(() => of([])))
+		]).subscribe(([departments, roles, userStatuses, functions]) => {
+			this.departments = departments.data;
+			this.roles = roles.data;
+			this.userStatuses = userStatuses.data;
+			this.functions = functions.data;
+			this.isLoading = false;
+		});
 	}
 
 	translateData(): void {
@@ -72,8 +96,12 @@ export class EvaluationsSetupComponent implements OnInit {
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
 		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, windowClass: 'full-size-modal' });
 		modalRef.componentInstance.inputType = isAttachEvaluated ? 'checkbox' : 'radio';
+		modalRef.componentInstance.departments = [...this.departments];
+		modalRef.componentInstance.roles = [...this.roles];
+		modalRef.componentInstance.userStatuses = [...this.userStatuses];
+		modalRef.componentInstance.functions = [...this.functions];
 		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? ([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
-		modalRef.componentInstance.attachedItems = isAttachEvaluated ? 
+		modalRef.componentInstance.attachedUsers = isAttachEvaluated ? 
 		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
 		modalRef.result.then((data) => {
 			if (isAttachEvaluated) {

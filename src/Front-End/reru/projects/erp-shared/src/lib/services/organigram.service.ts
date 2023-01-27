@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ContentOrganigramModel, HeadOrganigramModel, OrganigramUserModel } from '../models/organigram.model';
+import { Response } from '../models/response.model';
 import { AbstractService } from './abstract.service';
 import { AppSettingsService } from './app-settings.service';
 
@@ -15,27 +16,15 @@ export class OrganigramService extends AbstractService {
 		super(configService);
 	}
 
-  getHead(): Observable<any> {
-    return this.http.get<any>(`http://localhost:8182/Api/${this.routeUrl}/organigram-head`);
+  getHead(): Observable<Response<HeadOrganigramModel>> {
+    return this.http.get<Response<HeadOrganigramModel>>(`${this.coreUrl}/${this.routeUrl}/organigram-head`);
   }
 
-  getContent(params): Observable<any> {
-    return this.http.get<any>(`http://localhost:8182/Api/${this.routeUrl}/organigram-content`, { params });
+  getContent(params): Observable<Response<ContentOrganigramModel[]>> {
+    return this.http.get<Response<ContentOrganigramModel[]>>(`${this.coreUrl}/${this.routeUrl}/organigram-content`, { params });
   }
 
-  getUsers(params): Observable<any> {
-    return this.http.get<any>(`http://localhost:8182/Api/${this.routeUrl}/organigram-users`, { params });
+  getUsers(params): Observable<Response<OrganigramUserModel[]>> {
+    return this.http.get<Response<OrganigramUserModel[]>>(`${this.coreUrl}/${this.routeUrl}/organigram-users`, { params });
   }
-
-  // getHead(): Observable<HeadOrganigramModel> {
-  //   return this.http.get<HeadOrganigramModel>(`${this.coreUrl}/${this.routeUrl}/organigram-head`);
-  // }
-
-  // getContent(params): Observable<ContentOrganigramModel> {
-  //   return this.http.get<ContentOrganigramModel>(`${this.coreUrl}/${this.routeUrl}/organigram-content`, { params });
-  // }
-
-  // getUsers(params): Observable<OrganigramUserModel> {
-  //   return this.http.get<OrganigramUserModel>(`${this.coreUrl}/${this.routeUrl}/organigram-users`, { params });
-  // }
 }

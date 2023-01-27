@@ -1,12 +1,13 @@
 import { CollectionViewer, SelectionChange, DataSource } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { BehaviorSubject, forkJoin, merge, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrganigramService } from '../../services/organigram.service';
 import { WarningAlertModalComponent } from '../../modals/warning-alert-modal/warning-alert-modal.component';
+import { ContentOrganigramModel, OrganigramUserModel } from '../../models/organigram.model';
 
 /** Flat node with expandable and level information */
 export class DynamicFlatNode {
@@ -34,8 +35,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
   }
 
   constructor(private readonly _treeControl: FlatTreeControl<DynamicFlatNode>,
-              private readonly organigramService: OrganigramService,
-              private readonly attachedUsers: number[]) {
+              private readonly organigramService: OrganigramService) {
                 this.initialize();
               }
 
@@ -105,24 +105,21 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
     if (expand) {
       forkJoin([
         this.organigramService.getContent(contentParams).pipe(catchError(() => of({data: []}))),
-        userParams.Type ? this.organigramService.getUsers(userParams).pipe(catchError(() => of({ data: []}))) : of(true),
+        userParams.Type ? this.organigramService.getUsers(userParams).pipe(catchError(() => of({ data: []}))) : of({ data: [] }),
       ]).subscribe(([contentResponse, usersResponse]) => {
-      const departments = contentResponse.data;
-      const users = usersResponse.data;
-      const departmentNodes = departments.map((item) => new DynamicFlatNode(item, node.level + 1, isHead));
-      const userNodes = users.map((item) => new DynamicFlatNode(item, node.level + 1, isHead));
+      const departments = [...contentResponse.data];
+      const users: OrganigramUserModel[] = [...usersResponse.data];
+      const departmentNodes = departments.map((item: ContentOrganigramModel) => new DynamicFlatNode(item, node.level + 1, isHead));
+      const userNodes = users.map((item: OrganigramUserModel) => new DynamicFlatNode(item, node.level + 1, isHead));
       this.data.splice(index + 1, 0, ...userNodes, ...departmentNodes);
 
       // notify the change
       this.dataChange.next(this.data);
 
-      // check previously checked users from table list
-      const checkedUsers = userNodes.map((node: DynamicFlatNode) => {
-        if (this.attachedUsers.includes(node.item.id)) {
-          return node;
-        }
-      }).filter((el: DynamicFlatNode) => !!el);
-      this.checkSubject.next(checkedUsers);
+      // load checkboxes when user nodes came into DOM
+      if (userNodes.length) {
+        this.checkSubject.next(userNodes);
+      }
 
       node.isLoading = false;
       })
@@ -147,14 +144,15 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
-export class TreeComponent {
-  @Output() changeAttachedUser: EventEmitter<number[]> = new EventEmitter<number[]>();
+export class TreeComponent implements OnChanges {
+  @Output() changeAttachedUser: EventEmitter<{ attachedUsers: number[], checked: boolean }> = 
+                            new EventEmitter<{ attachedUsers: number[], checked: boolean }>();
   @Input() attachedUsers: number[] = [];
   isLoading: boolean = true;
   constructor(readonly organigramService: OrganigramService,
               private readonly modalService: NgbModal) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new DynamicDataSource(this.treeControl, organigramService, this.attachedUsers);
+    this.dataSource = new DynamicDataSource(this.treeControl, organigramService);
     this.subscribeForCheckChanges();
   }
 
@@ -172,11 +170,51 @@ export class TreeComponent {
 
   hasUsers = (nodes: DynamicFlatNode[]) => nodes.some((node: DynamicFlatNode) => !!node.item.firstName);
 
+  ngOnChanges(): void {
+    this.subscribeToCheckCheckboxesFromTable();
+  }
+
+  subscribeToCheckCheckboxesFromTable(): void {
+    if (this.checklistSelection.selected.length) {
+      const selectedUsers = this.checklistSelection.selected.filter(node => node?.item?.firstName && !this.attachedUsers.includes(+node?.item?.id));
+      selectedUsers.forEach((node: DynamicFlatNode) => {
+        if (this.checklistSelection.isSelected(node)){
+          this.checklistSelection.deselect(node);
+        }
+      })
+      if (!selectedUsers.length && this.attachedUsers.length) {
+        this.attachedUsers.forEach((id: number) => this.selectNodeByUserId(id));
+      }
+    } else if (this.attachedUsers.length) {
+      this.attachedUsers.forEach((id: number) => this.selectNodeByUserId(id));
+    }
+  }
+
+  selectNodeByUserId(id: number): void {
+    const node = this.getNodeByUserId(id);
+
+    // Save ids for when node will be available
+    if (!node) {
+      return;
+    }
+    const descendants = this.treeControl.getDescendants(node);
+    if (!this.checklistSelection.isSelected(node)) {
+      this.checklistSelection.select(node);
+      this.checklistSelection.select(...descendants);
+      this.checkAllParentsSelection(node);
+    }
+  }
+
+  getNodeByUserId(id: number): DynamicFlatNode {
+    return this.dataSource.data.find(node => !!node?.item?.firstName && +node.item.id === +id);
+  }
+
   subscribeForCheckChanges(): void {
     this.dataSource.checkSubject.subscribe((response: DynamicFlatNode[]) => {
-      response.forEach((node: DynamicFlatNode) => this.todoLeafItemSelectionToggle(node, null));
-      const checkedUserIds = response.map((node: DynamicFlatNode) => node.item.id);
-      this.changeAttachedUser.emit([...this.attachedUsers, ...checkedUserIds]);
+      response.forEach((node: DynamicFlatNode) => {
+        this.checklistSelection.toggle(node);
+        this.checkAllParentsSelection(node);
+      })
     });
   }
 
@@ -196,25 +234,34 @@ export class TreeComponent {
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: DynamicFlatNode, event): void {
     if (node.item.relationId) {
-      this.todoItemSelectionToggle(event, node);
+      this.todoItemSelectionToggle(node, event);
     } else {
       this.checklistSelection.toggle(node);
       this.checkAllParentsSelection(node);
+      this.changeAttachedUser.emit({ attachedUsers: [...new Set([...this.attachedUsers, +node.item.id])], checked: event.checked });
     }
   }
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: DynamicFlatNode, event): void {
-    const descendants = this.treeControl.getDescendants(node instanceof DynamicFlatNode ? node : event);
+    const attachedUsers = event.source.checked ? [...this.attachedUsers] : [];
+    const descendants = this.treeControl.getDescendants(node);
+    const userDescendants = descendants.map(node => { if (node.item.firstName && node.item.id) return +node.item.id}).filter(el => !!el);
+  
+    if (node.item.firstName) {
+      attachedUsers.push(+node.item.id);
+    }
+
+    if (userDescendants.length) {
+      attachedUsers.push(...userDescendants);
+    }
+
     if (!this.hasUsers(descendants)) {
       this.openWarningModal();
-      if (!event.source) {
-        (node as any).source.checked = false;
-      } else {
-        event.source.checked = false;
-      }
+      event.source.checked = false;
       return;
     }
+
     this.checklistSelection.toggle(node instanceof DynamicFlatNode ? node : event);
     this.checklistSelection.isSelected(node instanceof DynamicFlatNode ? node : event)
       ? this.checklistSelection.select(...descendants)
@@ -223,6 +270,7 @@ export class TreeComponent {
     // Force update for the parent
     descendants.forEach(child => this.checklistSelection.isSelected(child));
     this.checkAllParentsSelection(node instanceof DynamicFlatNode ? node : event);
+    this.changeAttachedUser.emit({ attachedUsers: [...new Set(attachedUsers)], checked: event.source.checked });
   }
 
   /* Checks all the parents when a leaf node is selected/unselected */

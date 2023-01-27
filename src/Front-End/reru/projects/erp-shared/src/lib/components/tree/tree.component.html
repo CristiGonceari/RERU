@@ -10,7 +10,7 @@
     <label *ngIf="!node.item.firstName" class="mr-2">{{node.item?.name}}</label>
     <mat-checkbox click *ngIf="!node.isLoading" class="checklist-leaf-node"
                   [checked]="checklistSelection.isSelected(node)"
-                  (change)="todoLeafItemSelectionToggle(node, $event)">{{node?.item?.fullName}}</mat-checkbox>
+                  (change)="todoLeafItemSelectionToggle(node, $event)">{{node?.item?.lastName}} {{node?.item?.firstName}} {{node?.item?.fatherName}}</mat-checkbox>
     <mat-progress-bar *ngIf="node.isLoading"
                       mode="indeterminate"
                       class="example-tree-progress-bar"></mat-progress-bar>

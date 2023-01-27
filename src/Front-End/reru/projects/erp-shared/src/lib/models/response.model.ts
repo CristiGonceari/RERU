@@ -1,8 +1,9 @@
+import { Message } from './message.model';
 import { PaginationModel } from './pagination.model';
 
 export interface Response<T> {
     data: T;
-    messages: any[];
+    messages: Message[];
     success: boolean;
 }
 
@@ -11,6 +12,6 @@ export interface ResponseArray<T> {
         items: T[];
         pagedSummary: PaginationModel;
     }
-    messages: any[];
+    messages: Message[];
     success: boolean;
 }

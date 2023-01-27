@@ -51,7 +51,7 @@ export * from './lib/guards/authentication.guard';
 export * from './lib/models/application-module.model';
 export * from './lib/models/application-user-module.model';
 export * from './lib/models/application-user.model';
-export * from './lib/models/response';
+export * from './lib/models/response.model';
 export * from './lib/models/FileTypeEnum';
 
 export * from './lib/services/app-settings.service';

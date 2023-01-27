@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationClass, PaginationModel } from '../../models/pagination.model';
 import { ResponseArray } from '../../models/response.model';
@@ -22,6 +22,7 @@ export class AttachUserModalComponent implements OnInit {
   @Input() departments: SelectItem[] = [];
   @Input() roles: SelectItem[] = [];
   @Input() userStatuses: SelectItem[] = [];
+  @Input() functions: SelectItem[] = [];
   paginatedAttachedIds: boolean = false;
   pagination: PaginationModel = new PaginationClass();
   isLoading = true;
@@ -36,7 +37,7 @@ export class AttachUserModalComponent implements OnInit {
   // @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
   // @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
   // @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
-  @Input() exceptUserIds: any[];
+  @Input() exceptUserIds: number[] = [];
   @Input() attachedUsers: number[] = [];
 
   @Input() inputType: 'checkbox' | 'radio';
@@ -46,10 +47,25 @@ export class AttachUserModalComponent implements OnInit {
   @Input() testTemplateId: number;
 
   constructor(private readonly userProfileService: UserProfileService,
-              private readonly activeModal: NgbActiveModal) {}
+              private readonly activeModal: NgbActiveModal,
+              private readonly cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getUsers();
+  }
+
+  handleChangeAttachedUsers(data: { attachedUsers: number[], checked: boolean }): void {
+    console.log('came in table', data);
+    // check if the user exist in the list, then proceed
+    if (this.users.some(user => data.attachedUsers.includes(user.id))) {
+      if (data.checked) {
+        this.attachedUsers = [...data.attachedUsers];
+      } else {
+        data.attachedUsers.forEach(el => {
+          this.attachedUsers.splice(this.attachedUsers.indexOf(el), 1);
+        })
+      }
+    }
   }
 
   public getUsers(data: any = {}): void {
@@ -88,30 +104,38 @@ export class AttachUserModalComponent implements OnInit {
 
   public checkAll(event): void {
     if (event.target.checked == false) {
-      let itemsToRemove = this.users.map(el => +el.id);
+      const itemsToRemove = this.users.map(el => +el.id);
       this.attachedUsers = this.attachedUsers.filter( x => !itemsToRemove.includes(x) );
     }
     if (event.target.checked == true) {
       this.attachedUsers = this.attachedUsers.filter( x => !this.users.map(el => +el.id).includes(x) );
-      let itemsToAdd = this.users.map(el => +el.id)
-      for (let i=0; i<itemsToAdd.length; i++) {
+      const itemsToAdd = this.users.map(el => +el.id)
+      for (let i = 0; i < itemsToAdd.length; i++) {
         this.attachedUsers.push(itemsToAdd[i]);
       }
     }
     this.getUsers();
   }
 
+  /**
+   * Triggers check (true/false) into attachedUsers,
+   * reassigns the attachedUsers array to trigger OnChanges on TreeComponent
+   * @param {Event} event Checkbox Event
+   */
   checkInput(event): void {
-    if (this.inputType == 'checkbox') this.onItemChange(event);
-    else this.attachedUsers[0] = +event.target.value;
+    if (this.inputType == 'checkbox') {
+      this.onItemChange(event);
+    } else { 
+      this.attachedUsers[0] = +event.target.value;
+    }
+    this.attachedUsers = [...this.attachedUsers];
   }
 
   onItemChange(event): void {
     if (event.target.checked == true) {
       this.attachedUsers.push(+event.target.value);
     } else if (event.target.checked == false) {
-      let indexToDelete = this.attachedUsers.findIndex(x => x == event.target.value);
-      this.attachedUsers.splice(indexToDelete, 1);
+      this.attachedUsers.splice(this.attachedUsers.indexOf(event.target.value), 1);
     }
   }
 

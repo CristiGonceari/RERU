@@ -2,7 +2,7 @@
 	<div class="d-flex justify-content-between w-100">
 		<h3 class="modal-title">{{'button.attach-evaluateds' | translate}}</h3>
 		<div class="d-flex gap-2">
-			<a (click)="view = modalViewEnum.isTable" href="javascript:void(0)" class="btn btn-icon btn-lg mr-4" content="body" ngbTooltip="Tabel mod">
+			<a (click)="view = modalViewEnum.isTable" href="javascript:void(0)" class="btn btn-icon btn-hover-light btn-lg mr-4" content="body" ngbTooltip="Tabel mod">
 				<span class="svg-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -13,7 +13,9 @@
 					</svg>
 				</span>
 			</a>
-			<a (click)="view = modalViewEnum.isOrganigram" href="javascript:void(0)" class="btn btn-icon btn-lg mr-4" content="body" ngbTooltip="Organigrama mod">
+			<a (click)="view = modalViewEnum.isOrganigram" [ngClass]="{'pulse pulse-danger': view != modalViewEnum.isOrganigram }" 
+			href="javascript:void(0)" class="btn btn-icon btn-hover-light btn-lg mr-4" content="body" ngbTooltip="Organigrama mod">
+				<span *ngIf="view != modalViewEnum.isOrganigram" class="pulse-ring"></span>
 				<span class="svg-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -53,16 +55,16 @@
 		</div>
 		<div class="row">
 			<div class="col-lg col-12 pt-lg-0 pt-2">
-				<erp-shared-select [items]="departments" (filter)="setFilter('departmentId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-				<!-- <app-search-department (filter)="setFilter('departmentId',  $event)" #departmentId></app-search-department> -->
+				<erp-shared-select [items]="departments" (filter)="setFilter('departmentId',  $event)" [placeholder]="'attach-user-modal.search-department' | translate"></erp-shared-select>
 			</div>
 			<div class="col-lg col-12 pt-lg-0 pt-2">
-				<erp-shared-select [items]="roles" (filter)="setFilter('roleId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-				<!-- <app-search-role (filter)="setFilter('roleId',  $event)" #roleId></app-search-role> -->
+				<erp-shared-select [items]="roles" (filter)="setFilter('roleId',  $event)" [placeholder]="'attach-user-modal.search-role' | translate"></erp-shared-select>
 			</div>
 			<div class="col-lg col-12 pt-lg-0 pt-2">
-				<erp-shared-select [items]="userStatuses" (filter)="setFilter('roleId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-				<!-- <app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status> -->
+				<erp-shared-select [items]="functions" (filter)="setFilter('functionId',  $event)" [placeholder]="'attach-user-modal.search-function' | translate"></erp-shared-select>
+			</div>
+			<div class="col-lg col-12 pt-lg-0 pt-2">
+				<erp-shared-select [items]="userStatuses" (filter)="setFilter('roleId',  $event)" [placeholder]="'attach-user-modal.search-user-status' | translate"></erp-shared-select>
 			</div>
 			<div class="d-lg-block d-none col-lg-auto col-12 pt-lg-0 pt-2">
 				<app-button (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
@@ -103,7 +105,7 @@
 					<td>
 						<label class="checkbox checkbox-lg checkbox-inline">
 							<input #currentCheckbox type="{{inputType}}" value="{{ user.id }}" name="option"
-								[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
+								[checked]="attachedUsers.includes(user.id)" (change)="checkInput($event)" />
 							<span></span>
 						</label>
 					</td>
@@ -135,8 +137,8 @@
 		</div>
 		</div>
 	</div>
-	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2">
-		<div class="col border p-4">
+	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2 h-100">
+		<div class="col-lg col-12 border p-4">
 			<div class="row mb-lg-4 mb-0">
 				<div class="col-lg col-12">
 					<erp-shared-search-input (handleSearch)="setFilter('lastName', $event)"
@@ -161,16 +163,16 @@
 			</div>
 			<div class="row">
 				<div class="col-lg col-12 pt-lg-0 pt-2">
-					<erp-shared-select [items]="departments" (filter)="setFilter('departmentId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-					<!-- <app-search-department (filter)="setFilter('departmentId',  $event)" #departmentId></app-search-department> -->
+					<erp-shared-select [items]="departments" (filter)="setFilter('departmentId',  $event)" [placeholder]="'attach-user-modal.search-department' | translate"></erp-shared-select>
 				</div>
 				<div class="col-lg col-12 pt-lg-0 pt-2">
-					<erp-shared-select [items]="roles" (filter)="setFilter('roleId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-					<!-- <app-search-role (filter)="setFilter('roleId',  $event)" #roleId></app-search-role> -->
+					<erp-shared-select [items]="roles" (filter)="setFilter('roleId',  $event)" [placeholder]="'attach-user-modal.search-role' | translate"></erp-shared-select>
 				</div>
 				<div class="col-lg col-12 pt-lg-0 pt-2">
-					<erp-shared-select [items]="userStatuses" (filter)="setFilter('roleId',  $event)" [placeholder]="'button.select' | translate"></erp-shared-select>
-					<!-- <app-search-status (filter)="setFilter('userStatusEnum',  $event)" #userStatusEnum></app-search-status> -->
+					<erp-shared-select [items]="functions" (filter)="setFilter('functionId',  $event)" [placeholder]="'attach-user-modal.search-function' | translate"></erp-shared-select>
+				</div>
+				<div class="col-lg col-12 pt-lg-0 pt-2">
+					<erp-shared-select [items]="userStatuses" (filter)="setFilter('roleId',  $event)" [placeholder]="'attach-user-modal.search-user-status' | translate"></erp-shared-select>
 				</div>
 				<div class="d-lg-block d-none col-lg-auto col-12 pt-lg-0 pt-2">
 					<app-button (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>
@@ -211,7 +213,7 @@
 						<td>
 							<label class="checkbox checkbox-lg checkbox-inline">
 								<input #currentCheckbox type="{{inputType}}" value="{{ user.id }}" name="option"
-									[checked]="attachedItems.includes(user.id)" (change)="checkInput($event)" />
+									[checked]="attachedUsers.includes(user.id)" (change)="checkInput($event)" />
 								<span></span>
 							</label>
 						</td>
@@ -243,8 +245,8 @@
 			</div>
 			</div>
 		</div>
-		<div class="col border p-4 tree-container">
-			<erp-shared-tree [attachedUsers]="attachedUsers" (changeAttachedUser)="attachedUsers = $event"></erp-shared-tree>
+		<div class="col-lg col-12 border p-4 tree-container">
+			<erp-shared-tree [attachedUsers]="attachedUsers" (changeAttachedUser)="handleChangeAttachedUsers($event)"></erp-shared-tree>
 		</div>
 	</div>
 </div>

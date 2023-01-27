@@ -400,6 +400,13 @@ ngb-modal-window.full-size-modal {
     div.modal-content {
       height: calc(100vh - 47px);
     }
+
+    @media screen and (max-width: 992px) {
+      max-width: 100%;
+      div.modal-content {
+        height: 100%;
+      }
+    }
   }
 }
 /* Bootstrap Modal classes */

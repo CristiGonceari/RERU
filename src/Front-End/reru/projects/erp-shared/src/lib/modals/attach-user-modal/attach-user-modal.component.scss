@@ -1,4 +1,7 @@
 :host {
+  .modal-body {
+    height: calc(100% - 30px);
+  }
   .tree-container {
     max-height: calc(100vh - 260px);
     overflow-x: auto;
