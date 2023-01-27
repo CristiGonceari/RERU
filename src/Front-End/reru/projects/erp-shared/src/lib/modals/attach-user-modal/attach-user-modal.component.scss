@@ -2,6 +2,13 @@
   .modal-body {
     height: calc(100% - 30px);
   }
+  div.container-block {
+    height: calc(100vh - 380px);
+    @media screen and (max-width: 992px) {
+      height: auto;
+    }
+  }
+
   .tree-container {
     max-height: calc(100vh - 260px);
     overflow-x: auto;

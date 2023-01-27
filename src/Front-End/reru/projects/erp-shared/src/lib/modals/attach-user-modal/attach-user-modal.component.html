@@ -137,8 +137,8 @@
 		</div>
 		</div>
 	</div>
-	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2 h-100">
-		<div class="col-lg col-12 border p-4">
+	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2 container-block">
+		<div class="col-lg col-12 border p-4 tree-container">
 			<div class="row mb-lg-4 mb-0">
 				<div class="col-lg col-12">
 					<erp-shared-search-input (handleSearch)="setFilter('lastName', $event)"
