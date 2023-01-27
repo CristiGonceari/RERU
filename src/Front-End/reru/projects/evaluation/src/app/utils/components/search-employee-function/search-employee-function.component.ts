@@ -7,14 +7,10 @@ import { ReferenceService } from '../../services/reference/reference.service';
   styleUrls: ['./search-employee-function.component.scss']
 })
 export class SearchEmployeeFunctionComponent  {
-
-  
   @Output() filter: EventEmitter<void> = new EventEmitter<void>();
   list;
   function: string = '';
   constructor(private referenceService: ReferenceService) { this.getFunctionValues(); }
-
-
 
   getFunctionValues() {
     this.referenceService.getEmployeeFunctions().subscribe(res => {this.list = res.data});

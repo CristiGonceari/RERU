@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchDepartmentComponent } from '../../../utils/components/search-department/search-department.component';
+import { SearchEmployeeFunctionComponent } from '../../../utils/components/search-employee-function/search-employee-function.component';
 import { SearchRoleComponent } from '../../../utils/components/search-role/search-role.component';
 
 @Component({
@@ -18,6 +19,7 @@ export class EvaluationsListTableComponent implements OnInit {
   @ViewChild('selectedResult') selectedResult: any;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
+  @ViewChild(SearchEmployeeFunctionComponent) functionId: SearchEmployeeFunctionComponent;
 
   constructor() { }
 
@@ -38,5 +40,6 @@ export class EvaluationsListTableComponent implements OnInit {
     this.selectedResult.getTestResults();
     this.departmentId.department = '';
     this.roleId.role = '';
+    this.functionId.function = '';
   }
 }
