@@ -1,21 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
 using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using CODWER.RERU.Evaluation.Application.Services;
-using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
-using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
-using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
-using System.Linq.Dynamic.Core;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 {
@@ -47,8 +40,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             paginatedModel = await CheckIfHasCandidatePosition(paginatedModel);
 
             paginatedModel = await CheckTestEvaluator(paginatedModel, currentUser);
-
-            paginatedModel = await CheckIfTestIsCalculatedBySystem(paginatedModel);
 
             return paginatedModel;
         }
@@ -111,21 +102,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 {
                     testDto.IsEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
                 }
-            }
-
-            return paginatedModel;
-        }
-
-        private async Task<PaginatedModel<TestDto>> CheckIfTestIsCalculatedBySystem(PaginatedModel<TestDto> paginatedModel)
-        {
-            foreach (var testDto in paginatedModel.Items)
-            {
-                var test = await _appDbContext.Tests
-                    .Include(tt => tt.TestQuestions)
-                    .ThenInclude(tt => tt.QuestionUnit)
-                    .FirstOrDefaultAsync(tt => tt.Id == testDto.Id);
-
-                testDto.IsVerificatedAutomat = test.TestQuestions.All(x => x.QuestionUnit.QuestionType is QuestionTypeEnum.OneAnswer or QuestionTypeEnum.MultipleAnswers);
             }
 
             return paginatedModel;

@@ -22,6 +22,7 @@ export class TestListComponent implements OnInit {
   @ViewChild('selectedStatus') selectedStatus: any;
   @ViewChild('selectedResult') selectedResult: any;
   @ViewChild('colaboratorId') colaboratorId: any;
+  @ViewChild('functionId') functionId: any;
 
 
   constructor(
@@ -48,6 +49,7 @@ export class TestListComponent implements OnInit {
     this.selectedResult.getTestResults();
     this.departmentId.department = '';
     this.roleId.role = '';
+    this.functionId.function = '';
   }
 
   openHistoryModal() {
