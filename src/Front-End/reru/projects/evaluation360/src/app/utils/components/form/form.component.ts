@@ -278,7 +278,7 @@ export class FormComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      this.handleFinalQualificationChange(Math.round(mea));
+      this.handleFinalQualificationChange(Math.round(mea * 100) / 100);
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);
