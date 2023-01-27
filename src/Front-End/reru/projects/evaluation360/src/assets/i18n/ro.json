@@ -56,7 +56,9 @@
   "dashboard": {
     "title": "Evaluare 360",
     "subtitle": "Pagina de start",
-    "enclosed-mode":"Mod restrâns"
+    "enclosed-mode":"Mod restrâns",
+    "hello-username": "Salut",
+    "have-a-good-day": "Bine ai venit!"
   },
   "footer": {
     "all-rights-reserved": "Toate drepturile rezervate",
