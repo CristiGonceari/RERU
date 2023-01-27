@@ -395,9 +395,16 @@
     <div class="form-group row">
       <label for="sanctionAppliedEvaluationCourse" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
           <div class="col-lg col-12">
-              <input class="form-control" type="text" formControlName="sanctionAppliedEvaluationCourse" 
-              [ngClass]="{'is-valid': isValid(evaluationForm, 'sanctionAppliedEvaluationCourse')}"
-              name="sanctionAppliedEvaluationCourse" id="sanctionAppliedEvaluationCourse" placeholder="Sancțiunea">
+            <select class="form-control" [ngClass]="{'is-valid': isValid(evaluationForm, 'sanctionAppliedEvaluationCourse')}" formControlName="sanctionAppliedEvaluationCourse">
+              <option value="null">{{ 'button.select' | translate }}</option>
+              <option [value]="sanctionEnum.Without">{{'evaluations.sanction-enum.1' | translate}}</option>
+              <option [value]="sanctionEnum.Warning">{{'evaluations.sanction-enum.2' | translate}}</option>
+              <option [value]="sanctionEnum.Reprimand">{{'evaluations.sanction-enum.3' | translate}}</option>
+              <option [value]="sanctionEnum.HarshRebuke">{{'evaluations.sanction-enum.4' | translate}}</option>
+              <option [value]="sanctionEnum.Downgrade">{{'evaluations.sanction-enum.5' | translate}}</option>
+              <option [value]="sanctionEnum.Demotion">{{'evaluations.sanction-enum.6' | translate}}</option>
+              <option [value]="sanctionEnum.Dismissal">{{'evaluations.sanction-enum.7' | translate}}</option>
+            </select>
           </div>
     </div>
 

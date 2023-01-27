@@ -16,7 +16,6 @@ export class SidebarService {
   public readonly user$ = this.userSubject.asObservable();
   public readonly enclosed$ = this.enclosedSubject.asObservable();
   constructor() { 
-    console.log('init sidebarservice'+new Date().getTime());
     this.initializeInterfaceTogglers();
   }
 

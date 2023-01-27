@@ -292,7 +292,16 @@
     "set-annual-average-as-3": "Media anuală între 2.51 și 3.50 (aleatoriu)",
     "set-annual-average-as-2": "Media anuală între 1.51 și 2.50 (aleatoriu)",
     "set-annual-average-as-1": "Media anuală între 1.00 și 1.50 (aleatoriu)",
-    "necessity": "Necesitate"
+    "necessity": "Necesitate",
+    "sanction-enum": {
+      "1": "Nu sunt",
+      "2": "Avertisment",
+      "3": "Mustrare",
+      "4": "Mustrare aspră",
+      "5": "Retrogradare cu un grad special",
+      "6": "Retrogradare în funcție",
+      "7": "Concediere din funcție publică cu statut special"
+    }
   },
   "statuses": {
     "Candidate": "Candidați",

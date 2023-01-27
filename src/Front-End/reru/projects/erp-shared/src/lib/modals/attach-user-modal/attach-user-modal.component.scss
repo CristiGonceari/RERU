@@ -1,0 +1,12 @@
+:host {
+  .modal-body {
+    height: calc(100% - 30px);
+  }
+  .tree-container {
+    max-height: calc(100vh - 260px);
+    overflow-x: auto;
+    @media screen and (max-width: 500px) {
+      max-height: auto;
+    }
+  }
+}
