@@ -17,6 +17,7 @@ namespace CVU.ERP.Logging.Models
         public string EventMessage { get; set; }
         public string SerializedObject { get; set; }
 
+        public static LogData AsEvaluation360(string message) => new (message, Projects.EVALUATION360);
         public static LogData AsEvaluation(string message) => new (message, Projects.EVALUATION);
         public static LogData AsEvaluation<T>(string message, T obj) => new (message, Projects.EVALUATION, Serialize(obj));
 

@@ -15,6 +15,7 @@ import { createEvaluatorForm,
 import { parseEvaluatedModel, parseCounterSignModel, parseDate, generateAvgNumbers } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
 import { EvaluationTypeEnum } from '../../models/type.enum';
+import { SanctionEnum } from '../../models/sanction.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
 import { EvaluationAcceptClass } from '../../models/evaluation-accept.model';
 import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.model';
@@ -37,6 +38,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   EvaluatinRoleEnum = EvaluationRoleEnum;
   EvaluationTypeEnum = EvaluationTypeEnum;
   ActionFormEnum = ActionFormEnum;
+  sanctionEnum = SanctionEnum;
 
   @ViewChild('finalEvalNum') finalEvalNum: ElementRef;
   @ViewChild('commentsEvaluated') commentsEvaluated: ElementRef;
@@ -278,7 +280,7 @@ export class FormComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      this.handleFinalQualificationChange(Math.round(mea));
+      this.handleFinalQualificationChange(Math.round(mea * 100) / 100);
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);

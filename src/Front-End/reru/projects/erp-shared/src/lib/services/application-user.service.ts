@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthResponse } from '../models/auth-response.model';
 import { ApplicationUserModel } from '../models/application-user.model';
-import { Response } from '../models/response';
+import { Response } from '../models/response.model';
 import { AbstractService } from './abstract.service';
 import { AppSettingsService } from './app-settings.service';
-import { Router } from '@angular/router';
 
 @Injectable(
   {

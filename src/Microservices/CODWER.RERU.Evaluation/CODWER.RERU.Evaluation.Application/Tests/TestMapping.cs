@@ -43,6 +43,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.FinalAccumulatedPercentage, opts => opts.MapFrom(src => src.FinalAccumulatedPercentage))
                 .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
                 .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey))
+                .ForMember(x => x.IsVerificatedAutomat, opts => opts.MapFrom(src => CheckIfTestIsCalculatedBySystem(src)))
                 .ForMember(x => x.CreateById, opts => opts.MapFrom(src => src.CreateById));
 
             CreateMap<AddEditTestDto, Test>()
@@ -80,6 +81,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             if (test.TestStatus is TestStatusEnum.AlowedToStart) return true;
 
             return test.TestTemplate.Settings.StartWithoutConfirmation && test.TestPassStatus is not TestPassStatusEnum.Forbidden or null;
+        }
+
+        private bool CheckIfTestIsCalculatedBySystem(Test test)
+        {
+           return test.TestQuestions.All(x => x.QuestionUnit?.QuestionType is QuestionTypeEnum.OneAnswer or QuestionTypeEnum.MultipleAnswers);
         }
     }
 }

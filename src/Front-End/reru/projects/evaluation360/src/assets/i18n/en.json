@@ -56,7 +56,9 @@
   "dashboard": {
     "title": "Evaluation 360",
     "subtitle": "Start Page",
-    "enclosed-mode":"Enclosed mode"
+    "enclosed-mode":"Enclosed mode",
+    "hello-username": "Hello",
+    "have-a-good-day": "Welcome, have a good day!"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",
@@ -204,7 +206,7 @@
     "confirmation": "Confirmation",
     "select-a-valid-qualification": "Select a qualification",
     "all-tests": "All tests",
-    "list": "List",
+    "list": "Evaluations",
     "new-evaluation": "New evaluation",
     "list-table": {
       "number": "Nr.",
@@ -290,7 +292,16 @@
     "set-annual-average-as-3": "Set annual average between 2.51 and 3.50 (randomly)",
     "set-annual-average-as-2": "Set annual average between 1.51 and 2.50 (randomly)",
     "set-annual-average-as-1": "Set annual average between 1.00 and 1.50 (randomly)",
-    "necessity": "Necessity"
+    "necessity": "Necessity",
+    "sanction-enum": {
+      "1": "Without",
+      "2": "Warning",
+      "3": "Reprimand",
+      "4": "Harsh rebuke",
+      "5": "Downgrade with a special grade",
+      "6": "Demotion in position",
+      "7": "Dismissal from public office with special status"
+    }
   },
   "statuses": {
     "Candidate": "Candidates",

@@ -1,9 +1,12 @@
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Logging;
+using CVU.ERP.Logging.Models;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.ServiceProvider;
 using MediatR;
@@ -18,19 +21,24 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
     private readonly AppDbContext _appDbContext;
     private readonly IExportData<Evaluation, PrintTableEvaluationsDto> _printer;
     private readonly ICurrentApplicationUserProvider _currentUserProvider;
+    private readonly ILoggerService<PrintEvaluationsCommandHandler> _loggerService;
 
     public PrintEvaluationsCommandHandler(
         AppDbContext appDbContext, 
         IExportData<Evaluation, PrintTableEvaluationsDto> printer, 
-        ICurrentApplicationUserProvider currentUserProvider)
+        ICurrentApplicationUserProvider currentUserProvider,
+        ILoggerService<PrintEvaluationsCommandHandler> loggerService)
     {
         _appDbContext = appDbContext;
         _printer = printer;
         _currentUserProvider = currentUserProvider;
+        _loggerService = loggerService;
     }
     
     public async Task<FileDataDto> Handle(PrintEvaluationsCommand request, CancellationToken cancellationToken)
     {
+        try 
+        {
         var currentUser = await _currentUserProvider.Get();
         var currentUserId = int.Parse(currentUser.Id);
         
@@ -94,16 +102,22 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
         {
             evaluations = evaluations.Where(x => x.Status == request.Status);
         }
-
+        var ev = evaluations.ToList().AsQueryable();
         var result = _printer.ExportTableSpecificFormat(new TableData<Evaluation>
         {
             Name = "Evaluări360",
-            Items = evaluations,
+            Items = ev,
             Fields = request.Fields,
             Orientation = request.Orientation,
             ExportFormat = request.TableExportFormat
         });
-
         return result;
+        }
+        catch ( Exception x )
+        {
+            await _loggerService.Log(LogData.AsEvaluation360($@"a fost creata o exceptie ""{x.Message}"" cu stack trace ""{x.StackTrace}"));
+        }
+
+            return null;
     }
 }

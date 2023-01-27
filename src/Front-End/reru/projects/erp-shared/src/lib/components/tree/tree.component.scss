@@ -1,0 +1,19 @@
+$matCheckboxColor: #F64E60;
+
+:host {
+    ::ng-deep .mat-checkbox-checked.mat-accent {
+        .mat-checkbox-ripple .mat-ripple-element {
+            background-color: $matCheckboxColor !important;
+        }
+      
+        .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+            background-color: $matCheckboxColor;
+         }
+      }
+      
+      ::ng-deep .mat-checkbox.mat-accent {
+        .mat-checkbox-ripple .mat-ripple-element {
+            background-color: $matCheckboxColor !important;
+        }
+      }
+}
