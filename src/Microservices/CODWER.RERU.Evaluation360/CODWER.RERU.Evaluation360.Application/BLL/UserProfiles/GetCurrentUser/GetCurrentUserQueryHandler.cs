@@ -15,7 +15,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.UserProfiles.GetCurrentUser
         private readonly ICurrentApplicationUserProvider _currentUserProvider;
         private readonly IMapper _mapper;
 
-
         public GetCurrentUserQueryHandler(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider, IMapper mapper)
         {
             _appDbContext = appDbContext;
