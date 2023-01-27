@@ -1,6 +1,10 @@
 <app-page-title [title]="'evaluations.title' | translate"></app-page-title>
 
-<erp-shared-content>
+<app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
+  [colorClass]="'text-primary'">
+</app-loading-spinner>
+
+<erp-shared-content *ngIf="!isLoading">
 	<div class="card card-custom gutter-b erp-shared-desktop-wide">
 		<div class="card-body">
 			<div class="row justify-content-center">

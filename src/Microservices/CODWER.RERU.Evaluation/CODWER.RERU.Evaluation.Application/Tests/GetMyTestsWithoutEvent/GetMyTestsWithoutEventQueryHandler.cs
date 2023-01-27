@@ -34,6 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
                 .Include(t => t.TestTemplate)
                     .ThenInclude(tt => tt.Settings)
                 .Include(t => t.TestQuestions)
+                    .ThenInclude(t => t.QuestionUnit)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)

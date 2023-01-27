@@ -16,6 +16,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             var tests = appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.TestQuestions)
+                    .ThenInclude(tt => tt.QuestionUnit)
                 .Include(t => t.UserProfile)
                     .ThenInclude(x => x.Department)
                 .Include(x => x.UserProfile)

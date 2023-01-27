@@ -54,39 +54,15 @@ import { Exception500Component } from './components/500/500.component';
 import { FormsModule } from '@angular/forms';
 import { ImportButtonComponent } from './components/buttons/import-button/import-button.component';
 import { ExportButtonComponent } from './components/buttons/export-button/export-button.component';
-
-import { OverlayModule } from '@angular/cdk/overlay';
-import { CdkTreeModule } from '@angular/cdk/tree';
-import { PortalModule } from '@angular/cdk/portal';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { AttachUserModalComponent } from './modals/attach-user-modal/attach-user-modal.component';
+import { SelectComponent } from './components/select/select.component';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { TreeComponent } from './components/tree/tree.component';
+import { WarningAlertModalComponent } from './modals/warning-alert-modal/warning-alert-modal.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -118,49 +94,18 @@ const commonExports = [
 	Exception500Component,
 	ExportButtonComponent,
 	ImportButtonComponent,
+	AttachUserModalComponent
 ];
-
-const materialModules = [
-	CdkTreeModule,
-	MatAutocompleteModule,
-	MatButtonModule,
-	MatCardModule,
-	MatCheckboxModule,
-	MatChipsModule,
-	MatDividerModule,
-	MatExpansionModule,
-	MatIconModule,
-	MatInputModule,
-	MatListModule,
-	MatMenuModule,
-	MatProgressSpinnerModule,
-	MatPaginatorModule,
-	MatRippleModule,
-	MatSelectModule,
-	MatSidenavModule,
-	MatSnackBarModule,
-	MatSortModule,
-	MatTableModule,
-	MatTabsModule,
-	MatToolbarModule,
-	MatFormFieldModule,
-	MatButtonToggleModule,
-	MatTreeModule,
-	OverlayModule,
-	PortalModule,
-	MatBadgeModule,
-	MatGridListModule,
-	MatRadioModule,
-	MatDatepickerModule,
-	MatTooltipModule
-  ];
 @NgModule({
 	declarations: [
 		...commonExports,
 		ViewIconComponent,
 		LayoutContentComponent,
 		UploadFileModalComponent,
-		GoToTestModalComponent
+		GoToTestModalComponent,
+		SelectComponent,
+		TreeComponent,
+		WarningAlertModalComponent
 	],
 	imports: [
 		CommonModule,
@@ -168,12 +113,16 @@ const materialModules = [
 		HttpClientModule,
 		translateModule,
 		NgbModule,
+		MatTreeModule,
+		MatCheckboxModule,
+		MatProgressBarModule,
+		MatFormFieldModule,
+		MatSelectModule,
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
 		NgxDropzoneModule,
-		FormsModule,
-		materialModules
+		FormsModule
 	],
 	exports: [...commonExports],
 	providers: [
@@ -211,4 +160,3 @@ export class SharedModule {
         };
     }
 }
-

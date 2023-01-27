@@ -95,7 +95,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
 
             if (testQuestion.Test.TestTemplate.Mode != TestTemplateModeEnum.Test)
             {
-                testQuestions = _appDbContext.TestQuestions.Where(x => x.TestId == testQuestion.TestId);
+                testQuestions = _appDbContext.TestQuestions.Where(x => x.TestId == testQuestion.TestId && x.Id == testQuestion.Id);
             }
 
             var answerToAdd = new TestAnswer

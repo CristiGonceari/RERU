@@ -34,7 +34,7 @@
                         <span class="font-size-lg" *ngIf="testTemplate.minPercent == 0">-</span>
                     </td>
                     <td>{{'statuses.' + modeEnum[testTemplate.mode] | translate}}</td>
-                    <td>{{('tests.basic-template-dropdown.'+ testTemplate.basicTestTemplate | translate) || '-'}}</td>
+                    <td>{{testTemplate?.basicTestTemplate ? ('tests.basic-template-dropdown.'+ testTemplate.basicTestTemplate | translate) : '-'}}</td>
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType != null">{{'statuses.' + qualifyingType[testTemplate.qualifyingType] | translate}}</td>
                     <td style="text-align: center;" *ngIf="testTemplate.qualifyingType == null">-</td>
                     <td>{{'statuses.' + statusEnum[testTemplate.status] | translate}}</td>

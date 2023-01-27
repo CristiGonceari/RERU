@@ -6,6 +6,7 @@ import { EventService } from '../../services/event/event.service';
 import { SearchStatusComponent } from './search-status/search-status.component';
 import { SearchRoleComponent } from './../search-role/search-role.component';
 import { SearchDepartmentComponent } from './../search-department/search-department.component';
+import { SearchEmployeeFunctionComponent } from '../search-employee-function/search-employee-function.component';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -24,9 +25,11 @@ export class AttachUserModalComponent implements OnInit {
   @ViewChild('fatherName') fatherName: any;
   @ViewChild('idnp') idnp: any;
   @ViewChild('email') email: any;
+  @ViewChild('colaboratorId') colaboratorId: any;
   @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
+  @ViewChild(SearchEmployeeFunctionComponent) functionId: SearchEmployeeFunctionComponent;
   @Input() exceptUserIds: any;
   @Input() attachedItems: number[];
   @Input() inputType: string;
@@ -169,13 +172,15 @@ export class AttachUserModalComponent implements OnInit {
 
 	resetFilters(): void {
     this.pagination.currentPage = 1;
-    this.firstName.key = '';
-    this.lastName.key = '';
-    this.fatherName.key = '';
-    this.idnp.key = '';
-    this.email.key = '';
+    this.firstName.value = '';
+    this.lastName.value = '';
+    this.fatherName.value = '';
+    this.idnp.value = '';
+    this.email.value = '';
+    this.colaboratorId.value = '';
     this.departmentId.department = '';
     this.roleId.role = '';
+    this.functionId.function = '';
     this.userStatusEnum.userStatus = '';
     this.filters = {};
     this.getUsers();
