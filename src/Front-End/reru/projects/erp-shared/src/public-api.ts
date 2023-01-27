@@ -65,4 +65,5 @@ export * from './lib/modules/svg.module';
 export * from './lib/modals/confirm-modal/confirm-modal.component';
 export * from './lib/modals/print-modal/print-modal.component';
 export * from './lib/modals/show-image-modal/show-image-modal.component';
-export * from './lib/modals/upload-file-modal/upload-file-modal.component'
+export * from './lib/modals/upload-file-modal/upload-file-modal.component';
+export * from './lib/modals/attach-user-modal/attach-user-modal.component';

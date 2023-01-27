@@ -1,0 +1,20 @@
+<ng-container *ngIf="!formGroup">
+    <select class="form-control" [ngClass]="classes" [name]="field" [(ngModel)]="selectModel" [id]="field" (change)="filter.emit($event.target.value)">
+        <option class="default-option text-muted" selected value="">{{placeholder}}</option>
+        <option *ngFor="let item of items" [value]="item.value">
+            <ng-container *ngIf="!isCustomDisplay">{{item.label}}</ng-container>
+            <ng-container *ngIf="isCustomDisplay" [innerHTML]="formatDisplay"></ng-container>
+        </option>
+    </select>
+</ng-container>
+<ng-container *ngIf="formGroup">
+    <form [formGroup]="formGroup">
+        <select class="form-control" [ngClass]="classes" [name]="field" [formControlName]="field" [id]="field" (change)="filter.emit($event.target.value)">
+            <option class="default-option text-muted" [value]="null">{{placeholder}}</option>
+            <option *ngFor="let item of items" [value]="item.value">
+                <ng-container *ngIf="!isCustomDisplay">{{item.label}}</ng-container>
+                <ng-container *ngIf="isCustomDisplay" [innerHTML]="formatDisplay"></ng-container>
+            </option>
+        </select>
+    </form>
+</ng-container>

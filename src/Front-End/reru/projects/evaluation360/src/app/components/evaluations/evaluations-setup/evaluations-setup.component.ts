@@ -6,9 +6,9 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { EvaluationService } from '../../../utils/services/evaluations.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AttachUserModalComponent, AttachUserModel } from '../../../utils/modals/attach-user-modal/attach-user-modal.component';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { forkJoin } from 'rxjs';
+import { AttachUserModalComponent } from '@erp/shared';
 
 @Component({
 	selector: 'app-evaluations-setup',
@@ -70,12 +70,12 @@ export class EvaluationsSetupComponent implements OnInit {
 	}
 
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
-		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, windowClass: 'full-size-modal' });
 		modalRef.componentInstance.inputType = isAttachEvaluated ? 'checkbox' : 'radio';
 		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? ([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
 		modalRef.componentInstance.attachedItems = isAttachEvaluated ? 
 		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
-		modalRef.result.then((data: AttachUserModel) => {
+		modalRef.result.then((data) => {
 			if (isAttachEvaluated) {
 				this.evaluationForm.get('evaluatedUserProfileIds').patchValue(data.selectedUsers)
 			} else {
