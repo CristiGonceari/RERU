@@ -108,7 +108,7 @@ export class EvaluationsTableComponent implements OnInit, AfterViewInit {
 
   deleteEvaluation(id: number): void {
     this.evaluationService.delete(id).subscribe(response => {
-      this.notificationService.success('Success', 'Fișa a fost ștearsă cu succes!', NotificationUtil.getDefaultConfig());
+      this.notificationService.success('Succes', 'Fișa a fost ștearsă cu succes!', NotificationUtil.getDefaultConfig());
       this.processTypeEvaluation(this.evaluateType);
     }, error => {
       if (error.status === 400) {

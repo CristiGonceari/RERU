@@ -65,28 +65,28 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
         {
             List<decimal?> listForM1 = new List<decimal?> {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
-            decimal? m1 = listForM1.Average();
+            decimal? m1 = Math.Round(listForM1.Average().Value, 2);
 
             List<decimal?> listForM2 = new List<decimal?> {evaluation.Question6, evaluation.Question7, evaluation.Question8};
-            decimal? m2 = listForM2.Average();
+            decimal? m2 = Math.Round(listForM2.Average().Value, 2);
 
             List<decimal?> listForM3 = new List<decimal?> {evaluation.Score1, evaluation.Score2, evaluation.Score3, evaluation.Score4, evaluation.Score5};
-            decimal? m3 = listForM3.Average();
+            decimal? m3 = Math.Round(listForM3.Average().Value, 2);
 
             List<decimal?> listForPb = new List<decimal?> {evaluation.Question9, evaluation.Question10, evaluation.Question11, evaluation.Question12};
-            decimal? pb = listForPb.Average();
+            decimal? pb = Math.Round(listForPb.Average().Value, 2);
 
             List<decimal?> listForM4 = new List<decimal?> {evaluation.Question13, pb};
-            decimal? m4 = listForM4.Average();
+            decimal? m4 = Math.Round(listForM4.Average().Value, 2);
 
             List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
-            decimal? mea = listForMea.Sum();
+            decimal? mea = Math.Round(listForMea.Average().Value, 2);
             decimal? mf;
 
             if (evaluation.PartialEvaluationScore != null)
             {
                 List<decimal?> listForMf = new List<decimal?> {mea, evaluation.PartialEvaluationScore};
-                mf = listForMf.Sum();
+                mf = Math.Round(listForMf.Average().Value, 2);
             }
             else
             {

@@ -40,9 +40,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
 
             CreateMap<EditEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
+                .ForMember(dest => dest.SanctionApplied, opts => opts.MapFrom(src => $"{src.SanctionAppliedEvaluationCourse}"))
                 ;
 
-            CreateMap<AcceptRejectEvaluationDto, Evaluation>()
+               CreateMap<AcceptRejectEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
                 .ForMember(dest=> dest.CommentsEvaluated, opts=> opts.MapFrom(src=> $"{src.CommentsEvaluated}"))
                 ;
