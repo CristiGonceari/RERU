@@ -110,7 +110,7 @@ export class DynamicDataSource implements DataSource<DynamicFlatNode> {
       const departments = [...contentResponse.data];
       const users: OrganigramUserModel[] = [...usersResponse.data];
       const departmentNodes = departments.map((item: ContentOrganigramModel) => new DynamicFlatNode(item, node.level + 1, isHead));
-      const userNodes = users.map((item: OrganigramUserModel) => new DynamicFlatNode(item, node.level + 1, isHead));
+      const userNodes = users.map((item: OrganigramUserModel) => new DynamicFlatNode(item, node.level + 1, false));
       this.data.splice(index + 1, 0, ...userNodes, ...departmentNodes);
 
       // notify the change

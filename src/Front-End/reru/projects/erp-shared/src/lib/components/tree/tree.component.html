@@ -17,14 +17,15 @@
   </mat-tree-node>
 
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <button type="button" class="btn btn-icon" matTreeNodeToggle>
+    <button *ngIf="!node.item.firstName" type="button" class="btn btn-icon" matTreeNodeToggle>
       <i class="ki" [ngClass]="{
           'ki-arrow-next': !treeControl.isExpanded(node),
           'ki-arrow-down': treeControl.isExpanded(node)
       }"></i>
     </button>
       <!-- Department nodes (has child) -->
-      <label class="mr-2">{{node.item?.organigramHeadName || node.item?.name}}</label>
+      <label *ngIf="!node.item?.firstName" class="mr-2">{{ node.item?.organigramHeadName || node.item?.name }}</label>
+      <label *ngIf="node.item.firstName" class="mr-2">{{node?.item?.lastName}} {{node?.item?.firstName}} {{node?.item?.fatherName}}</label>
       <mat-checkbox click *ngIf="!node.isLoading" [checked]="descendantsAllSelected(node)" (change)="todoItemSelectionToggle(node, $event)"></mat-checkbox>
       <mat-progress-bar *ngIf="node.isLoading"
                     mode="indeterminate"
