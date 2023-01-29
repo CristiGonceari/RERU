@@ -11,6 +11,6 @@ public class PrintEvaluationsCommand : TableParameter, IRequest<FileDataDto>
     public string EvaluatorName { set; get; }
     public string CounterSignerName { set; get; }
     public EvaluationTypeEnum? Type { set; get; }
-    public decimal? Points { set; get; } = 0.00M;
+    public decimal? Points { set; get; }
     public EvaluationStatusEnum? Status { set; get; }
 }

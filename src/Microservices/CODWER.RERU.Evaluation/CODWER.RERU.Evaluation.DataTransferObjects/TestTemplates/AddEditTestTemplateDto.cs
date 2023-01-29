@@ -13,5 +13,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public TestTemplateModeEnum Mode { get; set; }
         public QualifyingTypeEnum QualifyingType { get; set; }
         public List<AssignTagsValuesDto> ModuleRoles { get; set; }
+        public BasicTestTemplateEnum? BasicTestTemplate { get; set; }
     }
 }

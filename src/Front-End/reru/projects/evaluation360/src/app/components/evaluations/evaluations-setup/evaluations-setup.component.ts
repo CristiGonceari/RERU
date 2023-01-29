@@ -28,7 +28,7 @@ export class EvaluationsSetupComponent implements OnInit {
 	isLoading: boolean = true;
 	notification = {
 		title: {
-			success: 'Success',
+			success: 'Succes',
 			error: 'Error',
 		},
 		body: {
