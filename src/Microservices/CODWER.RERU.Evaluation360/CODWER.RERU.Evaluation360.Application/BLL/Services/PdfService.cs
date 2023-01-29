@@ -65,28 +65,28 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
         {
             List<decimal?> listForM1 = new List<decimal?> {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
-            decimal? m1 = listForM1.Average();
+            decimal? m1 = Math.Round(listForM1.Average().Value, 2);
 
             List<decimal?> listForM2 = new List<decimal?> {evaluation.Question6, evaluation.Question7, evaluation.Question8};
-            decimal? m2 = listForM2.Average();
+            decimal? m2 = Math.Round(listForM2.Average().Value, 2);
 
             List<decimal?> listForM3 = new List<decimal?> {evaluation.Score1, evaluation.Score2, evaluation.Score3, evaluation.Score4, evaluation.Score5};
-            decimal? m3 = listForM3.Average();
+            decimal? m3 = Math.Round(listForM3.Average().Value, 2);
 
             List<decimal?> listForPb = new List<decimal?> {evaluation.Question9, evaluation.Question10, evaluation.Question11, evaluation.Question12};
-            decimal? pb = listForPb.Average();
+            decimal? pb = Math.Round(listForPb.Average().Value, 2);
 
             List<decimal?> listForM4 = new List<decimal?> {evaluation.Question13, pb};
-            decimal? m4 = listForM4.Average();
+            decimal? m4 = Math.Round(listForM4.Average().Value, 2);
 
             List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
-            decimal? mea = listForMea.Sum();
+            decimal? mea = Math.Round(listForMea.Average().Value, 2);
             decimal? mf;
 
             if (evaluation.PartialEvaluationScore != null)
             {
                 List<decimal?> listForMf = new List<decimal?> {mea, evaluation.PartialEvaluationScore};
-                mf = listForMf.Sum();
+                mf = Math.Round(listForMf.Average().Value, 2);
             }
             else
             {
@@ -95,33 +95,33 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
             var myDictionary = new Dictionary<string, string>();
 
-            myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString());
+            myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString().ToLower());
             myDictionary.Add("{SubdivisionName}", evaluation.SubdivisionName);
-            myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd/MM/yyyy"));  
+            myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{NameSurnameEvaluated}", evaluation.EvaluatedUserProfile.FullName);  
             myDictionary.Add("{SubdivisionEvaluated}", evaluation.SubdivisionEvaluated);
             myDictionary.Add("{FunctionSubdivision}", evaluation.EvaluatedUserProfile.EmployeeFunction.Name);
-            myDictionary.Add("{SpecialOrMilitaryGrade}", evaluation.SpecialOrMilitaryGrade.ToString());
-            myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd/MM/yyyy")); 
-            myDictionary.Add("{PeriodEvaluatedUpTo}", evaluation.PeriodEvaluatedUpTo?.ToString("dd/MM/yyyy"));  
+            myDictionary.Add("{SpecialOrMilitaryGrade}", EnumMessages.Translate(evaluation.SpecialOrMilitaryGrade));
+            myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd.MM.yyyy")); 
+            myDictionary.Add("{PeriodEvaluatedUpTo}", evaluation.PeriodEvaluatedUpTo?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{EducationEnum}", EnumMessages.Translate(evaluation.EducationEnum)); 
-            myDictionary.Add("{ProfessionalTrainingActivitiesEnum}", EnumMessages.Translate(evaluation.ProfessionalTrainingActivities));  
-            myDictionary.Add("{ProfessionalTrainingActivitiesType}", evaluation.ProfessionalTrainingActivitiesType.ToString());  
+            myDictionary.Add("{ProfessionalTrainingActivitiesEnum}", EnumMessages.Translate(evaluation.ProfessionalTrainingActivities).ToLower());  
+            myDictionary.Add("{ProfessionalTrainingActivitiesType}", evaluation.ProfessionalTrainingActivitiesType.ToString().ToLower());  
             myDictionary.Add("{CourseName}", evaluation.CourseName);  
-            myDictionary.Add("{PeriodRunningActivityFromTo}", evaluation.PeriodRunningActivityFromTo?.ToString("dd/MM/yyyy"));  
-            myDictionary.Add("{PeriodRunningActivityUpTo}", evaluation.PeriodRunningActivityUpTo?.ToString("dd/MM/yyyy"));  
+            myDictionary.Add("{PeriodRunningActivityFromTo}", evaluation.PeriodRunningActivityFromTo?.ToString("dd.MM.yyyy"));  
+            myDictionary.Add("{PeriodRunningActivityUpTo}", evaluation.PeriodRunningActivityUpTo?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{AdministrativeActOfStudies}", evaluation.AdministrativeActOfStudies);  
-            myDictionary.Add("{ServiceDuringEvaluationCourse}", EnumMessages.Translate(evaluation.ServiceDuringEvaluationCourse));  
+            myDictionary.Add("{ServiceDuringEvaluationCourse}", EnumMessages.Translate(evaluation.ServiceDuringEvaluationCourse).ToLower());  
             myDictionary.Add("{FunctionEvaluated}", evaluation.FunctionEvaluated);  
-            myDictionary.Add("{AppointmentDate}", evaluation.AppointmentDate?.ToString("dd/MM/yyyy"));  
+            myDictionary.Add("{AppointmentDate}", evaluation.AppointmentDate?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{AdministrativeActService}", evaluation.AdministrativeActService);  
-            myDictionary.Add("{PartialEvaluationPeriodFromTo}", evaluation.PartialEvaluationPeriodFromTo?.ToString("dd/MM/yyyy"));  
-            myDictionary.Add("{PartialEvaluationPeriodUpTo}", evaluation.PartialEvaluationPeriodUpTo?.ToString("dd/MM/yyyy"));  
+            myDictionary.Add("{PartialEvaluationPeriodFromTo}", evaluation.PartialEvaluationPeriodFromTo?.ToString("dd.MM.yyyy"));  
+            myDictionary.Add("{PartialEvaluationPeriodUpTo}", evaluation.PartialEvaluationPeriodUpTo?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{PartialEvaluationScore}", evaluation.PartialEvaluationScore.ToString());  
             myDictionary.Add("{QualifierPartialEvaluations}", EnumMessages.Translate(evaluation.QualifierPartialEvaluations));  
             myDictionary.Add("{SanctionAppliedEvaluationCourse}", EnumMessages.Translate(evaluation.SanctionApplied));  
-            myDictionary.Add("{DateSanctionApplication}", evaluation.DateSanctionApplication?.ToString("dd/MM/yyyy"));  
-            myDictionary.Add("{DateLiftingSanction}", evaluation.DateLiftingSanction?.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{DateSanctionApplication}", evaluation.DateSanctionApplication?.ToString("dd.MM.yyyy"));  
+            myDictionary.Add("{DateLiftingSanction}", evaluation.DateLiftingSanction?.ToString("dd.MM.yyyy"));
             myDictionary.Add("{QualificationEvaluationObtained2YearsPast}", EnumMessages.Translate(evaluation.QualificationEvaluationObtained2YearsPast));
             myDictionary.Add("{QualificationEvaluationObtainedPreviousYear}", EnumMessages.Translate(evaluation.QualificationEvaluationObtainedPreviousYear));
             myDictionary.Add("{QualificationQuarter1}", EnumMessages.Translate(evaluation.QualificationQuarter1));
@@ -169,8 +169,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{mea}", mea.ToString());
             myDictionary.Add("{mf}", mf.ToString());
             myDictionary.Add("{FinalEvaluationQualification}", EnumMessages.Translate(evaluation.FinalEvaluationQualification));
-            myDictionary.Add("{DateEvaluationInterview}", evaluation.DateEvaluationInterview?.ToString("dd/MM/yyyy"));
-            myDictionary.Add("{DateSettingIindividualGoals}", evaluation.DateSettingIindividualGoals?.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{DateEvaluationInterview}", evaluation.DateEvaluationInterview?.ToString("dd.MM.yyyy"));
+            myDictionary.Add("{DateSettingIindividualGoals}", evaluation.DateSettingIindividualGoals?.ToString("dd.MM.yyyy"));
             myDictionary.Add("{Need1ProfessionalDevelopmentEvaluated}", evaluation.Need1ProfessionalDevelopmentEvaluated);
             myDictionary.Add("{Need2ProfessionalDevelopmentEvaluated}", evaluation.Need2ProfessionalDevelopmentEvaluated);
             myDictionary.Add("{Need3ProfessionalDevelopmentEvaluated}", evaluation.Need3ProfessionalDevelopmentEvaluated);
@@ -178,17 +178,17 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{Need5ProfessionalDevelopmentEvaluated}", evaluation.Need5ProfessionalDevelopmentEvaluated);
             myDictionary.Add("{CommentsEvaluator}", evaluation.CommentsEvaluator);
             myDictionary.Add("{CommentsEvaluated}", evaluation.CommentsEvaluated);
-            myDictionary.Add("{DateAccepEvaluated}", evaluation.DateAcceptOrRejectEvaluated?.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{DateAccepEvaluated}", evaluation.DateAcceptOrRejectEvaluated?.ToString("dd.MM.yyyy"));
             myDictionary.Add("{NameSurnameEvaluator}", evaluation.EvaluatorUserProfile.FullName);
             myDictionary.Add("{FunctionEvaluator}", evaluation.EvaluatorUserProfile.EmployeeFunction.Name);
-            myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd/MM/yyyy"));
+            myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd.MM.yyyy"));
 
             if (evaluation.CounterSignerUserProfileId != null)
             {
                 myDictionary.Add("{OtherComments}", evaluation.OtherComments);
                 myDictionary.Add("{NameSurnameCounterSigner}", evaluation.CounterSignerUserProfile.FullName);
                 myDictionary.Add("{FunctionCounterSigner}", evaluation.CounterSignerUserProfile.EmployeeFunction.Name);
-                myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd/MM/yyyy"));
+                myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd.MM.yyyy"));
                 myDictionary.Add("{BIFAT}", "BIFAT");
                 myDictionary.Add("{Semnat}", "Semnat");
             }

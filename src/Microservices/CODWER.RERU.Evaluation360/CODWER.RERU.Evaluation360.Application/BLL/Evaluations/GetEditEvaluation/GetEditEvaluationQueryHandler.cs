@@ -8,7 +8,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
-using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluation
@@ -38,10 +37,10 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
                 .OrderByDescending(e => e.CreateDate)
                 .FirstOrDefaultAsync(e => e.Id == request.Id);
 
-            Test test1 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireGenerala);
-            Test test2 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireDeSpecialitate);
-            Test test3 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InstructiaTragerii);
-            Test test4 = await GetPointsTest(evaluation, evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InterventiaProfesionala);
+            Test test1 = await GetPointsTest(evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireGenerala);
+            Test test2 = await GetPointsTest(evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.PregatireDeSpecialitate);
+            Test test3 = await GetPointsTest(evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InstructiaTragerii);
+            Test test4 = await GetPointsTest(evaluation.EvaluatedUserProfileId, BasicTestTemplateEnum.InterventiaProfesionala);
 
             if (test1 != null)
             {
@@ -65,7 +64,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEditEvaluatio
             return _mapper.Map<GetEvaluationDto>(evaluation);
         }
 
-        private async Task<Test> GetPointsTest(Evaluation evaluation, int evaluatedUserProfileId, BasicTestTemplateEnum basicTestTemplate)
+        private async Task<Test> GetPointsTest(int evaluatedUserProfileId, BasicTestTemplateEnum basicTestTemplate)
         {
             return await _dbContext.Tests
                         .Include(e => e.TestTemplate)
