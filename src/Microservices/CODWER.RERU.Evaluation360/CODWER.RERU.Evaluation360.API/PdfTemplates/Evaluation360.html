@@ -132,17 +132,17 @@
             </span>
         </div>
 </div>
-<div style="padding-top: 150px;text-align: center;">
-        <h1 style="text-align: center;">2021</h1>
-        <h2 style="text-align: center;">FIȘĂ DE EVALUARE</h2>
-        <h2 style="text-align: center;">{Type}</h2><br>
+<div style="padding-top: 150px;text-align: center">
+        <h1 style="text-align: center">2021</h1>
+        <h2 style="text-align: center">FIȘĂ DE EVALUARE</h2>
+        <h2 style="text-align: center">{Type}</h2><br>
 </div>
-<p align=left style='margin-top:0in;margin-right:-28.6pt;margin-bottom:0in;margin-left:28.35pt;margin-bottom:.0001pt;text-align:left'>Subdiviziunea    {SubdivisionName}</p><br>  
-    <table border=1 cellspacing=0 cellpadding=0 width=756 style='margin-left:6.85pt;border-collapse:collapse;border:none'>
+<p style='margin-top:0in;margin-right:-pt;margin-bottom:.0001pt;text-align:left'>Subdiviziunea    {SubdivisionName}</p><br><br>
+<table border=1 cellspacing=0 cellpadding=0 width=900 style='margin-left:auto;margin-right:auto;border-collapse:collapse;border:none'>
         <tr style='height:22.5pt'>
             <td width=600 colspan=12 style='width:449.8pt;border:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
-                <p style='font-size:12.0pt'><b>1. Date generale ale angajatului evaluat</b>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i><u>Data completării</u></i></p>
+                <p style='font-size:12.0pt'><b>1. Date generale ale angajatului evaluat</b>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i><u>Data completării</u></i></p>
             </td>
             <td width=140 colspan=5 style='width:105.2pt;border:solid windowtext 1.0pt;
   border-left:none;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
@@ -211,7 +211,7 @@
         <tr style='height:10.6pt'>
             <td width=220 colspan=4 rowspan=2 style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p>Activităţi de formare profesională</p>
-                <p>{ProfessionalTrainingActivitiesEnum}, {ProfessionalTrainingActivitiesType}</p>
+                <p>({ProfessionalTrainingActivitiesEnum}, {ProfessionalTrainingActivitiesType})</p>
             </td>
             <td width=236 colspan=4 style='width:165.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
@@ -233,7 +233,7 @@
             </td>
             <td width=142 colspan=3 style='width:165.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
-                <p align=center style='text-align:center'>{PeriodRunningActivityFromTo}-{PeriodRunningActivityUpTo}</p>
+                <p align=center style='text-align:center'>{PeriodRunningActivityFromTo} -<br>{PeriodRunningActivityUpTo}</p>
             </td>
             <td width=142 colspan=6 style='width:165.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
@@ -243,7 +243,7 @@
         <tr style='height:10.6pt'>
             <td width=220 colspan=4 rowspan=2 style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p>Modificarea raportului de serviciul pe parcursul perioadei evaluate</p>
-                <p>{ServiceDuringEvaluationCourse}</p>
+                <p>({ServiceDuringEvaluationCourse})</p>
             </td>
             <td width=236 colspan=4 style='width:165.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
@@ -306,7 +306,7 @@
                 <p align=center style='text-align:center'><b>Sancțiunea</b></p>
             </td>
             <td width=142 colspan=3 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
-                <p align=center style='text-align:center'><b>Data aplicării sancţiunii (ordinul)</b></p>
+                <p align=center style='text-align:center'><b>Data aplicării sancţiunii</b></p>
             </td>
             <td width=142 colspan=6 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p align=center style='text-align:center'><b>Data ridicării sancţiunii (ordinul)</b></p>
@@ -323,14 +323,17 @@
                 <p align=center style='text-align:center'>{DateLiftingSanction}</p>
             </td>
         </tr>
+</table>
+<br><br><br><br><br><br><br><br>
+<table border=1 cellspacing=0 cellpadding=0 width=900 style='margin-left:auto;margin-right:auto;border-collapse:collapse'>
         <tr style='height:10.35pt'>
-            <td width=220 colspan=4 rowspan=2 style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
+            <td width=220 colspan=4 rowspan=2 style='width:165.1pt;border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p>Calificative de evaluare anuale obţinute în ultimii 2 ani</p>
             </td>
-            <td width=236 colspan=4 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
+            <td width=236 colspan=4 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p align=center style='text-align:center'><b>2 ani urmă</b></p>
             </td>
-            <td width=284 colspan=9 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
+            <td width=284 colspan=9 valign=bottom style='width:165.1pt;border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:22.5pt'>
                 <p align=center style='margin-left:3.95pt;text-align:center'><b>Anul precedent</b></p>
             </td>
         </tr>
@@ -411,12 +414,7 @@
             <td width=510 colspan=11 style='width:382.45pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:19.85pt'>
-                <p>
-                    <i>
-                        Capacitatea de
-                        a realiza deplin sarcinile de serviciu
-                    </i>
-                </p>
+                <p><i>Capacitatea de a realiza deplin sarcinile de serviciu</i></p>
             </td>
             <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -495,16 +493,11 @@
         <tr style='height:30.25pt'>
             <td width=620 colspan=14 style='width:465.0pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:30.25pt'>
-                <p>
-                    <b>
-                        Punctajul
-                        stabilit la compartimentul 1) “Competenţa profesională” (M¹):
-                    </b>
+                <p><b>Punctajul stabilit la compartimentul 1) “Competenţa profesională” (M¹):</b>
                 </p>
                 <p style='font-size:12.0pt'>(constituie media aritmetică obţinută din suma punctajului a celor 5 criterii de evaluare)</p>
             </td>
-            <td width=120 colspan=3 valign=top style='width:1.25in;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:silver;padding:0in 5.4pt 0in 5.4pt;height:30.25pt'>
+            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:23.25pt'>
                 <p align=center style='text-align:center'>{m1}</p>
             </td>
         </tr>
@@ -565,16 +558,11 @@
         <tr style='height:25.35pt'>
             <td width=620 colspan=14 style='width:465.0pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:25.35pt'>
-                <p>
-                    <b>
-                        Punctajul
-                        stabilit la compartimentul 2) “Conduita de serviciu” (M<sup>2</sup>):
-                    </b>
+                <p><b>Punctajul stabilit la compartimentul 2) “Conduita de serviciu” (M<sup>2</sup>):</b>
                 </p>
                 <p style='font-size:12.0pt'>(constituie media aritmetică obţinută din suma punctajului a celor 3 criterii de evaluare)</p>
             </td>
-            <td width=120 colspan=3 valign=top style='width:1.25in;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D0CECE;padding:0in 5.4pt 0in 5.4pt;height:25.35pt'>
+            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:23.25pt'>
                 <p align=center style='text-align:center'>{m2}</p>
             </td>
         </tr>
@@ -582,9 +570,7 @@
             <td width=79 colspan=2 rowspan=7 valign=top style='width:59.2pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:16.65pt'>
                 <p>3) Obiectivele individuale</p>
             </td>
-            <td width=661 colspan=15 style='width:495.8pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:16.65pt'>
+            <td width=661 colspan=15 style='width:495.8pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:16.65pt'>
                 <p><i>Nivelul de realizare a obiectivelor individuale</i></p>
             </td>
             <td style='border:none;padding:0in 0in 0in 0in' width=16 colspan=2></td>
@@ -642,30 +628,27 @@
                 <p align=center style='text-align:center'>{Score1}</p>
             </td>
         </tr>
+</table>
+<br><br><br><br><br><br><br><br>
+<table border=1 cellspacing=0 cellpadding=0 width=900 style='margin-left:auto;margin-right:auto;border-collapse:collapse'>
         <tr style='height:.25in'>
-            <td width=31 style='width:23.35pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+            <td width=79 colspan=2 rowspan=4 valign=top style='width:59.2pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:16.65pt'>
+            </td>
+            <td width=31 style='width:23.35pt;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:.25in'>
                 <p align=center style='text-align:center'>2.</p>
             </td>
-            <td width=210 colspan=2 style='width:157.6pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+            <td width=210 colspan=2 style='width:157.6pt;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:.25in'>
                 <p align=center style='text-align:center'>{Goal2}</p>
             </td>
-            <td width=186 colspan=4 style='width:139.85pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:.25in'>
+            <td width=186 colspan=4 style='width:139.85pt;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.25in'>
                 <p align=center style='text-align:center'>{KPI2}</p>
             </td>
-            <td width=113 colspan=5 style='width:85.0pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:.25in'>
+            <td width=113 colspan=5 style='width:85.0pt;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.25in'>
                 <p align=center style='text-align:center'>{PerformanceTerm2}</p>
             </td>
-            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0in 5.4pt 0in 5.4pt;height:.25in'>
+            <td width=120 colspan=3 style='width:1.25in;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:.25in'>
                 <p align=center style='text-align:center'>{Score2}</p>
             </td>
         </tr>
@@ -862,8 +845,7 @@
   padding:0in 5.4pt 0in 5.4pt;height:24.65pt'>
                 <p><b>Media aritmetică de la compartimentele pregătirii de bază 1 – 4: (P<sub>b</sub>)</b></p><p style='font-size:12.0pt'>(constituie media aritmetică obţinută din suma punctajului a celor 4 compartimente ale pregătirii de bază)</p>
             </td>
-            <td width=120 colspan=3 valign=top style='width:1.25in;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#CCCCCC;padding:0in 5.4pt 0in 5.4pt;height:24.65pt'>
+            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:23.25pt'>
                 <p align=center style='text-align:center'>{pb}</p>
             </td>
         </tr>
@@ -888,8 +870,7 @@
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:28.45pt'>
                 <p style='margin-right:-3.8pt'><b>Punctajul stabilit la compartimentul 4) “Pregătirea de bază” (M<sup>4</sup>):</b></p><p style='font-size:11.0pt'>(constituie media aritmetică obţinută din suma mediei la cele 4 compartimente ale pregătirii de bază (P<sub>b</sub>) şi punctajul la pregătirea fizică (P<sub>f</sub>)</span></p>
             </td>
-            <td width=120 colspan=3 valign=top style='width:1.25in;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:28.45pt'>
+            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:23.25pt'>
                 <p align=center style='text-align:center'>{m4}</p>
             </td>
         </tr>
@@ -898,8 +879,7 @@
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:26.7pt'>
                 <p style='font-size:12.0pt'><b>Punctajul la evaluarea anuală:           MEa = M<sup>1 </sup>+ M<sup>2</sup> + M<sup>3</sup> +M<sup>4</sup></b></p><p style='font-size:12.0pt'>(constituie media aritmetică obţinută din mediile stabilite la compartimentele 1) – 4)</p>
             </td>
-            <td width=120 colspan=3 valign=top style='width:1.25in;border-top:none;
-  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:26.7pt'>
+            <td width=120 colspan=3 style='width:1.25in;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#D9D9D9;padding:0in 5.4pt 0in 5.4pt;height:23.25pt'>
                 <p align=center style='text-align:center'>{mea}</p>
             </td>
         </tr>
@@ -1022,12 +1002,7 @@
         <tr style='height:9.3pt'>
             <td width=740 colspan=17 style='width:555.0pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:9.3pt'>
-                <p>
-                    <b>
-                        7.
-                        Comentariile angajatului evaluat:</span>
-                    </b>
-                </p>
+                <p><b>7. Comentariile angajatului evaluat:</b></p>
             </td>
         </tr>
         <tr style='height:8.35pt'>
@@ -1041,7 +1016,7 @@
             </td>
             <td width=167 colspan=5 valign=top style='width:125.0pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:15.5pt'>
-                <p><b>Data  </b>{DateAccepEvaluated}</p>
+                <p><b>Data&emsp;</b>{DateAccepEvaluated}</p>
             </td>
             <td width=219 colspan=5 valign=top style='width:164.1pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:15.5pt'>
@@ -1057,12 +1032,13 @@
         <tr style='height:26.4pt'>
             <td width=355 colspan=7 style='width:265.9pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:26.4pt'>
-                <p><b>Evaluator           </b>{NameSurnameEvaluator}<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{FunctionEvaluator}</p>
+                <p><b>Evaluator           </b>{NameSurnameEvaluator}
+                <p><b>Funcția            </b>{FunctionEvaluator}</p>
             </td>
             <td width=167 colspan=5 style='width:125.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:26.4pt'>
-                <p><b>Data  </b>{DateCompletionGeneralData}</p>
+                <p><b>Data&emsp;</b>{DateCompletionGeneralData}</p>
             </td>
             <td width=219 colspan=5 style='width:164.1pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -1141,12 +1117,13 @@
         <tr style='height:26.4pt'>
             <td width=355 colspan=7 style='width:265.9pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0in 5.4pt 0in 5.4pt;height:26.4pt'>
-                <p><b>Contrasemnatar           </b>{NameSurnameCounterSigner}<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{FunctionCounterSigner}</p>
+                <p><b>Contrasemnatar           </b>{NameSurnameCounterSigner}
+                <p><b>Funcția           </b>{FunctionCounterSigner}</p>
             </td>
             <td width=167 colspan=5 style='width:125.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:26.4pt'>
-                <p><b>Data  </b>{DateCompletionCounterSigner}</p>
+                <p><b>Data&emsp;</b>{DateCompletionCounterSigner}</p>
             </td>
             <td width=219 colspan=5 style='width:164.1pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -1156,12 +1133,13 @@
         </tr>
         <tr style='height:15.5pt'>
             <td width=355 colspan=7 valign=top style='width:265.9pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:15.5pt'>
-                <p><i>Luare la cunoştinţă</i></p><b>Angajatul evaluat   </b>{NameSurnameEvaluated}<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{FunctionSubdivision}</p>
+                <p><i>Luare la cunoştinţă</i></p><b>Angajatul evaluat   </b>{NameSurnameEvaluated}
+                <p><b>Funcția   </b>{FunctionSubdivision}</p>
             </td>
             <td width=167 colspan=5 style='width:125.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0in 5.4pt 0in 5.4pt;height:15.5pt'>
-                <p><b>Data   </b>{DateEvaluatedKnow}</p>
+                <p><b>Data&emsp;</b>{DateEvaluatedKnow}</p>
             </td>
             <td width=212 colspan=5 style='width:159.1pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -1169,8 +1147,6 @@
                 <p><b>Semnătura&nbsp;&nbsp;&nbsp;</b>Semnat</p>
             </td>
         </tr>
-    </table>
-    
+</table>  
 </body>
-
 </html>
