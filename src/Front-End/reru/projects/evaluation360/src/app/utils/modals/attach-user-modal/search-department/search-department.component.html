@@ -1,6 +1,0 @@
-<select class="form-control form-control-solid h-35px" name="selectedStatus" [(ngModel)]="department" id="selectedStatus" (change)="filter.emit($event.target.value)">
-    <option class="default-option text-muted" selected value="">{{ 'attach-user-modal.search-department' | translate }}</option>
-    <option *ngFor="let item of list" [value]="item.value">
-        {{ item.label }}
-    </option>
-</select>
