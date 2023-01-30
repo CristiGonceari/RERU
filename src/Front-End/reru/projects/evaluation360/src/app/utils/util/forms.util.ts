@@ -8,7 +8,7 @@ const fb = new FormBuilder();
 export const isoDateRegex = new RegExp(/^[0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(02)-(0[1-9]|[12][0-9]))T(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])(\.[0-9]{2,3})?Z?$/)
 const letterNumbersAndDashRegex = new RegExp(/^[A-Za-z0-9\ă\â\î\ș\ț\Ă\Â\Î\Ș\Ț\"\- ]+$/);
 const doubleDigitsRegex = new RegExp(/^\d\d?$/i);
-
+ 
 export const createEvaluatorForm = (data: EvaluationModel, evaluationRoleEnum: EvaluationRoleEnum = EvaluationRoleEnum.Evaluator) => {
     return fb.group({
       id: fb.control({value: data?.id, disabled: evaluationRoleEnum != EvaluationRoleEnum.Evaluator}, []),
