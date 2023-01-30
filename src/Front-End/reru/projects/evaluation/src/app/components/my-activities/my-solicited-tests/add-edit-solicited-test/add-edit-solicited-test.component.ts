@@ -101,7 +101,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   setFile(event, index, requiredDocumenId): void {
     const file = event;
     const fileToAdd = this.parseFileToAdd(file, requiredDocumenId)
-    
+
     if (this.files[index] !== undefined) {
       this.files[index] = fileToAdd;
     } else {
@@ -214,6 +214,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
         this.isLoading = false
         this.backClicked();
       }
+    }, err => {
+      this.isLoading = false
     });
   }
 
@@ -235,6 +237,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
         this.isLoading = false
         this.backClicked();
       }
+    }, err => {
+      this.isLoading = false
     });
   }
 
@@ -298,7 +302,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
         break;
       case HttpEventType.UploadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-      break;
+        break;
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
         break;
@@ -314,5 +318,9 @@ export class AddEditSolicitedTestComponent implements OnInit {
   updateStatus(loaded: number, total: number | undefined, requestType: string) {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
+  }
+
+  cantAdd() {
+    return this.candidatePositions.value == undefined;
   }
 }
