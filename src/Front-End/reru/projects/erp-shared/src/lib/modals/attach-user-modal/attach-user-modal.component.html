@@ -206,6 +206,7 @@
 						<th scope="col"> {{ 'attach-user-modal.email' | translate }} </th>
 						<th scope="col"> {{ 'attach-user-modal.department' | translate }} </th>
 						<th scope="col"> {{ 'attach-user-modal.role' | translate }} </th>
+						<th scope="col"> {{ 'attach-user-modal.function' | translate }} </th>
 					</tr>
 				</thead>
 				<tbody class="datatable-body">
@@ -218,16 +219,11 @@
 							</label>
 						</td>
 						<td> <a class="text-dark-75 text-hover-primary" (click)="currentCheckbox.click()" href="javascript:void(0)">{{ user.lastName }} {{ user.firstName }} {{ user.fatherName }}</a></td>
-						<td> {{ user.idnp }} </td>
-						<td> {{ user.email }} </td>
-						<td>
-							<span *ngIf="!user.departmentName">-</span> 
-							<span *ngIf="user.departmentName">{{ user.departmentName }}</span> 
-						</td>
-						<td> 
-							<span *ngIf="!user.roleName">-</span> 
-							<span *ngIf="user.roleName">{{ user.roleName }}</span>
-						</td>
+						<td> {{ user.idnp || '-' }} </td>
+						<td> {{ user.email || '-' }} </td>
+						<td> {{ user.departmentName || '-' }}</td>
+						<td> {{ user.roleName || '-'}}</td>
+						<td> {{ user.functionName || '-' }}</td>
 					</tr>
 				</tbody>
 				<tbody class="datatable-body">

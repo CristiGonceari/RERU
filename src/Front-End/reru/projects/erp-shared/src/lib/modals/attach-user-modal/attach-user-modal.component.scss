@@ -1,7 +1,4 @@
 :host {
-  .modal-body {
-    height: calc(100% - 30px);
-  }
   div.container-block {
     height: calc(100vh - 380px);
     @media screen and (max-width: 992px) {
