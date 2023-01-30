@@ -380,7 +380,8 @@ namespace RERU.Data.Entities.Enums
                 GradesEnum.Colonel_al_serviciului_intern => Colonel_al_serviciului_intern,
                 GradesEnum.General_maior_al_serviciului_intern => General_maior_al_serviciului_intern,
                 GradesEnum.General_locotenent_al_serviciului_intern => General_locotenent_al_serviciului_intern,
-                GradesEnum.General_colonel_al_serviciului_intern => General_colonel_al_serviciului_intern
+                GradesEnum.General_colonel_al_serviciului_intern => General_colonel_al_serviciului_intern,
+                _ => "-"
             };
         }
     }
