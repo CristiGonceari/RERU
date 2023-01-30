@@ -105,7 +105,7 @@ export class EvaluationsSetupComponent implements OnInit {
 		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
 		modalRef.result.then((data) => {
 			if (isAttachEvaluated) {
-				this.evaluationForm.get('evaluatedUserProfileIds').patchValue(data.selectedUsers)
+				this.evaluationForm.get('evaluatedUserProfileIds').patchValue([...data.selectedUsers])
 			} else {
 				this.evaluationForm.get('counterSignerUserProfileId').patchValue(data.selectedUsers[0])
 			}

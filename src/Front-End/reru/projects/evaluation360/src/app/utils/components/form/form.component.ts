@@ -19,7 +19,7 @@ import { SanctionEnum } from '../../models/sanction.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
 import { EvaluationAcceptClass } from '../../models/evaluation-accept.model';
 import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.model';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
 @Component({
@@ -91,6 +91,9 @@ export class FormComponent implements OnInit, AfterViewInit {
   Mea$: Observable<number> = this.Mea.asObservable();
   Mf: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   Mf$: Observable<number> = this.Mf.asObservable();
+
+  showSanctionSection$: Subject<boolean> = new Subject();
+
   constructor(private readonly ngZone: NgZone) {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isValid = isValid.bind(this);
@@ -144,6 +147,18 @@ export class FormComponent implements OnInit, AfterViewInit {
     // after DOM has loaded assign read-only values
     this.finalEvalNum.nativeElement.value = this.evaluation.finalEvaluationQualification;
     this.focusEvaluatedCommentsArea();
+    this.subscribeForSanctionChanges();
+  }
+
+  subscribeForSanctionChanges(): void {
+    this.evaluationForm.get('sanctionAppliedEvaluationCourse').valueChanges.subscribe((value: number) => {
+      if (isNaN(+value) || +value === this.sanctionEnum.Without) {
+        this.showSanctionSection$.next(false);
+        return;
+      }
+
+      this.showSanctionSection$.next(true);
+    })
   }
 
   focusEvaluatedCommentsArea(): void {

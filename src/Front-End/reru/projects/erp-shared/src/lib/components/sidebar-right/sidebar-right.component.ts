@@ -70,8 +70,7 @@ export class SidebarRightComponent implements OnInit {
 					this.avatar = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/*;base64, ${this.avatarString}`);
 				}
 				this.authUserModel = response;
-				console.log('authUserModel', this.authUserModel);
-				let matches = this.authUserModel && this.authUserModel.user && this.authUserModel.user.firstName.match(/\b(\w)/g);
+				const matches = this.authUserModel && this.authUserModel.user && this.authUserModel.user.firstName.match(/\b(\w)/g);
 				this.acronym = matches ? matches.join('') : null;
 			});
 		} else {
