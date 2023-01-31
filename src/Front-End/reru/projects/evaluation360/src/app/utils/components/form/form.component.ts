@@ -151,7 +151,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   subscribeForSanctionChanges(): void {
-    this.evaluationForm.get('sanctionAppliedEvaluationCourse').valueChanges.subscribe((value: number) => {
+    this.evaluationForm.get('sanctionApplied').valueChanges.subscribe((value: number) => {
       if (isNaN(+value) || +value === this.sanctionEnum.Without) {
         this.showSanctionSection$.next(false);
         return;

@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
             int currentUserId = int.Parse(currentUser.Id);
 
             var items = _appDbContext.UserProfiles
-                .Where(x => x.IsActive && x.Id != currentUserId)
+                .Where(x => x.IsActive && x.Id != currentUserId && x.FunctionColaboratorId != null)
                 .Include(up => up.EventResponsiblePersons)
                 .Include(up => up.EventUsers)
                 .Include(up => up.Role)
