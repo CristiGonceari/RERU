@@ -347,8 +347,6 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
 
     if (this.finalEvalNum) {
-      console.log(value);
-      console.log( +value % 2 === 0 ? value : +value);
       this.finalEvalNum.nativeElement.value = +value % 2 === 0 ? value : +value || null;
     }
   }
