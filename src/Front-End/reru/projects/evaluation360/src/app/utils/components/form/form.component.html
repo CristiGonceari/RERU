@@ -607,7 +607,7 @@
             <input [disabled]="true" #finalEvalNum 
             [ngClass]="{'is-valid': isValid(evaluationForm, 'finalEvaluationQualification'),
               'is-invalid': isInvalidPattern(evaluationForm, 'finalEvaluationQualification') || isInvalidRequired(evaluationForm, 'finalEvaluationQualification') }"
-            (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
+            (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" min="0" max="4" pattern="[\d.?]+" maxlength="3" required>
           </div>
     </div>
 

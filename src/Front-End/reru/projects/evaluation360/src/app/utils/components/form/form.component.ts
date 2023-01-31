@@ -288,14 +288,14 @@ export class FormComponent implements OnInit, AfterViewInit {
     ]).subscribe(([mea]) => {
       if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
         const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
-        this.handleFinalQualificationChange(Math.round((mea + Mep) / 2));
+        this.handleFinalQualificationChange(((mea + Mep) / 2).toFixed(2));
         this.handleFinalQualificationChange(Math.round((mea + Mep) / 2), true);
         this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
         this.Mf.next((mea + Mep) / 2);
         return;
       }
 
-      this.handleFinalQualificationChange(Math.round(mea * 100) / 100);
+      this.handleFinalQualificationChange(mea.toFixed(2));
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);
@@ -334,7 +334,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.parsedDateSettingIindividualGoals = data.dateSettingIindividualGoals;
   }
 
-  handleFinalQualificationChange(value: number, isInputChange: boolean = false): void {
+  handleFinalQualificationChange(value: number | string, isInputChange: boolean = false): void {
     if (isInputChange) {
       switch(true) {
         case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('4');break;
@@ -347,7 +347,9 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
 
     if (this.finalEvalNum) {
-      this.finalEvalNum.nativeElement.value = +value || null;
+      console.log(value);
+      console.log( +value % 2 === 0 ? value : +value);
+      this.finalEvalNum.nativeElement.value = +value % 2 === 0 ? value : +value || null;
     }
   }
 
