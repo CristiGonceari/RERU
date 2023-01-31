@@ -1,5 +1,4 @@
 ﻿using RERU.Data.Persistence.Context;
-using CVU.ERP.StorageService.Context;
 using System.Threading.Tasks;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using Microsoft.EntityFrameworkCore;
@@ -10,25 +9,20 @@ using System.Collections.Generic;
 using System;
 using Wkhtmltopdf.NetCore;
 using RERU.Data.Entities.Enums;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 {
     public class PdfService : IPdfService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly StorageDbContext _storageDbContext;
         private readonly IGeneratePdf _generatePdf;
-        private readonly AppDbContext _dbContext;
 
         public PdfService(AppDbContext appDbContext,
-            StorageDbContext storageDbContext,
-            IGeneratePdf generatePdf,
-            AppDbContext dbContext)
+            IGeneratePdf generatePdf)
         {
             _appDbContext = appDbContext;
             _generatePdf = generatePdf;
-            _storageDbContext = storageDbContext;
-            _dbContext = dbContext;
         }
 
         public async Task<FileDataDto> PrintEvaluationPdf(int evaluationId)
@@ -96,16 +90,16 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             var myDictionary = new Dictionary<string, string>();
 
             myDictionary.Add("{Type}", " a angajatului care exercită funcții de " + evaluation.Type.ToString().ToLower());
-            myDictionary.Add("{SubdivisionName}", evaluation.SubdivisionName);
+            myDictionary.Add("{SubdivisionName}", Valide(evaluation.SubdivisionName));
             myDictionary.Add("{DateCompletionGeneralData}", evaluation.DateCompletionGeneralData?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{NameSurnameEvaluated}", evaluation.EvaluatedUserProfile.FullName);  
-            myDictionary.Add("{SubdivisionEvaluated}", evaluation.SubdivisionEvaluated);
-            myDictionary.Add("{FunctionSubdivision}", evaluation.EvaluatedUserProfile.EmployeeFunction.Name);
+            myDictionary.Add("{SubdivisionEvaluated}", Valide(evaluation.SubdivisionEvaluated));
+            myDictionary.Add("{FunctionSubdivision}", ValideFunction(evaluation.EvaluatedUserProfile.EmployeeFunction));
             myDictionary.Add("{SpecialOrMilitaryGrade}", EnumMessages.Translate(evaluation.SpecialOrMilitaryGrade));
             myDictionary.Add("{PeriodEvaluatedFromTo}", evaluation.PeriodEvaluatedFromTo?.ToString("dd.MM.yyyy")); 
             myDictionary.Add("{PeriodEvaluatedUpTo}", evaluation.PeriodEvaluatedUpTo?.ToString("dd.MM.yyyy"));  
             myDictionary.Add("{EducationEnum}", EnumMessages.Translate(evaluation.EducationEnum)); 
-            myDictionary.Add("{ProfessionalTrainingActivities}", Concatenate(EnumMessages.Translate(evaluation.ProfessionalTrainingActivities).ToLower(), evaluation.ProfessionalTrainingActivitiesType?.ToString().ToLower()));
+            myDictionary.Add("{ProfessionalTrainingActivities}", EnumMessages.Translate(evaluation.ProfessionalTrainingActivities).ToLower() + ", " + Valide(evaluation.ProfessionalTrainingActivitiesType?.ToString().ToLower()));
             myDictionary.Add("{CourseName}", Valide(evaluation.CourseName));
             myDictionary.Add("{PeriodRunningActivity}", Concatenate(evaluation.PeriodRunningActivityFromTo?.ToString("dd.MM.yyyy"), evaluation.PeriodRunningActivityUpTo?.ToString("dd.MM.yyyy")));  
             myDictionary.Add("{AdministrativeActOfStudies}", Valide(evaluation.AdministrativeActOfStudies)); 
@@ -174,17 +168,17 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             myDictionary.Add("{Need4ProfessionalDevelopmentEvaluated}", Valide(evaluation.Need4ProfessionalDevelopmentEvaluated));
             myDictionary.Add("{Need5ProfessionalDevelopmentEvaluated}", Valide(evaluation.Need5ProfessionalDevelopmentEvaluated));
             myDictionary.Add("{CommentsEvaluator}", Valide(evaluation.CommentsEvaluator));
-            myDictionary.Add("{CommentsEvaluated}", evaluation.CommentsEvaluated);
+            myDictionary.Add("{CommentsEvaluated}", Valide(evaluation.CommentsEvaluated));
             myDictionary.Add("{DateAccepEvaluated}", evaluation.DateAcceptOrRejectEvaluated?.ToString("dd.MM.yyyy"));
             myDictionary.Add("{NameSurnameEvaluator}", evaluation.EvaluatorUserProfile.FullName);
-            myDictionary.Add("{FunctionEvaluator}", evaluation.EvaluatorUserProfile.EmployeeFunction.Name);
+            myDictionary.Add("{FunctionEvaluator}", ValideFunction(evaluation.EvaluatorUserProfile.EmployeeFunction));
             myDictionary.Add("{DateEvaluatedKnow}", evaluation.DateEvaluatedKnow?.ToString("dd.MM.yyyy"));
 
             if (evaluation.CounterSignerUserProfileId != null)
             {
-                myDictionary.Add("{OtherComments}", evaluation.OtherComments);
+                myDictionary.Add("{OtherComments}", Valide(evaluation.OtherComments));
                 myDictionary.Add("{NameSurnameCounterSigner}", evaluation.CounterSignerUserProfile.FullName);
-                myDictionary.Add("{FunctionCounterSigner}", evaluation.CounterSignerUserProfile.EmployeeFunction.Name);
+                myDictionary.Add("{FunctionCounterSigner}", ValideFunction(evaluation.CounterSignerUserProfile.EmployeeFunction));
                 myDictionary.Add("{DateCompletionCounterSigner}", evaluation.DateCompletionCounterSigner?.ToString("dd.MM.yyyy"));
                 myDictionary.Add("{BIFAT}", "BIFAT");
                 myDictionary.Add("{Semnat}", "Semnat");
@@ -234,6 +228,18 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             {
                 return "—";
             }
+        }
+
+        private string ValideFunction(EmployeeFunction function)
+        {
+            if (function != null)
+            {
+                return function.Name;
+            }
+            else
+            {
+                return "—";
+            } 
         }
 
         private string Concatenate(string word1, string word2)

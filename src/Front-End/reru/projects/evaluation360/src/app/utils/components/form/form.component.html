@@ -396,9 +396,9 @@
       <label for="sanctionApplied" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
           <div class="col-lg col-12">
             <select class="form-control" [ngClass]="{
-              'is-valid': isValid(evaluationForm, 'sanctionAppliedEvaluationCourse'),
-              'is-invalid': isInvalidRequired(evaluationForm, 'sanctionAppliedEvaluationCourse') || isInvalidPattern(evaluationForm, 'sanctionAppliedEvaluationCourse')
-            }" formControlName="sanctionAppliedEvaluationCourse">
+              'is-valid': isValid(evaluationForm, 'sanctionApplied'),
+              'is-invalid': isInvalidRequired(evaluationForm, 'sanctionApplied') || isInvalidPattern(evaluationForm, 'sanctionApplied')
+            }" formControlName="sanctionApplied">
               <option value="null">{{ 'button.select' | translate }}</option>
               <option [value]="sanctionEnum.Without">{{'evaluations.sanction-enum.1' | translate}}</option>
               <option [value]="sanctionEnum.Warning">{{'evaluations.sanction-enum.2' | translate}}</option>
@@ -408,7 +408,7 @@
               <option [value]="sanctionEnum.Demotion">{{'evaluations.sanction-enum.6' | translate}}</option>
               <option [value]="sanctionEnum.Dismissal">{{'evaluations.sanction-enum.7' | translate}}</option>
             </select>
-            <div *ngIf="isInvalidRequired(evaluationForm, 'sanctionAppliedEvaluationCourse') || isInvalidPattern(evaluationForm, 'sanctionAppliedEvaluationCourse')" class="invalid-feedback">{{'notification.required' | translate}}</div>
+            <div *ngIf="isInvalidRequired(evaluationForm, 'sanctionApplied') || isInvalidPattern(evaluationForm, 'sanctionApplied')" class="invalid-feedback">{{'notification.required' | translate}}</div>
           </div>
     </div>
 
