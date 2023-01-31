@@ -31,7 +31,7 @@ export const parseEvaluation = (data: EvaluationModel): EvaluationModel => {
         partialEvaluationPeriodUpTo: data?.partialEvaluationPeriodUpTo,
         partialEvaluationScore: data?.partialEvaluationScore,
         qualifierPartialEvaluations: +data?.qualifierPartialEvaluations || null,
-        sanctionAppliedEvaluationCourse: +data?.sanctionAppliedEvaluationCourse || null,
+        sanctionApplied: +data?.sanctionApplied || null,
         dateSanctionApplication: data?.dateSanctionApplication,
         dateLiftingSanction: data?.dateLiftingSanction,
         qualificationEvaluationObtained2YearsPast: +data?.qualificationEvaluationObtained2YearsPast || null,

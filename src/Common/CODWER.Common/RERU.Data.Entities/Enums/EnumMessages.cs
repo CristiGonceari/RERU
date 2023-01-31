@@ -287,7 +287,7 @@ namespace RERU.Data.Entities.Enums
                 EducationEnum.Higher => Higher,
                 EducationEnum.Master => Master,
                 EducationEnum.Secondary => Secondary,
-                _ => "-"
+                _ => "—"
             };
         }
 
@@ -297,7 +297,7 @@ namespace RERU.Data.Entities.Enums
             {
                 ProfessionalTrainingActivitiesEnum.Perfectiosation => Perfectiosation,
                 ProfessionalTrainingActivitiesEnum.Specialization => Specialization,
-                _ => "-"
+                _ => "—"
             };
         }
 
@@ -309,7 +309,7 @@ namespace RERU.Data.Entities.Enums
                 ServiceDuringEvaluationCourse.Transfer => Transfer,
                 ServiceDuringEvaluationCourse.Detachment => Detachment,
                 ServiceDuringEvaluationCourse.Default => Default,
-                _ => "-"
+                _ => "—"
             };
         }
 
@@ -321,7 +321,7 @@ namespace RERU.Data.Entities.Enums
                 QualifiersEnum.Satisfied => Satisfied,
                 QualifiersEnum.Good => Good,
                 QualifiersEnum.VeryGood => VeryGood,
-                _ => "-"
+                _ => "—"
             };
         }
 
@@ -336,7 +336,7 @@ namespace RERU.Data.Entities.Enums
                 SanctionEnum.Downgrade => Downgrade,
                 SanctionEnum.Demotion => Demotion,
                 SanctionEnum.Dismissal => Dismissal,
-                _ => "-"
+                _ => "—"
             };
         }
 
@@ -381,7 +381,7 @@ namespace RERU.Data.Entities.Enums
                 GradesEnum.General_maior_al_serviciului_intern => General_maior_al_serviciului_intern,
                 GradesEnum.General_locotenent_al_serviciului_intern => General_locotenent_al_serviciului_intern,
                 GradesEnum.General_colonel_al_serviciului_intern => General_colonel_al_serviciului_intern,
-                _ => "-"
+                _ => "—"
             };
         }
     }
