@@ -84,6 +84,7 @@ export class EvaluationsSetupComponent implements OnInit {
 
 	handleCounterSignChange(value: boolean): void {
 		if (value) {
+			this.evaluationForm.get('counterSignerUserProfileId').patchValue(null);
 			this.evaluationForm.get('counterSignerUserProfileId').clearValidators();
 			this.evaluationForm.get('counterSignerUserProfileId').updateValueAndValidity();
 			this.counterSignUsers.length = 0;
