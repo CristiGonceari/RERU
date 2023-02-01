@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SidebarRightComponent } from './sidebar-right.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -7,7 +7,7 @@ describe('SidebarRightComponent', () => {
   let component: SidebarRightComponent;
   let fixture: ComponentFixture<SidebarRightComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [SidebarRightComponent],
