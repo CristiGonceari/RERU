@@ -547,7 +547,8 @@
     "mandatory": "Obligatoriu",
     "success-delete-mgs": "Documentul a fost sters cu succes",
     "want-to-del-msg": "Doriti sa stergeti acest document",
-    "document-application": "Gestionarea documentelor"
+    "document-application": "Gestionarea documentelor",
+    "check-mandatory-application": "Selectati daca este obligatoriu la candidare"
   },
   "processes":{
     "totalProcesses": "Procese Totale",
@@ -883,6 +884,7 @@
     "please-select-format": "Selectați formatul necesar"
   },
   "solicited-position":{
+    "request-position": "Solicită poziția",
     "solicited-positions": "Poziții solicitate",
     "attached-documents": "Documente atașate",
     "required-documents": "Documente necesare",

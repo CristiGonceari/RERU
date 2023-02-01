@@ -38,6 +38,13 @@
     "help": "Помощь",
     "faq": "Частые вопросы"
   },
+  "dashboard": {
+    "title": "Тесты 360",
+    "subtitle": "Начальная страница",
+    "enclosed-mode":"Скрытый режим",
+    "hello-username": "Здравствуйте",
+    "have-a-good-day": "Добро пожаловать!"
+  },
   "modal":{
     "success": "Успешно",
     "error": "Ошибка"
@@ -398,6 +405,10 @@
     "organgiram-head-type": "Тип связи",
     "to-remove-add-push-the-item": "Для добавления/удаления элемента нажмите на один из элементов органиграммы.",
     "select-an-action": "Выбери действие",
+    "select": "Выбери ",
+    "creation-type": "Тип создания",
+    "creation-type-manual": "Вручную",
+    "creation-type-import": "Импортировать",
     "add-sub-item": "Добавить подпозицию",
     "delete-current-item": "Удалить нынешний элемент",
     "link-type": "Тип соединения",
@@ -412,7 +423,15 @@
     "department": "Отдел",
     "role": "Функция",
     "enlarge": "Полная",
-    "view-department-component": "Показать состав отдела"
+    "view-department-component": "Показать состав отдела",
+    "organigram-updated": "Органиграмма обновлена!",
+    "relation-added": "Связь добавлена!",
+    "organigram-deleted": "Органиграмма удалена!",
+    "relation-deleted": "Связь удалена!",
+    "organigram-error-delete": "Произошла ошибка при удалении органиграммы!",
+    "an-error": "Произошла ошибка!",
+    "server-error": "Произошла ошибка сервера!",
+    "organigram-succesful-add": "Вы успешно добавили органиграмму!"
   },
   "guide": {
     "title": "Гид пользователя",
@@ -850,7 +869,8 @@
     "only-letters-numbers-dash-and-dot": "Должен содержать только буквы, цифры и - .",
     "only-letters-numbers-and-symbols": "Должен содержать только буквы, цифры и - , . ",
     "only-letters-numbers-and-some-symbols": "Должен содержать только буквы, цифры и - , . \" \" ",
-    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com"
+    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com",
+    "validations-service-error": "Ошибка службы проверки!"
   },
   "notification": {
     "title": {

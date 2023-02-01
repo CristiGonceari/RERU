@@ -38,6 +38,13 @@
     "help": "Help",
     "faq": "Frequent questions"
   },
+  "dashboard": {
+    "title": "Evaluation 360",
+    "subtitle": "Start Page",
+    "enclosed-mode":"Enclosed mode",
+    "hello-username": "Hello",
+    "have-a-good-day": "Welcome, have a good day!"
+  },
   "modal":{
     "success": "Success",
     "error": "Error"
@@ -397,6 +404,10 @@
     "organgiram-head-type": "Head type",
     "to-remove-add-push-the-item": "To add/remove an item please push an item from the organigram.",
     "select-an-action": "Select an action",
+    "select": "Select",
+    "creation-type": "Creation type",
+    "creation-type-manual": "Manual",
+    "creation-type-import": "Import",
     "add-sub-item": "Add sub-item",
     "delete-current-item": "Delete current item",
     "link-type": "Link type",
@@ -411,7 +422,15 @@
     "department": "Department",
     "role": "Role",
     "enlarge": "Full-size",
-    "view-department-component": "View departments members"
+    "view-department-component": "View departments members",
+    "organigram-updated": "Organigram updated!",
+    "relation-added": "Relation added!",
+    "organigram-deleted": "Organigram deleted!",
+    "relation-deleted": "Relation deleted!",
+    "organigram-error-delete": "There was an error deleting the organigram!",
+    "an-error": "An error occured!",
+    "server-error": "Server error occured!",
+    "organigram-succesful-add": "You've added organigram successfully!"
   },
   "guide": {
     "title": "User Guide",
@@ -850,7 +869,8 @@
     "only-letters-numbers-dash-and-dot": "Should contain only letters, numbers and - .",
     "only-letters-numbers-and-symbols": "Should contain only letters, numbers and - , . ",
     "only-letters-numbers-and-some-symbols": "Should contain only letters, numbers and - , . \" \" ",
-    "valid-email": "Email needs to be valid. For example: codwer@mail.com"
+    "valid-email": "Email needs to be valid. For example: codwer@mail.com",
+    "validations-service-error": "Validation service error!"
   },
   "notification": {
     "title": {

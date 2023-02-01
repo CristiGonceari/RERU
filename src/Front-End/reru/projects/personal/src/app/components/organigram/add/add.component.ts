@@ -14,6 +14,7 @@ import { Observable, OperatorFunction, Subject, merge } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, filter } from 'rxjs/operators';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs } from 'file-saver';
+import { I18nService } from '../../../utils/services/i18n.service';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -32,12 +33,22 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
   @ViewChild('instance', { static: false }) instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
+  notification = {
+    success: 'Success',
+    error: 'Error',
+    validationServiceError: 'Validation service error!',
+    organigramUpdated: 'Organigram updated!',
+    serverError: 'Server error occured!',
+    anError: 'An error occured!',
+    organigramSuccesfulAdd: "You\'ve added organigram successfully!"
+  };
 
   constructor(private fb: FormBuilder,
     private organigramService: OrganigramService,
     private route: ActivatedRoute,
     private router: Router,
     private ngZone: NgZone,
+    public translate: I18nService,
     private notificationService: NotificationsService,
     private referenceService: ReferenceService) {
     super();
@@ -48,6 +59,9 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     this.retrieveDropdowns();
     this.initForm();
     this.subscribeForTypeChanges();
+    this.translateData();
+
+    this.subscribeForTranslateChanges();
   }
 
   retrieveDropdowns(): void {
@@ -61,21 +75,45 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     });
   }
 
+  translateData(): void {
+    forkJoin([
+      this.translate.get('notification.success'),
+      this.translate.get('notification.error'),
+      this.translate.get('validations.validations-service-error'),
+      this.translate.get('organigram.organigram-updated'),
+      this.translate.get('organigram.an-error'),
+      this.translate.get('organigram.server-error'),
+      this.translate.get('organigram.organigram-succesful-add'),
+    ]).subscribe(([success, error, validationServiceError, organigramUpdated, anError, serverError, organigramSuccesfulAdd]) => {
+      this.notification.success = success;
+      this.notification.error = error;
+      this.notification.validationServiceError = validationServiceError;
+      this.notification.organigramUpdated = organigramUpdated;
+      this.notification.anError = anError;
+      this.notification.serverError = serverError;
+      this.notification.organigramSuccesfulAdd = organigramSuccesfulAdd;
+    });
+  }
+
+  subscribeForTranslateChanges(): void {
+    this.translate.change.subscribe(() => this.translateData());
+  }
+
   submit(): void {
     this.organigramService.add(this.parseOrganizationalChart(this.organigramForm.value)).subscribe((response: ApiResponse<any>) => {
       if (response.success) {
-        this.notificationService.success('Success', 'Organigram updated!', NotificationUtil.getDefaultConfig());
+        this.notificationService.success(this.notification.success, this.notification.organigramUpdated, NotificationUtil.getDefaultConfig());
         this.organigramForm.get('organizationalChartId').patchValue(response.data);
         this.head(this.organigramForm.value);
         return;
       }
-      this.notificationService.warn('Error', 'An error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.warn(this.notification.error, this.notification.anError, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       if (error.status === 400) {
-        this.notificationService.warn('Error', 'Validation service error!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
         return;
       }
-      this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -90,13 +128,13 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     if (data.createType == 1) {
       this.organigramService.head(this.parseHead(data)).subscribe(response => {
         this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
-        this.notificationService.success('Success', 'You\'ve added organigram successfully!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.organigramSuccesfulAdd, NotificationUtil.getDefaultMidConfig());
       }, (error) => {
         if (error.status === 400) {
-          this.notificationService.warn('Error', 'Validation service error!', NotificationUtil.getDefaultMidConfig());
+          this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
           return;
         }
-        this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
       });
     } else if (data.createType == 2) {
       const form = new FormData();
@@ -110,13 +148,13 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
         saveAs(file);
 
         this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
-        this.notificationService.success('Success', 'You\'ve added organigram successfully!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.organigramSuccesfulAdd, NotificationUtil.getDefaultMidConfig());
       }, error => {
         if (error.status === 400) {
-          this.notificationService.warn('Error', 'Validation service error!', NotificationUtil.getDefaultMidConfig());
+          this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
           return;
         }
-        this.notificationService.error('Server error occured!', null, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
       });
     }
   }

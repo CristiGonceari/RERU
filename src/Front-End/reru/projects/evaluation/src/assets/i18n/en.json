@@ -548,7 +548,8 @@
     "mandatory": "Mandatory",
     "success-delete-mgs": "Document was successfuly deleted",
     "want-to-del-msg": "Do you want to delete document",
-    "document-application": "Manage documents"
+    "document-application": "Manage documents",
+    "check-mandatory-application": "Select if required to apply"
   },
   "processes":{
     "totalProcesses": "Total Processes",
@@ -887,6 +888,7 @@
     "please-select-format": "Please select format"
   },
   "solicited-position":{
+    "request-position": "Request position",
     "solicited-positions": "Solicited positions",
     "attached-documents": "Attached documents",
     "required-documents": "Required documents",
