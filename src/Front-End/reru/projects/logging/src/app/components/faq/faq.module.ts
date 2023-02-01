@@ -15,27 +15,26 @@ import { SearchComponent } from './faq-list/search/search.component';
 import { UtilsModule } from '../../utils/utils.module';
 
 @NgModule({
-	declarations: [
-		FaqDetailsComponent,
-		FaqListComponent,
-		FaqAddEditComponent,
-		FaqListTableComponent,
-		FaqOverviewComponent,
-		SearchComponent,
-	],
-	imports: [
-	  CommonModule,
-		ReactiveFormsModule,
-		FormsModule,
-		NgbModule,
-		TranslateModule,
-		SharedModule,
-		CKEditorModule,
-		FaqRoutingModule,
-		UtilsModule
-	],
-	exports: [],
-	entryComponents: [],
-	providers: [NgbActiveModal],
+    declarations: [
+        FaqDetailsComponent,
+        FaqListComponent,
+        FaqAddEditComponent,
+        FaqListTableComponent,
+        FaqOverviewComponent,
+        SearchComponent,
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgbModule,
+        TranslateModule,
+        SharedModule,
+        CKEditorModule,
+        FaqRoutingModule,
+        UtilsModule
+    ],
+    exports: [],
+    providers: [NgbActiveModal]
 })
 export class FAQModule {}

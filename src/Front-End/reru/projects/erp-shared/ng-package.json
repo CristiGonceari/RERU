@@ -2,17 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/erp-shared",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "@ng-bootstrap/ng-bootstrap": "NgbModule",
-      "@ngx-translate/core": "TranslateModule",
-      "@ngx-translate/http-loader": "TranslateHttpLoader",
-      "@gilsdav/ngx-translate-router": "LocalizeRouterModule",
-      "ngx-cookie-service": "CookieService",
-      "angular2-notifications": "SimpleNotificationsModule",
-      "oidc-client": "oidc-client",
-      "file-saver": "oidc-client",
-      "ngx-dropzone": "NgxDropzoneModule"
-    }
+    "entryFile": "src/public-api.ts"
   }
 }

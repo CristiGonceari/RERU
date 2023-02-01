@@ -17,29 +17,28 @@ import { TagInputModule } from 'ngx-chips';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-	declarations: [
-		FaqDetailsComponent,
-		FaqListComponent,
-		FaqAddEditComponent,
-		FaqListTableComponent,
-		FaqOverviewComponent,
-		SearchComponent,
-	],
-	imports: [
-	  CommonModule,
-		ReactiveFormsModule,
-		FormsModule,
-		NgbModule,
-		TranslateModule,
-		SharedModule,
-		CKEditorModule,
-		FaqRoutingModule,
-		UtilsModule,
-		TagInputModule,
-		MatSelectModule
-	],
-	exports: [],
-	entryComponents: [],
-	providers: [NgbActiveModal],
+    declarations: [
+        FaqDetailsComponent,
+        FaqListComponent,
+        FaqAddEditComponent,
+        FaqListTableComponent,
+        FaqOverviewComponent,
+        SearchComponent,
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgbModule,
+        TranslateModule,
+        SharedModule,
+        CKEditorModule,
+        FaqRoutingModule,
+        UtilsModule,
+        TagInputModule,
+        MatSelectModule
+    ],
+    exports: [],
+    providers: [NgbActiveModal]
 })
 export class FAQModule {}

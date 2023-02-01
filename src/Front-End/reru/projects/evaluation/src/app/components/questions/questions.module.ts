@@ -20,31 +20,30 @@ import { SearchByQuestionStatusComponent } from './question-list/search-by-quest
 import { SearchByQuestionTypeComponent } from './question-list/search-by-question-type/search-by-question-type.component';
 
 @NgModule({
-	declarations: [
-    BulkImportQuestionsComponent,
-    QuestionListComponent,
-    AddEditQuestionComponent,
-    QuestionDetailsComponent,
-    QuestionOverviewComponent,
-    QuestionListTableComponent,
-    SearchByQuestionStatusComponent,
-    SearchByQuestionTypeComponent,
-  ],
-	imports: [
-	  CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgbModule,
-    NgxDropzoneModule,
-    TranslateModule,
-    SharedModule,
-    RouterModule,
-    QuestionRoutingModule,
-    HttpClientModule,
-    UtilsModule,
-    TagInputModule
-  ],
-	exports: [QuestionListComponent],
-	entryComponents: [],
+    declarations: [
+        BulkImportQuestionsComponent,
+        QuestionListComponent,
+        AddEditQuestionComponent,
+        QuestionDetailsComponent,
+        QuestionOverviewComponent,
+        QuestionListTableComponent,
+        SearchByQuestionStatusComponent,
+        SearchByQuestionTypeComponent,
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgbModule,
+        NgxDropzoneModule,
+        TranslateModule,
+        SharedModule,
+        RouterModule,
+        QuestionRoutingModule,
+        HttpClientModule,
+        UtilsModule,
+        TagInputModule
+    ],
+    exports: [QuestionListComponent]
 })
 export class QuestionsModule {}
