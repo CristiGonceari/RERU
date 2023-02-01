@@ -25,7 +25,6 @@
             "main": "projects/core/src/main.ts",
             "polyfills": "projects/core/src/polyfills.ts",
             "tsConfig": "projects/core/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/core/src/favicon.ico",
               "projects/core/src/assets",
@@ -50,7 +49,13 @@
               "dragula",
               "ng-apexcharts",
               "apexcharts"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -80,7 +85,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -163,7 +169,6 @@
             "main": "projects/evaluation/src/main.ts",
             "polyfills": "projects/evaluation/src/polyfills.ts",
             "tsConfig": "projects/evaluation/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/evaluation/src/favicon.ico",
               "projects/evaluation/src/assets",
@@ -191,7 +196,13 @@
               "dragula",
               "ng-apexcharts",
               "apexcharts"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -221,7 +232,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -306,7 +318,6 @@
             "main": "projects/personal/src/main.ts",
             "polyfills": "projects/personal/src/polyfills.ts",
             "tsConfig": "projects/personal/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/personal/src/favicon.ico",
               "projects/personal/src/assets",
@@ -324,7 +335,13 @@
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
               "projects/personal/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -354,7 +371,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -483,7 +501,6 @@
             "main": "projects/logging/src/main.ts",
             "polyfills": "projects/logging/src/polyfills.ts",
             "tsConfig": "projects/logging/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/logging/src/favicon.ico",
               "projects/logging/src/assets",
@@ -506,7 +523,13 @@
             "allowedCommonJsDependencies": [
               "file-saver",
               "@swimlane/dragula"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -536,7 +559,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -620,7 +644,6 @@
             "main": "projects/evaluation360/src/main.ts",
             "polyfills": "projects/evaluation360/src/polyfills.ts",
             "tsConfig": "projects/evaluation360/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/evaluation360/src/favicon.ico",
               "projects/evaluation360/src/assets",
@@ -644,7 +667,13 @@
               "file-saver",
               "ng-apexcharts",
               "apexcharts"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -674,7 +703,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
