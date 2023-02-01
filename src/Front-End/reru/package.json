@@ -22,18 +22,18 @@
     "npm": "<=6.9.0"
   },
   "dependencies": {
-    "@angular/animations": "^11.2.14",
+    "@angular/animations": "^15.1.2",
     "@angular/cdk": "^11.2.13",
-    "@angular/common": "^11.2.14",
-    "@angular/compiler": "^11.2.14",
-    "@angular/core": "^11.2.14",
-    "@angular/elements": "^11.2.14",
-    "@angular/forms": "^11.2.14",
-    "@angular/localize": "^11.2.14",
+    "@angular/common": "^15.1.2",
+    "@angular/compiler": "^15.1.2",
+    "@angular/core": "^15.1.2",
+    "@angular/elements": "^15.1.2",
+    "@angular/forms": "^15.1.2",
+    "@angular/localize": "^15.1.2",
     "@angular/material": "^11.2.13",
-    "@angular/platform-browser": "^11.2.14",
-    "@angular/platform-browser-dynamic": "^11.2.14",
-    "@angular/router": "^11.2.14",
+    "@angular/platform-browser": "^15.1.2",
+    "@angular/platform-browser-dynamic": "^15.1.2",
+    "@angular/router": "^15.1.2",
     "@ckeditor/ckeditor5-angular": "^2.0.1",
     "@ckeditor/ckeditor5-build-classic": "^29.2.0",
     "@ckeditor/ckeditor5-build-decoupled-document": "^24.0.0",
@@ -41,7 +41,7 @@
     "@ckeditor/ckeditor5-upload": "^24.0.0",
     "@gilsdav/ngx-translate-router": "^3.1.2",
     "@gilsdav/ngx-translate-router-http-loader": "^1.1.2",
-    "@ng-bootstrap/ng-bootstrap": "^7.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@swimlane/dragula": "^3.8.0",
@@ -66,7 +66,7 @@
     "oidc-client": "^1.11.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.12.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1102.19",
@@ -76,7 +76,7 @@
     "@angular-eslint/schematics": "0.1.0-beta.1",
     "@angular-eslint/template-parser": "0.1.0-beta.1",
     "@angular/cli": "^11.2.19",
-    "@angular/compiler-cli": "^11.2.14",
+    "@angular/compiler-cli": "^15.1.2",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.20.25",
@@ -105,6 +105,6 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.1.6"
+    "typescript": "^4.9.5"
   }
 }
