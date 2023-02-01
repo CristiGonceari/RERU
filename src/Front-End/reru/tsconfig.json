@@ -4,37 +4,19 @@
       "path": "./projects/personal/tsconfig.app.json"
     },
     {
-      "path": "./projects/personal/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/erp-shared/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/erp-shared/tsconfig.spec.json"
     },
     {
       "path": "./projects/core/tsconfig.app.json"
     },
     {
-      "path": "./projects/core/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/evaluation/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/evaluation/tsconfig.spec.json"
     },
     {
       "path": "./projects/evaluation360/tsconfig.app.json"
     },
     {
-      "path": "./projects/evaluation360/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/logging/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/logging/tsconfig.spec.json"
     },
   ]
 }

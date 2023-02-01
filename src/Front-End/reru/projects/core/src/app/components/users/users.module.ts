@@ -19,7 +19,7 @@ import { RemoveComponent } from './remove/remove.component';
 import { SearchStatusComponent } from './user-list/search-status/search-status.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -32,8 +32,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-dat
     TranslateModule,
     UsersRoutingModule,
     NgbModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule,
     HttpClientModule
   ],
   declarations: [

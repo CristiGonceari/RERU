@@ -1,17 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-
 /* UI METRONIC LIBRARY INITIALIZATION */
 @import "style";
 /* END METRONIC LIBRARY INITIALIZATION */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+
 
 /* Importing Dragula SCSS file. */
-@import '~dragula/dist/dragula';
+// @import '~dragula/dist/dragula';
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "~ng-pick-datetime/assets/style/picker.min.css";
+// @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 html,
 body,

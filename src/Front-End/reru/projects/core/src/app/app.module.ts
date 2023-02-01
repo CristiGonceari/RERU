@@ -13,7 +13,7 @@ import { HttpLoaderFactory } from './utils/services/i18n.service';
 import { UtilsModule } from './utils/utils.module';
 import { SharedModule, SvgModule, MOCK_AUTHENTICATION } from '@erp/shared';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { NgxDnDModule } from '@swimlane/ngx-dnd';
+// import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { environment } from '../environments/environment';
 import { ModulesComponent } from './components/modules/modules.component';
 import { RolesComponent } from './components/roles/roles.component';
@@ -50,7 +50,7 @@ import { DEFAULT_TIMEOUT, TimeoutInterceptor } from '../app/utils/specific-inter
 		CommonModule,
 		SvgModule,
 		NgxDropzoneModule,
-		NgxDnDModule.forRoot(),
+		// NgxDnDModule.forRoot(),
 		HttpClientModule,
 	],
 	schemas: [

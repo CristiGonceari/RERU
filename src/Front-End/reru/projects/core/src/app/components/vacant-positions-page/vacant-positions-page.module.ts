@@ -10,7 +10,7 @@ import { VacantPositionsPageComponent } from './vacant-positions-page.component'
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CommonModule, DatePipe } from '@angular/common';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -22,8 +22,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-dat
     ReactiveFormsModule,
     TranslateModule,
     NgbModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule,
     VacantPositionPageRoutingModule,
     NgxDropzoneModule,
     CKEditorModule

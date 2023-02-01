@@ -106,8 +106,7 @@ const routes: Routes = [
 		MyProfileRoutingModule,
 		RouterModule.forRoot(routes, {
     useHash: true,
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'legacy'
+    scrollPositionRestoration: 'enabled'
 }),
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {

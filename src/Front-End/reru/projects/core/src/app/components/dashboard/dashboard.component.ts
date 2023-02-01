@@ -9,9 +9,6 @@ import {
 import { InternalService } from '../../utils/services/internal.service';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AccessModeEnum } from '../../utils/models/access-mode.enum';
-import { ProfileService } from '../../utils/services/profile.service';
 
 @Component({
   selector: 'app-dashboard',

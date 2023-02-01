@@ -1,20 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  ApplicationUserService,
-  AvailableModulesService,
-  ApplicationUserModuleModel,
-} from '@erp/shared';
-
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from '../../utils/services/i18n.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { GeneralDataFormComponent } from '../general-data-form/general-data-form.component';
-import { UserService } from '../../utils/services/user.service';
-import { RegistrationFluxStepService } from '../../utils/services/registration-flux-step.service';
 import { RegistrationFluxStepEnum } from '../../utils/models/registrationFluxStep.enum';
-import { NotificationUtil } from '../../utils/util/notification.util';
-import { MatHorizontalStepper, MatStepper } from '@angular/material/stepper';
-import { GeneralDataFormComponent } from './general-data-form/general-data-form.component';
+import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReferenceService } from '../../utils/services/reference.service';
 import { ProfileService } from '../../utils/services/profile.service';
@@ -26,9 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './candidate-registration-flux.component.html',
   styleUrls: ['./candidate-registration-flux.component.scss']
 })
-
 export class CandidateRegistrationFluxComponent implements OnInit {
-  
   @ViewChild('stepper') stepper: MatStepper;
 
   counter;
@@ -56,7 +42,6 @@ export class CandidateRegistrationFluxComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private referenceService: ReferenceService,
-    private registrationFluxService: RegistrationFluxStepService,
     private profileService: ProfileService,
     private ds: DataService,
     private cdr: ChangeDetectorRef

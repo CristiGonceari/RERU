@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { ResetPasswordComponent } from './reset-password.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CommonModule, DatePipe } from '@angular/common';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
     imports: [
@@ -21,8 +21,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-dat
       ReactiveFormsModule,
       TranslateModule,
       NgbModule,
-      OwlDateTimeModule,
-      OwlNativeDateTimeModule,
+      // OwlDateTimeModule,
+      // OwlNativeDateTimeModule,
       ResetPasswordRoutingModule,
       NgxDropzoneModule,
     ],

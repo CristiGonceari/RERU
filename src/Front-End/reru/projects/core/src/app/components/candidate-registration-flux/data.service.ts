@@ -10,7 +10,7 @@ export class DataService {
     }
  
     clearData() {
-        this.subject.next();
+        this.subject.next(null);
     }
  
     getData(): Observable<mapModel> {

@@ -13,7 +13,7 @@ import { ChangePersonalDataComponent } from './change-personal-data/change-perso
 import { OverviewProfileComponent } from './overview-profile/overview-profile.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -24,8 +24,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@busacca/ng-pick-dat
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule,
     MyProfileRoutingModule,
     NgxDropzoneModule,
     SvgModule,
