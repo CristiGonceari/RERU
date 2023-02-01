@@ -49,7 +49,7 @@
     "@swimlane/ngx-dnd": "^9.0.0",
     "@types/dragula": "^3.7.0",
     "@webcomponents/custom-elements": "^1.4.2",
-    "angular2-notifications": "^9.0.0",
+    "angular2-notifications": "^12.0.0",
     "apexcharts": "^3.26.3",
     "bootstrap": "^4.6.2",
     "date-fns": "^2.16.1",
