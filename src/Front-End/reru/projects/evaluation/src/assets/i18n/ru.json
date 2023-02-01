@@ -547,7 +547,8 @@
     "mandatory": "Принудительный",
     "success-delete-mgs": "Документ успешно удален",
     "want-to-del-msg": "Вы хотите удалить этот документ",
-    "document-application": "Управление документами"
+    "document-application": "Управление документами",
+    "check-mandatory-application": "Выбери если обязательно при подаче заявки"
   },
   "processes":{
     "totalProcesses": "Все процессы",
@@ -886,6 +887,7 @@
     "please-select-format": "Пожалуйста выберите формат файла"
   },
   "solicited-position":{
+    "request-position": "Запросить позицию",
     "solicited-positions": "Запрошенная позиция",
     "attached-documents": "Приложенные документы",
     "required-documents": "Необходимые документы",

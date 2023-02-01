@@ -40,7 +40,12 @@
             </td></tr>
         </tbody>
     </table>
-    <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize" (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-        class="datatable-pager datatable-paging-loaded" (pageChange)="list({ page: $event })">
+    <div pagination 
+    [page]="pagedSummary.currentPage" 
+    [total]="pagedSummary.totalPages" 
+    [size]="pagedSummary.pageSize" 
+    [totalRecords]="pagedSummary.totalCount"
+    (sizeChange)="list({ page: pagedSummary.currentPage, itemsPerPage: $event })"
+    (pageChange)="list({ page: $event })" class="datatable-pager datatable-paging-loaded">
     </div>
 </div>
