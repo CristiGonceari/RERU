@@ -7,8 +7,7 @@ import { ObjectUtil } from '../../util/object.util';
 import { saveAs } from 'file-saver';
 import { DocumentTemplate } from '../../models/document-template/document-templates.model';
 import { TestService } from '../../services/test/test.service';
-import { CKEditorModule } from 'ngx-ckeditor';
-import { map } from 'rxjs/operators'
+
 @Component({
   selector: 'app-generate-document-modal',
   templateUrl: './generate-document-modal.component.html',

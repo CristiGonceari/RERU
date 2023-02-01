@@ -22,9 +22,6 @@ import { DeclarationComponent } from './declaration/declaration.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DataService } from './data.service';
 
-// import { CKEditorModule } from 'ngx-ckeditor';
-
-
 
 @NgModule({
   declarations: [
