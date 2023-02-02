@@ -89,8 +89,7 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forRoot(routes, {
     useHash: true,
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'legacy'
+    scrollPositionRestoration: 'enabled'
 }),
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {

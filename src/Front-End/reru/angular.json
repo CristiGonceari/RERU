@@ -43,7 +43,9 @@
               "@swimlane/dragula",
               "dragula",
               "ng-apexcharts",
-              "apexcharts"
+              "apexcharts",
+              "oidc-client",
+              "@ckeditor/ckeditor5-build-decoupl-decoupled-document"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

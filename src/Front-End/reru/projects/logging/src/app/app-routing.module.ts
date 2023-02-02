@@ -27,7 +27,6 @@ const routes: Routes = [
 		RouterModule.forRoot(routes, {
     useHash: true,
     scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'legacy'
 }),
 		LocalizeRouterModule.forRoot(routes, {
 			parser: {
