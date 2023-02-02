@@ -37,6 +37,7 @@
 									  [userStatuses]="userStatuses"
 									  [attachedUsers]="attachedUsers"
 									  [inputType]="inputType"
+									  (changeAttachedUser)="handleChangeAttachedUsers($event)"
 									  [roles]="roles"></erp-shared-attach-user-table>
 	</div>
 	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2 container-block">
