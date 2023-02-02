@@ -8,8 +8,7 @@ import { ObjectUtil } from '../../utils/util/object.util';
 
 @Component({
   selector: 'erp-shared-attach-user-table',
-  templateUrl: './attach-user-table.component.html',
-  styleUrls: ['./attach-user-table.component.scss']
+  templateUrl: './attach-user-table.component.html'
 })
 export class AttachUserTableComponent implements OnInit {
   @Input() departments: SelectItem[] = [];
@@ -44,8 +43,9 @@ export class AttachUserTableComponent implements OnInit {
     this.getUsers();
   }
 
-  public getUsers(data: any = {}): void {
+  getUsers(data: any = {}): void {
     this.paginatedAttachedIds = false;
+    if (!this.isLoading) this.isLoading = true;
 
     const params = ObjectUtil.preParseObject({
       page: data.page || this.pagination.currentPage,
@@ -69,7 +69,6 @@ export class AttachUserTableComponent implements OnInit {
   }
 
   handleChangeAttachedUsers(data: { attachedUsers: number[], checked: boolean }): void {
-    // check if the user exist in the list, then proceed
     if (this.users.some(user => data.attachedUsers.includes(user.id))) {
       this.changeAttachedUser.emit(data);
       if (data.checked) {
@@ -82,7 +81,7 @@ export class AttachUserTableComponent implements OnInit {
     }
   }
 
-  setFilter(field: string, value): void {
+  setFilter(field: string, value: string | number | null): void {
     this.pagination.currentPage = 1;
     this.filters[field] = value;
     this.getUsers();
@@ -98,27 +97,37 @@ export class AttachUserTableComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  public checkAll(event): void {
-    if (event.target.checked == false) {
-      const itemsToRemove = this.users.map(el => +el.id);
-      this.attachedUsers = this.attachedUsers.filter( x => !itemsToRemove.includes(x) );
+  checkAll(event: Event): void {
+    const userIds = [...this.users.map(u => +u.id)];
+    if ((<HTMLInputElement>event.target).checked == false) {
+      this.attachedUsers.length = 0;
+      this.notifyForAttachedUsers(userIds, false);
     }
-    if (event.target.checked == true) {
-      this.attachedUsers = this.attachedUsers.filter( x => !this.users.map(el => +el.id).includes(x) );
-      const itemsToAdd = this.users.map(el => +el.id)
-      for (let i = 0; i < itemsToAdd.length; i++) {
-        this.attachedUsers.push(itemsToAdd[i]);
-      }
+
+    if ((<HTMLInputElement>event.target).checked == true) {
+      this.attachedUsers = [...userIds];
+      this.notifyForAttachedUsers(userIds, true);
     }
-    this.getUsers();
   }
 
-  onItemChange(event): void {
-    if (event.target.checked == true) {
-      this.attachedUsers.push(+event.target.value);
-    } else if (event.target.checked == false) {
-      this.attachedUsers.splice(this.attachedUsers.indexOf(event.target.value), 1);
+  onItemChange(event: Event): void {
+    if ((<HTMLInputElement>event.target).checked == true) {
+      this.attachedUsers.push(+(<HTMLInputElement>event.target).value);
+    } 
+
+    if ((<HTMLInputElement>event.target).checked == false) {
+      this.attachedUsers.splice(this.attachedUsers.indexOf(+(<HTMLInputElement>event.target).value), 1);
     }
+
+    this.notifyForAttachedUsers([...this.attachedUsers], true);
+    this.paginatedAttachedIds = this.users.length === this.attachedUsers.length ? true : false;
+  }
+
+  private notifyForAttachedUsers(users: number[], checked: boolean) {
+    this.changeAttachedUser.emit({ 
+      attachedUsers: [...users], 
+      checked
+    });
   }
 
 }
