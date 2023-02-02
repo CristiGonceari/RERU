@@ -28,8 +28,4 @@ export class ReferenceService extends AbstractService {
 	listFunctions(): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.routeUrl}/employee-functions/select-items`);
 	}
-
-	getArticleRoles(): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.routeUrl}/roles/select-items`);
-	}
 }
