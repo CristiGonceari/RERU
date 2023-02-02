@@ -72,8 +72,8 @@ namespace CODWER.RERU.Core.API
             services.Configure<TenantDto>(Configuration.GetSection("CoreSettings").GetSection("Tenant"));
             services.Configure<ActiveTimeDto>(Configuration.GetSection("CoreSettings").GetSection("ActiveTime"));
 
-            //services.AddERPModuleServices(Configuration); // before conf AppDbContext
-            services.AddCoreServiceProvider(); // before conf AppDbContext
+               services.AddERPModuleServices(Configuration); // before conf AppDbContext
+               services.AddCoreServiceProvider(); // before conf AppDbContext
 
             ServicesSetup.ConfigureEntity(services, Configuration);
             ServicesSetup.ConfigureInjection(services);
@@ -133,13 +133,13 @@ namespace CODWER.RERU.Core.API
                 .AddERPModuleControllers();
             services.AddWkhtmltopdf();
 
-            //if (!CurrentEnvironment.IsDevelopment())
+            //if (!currentenvironment.isdevelopment())
             //{
-            //    services.AddERPModuleServices(Configuration);
+            //    services.adderpmoduleservices(configuration);
             //}
 
 
-            services.AddERPModuleServices(Configuration);
+            //services.AddERPModuleServices(Configuration);
             services
                 .AddCoreModuleApplication(Configuration)
                 .AddCommonLoggingContext(Configuration);

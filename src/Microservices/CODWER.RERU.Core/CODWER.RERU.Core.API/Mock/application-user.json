@@ -1,5 +1,5 @@
 {
-  "id": "9999",
+  "id": "1",
   "name": "RERU Client",
   "firstName": "Andrian",
   "lastName": "Hubencu",
@@ -57,6 +57,7 @@
         "P03001301",
         "P03001401",
         "P04000002",
+        "P05000001",
         "P00000001",
         "P00000002",
         "P00000003",
@@ -183,8 +184,7 @@
         "publicUrl": ""
       },
       "permissions": [
-        "P04000001",
-        "P04000002"
+        "P05000001"
       ],
       "role": "Administrator"
     }

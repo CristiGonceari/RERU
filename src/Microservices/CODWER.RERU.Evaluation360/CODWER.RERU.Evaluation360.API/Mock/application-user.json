@@ -1,5 +1,5 @@
 ﻿{
-  "id": "9999",
+  "id": "1",
   "firstName": "RERU Client",
   "lastName": "Evaluation",
   "fatherName": "Mock User",
@@ -9,25 +9,10 @@
   "avatar": null,
   "modules": [
     {
-      "module": { "name": "Evaluation" },
+      "module": { "name": "Evaluare 360" },
       "role": "test role",
       "permissions": [
-        "P00000001",
-        "P03000001",
-        "P03000101",
-        "P03000201",
-        "P03000301",
-        "P03000401",
-        "P03000501",
-        "P03000601",
-        "P03000701",
-        "P03000801",
-        "P03000901",
-        "P03001001",
-        "P03001101",
-        "P03001201",
-        "P03001301",
-        "P03001401"
+        "P05000001"
       ]
     }
   ]
