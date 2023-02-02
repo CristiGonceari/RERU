@@ -55,6 +55,9 @@
     <None Update="Rotativa\Windows\wkhtmltopdf.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="UserGuide\Ghid360.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
