@@ -343,7 +343,8 @@
     "department": "Department",
     "role": "Role",
     "function": "Function",
-    "npp": "F.L.F."
+    "npp": "F.L.F.",
+    "attached-users": "Attached users"
   },
   "message": {
     "no-record": "There are no records found.",

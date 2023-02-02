@@ -45,6 +45,7 @@
     [colorClass]="'text-primary'">
 </app-loading-spinner>
 
+<p class="mt-4 label label-primary label-inline font-weight-light font-size-small">{{ 'attach-user-modal.attached-users' | translate }}: {{attachedUsers.length}}</p>
 <div class="table-responsive-xl datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
 id="kt_datatable">
 <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">

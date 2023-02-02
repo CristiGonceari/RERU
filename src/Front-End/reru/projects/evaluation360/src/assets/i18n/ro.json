@@ -343,7 +343,8 @@
     "department": "Departament",
     "role": "Rol",
     "function": "Funcție",
-    "npp": "N.P.P."
+    "npp": "N.P.P.",
+    "attached-users": "Utilizatori atașați"
   },
   "message": {
     "no-record": "Nu a fost găsită nicio înregistrare.",
