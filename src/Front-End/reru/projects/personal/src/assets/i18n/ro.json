@@ -458,6 +458,7 @@
     "are-you-sure-you-want-to-delete-holiday": "Sunteți sigur că doriți să ștergeți sărbătoarea <b>{{name}}</b>?"
   },
   "document": {
+    "select-file-format": "Selectați formatul fișierului",
     "are-you-sure-want-to-delete-document": "Sunteți sigur că doriți să ștergeți documentul <b>{{name}}</b>?",
     "add-document": "Adaugă document",
     "file": "Fișier",
@@ -1050,7 +1051,8 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
+    "select-file-format": "Selectați formatul fișierului"
   },
   "general-datas":{
     "nationality": "Naţionalitatea",
