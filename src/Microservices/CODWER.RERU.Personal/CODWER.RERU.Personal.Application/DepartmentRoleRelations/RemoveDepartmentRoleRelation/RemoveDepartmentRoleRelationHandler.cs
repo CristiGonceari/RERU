@@ -40,7 +40,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.RemoveDepartm
             var result = new OrganizationalChartContentDto();
             _listToRemove.Add(head);
 
-            if (head is ParentDepartmentChildDepartment || head is ParentRoleChildDepartment)
+            if (head is ParentDepartmentChildDepartment)
             {
                 var item = await _appDbContext.ParentDepartmentChildDepartments
                     .Include(x => x.ChildDepartment)
@@ -50,9 +50,29 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.RemoveDepartm
                 result.RelationId = item.Id;
                 result.Type = OrganizationalChartItemType.Department;
             }
-            else if (head is ParentDepartmentChildRole || head is ParentRoleChildRole)
+            else if (head is ParentRoleChildDepartment)
+            {
+                var item = await _appDbContext.ParentRoleChildDepartments
+                    .Include(x => x.ChildDepartment)
+                    .FirstOrDefaultAsync(x => x.Id == head.Id);
+
+                result.Id = item.ChildDepartment.Id;
+                result.RelationId = item.Id;
+                result.Type = OrganizationalChartItemType.Department;
+            }
+            else if (head is ParentDepartmentChildRole)
             {
                 var item = await _appDbContext.ParentDepartmentChildRoles
+                    .Include(x => x.ChildRole)
+                    .FirstOrDefaultAsync(x => x.Id == head.Id);
+
+                result.Id = item.ChildRole.Id;
+                result.RelationId = item.Id;
+                result.Type = OrganizationalChartItemType.Role;
+            }
+            else if (head is ParentRoleChildRole)
+            {
+                var item = await _appDbContext.ParentRoleChildRoles
                     .Include(x => x.ChildRole)
                     .FirstOrDefaultAsync(x => x.Id == head.Id);
 

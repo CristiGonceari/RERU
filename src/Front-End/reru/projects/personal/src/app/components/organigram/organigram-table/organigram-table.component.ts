@@ -9,6 +9,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 
+
 @Component({
   selector: 'app-organigram-table',
   templateUrl: './organigram-table.component.html',
@@ -18,12 +19,14 @@ export class OrganigramTableComponent implements OnInit {
   isLoading: boolean = true;
   organigrams: any[] = [];
   pagedSummary: PagedSummary = new PagedSummary();
+
   notification = {
     success: 'Success',
     error: 'Error',
-    succesDelete: 'Organigram deleted!',
-    genericError: 'There was an error deleting the organigram!'
+    successDelete: 'Organigram was deleted',
+    errorDelete: 'Organigram was not deleted',
   };
+
   constructor(private organigramService: OrganigramService,
               private notificationService: NotificationsService,
               public translate: I18nService,
@@ -55,13 +58,14 @@ export class OrganigramTableComponent implements OnInit {
     forkJoin([
       this.translate.get('notification.success'),
       this.translate.get('notification.error'),
-      this.translate.get('organigram.organigram-deleted'),
-      this.translate.get('organigram.organigram-error-delete')
-    ]).subscribe(([success, error, succesDelete, genericError]) => {
+      this.translate.get('organigram.succes-delete-organigram'),
+      this.translate.get('organigram.error-delete-organigram'),
+
+    ]).subscribe(([success, error, successDelete, errorDelete]) => {
       this.notification.success = success;
       this.notification.error = error;
-      this.notification.succesDelete = succesDelete;
-      this.notification.genericError = genericError;
+      this.notification.successDelete = successDelete;
+      this.notification.errorDelete = errorDelete;
     });
   }
 
@@ -77,9 +81,9 @@ export class OrganigramTableComponent implements OnInit {
   deleteOrganigram(id: number): void {
     this.organigramService.delete(id).subscribe(() => {
       this.list();
-        this.notificationService.success(this.notification.success, this.notification.succesDelete, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.successDelete, this.notification.successDelete, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
-        this.notificationService.error(this.notification.error, this.notification.genericError, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.errorDelete, this.notification.errorDelete, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

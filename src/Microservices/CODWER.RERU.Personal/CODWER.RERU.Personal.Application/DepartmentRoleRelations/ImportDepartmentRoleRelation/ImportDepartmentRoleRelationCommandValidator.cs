@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using RERU.Data.Persistence.Context;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.ImportDepartm
 {
     public  class ImportDepartmentRoleRelationCommandValidator : AbstractValidator<ImportDepartmentRoleRelationCommand>
     {
-        public ImportDepartmentRoleRelationCommandValidator()
+        public ImportDepartmentRoleRelationCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Data.File.FileName)
                 .NotEmpty()
@@ -25,6 +26,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.ImportDepartm
 
             RuleFor(x => x.Data.File)
                 .Custom(CheckFileWorksheets);
+
         }
 
         private void CheckExtension(string fileName, CustomContext context)

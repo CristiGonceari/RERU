@@ -82,7 +82,7 @@
 										<app-button class="btn mr-2" [value]="'button.back' | translate"
 											(handle)="backClicked()"></app-button>
 										<app-add-button class="btn" [value]="'button.confirm' | translate"
-											(handle)="saveArticle()" [disabled]="!editorData"></app-add-button>
+											(handle)="saveArticle()" [disabled]="checkConfirmButton(editorData, articleForm)"></app-add-button>
 									</div>
 								</form>
 							</div>

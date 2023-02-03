@@ -50,6 +50,13 @@ export class FaqAddEditComponent implements OnInit {
     }
   }
 
+  checkConfirmButton(article: string, title: string){
+    if (article !== '' && title !== ''){
+      return false
+    }
+    return true;
+  }
+
   getArticle(): void {
     this.articleService.get(this.articleId).subscribe((res) => {
       if (res && res.data) {
