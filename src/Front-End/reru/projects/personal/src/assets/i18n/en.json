@@ -457,6 +457,7 @@
     "are-you-sure-you-want-to-delete-holiday": "Are you sure you want to delete <b>{{name}}</b>?"
   },
   "document": {
+    "select-file-format": "Select file format",
     "are-you-sure-want-to-delete-document": "Are you sure you want to delete the document <b>{{name}}</b>?",
     "add-document": "Add document",
     "file": "File",
@@ -1047,7 +1048,8 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
-    "print-msg": "Please specify the print orientation and necessary fields."
+    "print-msg": "Please specify the print orientation and necessary fields.",
+    "select-file-format": "Select file format"
   },
   "general-datas":{
     "general-data":"General Data",

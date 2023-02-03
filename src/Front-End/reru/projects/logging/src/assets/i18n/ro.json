@@ -215,6 +215,7 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
+    "select-file-format": "Selectați formatul fișierului"
   }
 }

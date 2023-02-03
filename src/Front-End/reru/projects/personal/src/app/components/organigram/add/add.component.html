@@ -95,8 +95,8 @@
                                                                 <label for="file"
                                                                     class="col-form-label col-auto">{{'document.file' | translate}}:</label>
                                                                 <div class="col">
-                                                                    <input (change)="setFile($event)" class="form-control"
-                                                                        type="file" name="file" id="file">
+                                                                    <app-add-edit-media-file (handleFile)="setFile($event)" class="form-control vertical-center" type="file" name="file" id="file"
+                                                                    ></app-add-edit-media-file>
                                                                 </div>
                                                             </div>
                                                             <div class="row"

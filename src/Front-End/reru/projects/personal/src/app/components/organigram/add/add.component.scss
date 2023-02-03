@@ -4,3 +4,9 @@
     overflow-y: auto;
     overflow-x: hidden;
   } 
+
+  .vertical-center {
+    display: flex;
+    align-items: center;
+    margin: 10x 10px;
+  }
