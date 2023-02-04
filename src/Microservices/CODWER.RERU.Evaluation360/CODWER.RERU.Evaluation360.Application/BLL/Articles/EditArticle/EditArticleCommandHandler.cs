@@ -26,7 +26,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.EditArticle
 
         public async Task<int> Handle(EditArticleCommand request, CancellationToken cancellationToken)
         {
-            var article = await _appDbContext.CoreArticles.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
+            var article = await _appDbContext.Ev360Articles.FirstOrDefaultAsync(x => x.Id == request.Data.Id);
 
             _mapper.Map(request.Data, article);
 

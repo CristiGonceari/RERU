@@ -9,14 +9,14 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles
 {
     public static class GetAndFilterArticles
     {
-        public static IQueryable<ArticleCore> Filter(AppDbContext appDbContext, string name, ApplicationUser currentUser)
+        public static IQueryable<ArticleEv360> Filter(AppDbContext appDbContext, string name, ApplicationUser currentUser)
         {
-            var articles = appDbContext.CoreArticles
+            var articles = appDbContext.Ev360Articles
                 .Include(x => x.ArticleRoles)
                 .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
-            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Core);
+            var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation360);
 
             var currentUserProfile = appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)

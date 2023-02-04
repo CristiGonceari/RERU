@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.DeleteArticle
         public DeleteArticleCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Id)
-               .SetValidator(x => new ItemMustExistValidator<ArticleCore>(appDbContext, ValidationCodes.INVALID_ID,
+               .SetValidator(x => new ItemMustExistValidator<ArticleEv360>(appDbContext, ValidationCodes.INVALID_ID,
                    ValidationMessages.InvalidReference));
         }
     }

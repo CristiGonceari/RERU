@@ -451,6 +451,7 @@
     "delete-article": "Șterge articol",
     "article-title": "Titlul articolului",
     "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articolul",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
