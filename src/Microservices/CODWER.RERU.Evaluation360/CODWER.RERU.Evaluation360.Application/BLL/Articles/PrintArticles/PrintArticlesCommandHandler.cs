@@ -2,21 +2,21 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.DataTransferObjects.Articles;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.ServiceProvider;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities;
+using CODWER.RERU.Evaluation360.DataTransferObjects.Articles;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.PrintArticles
 {
     public class PrintArticlesCommandHandler : IRequestHandler<PrintArticlesCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IExportData<ArticleCore, ArticleCoreDto> _printer;
+        private readonly IExportData<ArticleEv360, ArticleEv360Dto> _printer;
         private readonly ICurrentApplicationUserProvider _currentApplication;
 
-        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<ArticleCore, ArticleCoreDto> printer, ICurrentApplicationUserProvider currentApplication)
+        public PrintArticlesCommandHandler(AppDbContext appDbContext, IExportData<ArticleEv360, ArticleEv360Dto> printer, ICurrentApplicationUserProvider currentApplication)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -29,7 +29,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.PrintArticles
 
             var articles = GetAndFilterArticles.Filter(_appDbContext, request.Name, currentUser);
 
-            var result = _printer.ExportTableSpecificFormat(new TableData<ArticleCore>
+            var result = _printer.ExportTableSpecificFormat(new TableData<ArticleEv360>
             {
                 Name = request.TableName,
                 Items = articles,

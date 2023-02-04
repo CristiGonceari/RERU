@@ -1031,6 +1031,7 @@
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
     "name": "Name",
+    "empty": "The field is required",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",

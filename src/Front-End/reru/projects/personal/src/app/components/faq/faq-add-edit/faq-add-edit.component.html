@@ -27,8 +27,10 @@
 														'faq.article-title' | translate }}</label>
 													<div class="col-lg-9 col-xl-9">
 														<input class="form-control form-control-lg form-control-solid"
-															name="name" type="text" formControlName="name" />
+															name="name" type="text" formControlName="name" [(ngModel)]="title"/>
 													</div>
+													<label class="col-xl-3 col-lg-3"></label>
+													<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
 												</div>
 												<div class="form-group row mb-3">
 													<label class="col-xl-3 col-lg-3 col-form-label">
@@ -73,6 +75,8 @@
 															(ready)="onReady($event)"
 															[ngModelOptions]="{standalone: true}"></ckeditor>
 													</div>
+													<label class="col-xl-3 col-lg-3"></label>
+													<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
 												</div>
 											</div>
 										</div>
@@ -81,7 +85,7 @@
 										<app-button class="btn mr-2" [value]="'button.back' | translate"
 											(handle)="backClicked()"></app-button>
 										<app-add-button class="btn" [value]="'button.confirm' | translate"
-											(handle)="saveArticle()" [disabled]="!editorData"></app-add-button>
+											(handle)="saveArticle()" [disabled]="!editorData || !title"></app-add-button>
 									</div>
 								</form>
 							</div>

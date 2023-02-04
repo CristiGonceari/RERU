@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.DataTransferObjects;
+using CODWER.RERU.Evaluation360.DataTransferObjects;
 
 namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 {

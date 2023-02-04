@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.DataTransferObjects;
+using CODWER.RERU.Evaluation360.DataTransferObjects;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 

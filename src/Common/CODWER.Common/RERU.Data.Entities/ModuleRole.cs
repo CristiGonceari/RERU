@@ -11,6 +11,7 @@ namespace RERU.Data.Entities
         {
             UserProfileModuleRoles = new HashSet<UserProfileModuleRole>();
             ArticleEvaluationRoles = new HashSet<ArticleEvaluationModuleRole>();
+            ArticleEv360Roles = new HashSet<ArticleEv360ModuleRole>();
             ArticleCoreRoles = new HashSet<ArticleCoreModuleRole>();
             TestTemplateModuleRoles = new HashSet<TestTemplateModuleRole>();
             ArticlePersonalRoles = new HashSet<ArticlePersonalModuleRole>();
@@ -25,6 +26,7 @@ namespace RERU.Data.Entities
 
         public List<ModuleRolePermission> Permissions { set; get; }
         public virtual ICollection<ArticleEvaluationModuleRole> ArticleEvaluationRoles { set; get; }
+        public virtual ICollection<ArticleEv360ModuleRole> ArticleEv360Roles { set; get; }
         public virtual ICollection<ArticleCoreModuleRole> ArticleCoreRoles { set; get; }
         public virtual ICollection<ArticlePersonalModuleRole> ArticlePersonalRoles { set; get; }
         public virtual ICollection<UserProfileModuleRole> UserProfileModuleRoles { set; get; }
