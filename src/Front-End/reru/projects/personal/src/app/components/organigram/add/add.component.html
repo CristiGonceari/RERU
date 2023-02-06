@@ -4,12 +4,9 @@
         <div class=" container ">
             <div class="card card-custom gutter-b">
                 <div class="card-body p-0">
-                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
-                        data-wizard-clickable="true">
                         <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
                             <div class="col">
-                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm"
-                                    autocomplete="off">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm" autocomplete="off">
                                     <div class="pb-5">
                                         <h3 class="mb-10 font-weight-bolder text-dark">
                                             {{'organigram.new-organigram' | translate}}</h3>
@@ -86,8 +83,7 @@
                                                     <div class="justify-content-center ml-auto border" style="width: 84%;">
                                                         <div class="mb-3 row justify-content-center">
                                                         <img class="img-thumbnail"
-                                                            src="../../../../assets/import-organigram.png"
-                                                            alt="functions-example">
+                                                            [src]="'assets/import-organigram.png'">
                                                     </div>
                                                     <div class="w-75 m-auto">
                                                         <form [formGroup]="uploadForm">
@@ -126,7 +122,6 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@
 			<div class="text-right border-top pt-10">
 				<app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
 				</app-button>
-				<app-add-button class="btn" (handle)="saveArticle()" [disabled]="!editorData || !title" [value]="'button.confirm' | translate">
+				<app-add-button class="btn" (handle)="saveArticle()" [disabled]="checkConfirmButton(editorData, title)" [value]="'button.confirm' | translate">
 				</app-add-button>
 			</div>
 		</div>

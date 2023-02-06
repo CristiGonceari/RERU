@@ -22,6 +22,8 @@ import { I18nService } from '../../../utils/services/i18n.service';
 })
 export class AddComponent extends EnterSubmitListener implements OnInit {
 
+  @ViewChild('instance', { static: false }) instance: NgbTypeahead;
+
   uploadForm: FormGroup;
   organigramForm: FormGroup;
 
@@ -30,17 +32,24 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
   departments: SelectItem[] = [];
   roles: SelectItem[] = [];
   selectedItem: SelectItem;
-  @ViewChild('instance', { static: false }) instance: NgbTypeahead;
+
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
+
   notification = {
     success: 'Success',
     error: 'Error',
-    validationServiceError: 'Validation service error!',
-    organigramUpdated: 'Organigram updated!',
-    serverError: 'Server error occured!',
-    anError: 'An error occured!',
-    organigramSuccesfulAdd: "You\'ve added organigram successfully!"
+    successAdd: 'Organigram has been successfully added',
+    errorAdd: 'Organigram was not added successfully',
+    successAddChart: 'Organigram item has been successfully added',
+    errorAddChart: 'Organigram item was not been added',
+    successEdit: 'Organigram has been edited successfully',
+    errorEdit: 'Organigram was not edited successfully',
+    successDelete: 'Organigram was deleted',
+    errorDelete: 'Organigram was not deleted',
+    successDeleteChart: 'Organigram item was deleted successfully',
+    errorDeleteChart: 'This organizational item cannot be deleted because it has sub-item/s',
+    serverWarn: 'Server error occured!'
   };
 
   constructor(private fb: FormBuilder,
@@ -48,11 +57,10 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngZone: NgZone,
-    public translate: I18nService,
     private notificationService: NotificationsService,
-    private referenceService: ReferenceService) {
+    private referenceService: ReferenceService,
+    public translate: I18nService) {
     super();
-    this.callback = this.submit;
   }
 
   ngOnInit(): void {
@@ -79,19 +87,32 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     forkJoin([
       this.translate.get('notification.success'),
       this.translate.get('notification.error'),
-      this.translate.get('validations.validations-service-error'),
-      this.translate.get('organigram.organigram-updated'),
-      this.translate.get('organigram.an-error'),
-      this.translate.get('organigram.server-error'),
-      this.translate.get('organigram.organigram-succesful-add'),
-    ]).subscribe(([success, error, validationServiceError, organigramUpdated, anError, serverError, organigramSuccesfulAdd]) => {
+      this.translate.get('organigram.succes-add-organigram'),
+      this.translate.get('organigram.error-add-organigram'),
+      this.translate.get('organigram.succes-add-chart-organigram'),
+      this.translate.get('organigram.error-add-chart-organigram'),
+      this.translate.get('organigram.succes-edit-organigram'),
+      this.translate.get('organigram.error-edit-organigram'),
+      this.translate.get('organigram.succes-delete-organigram'),
+      this.translate.get('organigram.error-delete-organigram'),
+      this.translate.get('organigram.succes-delete-chart-organigram'),
+      this.translate.get('organigram.error-delete-chart-organigram'),
+      this.translate.get('organigram.server-warn')
+
+    ]).subscribe(([success, error, successAdd, errorAdd, successAddChart, errorAddChart, successEdit, errorEdit, successDelete, errorDelete, successDeleteChart, errorDeleteChart, serverWarn]) => {
       this.notification.success = success;
       this.notification.error = error;
-      this.notification.validationServiceError = validationServiceError;
-      this.notification.organigramUpdated = organigramUpdated;
-      this.notification.anError = anError;
-      this.notification.serverError = serverError;
-      this.notification.organigramSuccesfulAdd = organigramSuccesfulAdd;
+      this.notification.successAdd = successAdd;
+      this.notification.errorAdd = errorAdd;
+      this.notification.successAddChart = successAddChart;
+      this.notification.errorAddChart = errorAddChart;
+      this.notification.successEdit = successEdit;
+      this.notification.errorEdit = errorEdit;
+      this.notification.successDelete = successDelete;
+      this.notification.errorDelete = errorDelete;
+      this.notification.successDeleteChart = successDeleteChart;
+      this.notification.errorDeleteChart = errorDeleteChart;
+      this.notification.serverWarn = serverWarn;
     });
   }
 
@@ -102,18 +123,18 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
   submit(): void {
     this.organigramService.add(this.parseOrganizationalChart(this.organigramForm.value)).subscribe((response: ApiResponse<any>) => {
       if (response.success) {
-        this.notificationService.success(this.notification.success, this.notification.organigramUpdated, NotificationUtil.getDefaultConfig());
         this.organigramForm.get('organizationalChartId').patchValue(response.data);
         this.head(this.organigramForm.value);
         return;
       }
-      this.notificationService.warn(this.notification.error, this.notification.anError, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
+      });
       if (error.status === 400) {
-        this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
         return;
       }
-      this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -128,13 +149,13 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     if (data.createType == 1) {
       this.organigramService.head(this.parseHead(data)).subscribe(response => {
         this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
-        this.notificationService.success(this.notification.success, this.notification.organigramSuccesfulAdd, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
       }, (error) => {
         if (error.status === 400) {
-          this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.warn(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
           return;
         }
-        this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
       });
     } else if (data.createType == 2) {
       const form = new FormData();
@@ -147,14 +168,23 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
         const file = new File([blob], fileName, { type: res.body.type });
         saveAs(file);
 
-        this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
-        this.notificationService.success(this.notification.success, this.notification.organigramSuccesfulAdd, NotificationUtil.getDefaultMidConfig());
+        if (fileName.slice(-6).includes("Succes")) {
+         
+          this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
+          this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
+
+        } else if (fileName.slice(-5).includes("Error")) {
+          
+          this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+          this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+        }
       }, error => {
         if (error.status === 400) {
-          this.notificationService.warn(this.notification.error, this.notification.validationServiceError, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+
           return;
         }
-        this.notificationService.error(this.notification.serverError, null, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
       });
     }
   }

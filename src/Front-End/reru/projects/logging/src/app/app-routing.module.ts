@@ -10,7 +10,11 @@ import { PermissionRouteGuard } from '@erp/shared';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
-	{ path: '', component: DashboardComponent },
+	{ 
+		path: '', 
+		component: DashboardComponent , 
+		canActivate: [PermissionRouteGuard]
+	},
 	{
 		path: 'faq',
 		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
