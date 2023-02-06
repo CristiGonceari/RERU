@@ -129,7 +129,6 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
       }
       this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
-      });
       if (error.status === 400) {
         this.notificationService.warn(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
         return;
