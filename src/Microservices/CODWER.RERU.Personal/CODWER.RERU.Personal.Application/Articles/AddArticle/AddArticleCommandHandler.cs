@@ -29,13 +29,13 @@ namespace CODWER.RERU.Personal.Application.Articles.AddArticle
         {
             var storage = await _storageFileService.AddFile(request.FileDto);
 
-            if (storage == "") storage = null;
+            if (string.IsNullOrEmpty(storage)) storage = null;
 
             var newArticle = new ArticleDto()
             {
                 Name = request.Name,
                 Content = request.Content,
-                MediaFileId = storage,
+                MediaFileId = storage ?? string.Empty,
             };
 
             var articleToCreate = _mapper.Map<Article>(newArticle);

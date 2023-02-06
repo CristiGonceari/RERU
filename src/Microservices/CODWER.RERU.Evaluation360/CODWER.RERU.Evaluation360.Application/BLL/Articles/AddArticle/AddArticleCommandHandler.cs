@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.AddArticle
             var storage = await _storageFileService.AddFile(request.FileDto);
             //var storage = "0000000-0000000";
 
-            if (storage == "") storage = null;
+            if (string.IsNullOrEmpty(storage)) storage = null;
 
             var newArticle = new ArticleEv360Dto()
             {
