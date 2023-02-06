@@ -9,7 +9,6 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReferenceService } from '../../../utils/services/reference.service';
-import { ArticleModel } from '../../../utils/models/article.model';
 
 @Component({
   selector: 'app-faq-add-edit',
@@ -35,7 +34,7 @@ export class FaqAddEditComponent implements OnInit {
   yes: string;
 
   articleForm: FormGroup;
-  fileId: string = null;
+  fileId: string;
   attachedFile: File;
   fileType: string = null;
   disableBtn: boolean = false;
@@ -128,10 +127,7 @@ export class FaqAddEditComponent implements OnInit {
       request.append('FileDto.File', this.attachedFile);
       request.append('FileDto.Type', this.fileType);
     }
-
-    if(this.articleForm.value.name){
-      request.append('Name', this.articleForm.value.name);
-    }
+    request.append('Name', this.articleForm.value.name);
     request.append('Content', this.editorData);
 
     for (let i = 0; i < tagsArr.length; i++) {
