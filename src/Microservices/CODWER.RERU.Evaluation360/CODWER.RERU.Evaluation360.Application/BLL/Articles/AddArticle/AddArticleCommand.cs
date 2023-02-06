@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CODWER.RERU.Core.DataTransferObjects;
 using CODWER.RERU.Evaluation360.Application.Permissions;
+using CODWER.RERU.Evaluation360.DataTransferObjects;
 using CVU.ERP.Module.Application.Attributes;
 using CVU.ERP.StorageService.Models;
 using MediatR;

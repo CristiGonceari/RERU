@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using CVU.ERP.Common.Pagination;
 using MediatR;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using CODWER.RERU.Core.DataTransferObjects.Articles;
 using CODWER.RERU.Evaluation360.Application.BLL.Articles.GetArticle;
 using CODWER.RERU.Evaluation360.Application.BLL.Articles.DeleteArticle;
 using CODWER.RERU.Evaluation360.Application.BLL.Articles.GetArticles;
@@ -11,6 +10,7 @@ using CODWER.RERU.Evaluation360.Application.BLL.Articles.AddArticle;
 using CODWER.RERU.Evaluation360.Application.BLL.Articles.EditArticle;
 using CODWER.RERU.Evaluation360.Application.BLL.Articles.PrintArticles;
 using CODWER.RERU.Evaluation360.API.Config;
+using CODWER.RERU.Evaluation360.DataTransferObjects.Articles;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -19,13 +19,13 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
     public class ArticleController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<ArticleCoreDto> GetArticle([FromRoute] int id)
+        public async Task<ArticleEv360Dto> GetArticle([FromRoute] int id)
         {
             return await Sender.Send(new GetArticleQuery { Id = id });
         }
 
         [HttpGet]
-        public async Task<PaginatedModel<ArticleCoreDto>> GetArticles([FromQuery] GetArticlesQuery query)
+        public async Task<PaginatedModel<ArticleEv360Dto>> GetArticles([FromQuery] GetArticlesQuery query)
         {
             return await Sender.Send(query);
         }

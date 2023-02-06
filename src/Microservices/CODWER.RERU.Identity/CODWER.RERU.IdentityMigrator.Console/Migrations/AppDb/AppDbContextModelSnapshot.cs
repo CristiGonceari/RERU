@@ -149,6 +149,85 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("ArticleCoreModuleRoles");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ev360Articles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360ModuleRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ArticleEv360ModuleRoles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
                 {
                     b.Property<int>("Id")
@@ -7692,6 +7771,25 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360ModuleRole", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.ArticleEv360", "Article")
+                        .WithMany("ArticleRoles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
+                        .WithMany("ArticleEv360Roles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluationModuleRole", b =>
                 {
                     b.HasOne("RERU.Data.Entities.ArticleEvaluation", "Article")
@@ -9760,6 +9858,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("ArticleRoles");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360", b =>
+                {
+                    b.Navigation("ArticleRoles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
                 {
                     b.Navigation("ArticleRoles");
@@ -9822,6 +9925,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.ModuleRole", b =>
                 {
                     b.Navigation("ArticleCoreRoles");
+
+                    b.Navigation("ArticleEv360Roles");
 
                     b.Navigation("ArticleEvaluationRoles");
 

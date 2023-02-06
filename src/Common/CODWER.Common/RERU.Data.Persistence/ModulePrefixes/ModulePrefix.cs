@@ -4,6 +4,7 @@
     {
         public static string Core => "P00";
         public static string Evaluation => "P03";
+        public static string Evaluation360 => "P05";
         public static string Personal => "P02";
     }
 }

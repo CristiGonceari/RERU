@@ -436,7 +436,8 @@
     "succes-delete-chart-organigram": "Sub-elementul organigramei a fost șters cu succes",
     "error-delete-chart-organigram": "Acest element nu poate fi șters deoarece are sub-element/e adaugat/e",
     "succes-delete-organigram": "Organigrama a fost ștearsă cu succes",
-    "error-delete-organigram": "Organigrama nu a fost ștearsă"
+    "error-delete-organigram": "Organigrama nu a fost ștearsă",
+    "server-warn": "A apărut o eroare de Server!"
   },
   "guide": {
     "title": "Ghidul Utilizatorului",
@@ -1036,6 +1037,7 @@
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",
     "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",

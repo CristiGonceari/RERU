@@ -29,6 +29,8 @@ namespace CODWER.RERU.Evaluation.Application.Articles.AddArticle
         {
             var storage = await _storageFileService.AddFile(request.FileDto);
 
+            if (storage == "") storage = null;
+
             var newArticle = new ArticleEvaluationDto()
             {
                 Name = request.Name,

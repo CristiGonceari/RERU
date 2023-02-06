@@ -25,6 +25,7 @@ export class EditComponent extends EnterSubmitListener implements OnInit {
     error: 'Error',
     successEdit: 'Organigram has been edited successfully',
     errorEdit: 'Organigram was not edited successfully',
+    serverWarn: 'Server error occured!'
   };
 
   constructor(private fb: FormBuilder,
@@ -66,12 +67,13 @@ export class EditComponent extends EnterSubmitListener implements OnInit {
       this.translate.get('notification.error'),
       this.translate.get('organigram.succes-edit-organigram'),
       this.translate.get('organigram.error-edit-organigram'),
-
-    ]).subscribe(([success, error, successEdit, errorEdit]) => {
+      this.translate.get('organigram.server-warn')
+    ]).subscribe(([success, error, successEdit, errorEdit, serverWarn]) => {
       this.notification.success = success;
       this.notification.error = error;
       this.notification.successEdit = successEdit;
       this.notification.errorEdit = errorEdit;
+      this.notification.serverWarn = serverWarn;
     });
   }
 
@@ -88,7 +90,7 @@ export class EditComponent extends EnterSubmitListener implements OnInit {
       this.notificationService.success(this.notification.success, this.notification.successEdit, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       if (error.status === 400) {
-        this.notificationService.error(this.notification.error, this.notification.errorEdit, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.error, this.notification.serverWarn, NotificationUtil.getDefaultMidConfig());
         return;
       }
       this.notificationService.error(this.notification.error, this.notification.errorEdit, NotificationUtil.getDefaultMidConfig());

@@ -35,7 +35,7 @@ export class FaqAddEditComponent implements OnInit {
   yes: string;
 
   articleForm: FormGroup;
-  fileId: string;
+  fileId: string = null;
   attachedFile: File;
   fileType: string = null;
   disableBtn: boolean = false;
@@ -128,7 +128,10 @@ export class FaqAddEditComponent implements OnInit {
       request.append('FileDto.File', this.attachedFile);
       request.append('FileDto.Type', this.fileType);
     }
-    request.append('Name', this.articleForm.value.name);
+
+    if(this.articleForm.value.name){
+      request.append('Name', this.articleForm.value.name);
+    }
     request.append('Content', this.editorData);
 
     for (let i = 0; i < tagsArr.length; i++) {
@@ -166,7 +169,7 @@ export class FaqAddEditComponent implements OnInit {
     request.append('Data.Name', this.articleForm.value.name);
     request.append('Data.Content', this.editorData);
 
-    if(this.fileId == "null" || this.fileId == null) this.fileId = '';
+    if(this.fileId == "null" || this.fileId == null) this.fileId = null;
     request.append('Data.MediaFileId', this.fileId);
 
     for (let i = 0; i < tagsArr.length; i++) {

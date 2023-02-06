@@ -17,9 +17,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.DeleteArticle
 
         public async Task<Unit> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
-            var articleToDelete = await _appDbContext.CoreArticles.FirstAsync(x => x.Id == request.Id);
+            var articleToDelete = await _appDbContext.Ev360Articles.FirstAsync(x => x.Id == request.Id);
 
-            _appDbContext.CoreArticles.Remove(articleToDelete);
+            _appDbContext.Ev360Articles.Remove(articleToDelete);
 
             await _appDbContext.SaveChangesAsync();
 

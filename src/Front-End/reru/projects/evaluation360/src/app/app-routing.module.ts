@@ -18,7 +18,7 @@ const routes: Routes = [
 		path: 'evaluation', 
 		loadChildren: () => import('./components/evaluations/evaluation.module').then(m => m.EvaluationModule),
 		canActivate: [AuthenticationGuard]
-	 },
+	},
 	{
 		path: 'faq',
 		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),

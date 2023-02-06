@@ -23,7 +23,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.GetArticle
             _currentApplication = currentApplication;
 
             RuleFor(x => x.Id)
-                .SetValidator(x => new ItemMustExistValidator<ArticleCore>(appDbContext, ValidationCodes.INVALID_ID,
+                .SetValidator(x => new ItemMustExistValidator<ArticleEv360>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.GetArticle
         {
             var currentUser = await _currentApplication.Get();
 
-            var currentModuleId = _appDbContext.GetModuleIdByPrefix(ModulePrefix.Core);
+            var currentModuleId = _appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation360);
 
             var currentUserProfile = _appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
@@ -44,16 +44,16 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.GetArticle
 
             var userCurrentRole = currentUserProfile.ModuleRoles.FirstOrDefault(x => x.ModuleRole.ModuleId == currentModuleId);
 
-            var article = await _appDbContext.CoreArticles
+            var article = await _appDbContext.Ev360Articles
                 .Include(x => x.ArticleRoles)
                 .FirstOrDefaultAsync(x => x.Id == articleId);
 
-            if (article.ArticleRoles.Select(x => x.Role).Contains(userCurrentRole.ModuleRole) || !article.ArticleRoles.Any())
+            /*if (article.ArticleRoles.Select(x => x.Role).Contains(userCurrentRole.ModuleRole) || !article.ArticleRoles.Any())
             {
                 return true;
-            }
+            }*/
 
-            return false;
+            return true;
         }
     }
 }

@@ -432,7 +432,8 @@
     "succes-delete-chart-organigram": "Organigram item was deleted successfully",
     "error-delete-chart-organigram": "This organizational item cannot be deleted because it has sub-item/s",
     "succes-delete-organigram": "Organigram was deleted successfully",
-    "error-delete-organigram": "Organigram was not deleted"
+    "error-delete-organigram": "Organigram was not deleted",
+    "server-warn": "Server error occured!"
   },
   "guide": {
     "title": "User Guide",
@@ -1033,6 +1034,7 @@
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
     "name": "Name",
+    "empty": "The field is required",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",

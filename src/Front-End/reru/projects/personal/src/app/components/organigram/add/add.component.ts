@@ -49,10 +49,8 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
     errorDelete: 'Organigram was not deleted',
     successDeleteChart: 'Organigram item was deleted successfully',
     errorDeleteChart: 'This organizational item cannot be deleted because it has sub-item/s',
+    serverWarn: 'Server error occured!'
   };
-
-  title: string;
-  description: string;
 
   constructor(private fb: FormBuilder,
     private organigramService: OrganigramService,
@@ -98,9 +96,10 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
       this.translate.get('organigram.succes-delete-organigram'),
       this.translate.get('organigram.error-delete-organigram'),
       this.translate.get('organigram.succes-delete-chart-organigram'),
-      this.translate.get('organigram.error-delete-chart-organigram')
+      this.translate.get('organigram.error-delete-chart-organigram'),
+      this.translate.get('organigram.server-warn')
 
-    ]).subscribe(([success, error, successAdd, errorAdd, successAddChart, errorAddChart, successEdit, errorEdit, successDelete, errorDelete, successDeleteChart, errorDeleteChart]) => {
+    ]).subscribe(([success, error, successAdd, errorAdd, successAddChart, errorAddChart, successEdit, errorEdit, successDelete, errorDelete, successDeleteChart, errorDeleteChart, serverWarn]) => {
       this.notification.success = success;
       this.notification.error = error;
       this.notification.successAdd = successAdd;
@@ -113,6 +112,7 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
       this.notification.errorDelete = errorDelete;
       this.notification.successDeleteChart = successDeleteChart;
       this.notification.errorDeleteChart = errorDeleteChart;
+      this.notification.serverWarn = serverWarn;
     });
   }
 
@@ -129,12 +129,6 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
       }
       this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
-      forkJoin([
-        this.translate.get('modal.error'),
-        this.translate.get('organigram.error-add-organigram'),
-      ]).subscribe(([title, description1]) => {
-        this.title = title;
-        this.description = description1;
       });
       if (error.status === 400) {
         this.notificationService.warn(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
@@ -157,18 +151,11 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
         this.ngZone.run(() => this.router.navigate(['../', this.organigramForm.get('organizationalChartId').value], { relativeTo: this.route }));
         this.notificationService.success(this.notification.success, this.notification.successAdd, NotificationUtil.getDefaultMidConfig());
       }, (error) => {
-        forkJoin([
-          this.translate.get('modal.error'),
-          this.translate.get('organigram.error-add-organigram'),
-        ]).subscribe(([title, description1]) => {
-          this.title = title;
-          this.description = description1;
-        });
         if (error.status === 400) {
-          this.notificationService.success(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.warn(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
           return;
         }
-          this.notificationService.success(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
       });
     } else if (data.createType == 2) {
       const form = new FormData();
@@ -192,19 +179,12 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
           this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
         }
       }, error => {
-        forkJoin([
-          this.translate.get('modal.error'),
-          this.translate.get('organigram.error-add-organigram'),
-        ]).subscribe(([title, description1]) => {
-          this.title = title;
-          this.description = description1;
-        });
         if (error.status === 400) {
-          this.notificationService.success(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+          this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
 
           return;
         }
-        this.notificationService.success(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
+        this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
       });
     }
   }
