@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
 
         public async Task<List<DepartmentRoleUserProfileDto>> Handle(GetDepartmentRoleContentCalculatedQuery request, CancellationToken cancellationToken)
         {
-            var positions = _appDbContext.UserProfiles
+            var users = _appDbContext.UserProfiles
                 .Include(p => p.Contractor)
                 .Include(p => p.Department)
                 .Include(p => p.Role)
@@ -32,15 +32,15 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentR
 
             if (request.Type == 1)
             {
-                positions = positions.Where(p => p.Department.Id == request.Id);
+                users = users.Where(p => p.Department.Id == request.Id);
             }
             else if (request.Type == 2)
             {
-                positions = positions.Where(p => p.Role.Id == request.Id);
+                users = users.Where(p => p.Role.Id == request.Id);
 
             }
 
-            var items = _mapper.Map<List<DepartmentRoleUserProfileDto>>(positions);
+            var items = _mapper.Map<List<DepartmentRoleUserProfileDto>>(users);
 
             return items;
         }
