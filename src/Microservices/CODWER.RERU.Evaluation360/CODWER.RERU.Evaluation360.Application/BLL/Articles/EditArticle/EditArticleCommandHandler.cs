@@ -36,10 +36,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Articles.EditArticle
 
                 article.MediaFileId = addFile;
             }
-            else
-            {
-                article.MediaFileId = request.Data.MediaFileId;
-            }
 
             await _appDbContext.SaveChangesAsync();
 
