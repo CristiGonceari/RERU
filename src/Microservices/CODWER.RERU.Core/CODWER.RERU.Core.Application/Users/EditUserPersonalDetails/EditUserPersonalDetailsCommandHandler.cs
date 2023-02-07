@@ -38,7 +38,7 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
                 {
                     var userName = $"{request.Data.LastName} {request.Data.FirstName} {request.Data.FatherName}";
 
-                    var identifier = await identityService.Update(userName, request.Data.Email, userProfile.Email, request.Data.EmailNotification);
+                    var identifier = await identityService.Update(userName, request.Data.Email, userProfile.Email, true);
 
                     if (!string.IsNullOrEmpty(identifier))
                     {

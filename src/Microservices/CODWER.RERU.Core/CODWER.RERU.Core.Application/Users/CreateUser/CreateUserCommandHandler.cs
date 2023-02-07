@@ -74,7 +74,7 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             foreach (var identityService in _identityServices)
             {
-                var identifier = await identityService.Create(userProfile, request.EmailNotification, password);
+                var identifier = await identityService.Create(userProfile, true, password);
 
                 if (!string.IsNullOrEmpty(identifier))
                 {
