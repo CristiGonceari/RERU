@@ -596,7 +596,7 @@
       "code": "Cod",
       "no": "Nu",
       "type": "Tipul",
-      "search-funciton": "Selectează funcție",
+      "search-funciton": "Selectează funcția",
       "last-function": "Ultima funcție"
     },
     "position": {
@@ -608,7 +608,7 @@
       "department": "Departament",
       "probation-day-period": "Durata stagierii",
       "work-place": "Locul de muncă (adresa)",
-      "search-position": "Selectează rol"
+      "search-position": "Selectează rolul"
     },
     "contractor-type": {
       "title": "Tip angajat",

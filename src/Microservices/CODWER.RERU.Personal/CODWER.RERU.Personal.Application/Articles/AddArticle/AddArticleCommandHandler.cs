@@ -35,7 +35,7 @@ namespace CODWER.RERU.Personal.Application.Articles.AddArticle
             {
                 Name = request.Name,
                 Content = request.Content,
-                MediaFileId = storage ?? string.Empty,
+                MediaFileId = storage,
             };
 
             var articleToCreate = _mapper.Map<Article>(newArticle);

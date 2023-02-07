@@ -23,7 +23,9 @@ namespace CODWER.RERU.Evaluation360.Application.References.GetDepartmentsValue
 
         public async Task<List<SelectItem>> Handle(GetDepartmentsValuesQuery request, CancellationToken cancellationToken)
         {
-            var departments = _appDbContext.Departments.AsQueryable();
+            var departments = _appDbContext.Departments
+                                    .OrderBy( x=> x.Name)
+                                    .AsQueryable();
 
             return await departments.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
         }
