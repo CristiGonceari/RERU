@@ -58,24 +58,25 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
 
         private Dictionary<string, string> GetDictionary(Evaluation evaluation)
         {
+            decimal? m1 =  0, m2 = 0, m3 = 0, m4 = 0, pb = 0, mea = 0, mf = 0;
+
             List<decimal?> listForM1 = new() {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
-            decimal? m1 = listForM1.Average();
+            m1 = listForM1.Average();
 
             List<decimal?> listForM2 = new() {evaluation.Question6, evaluation.Question7, evaluation.Question8};
-            decimal? m2 = listForM2.Average();
+            m2 = listForM2.Average();
 
             List<decimal?> listForM3 = new() {evaluation.Score1, evaluation.Score2, evaluation.Score3, evaluation.Score4, evaluation.Score5};
-            decimal? m3 = listForM3.Average();
+            m3 = listForM3.Average();
 
             List<decimal?> listForPb = new() {evaluation.Question9, evaluation.Question10, evaluation.Question11, evaluation.Question12};
-            decimal? pb = listForPb.Average();
+            pb = listForPb.Average();
 
             List<decimal?> listForM4 = new() {evaluation.Question13, pb};
-            decimal? m4 = listForM4.Average();
+            m4 = listForM4.Average();
 
             List<decimal?> listForMea = new() {m1, m2, m3, m4};
-            decimal? mea = listForMea.Average();
-            decimal? mf;
+            mea = listForMea.Average();
 
             if (evaluation.PartialEvaluationScore != null)
             {
@@ -86,6 +87,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Services
             {
                 mf = mea;
             }
+
+            Console.WriteLine("m1 = " + m1 + " m2 = " + m2 + " m3 = " + m3 + " m4 = " + m4 + " pb = " + pb + " mea = " + mea);
 
             var myDictionary = new Dictionary<string, string>();
 
