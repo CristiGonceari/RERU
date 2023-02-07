@@ -86,7 +86,7 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
 
             if (request.DepartmentId.HasValue)
             {
-                items = items.Where(x => x.Department.Id == request.DepartmentId);
+                items = items.Where(x => x.Department.ColaboratorId == request.DepartmentId);
             }
 
             if (request.RoleId.HasValue)
@@ -141,10 +141,6 @@ namespace CODWER.RERU.Evaluation360.Application.UserProfiles.GetUserProfiles
                 if (request.UserStatusEnum == UserStatusEnum.Employee)
                 {
                     items = items.Where(x => x.DepartmentColaboratorId != null && x.RoleColaboratorId != null);
-                }
-                else if (request.UserStatusEnum == UserStatusEnum.Candidate)
-                {
-                    items = items.Where(x => x.DepartmentColaboratorId == null || x.RoleColaboratorId == null);
                 }
             }
 
