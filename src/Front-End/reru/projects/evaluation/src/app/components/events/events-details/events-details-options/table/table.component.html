@@ -5,30 +5,33 @@
   <table class="datatable table font-size-lg" style="overflow: visible" *ngIf="!isLoading">
     <thead class="text-uppercase text-muted">
       <tr *ngIf="users">
-        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
-        <th scope="col">{{'login.idnp' | translate}}</th>
-        <th scope="col">{{'position.name' | translate}}</th>
+        <th scope="col" name="users">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
+        <th scope="col" name="users">{{'login.idnp' | translate}}</th>
+        <th scope="col" name="users">{{'position.name' | translate}}</th>
+        <th scope="col" style="display: none;" name="users"></th>
       </tr>
       <tr *ngIf="testTemplates">
-        <th scope="col">{{'events.name' | translate}}</th>
-        <th scope="col" style="width: 120px;" class="text-left">{{'tests.questions-to-use-count' | translate}}</th>
-        <th scope="col" style="width: 100px;" class="text-left">{{'tests.time-min' | translate}}</th>
-        <th  class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
+        <th scope="col" name="testTemplates">{{'events.name' | translate}}</th>
+        <th scope="col" style="width: 120px;" class="text-left" name="testTemplates">{{'tests.questions-to-use-count' | translate}}</th>
+        <th scope="col" style="width: 100px;" class="text-left" name="testTemplates">{{'tests.time-min' | translate}}</th>
+        <th  class="col-1 text-center" style="width: 48px" name="testTemplates">{{'button.actions' | translate}}</th>
       </tr>
       <tr *ngIf="locations">
-        <th scope="col">{{'locations.name' | translate}}</th>
-        <th scope="col" style="width: 300px;" class="text-left">{{'locations.address' | translate}}</th>
-        <th scope="col" style="width: 200px;" class="text-left">{{'questions.type' | translate}}</th>
-        <th scope="col" style="width: 100px;" class="text-left">{{'locations.places' | translate}}</th>
-        <th class="col-1 text-center" style="width: 48px">{{'button.actions' | translate}}</th>
+        <th scope="col" name="locations">{{'locations.name' | translate}}</th>
+        <th scope="col" style="width: 300px;" class="text-left" name="locations">{{'locations.address' | translate}}</th>
+        <th scope="col" style="width: 200px;" class="text-left" name="locations">{{'questions.type' | translate}}</th>
+        <th scope="col" style="width: 100px;" class="text-left" name="locations">{{'locations.places' | translate}}</th>
+        <th class="col-1 text-center" style="width: 48px" name="locations">{{'button.actions' | translate}}</th>
       </tr>
-      <tr *ngIf="evaluators">
-        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
-        <th scope="col"> {{'login.idnp' | translate}}</th>
+      <tr *ngIf="evaluators" >
+        <th scope="col" name="evaluators">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
+        <th scope="col" name="evaluators"> {{'login.idnp' | translate}}</th>
+        <th scope="col" style="display: none;" name="evaluators"></th>
       </tr>
       <tr *ngIf="persons">
-        <th scope="col">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
-        <th scope="col">{{'login.idnp' | translate}}</th>
+        <th scope="col" name="evaluators">{{'events.name' | translate}} ({{'user-profile.npp' | translate}})</th>
+        <th scope="col" name="persons">{{'login.idnp' | translate}}</th>
+        <th scope="col" style="display: none;" name="persons"></th>
       </tr>
     </thead>
     <tbody class="datatable-body" *ngIf="fields.length && locations">

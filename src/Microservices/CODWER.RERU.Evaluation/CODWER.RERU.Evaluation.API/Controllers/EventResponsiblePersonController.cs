@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.API.Config;
+﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.AssignResponsiblePersonToEvent;
 using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetEventResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetListOfEventResponsiblePerson;
 using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetNoAssignedResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.PrintEventResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssignedResponsiblePersonNotifications;
 using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.UnassignResponsiblePersonFromEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
-using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.SendToAssignedResponsiblePersonNotifications;
-using CODWER.RERU.Evaluation.Application.EventResponsiblePersons.GetListOfEventResponsiblePerson;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -54,6 +56,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<int>> GetListOfEventResponsiblePerson([FromQuery] GetListOfEventResponsiblePersonQuery query)
         {
             return await Mediator.Send(query);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintEventLocations([FromBody] PrintEventResponsiblePersonsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

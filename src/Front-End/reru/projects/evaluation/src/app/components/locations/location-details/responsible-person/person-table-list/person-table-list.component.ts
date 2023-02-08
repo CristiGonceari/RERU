@@ -7,6 +7,8 @@ import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagina
 import { AttachToLocationService } from 'projects/evaluation/src/app/utils/services/attach-to-location/attach-to-location.service';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { LocationService } from 'projects/evaluation/src/app/utils/services/location/location.service';
+import { PrintTableService } from 'projects/evaluation/src/app/utils/services/print-table/print-table.service';
+import { LocationResponsiblePersonService } from 'projects/evaluation/src/app/utils/services/location-responsible-persons/location-responsible-person.service';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 
@@ -31,11 +33,26 @@ export class PersonTableListComponent implements OnInit {
 		public translate: I18nService,
 		private modalService: NgbModal,
 		private route: ActivatedRoute,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+		private printTableService: PrintTableService,
+		private locationResponsiblePersonService: LocationResponsiblePersonService
 	) { }
 
 	ngOnInit(): void {
 		this.subsribeForParams();
+	}
+
+	getHeaders(title: string){
+		let headersDto = [
+			'fullName',
+			'idnp'
+		];
+
+		let filters = {
+			locationId: this.locationId
+		}
+
+		this.printTableService.getHeaders(this.locationResponsiblePersonService, title, headersDto, filters, document);
 	}
 
 	list(data: any = {}) {

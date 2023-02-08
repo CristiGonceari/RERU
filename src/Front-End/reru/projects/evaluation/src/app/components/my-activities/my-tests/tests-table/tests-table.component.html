@@ -38,12 +38,12 @@
       <table *ngIf="!isLoading" for="kt_datatable" class="datatable table" style="overflow: visible">
         <thead class="text-uppercase text-muted">
           <tr>
-            <th scope="col" class="colored">
-              <b>{{'dashboard.date-status' | translate}}</b>
+            <th scope="col" name="column" class="colored">
+             {{'dashboard.date-status' | translate}}
             </th>
-            <th scope="col">{{'dashboard.test' | translate}}</th>
-            <th scope="col">{{'events.event' | translate}}</th>
-            <th scope="col">{{'dashboard.score' | translate}} /
+            <th scope="col" name="column">{{'dashboard.test' | translate}}</th>
+            <th scope="col" name="column">{{'events.event' | translate}}</th>
+            <th scope="col" name="column">{{'dashboard.score' | translate}} /
               {{'dashboard.min-score' | translate}}</th>
             <th *ngIf="testRowList.length" scope="col">{{'button.actions' | translate}}</th>
           </tr>

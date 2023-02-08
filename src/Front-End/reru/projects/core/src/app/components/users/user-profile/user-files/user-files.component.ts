@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { ConfirmModalComponent, UploadFileModalComponent } from '@erp/shared';
+import { ConfirmModalComponent, UploadFileModalComponent, PrintModalComponent } from '@erp/shared';
 import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination-summary.model';
 import { UserFilesModel } from 'projects/core/src/app/utils/models/user-files.model';
 import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
@@ -28,6 +28,10 @@ export class UserFilesComponent implements OnInit {
   docTitle: string;
   docDescription: string;
 	pagination: PaginationSummary = new PaginationSummary();
+
+  headersToPrint = [];
+	printTranslates: any[];
+	canDownloadFile: boolean = false;
 
   constructor(
     private userFilesService: UserFilesService,
@@ -160,4 +164,59 @@ export class UserFilesComponent implements OnInit {
       })
     }
   }
+
+  getTitle(): string {
+    return document.getElementById('title').innerHTML;
+  }
+
+  getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = [ '-', 'name'];
+         
+		for (let i = 1; i <= headersHtml.length - 2; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+		}
+
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2
+		};
+
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i = 0; i < this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.canDownloadFile = true;
+		this.myFiles.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
+				saveAs(file);
+				this.canDownloadFile = false;
+			}
+		}, () => this.canDownloadFile = false);
+	}
 }

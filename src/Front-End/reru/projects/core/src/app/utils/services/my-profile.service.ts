@@ -22,4 +22,11 @@ export class MyProfileService extends AbstractService {
 		return this.http.post(`${this.coreUrl}/${this.routeUrl}/file`, params );
 	}
 
+	print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
 }

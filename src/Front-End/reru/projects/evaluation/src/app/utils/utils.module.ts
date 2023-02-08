@@ -83,7 +83,6 @@ import { SearchEmployeeFunctionComponent } from './components/search-employee-fu
     SearchDepartmentComponent,
     SearchRoleComponent,
     SearchEmployeeFunctionComponent
-
   ]
 })
 export class UtilsModule { }

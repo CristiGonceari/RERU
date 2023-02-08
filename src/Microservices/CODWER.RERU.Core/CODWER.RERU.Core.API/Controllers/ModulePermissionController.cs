@@ -1,9 +1,11 @@
-﻿using CVU.ERP.Common.Pagination;
+﻿using CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions;
+using CODWER.RERU.Core.Application.ModulePermissions.PrintModulePermissions;
 using CODWER.RERU.Core.DataTransferObjects.ModulePermissions;
+using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -19,6 +21,16 @@ namespace CODWER.RERU.Core.API.Controllers
         {
             var mediatorResponse = await Mediator.Send(query);
             return mediatorResponse;
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintModulePermissions([FromBody] PrintModulePermissionsCommand command)
+        {
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles
 {
     public class GetModuleRolesQueryHandler : BaseHandler, IRequestHandler<GetModuleRolesQuery, PaginatedModel<ModuleRoleRowDto>>
     {
-
         private readonly IPaginationService _paginationService;
 
         public GetModuleRolesQueryHandler(ICommonServiceProvider commonServiceProvider, IPaginationService paginationService) : base(commonServiceProvider)
