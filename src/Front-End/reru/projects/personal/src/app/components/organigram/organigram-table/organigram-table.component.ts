@@ -81,9 +81,9 @@ export class OrganigramTableComponent implements OnInit {
   deleteOrganigram(id: number): void {
     this.organigramService.delete(id).subscribe(() => {
       this.list();
-      this.notificationService.success(this.notification.successDelete, this.notification.successDelete, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.success, this.notification.successDelete, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
-      this.notificationService.error(this.notification.errorDelete, this.notification.errorDelete, NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.errorDelete, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

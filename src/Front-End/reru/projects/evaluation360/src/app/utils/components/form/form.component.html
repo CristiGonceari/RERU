@@ -599,15 +599,14 @@
     <div class="form-group row">
           <label for="finalEvaluationQualification" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluation-final-calificative' | translate }}</label>
           <div class="col-lg-5 col-12 pb-lg-0 pb-7">
-            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm"
-                                      (handleChange)="handleFinalQualificationChange($event)">
+            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm">
             </app-qualification-select>
           </div>
           <div class="col-lg-5 col-12 d-flex align-items-center">
             <input [disabled]="true" #finalEvalNum 
             [ngClass]="{'is-valid': isValid(evaluationForm, 'finalEvaluationQualification'),
               'is-invalid': isInvalidPattern(evaluationForm, 'finalEvaluationQualification') || isInvalidRequired(evaluationForm, 'finalEvaluationQualification') }"
-            (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" min="0" max="4" pattern="[\d.?]+" maxlength="3" required>
+             class="form-control" type="number" placeholder="0.00" min="0" max="4" pattern="[\d.?]+" maxlength="3" required>
           </div>
     </div>
 

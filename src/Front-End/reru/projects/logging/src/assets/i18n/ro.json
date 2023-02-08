@@ -64,6 +64,7 @@
   },
   "notification": {
     "title": {
+      "logs": "Loguri",
       "success": "Succes",
       "error": "Eroare",
       "warning": "Atenție",
@@ -74,7 +75,8 @@
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
         "delete": "A fost sters cu succes!",
-        "login": "Logare cu succes!"
+        "login": "Logare cu succes!",
+        "delete-log": "Logurile ai fost șterse!"
       },
       "error": "A avut loc o eroare!"
     },

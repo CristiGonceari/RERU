@@ -42,9 +42,21 @@
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
+        "delete-evaluation": "Prof. evaluation was deleted successfully!",
+        "ev-was": "Prof. evaluation was ",
+        "sent": "sent",
+        "saved": "saved",
+        "accepted": "accepted",
+        "rejected": "rejected",
+        "countersigned": "countersigned",
+        "with-succes": " successfully!",
+        "evaluated-known": "The evaluated got acquainted with the final results successfully!",
         "login": "Login successfully!"
       },
-      "error": "There has been an error!"
+      "error": "There has been an error!",
+      "warning": "Something went wrong!",
+      "validation-error": "Validation error!",
+      "server-error": "Server error occured!"
     },
     "required": "The field is required"
   },
