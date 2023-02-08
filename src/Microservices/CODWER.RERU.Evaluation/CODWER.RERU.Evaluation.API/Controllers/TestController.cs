@@ -1,14 +1,14 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
+using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
 using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
+using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.CountMyEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
+using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
@@ -19,43 +19,46 @@ using CODWER.RERU.Evaluation.Application.Tests.GetTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestSettings;
-using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
-using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
-using CODWER.RERU.Evaluation.Application.Tests.StartTest;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
-using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
-using CVU.ERP.Common.Pagination;
-using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
-using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.CountMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPolls;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPollsCount;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyPolls;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests;
 using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
+using CODWER.RERU.Evaluation.Application.Tests.SetConfirmationToStartTest;
 using CODWER.RERU.Evaluation.Application.Tests.SetTestResult;
 using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
+using CODWER.RERU.Evaluation.Application.Tests.StartTest;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
+using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
+using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using CVU.ERP.Module.Application.ImportProcessServices;
-using RERU.Data.Entities.Enums;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluatedTests;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -316,6 +319,50 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         [HttpPut("print-tests")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintTestsPdf([FromBody] PrintTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-my-polls")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintMyPolls([FromBody] PrintMyPollsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-my-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintMyTests([FromBody] PrintMyTestsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-my-evaluations")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintMyEvaluations([FromBody] PrintMyEvaluationsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-my-evaluated-tests")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintMyEvaluatedTests([FromBody] PrintMyEvaluatedTestsCommand command)
         {
             var result = await Mediator.Send(command);
 

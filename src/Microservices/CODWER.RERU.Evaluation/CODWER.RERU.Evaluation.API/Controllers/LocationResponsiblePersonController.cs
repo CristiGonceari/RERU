@@ -2,9 +2,11 @@
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.AssignResponsiblePersonToLocation;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetLocationResponsiblePersons;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.GetNoAssinedResponsiblePersons;
+using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.PrintLocationResponsiblePersons;
 using CODWER.RERU.Evaluation.Application.LocationResponsiblePersons.UnassignResponsiblePersonFromLocation;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -40,6 +42,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             var command = new UnassignResponsiblePersonFromLocationCommand { LocationId = locationId, UserProfileId = personId };
 
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> Print([FromBody] PrintLocationResponsiblePersonsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

@@ -5,9 +5,11 @@ using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.EventLocations.AssignLocationToEvent;
 using CODWER.RERU.Evaluation.Application.EventLocations.GetEventLocations;
 using CODWER.RERU.Evaluation.Application.EventLocations.GetNoAssignedLocations;
+using CODWER.RERU.Evaluation.Application.EventLocations.PrintEventLocations;
 using CODWER.RERU.Evaluation.Application.EventLocations.UnassignLocationFromEvent;
 using CODWER.RERU.Evaluation.DataTransferObjects.Locations;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
@@ -39,6 +41,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var command = new UnassignLocationFromEventCommand { EventId = eventId, LocationId = locationId };
             return await Mediator.Send(command);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintEventLocations([FromBody] PrintEventLocationsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

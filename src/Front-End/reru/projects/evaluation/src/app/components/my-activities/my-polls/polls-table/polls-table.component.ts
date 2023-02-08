@@ -5,6 +5,11 @@ import { MyPollStatusEnum } from '../../../../utils/enums/my-poll-status.enum';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { Events } from 'projects/evaluation/src/app/utils/models/calendar/events';
+import { saveAs } from 'file-saver';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { I18nService } from '../../../../utils/services/i18n/i18n.service';
+import { PrintModalComponent } from '@erp/shared';
+import { forkJoin } from 'rxjs';
  
 @Component({
   selector: 'app-polls-table',
@@ -24,11 +29,83 @@ export class PollsTableComponent implements OnInit {
   selectedDay;
   displayDate;
 
-  constructor(private testService: TestService, private router: Router, private route: ActivatedRoute,
+  downloadFile: boolean = false;
+	headersToPrint = [];
+	printTranslates: any[];
+  filters: any = {};
+
+  constructor(private testService: TestService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+	  public translate: I18nService,
     ) { }
 
   ngOnInit(): void {
   }
+
+  
+  getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByName('column');
+		let headersDto = [
+      'testTemplateName', 
+      'eventName',
+      'testStatus', 
+      'votedTime', 
+      'startTime',
+      'endTime', 
+    ];
+    
+		for (let i = 0; i < headersHtml.length - 8; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+		}
+    
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+      date: this.selectedDay,
+      ...this.filters
+		};
+    
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel'),
+      		this.translate.get('print.select-file-format')
+		]).subscribe(
+			(items) => {
+				for (let i = 0; i < this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+    
+		this.testService.printMyPolls(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(1).slice(0, -2);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
+	} 
 
   getListByDate(data: any = {}): void {
     this.isLoading = true;

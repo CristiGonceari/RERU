@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './my-evaluated-tests.component.html',
   styleUrls: ['./my-evaluated-tests.component.scss']
 })
-export class MyEvaluatedTestsComponent {}
+export class MyEvaluatedTestsComponent {  
+  constructor(){}
+  
+  getTitle(): string {
+   return document.getElementById('title').innerHTML;
+  }
+}

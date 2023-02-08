@@ -8,6 +8,7 @@ using CODWER.RERU.Evaluation.Application.SolicitedPositions.EditSolicitedPositio
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.AddMySolicitedPosition;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.DeleteMySolicitedPosition;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.EditMySolicitedPosition;
+using CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPositions.PrintMySolicitedPositions;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.PrintSolicitedPositions;
 using CODWER.RERU.Evaluation.Application.SolicitedPositions.UserSolicitedTests.GetUserSolicitedTests;
 using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
@@ -55,6 +56,17 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             var query = new GetMySolicitedPositionQuery { Id = id };
             return await Mediator.Send(query);
+        }
+
+        [HttpPut("print-my")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintMySolicitedTests([FromBody] PrintMySolicitedPositionsCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
 
         [HttpPost("add-my")]

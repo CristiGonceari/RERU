@@ -1,18 +1,24 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 	<div class="card card-custom gutter-b erp-shared-desktop-wide">
 		<div class="card-header flex-wrap border-0 py-5">
-			<div class="card-title font-weight-bolder">{{'solicited-test.my-solicited-tests' | translate}}</div>
+			<div class="card-title font-weight-bolder" id="title">{{'solicited-test.my-solicited-tests' | translate}}</div>
 			<div class="card-toolbar m-0 d-md-flex d-none">
-				<app-add-button class="btn" [value]="'solicited-position.request-position' | translate"
-				  [routerLink]="['../add-solicited-position']"></app-add-button>
-			  </div>
+				<erp-shared-export-button class="mr-3 p-1" (click)="solicitedTestTable.getHeaders(getTitle())">
+					{{'button.export' | translate}}
+				</erp-shared-export-button>
+				<app-add-button class="btn" [value]="'solicited-position.request-position' | translate" [routerLink]="['../add-solicited-position']">
+				</app-add-button>
+			</div>
 			<div class="card-toolbar m-0 d-md-none d-flex w-100">
-				<app-add-button class="btn" width="100%" [value]="'solicited-position.request-position' | translate"
-				  [routerLink]="['../add-solicited-position']"></app-add-button>
-			  </div>
+				<erp-shared-export-button class="mr-3 p-1" (click)="solicitedTestTable.getHeaders(getTitle())">
+					{{'button.export' | translate}}
+				</erp-shared-export-button>
+				<app-add-button class="btn" width="100%" [value]="'solicited-position.request-position' | translate" [routerLink]="['../add-solicited-position']">
+				</app-add-button>
+			</div>
 		</div>
 		<div class="card-body">
-			<app-solicited-tests-table></app-solicited-tests-table>
+			<app-solicited-tests-table #solicitedTestTable></app-solicited-tests-table>
 		</div>
 	</div>
 </div>

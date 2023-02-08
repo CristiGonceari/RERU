@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractService, AppSettingsService } from '@erp/shared';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +32,11 @@ export class EventTestTemplateService extends AbstractService {
   getTestTemplateByEventsIds(params): Observable<any> {
     return this.http.get(`${this.baseUrl}/EventTestTemplate/by-event`, { params });
   }
+
+  print(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

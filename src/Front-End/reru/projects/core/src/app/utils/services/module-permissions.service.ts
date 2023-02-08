@@ -19,4 +19,11 @@ export class ModulePermissionsService extends AbstractService {
   get(id: number, data: any): Observable<Response<Paginated<PermissionModel>>> {
 		return this.http.get<Response<Paginated<PermissionModel>>>(`${this.coreUrl}/${this.routeUrl}?ModuleId=${id}`, { params: data });
 	}
+
+  print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }
