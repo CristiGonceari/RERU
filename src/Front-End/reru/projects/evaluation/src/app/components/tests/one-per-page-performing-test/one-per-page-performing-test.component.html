@@ -74,7 +74,7 @@
                 </app-loading-spinner>
                 <div *ngIf="!isLoadingMedia" class="mb-7 bg-gray-100 text-center rounded py-7 px-2 position-relative shadow-xs">
                     <span class="text-muted position-absolute left-0 top-0 pt-2 pl-2">{{ 'questions.question' | translate }} {{questionIndex}}</span>
-                    <p *ngIf="questionUnit?.question?.length < 100" class="d-xl-block d-none question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p>
+                    <p *ngIf="questionUnit?.question?.length < 100" class="d-xl-block d-none question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml" style="white-space: pre-line"></p>
                     <p *ngIf="questionUnit?.question?.length > 100" class="text-justify d-xl-block d-none question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p>
                     <p class="d-xl-none d-block text-justify question-container font-size-h6" [innerHTML]="questionUnit.question | safeHtml"></p>
                     <!-- <p class="question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p> -->
