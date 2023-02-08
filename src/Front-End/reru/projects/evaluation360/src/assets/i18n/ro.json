@@ -42,9 +42,21 @@
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
         "delete": "A fost șters cu succes!",
+        "delete-evaluation": "Fișa a fost ștearsă cu succes!",
+        "ev-was": "Fișa a fost ",
+        "sent": "trimisă",
+        "saved": "salvată",
+        "accepted": "acceptată",
+        "rejected": "respinsă",
+        "countersigned": "contrasemnată",
+        "with-succes": " cu succes!",
+        "evaluated-known": "Evaluatul a luat cunoștință cu rezultatele finale cu succes!",
         "login": "Logare cu succes!"
       },
-      "error": "A avut loc o eroare!"
+      "error": "A avut loc o eroare!",
+      "warning": "Ceva nu a mers bine!",
+      "validation-error": "Eroare de validare!",
+      "server-error": "Eroare de Server!"
     },
     "required": "Câmpul este obligatoriu"
   },

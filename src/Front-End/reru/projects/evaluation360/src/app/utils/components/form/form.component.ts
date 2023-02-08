@@ -145,7 +145,7 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // after DOM has loaded assign read-only values
-    this.finalEvalNum.nativeElement.value = this.evaluation.finalEvaluationQualification;
+    this.Mf$.subscribe((value) => this.finalEvalNum.nativeElement.value = !isNaN(value) ? value.toFixed(2) : 0) ;
     this.focusEvaluatedCommentsArea();
     this.subscribeForSanctionChanges();
   }
@@ -288,14 +288,12 @@ export class FormComponent implements OnInit, AfterViewInit {
     ]).subscribe(([mea]) => {
       if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
         const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
-        this.handleFinalQualificationChange(((mea + Mep) / 2).toFixed(2));
         this.handleFinalQualificationChange(Math.round((mea + Mep) / 2), true);
         this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
         this.Mf.next((mea + Mep) / 2);
         return;
       }
 
-      this.handleFinalQualificationChange(mea.toFixed(2));
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);
@@ -335,6 +333,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   handleFinalQualificationChange(value: number | string, isInputChange: boolean = false): void {
+    console.log("value: ", value)
     if (isInputChange) {
       switch(true) {
         case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('4');break;
