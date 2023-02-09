@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationModel } from 'projects/evaluation/src/app/utils/models/pagination.model';
 import { EventService } from 'projects/evaluation/src/app/utils/services/event/event.service';
-import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
 import { TestingLocationTypeEnum } from 'projects/evaluation/src/app/utils/enums/testing-location-type.enum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
@@ -11,6 +10,13 @@ import { ConfirmModalComponent } from 'projects/erp-shared/src/lib/modals/confir
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { forkJoin } from 'rxjs';
 import { AttachUserModalComponent } from 'projects/evaluation/src/app/utils/components/attach-user-modal/attach-user-modal.component';
+import { PrintTableService } from 'projects/evaluation/src/app/utils/services/print-table/print-table.service';
+
+import { EventUsersService } from 'projects/evaluation/src/app/utils/services/event-users/event-users.service';
+import { EventLocationsService } from 'projects/evaluation/src/app/utils/services/event-locations/event-locations.service';
+import { EventEvaluatorsService } from 'projects/evaluation/src/app/utils/services/event-evaluators/event-evaluators.service';
+import { EventResponsiblePersonsService } from 'projects/evaluation/src/app/utils/services/event-responsible-persons/event-responsible-persons.service';
+import { EventTestTemplateService } from 'projects/evaluation/src/app/utils/services/event-test-template/event-test-template.service';
 
 @Component({
   selector: 'app-table',
@@ -45,9 +51,15 @@ export class TableComponent implements OnInit {
     private route: ActivatedRoute,
     public translate: I18nService,
     private router: Router,
-    private eventTestTemplateService: EventTestTemplateService,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
+    private printTableService: PrintTableService,
+    private eventUserService: EventUsersService,
+    private eventLocationService: EventLocationsService,
+    private eventEvaluatorService: EventEvaluatorsService,
+    private eventResponsiblePersonsService: EventResponsiblePersonsService,
+    private eventTestTemplateService: EventTestTemplateService,
+
   ) { }
 
   ngOnInit(): void {
@@ -300,6 +312,63 @@ export class TableComponent implements OnInit {
       this.list();
       this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, (err) => { this.list(); this.isLoading = false; });
+  }
+
+  printTable(title: string) {
+    let filters = {eventId:  this.importedId};
+    switch (this.category) {
+      case "users": {
+        let headersDto = [
+          'fullName',
+			    'idnp',
+          'candidatePositionNames'
+        ];
+
+        this.printTableService.getHeaders(this.eventUserService, title, headersDto, filters, document, "users");
+        break;
+      }
+      case "test-types": {
+        let headersDto = [
+          'name',
+          'questionCount',
+          'duration'
+        ];
+
+        this.printTableService.getHeaders(this.eventTestTemplateService, title, headersDto, filters, document, "testTemplates");
+        break;
+      }
+      case "locations": {
+        let headersDto = [
+          'name',
+          'address',
+          'type',
+          'places'
+        ];
+
+        this.printTableService.getHeaders(this.eventLocationService, title, headersDto, filters, document, "locations");
+        break;
+      }
+      case "evaluators": {
+        let headersDto = [
+          'fullName',
+			    'idnp'
+        ];
+
+        this.printTableService.getHeaders(this.eventEvaluatorService, title, headersDto, filters, document, "locations");
+        break;
+      }
+      case "persons": {
+        let headersDto = [
+          'fullName',
+			    'idnp'
+        ];
+
+        this.printTableService.getHeaders(this.eventResponsiblePersonsService, title, headersDto, filters, document, "evaluators");
+        break;
+      }
+      default:
+        break;
+    }
   }
 
 }

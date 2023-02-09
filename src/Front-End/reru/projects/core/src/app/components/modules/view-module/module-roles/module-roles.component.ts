@@ -6,9 +6,10 @@ import { PaginationSummary } from 'projects/core/src/app/utils/models/pagination
 import { RoleModel } from 'projects/core/src/app/utils/models/role.model';
 import { ModuleRolesService } from 'projects/core/src/app/utils/services/module-roles.service';
 import { NotificationUtil } from 'projects/core/src/app/utils/util/notification.util';
-import { ConfirmModalComponent, PermissionCheckerService } from '@erp/shared';
+import { ConfirmModalComponent, PermissionCheckerService, PrintModalComponent } from '@erp/shared';
 import { forkJoin } from 'rxjs';
 import { I18nService } from 'projects/core/src/app/utils/services/i18n.service';
+import { saveAs } from 'file-saver';
 
 @Component({
 	selector: 'app-module-roles',
@@ -26,6 +27,10 @@ export class ModuleRolesComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+
+	headersToPrint = [];
+	printTranslates: any[];
+	downloadFile: boolean;
 
 	constructor(
 		private roleService: ModuleRolesService,
@@ -49,6 +54,62 @@ export class ModuleRolesComponent implements OnInit {
 				this.getRoles();
 			}
 		});
+	}
+
+	getTitle(): string {
+		return document.getElementById('title').innerHTML;
+	}
+
+	getHeaders(name: string): void {
+		this.translateData();
+		let headersHtml = document.getElementsByTagName('th');
+		let headersDto = ['name', 'type', 'isAssignByDefault'];
+         console.log("headrs:", headersHtml)
+		for (let i = 0; i <= headersHtml.length - 2; i++) {
+			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
+		}
+
+		let printData = {
+			tableName: name,
+			fields: this.headersToPrint,
+			orientation: 2,
+			moduleId: this.moduleId
+		};
+
+		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
+		modalRef.componentInstance.tableData = printData;
+		modalRef.componentInstance.translateData = this.printTranslates;
+		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
+		this.headersToPrint = [];
+	}
+
+	translateData(): void {
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		forkJoin([
+			this.translate.get('print.print-table'),
+			this.translate.get('print.print-msg'),
+			this.translate.get('print.sorted-by'),
+			this.translate.get('button.cancel')
+		]).subscribe(
+			(items) => {
+				for (let i = 0; i < this.printTranslates.length; i++) {
+					this.printTranslates[i] = items[i];
+				}
+			}
+		);
+	}
+
+	printTable(data): void {
+		this.downloadFile = true;
+		this.roleService.print(data).subscribe(response => {
+			if (response) {
+				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+				const blob = new Blob([response.body], { type: response.body.type });
+				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
+				saveAs(file);
+				this.downloadFile = false;
+			}
+		}, () => this.downloadFile = false);
 	}
 
 	getRoles(data: any = {}): void {

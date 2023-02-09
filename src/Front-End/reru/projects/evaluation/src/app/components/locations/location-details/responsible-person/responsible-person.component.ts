@@ -25,4 +25,8 @@ export class ResponsiblePersonComponent implements OnInit {
       this.locationId = params.id;
     });
 	}
+
+  getTitle(): string {
+		return document.getElementById('title').innerHTML;
+	}
 }

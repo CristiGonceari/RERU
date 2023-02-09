@@ -21,7 +21,6 @@ export class ApplicationUserService extends AbstractService {
 	constructor(private readonly appSettingsService: AppSettingsService,
     			private readonly http: HttpClient) {
     super(appSettingsService);
-   console.log('==> application user service constructor');
   }
 
 	loadCurrentUser(data?: AuthResponse): Promise<boolean> {
@@ -37,7 +36,6 @@ export class ApplicationUserService extends AbstractService {
 			.toPromise()
 			.then(
 				(response: Response<ApplicationUserModel>) => {
-					console.log('==> application user service /me response', response);
 					if (response.data && response.data.isAuthenticated) {
 						localStorage.setItem(this.userProfileKey, JSON.stringify(response.data));
 						this.userSubject.next(response.data);

@@ -24,26 +24,11 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.GetModulePermissions
         {
             var moduleRoles = AppDbContext.ModulePermissions.Where(m => m.ModuleId == request.ModuleId);
 
-            moduleRoles = Filter(moduleRoles, request);
+            moduleRoles = GetAndFilterModulePermissions.Filter(moduleRoles, request.Code, request.Description);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<ModulePermission, ModulePermissionRowDto>(moduleRoles, request);
 
             return paginatedModel;
-        }
-
-        private IQueryable<ModulePermission> Filter(IQueryable<ModulePermission> items, GetModulePermissionsQuery request)
-        {
-            if (!string.IsNullOrEmpty(request.Code))
-            {
-                items = items.Where(p => p.Code.ToLower().Contains(request.Code.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(request.Description))
-            {
-                items = items.Where(p => p.Description.ToLower().Contains(request.Description.ToLower()));
-            }
-
-            return items;
         }
     }
 }

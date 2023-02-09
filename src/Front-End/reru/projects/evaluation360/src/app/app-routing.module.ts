@@ -4,7 +4,7 @@ import { LocalizeRouterModule, LocalizeParser, LocalizeRouterSettings, CacheMech
 import { Location } from '@angular/common';
 import { ManualLoaderFactory } from './utils/services/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationCallbackComponent, AuthenticationGuard, Exception404Component, Exception500Component } from '@erp/shared';
+import { AuthenticationCallbackComponent, AuthenticationGuard, Exception404Component, Exception500Component, PermissionRouteGuard } from '@erp/shared';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -14,7 +14,17 @@ const routes: Routes = [
 		component: DashboardComponent,
 		canActivate: [AuthenticationGuard]
 	},
-	{ path: 'evaluation', loadChildren: () => import('./components/evaluations/evaluation.module').then(m => m.EvaluationModule) },
+	{ 
+		path: 'evaluation', 
+		loadChildren: () => import('./components/evaluations/evaluation.module').then(m => m.EvaluationModule),
+		canActivate: [AuthenticationGuard]
+	},
+	{
+		path: 'faq',
+		loadChildren: () => import('./components/faq/faq.module').then(m => m.FAQModule),
+		data: { permission: 'P05000001' },
+		canActivate: [PermissionRouteGuard, AuthenticationGuard]
+	},
 	{ path: '500', component: Exception500Component, pathMatch: 'full' },
 	{ path: '404', component: Exception404Component, pathMatch: 'full' },
 	{ path: '**', redirectTo: '404' }

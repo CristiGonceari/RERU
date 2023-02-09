@@ -23,4 +23,8 @@ export class LocationsListComponent implements OnInit {
       this.id = params.id;
     });
 	}
+
+  getTitle(): string {
+		return document.getElementById('title').innerHTML;
+	}
 }

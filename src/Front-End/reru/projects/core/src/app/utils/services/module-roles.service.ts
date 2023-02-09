@@ -43,4 +43,11 @@ export class ModuleRolesService extends AbstractService {
 	selectModuleRole(id: number): Observable<Response<any>> {
 		return this.http.get<any>(`${this.coreUrl}/${this.routeUrl}/${id}/select-items`);
 	}
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

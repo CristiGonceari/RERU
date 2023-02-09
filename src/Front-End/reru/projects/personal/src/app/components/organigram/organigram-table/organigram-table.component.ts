@@ -6,6 +6,9 @@ import { OrganigramService } from '../../../utils/services/organigram.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { DeleteOrganigramModalComponent } from '../../../utils/modals/delete-organigram-modal/delete-organigram-modal.component';
 import { ObjectUtil } from '../../../utils/util/object.util';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
+
 
 @Component({
   selector: 'app-organigram-table',
@@ -16,12 +19,24 @@ export class OrganigramTableComponent implements OnInit {
   isLoading: boolean = true;
   organigrams: any[] = [];
   pagedSummary: PagedSummary = new PagedSummary();
+
+  notification = {
+    success: 'Success',
+    error: 'Error',
+    successDelete: 'Organigram was deleted',
+    errorDelete: 'Organigram was not deleted',
+  };
+
   constructor(private organigramService: OrganigramService,
               private notificationService: NotificationsService,
+              public translate: I18nService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.list();
+    this.translateData();
+
+    this.subscribeForTranslateChanges();
   }
 
   list(data :any = {}): void {
@@ -39,6 +54,25 @@ export class OrganigramTableComponent implements OnInit {
     });
   }
 
+  translateData(): void {
+    forkJoin([
+      this.translate.get('notification.success'),
+      this.translate.get('notification.error'),
+      this.translate.get('organigram.succes-delete-organigram'),
+      this.translate.get('organigram.error-delete-organigram'),
+
+    ]).subscribe(([success, error, successDelete, errorDelete]) => {
+      this.notification.success = success;
+      this.notification.error = error;
+      this.notification.successDelete = successDelete;
+      this.notification.errorDelete = errorDelete;
+    });
+  }
+
+  subscribeForTranslateChanges(): void {
+    this.translate.change.subscribe(() => this.translateData());
+  }
+  
   openOrganigramDeleteModal(id: number) {
     const modalRef = this.modalService.open(DeleteOrganigramModalComponent);
     modalRef.result.then(() => this.deleteOrganigram(id), () => {});
@@ -47,9 +81,9 @@ export class OrganigramTableComponent implements OnInit {
   deleteOrganigram(id: number): void {
     this.organigramService.delete(id).subscribe(() => {
       this.list();
-      this.notificationService.success('Success', 'Organigram deleted!', NotificationUtil.getDefaultConfig());
+      this.notificationService.success(this.notification.success, this.notification.successDelete, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
-      this.notificationService.error('Error', 'There was an error deleting the organigram!', NotificationUtil.getDefaultConfig());
+      this.notificationService.error(this.notification.error, this.notification.errorDelete, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

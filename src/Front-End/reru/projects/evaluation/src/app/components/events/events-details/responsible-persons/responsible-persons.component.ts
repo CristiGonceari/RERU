@@ -22,4 +22,8 @@ export class ResponsiblePersonsComponent implements OnInit {
       this.id = params.id;
     });
   }
+
+  getTitle(): string {
+		return document.getElementById('title').innerHTML;
+	}
 }

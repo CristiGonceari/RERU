@@ -4,11 +4,17 @@
   <div class="card card-custom gutter-b">
     <div class="card-header flex-wrap border-0 py-5">
       <div class="w-100 d-flex justify-content-between align-items-center flex-lg-row flex-column">
-        <div class="card-title">{{'files.title' | translate}}</div>
+        <div class="card-title" id="title">{{'files.title' | translate}}</div>
         <div class="card-toolbar d-lg-none d-flex w-100">
+          <erp-shared-export-button class="mr-2" (click)="getHeaders(getTitle())">
+            {{'button.export' | translate}}
+          </erp-shared-export-button>
           <app-add-button class="btn" width="100%" [value]="'files.upload-doc' | translate" (click)="openUploadDocumentModal()"></app-add-button>
         </div>
         <div class="card-toolbar d-lg-flex d-none">
+          <erp-shared-export-button class="mr-2" (click)="getHeaders(getTitle())">
+            {{'button.export' | translate}}
+          </erp-shared-export-button>
           <app-add-button class="btn" [value]="'files.upload-doc' | translate" (click)="openUploadDocumentModal()"></app-add-button>
         </div>
       </div>

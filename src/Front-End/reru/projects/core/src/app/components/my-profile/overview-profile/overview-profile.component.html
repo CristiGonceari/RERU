@@ -51,7 +51,10 @@
 
   <div class="card card-custom mb-7">
     <div class="card-header flex-wrap border-0 py-5">
-      <div class="card-title">{{'user-profile.available-modules' | translate}}</div>
+      <div class="card-title" id="title">{{'user-profile.available-modules' | translate}}</div>
+      <erp-shared-export-button class="mr-2" (click)="getHeaders(getTitle())">
+        {{'button.export' | translate}}
+      </erp-shared-export-button>
     </div>
     <div class="card-body">
       <div class="table-responsive-xl">

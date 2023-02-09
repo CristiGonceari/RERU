@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
   <mat-form-field>
-    <mat-select placeholder="Select your option" [(ngModel)]="selectedFormat"
+    <mat-select placeholder="{{translateData[4]}}" [(ngModel)]="selectedFormat"
       (change)="selectedFormat = $event.target.value">
       <mat-option *ngFor="let item of exportTableFormat" [value]="item.value">
         <svg *ngIf="item.value == 0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

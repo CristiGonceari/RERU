@@ -23,7 +23,7 @@ export interface EvaluationModel {
 	partialEvaluationPeriodUpTo: string | Date;
 	partialEvaluationScore: number;
 	qualifierPartialEvaluations: number;
-	sanctionAppliedEvaluationCourse: number;
+	sanctionApplied: number;
 	dateSanctionApplication: string | Date;
 	dateLiftingSanction: string | Date;
 	qualificationEvaluationObtained2YearsPast: number;
@@ -114,7 +114,7 @@ export class EvaluationClass implements EvaluationModel {
 	partialEvaluationPeriodUpTo: string | Date;
 	partialEvaluationScore: number;
 	qualifierPartialEvaluations: number;
-	sanctionAppliedEvaluationCourse: number;
+	sanctionApplied: number;
 	dateSanctionApplication: string | Date;
 	dateLiftingSanction: string | Date;
 	qualificationEvaluationObtained2YearsPast: number;
@@ -191,7 +191,7 @@ export class EvaluationClass implements EvaluationModel {
 			this.partialEvaluationPeriodUpTo = evaluation.partialEvaluationPeriodUpTo;
 			this.partialEvaluationScore = evaluation.partialEvaluationScore || null;
 			this.qualifierPartialEvaluations = +evaluation.qualifierPartialEvaluations;
-			this.sanctionAppliedEvaluationCourse = +evaluation.sanctionAppliedEvaluationCourse;
+			this.sanctionApplied = +evaluation.sanctionApplied;
 			this.dateSanctionApplication = evaluation.dateSanctionApplication;
 			this.dateLiftingSanction = evaluation.dateLiftingSanction;
 			this.qualificationEvaluationObtained2YearsPast = +evaluation.qualificationEvaluationObtained2YearsPast || null;

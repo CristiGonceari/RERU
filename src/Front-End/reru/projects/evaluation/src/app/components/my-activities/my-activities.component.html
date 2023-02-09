@@ -2,7 +2,7 @@
 </app-page-title>
 
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'"
-    [colorClass]="'text-primary'">
+	[colorClass]="'text-primary'">
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
@@ -23,13 +23,15 @@
 							<p class="font-weight-bolder font-size-h5 text-dark-75">
 								{{user.lastName}} {{ user.firstName }}
 							</p>
-							<p class="text-muted" *ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
+							<p class="text-muted"
+								*ngIf="user.departmentColaboratorId != null && user.roleColaboratorId != null">
 								<span class="mr-2">
 									<svg-icon key="user" [width]="16" [height]="16"></svg-icon>
 								</span>
 								{{'statuses.employee' | translate}}
 							</p>
-							<p class="text-muted" *ngIf="user.departmentColaboratorId == null || user.roleColaboratorId == null">
+							<p class="text-muted"
+								*ngIf="user.departmentColaboratorId == null || user.roleColaboratorId == null">
 								<span class="mr-2">
 									<svg-icon key="user" [width]="16" [height]="16"></svg-icon>
 								</span>
@@ -40,7 +42,8 @@
 					<div class="py-9">
 						<div class="navi navi-bold navi-hover navi-active navi-link-rounded">
 							<div class="navi-item mb-2">
-								<a [routerLink]="['my-solicited-position']" routerLinkActive="active" class="navi-link py-4">
+								<a [routerLink]="['my-solicited-position']" routerLinkActive="active"
+									class="navi-link py-4">
 									<i class="fas fa-poll-h icon-md mr-3"></i>
 									<span class="navi-text font-size-lg">
 										{{ "solicited-test.my-solicited-tests" | translate }}
@@ -55,14 +58,14 @@
 									</span>
 								</a>
 							</div>
-							<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
+							<div class="navi-item mb-2">
 								<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
 									<i class="far fa-question-circle icon-md mr-3"></i>
 									<span class="navi-text font-size-lg">
 										{{ 'evaluations.evaluations' | translate }}
 									</span>
 								</a>
-							</div> 
+							</div>
 							<div class="navi-item mb-2">
 								<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4">
 									<i class="fas fa-poll-h icon-md mr-3"></i>
@@ -71,8 +74,9 @@
 									</span>
 								</a>
 							</div>
-							<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
-								<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4">
+							<div class="navi-item mb-2">
+								<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active"
+									class="navi-link py-4">
 									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
 									<span class="navi-text font-size-lg">
 										{{ 'dashboard.my-evaluated-tests' | translate }}
@@ -87,37 +91,41 @@
 		<div class="flex-row-fluid ml-lg-8">
 			<div class="mobile-container-menu">
 				<div class="card card-custom mb-7 w-100">
-				  <div class="card-body px-2 pb-4 overflow-auto">
-					<div class="d-flex navi navi-bold navi-hover navi-active navi-link-rounded">
-					  <div class="navi-item mb-2">
-						<a [routerLink]="['my-solicited-position']" routerLinkActive="active" class="navi-link py-4 pr-3 h-100">
-							<i class="fas fa-poll-h icon-md mr-3"></i>
-						</a>
-					  </div>
-					  <div class="navi-item mb-2">
-						<a [routerLink]="['my-tests']" routerLinkActive="active" class="navi-link py-4 pr-3">
-							<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
-						</a>
-					  </div>
-					  <div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
-						<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4 pr-3">
-							<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
-						</a>
-					  </div>
-					  <div class="navi-item mb-2">
-						<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4 pr-3 h-100">
-							<i class="fas fa-poll-h icon-md mr-3"></i>
-						</a>
-					  </div>
-					  <div class="navi-item" *ngIf="user.userStatusEnum == 1">
-						<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active" class="navi-link py-4 pr-3">
-							<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
-						</a>
-					  </div>
+					<div class="card-body px-2 pb-4 overflow-auto">
+						<div class="d-flex navi navi-bold navi-hover navi-active navi-link-rounded">
+							<div class="navi-item mb-2">
+								<a [routerLink]="['my-solicited-position']" routerLinkActive="active"
+									class="navi-link py-4 pr-3 h-100">
+									<i class="fas fa-poll-h icon-md mr-3"></i>
+								</a>
+							</div>
+							<div class="navi-item mb-2">
+								<a [routerLink]="['my-tests']" routerLinkActive="active" class="navi-link py-4 pr-3">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							</div>
+							<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
+								<a [routerLink]="['my-evaluations']" routerLinkActive="active"
+									class="navi-link py-4 pr-3">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							</div>
+							<div class="navi-item mb-2">
+								<a [routerLink]="['my-polls']" routerLinkActive="active"
+									class="navi-link py-4 pr-3 h-100">
+									<i class="fas fa-poll-h icon-md mr-3"></i>
+								</a>
+							</div>
+							<div class="navi-item" *ngIf="user.userStatusEnum == 1">
+								<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active"
+									class="navi-link py-4 pr-3">
+									<i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+								</a>
+							</div>
+						</div>
 					</div>
-				  </div>
 				</div>
-			  </div>
+			</div>
 			<router-outlet></router-outlet>
 		</div>
 	</div>

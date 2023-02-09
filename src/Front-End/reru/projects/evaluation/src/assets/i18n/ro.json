@@ -547,7 +547,8 @@
     "mandatory": "Obligatoriu",
     "success-delete-mgs": "Documentul a fost sters cu succes",
     "want-to-del-msg": "Doriti sa stergeti acest document",
-    "document-application": "Gestionarea documentelor"
+    "document-application": "Gestionarea documentelor",
+    "check-mandatory-application": "Selectati daca este obligatoriu la candidare"
   },
   "processes":{
     "totalProcesses": "Procese Totale",
@@ -692,6 +693,7 @@
     "delete-article": "Șterge articol",
     "article-title": "Titlul articolului",
     "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
@@ -883,6 +885,7 @@
     "please-select-format": "Selectați formatul necesar"
   },
   "solicited-position":{
+    "request-position": "Solicită poziția",
     "solicited-positions": "Poziții solicitate",
     "attached-documents": "Documente atașate",
     "required-documents": "Documente necesare",
@@ -1013,6 +1016,7 @@
     "03030207": "Toți candidații din eveniment au terminat testul",
     "03030208": "Testul dvs. solicitat a fost refuzat",
     "03002201": "Nu puteti sterge poziția la care cineva a aplicat",
+    "03002106": "Poziție nevalidă",
     "03002107": "Numele poziției este gol",
     "03002109": "Coloana medicală este necompletată",
     "03001506": "Nu ați asignat nici un evaluat",
@@ -1035,7 +1039,8 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
+    "select-file-format": "Selectați formatul fișierului"
   },
   "guide": {
     "title": "Ghidul Utilizatorului"
@@ -1126,6 +1131,7 @@
     "user-role-details": "Detaliile rolului",
     "search-role": "Căutați după rolul evaluatului",
     "employee-function": "Funcție angajat",
+    "function": "Funcție",
     "search-by-function": "Căutați după funcție"
   }
 }

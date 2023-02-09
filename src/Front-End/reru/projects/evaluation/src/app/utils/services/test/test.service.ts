@@ -19,7 +19,7 @@ export class TestService extends AbstractService {
 	constructor(protected appConfigService: AppSettingsService, public http: HttpClient) {
 		super(appConfigService);
 	}
-
+	
 	createTest(data): Observable<any> {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/tests`, data);
 	}
@@ -192,6 +192,13 @@ export class TestService extends AbstractService {
 		});
 	}
 
+	prinMyEvaluatedTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my-evaluated-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
 	printUserEvaluations(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-evaluations`, data, {
 			responseType: 'blob',
@@ -208,6 +215,27 @@ export class TestService extends AbstractService {
 
 	printUserTests(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printMyTests(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my-tests`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printMyEvaluations(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my-evaluations`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
+
+	printMyPolls(data): Observable<any> {
+		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my-polls`, data, {
 			responseType: 'blob',
 			observe: 'response',
 		});

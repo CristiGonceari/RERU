@@ -23,7 +23,6 @@ export class AppSettingsService {
 			.toPromise()
 			.then((config: IAppSettings) => {
 				this.appSettings = config;
-				console.log('===> appsettings loaded');
 			//	return config;
 			})
 			.catch(error => {

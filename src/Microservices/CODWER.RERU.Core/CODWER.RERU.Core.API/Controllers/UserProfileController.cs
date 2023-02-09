@@ -1,29 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CVU.ERP.Common.Pagination;
-using CODWER.RERU.Core.Application.Modules.GetUserModuleAccess;
+﻿using CODWER.RERU.Core.Application.Modules.GetUserModuleAccess;
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.GetCreateUserProdileModuleRoleWithDetails;
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.RemoveModuleAccess;
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.UpdateUserProfileModuleAccess;
+using CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileData;
 using CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles;
+using CODWER.RERU.Core.Application.UserProfiles.GetCandidateGeneralDatas;
+using CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile;
 using CODWER.RERU.Core.Application.UserProfiles.GetUserProfile;
+using CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles;
 using CODWER.RERU.Core.DataTransferObjects.Modules;
 using CODWER.RERU.Core.DataTransferObjects.UserProfileModuleRoles;
 using CODWER.RERU.Core.DataTransferObjects.UserProfiles;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using CODWER.RERU.Core.Application.UserProfiles.PrintUserProfiles;
+using CODWER.RERU.Core.DataTransferObjects.Users;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Common.EnumConverters;
+using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using RERU.Data.Entities.Enums;
-using CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile;
-using CODWER.RERU.Core.Application.UserProfiles.GetCandidateGeneralDatas;
-using CODWER.RERU.Core.DataTransferObjects.Users;
-using CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileData;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace CODWER.RERU.Core.API.Controllers {
+namespace CODWER.RERU.Core.API.Controllers
+{
     [ApiController]
     [Route("api/[controller]")]
     public class UserProfileController : BaseController

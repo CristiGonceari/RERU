@@ -148,6 +148,7 @@ export class TreeComponent implements OnChanges {
   @Output() changeAttachedUser: EventEmitter<{ attachedUsers: number[], checked: boolean }> = 
                             new EventEmitter<{ attachedUsers: number[], checked: boolean }>();
   @Input() attachedUsers: number[] = [];
+  @Input() inputType: 'checkbox' | 'radio';
   isLoading: boolean = true;
   constructor(readonly organigramService: OrganigramService,
               private readonly modalService: NgbModal) {
@@ -212,8 +213,10 @@ export class TreeComponent implements OnChanges {
   subscribeForCheckChanges(): void {
     this.dataSource.checkSubject.subscribe((response: DynamicFlatNode[]) => {
       response.forEach((node: DynamicFlatNode) => {
-        this.checklistSelection.toggle(node);
-        this.checkAllParentsSelection(node);
+        if (this.attachedUsers.includes(+node.item.id)) {
+          this.checklistSelection.toggle(node);
+          this.checkAllParentsSelection(node);
+        }
       })
     });
   }
@@ -236,9 +239,16 @@ export class TreeComponent implements OnChanges {
     if (node.item.relationId) {
       this.todoItemSelectionToggle(node, event);
     } else {
-      this.checklistSelection.toggle(node);
-      this.checkAllParentsSelection(node);
-      this.changeAttachedUser.emit({ attachedUsers: [...new Set([...this.attachedUsers, +node.item.id])], checked: event.checked });
+      if (this.inputType === 'radio') {
+        this.checklistSelection.clear();
+        this.checklistSelection.toggle(node);
+        this.checkAllParentsSelection(node);
+        this.changeAttachedUser.emit({ attachedUsers: [+node.item.id], checked: event.checked });
+      } else {
+        this.checklistSelection.toggle(node);
+        this.checkAllParentsSelection(node);
+        this.changeAttachedUser.emit({ attachedUsers: [...new Set([...this.attachedUsers, +node.item.id])], checked: event.checked });
+      }
     }
   }
 
@@ -249,7 +259,12 @@ export class TreeComponent implements OnChanges {
     const userDescendants = descendants.map(node => { if (node.item.firstName && node.item.id) return +node.item.id}).filter(el => !!el);
   
     if (node.item.firstName) {
-      attachedUsers.push(+node.item.id);
+      if (this.inputType === 'radio') {
+        attachedUsers.length = 0;
+        attachedUsers[0] = +node.item.id;
+      } else {
+        attachedUsers.push(+node.item.id);
+      }
     }
 
     if (userDescendants.length) {
