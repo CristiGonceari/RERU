@@ -333,7 +333,6 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   handleFinalQualificationChange(value: number | string, isInputChange: boolean = false): void {
-    console.log("value: ", value)
     if (isInputChange) {
       switch(true) {
         case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('4');break;

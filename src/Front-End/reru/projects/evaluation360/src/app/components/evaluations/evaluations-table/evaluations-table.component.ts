@@ -115,15 +115,6 @@ export class EvaluationsTableComponent implements OnInit, AfterViewInit {
   //   });
   // }
 
-  // notification = {
-  //   success: 'Success', 
-  //   warning: "Warning",
-  //   error: 'Error',
-  //   deleteEvaluation: 'Evaluation was deleted successfully!',
-  //   waringBody: 'Something went wrong!',
-  //   anError: 'There has been an error!'
-  // };
-
   translateData(): void {
     forkJoin([
       this.translate.get('notification.title.success'),
