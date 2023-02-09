@@ -72,8 +72,6 @@ export class AuthenticationService extends BaseService {
 
 	getClientSettings(): UserManagerSettings {
 		var settings = this.appSettingsService.settings;
-		console.log("Settings", settings);
-		console.log("Settings post_logout_redirect_uri", settings.APP_BASE_URL);
 
 		return {
 			authority: settings.IDENTITY_AUTHORITY,

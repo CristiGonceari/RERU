@@ -118,7 +118,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					id: this.formBuilder.control(test.id || null, [Validators.required]),
 					name: this.formBuilder.control((test && test.name) || null, [Validators.required]),
 					questionCount: this.formBuilder.control((test && test.questionCount) || null, [Validators.required]),
-					duration: this.formBuilder.control((test && test.duration) || null, [Validators.required]),
+					duration: this.formBuilder.control((test && !isNaN(test.duration) ? test.duration : null), [Validators.required]),
 					minPercent: this.formBuilder.control(test && test.minPercent, [Validators.required]),
 					mode: this.formBuilder.control((test && test.mode), [Validators.required]),
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),

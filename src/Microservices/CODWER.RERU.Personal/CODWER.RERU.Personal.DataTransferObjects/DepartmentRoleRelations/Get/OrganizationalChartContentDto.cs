@@ -12,6 +12,7 @@ namespace CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleRelations.Get
         public int Id { get; set; }
         public string Name { get; set; }
         public int RelationId { get; set; }
+        public bool IsHead { get; set; }
 
         public OrganizationalChartItemType Type { get; set; }
 

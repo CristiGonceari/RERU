@@ -6,8 +6,8 @@
         <thead>
             <tr>
                 <th [ngStyle]="{'width.%' : 30}">{{'entity.nomenclature.name' | translate}} ({{'entity.personal.npp' | translate}})</th>
-                <th [ngStyle]="{'width.%' : 20}" class="text-center">{{'entity.role.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.department.title' | translate}}</th>
+                <th [ngStyle]="{'width.%' : 20}" class="text-center">{{'entity.role.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.employee-functions.title' | translate}}</th>
                 <th [ngStyle]="{'width.%' : 20}"class="text-center">{{'entity.personal.idnp' | translate}}</th>
                 <th>&nbsp;</th>
@@ -17,10 +17,10 @@
             <tr *ngFor="let item of contractors; let i = index; let even = even">
                 <td><app-list-dropdown [index]="i" [contractor]="item"></app-list-dropdown></td>
                 <td class="text-center">
-                    <app-last-organization-role-label [item]="item"></app-last-organization-role-label>
+                    <app-last-department-label [item]="item"></app-last-department-label>
                 </td>
                 <td class="text-center">
-                    <app-last-department-label [item]="item"></app-last-department-label>
+                    <app-last-organization-role-label [item]="item"></app-last-organization-role-label>
                 </td>
                 <td class="text-center">
                     <app-last-employee-function-label [item]="item"></app-last-employee-function-label>

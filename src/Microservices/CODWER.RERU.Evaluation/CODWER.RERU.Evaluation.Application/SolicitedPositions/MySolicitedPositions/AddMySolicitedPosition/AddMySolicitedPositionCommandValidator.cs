@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
         public AddMySolicitedPositionCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Data.CandidatePositionId)
-                .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_TEST_TEMPLATE,
+                .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_POSITION,
                     ValidationMessages.InvalidReference));
         }
     }

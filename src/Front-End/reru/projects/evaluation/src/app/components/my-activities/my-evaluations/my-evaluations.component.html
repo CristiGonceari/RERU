@@ -1,8 +1,12 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 py-5">
-            <div class="card-title font-weight-bolder">{{'evaluations.my-evaluations' | translate}}</div>
+            <div class="card-title font-weight-bolder" id="title">{{'evaluations.my-evaluations' | translate}}</div>
+            <erp-shared-export-button class="mr-3 p-1" (click)="getHeaders(getTitle())">
+                {{'button.export' | translate}}
+            </erp-shared-export-button>
         </div>
+      
         <div class="card-body pt-0">
             <app-loading-spinner *ngIf="isLoading" [contentHeight]="'40vh'" [height]="'5rem'"
                 [width]="'5rem'" [colorClass]="'text-primary'">

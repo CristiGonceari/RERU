@@ -42,16 +42,29 @@
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
         "delete": "A fost șters cu succes!",
+        "delete-evaluation": "Fișa a fost ștearsă cu succes!",
+        "ev-was": "Fișa a fost ",
+        "sent": "trimisă",
+        "saved": "salvată",
+        "accepted": "acceptată",
+        "rejected": "respinsă",
+        "countersigned": "contrasemnată",
+        "with-succes": " cu succes!",
+        "evaluated-known": "Evaluatul a luat cunoștință cu rezultatele finale cu succes!",
         "login": "Logare cu succes!"
       },
-      "error": "A avut loc o eroare!"
+      "error": "A avut loc o eroare!",
+      "warning": "Ceva nu a mers bine!",
+      "validation-error": "Eroare de validare!",
+      "server-error": "Eroare de Server!"
     },
     "required": "Câmpul este obligatoriu"
   },
   "sidebar": {
     "home": "Principală",
     "administration": "Administrare",
-    "evaluations": "Evaluări"
+    "evaluations": "Evaluări",
+    "faq": "Întrebări frecvente"
   },
   "dashboard": {
     "title": "Evaluare 360",
@@ -321,6 +334,8 @@
     "delete": "Șterge",
     "select": "Selectează",
     "save": "Salvează",
+    "attach": "Atașați fișierul",
+    "actions": "Acțiuni",
     "reject": "Respinge",
     "accept": "Acceptă",
     "edit": "Modifică",
@@ -329,6 +344,79 @@
     "search": "Caută",
     "reset": "Resetează",
     "print": "Imprimă"
+  },
+  "categories": {
+    "settings": "Setări",
+    "categories": "Categorii",
+    "title": "Categorii",
+    "subtitle": "Gestionarea categoriilor",
+    "new-category": "Adaugă categorie",
+    "add-categories": "Adăugați categorii",
+    "edit-categories": "Editați categoria",
+    "used-categories": "Categorii folosite",
+    "delete-category": "Șterge Categoria",
+    "category-name": "Nume",
+    "total-questions": "Total întrebări",
+    "empty-name": "Campul este obligatoriu, cel puțin 1 caracter",
+    "wrong-name": "Campul trebuie să inceapă cu 1 caracter",
+    "view-details": "Detalii",
+    "overview": "Prezentare generală",
+    "category-data": "Introdu datele categoriei si confirma",
+    "category-details": "Detaliile categoriei",
+    "remove": "Ștergeți categoria",
+    "remove-msg": "Sigur doriți să ștergeți această categorie?",
+    "remove-questions-in-category": "Toate întrebările din această categorie vor fi eliminate",
+    "delete-msg": "Sigur doriți sa ștergeți categoria? Toate întrebările din această categorie vor fi eliminate.",
+    "succes-delete-msg": "Categoria a fost ștearsă cu succes",
+    "succes-add-msg": "Categoria a fost adăugată cu succes",
+    "succes-update-msg": "Categoria a fost actualizată cu succes"
+  },
+  "locations": {
+    "locations": "Locații de testare",
+    "manage-locations": "Gestionarea locațiilor",
+    "add-location": "Adaugă locație",
+    "name": "Nume",
+    "location-name": "Numele locației de testare",
+    "address": "Adresa",
+    "location-address": "Adresa locației de testare",
+    "places": "Nr. locuri",
+    "person-name": "Numele persoanei responsabile",
+    "person": "Persoana responsabilă",
+    "persons": "Persoane responsabile",
+    "clients": "Clienți înregistrați",
+    "location-data": "Introduceți detaliile locației și confirmați",
+    "location-details": "Detaliile locației",
+    "attach": "Atașează",
+    "attach-res": "Atașați persoana responsabilă",
+    "attach-to-location": "Atașați persoana responsabilă la locația de testare",
+    "remove": "Ștergeți locația",
+    "remove-person": "Eliminați persoana responsabilă",
+    "remove-msg": "Sigur doriți să ștergeți această locație de testare?",
+    "remove-person-msg": "Sigur doriți să eliminați această persoană responsabilă din această locație de testare?",
+    "remove-client-msg": "Sigur doriți să eliminați acest client din acest eveniment?",
+    "remove-client": "Ștergeți clientul",
+    "description": "Descriere",
+    "Class": "Clasă",
+    "ComputerClass": "Clasă cu calculatoare",
+    "empty-name": "Câmpul este obligatoriu",
+    "succes-remove-location-msg": "Locația a fost ștearsă cu succes",
+    "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
+    "succes-add-location-msg": "Locația a fost adăugată cu succes",
+    "succes-edit-location-msg": "Locația a fost editată cu succes",
+    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu succes",
+    "location": "locație"
+  },
+  "modal":{
+    "delete": "Șterge",
+    "success": "Succes",
+    "error": "Eroare",
+    "attention": "Atenție",
+    "finish-test": "Terminați testul",
+    "finish-poll": "Terminați sondajul",
+    "finish-verification": "Terminați verificarea testului",
+    "delete-msg": "Sigur doriți să ștergeți ",
+    "yes": "Da",
+    "no": "Nu"
   },
   "attach-user-modal": {
     "first-name": "Prenume",
@@ -343,7 +431,8 @@
     "department": "Departament",
     "role": "Rol",
     "function": "Funcție",
-    "npp": "N.P.P."
+    "npp": "N.P.P.",
+    "attached-users": "Utilizatori atașați"
   },
   "message": {
     "no-record": "Nu a fost găsită nicio înregistrare.",
@@ -361,5 +450,34 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare."
+  },
+  "guide": {
+    "title": "Ghidul Utilizatorului"
+  },
+  "faq": {
+    "help": "Ajutor",
+    "faq": "Întrebări frecvente",
+    "subtitle": "Întrebări frecvente",
+    "manage-faq": "Gestionarea întrebărilor",
+    "new-article": "Adaugă articol",
+    "delete-article": "Șterge articol",
+    "article-title": "Titlul articolului",
+    "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
+    "content": "Conţinut",
+    "remove": "Ștergeți articolul",
+    "remove-msg": "Sigur doriți să ștergeți acest articol?",
+    "succes-remove-msg": "Articolul a fost șters cu succes",
+    "succes-add-msg": "Articolul a fost adăugat cu succes",
+    "succes-edit-msg": "Articolul a fost editat cu succes",
+    "article-details": "Detaliile articolului",
+    "contains-media": "Conține media",
+    "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
+    "info-roles": "Rolurile care pot vizualiza acest articol",
+    "module-roles": "Rolurile modulului"
+  },
+  "user-state": {
+   "Employee": "Angajat",
+   "Candidate": "Candidat"
   }
 }

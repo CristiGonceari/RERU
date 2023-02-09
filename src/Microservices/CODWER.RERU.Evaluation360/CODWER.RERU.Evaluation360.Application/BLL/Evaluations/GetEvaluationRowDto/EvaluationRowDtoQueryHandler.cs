@@ -113,27 +113,33 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
 
         private void CalculatePoints(IQueryable<Evaluation> evaluations)
         {
+            decimal? m1 =  0, m2 = 0, m3 = 0, m4 = 0, pb = 0, mea = 0, mf = 0;
+
             foreach (var evaluation in evaluations)
             {
                 List<decimal?> listForM1 = new List<decimal?> {evaluation.Question1, evaluation.Question2, evaluation.Question3, evaluation.Question4, evaluation.Question5};
-                decimal? m1 = listForM1.Average();
+                m1 = listForM1.Average();
 
                 List<decimal?> listForM2 = new List<decimal?> {evaluation.Question6, evaluation.Question7, evaluation.Question8};
-                decimal? m2 = listForM2.Average();
+                m2 = listForM2.Average();
+
+                if (evaluation.Score1 == null) evaluation.Score1 = 0;
+                if (evaluation.Score2 == null) evaluation.Score2 = 0;
+                if (evaluation.Score3 == null) evaluation.Score3 = 0;
+                if (evaluation.Score4 == null) evaluation.Score4 = 0;
+                if (evaluation.Score5 == null) evaluation.Score5 = 0;
 
                 List<decimal?> listForM3 = new List<decimal?> {evaluation.Score1, evaluation.Score2, evaluation.Score3, evaluation.Score4, evaluation.Score5};
-                decimal? m3 = listForM3.Average();
+                m3 = listForM3.Average();
 
                 List<decimal?> listForPb = new List<decimal?> {evaluation.Question9, evaluation.Question10, evaluation.Question11, evaluation.Question12};
-                decimal? pb = listForPb.Average();
+                pb = listForPb.Average();
 
                 List<decimal?> listForM4 = new List<decimal?> {evaluation.Question13, pb};
-                decimal? m4 = listForM4.Average();
+                m4 = listForM4.Average();
 
                 List<decimal?> listForMea = new List<decimal?> {m1, m2, m3, m4};
-                decimal? mea = listForMea.Average();
-
-                decimal? mf = 0;
+                mea = listForMea.Average();
 
                 if (evaluation.PartialEvaluationScore != null)
                 {
@@ -144,6 +150,8 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                 {
                     mf = mea;
                 }
+
+                Console.WriteLine("score1 = " + evaluation.Score1 + " m1 = " + m1 + " m2 = " + m2 + " m3 = " + m3 + " m4 = " + m4 + " pb = " + pb + " mea = " + mea);
 
                 if (mf != null) evaluation.Points = Math.Round(mf.Value, 2);
             }

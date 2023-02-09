@@ -29,7 +29,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
                 .ForMember(dest=> dest.FunctionSubdivision, opts=> opts.MapFrom(src=> $"{src.EvaluatedUserProfile.EmployeeFunction.Name}"))
                 .ForMember(dest=> dest.FunctionEvaluator, opts=> opts.MapFrom(src=> $"{src.EvaluatorUserProfile.EmployeeFunction.Name}"))
                 .ForMember(dest=> dest.FunctionCounterSigner, opts=> opts.MapFrom(src=> $"{src.CounterSignerUserProfile.EmployeeFunction.Name}"))
-                .ForMember(dest=> dest.SanctionAppliedEvaluationCourse, opts=> opts.MapFrom(src=> $"{src.SanctionApplied}"))
                 ;
 
             CreateMap<CreateEvaluationsCommand, Evaluation>()
@@ -40,10 +39,9 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations
 
             CreateMap<EditEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
-                .ForMember(dest => dest.SanctionApplied, opts => opts.MapFrom(src => $"{src.SanctionAppliedEvaluationCourse}"))
                 ;
 
-               CreateMap<AcceptRejectEvaluationDto, Evaluation>()
+            CreateMap<AcceptRejectEvaluationDto, Evaluation>()
                 .ForMember(dest=> dest.Id, opts=> opts.Ignore())
                 .ForMember(dest=> dest.CommentsEvaluated, opts=> opts.MapFrom(src=> $"{src.CommentsEvaluated}"))
                 ;

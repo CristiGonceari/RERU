@@ -35,4 +35,11 @@ export class ProfileService extends AbstractService {
 	// getUserModuleAccess(id: number): Observable<Response<UserModuleAccessModel[]>> {
 	// 	return this.http.get<Response<UserModuleAccessModel[]>>(`${this.coreUrl}/${this.routeUrl}/access/${id}`);
 	// }
+
+	print(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }

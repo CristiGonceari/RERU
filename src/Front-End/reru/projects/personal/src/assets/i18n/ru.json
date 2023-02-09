@@ -38,6 +38,13 @@
     "help": "Помощь",
     "faq": "Частые вопросы"
   },
+  "dashboard": {
+    "title": "Тесты 360",
+    "subtitle": "Начальная страница",
+    "enclosed-mode":"Скрытый режим",
+    "hello-username": "Здравствуйте",
+    "have-a-good-day": "Добро пожаловать!"
+  },
   "modal":{
     "success": "Успешно",
     "error": "Ошибка"
@@ -398,6 +405,10 @@
     "organgiram-head-type": "Тип связи",
     "to-remove-add-push-the-item": "Для добавления/удаления элемента нажмите на один из элементов органиграммы.",
     "select-an-action": "Выбери действие",
+    "select": "Выбери ",
+    "creation-type": "Тип создания",
+    "creation-type-manual": "Вручную",
+    "creation-type-import": "Импортировать",
     "add-sub-item": "Добавить подпозицию",
     "delete-current-item": "Удалить нынешний элемент",
     "link-type": "Тип соединения",
@@ -412,7 +423,18 @@
     "department": "Отдел",
     "role": "Функция",
     "enlarge": "Полная",
-    "view-department-component": "Показать состав отдела"
+    "view-department-component": "Показать состав отдела",
+    "succes-add-organigram": "Органиграмма успешно добавлена",
+    "error-add-organigram": "Органиграмма не была добавлена",
+    "succes-add-chart-organigram": "Элемент органограммы успешно добавлен",
+    "error-add-chart-organigram": "Элемент органограммы не был добавлен",
+    "succes-edit-organigram": "Органиграмма успешно отредактирована",
+    "error-edit-organigram": "Органиграмма не была отредактирована",
+    "succes-delete-chart-organigram": "Подэлемент oрганиграммы успешно удален",
+    "error-delete-chart-organigram": "Этот организационный элемент нельзя удалить, так как он содержит подэлементы.",
+    "succes-delete-organigram": "Органиграмма успешно удаленаy",
+    "error-delete-organigram": "Органиграмма не была удалена",
+    "server-warn": "Произошла ошибка сервера!"
   },
   "guide": {
     "title": "Гид пользователя",
@@ -436,6 +458,7 @@
     "are-you-sure-you-want-to-delete-holiday": "Вы уверены, что хотите удалить <b>{{name}}</b>?"
   },
   "document": {
+    "select-file-format": "Выбери формат файла",
     "are-you-sure-want-to-delete-document": "Вы уверены, что хотите удалить документ <b>{{name}}</b>?",
     "add-document": "Добавить файл",
     "file": "Файл",
@@ -603,7 +626,7 @@
       "department": "Отдел",
       "probation-day-period": "Испытательный срок",
       "work-place": "Место работы (адрес)",
-      "search-position": "Выберите роль"
+      "search-position": "Выберите должность"
     },
     "organigram": {
       "name": "Название",
@@ -850,7 +873,8 @@
     "only-letters-numbers-dash-and-dot": "Должен содержать только буквы, цифры и - .",
     "only-letters-numbers-and-symbols": "Должен содержать только буквы, цифры и - , . ",
     "only-letters-numbers-and-some-symbols": "Должен содержать только буквы, цифры и - , . \" \" ",
-    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com"
+    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com",
+    "validations-service-error": "Ошибка службы проверки!"
   },
   "notification": {
     "title": {
@@ -1005,11 +1029,12 @@
     "help": "Помощь",
     "faq": "Частые вопросы",
     "subtitle": "Часто задаваемые вопросы",
-    "manage-faq": "Управление вопросов",
+    "manage-faq": "Управление вопросами",
     "new-article": "Добавить Статью",
     "delete-article": "Удалить Статью",
     "article-title": "Название Статьи",
     "name": "Имя",
+    "empty": "Обязательное поле",
     "content": "Содержание",
     "remove": "Удалить cтатью",
     "remove-msg": "Вы уверены, что хотите удалить эту cтатью?",
@@ -1023,11 +1048,48 @@
     "info-roles": "Роли, которые могут просматривать эту статью",
     "module-roles": "Роли модуля"
   },
+  "locations": {
+    "locations": "Локации",
+    "manage-locations": "Управление местоположением",
+    "add-location": "Добавить мстоположение",
+    "name": "Имя",
+    "location-name": "Название локации тестирования ",
+    "address": "Адрес",
+    "location-address": "Адрес локации тестирования",
+    "places": "Кол. мест",
+    "person-name": "Имя ответственного лица",
+    "person": "Ответственное лицо",
+    "persons": "Ответственные лица",
+    "clients": "Зарегистрированные клиенты",
+    "location-data": "Введите данные о местоположении и подтвердите",
+    "location-details": "Детали местоположения",
+    "delete": "Удалить местоположение",
+    "attach": "Прикрепить",
+    "attach-res": "Прикрепите ответственное лицо",
+    "attach-to-location": "Прикрепить ответственное лицо к локации тестирования",
+    "remove": "Удалить местоположение",
+    "remove-person": "Удалить ответственное лицо",
+    "remove-msg": "Вы уверенны, что хотите удалить эту локацию?",
+    "remove-person-msg": "Вы уверенны, что хотите удалить ответственное лицо с данной локации тестирования?",
+    "remove-client-msg": "Вы уверенны, что хотите удалить этого клиента из этого мероприятия?",
+    "remove-client": "Удалить клиента",
+    "description": "Описание",
+    "Class": "Класс",
+    "ComputerClass": "Компьютерный класс",
+    "empty-name": "Поле обязательно для заполнения",
+    "succes-remove-location-msg": "Локация была удалена успешно",
+    "succes-remove-person-msg": "Ответсвтенное лицо было удалено успешно",
+    "succes-add-location-msg": "Локация была добавлена успешно",
+    "succes-edit-location-msg": "Локация была обновлена успешно",
+    "succes-add-person-msg": "Ответственное лицо было добавлено успешно",
+    "location": "локацию"
+  },
   "print": {
     "print-table": "Печать таблицы",
     "sorted-by": "Отсортировано по",
     "error-msg": "Укажите, пожалуйста, необходимые поля для печати",
-    "print-msg": "Укажите, пожалуйста, ориентацию печати и необходимые поля."
+    "print-msg": "Укажите, пожалуйста, ориентацию печати и необходимые поля.",
+    "select-file-format": "Выбери формат файла"
   },
   "general-datas":{
     "general-data":"Общие данные",

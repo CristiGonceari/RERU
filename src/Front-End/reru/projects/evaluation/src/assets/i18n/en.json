@@ -548,7 +548,8 @@
     "mandatory": "Mandatory",
     "success-delete-mgs": "Document was successfuly deleted",
     "want-to-del-msg": "Do you want to delete document",
-    "document-application": "Manage documents"
+    "document-application": "Manage documents",
+    "check-mandatory-application": "Select if required to apply"
   },
   "processes":{
     "totalProcesses": "Total Processes",
@@ -694,6 +695,7 @@
     "delete-article": "Delete article",
     "article-title": "Article titile",
     "name": "Name",
+    "empty": "The field is required",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",
@@ -887,6 +889,7 @@
     "please-select-format": "Please select format"
   },
   "solicited-position":{
+    "request-position": "Request position",
     "solicited-positions": "Solicited positions",
     "attached-documents": "Attached documents",
     "required-documents": "Required documents",
@@ -1017,6 +1020,7 @@
     "03030207": "All candidates from event finished test",
     "03030208": "Your solicited test was refused",
     "03002201": "You can not delete used candidate position",
+    "03002106": "Invalid position",
     "03002107": "Empty position name",
     "03002109": "Empty medical column",
     "03001506": "Evaluated were not assigned",
@@ -1035,7 +1039,8 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
-    "print-msg": "Please specify the print orientation and necessary fields."
+    "print-msg": "Please specify the print orientation and necessary fields.",
+    "select-file-format": "Select file format"
   },
   "guide": {
     "title": "User Guide"
@@ -1126,6 +1131,7 @@
     "user-role-details": "Role details",
     "search-role": "Search by evaluat role",
     "employee-function": "Employee function",
+    "function": "Function",
     "search-by-function": "Search by function"
   }
 }

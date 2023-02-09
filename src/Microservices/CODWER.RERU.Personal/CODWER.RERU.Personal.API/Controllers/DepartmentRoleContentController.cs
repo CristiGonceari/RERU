@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.DepartmentRoleContents.AddDepartmentRoleContent;
 using CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentDashboard;
@@ -34,7 +35,7 @@ namespace CODWER.RERU.Personal.API.Controllers
         }
 
         [HttpGet("calculated/{id}/{type}")]
-        public async Task<DepartmentRoleContentDto> GetDepartmentRoleContentCalculated([FromRoute] int id, int type)
+        public async Task<List<DepartmentRoleUserProfileDto>> GetDepartmentRoleContentCalculated([FromRoute] int id, int type)
         {
             var query = new GetDepartmentRoleContentCalculatedQuery { Id = id, Type = type };
             var result = await Mediator.Send(query);

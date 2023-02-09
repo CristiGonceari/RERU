@@ -5,6 +5,7 @@ using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.OrganizationalCharts;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using System.Linq;
 
 namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetOrganizationalCharts
 {
@@ -22,6 +23,7 @@ namespace CODWER.RERU.Personal.Application.OrganizationalCharts.GetOrganizationa
         public async Task<PaginatedModel<OrganizationalChartDto>> Handle(GetOrganizationalChartsQuery request, CancellationToken cancellationToken)
         {
             var items = _appDbContext.OrganizationalCharts
+                .OrderByDescending(oc => oc.FromDate)
                 .AsQueryable();
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<OrganizationalChart, OrganizationalChartDto>(items, request);

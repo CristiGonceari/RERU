@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './my-tests.component.html',
   styleUrls: ['../table-inherited.component.scss']
 })
-export class MyTestsComponent {}
+export class MyTestsComponent {
+  getTitle(): string {
+    return document.getElementById('title').innerHTML;
+  }
+}

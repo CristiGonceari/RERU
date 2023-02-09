@@ -106,7 +106,7 @@
               class="form-control" [value]="parsedPeriodEvaluatedFromTo | date: 'dd.MM.yyyy'" 
               (keyup)="parseDate($event.target.value, 'periodEvaluatedFromTo', evaluationForm)" />
             <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedFromTo') || isInvalidRequired(evaluationForm, 'periodEvaluatedFromTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
-            <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedFromTo', 'ismorethan')">{{'message.date-from-is-more-than' | translate}}</div>
+            <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedFromTo', 'ismorethan')" class="invalid-feedback">{{'message.date-from-is-more-than' | translate}}</div>
             <owl-date-time [disabled]="isDisabledEvaluator" #efd pickerType="calendar"></owl-date-time>
           </div>
       </div>
@@ -167,7 +167,7 @@
             [readonly]="isDisabledEvaluator" [owlDateTimeTrigger]="etd"  placeholder="00.00.0000" autocomplete="off"
               class="form-control" [value]="parsedPeriodEvaluatedUpTo | date: 'dd.MM.yyyy'" />
               <div *ngIf="isInvalidPattern(evaluationForm, 'periodEvaluatedUpTo') || isInvalidRequired(evaluationForm, 'periodEvaluatedUpTo')" class="invalid-feedback">{{'message.use-date-format' | translate }}</div>
-              <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedUpTo', 'islessthan')">{{'message.date-to-is-less-than' | translate}}</div>
+              <div *ngIf="isInvalidCustom(evaluationForm, 'periodEvaluatedUpTo', 'islessthan')" class="invalid-feedback">{{'message.date-to-is-less-than' | translate}}</div>
               <owl-date-time [disabled]="isDisabledEvaluator" #etd pickerType="calendar"></owl-date-time>
           </div>
       </div>
@@ -393,9 +393,12 @@
     </div>
 
     <div class="form-group row">
-      <label for="sanctionAppliedEvaluationCourse" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
+      <label for="sanctionApplied" class="col-lg-2 col-12  col-form-label">{{ 'evaluations.sanction' | translate }}: </label>
           <div class="col-lg col-12">
-            <select class="form-control" [ngClass]="{'is-valid': isValid(evaluationForm, 'sanctionAppliedEvaluationCourse')}" formControlName="sanctionAppliedEvaluationCourse">
+            <select class="form-control" [ngClass]="{
+              'is-valid': isValid(evaluationForm, 'sanctionApplied'),
+              'is-invalid': isInvalidRequired(evaluationForm, 'sanctionApplied') || isInvalidPattern(evaluationForm, 'sanctionApplied')
+            }" formControlName="sanctionApplied">
               <option value="null">{{ 'button.select' | translate }}</option>
               <option [value]="sanctionEnum.Without">{{'evaluations.sanction-enum.1' | translate}}</option>
               <option [value]="sanctionEnum.Warning">{{'evaluations.sanction-enum.2' | translate}}</option>
@@ -405,10 +408,11 @@
               <option [value]="sanctionEnum.Demotion">{{'evaluations.sanction-enum.6' | translate}}</option>
               <option [value]="sanctionEnum.Dismissal">{{'evaluations.sanction-enum.7' | translate}}</option>
             </select>
+            <div *ngIf="isInvalidRequired(evaluationForm, 'sanctionApplied') || isInvalidPattern(evaluationForm, 'sanctionApplied')" class="invalid-feedback">{{'notification.required' | translate}}</div>
           </div>
     </div>
 
-    <div class="form-group row" *ngIf="evaluationForm?.get('sanctionAppliedEvaluationCourse').value != sanctionEnum.Without">
+    <div class="form-group row" *ngIf="showSanctionSection$ | async">
       <div class="col-lg col-12">
         <div class="row">
           <label for="parsedDateSanctionApplication" class="col-lg-4 col-12" [innerHTML]="'evaluations.sanction-date-applied-from' | translate"></label>
@@ -595,15 +599,14 @@
     <div class="form-group row">
           <label for="finalEvaluationQualification" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluation-final-calificative' | translate }}</label>
           <div class="col-lg-5 col-12 pb-lg-0 pb-7">
-            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm"
-                                      (handleChange)="handleFinalQualificationChange($event)">
+            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm">
             </app-qualification-select>
           </div>
           <div class="col-lg-5 col-12 d-flex align-items-center">
             <input [disabled]="true" #finalEvalNum 
             [ngClass]="{'is-valid': isValid(evaluationForm, 'finalEvaluationQualification'),
               'is-invalid': isInvalidPattern(evaluationForm, 'finalEvaluationQualification') || isInvalidRequired(evaluationForm, 'finalEvaluationQualification') }"
-            (input)="handleFinalQualificationChange($event.target.value, true)" class="form-control" type="number" placeholder="0.00" step="2" min="1" max="4" pattern="\d*" maxlength="3" required>
+             class="form-control" type="number" placeholder="0.00" min="0" max="4" pattern="[\d.?]+" maxlength="3" required>
           </div>
     </div>
 

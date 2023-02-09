@@ -1,10 +1,14 @@
-﻿using CODWER.RERU.Logging.DataTransferObjects;
+﻿using CODWER.RERU.Logging.Application.Permissions;
+using CODWER.RERU.Logging.DataTransferObjects;
 using CVU.ERP.Common.Pagination;
+using CVU.ERP.Module.Application.Attributes;
 using MediatR;
 using System;
 
 namespace CODWER.RERU.Logging.Application.GetLoggingValuesQuery
 {
+    [ModuleOperation(permission: PermissionCodes.ACCES_GENERAL_LA_DATE_JURNALIZATE)]
+
     public class GetLoggingValuesQuery : PaginatedQueryParameter, IRequest<PaginatedModel<LogDto>>
     {
         public string Event { get; set; }

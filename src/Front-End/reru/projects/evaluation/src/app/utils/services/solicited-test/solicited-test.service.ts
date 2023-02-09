@@ -49,6 +49,13 @@ export class SolicitedTestService extends AbstractService {
   }
 
   print(data): Observable<any> {
+        if(data.my){
+			return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my`, data, {
+				responseType: 'blob',
+				observe: 'response',
+			});
+		}
+
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print`, data, {
 			responseType: 'blob',
 			observe: 'response',

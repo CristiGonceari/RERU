@@ -9,7 +9,10 @@ using CODWER.RERU.Core.Application.ModuleRoles.GetAllModuleRoles;
 using CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleDetails;
 using CODWER.RERU.Core.Application.ModuleRoles.GetModuleRoleForEdit;
 using CODWER.RERU.Core.Application.ModuleRoles.GetModuleRolesForSelect;
+using CODWER.RERU.Core.Application.ModuleRoles.PrintModuleRoles;
+using CODWER.RERU.Core.Application.MyProfile.Files.PrintFiles;
 using CODWER.RERU.Core.DataTransferObjects.ModuleRoles;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +62,16 @@ namespace CODWER.RERU.Core.API.Controllers
         public Task DeleteModuleRole ([FromRoute] int id) {
             var deleteModuleRole = new DeleteModuleRoleCommand (id);
             return Mediator.Send (deleteModuleRole);
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintModuleRoles([FromBody] PrintModuleRolesCommand command)
+        {
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }

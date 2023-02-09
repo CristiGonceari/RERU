@@ -13,7 +13,6 @@ export class AuthenticationHeaderInterceptor implements HttpInterceptor {
 	{}
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("****=>header interceptor", request.url)
 		request = this.tokenization(request);
 
 		return next.handle(request);

@@ -27,7 +27,8 @@ namespace CODWER.RERU.Evaluation360.Application.DependencyInjection
             
             services.AddTransient<INotificationService, NotificationService>()
                 .AddTransient<IInternalNotificationService, InternalNotificationService>()
-                .AddTransient<IPdfService, PdfService>();
+                .AddTransient<IPdfService, PdfService>()
+                .AddTransient<IAssignRolesToArticle, AssignRolesToArticleService>();
         }
     }
 }

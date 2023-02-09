@@ -11,5 +11,8 @@ export class MySolicitedTestsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
+  getTitle(): string {
+		return document.getElementById('title').innerHTML;
+	}
 }

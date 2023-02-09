@@ -9,8 +9,12 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.RemoveDepartm
 {
     public class RemoveDepartmentRoleRelationValidator : AbstractValidator<RemoveDepartmentRoleRelationCommand>
     {
+        private readonly AppDbContext _appDbContext;
+
         public RemoveDepartmentRoleRelationValidator(AppDbContext appDbContext)
         {
+            _appDbContext = appDbContext;
+
             RuleFor(x => x.Id).SetValidator(new ItemMustExistValidator<DepartmentRoleRelation>(appDbContext,ValidationCodes.ORGANIZATION_ROLE_NOT_FOUND, ValidationMessages.InvalidReference));
         }
     }

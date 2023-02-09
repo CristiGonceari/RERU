@@ -9,7 +9,8 @@
                 <th scope="col">{{'position.apply-for-position' | translate}}</th>
                 <th scope="col">{{'solicited-test.solicited-time' | translate}}</th>
                 <th scope="col">{{'verify-test.status' | translate}}</th>
-                <th scope="col" class="text-center">{{'solicited-position.attached-documents' | translate}} / {{'solicited-position.required-documents' | translate}}</th>
+                <th scope="col" class="text-center">{{'solicited-position.required-documents' | translate}}</th>
+                <th scope="col" class="text-center">{{'solicited-position.attached-documents' | translate}}</th>
                 <th scope="col" style="width: 48px">{{'button.actions' | translate}}</th>
             </tr>
         </thead>
@@ -18,7 +19,8 @@
                 <td>{{ item.candidatePositionName }}</td>
                 <td>{{ item.solicitedTime | date: 'dd/MM/yyyy, HH:mm'}}</td>
                 <td>{{'statuses.' + enum[item.solicitedTestStatus] | translate }}</td>
-                <td class="text-center">{{ item.attachedFilesCount }} / {{ item.requiredAttachedFilesCount }}</td>
+                <td class="text-center"> {{ item.requiredAttachedFilesCount }}</td>
+                <td class="text-center">{{ item.attachedFilesCount }}</td>
                 <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3">
                     <div style="overflow: visible; position: relative; width: 0px">
                         <div ngbDropdown class="dropdown dropdown-inline" container="body">

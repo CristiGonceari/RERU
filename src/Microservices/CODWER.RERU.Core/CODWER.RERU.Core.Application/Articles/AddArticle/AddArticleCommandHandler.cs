@@ -29,6 +29,8 @@ namespace CODWER.RERU.Core.Application.Articles.AddArticle
         {
             var storage = await _storageFileService.AddFile(request.FileDto);
 
+            if (string.IsNullOrEmpty(storage)) storage = null;
+
             var newArticle = new ArticleCoreDto()
             {
                 Name = request.Name,

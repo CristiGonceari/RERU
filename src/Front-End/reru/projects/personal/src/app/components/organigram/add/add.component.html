@@ -4,12 +4,9 @@
         <div class=" container ">
             <div class="card card-custom gutter-b">
                 <div class="card-body p-0">
-                    <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
-                        data-wizard-clickable="true">
                         <div class="row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
                             <div class="col">
-                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm"
-                                    autocomplete="off">
+                                <form class="form" id="kt_contact_add_form" [formGroup]="organigramForm" autocomplete="off">
                                     <div class="pb-5">
                                         <h3 class="mb-10 font-weight-bolder text-dark">
                                             {{'organigram.new-organigram' | translate}}</h3>
@@ -35,14 +32,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="type" class="col-xl-2 col-lg-3 col-form-label">{{'Tip de creare' | translate}}</label>
+                                                    <label for="type" class="col-xl-2 col-lg-3 col-form-label">{{'organigram.creation-type' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-10">
                                                         <select autocomplete="off"
                                                             class="form-control form-control-solid" name="createType"
                                                             formControlName="createType">
-                                                            <option value="null">Selectează</option>
-                                                            <option value="1">Manual</option>
-                                                            <option value="2">Importă</option>
+                                                            <option value="null">{{'organigram.select' | translate}}</option>
+                                                            <option value="1">{{'organigram.creation-type-manual' | translate}}</option>
+                                                            <option value="2">{{'organigram.creation-type-import' | translate}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -54,9 +51,9 @@
                                                             <select autocomplete="off" disabled='true'
                                                                 class="form-control form-control-solid" name="type"
                                                                 id="type" formControlName="type">
-                                                                <option value="null">Selectează</option>
-                                                                <option value="1">Departament</option>
-                                                                <option value="2">Funcție</option>
+                                                                <option value="null">{{'organigram.organgiram-head-type' | translate}}</option>
+                                                                <option value="1">{{'organigram.department' | translate}}</option>
+                                                                <option value="2">{{'employee-functions.title' | translate}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -86,8 +83,7 @@
                                                     <div class="justify-content-center ml-auto border" style="width: 84%;">
                                                         <div class="mb-3 row justify-content-center">
                                                         <img class="img-thumbnail"
-                                                            src="../../../../assets/import-organigram.png"
-                                                            alt="functions-example">
+                                                            [src]="'assets/import-organigram.png'">
                                                     </div>
                                                     <div class="w-75 m-auto">
                                                         <form [formGroup]="uploadForm">
@@ -95,8 +91,8 @@
                                                                 <label for="file"
                                                                     class="col-form-label col-auto">{{'document.file' | translate}}:</label>
                                                                 <div class="col">
-                                                                    <input (change)="setFile($event)" class="form-control"
-                                                                        type="file" name="file" id="file">
+                                                                    <app-add-edit-media-file (handleFile)="setFile($event)" class="form-control vertical-center" type="file" name="file" id="file"
+                                                                    ></app-add-edit-media-file>
                                                                 </div>
                                                             </div>
                                                             <div class="row"
@@ -126,7 +122,6 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
