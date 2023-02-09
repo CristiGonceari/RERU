@@ -433,6 +433,7 @@ export class TestListTableComponent implements OnInit {
     this.dateTimeTo = '';
     this.searchFrom = '';
     this.searchTo = '';
+    this.colaboratorId = null;
 		this.getTests();
 	}
 }
