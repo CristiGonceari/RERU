@@ -7,10 +7,11 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { EvaluationService } from '../../../utils/services/evaluations.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { I18nService } from '../../../utils/services/i18n.service';
-import { forkJoin, of } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
 import { AttachUserModalComponent } from '@erp/shared';
 import { ReferenceService } from '../../../utils/services/reference.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, concatMap, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-evaluations-setup',
@@ -54,18 +55,30 @@ export class EvaluationsSetupComponent implements OnInit {
 		this.retrieveModalDropdowns();
 		this.initForm();
 		this.translateData();
+		this.subscribeForTranslateChanges();
 	}
 
 	retrieveModalDropdowns(): void {
 		forkJoin([
 			this.referenceService.listDepartments().pipe(catchError(() => of([]))),
 			this.referenceService.listRoles().pipe(catchError(() => of([]))),
-			this.referenceService.listUserStatuses().pipe(catchError(() => of([]))),
+			this.referenceService.listUserStatuses().pipe(
+			 	concatMap(users => {
+					return combineLatest([
+						of(users.data),
+						...users.data.map(u => this.translateService.get('user-state.'+u.label)),
+					])
+				}),
+				map( ([ users, ...translations ]) => {	
+					return (users as any[]).map( (u, i) => { u.label = translations[i]; return u;})
+				}),
+				catchError(() => of([]))
+			),
 			this.referenceService.listFunctions().pipe(catchError(() => of([])))
 		]).subscribe(([departments, roles, userStatuses, functions]) => {
 			this.departments = departments.data;
 			this.roles = roles.data;
-			this.userStatuses = userStatuses.data;
+			this.userStatuses = userStatuses;
 			this.functions = functions.data;
 			this.isLoading = false;
 		});
@@ -79,6 +92,13 @@ export class EvaluationsSetupComponent implements OnInit {
 			this.translateService.get('notification.body.error'),
 		]).subscribe(([success, create, error, bodyError ]) => {
 			this.notification = { title: {success, error}, body: { create, error: bodyError }  };
+		})
+	}
+
+	subscribeForTranslateChanges(): void {
+		this.translateService.change.subscribe(() => {
+			this.translateData();
+			this.retrieveModalDropdowns();
 		})
 	}
 
