@@ -8,7 +8,7 @@ export class User {
   candidatePositionId?: number;
   candidatePositionName?: string;
   email: string;
-  birthday: string;
+  birthDate;
   phoneNumber: string;
   isActive: boolean;
   bulletinId: number;
