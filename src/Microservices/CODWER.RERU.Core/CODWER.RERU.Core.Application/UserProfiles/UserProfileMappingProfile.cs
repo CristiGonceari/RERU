@@ -85,7 +85,8 @@ namespace CODWER.RERU.Core.Application.UserProfiles
 
             CreateMap<UserProfile, UserProfileOverviewDto>()
                 .ForMember(x => x.UserStatusEnum, opts => opts.MapFrom(src => src.DepartmentColaboratorId == null && src.RoleColaboratorId == null ? UserStatusEnum.Candidate : UserStatusEnum.Employee))
-                .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles));
+                .ForMember(destinationMember => destinationMember.Modules, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRoles))
+                .ForMember(x => x.Birthday, opts => opts.MapFrom(src => src.BirthDate));
 
             CreateMap<UserProfileModuleRole, UserProfileModuleRowDto>()
                 .ForMember(destinationMember => destinationMember.Role, opts => opts.MapFrom(sourceMember => sourceMember.ModuleRole.Name))

@@ -8,6 +8,7 @@ export class MyProfile {
     lastName: string;
     fatherName: string;
     idnp: string;
+    birthday;
     isActive: boolean;
     modules: UserModule[];
 }
