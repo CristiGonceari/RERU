@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthResponse } from '../models/auth-response.model';
 import { ApplicationUserModel } from '../models/application-user.model';
-import { Response } from '../models/response';
+import { Response } from '../models/response.model';
 import { AbstractService } from './abstract.service';
 import { AppSettingsService } from './app-settings.service';
-import { Router } from '@angular/router';
 
 @Injectable(
   {
@@ -22,7 +21,6 @@ export class ApplicationUserService extends AbstractService {
 	constructor(private readonly appSettingsService: AppSettingsService,
     			private readonly http: HttpClient) {
     super(appSettingsService);
-   console.log('==> application user service constructor');
   }
 
 	loadCurrentUser(data?: AuthResponse): Promise<boolean> {
@@ -38,7 +36,6 @@ export class ApplicationUserService extends AbstractService {
 			.toPromise()
 			.then(
 				(response: Response<ApplicationUserModel>) => {
-					console.log('==> application user service /me response', response);
 					if (response.data && response.data.isAuthenticated) {
 						localStorage.setItem(this.userProfileKey, JSON.stringify(response.data));
 						this.userSubject.next(response.data);

@@ -1,7 +1,10 @@
 <div id="kt_content" class="content d-flex flex-column flex-column-fluid">
   <div class="card card-custom gutter-b">
     <div class="card-header flex-wrap border-0 py-5">
-      <div class="card-title">{{'pages.modules-details.permissions' | translate}}</div>
+      <div class="card-title" id="title">{{'pages.modules-details.permissions' | translate}}</div>
+      <erp-shared-export-button class="mr-2" (click)="getHeaders(getTitle())">
+        {{'button.export' | translate}}
+      </erp-shared-export-button>
     </div>
     <div class="card-header border-0 pt-0 pb-0">
       <div class="row w-100"> 
@@ -32,7 +35,7 @@
           <thead class="text-uppercase text-muted">
             <tr>
               <th scope="col" style="width: 110px">{{'table.code' | translate}}</th>
-              <th scope="col">{{'table.permission' | translate}}</th>
+              <th scope="col">{{'table.permission' | translate}}</th> 
             </tr>
           </thead>
           <tbody class="text-dark-75" *ngIf="permissions">

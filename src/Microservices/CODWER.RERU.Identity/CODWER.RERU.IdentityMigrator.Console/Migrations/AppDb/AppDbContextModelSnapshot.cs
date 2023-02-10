@@ -149,6 +149,85 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("ArticleCoreModuleRoles");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ev360Articles");
+                });
+
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360ModuleRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ArticleEv360ModuleRoles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
                 {
                     b.Property<int>("Id")
@@ -998,8 +1077,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<decimal?>("Question9")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("SanctionAppliedEvaluationCourse")
-                        .HasColumnType("text");
+                    b.Property<int?>("SanctionApplied")
+                        .HasColumnType("integer");
 
                     b.Property<decimal?>("Score1")
                         .HasColumnType("numeric");
@@ -1084,6 +1163,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasIndex("QualificationQuarter4");
 
                     b.HasIndex("QualifierPartialEvaluations");
+
+                    b.HasIndex("SanctionApplied");
 
                     b.HasIndex("ServiceDuringEvaluationCourse");
 
@@ -6423,6 +6504,59 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SanctionEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Without"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Warning"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Reprimand"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "HarshRebuke"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Downgrade"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Demotion"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Dismissal"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ScoreFormulaEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -7637,6 +7771,25 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360ModuleRole", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.ArticleEv360", "Article")
+                        .WithMany("ArticleRoles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RERU.Data.Entities.ModuleRole", "Role")
+                        .WithMany("ArticleEv360Roles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluationModuleRole", b =>
                 {
                     b.HasOne("RERU.Data.Entities.ArticleEvaluation", "Article")
@@ -7847,6 +8000,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.QualifiersEnum>", null)
                         .WithMany()
                         .HasForeignKey("QualifierPartialEvaluations")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("SanctionApplied")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ServiceDuringEvaluationCourse>", null)
@@ -9411,6 +9569,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SanctionEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ScoreFormulaEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.ScoreFormulaEnum>", null)
@@ -9691,6 +9858,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("ArticleRoles");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.ArticleEv360", b =>
+                {
+                    b.Navigation("ArticleRoles");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.ArticleEvaluation", b =>
                 {
                     b.Navigation("ArticleRoles");
@@ -9753,6 +9925,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("RERU.Data.Entities.ModuleRole", b =>
                 {
                     b.Navigation("ArticleCoreRoles");
+
+                    b.Navigation("ArticleEv360Roles");
 
                     b.Navigation("ArticleEvaluationRoles");
 

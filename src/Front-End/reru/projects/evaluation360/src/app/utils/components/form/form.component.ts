@@ -15,10 +15,11 @@ import { createEvaluatorForm,
 import { parseEvaluatedModel, parseCounterSignModel, parseDate, generateAvgNumbers } from '../../util/parsings.util';
 import { EvaluationRoleEnum } from '../../models/evaluation-role.enum';
 import { EvaluationTypeEnum } from '../../models/type.enum';
+import { SanctionEnum } from '../../models/sanction.enum';
 import { ActionFormEnum, ActionFormModel, ActionFormType } from '../../models/action-form.type';
 import { EvaluationAcceptClass } from '../../models/evaluation-accept.model';
 import { EvaluationCounterSignClass } from '../../models/evaluation-countersign.model';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
 @Component({
@@ -37,6 +38,7 @@ export class FormComponent implements OnInit, AfterViewInit {
   EvaluatinRoleEnum = EvaluationRoleEnum;
   EvaluationTypeEnum = EvaluationTypeEnum;
   ActionFormEnum = ActionFormEnum;
+  sanctionEnum = SanctionEnum;
 
   @ViewChild('finalEvalNum') finalEvalNum: ElementRef;
   @ViewChild('commentsEvaluated') commentsEvaluated: ElementRef;
@@ -89,6 +91,9 @@ export class FormComponent implements OnInit, AfterViewInit {
   Mea$: Observable<number> = this.Mea.asObservable();
   Mf: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   Mf$: Observable<number> = this.Mf.asObservable();
+
+  showSanctionSection$: Subject<boolean> = new Subject();
+
   constructor(private readonly ngZone: NgZone) {
     this.isInvalidPattern = isInvalidPattern.bind(this);
     this.isValid = isValid.bind(this);
@@ -140,8 +145,20 @@ export class FormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // after DOM has loaded assign read-only values
-    this.finalEvalNum.nativeElement.value = this.evaluation.finalEvaluationQualification;
+    this.Mf$.subscribe((value) => this.finalEvalNum.nativeElement.value = !isNaN(value) ? value.toFixed(2) : 0) ;
     this.focusEvaluatedCommentsArea();
+    this.subscribeForSanctionChanges();
+  }
+
+  subscribeForSanctionChanges(): void {
+    this.evaluationForm.get('sanctionApplied').valueChanges.subscribe((value: number) => {
+      if (isNaN(+value) || +value === this.sanctionEnum.Without) {
+        this.showSanctionSection$.next(false);
+        return;
+      }
+
+      this.showSanctionSection$.next(true);
+    })
   }
 
   focusEvaluatedCommentsArea(): void {
@@ -271,14 +288,12 @@ export class FormComponent implements OnInit, AfterViewInit {
     ]).subscribe(([mea]) => {
       if (this.evaluationForm?.get('partialEvaluationScore')?.value) {
         const Mep = this.evaluationForm?.get('partialEvaluationScore')?.value || 0;
-        this.handleFinalQualificationChange(Math.round((mea + Mep) / 2));
         this.handleFinalQualificationChange(Math.round((mea + Mep) / 2), true);
         this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
         this.Mf.next((mea + Mep) / 2);
         return;
       }
 
-      this.handleFinalQualificationChange(Math.round(mea));
       this.handleFinalQualificationChange(Math.round(mea), true);
       this.evaluationForm.get('finalEvaluationQualification').markAsTouched();
       this.Mf.next(mea);
@@ -317,7 +332,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     this.parsedDateSettingIindividualGoals = data.dateSettingIindividualGoals;
   }
 
-  handleFinalQualificationChange(value: number, isInputChange: boolean = false): void {
+  handleFinalQualificationChange(value: number | string, isInputChange: boolean = false): void {
     if (isInputChange) {
       switch(true) {
         case value >= 3.51 && value <= 4.00: this.evaluationForm?.get('finalEvaluationQualification')?.patchValue('4');break;
@@ -330,7 +345,7 @@ export class FormComponent implements OnInit, AfterViewInit {
     }
 
     if (this.finalEvalNum) {
-      this.finalEvalNum.nativeElement.value = +value || null;
+      this.finalEvalNum.nativeElement.value = +value % 2 === 0 ? value : +value || null;
     }
   }
 

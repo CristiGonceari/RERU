@@ -48,6 +48,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                 result.Name = item.ChildDepartment.Name;
                 result.RelationId = item.Id;
                 result.Type = OrganizationalChartItemType.Department;
+                result.IsHead = true;
             }
             else if (abstractHead is ParentDepartmentChildRole)
             {
@@ -59,6 +60,7 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleRelations.GetOrganizati
                 result.Name = item.ChildRole.Name;
                 result.RelationId = item.Id;
                 result.Type = OrganizationalChartItemType.Role;
+                result.IsHead = true;
             }
 
             return result;

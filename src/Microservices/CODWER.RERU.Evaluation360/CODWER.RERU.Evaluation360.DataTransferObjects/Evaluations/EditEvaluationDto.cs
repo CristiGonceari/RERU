@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
         public DateTime? PartialEvaluationPeriodUpTo { set; get; }
         public decimal? PartialEvaluationScore { set; get; }
         public QualifiersEnum? QualifierPartialEvaluations { set; get; }
-        public string? SanctionAppliedEvaluationCourse { set; get; }
+        public SanctionEnum? SanctionApplied { set; get; }
         public DateTime? DateSanctionApplication { set; get; }
         public DateTime? DateLiftingSanction { set; get; }
         public QualifiersEnum? QualificationEvaluationObtained2YearsPast { set; get; }

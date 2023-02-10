@@ -2,65 +2,40 @@
 </app-page-title>
 
 <erp-shared-content>
-    <div class="row">
-        <div class="col-xl-4 col-12">
-            <div class="card card-custom card-stretch gutter-b">
-                <div class="card-header border-0 pt-5">
-                    <h3 class="card-title font-weight-bolder">Notifications</h3>
-                    <div class="card-toolbar">
-                        <div class="dropdown dropdown-inline">
-                            <a href="#" class="btn btn-clean btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body d-flex flex-column">
-                    <div class="flex-grow-1" style="position: relative;">
-                        <apx-chart
-                            [fill]="notificationsChart.fill"
-                            [series]="notificationsChart.series"
-                            [chart]="notificationsChart.chart"
-                            [plotOptions]="notificationsChart.plotOptions"
-                            [labels]="notificationsChart.labels"
-                        ></apx-chart>
-                    </div>
-                    <div class="pt-5">
-                        <p class="text-center font-weight-normal font-size-lg pb-7">Notite: Afiseaza notificarile noi aparute 
-                        <br>avand numarul total de notificari</p>
-                        <a href="#" class="btn btn-success btn-shadow-hover font-weight-bolder w-100 h-35px">Check notifications</a>
-                    </div>
-                </div>
-            </div>
+  <div class="row dahsboard-component">
+    <div class="col">
+      <div
+        class="card card-custom wave wave-secondary shadow-sm wave-animate-fast gutter-b card-stretch card-shadowless">
+        <div class="card-body" *ngIf="isLoading">
+          <app-loading-spinner colorClass="text-primary" contentHeight="10rem" height="5rem"
+            width="5rem"></app-loading-spinner>
         </div>
-        <div class="col-xl-8 col-12">
-            <div class="card card-custom card-stretch gutter-b">
-                <div class="card-header border-0 pt-5">
-                    <h3 class="card-title font-weight-bolder">Evaluated Today</h3>
-                    <div class="card-toolbar">
-                        <div class="dropdown dropdown-inline">
-                            <a href="#" class="btn btn-clean btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body d-flex flex-column">
-                        <apx-chart
-                            [series]="evaluationsChartOptions.series"
-                            [chart]="evaluationsChartOptions.chart"
-                            [xaxis]="evaluationsChartOptions.xaxis"
-                            [stroke]="evaluationsChartOptions.stroke"
-                            [tooltip]="evaluationsChartOptions.tooltip"
-                            [dataLabels]="evaluationsChartOptions.dataLabels"
-                      ></apx-chart>
-                    <div class="pt-5">
-                        <p class="text-center font-weight-normal font-size-lg pb-7">Notite: Evaluari efectuate astazi
-                        <br>pentru diferite departamente sortate dupa ore</p>
-                        <a routerLink="/statistics" class="btn btn-success btn-shadow-hover font-weight-bolder w-100 h-35px">Mai multe</a>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body" *ngIf="!isLoading">
+          <div class="flex-grow-1 p-10 card-rounded flex-grow-1 bgi-no-repeat"
+            style="background-position: calc(96% + -0.5rem) top; background-size: 14% auto; background-image: url(assets/hand.png)">
+            <h2 *ngIf="profile?.email" class="text-dark pb-5 font-weight-bolder">{{'dashboard.hello-username' |
+              translate }}: {{profile.fullName || '-'}} ☀️</h2>
+            <h2 *ngIf="!profile?.email" class="text-dark pb-5 font-weight-bolder">{{'dashboard.hello-username' |
+              translate }}: {{profile.fullName || ' '}}☀️</h2>
+            <p class="text-dark-50 pb-5 font-size-h2">{{'dashboard.have-a-good-day' | translate}}</p>
+            <a routerLink="./evaluation"
+              class="profile-button btn btn-danger font-weight-bold py-0 px-6 slide-in-blurred-bottom">
+              <span class="svg-icon svg-icon-white">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                  height="24px" viewBox="0 0 24 24" version="1.1">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24"></rect>
+                    <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                    <path
+                      d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z"
+                      fill="#000000" opacity="0.3"></path>
+                  </g>
+                </svg>
+              </span>
+              {{'sidebar.evaluations' | translate}}</a>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </erp-shared-content>

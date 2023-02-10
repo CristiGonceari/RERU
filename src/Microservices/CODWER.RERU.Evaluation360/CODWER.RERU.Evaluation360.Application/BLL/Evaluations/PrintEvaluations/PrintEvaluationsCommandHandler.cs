@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation360.DataTransferObjects.Evaluations;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Logging;
 using CVU.ERP.Module.Application.TableExportServices;
 using CVU.ERP.ServiceProvider;
 using MediatR;
@@ -18,15 +19,18 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
     private readonly AppDbContext _appDbContext;
     private readonly IExportData<Evaluation, PrintTableEvaluationsDto> _printer;
     private readonly ICurrentApplicationUserProvider _currentUserProvider;
+    private readonly ILoggerService<PrintEvaluationsCommandHandler> _loggerService;
 
     public PrintEvaluationsCommandHandler(
         AppDbContext appDbContext, 
         IExportData<Evaluation, PrintTableEvaluationsDto> printer, 
-        ICurrentApplicationUserProvider currentUserProvider)
+        ICurrentApplicationUserProvider currentUserProvider,
+        ILoggerService<PrintEvaluationsCommandHandler> loggerService)
     {
         _appDbContext = appDbContext;
         _printer = printer;
         _currentUserProvider = currentUserProvider;
+        _loggerService = loggerService;
     }
     
     public async Task<FileDataDto> Handle(PrintEvaluationsCommand request, CancellationToken cancellationToken)
@@ -94,7 +98,7 @@ public class PrintEvaluationsCommandHandler : IRequestHandler<PrintEvaluationsCo
         {
             evaluations = evaluations.Where(x => x.Status == request.Status);
         }
-
+        
         var result = _printer.ExportTableSpecificFormat(new TableData<Evaluation>
         {
             Name = "Evaluări360",

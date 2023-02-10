@@ -97,6 +97,13 @@ export class FaqAddEditComponent implements OnInit {
 		}
 	}
 
+  checkConfirmButton(article: string, form){
+    if (article !== '' && !form.invalid){
+      return false
+    }
+    return true;
+  }
+
   onTextChange() {
 		this.referenceService.getCoreRoles().subscribe(res => {
 			res.data.forEach(element => {

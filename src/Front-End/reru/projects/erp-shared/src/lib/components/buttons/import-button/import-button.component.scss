@@ -15,12 +15,12 @@
 
     &:hover:not(:disabled) {
       color: #FFF;
-      background: #ad0b00;
+      background: #c50f02;
     }
 
     &:focus {
       color: #FFF;
-      background: #ad0b00;
+      background: #c50f02;
     }
     @include responsive-container;
   }

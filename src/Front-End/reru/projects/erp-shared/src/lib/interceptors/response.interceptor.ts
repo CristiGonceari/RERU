@@ -24,11 +24,9 @@ export class ResponseInterceptor implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			tap(evt => {
-				console.log('response interceptor');
 				if (evt instanceof HttpResponse) {
 					if (evt.body && evt.body.success && evt.body.messages.length) {
 						let mText = evt.body.messages.map(mt => mt.messageText);
-						console.log(evt.body);
 						this.notificationService.success('Success', mText, NotificationUtil.getDefaultMidConfig());
 					}
 				}

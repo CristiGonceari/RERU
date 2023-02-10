@@ -60,6 +60,71 @@ namespace RERU.Data.Entities.Enums
         public const string Class = "Clasă";
         public const string ComputerClass = "Clasă cu calculatoare";
 
+        public const string Secondary = "Medii";
+        public const string Higher = "Superioare";
+        public const string Master = "Masterat";
+        public const string Doctorate = "Doctorat";
+
+        public const string Perfectiosation = "Perfecționare";
+        public const string Specialization = "Specializare";
+
+        public const string Employment = "Angajare";
+        public const string Transfer = "Transferare";
+        public const string Detachment = "Detașare";
+        public const string Default = "Neschimbat";
+
+        public const string Dissatisfied = "Nesatisfăcător";
+        public const string Satisfied = "Satisfăcător";
+        public const string Good = "Bine";
+        public const string VeryGood = "Foarte bine";
+
+        public const string Without = "Nu sunt";
+        public const string Warning = "Avertisment";
+        public const string Reprimand = "Mustrare";
+        public const string HarshRebuke = "Mustrare aspră";
+        public const string Downgrade = "Retrogradare cu un grad special";
+        public const string Demotion = "Retrogradare în funcţie";
+        public const string Dismissal = "Concediere din funcţia publică cu statut special";
+
+        public const string General_colonel = "General colonel";
+        public const string General_locotenent = "General locotenent";
+        public const string General_maior = "General maior";
+        public const string Locotenent_colonel = "Locotenent colonel";
+        public const string Capitan = "Căpitan";
+        public const string Locotenent_major = "Locotenent major";
+        public const string Locotenent_sublocotenent = "Locotenent, sublocotenent"; 
+        public const string Plutonier_adjutant = "Plutonier adjutant";
+        public const string Plutonier_major = "Plutonier major";
+        public const string Sergent_major = "Sergent major";
+        public const string Sergent_inferior_caporal_soldat  = "Sergent-inferior, caporal, soldat";
+        public const string Agent_superior = "Agent superior";
+        public const string Agent_principal = "Agent principal";
+        public const string Agent_sef_adjunct = "Agent-șef adjunct";
+        public const string Agent_sef = "Agent-șef";
+        public const string Agent_sef_principal = "Agent-șef principal";
+        public const string Inspector_superior = "Inspector superior";
+        public const string Inspector_principal = "Inspector principal";
+        public const string Comisar_principal = "Comisar principal";
+        public const string Comisar_sef = "Comisar-șef";
+        public const string Chestor_sef = "Chestor-șef";
+        public const string Chestor_general = "Chestor general";
+        public const string Sergent_inferior_al_serviciului_intern  = "Sergent-inferior al serviciului intern";
+        public const string Sergent_al_serviciului_intern = "Sergent al serviciului intern";
+        public const string Sergent_major_al_serviciului_intern = "Sergent-major al serviciului intern"; 
+        public const string Plutonier_al_serviciului_intern = "Plutonier al serviciului intern";
+        public const string Plutonier_major_al_serviciului_intern = "Plutonier-major al serviciului intern";
+        public const string Plutonier_adjutant_al_serviciului_intern = "Plutonier adjutant al serviciului intern";
+        public const string Locotenent_al_serviciului_intern = "Locotenent al serviciului intern"; 
+        public const string Locotenent_major_al_serviciului_intern = "Locotenent-major al serviciului intern";
+        public const string Capitan_al_serviciului_intern = "Căpitan al serviciului intern"; 
+        public const string Maior_al_serviciului_intern = "Maior al serviciului intern";
+        public const string Locotenent_colonel_al_serviciului_intern = "Locotenent-colone al serviciului intern";
+        public const string Colonel_al_serviciului_intern = "Colonel al serviciului intern";
+        public const string General_maior_al_serviciului_intern = "General-maior al serviciului intern";
+        public const string General_locotenent_al_serviciului_intern = "General-locotenent al serviciului intern";
+        public const string General_colonel_al_serviciului_intern = "General-colonel al serviciului intern";
+
+
         public static string Translate(TestStatusEnum testStatus)
         {
             return testStatus switch
@@ -211,6 +276,112 @@ namespace RERU.Data.Entities.Enums
                 TestingLocationType.Class => New,
                 TestingLocationType.ComputerClass => Refused,
                 _ => "-"
+            };
+        }
+
+        public static string Translate(EducationEnum? education)
+        {
+            return education switch
+            {
+                EducationEnum.Doctorate => Doctorate,
+                EducationEnum.Higher => Higher,
+                EducationEnum.Master => Master,
+                EducationEnum.Secondary => Secondary,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(ProfessionalTrainingActivitiesEnum? professionalTrainingActivities)
+        {
+            return professionalTrainingActivities switch
+            {
+                ProfessionalTrainingActivitiesEnum.Perfectiosation => Perfectiosation,
+                ProfessionalTrainingActivitiesEnum.Specialization => Specialization,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(ServiceDuringEvaluationCourse? serviceDuringEvaluationCourse)
+        {
+            return serviceDuringEvaluationCourse switch
+            {
+                ServiceDuringEvaluationCourse.Employment => Employment,
+                ServiceDuringEvaluationCourse.Transfer => Transfer,
+                ServiceDuringEvaluationCourse.Detachment => Detachment,
+                ServiceDuringEvaluationCourse.Default => Default,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(QualifiersEnum? qualifiersEnum)
+        {
+            return qualifiersEnum switch
+            {
+                QualifiersEnum.Dissatisfied => Dissatisfied,
+                QualifiersEnum.Satisfied => Satisfied,
+                QualifiersEnum.Good => Good,
+                QualifiersEnum.VeryGood => VeryGood,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(SanctionEnum? sanctionEnum)
+        {
+            return sanctionEnum switch
+            {
+                SanctionEnum.Without => Without,
+                SanctionEnum.Warning => Warning,
+                SanctionEnum.Reprimand => Reprimand,
+                SanctionEnum.HarshRebuke => HarshRebuke,
+                SanctionEnum.Downgrade => Downgrade,
+                SanctionEnum.Demotion => Demotion,
+                SanctionEnum.Dismissal => Dismissal,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(GradesEnum? gradesEnum)
+        {
+            return gradesEnum switch
+            {
+                GradesEnum.General_colonel => General_colonel,
+                GradesEnum.General_locotenent => General_locotenent,
+                GradesEnum.General_maior => General_maior,
+                GradesEnum.Locotenent_colonel => Locotenent_colonel,
+                GradesEnum.Capitan => Capitan,
+                GradesEnum.Locotenent_major => Locotenent_major,
+                GradesEnum.Locotenent_sublocotenent => Locotenent_sublocotenent,
+                GradesEnum.Plutonier_adjutant => Plutonier_adjutant,
+                GradesEnum.Plutonier_major => Plutonier_major,
+                GradesEnum.Sergent_major => Sergent_major,
+                GradesEnum.Sergent_inferior_caporal_soldat  => Sergent_inferior_caporal_soldat,
+                GradesEnum.Agent_superior => Agent_superior,
+                GradesEnum.Agent_principal => Agent_principal,
+                GradesEnum.Agent_sef_adjunct => Agent_sef_adjunct,
+                GradesEnum.Agent_sef => Agent_sef,
+                GradesEnum.Agent_sef_principal => Agent_sef_principal,
+                GradesEnum.Inspector_superior => Inspector_superior,
+                GradesEnum.Inspector_principal => Inspector_principal,
+                GradesEnum.Comisar_principal => Comisar_principal,
+                GradesEnum.Comisar_sef => Comisar_sef,
+                GradesEnum.Chestor_sef => Chestor_sef,
+                GradesEnum.Chestor_general => Chestor_general,
+                GradesEnum.Sergent_inferior_al_serviciului_intern  => Sergent_inferior_al_serviciului_intern,
+                GradesEnum.Sergent_al_serviciului_intern => Sergent_al_serviciului_intern,
+                GradesEnum.Sergent_major_al_serviciului_intern => Sergent_major_al_serviciului_intern,
+                GradesEnum.Plutonier_al_serviciului_intern => Plutonier_al_serviciului_intern,
+                GradesEnum.Plutonier_major_al_serviciului_intern => Plutonier_major_al_serviciului_intern,
+                GradesEnum.Plutonier_adjutant_al_serviciului_intern => Plutonier_adjutant_al_serviciului_intern,
+                GradesEnum.Locotenent_al_serviciului_intern => Locotenent_al_serviciului_intern,
+                GradesEnum.Locotenent_major_al_serviciului_intern => Locotenent_major_al_serviciului_intern,
+                GradesEnum.Capitan_al_serviciului_intern => Capitan_al_serviciului_intern,
+                GradesEnum.Maior_al_serviciului_intern => Maior_al_serviciului_intern,
+                GradesEnum.Locotenent_colonel_al_serviciului_intern => Locotenent_colonel_al_serviciului_intern,
+                GradesEnum.Colonel_al_serviciului_intern => Colonel_al_serviciului_intern,
+                GradesEnum.General_maior_al_serviciului_intern => General_maior_al_serviciului_intern,
+                GradesEnum.General_locotenent_al_serviciului_intern => General_locotenent_al_serviciului_intern,
+                GradesEnum.General_colonel_al_serviciului_intern => General_colonel_al_serviciului_intern,
+                _ => "—"
             };
         }
     }

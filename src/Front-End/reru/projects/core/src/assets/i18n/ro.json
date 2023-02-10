@@ -560,7 +560,8 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
+    "select-file-format": "Selectați formatul fișierului"
   },
   "guide": {
     "title": "Ghidul Utilizatorului"
@@ -575,6 +576,7 @@
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",
     "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",

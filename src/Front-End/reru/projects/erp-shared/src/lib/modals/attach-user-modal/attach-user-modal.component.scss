@@ -1,0 +1,16 @@
+:host {
+  div.container-block {
+    height: calc(100vh - 380px);
+    @media screen and (max-width: 992px) {
+      height: auto;
+    }
+  }
+
+  .tree-container {
+    max-height: calc(100vh - 365px);
+    overflow-x: auto;
+    @media screen and (max-width: 500px) {
+      max-height: auto;
+    }
+  }
+}

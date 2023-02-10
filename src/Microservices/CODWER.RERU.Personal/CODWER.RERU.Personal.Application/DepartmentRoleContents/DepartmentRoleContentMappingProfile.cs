@@ -3,6 +3,7 @@ using AutoMapper;
 using RERU.Data.Entities.PersonalEntities;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleContents
 {
@@ -11,6 +12,16 @@ namespace CODWER.RERU.Personal.Application.DepartmentRoleContents
         public DepartmentRoleContentMappingProfile()
         {
             CreateMap<AddEditDepartmentRoleContentDto, DepartmentRoleContent>();
+
+            CreateMap<UserProfile, DepartmentRoleUserProfileDto>()
+                .ForMember(x => x.DepartmentId, opts => opts.MapFrom(op => op.Department.Id))
+                .ForMember(x => x.DepartmentName, opts => opts.MapFrom(op => op.Department.Name))
+                .ForMember(x => x.FullName, opts => opts.MapFrom(op => op.FullName))
+                .ForMember(x => x.RoleId, opts => opts.MapFrom(op => op.Role.Id))
+                .ForMember(x => x.RoleName, opts => opts.MapFrom(op => op.Role.Name))
+                .ForMember(x => x.FunctionId, opts => opts.MapFrom(op => op.EmployeeFunction.Id))
+                .ForMember(x => x.FunctionName, opts => opts.MapFrom(op => op.EmployeeFunction.Name))
+                ;
 
             #region Department to DepartmentContent Template
             CreateMap<Department, DepartmentRoleContentDto>()

@@ -39,6 +39,13 @@
     "help": "Ajutor",
     "faq": "Întrebări frecvente"
   },
+  "dashboard": {
+    "title": "Evaluare 360",
+    "subtitle": "Pagina de start",
+    "enclosed-mode":"Mod restrâns",
+    "hello-username": "Salut",
+    "have-a-good-day": "Bine ai venit!"
+  },
   "modal":{
     "success": "Succes",
     "error": "Eroare"
@@ -401,6 +408,10 @@
     "organgiram-head-type": "Tipul capului",
     "to-remove-add-push-the-item": "Pentru a adăuga/renunța la o relație apăsați pe elementul din organigramă.",
     "select-an-action": "Selectează o acțiune",
+    "select": "Selectează ",
+    "creation-type": "Tip de creare",
+    "creation-type-manual": "Manual",
+    "creation-type-import": "Importă",
     "add-sub-item": "Adaugă sub-element",
     "delete-current-item": "Șterge element curent",
     "link-type": "Tipul legăturii",
@@ -415,7 +426,18 @@
     "department": "Departament",
     "role": "Funcție",
     "enlarge": "Lărgește",
-    "view-department-component": "Vizualizează componența departamentului"
+    "view-department-component": "Vizualizează componența departamentului",
+    "succes-add-organigram": "Organigrama a fost adăugată cu succes",
+    "error-add-organigram": "Organigrama nu a fost adăugată",
+    "succes-add-chart-organigram": "Elementul a fost adăugat cu succes",
+    "error-add-chart-organigram": "Elementul nu a fost adăugat",
+    "succes-edit-organigram": "Organigrama a fost editată cu succes",
+    "error-edit-organigram": "Organigrama nu a fost editată",
+    "succes-delete-chart-organigram": "Sub-elementul organigramei a fost șters cu succes",
+    "error-delete-chart-organigram": "Acest element nu poate fi șters deoarece are sub-element/e adaugat/e",
+    "succes-delete-organigram": "Organigrama a fost ștearsă cu succes",
+    "error-delete-organigram": "Organigrama nu a fost ștearsă",
+    "server-warn": "A apărut o eroare de Server!"
   },
   "guide": {
     "title": "Ghidul Utilizatorului",
@@ -439,6 +461,7 @@
     "are-you-sure-you-want-to-delete-holiday": "Sunteți sigur că doriți să ștergeți sărbătoarea <b>{{name}}</b>?"
   },
   "document": {
+    "select-file-format": "Selectați formatul fișierului",
     "are-you-sure-want-to-delete-document": "Sunteți sigur că doriți să ștergeți documentul <b>{{name}}</b>?",
     "add-document": "Adaugă document",
     "file": "Fișier",
@@ -573,7 +596,7 @@
       "code": "Cod",
       "no": "Nu",
       "type": "Tipul",
-      "search-funciton": "Selectează funcție",
+      "search-funciton": "Selectează funcția",
       "last-function": "Ultima funcție"
     },
     "position": {
@@ -585,7 +608,7 @@
       "department": "Departament",
       "probation-day-period": "Durata stagierii",
       "work-place": "Locul de muncă (adresa)",
-      "search-position": "Selectează rol"
+      "search-position": "Selectează rolul"
     },
     "contractor-type": {
       "title": "Tip angajat",
@@ -852,7 +875,8 @@
     "only-letters-numbers-dash-and-dot": "Trebuie să conţină doar litere, cifre şi - .",
     "only-letters-numbers-and-symbols": "Trebuie să conţină doar litere, cifre şi - , . ",
     "only-letters-numbers-and-some-symbols": "Trebuie să conţină doar litere, cifre şi - , . \" \" ",
-    "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com"
+    "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com",
+    "validations-service-error": "Eroare de serviciu de validare!"
   },
   "notification": {
     "title": {
@@ -1013,6 +1037,7 @@
     "delete-article": "Șterge Articol",
     "article-title": "Titlul Articolului",
     "name": "Nume",
+    "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
@@ -1026,11 +1051,47 @@
     "info-roles": "Rolurile care pot vizualiza acest articol",
     "module-roles": "Rolurile modulului"
   },
+  "locations": {
+    "locations": "Locații de testare",
+    "manage-locations": "Gestionarea locațiilor",
+    "add-location": "Adaugă locație",
+    "name": "Nume",
+    "location-name": "Numele locației de testare",
+    "address": "Adresa",
+    "location-address": "Adresa locației de testare",
+    "places": "Nr. locuri",
+    "person-name": "Numele persoanei responsabile",
+    "person": "Persoana responsabilă",
+    "persons": "Persoane responsabile",
+    "clients": "Clienți înregistrați",
+    "location-data": "Introduceți detaliile locației și confirmați",
+    "location-details": "Detaliile locației",
+    "attach": "Atașează",
+    "attach-res": "Atașați persoana responsabilă",
+    "attach-to-location": "Atașați persoana responsabilă la locația de testare",
+    "remove": "Ștergeți locația",
+    "remove-person": "Eliminați persoana responsabilă",
+    "remove-msg": "Sigur doriți să ștergeți această locație de testare?",
+    "remove-person-msg": "Sigur doriți să eliminați această persoană responsabilă din această locație de testare?",
+    "remove-client-msg": "Sigur doriți să eliminați acest client din acest eveniment?",
+    "remove-client": "Ștergeți clientul",
+    "description": "Descriere",
+    "Class": "Clasă",
+    "ComputerClass": "Clasă cu calculatoare",
+    "empty-name": "Câmpul este obligatoriu",
+    "succes-remove-location-msg": "Locația a fost ștearsă cu succes",
+    "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
+    "succes-add-location-msg": "Locația a fost adăugată cu succes",
+    "succes-edit-location-msg": "Locația a fost editată cu succes",
+    "succes-add-person-msg": "Persoana responsabilă a fost adăugată cu succes",
+    "location": "locație"
+  },
   "print": {
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare."
+    "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
+    "select-file-format": "Selectați formatul fișierului"
   },
   "general-datas":{
     "nationality": "Naţionalitatea",

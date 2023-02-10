@@ -299,9 +299,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                       <p> 1.Logați-vă pe pagina {_platformConfig.BaseUrl}</p>
                       <p> 2.Click pe butonul ""Evaluare"" </p>
                       <p> 3.Click pe butonul ""Activitățile mele"" </p>
-                      <p> 4.Din meniul din stânga, alegeți opțiunea TESTE.</p>
-                      <p> 5.Pentru a începe testul, click ""Începe Testul"" din partea dreaptă de jos a paginii </p>
-                      <p> 6.Bifați acceptarea regulilor, selectează ""Acceptă"", și click butonul ""Începe"" </p>";
+                      <p> 4.Din meniul din stânga, alegeți opțiunea TESTE.</p>                     
+                      <p> 5.Alegeți din calendar ziua, pentru a vizualiza testele din ziua respectivă.</p>
+                      <p> 6.Pentru a începe testul, click ""Începe Testul"" din partea dreaptă de jos a paginii </p>
+                      <p> 7.Bifați acceptarea regulilor, selectează ""Acceptă"", și click butonul ""Începe"" </p>";
 
             return content;
         }

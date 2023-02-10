@@ -6,9 +6,12 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { EvaluationService } from '../../../utils/services/evaluations.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AttachUserModalComponent, AttachUserModel } from '../../../utils/modals/attach-user-modal/attach-user-modal.component';
 import { I18nService } from '../../../utils/services/i18n.service';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
+import { AttachUserModalComponent } from '@erp/shared';
+import { ReferenceService } from '../../../utils/services/reference.service';
+import { catchError, concatMap, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-evaluations-setup',
@@ -19,9 +22,14 @@ export class EvaluationsSetupComponent implements OnInit {
 	evaluationForm: FormGroup;
 	counterSignUsers: SelectItem[] = [];
 	evaluatedUsers: SelectItem[] = [];
+	roles: SelectItem[];
+	departments: SelectItem[];
+	userStatuses: SelectItem[];
+	functions: SelectItem[];
+	isLoading: boolean = true;
 	notification = {
 		title: {
-			success: 'Success',
+			success: 'Succes',
 			error: 'Error',
 		},
 		body: {
@@ -39,12 +47,41 @@ export class EvaluationsSetupComponent implements OnInit {
 		private readonly router: Router,
 		private readonly route: ActivatedRoute,
 		private readonly modalService: NgbModal,
-		private readonly translateService: I18nService
+		private readonly translateService: I18nService,
+		private readonly referenceService: ReferenceService
 	) {}
 
 	ngOnInit(): void {
+		this.retrieveModalDropdowns();
 		this.initForm();
 		this.translateData();
+		this.subscribeForTranslateChanges();
+	}
+
+	retrieveModalDropdowns(): void {
+		forkJoin([
+			this.referenceService.listDepartments().pipe(catchError(() => of([]))),
+			this.referenceService.listRoles().pipe(catchError(() => of([]))),
+			this.referenceService.listUserStatuses().pipe(
+			 	concatMap(users => {
+					return combineLatest([
+						of(users.data),
+						...users.data.map(u => this.translateService.get('user-state.'+u.label)),
+					])
+				}),
+				map( ([ users, ...translations ]) => {	
+					return (users as any[]).map( (u, i) => { u.label = translations[i]; return u;})
+				}),
+				catchError(() => of([]))
+			),
+			this.referenceService.listFunctions().pipe(catchError(() => of([])))
+		]).subscribe(([departments, roles, userStatuses, functions]) => {
+			this.departments = departments.data;
+			this.roles = roles.data;
+			this.userStatuses = userStatuses;
+			this.functions = functions.data;
+			this.isLoading = false;
+		});
 	}
 
 	translateData(): void {
@@ -58,8 +95,16 @@ export class EvaluationsSetupComponent implements OnInit {
 		})
 	}
 
+	subscribeForTranslateChanges(): void {
+		this.translateService.change.subscribe(() => {
+			this.translateData();
+			this.retrieveModalDropdowns();
+		})
+	}
+
 	handleCounterSignChange(value: boolean): void {
 		if (value) {
+			this.evaluationForm.get('counterSignerUserProfileId').patchValue(null);
 			this.evaluationForm.get('counterSignerUserProfileId').clearValidators();
 			this.evaluationForm.get('counterSignerUserProfileId').updateValueAndValidity();
 			this.counterSignUsers.length = 0;
@@ -70,14 +115,18 @@ export class EvaluationsSetupComponent implements OnInit {
 	}
 
 	openAttachUserModal(isAttachEvaluated: boolean = false): void {
-		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, size: 'xl' });
+		const modalRef: any = this.modalService.open(AttachUserModalComponent, { centered: true, windowClass: 'full-size-modal' });
 		modalRef.componentInstance.inputType = isAttachEvaluated ? 'checkbox' : 'radio';
+		modalRef.componentInstance.departments = [...this.departments];
+		modalRef.componentInstance.roles = [...this.roles];
+		modalRef.componentInstance.userStatuses = [...this.userStatuses];
+		modalRef.componentInstance.functions = [...this.functions];
 		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? ([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
-		modalRef.componentInstance.attachedItems = isAttachEvaluated ? 
+		modalRef.componentInstance.attachedUsers = isAttachEvaluated ? 
 		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
-		modalRef.result.then((data: AttachUserModel) => {
+		modalRef.result.then((data) => {
 			if (isAttachEvaluated) {
-				this.evaluationForm.get('evaluatedUserProfileIds').patchValue(data.selectedUsers)
+				this.evaluationForm.get('evaluatedUserProfileIds').patchValue([...data.selectedUsers])
 			} else {
 				this.evaluationForm.get('counterSignerUserProfileId').patchValue(data.selectedUsers[0])
 			}

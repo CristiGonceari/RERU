@@ -13,16 +13,13 @@
             <table for="kt_datatable" class="datatable table" style="overflow: visible">
                 <thead class="text-uppercase text-muted">
                     <tr>
-                        <th scope="col" class="colored">
-                            <b>{{'dashboard.date-status' | translate}}</b>
-                            <i class="fas fa-arrow-down ml-1 colored"></i>
-                        </th>
-                        <th scope="col">{{'verify-test.student' | translate}}</th>
-                        <th scope="col">{{'dashboard.test' | translate}}</th>
-                        <th scope="col" style="width: 170px;">
+                        <th scope="col" class="colored" name="column"> {{'dashboard.date-status' | translate}} </th>
+                        <th scope="col" name="column">{{'verify-test.student' | translate}}</th>
+                        <th scope="col" name="column">{{'dashboard.test' | translate}}</th>
+                        <th scope="col" style="width: 170px;" name="column">
                             {{'dashboard.score' | translate}} / {{'dashboard.min-score' | translate}}
                         </th>
-                        <th scope="col" style="width: 170px;">{{'dashboard.result' | translate}}</th>
+                        <th scope="col" style="width: 170px;" name="column">{{'dashboard.result' | translate}}</th>
                         <th *ngIf="testRowList.length" scope="col">{{'button.actions' | translate}}</th>
                     </tr>
                 </thead>

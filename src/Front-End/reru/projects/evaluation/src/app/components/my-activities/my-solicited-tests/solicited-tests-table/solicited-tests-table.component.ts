@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { SolicitedTestStatusEnum } from 'projects/evaluation/src/app/utils/enums/solicited-test-status.model';
+import { PrintTableService } from 'projects/evaluation/src/app/utils/services/print-table/print-table.service';
 
 @Component({
 	selector: 'app-solicited-tests-table',
@@ -35,11 +36,28 @@ export class SolicitedTestsTableComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		public translate: I18nService,
 		private modalService: NgbModal,
-		private notificationService: NotificationsService
+		private notificationService: NotificationsService,
+		private printTableService: PrintTableService
 	) { }
 
 	ngOnInit(): void {
 		this.getMySolicitedTests();
+	}
+
+	getHeaders(title: string){
+		let headersDto = [
+			'candidatePositionName',
+			'solicitedTime',
+			'solicitedTestStatus',
+			'requiredAttachedFilesCount',
+			'attachedFilesCount',
+		];
+
+		let filters = {
+			my: true
+		}
+
+		this.printTableService.getHeaders(this.solicitedTestService, title, headersDto, filters, document);
 	}
 
 	getMySolicitedTests(data: any = {}) {

@@ -54,6 +54,16 @@ import { Exception500Component } from './components/500/500.component';
 import { FormsModule } from '@angular/forms';
 import { ImportButtonComponent } from './components/buttons/import-button/import-button.component';
 import { ExportButtonComponent } from './components/buttons/export-button/export-button.component';
+import { AttachUserModalComponent } from './modals/attach-user-modal/attach-user-modal.component';
+import { SelectComponent } from './components/select/select.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { TreeComponent } from './components/tree/tree.component';
+import { WarningAlertModalComponent } from './modals/warning-alert-modal/warning-alert-modal.component';
+import { AttachUserTableComponent } from './components/attach-user-table/attach-user-table.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -84,7 +94,8 @@ const commonExports = [
 	Exception404Component,
 	Exception500Component,
 	ExportButtonComponent,
-	ImportButtonComponent
+	ImportButtonComponent,
+	AttachUserModalComponent
 ];
 @NgModule({
 	declarations: [
@@ -92,7 +103,11 @@ const commonExports = [
 		ViewIconComponent,
 		LayoutContentComponent,
 		UploadFileModalComponent,
-		GoToTestModalComponent
+		GoToTestModalComponent,
+		SelectComponent,
+		TreeComponent,
+		WarningAlertModalComponent,
+		AttachUserTableComponent
 	],
 	imports: [
 		CommonModule,
@@ -100,6 +115,11 @@ const commonExports = [
 		HttpClientModule,
 		translateModule,
 		NgbModule,
+		MatTreeModule,
+		MatCheckboxModule,
+		MatProgressBarModule,
+		MatFormFieldModule,
+		MatSelectModule,
 		LocalizeRouterModule,
 		SharedPipesModule,
 		SvgModule,
@@ -142,4 +162,3 @@ export class SharedModule {
         };
     }
 }
-

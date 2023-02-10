@@ -14,13 +14,15 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
             CreateMap<TestTemplate, TestTemplateDto>()
                 .ForMember(x => x.CategoriesCount, opts => opts.MapFrom(tt => tt.TestTemplateQuestionCategories.Select(x => x.QuestionCategory).Distinct().Count()))
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => tt.Status))
-                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => tt.QualifyingType));
+                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => tt.QualifyingType))
+                .ForMember(x => x.BasicTestTemplate, opts => opts.MapFrom(tt => tt.BasicTestTemplate));
 
             CreateMap<AddEditTestTemplateDto, TestTemplate>()
                 .ForMember(x => x.Id, opts => opts.Ignore())
                 .ForMember(x => x.Status, opts => opts.MapFrom(tt => (int)TestTemplateStatusEnum.Draft))
                 .ForMember(x => x.CategoriesSequence, opts => opts.MapFrom(tt => (int)SequenceEnum.Random))
-                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => GetQualifyingTypeEnum(tt.Mode, tt.QualifyingType)));
+                .ForMember(x => x.QualifyingType, opts => opts.MapFrom(tt => GetQualifyingTypeEnum(tt.Mode, tt.QualifyingType)))
+                .ForMember(x => x.BasicTestTemplate, opts => opts.MapFrom(tt => tt.BasicTestTemplate));
 
             CreateMap<TestTemplateSettingsDto, TestTemplateSettings>()
                 .ForMember(x => x.Id, opts => opts.Ignore());

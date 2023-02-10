@@ -11,7 +11,9 @@ using CVU.ERP.Common.Pagination;
 using MediatR;
 using CODWER.RERU.Evaluation.Application.EventUsers.GetEventAssignedUsers;
 using CODWER.RERU.Evaluation.Application.EventUsers.GetListOfEventUsers;
+using CODWER.RERU.Evaluation.Application.EventUsers.PrintEventUsers;
 using CODWER.RERU.Evaluation.Application.EventUsers.SendToAssignedUserNotifications;
+using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -63,5 +65,15 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintEventUsers([FromBody] PrintEventUsersCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
     }
 }

@@ -12,8 +12,6 @@ export class SearchEmployeeFunctionComponent {
   function: string = '';
   constructor(private referenceService: ReferenceService) { this.getFunctionValues(); }
 
-
-
   getFunctionValues() {
     this.referenceService.getEmployeeFunctionsSelectValues().subscribe(res => {this.list = res.data});
   }

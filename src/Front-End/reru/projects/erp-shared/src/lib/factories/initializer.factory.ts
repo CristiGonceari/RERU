@@ -23,15 +23,12 @@ export function appInitializerFn(
 			appSettingsService
 				.load()
 				.then(data => {
-					console.log('==> appInitializerFn loaded appsettings');
 					return authenticationService.initAuthenticationService().then(() => applicationUserService.loadCurrentUser());
 				})
 				.then(() => {
-					console.log('==> resolved appInitializerFn');
 					resolve(0);
 				})
 				.catch(error => {
-					console.log('==> rejected appInitializerFn');
 					console.log(error);
 					reject();
 				});

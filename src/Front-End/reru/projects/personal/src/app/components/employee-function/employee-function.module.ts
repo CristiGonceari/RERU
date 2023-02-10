@@ -16,7 +16,11 @@ import { DetailsComponent } from './details/details.component';
 
 
 @NgModule({
-  declarations: [EmployeeFunctionComponent, ListComponent, EmployeeFunctionTableComponent, EmployeeFunctionDropdownComponent, DetailsComponent],
+  declarations: [EmployeeFunctionComponent, 
+    ListComponent, 
+    EmployeeFunctionTableComponent, 
+    EmployeeFunctionDropdownComponent, 
+    DetailsComponent],
   imports: [
     CommonModule,
     EmployeeFunctionRoutingModule,

@@ -64,6 +64,7 @@
   },
   "notification": {
     "title": {
+      "logs": "Logs",
       "success": "Success",
       "error": "Error",
       "warning": "Warning",
@@ -74,7 +75,8 @@
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
-        "login": "Login successfully!"
+        "login": "Login successfully!",
+        "delete-log": "Logs deleted!"
       },
       "error": "There has been an error!"
     },
@@ -185,6 +187,7 @@
     "delete-article": "Delete Article",
     "article-title": "Article Titile",
     "name": "Name",
+    "empty": "The field is required",
     "content": "Content",
     "remove": "Remove article",
     "remove-msg": "Are you sure you want to remove this article?",
@@ -211,6 +214,7 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
-    "print-msg": "Please specify the print orientation and necessary fields."
+    "print-msg": "Please specify the print orientation and necessary fields.",
+    "select-file-format": "Select file format"
   }
 }

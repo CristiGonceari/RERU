@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserProcessHistoryModalComponent } from '../../../utils/modals/add-user-process-history-modal/add-user-process-history-modal.component'
 import { SearchDepartmentComponent } from '../../../utils/components/search-department/search-department.component';
 import { SearchRoleComponent } from '../../../utils/components/search-role/search-role.component';
+import { SearchEmployeeFunctionComponent } from '../../../utils/components/search-employee-function/search-employee-function.component';
 
 @Component({
   selector: 'app-user-list',
@@ -20,6 +21,7 @@ export class UserListComponent {
   @ViewChild(SearchStatusComponent) userStatusEnum: SearchStatusComponent;
   @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
   @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
+  @ViewChild(SearchEmployeeFunctionComponent) functionId: SearchEmployeeFunctionComponent;
 
   title: string;
   constructor(private referenceService: ReferenceService,
@@ -39,6 +41,7 @@ export class UserListComponent {
     this.userStatusEnum.userStatus = '';
     this.departmentId.department = '';
     this.roleId.role = '';
+    this.functionId.function = ''
   }
 
   getTitle(): string {

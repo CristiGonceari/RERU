@@ -97,12 +97,13 @@ export class TestTemplateListTableComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
-			this.translate.get('button.cancel')
+			this.translate.get('button.cancel'),
+      		this.translate.get('print.select-file-format')
 		]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {

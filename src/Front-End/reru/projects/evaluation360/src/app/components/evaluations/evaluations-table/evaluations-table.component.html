@@ -64,6 +64,6 @@
 		[size]="pagedSummary.pageSize"
 		(sizeChange)="list({ page: 1, itemsPerPage: $event})"
 		class="datatable-pager datatable-paging-loaded"
-		(pageChange)="list({ page: $event })">
+		(pageChange)="list({ page: $event, itemsPerPage: pagedSummary.pageSize })">
 	</div>
 </div>

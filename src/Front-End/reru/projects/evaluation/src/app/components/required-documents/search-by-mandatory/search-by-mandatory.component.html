@@ -1,7 +1,5 @@
 <select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
-    <option class="default-option text-muted" selected value="">Selectati daca este obligatoriu la candidare</option>
-    <option *ngFor="let item of mandatoryType" [value]="item.value">
-        <!-- {{'statuses.' + item.label | translate}} -->
-        {{item.label | translate}}
-    </option>
+    <option class="default-option text-muted" selected [value]=""> {{ 'require-documents.check-mandatory-application' | translate }}</option>
+    <option [value]="true"> {{ 'modal.yes' | translate }} </option>
+    <option [value]="false"> {{ 'modal.no' | translate }} </option>
 </select>

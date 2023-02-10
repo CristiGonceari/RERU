@@ -1,0 +1,34 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <!-- Functions nodes -->
+      <button *ngIf="!node.item.firstName" type="button" class="btn btn-icon" matTreeNodeToggle>
+        <i class="ki" [ngClass]="{
+            'ki-arrow-next': !treeControl.isExpanded(node),
+            'ki-arrow-down': treeControl.isExpanded(node)
+        }"></i>
+      </button>
+    <label *ngIf="!node.item.firstName" class="mr-2">{{node.item?.name}}</label>
+    <mat-checkbox click *ngIf="!node.isLoading" class="checklist-leaf-node"
+                  [checked]="checklistSelection.isSelected(node)"
+                  (change)="todoLeafItemSelectionToggle(node, $event)">{{node?.item?.lastName}} {{node?.item?.firstName}} {{node?.item?.fatherName}}</mat-checkbox>
+    <mat-progress-bar *ngIf="node.isLoading"
+                      mode="indeterminate"
+                      class="example-tree-progress-bar"></mat-progress-bar>
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <button *ngIf="!node.item.firstName" type="button" class="btn btn-icon" matTreeNodeToggle>
+      <i class="ki" [ngClass]="{
+          'ki-arrow-next': !treeControl.isExpanded(node),
+          'ki-arrow-down': treeControl.isExpanded(node)
+      }"></i>
+    </button>
+      <!-- Department nodes (has child) -->
+      <label *ngIf="!node.item?.firstName" class="mr-2">{{ node.item?.organigramHeadName || node.item?.name }}</label>
+      <label *ngIf="node.item.firstName" class="mr-2">{{node?.item?.lastName}} {{node?.item?.firstName}} {{node?.item?.fatherName}}</label>
+      <mat-checkbox click *ngIf="!node.isLoading" [checked]="descendantsAllSelected(node)" (change)="todoItemSelectionToggle(node, $event)"></mat-checkbox>
+      <mat-progress-bar *ngIf="node.isLoading"
+                    mode="indeterminate"
+                    class="example-tree-progress-bar"></mat-progress-bar>
+  </mat-tree-node>
+</mat-tree>

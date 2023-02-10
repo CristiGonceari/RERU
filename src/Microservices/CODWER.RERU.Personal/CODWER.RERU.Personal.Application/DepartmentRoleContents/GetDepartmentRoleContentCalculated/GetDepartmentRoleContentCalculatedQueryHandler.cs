@@ -1,80 +1,48 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RERU.Data.Entities.PersonalEntities.StaticExtensions;
 using RERU.Data.Persistence.Context;
 using CODWER.RERU.Personal.DataTransferObjects.DepartmentRoleContents;
-using CVU.ERP.Common;
-using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Personal.Application.DepartmentRoleContents.GetDepartmentRoleContentCalculated
 {
-    public class GetDepartmentRoleContentCalculatedQueryHandler : IRequestHandler<GetDepartmentRoleContentCalculatedQuery, DepartmentRoleContentDto>
+    public class GetDepartmentRoleContentCalculatedQueryHandler : IRequestHandler<GetDepartmentRoleContentCalculatedQuery, List<DepartmentRoleUserProfileDto>>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IDateTime _dateTime;
+        public readonly IMapper _mapper;
 
-        public GetDepartmentRoleContentCalculatedQueryHandler(AppDbContext appDbContext, IDateTime dateTime)
+        public GetDepartmentRoleContentCalculatedQueryHandler(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
-            _dateTime = dateTime;
+            _mapper = mapper;
         }
 
-        public async Task<DepartmentRoleContentDto> Handle(GetDepartmentRoleContentCalculatedQuery request, CancellationToken cancellationToken)
+        public async Task<List<DepartmentRoleUserProfileDto>> Handle(GetDepartmentRoleContentCalculatedQuery request, CancellationToken cancellationToken)
         {
-            var now = _dateTime.Now;
-
-            var positions = _appDbContext.UserProfiles
+            var users = _appDbContext.UserProfiles
                 .Include(p => p.Contractor)
                 .Include(p => p.Department)
                 .Include(p => p.Role)
+                .Include(p => p.EmployeeFunction)
                 .AsQueryable();
-            //.Where(p =>
-            //    ((p.FromDate == null && p.ToDate == null)
-            //     || (p.ToDate == null && p.FromDate != null && p.FromDate < now)
-            //     || (p.FromDate == null && p.ToDate != null && p.ToDate > now)
-            //     || (p.FromDate != null && p.ToDate != null && p.FromDate < now && p.ToDate > now)));
 
             if (request.Type == 1)
             {
-                positions = positions.Where(p => p.Department.Id == request.Id);
+                users = users.Where(p => p.Department.Id == request.Id);
             }
             else if (request.Type == 2)
             {
-                positions = positions.Where(p => p.Role.Id == request.Id);
+                users = users.Where(p => p.Role.Id == request.Id);
 
             }
 
-            var departmentContent = positions
-                .ToList()
-                .GroupBy(p => p.Department) // group by department
-                .Select(drc => new DepartmentRoleContentDto
-                {
-                    DepartmentId = drc.Key.Id,
-                    DepartmentName = drc.Key.Name,
+            var items = _mapper.Map<List<DepartmentRoleUserProfileDto>>(users);
 
-                    Roles = drc
-                        .GroupBy(p=>p.Role) // group by organization role
-                        .Select(rfd=> new RoleFromDepartment
-                        {
-                            OrganizationRoleId = rfd.Key.Id,
-                            OrganizationRoleName = rfd.Key.Name,
-
-                            OrganizationRoleCount = rfd.ToList().Select(c => c.Id).Distinct().Count(),
-                            ContractorIds = rfd.ToList().Select(c => new SelectItem
-                            {
-                                Label = c.FullName,
-                                Value = c.Id.ToString()
-                            }).Distinct().ToList()
-                        }).ToList()
-                }).ToList();
-
-            return departmentContent.Count() != 0
-                ? departmentContent.First()
-                : new DepartmentRoleContentDto();
+            return items;
         }
     }
 }

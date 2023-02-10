@@ -1,0 +1,73 @@
+<div class="modal-header px-7">
+	<div class="d-flex justify-content-between w-100">
+		<h3 class="modal-title">{{'button.attach-evaluateds' | translate}}</h3>
+		<div class="d-flex gap-2">
+			<a (click)="view = modalViewEnum.isTable" href="javascript:void(0)" class="btn btn-icon btn-hover-light btn-lg mr-4" content="body" ngbTooltip="Tabel mod">
+				<span class="svg-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<rect x="0" y="0" width="24" height="24"/>
+							<rect fill="#000000" x="2" y="5" width="19" height="4" rx="1"/>
+							<rect fill="#000000" opacity="0.3" x="2" y="11" width="19" height="10" rx="1"/>
+						</g>
+					</svg>
+				</span>
+			</a>
+			<a (click)="view = modalViewEnum.isOrganigram" [ngClass]="{'pulse pulse-danger': view != modalViewEnum.isOrganigram }" 
+			href="javascript:void(0)" class="btn btn-icon btn-hover-light btn-lg mr-4" content="body" ngbTooltip="Organigrama mod">
+				<span *ngIf="view != modalViewEnum.isOrganigram" class="pulse-ring"></span>
+				<span class="svg-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<rect x="0" y="0" width="24" height="24"/>
+							<rect fill="#000000" x="9" y="5" width="13" height="14" rx="1.5"/>
+							<rect fill="#000000" opacity="0.3" x="2" y="5" width="5" height="14" rx="1"/>
+						</g>
+					</svg>
+				</span>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="modal-body px-7" [ngClass]="{ 'h-100': view === modalViewEnum.isOrganigram }">
+	<div *ngIf="view === modalViewEnum.isTable">
+		<erp-shared-attach-user-table #t [departments]="departments"
+									  [functions]="functions"
+									  [view]="view"
+									  [userStatuses]="userStatuses"
+									  [attachedUsers]="attachedUsers"
+									  [inputType]="inputType"
+									  (changeAttachedUser)="handleChangeAttachedUsers($event)"
+									  [roles]="roles"></erp-shared-attach-user-table>
+	</div>
+	<div *ngIf="view === modalViewEnum.isOrganigram" class="row gap-2 container-block">
+		<div class="col-lg col-12 border p-4 tree-container">
+			<erp-shared-attach-user-table #t [departments]="departments"
+										  [functions]="functions"
+										  [view]="view"
+										  [userStatuses]="userStatuses"
+										  [attachedUsers]="attachedUsers"
+										  [inputType]="inputType"
+										  [roles]="roles" 
+										  (changeAttachedUser)="handleChangeAttachedUsers($event)"></erp-shared-attach-user-table>
+		</div>
+		<div class="col-lg col-12 border p-4 tree-container">
+			<erp-shared-tree [inputType]="inputType" 
+							 [attachedUsers]="attachedUsers" 
+							 (changeAttachedUser)="t.handleChangeAttachedUsers($event)"></erp-shared-tree>
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer d-lg-flex d-none">
+	<button type="button" class="btn btn-secondary" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+	<button type="button" class="btn btn-primary" (click)="confirm()">{{'button.confirm' | translate}}</button>
+</div>
+<div class="modal-footer d-lg-none d-flex">
+	<button type="button" class="btn btn-primary w-100" (click)="confirm()">{{'button.confirm' | translate}}</button>
+	<button type="button" class="btn btn-secondary w-100 pt-2" (click)="dismiss()">{{'button.cancel' | translate}}</button>
+</div>
+<ng-template #tooltip>
+	<p class="mb-0 font-size-sm" *ngIf="paginatedAttachedIds">{{'button.uncheck-all' | translate}}</p>
+	<p class="mb-0 font-size-sm" *ngIf="!paginatedAttachedIds">{{'button.check-all' | translate}}</p>
+</ng-template>

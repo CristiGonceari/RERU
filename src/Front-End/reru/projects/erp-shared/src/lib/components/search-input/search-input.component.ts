@@ -31,6 +31,7 @@ export class SearchInputComponent {
     this.value = '';
     this.searchBy.next('');
     this.handleSearch.emit('');
+    this.isLoading = false;
   }
 
 }

@@ -35,7 +35,7 @@ export class ImportDepartmentsModalComponent implements OnInit {
   }
 
   setFile(event): void {
-    const file = event.target.files[0];
+    const file = event;
     if (file.size === 0) {
       this.uploadForm.get('file').setErrors({ fileEmpty: true });
       return;

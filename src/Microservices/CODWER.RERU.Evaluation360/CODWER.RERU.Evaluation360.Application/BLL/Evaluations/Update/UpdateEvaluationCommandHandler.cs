@@ -80,13 +80,14 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
                 List<decimal?> listForMf = new List<decimal?> {mea, evaluation.PartialEvaluationScore};
                 mf = listForMf.Average();
             }
+
             else
             {
                 mf = mea;
             }
 
             evaluation.FinalEvaluationQualification = GetQualification(mf);
-            evaluation.Points = mf;
+            evaluation.Points = Math.Round(mf.Value, 2);
         }
     }
 }

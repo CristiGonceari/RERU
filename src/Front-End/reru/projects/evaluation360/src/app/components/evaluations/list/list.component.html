@@ -3,8 +3,10 @@
 <erp-shared-content>
 	<div class="card card-custom erp-shared-desktop-wide">
 		<div class="card-header border-0 pt-6 pb-0">
-			<div class="card-title d-flex gap-5 w-50">
-				<h3 class="card-label font-weight-bolder">{{'evaluations.list' | translate}}</h3>				
+			<div class="card-title d-flex">
+				<h3 class="card-label font-weight-bolder m-0">{{'evaluations.list' | translate}}</h3>
+				<div class="subheader-separator-custom mx-3 bg-gray-200"></div>	
+				<h3 class="text-muted mb-0">{{'evaluations.manage-evaluations' | translate}}</h3>
 			</div>
 			<div class="card-toolbar d-md-flex d-none gap-4">
 				<erp-shared-export-button (click)="openPrintModal()">
@@ -45,7 +47,7 @@
 						<div class="form-group row d-flex align-items-center">
 							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.employee' | translate}}</label>
 							<div class="col-lg col-12">
-								<input class="form-control" type="text" placeholder="Angajat" [(ngModel)]="filters.evaluatedName">
+								<input class="form-control" type="text" placeholder="{{'evaluations.list-table.employee' | translate}}" [(ngModel)]="filters.evaluatedName">
 							</div>
 						</div>
 					</div>
@@ -53,7 +55,7 @@
 						<div class="form-group row d-flex align-items-center">
 							<label class="col-xl-auto col-lg col-12 col-form-label">{{'evaluations.list-table.evaluator' | translate}}</label>
 							<div class="col-lg col-12">
-								<input class="form-control" type="text" placeholder="Evaluator" [(ngModel)]="filters.evaluatorName">
+								<input class="form-control" type="text" placeholder="{{'evaluations.list-table.evaluator' | translate}}" [(ngModel)]="filters.evaluatorName">
 							</div>
 						</div>
 					</div>
@@ -61,7 +63,7 @@
 						<div class="form-group row d-flex align-items-center">
 							<label class="col-xl-auto col-lg col-12">{{'evaluations.list-table.countersigner' | translate}}</label>
 							<div class="col-lg col-12">
-								<input class="form-control" type="text" placeholder="Contrasemnatar" [(ngModel)]="filters.counterSignerName">
+								<input class="form-control" type="text" placeholder="{{'evaluations.list-table.countersigner' | translate}}" [(ngModel)]="filters.counterSignerName">
 							</div>
 						</div>
 					</div>

@@ -68,8 +68,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.Update
                 }
             });
 
-            Console.WriteLine("-----------------------" + evaluated.Email);
-
             return Unit.Value;
         }
 

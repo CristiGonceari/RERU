@@ -1,14 +1,17 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
   <div class="card card-custom gutter-b erp-shared-desktop-wide ml-lg-8">
     <div class="card-header flex-wrap border-0 py5">
-      <div class="card-title"><b>{{'events.test-types' | translate}}</b></div>
+      <div class="card-title"><b id="title">{{'events.test-types' | translate}}</b></div>
       <div class="card-toolbar m-0">
+        <erp-shared-export-button class="mr-3 p-1" (click)="table.printTable(getTitle())">
+					{{'button.export' | translate}}
+				</erp-shared-export-button>
         <app-add-button class="btn" [value]="'events.attach-test-type' | translate"
           [routerLink]="['../../../attach-test-type', id]"></app-add-button>
       </div>
     </div>
     <div class="card-body">
-      <app-table [category]="url" [importedId]="id"></app-table>
+      <app-table [category]="url" [importedId]="id" #table></app-table>
     </div>
   </div>
 </div>
