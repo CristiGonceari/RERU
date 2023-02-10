@@ -283,9 +283,9 @@
     "objective": "Objective",
     "indicator": "Indicator",
     "term": "Term",
-    "established-score-on-fourth-compartment": "The score established in compartment 4) «Basic training» (M⁴)",
-    "yearly-evaluation-score": "Yearly evaluation score",
-    "yearly-evaluation-score-final": "Yearly final evaluation score (Mf = MEa + Mep1 + MEp2 +...+MEpn)",
+    "established-score-on-fourth-compartment": "The score established in compartment 4) «Basic training» (M⁴)<br><small>(constitutes the arithmetic mean obtained from the sum of the average at the 4 compartments of the basic training (Pb) and scoring on physical training (Pf)</small>",
+    "yearly-evaluation-score": "Yearly evaluation score (MEa = M¹ + M² + M³ + M⁴)<br><small>(constitutes the arithmetic mean obtained from the averages established at the compartments 1) – 4)</small>",
+    "yearly-evaluation-score-final": "Yearly final evaluation score (Mf = MEa + Mep1 + MEp2 +...+MEpn)<br><small>(where Mf is the final average, MEa is the average at the annual prof. evaluation, MEp¹ is the average at partial prof. evaluation, MEp² is the average at the second partial prof. evaluation, MEp n where applicable other partial prof. evaluation)</small>",
     "evaluation-final-calificative": "Evaluation final calificative",
     "date-evaluation-interview": "Interview evaluation date",
     "individual-objective-established": "Established individual objectives (date)",
@@ -470,5 +470,9 @@
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
     "module-roles": "Module roles"
+  },
+  "user-state": {
+    "Employee": "Employee",
+    "Candidate": "Candidate"
   }
 }

@@ -475,5 +475,9 @@
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
     "module-roles": "Rolurile modulului"
+  },
+  "user-state": {
+   "Employee": "Angajat",
+   "Candidate": "Candidat"
   }
 }

@@ -257,7 +257,7 @@
     "course-name": "Имя курса",
     "period-running-activity-from": "Период от",
     "period-running-activity-to": "Период до",
-    "administrative-act-of-course": "Actul administrativ (curs)",
+    "administrative-act-of-course": "Административный акт (курс)",
     "modifying-service-during-evaluation-course": {
       "title": "Изменение в сервисном отчете за оцениваемый период",
       "1": "Трудустройство",
@@ -283,8 +283,9 @@
     "objective": "Обьектив",
     "indicator": "Индикатор",
     "term": "Срок",
-    "established-score-on-fourth-compartment": "Балл установлен в купе 4) «Базовая подготовка» (М⁴)",
-    "yearly-evaluation-score": "Оценка на годовой аттестации",
+    "established-score-on-fourth-compartment": "Балл установлен в купе 4) «Базовая подготовка» (М⁴)<br><small>(представляет собой среднее арифметическое, полученное из суммы среднего в 4 отсеках базовой подготовки (Pb) и оценка физической подготовки (Pf)</small>",
+    "yearly-evaluation-score": "Оценка на годовой аттестации  (MEa = M¹ + M² + M³ + M⁴)<br><small>(представляет собой среднее арифметическое, полученное из средних значений, установленных в разделов 1) – 4)</small>",
+    "yearly-evaluation-score-final": "Ежегодный итоговый оценочный балл  (Mf = MEa + Mep¹ + MEp² +...+MEpn)<br><small>(где Mf-окончательное среднее значение, MEa-среднее значение при проф. оценивание, MEp¹ это среднее значение при частичной проф. оценивание, MEp² это среднее значение при второй частичной проф. оценивание, MEp n при других частичных проф. оценивание)</small>",
     "evaluation-final-calificative": "Итоговая оценка",
     "date-evaluation-interview": "Дата оценочного собеседования",
     "individual-objective-established": "Установлены индивидуальные цели (дата)",
@@ -469,5 +470,9 @@
     "info-tag": "Если роль не выбран, статья доступна для всех ролей",
     "info-roles": "Роли, которые могут просматривать эту статью",
     "module-roles": "Роли модуля"
+  },
+  "user-state": {
+    "Employee": "Сотрудник",
+    "Candidate": "Кандидат"
   }
 }

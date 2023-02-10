@@ -24,7 +24,7 @@ export class DeleteLogsModalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal,
     private notificationService: NotificationsService,
     private loggingService: LoggingService,
-    public translate: I18nService) { }
+    private translate: I18nService) { }
 
   ngOnInit(): void {
     this.translateData();

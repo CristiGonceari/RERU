@@ -93,13 +93,13 @@ export class EvaluationProcessComponent implements OnInit {
       this.notification.success = success;
       this.notification.warning = warning;
       this.notification.error = error;
-      this.notification.evWas = evWas;//
-      this.notification.sent = sent;//
-      this.notification.saved = saved;//
+      this.notification.evWas = evWas;
+      this.notification.sent = sent;
+      this.notification.saved = saved;
       this.notification.accepted = accepted;
       this.notification.rejected = rejected;
       this.notification.countersigned = countersigned;
-      this.notification.withSucces = withSucces;//
+      this.notification.withSucces = withSucces;
       this.notification.validationError = validationError;
       this.notification.serverError = serverError;
       this.notification.evaluatedKnown = evaluatedKnown;
