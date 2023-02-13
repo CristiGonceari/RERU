@@ -126,20 +126,6 @@ export class DashboardComponent implements OnInit {
           type: "category",
           categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
               .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
-        },
-        yaxis: {
-          tickAmount: 4,
-          floating: false,
-          labels: {
-            offsetY: -7,
-            offsetX: 0
-          },
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          }
         }
       };
     }
