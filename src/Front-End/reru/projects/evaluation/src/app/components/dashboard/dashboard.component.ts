@@ -6,6 +6,7 @@ import { NotificationUtil } from '../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import {
   ApexNonAxisChartSeries,
   ApexPlotOptions,
@@ -15,8 +16,11 @@ import {
   ApexXAxis,
   ApexStroke,
   ApexTooltip,
-  ApexDataLabels
+  ApexDataLabels,
+  ApexYAxis
 } from "ng-apexcharts";
+import { forkJoin, Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
 export type NotificationsChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -30,6 +34,7 @@ export type TodaysEvaluations = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
+  yaxis: ApexYAxis | ApexYAxis[];
   stroke: ApexStroke;
   tooltip: ApexTooltip;
   dataLabels: ApexDataLabels;
@@ -70,6 +75,7 @@ export class DashboardComponent implements OnInit {
   constructor(private userService: UserProfileService,
               private fileService : CloudFileService,
               private notificationService: NotificationsService,
+              private testService: TestService,
     ) {
       this.notificationsChart = {
         series: [25],
@@ -99,16 +105,12 @@ export class DashboardComponent implements OnInit {
         }
       };
 
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear().toString().slice(2);
+      const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
+
       this.evaluationsChartOptions = {
         series: [
-          {
-            name: "MAI Patrulare",
-            data: [31, 40, 28, 51, 42, 109, 100, 90, 80, 70, 60, 100, 50, 40]
-          },
-          {
-            name: "MAI Criminalistica",
-            data: [11, 32, 45, 32, 34, 52, 41, 55, 61, 55, 45, 41, 39, 14]
-          }
         ],
         chart: {
           height: 350,
@@ -121,38 +123,48 @@ export class DashboardComponent implements OnInit {
           curve: "smooth"
         },
         xaxis: {
-          type: "datetime",
-          categories: [
-            "2022-11-24T08:00:00.000Z",
-            "2022-11-24T09:00:00.000Z",
-            "2022-11-24T10:00:00.000Z",
-            "2022-11-24T11:00:00.000Z",
-            "2022-11-24T12:00:00.000Z",
-            "2022-11-24T13:00:00.000Z",
-            "2022-11-24T14:00:00.000Z",
-            "2022-11-24T15:00:00.000Z",
-            "2022-11-24T16:00:00.000Z",
-            "2022-11-24T17:00:00.000Z",
-            "2022-11-24T18:00:00.000Z",
-            "2022-11-24T19:00:00.000Z",
-            "2022-11-24T20:00:00.000Z",
-            "2022-11-24T21:00:00.000Z",
-          ]
+          type: "category",
+          categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
+              .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
         },
-        tooltip: {
-          x: {
-            format: "dd/MM/yy HH:mm"
+        yaxis: {
+          tickAmount: 4,
+          floating: false,
+          labels: {
+            offsetY: -7,
+            offsetX: 0
+          },
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
           }
         }
       };
-
-
     }
 
   ngOnInit(): void {
     this.retrieveProfile();
     this.getDemoList();
-    // this.evaluationsChartOptions.series = this.generateData(10, 100, 15);
+    this.countTestsAndEvaluations().subscribe(series => {this.evaluationsChartOptions.series = series;});
+    //this.evaluationsChartOptions.series = this.generateData(10, 100, 15);
+  }
+
+  countTestsAndEvaluations() {
+    return forkJoin([
+      this.testService.getNrTests(),
+      this.testService.getNrEvaluations()
+    ]).pipe(map(([tests, evaluations]) => [
+      {
+        name: "Teste",
+        data: tests.data
+      },
+      {
+        name: "Evaluări",
+        data: evaluations.data
+      }
+    ]));
   }
 
   generateData(baseval, count, yrange) {
@@ -275,5 +287,4 @@ export class DashboardComponent implements OnInit {
 			}
 		)
 	}
-  
 }
