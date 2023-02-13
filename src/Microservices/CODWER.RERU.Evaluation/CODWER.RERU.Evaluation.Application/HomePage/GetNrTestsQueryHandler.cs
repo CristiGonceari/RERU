@@ -16,12 +16,10 @@ namespace CODWER.RERU.Evaluation.Application.HomePage
     class GetNrTestsQueryHandler : IRequestHandler<GetNrTestsQuery, List<int>>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IMapper _mapper;
 
-        public GetNrTestsQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetNrTestsQueryHandler(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            _mapper = mapper;
         }
         
         public async Task<List<int>> Handle(GetNrTestsQuery request, CancellationToken cancellationToken)
@@ -38,12 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.HomePage
 
         private List<int> CalculateTestsPerMonth(IQueryable<Test> tests)
         {
-            var currentDate = DateTime.Now;
             var nrTests = new List<int>();
 
             for (int i = 11; i >= 0; i--)
             {
-                var date = currentDate.AddMonths(-i);
+                var date = DateTime.Now.AddMonths(-i);
                 var count = tests.Count(test => test.CreateDate.Month == date.Month && test.CreateDate.Year == date.Year);
 
                 nrTests.Add(count);

@@ -16,12 +16,10 @@ namespace CODWER.RERU.Evaluation.Application.HomePage
     class GetNrEvaluationsQueryHandler : IRequestHandler<GetNrEvaluationsQuery, List<int>>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IMapper _mapper;
 
-        public GetNrEvaluationsQueryHandler(AppDbContext appDbContext, IMapper mapper)
+        public GetNrEvaluationsQueryHandler(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            _mapper = mapper;
         }
         
         public async Task<List<int>> Handle(GetNrEvaluationsQuery request, CancellationToken cancellationToken)
@@ -38,12 +36,11 @@ namespace CODWER.RERU.Evaluation.Application.HomePage
 
         private List<int> CalculateEvaluationsPerMonth(IQueryable<Test> evaluations)
         {
-            var currentDate = DateTime.Now;
             var nrEvaluations = new List<int>();
 
             for (int i = 11; i >= 0; i--)
             {
-                var date = currentDate.AddMonths(-i);
+                var date = DateTime.Now.AddMonths(-i);
                 var count = evaluations.Count(test => test.CreateDate.Month == date.Month && test.CreateDate.Year == date.Year);
 
                 nrEvaluations.Add(count);
