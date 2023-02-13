@@ -61,6 +61,9 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
                                 identityServerUser.PasswordHash =
                                     _userManager.PasswordHasher.HashPassword(identityServerUser, request.Data.Password);
                                 await _userManager.UpdateAsync(identityServerUser);
+
+                                userProfile.Password = request.Data.Password;
+                                await AppDbContext.SaveChangesAsync();
                             }
                         }
                     }
