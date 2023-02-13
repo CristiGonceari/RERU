@@ -1133,5 +1133,10 @@
     "employee-function": "Employee function",
     "function": "Function",
     "search-by-function": "Search by function"
+  },
+  "graph-tests-and-evaluations": {
+    "name": "Tests and Evaluations",
+    "note": "Notes: Tests and Evaluations taken over a year sorted by month",
+    "statistics": "Statistics"
   }
 }

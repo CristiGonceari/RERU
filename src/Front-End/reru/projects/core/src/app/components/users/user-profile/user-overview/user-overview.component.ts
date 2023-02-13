@@ -45,7 +45,7 @@ export class UserOverviewComponent implements OnInit {
       this.idnp = res.data.idnp;
       this.email = res.data.email;
       this.candidatePositionName = res.data.candidatePositionName;
-      this.birthday = res.data.birthday;
+      this.birthday = res.data.birthDate;
       this.phoneNumber = res.data.phoneNumber;
       this.isLoading = false;
     });
