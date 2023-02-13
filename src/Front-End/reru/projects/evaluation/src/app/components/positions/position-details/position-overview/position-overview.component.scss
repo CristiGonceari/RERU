@@ -2,3 +2,22 @@
     cursor: default;
     pointer-events: none !important;
 }
+
+.listAttachedItems { 
+    list-style: none;
+    padding-left: 20px;
+}
+
+.attachedItem {
+    float: left;
+    padding-right: 40px;
+}
+
+.attachedItem::before {
+    content: "\2022";
+    color: #B5B5C3;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1.5em;
+}
