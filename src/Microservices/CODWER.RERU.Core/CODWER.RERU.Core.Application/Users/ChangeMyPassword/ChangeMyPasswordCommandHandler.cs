@@ -29,7 +29,8 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
         {
             var currentUser = await _userProvider.Get();
             var user = await UserManagementDbContext.Users.FirstOrDefaultAsync(u => u.Email == currentUser.Email);
-           
+            var userProfile = await AppDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Id.ToString() == currentUser.Id);
+
             if (await _userManager.CheckPasswordAsync(user, request.oldPassword))
             {
                 if(request.newPassword == request.repeatPassword)
@@ -49,19 +50,27 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
                                 passwordErrors.Add(error.Description);
                                 throw new Exception("Validation Error");
                             }
-                        } else
+                        } 
+                        else
                         {
                             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.newPassword);
                             await _userManager.UpdateAsync(user);
+
+                            userProfile.Password = request.newPassword;
+                            await AppDbContext.SaveChangesAsync();
                         }                       
-                    }  
-                }   else 
+                    }
+                }
+                else
+                {
                     throw new Exception("New password and Repeat password aren't the same");
+                }
             }
             else
             {
                 throw new Exception("Wrong Old Password");
             }
+
             return Unit.Value;
         }
     }
