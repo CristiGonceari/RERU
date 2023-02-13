@@ -44,8 +44,8 @@ export class PositionOverviewComponent implements OnInit {
   get(id: number): void {
     this.positionService.get(id).subscribe(response => {
       this.position = response.data;
-      this.documnets = response.data.requiredDocuments.map(e => e.label).join(", ");
-      this.events = response.data.events.map(e => e.label).join(", ");
+      this.documnets = response.data.requiredDocuments.map(e => e.label);
+      this.events = response.data.events.map(e => e.label);
       this.countOfEvents = response.data.events.length;
       this.getTestTemplateByEventsIds(response.data.events);
       this.getAttachedUsers();
@@ -61,7 +61,7 @@ export class PositionOverviewComponent implements OnInit {
 
   getAttachedUsers() {
     this.candidatePositionNotificationService.getNotificatedUsers(this.position.id).subscribe(res => {
-      this.attachedUsers = res.data.map(e => e.label).join(", ");
+      this.attachedUsers = res.data.map(e => e.label);
       this.countOfUsers = res.data.length;
     })
   }
