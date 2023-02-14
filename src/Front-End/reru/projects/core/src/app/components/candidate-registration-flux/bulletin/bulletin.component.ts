@@ -136,6 +136,14 @@ export class BulletinComponent implements OnInit {
       residenceAddress: this.buildAddress()
     });
   }
+  addressValidation(address)
+  {
+    return address.country && 
+    address.region && 
+    address.city && 
+    address.postCode 
+       ? 'is-valid' : 'is-invalid';
+  }
 
   initExistentForm(contractorId?: number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress?, parentsResidenceAddress?): void {
 
