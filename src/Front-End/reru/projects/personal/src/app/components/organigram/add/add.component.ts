@@ -179,10 +179,16 @@ export class AddComponent extends EnterSubmitListener implements OnInit {
         }
       }, error => {
         if (error.status === 400) {
+          this.organigramService.delete(this.organigramForm.value.organizationalChartId).subscribe(() =>{
+            this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+          });
           this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
 
           return;
         }
+        this.organigramService.delete(this.organigramForm.value.organizationalChartId).subscribe(() =>{
+          this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
+        });
         this.notificationService.error(this.notification.error, this.notification.errorAdd, NotificationUtil.getDefaultMidConfig());
       });
     }

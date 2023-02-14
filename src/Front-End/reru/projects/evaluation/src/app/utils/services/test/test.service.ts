@@ -288,4 +288,12 @@ export class TestService extends AbstractService {
 	getMyPollsCount(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls-count`, {params});
 	}
+
+	getNrTests(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/HomePage/tests-count`);
+	}
+
+	getNrEvaluations(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/HomePage/evaluations-count`);
+	}
 }

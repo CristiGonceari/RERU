@@ -1133,5 +1133,10 @@
     "employee-function": "Funcție angajat",
     "function": "Funcție",
     "search-by-function": "Căutați după funcție"
+  },
+  "graph-tests-and-evaluations": {
+    "name": "Teste și Evaluări",
+    "note": "Notițe: Teste și Evaluări efectuate timp de un an sortate după luni",
+    "statistics": "Statistici"
   }
 }
