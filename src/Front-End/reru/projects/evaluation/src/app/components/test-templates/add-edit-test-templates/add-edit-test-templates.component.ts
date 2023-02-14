@@ -124,7 +124,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
-					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate || null, [Validators.required])
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -139,7 +139,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
-					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate || null, [Validators.required])
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -156,7 +156,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null, [Validators.required])
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			} else if (this.modeId == 1) {
 				this.testForm = this.formBuilder.group({
@@ -165,7 +165,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					mode: this.formBuilder.control(this.modeId, [Validators.required],),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null, [Validators.required])
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			} else {
 				this.testForm = this.formBuilder.group({
@@ -175,7 +175,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null, [Validators.required])
+					basicTestTemplate: this.formBuilder.control(null)
 				});
 			}
 		}

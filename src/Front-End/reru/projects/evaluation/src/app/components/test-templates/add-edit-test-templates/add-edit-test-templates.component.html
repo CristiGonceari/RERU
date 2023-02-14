@@ -110,7 +110,7 @@
                                             <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'tests.basic-template-dropdown.title' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <select class="form-control form-control-solid" formControlName="basicTestTemplate">
-                                                    <option [value]="null" disabled selected hidden>{{'questions.select' | translate}}</option>
+                                                    <option [value]="null">{{ 'tests.basic-template-dropdown.0' | translate }}</option>
                                                     <option [value]="basicTemplateEnum.GeneralTraining">{{ 'tests.basic-template-dropdown.1' | translate }}</option>
                                                     <option [value]="basicTemplateEnum.SpecializedTraining">{{ 'tests.basic-template-dropdown.2' | translate }}</option>
                                                     <option [value]="basicTemplateEnum.ShootingInstruction">{{ 'tests.basic-template-dropdown.3' | translate }}</option>
@@ -124,7 +124,6 @@
                             <div class="text-right border-top pt-10">
                                 <app-button class="btn mr-2" [value]="'button.cancel' | translate"
                                     (handle)="backClicked()"></app-button>
-
                                 <app-add-button class="btn" *ngIf="!testId" [disabled]="testForm.invalid"
                                     (handle)="onSave()" [value]="'button.confirm' | translate"></app-add-button>
                                 <app-confirm-button class="btn" *ngIf="testId" [disabled]="testForm.invalid"
