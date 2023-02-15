@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
 	}
 
   clearFields() {
-    this.documentName.key='';
+    this.documentName.value= "";
 		this.searchStatus.getDocumentTemplatesType();
 	}
 
