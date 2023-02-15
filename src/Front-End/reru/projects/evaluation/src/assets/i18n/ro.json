@@ -404,7 +404,8 @@
     "start-test": "Testul va începe în câteva minute",
     "verified-by-system": "Verificat de sistem",
     "basic-template-dropdown": {
-      "title": "Șablon",
+      "title": "Șablon de bază",
+      "0": "Nu are",
       "1": "Pregătire generală",
       "2": "Pregătire de specialitate",
       "3": "Instrucțiunea tragerii",
