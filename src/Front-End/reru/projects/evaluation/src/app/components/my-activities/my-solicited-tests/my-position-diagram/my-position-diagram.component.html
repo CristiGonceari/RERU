@@ -34,7 +34,9 @@
                         <tr>
                             <th style="vertical-align: middle;">{{ 'events.events' | translate }}</th>
                             <th style="vertical-align: middle;">{{ 'sidebar.manage-tests' | translate }}</th>
-                            <th style="vertical-align: middle;">{{ 'tests.title' | translate }}</th>
+                            <th style="vertical-align: middle;">{{ 'verify-test.result' | translate }}</th>
+                            <th style="vertical-align: middle;">{{ 'evaluations.latest-changes' | translate }}</th>
+                            <th style="vertical-align: middle;">{{ 'position.status' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody class="text-dark-75" *ngFor="let event of eventsDiagram">
@@ -51,8 +53,20 @@
                             <td>
                                 <div *ngFor="let tests of getTests(testTemplate.testTemplateId, event.eventId)">
                                     <span *ngFor="let test of tests.tests">
-                                        -{{ translateResultValue(test.resultValue) }},
-                                        {{test.passDate | date: 'dd/MM/yyyy HH:mm'}},
+                                        {{ translateResultValue(test.resultValue) }}<br>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngFor="let tests of getTests(testTemplate.testTemplateId, event.eventId)">
+                                    <span *ngFor="let test of tests.tests">
+                                        {{test.passDate | date: 'dd/MM/yyyy HH:mm'}} <br>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngFor="let tests of getTests(testTemplate.testTemplateId, event.eventId)">
+                                    <span *ngFor="let test of tests.tests">
                                         {{'statuses.' + status[test.status] | translate}} <br>
                                     </span>
                                 </div>

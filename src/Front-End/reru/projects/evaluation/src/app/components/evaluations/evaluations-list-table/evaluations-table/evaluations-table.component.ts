@@ -58,6 +58,8 @@ export class EvaluationsTableComponent implements OnInit {
   eventName;
   locationName;
   idnp: string;
+  roleName;
+  functionName;
   isLoading: boolean = true;
 	downloadFile: boolean = false;
 	headersToPrint = [];
@@ -268,11 +270,11 @@ export class EvaluationsTableComponent implements OnInit {
       'testTemplateName', 
       'userName',
       'evaluatorName', 
-      'eventName', 
+      'eventName',
       'departmentName',
       'locationNames', 
       'testStatus', 
-      'resultValue'
+      'result'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {
@@ -280,10 +282,11 @@ export class EvaluationsTableComponent implements OnInit {
         this.headersToPrint.push({ value: "idnp", label: "Idnp", isChecked: true})
       }
       if(i == 4){
-         headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
+        headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
       }
       if(i == 5){
-        this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
+        this.headersToPrint.push({ value: "functionName", label: this.functionName, isChecked: true})
+        this.headersToPrint.push({ value: "roleName", label: this.roleName, isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -318,7 +321,7 @@ export class EvaluationsTableComponent implements OnInit {
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
-      		this.translate.get('print.select-file-format')
+      this.translate.get('print.select-file-format')
 		]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {
@@ -326,6 +329,14 @@ export class EvaluationsTableComponent implements OnInit {
 				}
 			}
 		);
+
+    forkJoin([
+      this.translate.get('user-roles.function'),
+      this.translate.get('user-roles.role'),
+    ]).subscribe(([roleName, functionName]) => {
+      this.roleName = roleName;
+      this.functionName = functionName;
+    });
 	}
 
 	printTable(data): void {

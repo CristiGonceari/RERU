@@ -547,6 +547,7 @@
     "add-document": "Добавить документ",
     "mandatory": "Принудительный",
     "success-delete-mgs": "Документ успешно удален",
+    "error-delete-mgs": "При удалении документа произошла ошибка!",
     "want-to-del-msg": "Вы хотите удалить этот документ",
     "document-application": "Управление документами",
     "check-mandatory-application": "Выбери если обязательно при подаче заявки"
@@ -1088,6 +1089,7 @@
     "received-evaluations": "Полученные оценки",
     "granted-evaluations": "Выставленные оценки",
     "performed-tests": "Проведенные тесты",
+    "latest-changes": "Последнее изменения",
     "attach-notified-users": "Уведомленные пользователи"
   },
   "footer": {
