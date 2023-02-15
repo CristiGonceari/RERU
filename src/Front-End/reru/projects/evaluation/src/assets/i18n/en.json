@@ -548,6 +548,7 @@
     "add-document": "Add document",
     "mandatory": "Mandatory",
     "success-delete-mgs": "Document was successfuly deleted",
+    "error-delete-mgs": "There was an error deleting the document!",
     "want-to-del-msg": "Do you want to delete document",
     "document-application": "Manage documents",
     "check-mandatory-application": "Select if required to apply"
@@ -1089,6 +1090,7 @@
     "received-evaluations": "Received evaluations",
     "granted-evaluations": "Granted evaluations",
     "performed-tests": "Performed tests",
+    "latest-changes": "Latest change",
     "attach-notified-users": "Notified users"
   },
   "footer": {

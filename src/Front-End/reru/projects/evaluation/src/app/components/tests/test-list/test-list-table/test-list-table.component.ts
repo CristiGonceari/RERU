@@ -57,6 +57,8 @@ export class TestListTableComponent implements OnInit {
   testPassEnum: TestStatusEnum;
   eventName;
   locationName;
+  roleName;
+  functionName;
   isLoading: boolean = true;
 	downloadFile: boolean = false;
 	headersToPrint = [];
@@ -336,7 +338,8 @@ export class TestListTableComponent implements OnInit {
          headersHtml[i].innerHTML = headersHtml[i].innerHTML.split('/')[0]
       }
       if(i == 5){
-        this.headersToPrint.push({ value: "roleName", label: "Role", isChecked: true})
+        this.headersToPrint.push({ value: "functionName", label: this.functionName, isChecked: true})
+        this.headersToPrint.push({ value: "roleName", label: this.roleName, isChecked: true})
       }
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -381,6 +384,14 @@ export class TestListTableComponent implements OnInit {
 				}
 			}
 		);
+
+    forkJoin([
+      this.translate.get('user-roles.function'),
+      this.translate.get('user-roles.role'),
+    ]).subscribe(([roleName, functionName]) => {
+      this.roleName = roleName;
+      this.functionName = functionName;
+    });
 	}
 
 	printTable(data): void {
