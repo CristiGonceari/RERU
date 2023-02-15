@@ -21,6 +21,7 @@ import { FileTypeEnum } from '../../../../utils/enums/file-type.enum';
 import { QualifyingTypeEnum } from 'projects/evaluation/src/app/utils/enums/qualifying-type.enum';
 import { ParsePrintTabelService } from 'projects/evaluation/src/app/utils/services/parse-print-table/parse-print-tabel.service';
 import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
+import { BasicTemplateEnum } from 'projects/evaluation/src/app/utils/enums/basic-template.enum';
 
 @Component({
 	selector: 'app-test-template-list-table',
@@ -35,6 +36,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	testName: string;
 	modeEnum = TestTemplateModeEnum;
 	qualifyingType = QualifyingTypeEnum;
+	basicTestTemplate = BasicTemplateEnum;
 
 	keyword: string;
 	status: string = '';
@@ -76,7 +78,7 @@ export class TestTemplateListTableComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'categoriesCount', 'questionCount', 'duration', 'minPercent', 'mode', 'qualifyingType', 'status', "canBeSolicited"];
+		let headersDto = ['name', 'categoriesCount', 'questionCount', 'duration', 'minPercent', 'mode', 'basicTestTemplate', 'qualifyingType', 'status', "canBeSolicited"];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

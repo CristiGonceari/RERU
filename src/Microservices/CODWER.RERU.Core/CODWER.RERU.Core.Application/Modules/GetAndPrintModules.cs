@@ -8,7 +8,7 @@ namespace CODWER.RERU.Core.Application.Modules
     {
         public static IQueryable<global::RERU.Data.Entities.Module> Filter(AppDbContext appDbContext, string name)
         {
-            var modules = appDbContext.Modules.AsQueryable();
+            var modules = appDbContext.Modules.OrderByDescending(m=>m.Priority).AsQueryable();
 
             if (name != null && !string.IsNullOrEmpty(name))
             {
