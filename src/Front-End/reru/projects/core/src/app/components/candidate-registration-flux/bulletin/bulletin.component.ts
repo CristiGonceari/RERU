@@ -136,6 +136,7 @@ export class BulletinComponent implements OnInit {
       residenceAddress: this.buildAddress()
     });
   }
+  
   addressValidation(address)
   {
     return address.country && 
