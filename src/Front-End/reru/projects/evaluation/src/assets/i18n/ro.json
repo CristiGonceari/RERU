@@ -547,6 +547,7 @@
     "add-document": "Adauga document",
     "mandatory": "Obligatoriu",
     "success-delete-mgs": "Documentul a fost sters cu succes",
+    "error-delete-mgs": "A apărut o eroare la ștergerea documentului!",
     "want-to-del-msg": "Doriti sa stergeti acest document",
     "document-application": "Gestionarea documentelor",
     "check-mandatory-application": "Selectati daca este obligatoriu la candidare"

@@ -49,7 +49,7 @@ export class PositionAddTestComponent implements OnInit {
   myControl = new FormControl();
 
   showEventCard: boolean = false;
-  showName: boolean = false;
+  showName: boolean = true;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
