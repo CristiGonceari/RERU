@@ -4,7 +4,7 @@ import { NotificationUtil } from '../../../utils/util/notification.util';
 import { NotificationsService } from 'angular2-notifications';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { DocumentTemplateService } from '../../../utils/services/document-template/document-template.service';
 import { DocumentKeyEnum } from '../../../utils/models/document-template/document-template-keys.enum';
 import { DocumentTemplateKeys } from '../../../utils/models/document-template/document-template-keys.model';
@@ -13,6 +13,7 @@ import { SelectItem } from '../../../utils/models/select-item.model';
 import { saveAs } from 'file-saver';
 import { ObjectUtil } from '../../../utils/util/object.util';
 import { TestTemplateService } from '../../../utils/services/test-template/test-template.service';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-add',
@@ -25,6 +26,7 @@ export class AddComponent implements OnInit {
   filterForm: FormGroup;
   editorValue: string = '';
   title: string;
+  description: string;
   fileType = new SelectItem({value: "0", label: "Select"});
   forEditFileType: any = [];
   editor: string[] =[];
@@ -40,6 +42,7 @@ export class AddComponent implements OnInit {
     private location: Location,
     private notificationService: NotificationsService,
     private activatedRoute: ActivatedRoute,
+    public translate: I18nService,
   ) { }
 
   ngOnInit(): void {
@@ -116,12 +119,30 @@ export class AddComponent implements OnInit {
     if (this.documentId) {
       this.documentTemplateService.edit(editDocument).subscribe(() => {
         this.backCancel();
-        this.notificationService.success('Success', 'Document was successfully updated', NotificationUtil.getDefaultMidConfig());
+
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('require-documents.document-edited-msg'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     } else {
       this.documentTemplateService.create(createDocument).subscribe(() => {
         this.backCancel();
-        this.notificationService.success('Success', 'Document was successfully added', NotificationUtil.getDefaultMidConfig());
+
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('require-documents.document-added-msg'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       });
     }
   }
