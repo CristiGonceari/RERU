@@ -643,6 +643,13 @@
     "birth-place":"Locul nasterii",
     "residence-address":"Adresa de rezidenta",
     "parents-residence-address":"Adresa de reședință a părinților",
+    "abbreviations":{
+      "city":"or. ",
+      "street":"str. ",
+      "boulevard":"bd. ",
+      "apartment":"ap. ",
+      "post-code":"Cod poștal. "
+    },
     "modal":{
       "country": "Țara",
       "region": "Regiunea",
@@ -650,7 +657,7 @@
       "street": "Strada",
       "building": "Bloc",
       "apartment": "Apartament",
-      "post-code": "Cod poștal"
+      "post-code": "Cod poștal."
     }
   },
   "study":{
@@ -785,7 +792,7 @@
   },
   "step":{
     "GeneralData": "Date Generale",
-    "Bulletin": "Bulletin",
+    "Bulletin": "Buletin",
     "Study": "Studii",
     "MaterialStatus": "Starea civilă",
     "MilitaryObligation": "Obligație militară",

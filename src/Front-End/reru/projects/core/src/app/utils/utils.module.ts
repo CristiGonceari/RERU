@@ -18,6 +18,7 @@ import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/b
 import { SearchDepartmentComponent } from './components/search-department/search-department.component';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
+import { SharedModule } from '@erp/shared';
 
 const commonComponents = [
   DateComponent,
@@ -43,7 +44,8 @@ const commonComponents = [
     TranslateModule, 
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [...commonComponents],
   providers: [
