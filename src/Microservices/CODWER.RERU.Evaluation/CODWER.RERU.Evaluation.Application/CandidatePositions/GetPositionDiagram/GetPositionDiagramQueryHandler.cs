@@ -113,7 +113,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
             return _appDbContext.EventTestTemplates
                 .Where(x => x.EventId == eventId &&
                             x.TestTemplateId == testTemplateId)
-                .OrderBy(x => x.EventId)
+                .OrderBy(x => x.CreateDate)
                 .Select(x => _mapper.Map<TestsByTestTemplateDiagramDto>(x))
                 .ToList();
         }
