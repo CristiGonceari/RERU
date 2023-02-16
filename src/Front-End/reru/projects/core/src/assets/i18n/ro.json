@@ -15,7 +15,7 @@
   "registration-page":{
     "about-us": "E bine să știi",
     "registration": "Înregistrare",
-    "success-message": "Te-ai inregistrat cu succes, parola ta a fost trimisa pe email !!",
+    "success-message": "Te-ai înregistrat cu succes, parola ta a fost trimisă pe email !!",
     "registration-datas": "Date de înregistrare",
     "to-add-new-candidate": "Pentru a vă înregistra în calitate de candidat, este necesar să completați formularul de mai jos.",
     "after-registration-recive-email": "După înregistrare, vi se va expedia un email cu credențialele dvs. ",
@@ -36,7 +36,7 @@
     "personal-file": "Fișa Personala",
     "personal-form-file": "Formular pentru completarea datelor personale",
     "upload-files": "Plasați fișiere aici sau faceți clic pentru a încărca",
-    "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați in zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
+    "personal-file-msg": "Pentru a completa fișa personala vă rugăm să o descărcati, accesând butonul de mai jos. După ce completați fișa personala, o încărcați în zona de mai jos împreună cu celelalte documente necesare. Completarea fișei este obligatorie"
   },
   "reset-pass": {
     "card-header-main": "Găseşte-ţi contul",
@@ -67,7 +67,7 @@
     "title": "Pagina de poziții vacante",
     "details": "Detalii despre poziția vacantă",
     "available-from": "Valabil de la",
-    "available-to": "Valabil pana la"
+    "available-to": "Valabil până la"
   },
   "module-type": {
     "dynamic": "Dinamic",
@@ -93,7 +93,7 @@
     "import-departments": "Importă departamente",
     "import-roles": "Importă roluri",
     "modal-title": "Încărcarea documentelor",
-    "modal-description": "Încarcă document sau apasa aici pentru incarcare"
+    "modal-description": "Încarcă document sau apasă aici pentru încărcare"
   },
   "login": {
     "admin-panel": "Panou de Administrare",
@@ -123,7 +123,7 @@
       "success": {
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
-        "delete": "A fost sters cu succes!",
+        "delete": "A fost șters cu succes!",
         "login": "Logare cu succes!"
       },
       "error": "A avut loc o eroare!",
@@ -166,7 +166,7 @@
     "no": "Nu"
   },
   "button": {
-    "change": "Schimba",
+    "change": "Schimbă",
     "add": "Adaugă",
     "edit": "Editează",
     "cancel": "Anulează",
@@ -194,8 +194,8 @@
     "no": "Nu",
     "attach": "Atașează",
     "print": "Imprimă",
-    "watch": "Priveste video",
-    "import": "Importa",
+    "watch": "Privește video",
+    "import": "Importă",
     "loading": "Se încarcă",
     "next": "Următorul",
     "finish": "Finalizează",
@@ -299,9 +299,9 @@
   "processes":{
     "totalProcesses": "Procese Totale",
     "doneProcesses": "Procese Efectuate",
-    "startTime": "Inceput",
-    "endTime": "Sfarsit",
-    "file": "Fisier",
+    "startTime": "Început",
+    "endTime": "Sfârșit",
+    "file": "Fișier",
     "history": "Istoria"
   },
   "user-profile": {
@@ -376,7 +376,7 @@
     "uppercase-character": "1 caracter majuscul",
     "number": "1 număr",
     "special-character": "1 caracter special",
-    "password-are-not-the-same": "Parola noua și parola repetată trebie să coincidă"
+    "password-are-not-the-same": "Parola nouă și parola repetată trebie să coincidă"
   },
   "deactivate-user": {
     "title": "Dezactivarea utilizatorului",
@@ -441,7 +441,7 @@
       "development": "Dezvoltarea modulelor",
       "info": "Informații despre modul",
       "delete-msg": "Sigur doriți să ștergeți acest modul",
-      "succes-delete-msg": "Modulul a fost sters cu succes!",
+      "succes-delete-msg": "Modulul a fost șters cu succes!",
       "succes-create": "Modulul a fost creat cu succes!",
       "success-edit": "Modulul a fost editat cu succes!"
     },
@@ -544,7 +544,7 @@
     "01000203": "Date nevalide!",
     "01000204": "Id nevalid!",
     "01000301": "Postul nevalid",
-    "01000302": "Introduceti denumirea pozitiei",
+    "01000302": "Introduceți denumirea poziției",
     "01000106": "Modul de acces necompletat",
     "01000108": "Cod incorect",
     "01000109": "Vârsta minimă trebuie să fie de 18 ani",
@@ -638,10 +638,10 @@
   "bulletin":{
     "series":"Seria",
     "emited-by":"Emis de",
-    "relase-day":"Data eliberarii",
+    "relase-day":"Data eliberării",
     "adresses":"Adresa",
-    "birth-place":"Locul nasterii",
-    "residence-address":"Adresa de rezidenta",
+    "birth-place":"Locul nașterii",
+    "residence-address":"Adresa de rezidență",
     "parents-residence-address":"Adresa de reședință a părinților",
     "abbreviations":{
       "city":"or. ",
@@ -737,8 +737,8 @@
     "Female": "Feminin"
   },
   "languageKnowledge":{
-    "Basic": "Cunostinte bază",
-    "BasicKnowledge": "Cunostinte bază",
+    "Basic": "Cunoștințe de bază",
+    "BasicKnowledge": "Cunoștințe de bază",
     "Medium": "Mediu",
     "Good" : "Bine",
     "VeryGood": "Foarte bine"
@@ -747,7 +747,7 @@
     "1": "Studii de bază",
     "2": "Universitare",
     "3": "PostUniversitare",
-    "4": "Cursuri de Perfectionare",
+    "4": "Cursuri de Perfecționare",
     "5": "Cursuri de Specializare"
   },
   "studyFrequency":{
@@ -776,13 +776,13 @@
     "WifesSisters" : "Surorile soției"
   },
   "militaryObligationType":{
-    "AlternativeService" : "Serviciu de alternativa",
+    "AlternativeService" : "Serviciu de alternativă",
     "PerformedMilitaryService" : "Serviciul militar indeplinit",
     "Recruit" : "Recrut",
     "Reservist" : "Rezervist"
   },
   "stepper":{
-    "button-update-and-next":"Actualizeaza și treci la pasul următor",
+    "button-update-and-next":"Actualizează și treci la pasul următor",
     "button-save-and-next":"Adaugă și treci la pasul următor",
     "button-next":"Treci la pasul următor",
     "button-update":"Actualizează",
