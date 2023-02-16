@@ -43,6 +43,7 @@ export class DiagramComponent implements OnInit {
 	yes: string;
 
 	isOpenAddTest: boolean = false;
+	isOpenAddEvaluation: boolean = false;
 
 	selectedEventId;
 	selectedTestTemplateId;
@@ -196,11 +197,13 @@ export class DiagramComponent implements OnInit {
 		modalRef.componentInstance.testTemplates = this.testTemplates;
 		modalRef.componentInstance.positionId = this.positionId;
 		modalRef.result.then(() => {
-			if ((modalRef.result?.__zone_symbol__value?.isOpenAddTest &&
+			if (((modalRef.result?.__zone_symbol__value?.isOpenAddTest ||
+				modalRef.result?.__zone_symbol__value?.isOpenAddEvaluation) &&
 				modalRef.result?.__zone_symbol__value?.selectedEventId &&
 				modalRef.result?.__zone_symbol__value?.selectedTestTemplateId) != null
 			) {
 				this.isOpenAddTest = modalRef.result.__zone_symbol__value.isOpenAddTest;
+				this.isOpenAddEvaluation = modalRef.result.__zone_symbol__value.isOpenAddEvaluation;
 				this.selectedEventId = modalRef.result.__zone_symbol__value.selectedEventId;
 				this.selectedTestTemplateId = modalRef.result.__zone_symbol__value.selectedTestTemplateId;
 			}
@@ -208,13 +211,25 @@ export class DiagramComponent implements OnInit {
 	}
 
 	openAddTest(value) {
-		this.isOpenAddTest = true;
-		this.selectedEventId = value.eventId;
-		this.selectedTestTemplateId = value.testTemplateId;
+		if (value.mode == 0) {
+			this.isOpenAddTest = true;
+			this.selectedEventId = value.eventId;
+			this.selectedTestTemplateId = value.testTemplateId;
+		} else if (value.mode == 2) {
+			this.isOpenAddEvaluation = true;
+			this.selectedEventId = value.eventId;
+			this.selectedTestTemplateId = value.testTemplateId;
+		}
 	}
 
 	onChangeAddTest(value: boolean) {
 		this.isOpenAddTest = value;
+		this.clearDiagramData();
+		this.getDiagram();
+	}
+
+	onChangeAddEvaluation(value: boolean) {
+		this.isOpenAddEvaluation = value;
 		this.clearDiagramData();
 		this.getDiagram();
 	}
