@@ -96,7 +96,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 {
                     await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        Subject = "New account",
+                        Subject = "Cont nou",
                         To = identityUser.Email,
                         HtmlTemplateAddress = "Templates/UserRegister.html",
                         ReplacedValues = new Dictionary<string, string>()
@@ -133,7 +133,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 {
                     await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        Subject = "Update account",
+                        Subject = "Email editat",
                         To = identityUser.Email,
                         HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                         ReplacedValues = new Dictionary<string, string>()
@@ -191,7 +191,7 @@ namespace CODWER.RERU.Core.Application.Common.Services.Identity.IdentityServer
                 {
                     await _notificationService.PutEmailInQueue(new QueuedEmailData
                     {
-                        Subject = "Reset Password",
+                        Subject = "Resetarea parolei",
                         To = user.Email,
                         HtmlTemplateAddress = "Templates/ResetPassword.html",
                         ReplacedValues = new Dictionary<string, string>()
