@@ -19,37 +19,32 @@
                 <!-- <div class="card-body"> -->
                     <div class="card-header border-0 pt-0 pb-0 pr-5">
                         <div class="row w-100">
-                            <div class="col-lg col-md-6 col-12">
-                                <div class="input-group input-group-sm input-group-solid">
-                                  <input class="form-control"  type="text" name="testName" [(ngModel)]="testsTable.filters.testName" 
-                                  [placeholder]="'button.search-name' | translate" #testname/>
-                                </div>
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testName=$event"
+                                    [placeholder]="'button.search-name' | translate" #testName>
+                                </erp-shared-search-input>
                             </div>
-                            <div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
-                                <div class="input-group input-group-sm input-group-solid">
-                                  <input class="form-control"  type="text" name="userName" [(ngModel)]="testsTable.filters.userName" 
-                                  [placeholder]="'verify-test.search-student' | translate"/>
-                                </div>
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.userName=$event"
+                                    [placeholder]="'verify-test.search-student' | translate" #userName>
+                                </erp-shared-search-input>
                             </div>
-                            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-                                <div class="input-group input-group-sm input-group-solid">
-                                  <input class="form-control"  type="text" name="evaluatorName" [(ngModel)]="testsTable.filters.evaluatorName" 
-                                  [placeholder]="'evaluations.search-evaluator' | translate"/>
-                                </div>
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.evaluatorName=$event"
+                                    [placeholder]="'evaluations.search-evaluator' | translate" #evaluatorName>
+                                </erp-shared-search-input>
                             </div>
-                            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-                                <div class="input-group input-group-sm input-group-solid">
-                                  <input class="form-control"  type="text" name="evaluatorName" [(ngModel)]="testsTable.filters.testEvent" 
-                                  [placeholder]="'events.search-event' | translate"/>
-                                </div>
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testEvent=$event"
+                                    [placeholder]="'events.search-event' | translate" #testEvent>
+                                </erp-shared-search-input>
                             </div>
                         </div>
                         <div class="row w-100 mt-3">
-                            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-                                <div class="input-group input-group-sm input-group-solid">
-                                  <input class="form-control"  type="text" name="evaluatorName" [(ngModel)]="testsTable.filters.testLocation" 
-                                  [placeholder]="'events.search-location' | translate"/>
-                                </div>
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testLocation=$event"
+                                    [placeholder]="'events.search-location' | translate" #testLocation>
+                                </erp-shared-search-input>
                             </div>
                             <div class="col">
                                 <app-search-result (filter)="testsTable.setFilter('selectedResult', $event)" #selectedResult>

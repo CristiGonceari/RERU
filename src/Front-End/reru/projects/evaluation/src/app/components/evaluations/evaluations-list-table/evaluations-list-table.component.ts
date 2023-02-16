@@ -32,6 +32,11 @@ export class EvaluationsListTableComponent implements OnInit {
   }
 
   clearFields() {
+    this.testName.clearSearch();
+    this.userName.clearSearch();
+    this.evaluatorName.clearSearch();
+    this.testEvent.clearSearch();
+    this.testLocation.clearSearch();
     this.selectedResult.getTestResults();
     this.departmentId.department = '';
     this.roleId.role = '';
