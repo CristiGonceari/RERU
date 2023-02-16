@@ -76,7 +76,7 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
                     {
                         await _notificationService.PutEmailInQueue(new QueuedEmailData
                         {
-                            Subject = "New password",
+                            Subject = "Parolă nouă",
                             To = identityServerUser.Email,
                             HtmlTemplateAddress = "Templates/SetPassword.html",
                             ReplacedValues = new Dictionary<string, string>()

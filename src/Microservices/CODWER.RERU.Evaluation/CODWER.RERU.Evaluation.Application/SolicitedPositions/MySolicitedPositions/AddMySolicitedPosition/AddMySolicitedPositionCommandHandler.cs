@@ -95,7 +95,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
         {
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Pozitia candidata",
+                Subject = "Poziția candidată",
                 To = responsiblePerson.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()

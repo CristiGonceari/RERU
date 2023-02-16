@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
       };
 
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString().slice(2);
+      const currentYear = new Date().getFullYear().toString();
       const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
 
       this.evaluationsChartOptions = {
