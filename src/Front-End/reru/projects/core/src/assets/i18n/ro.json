@@ -299,9 +299,9 @@
   "processes":{
     "totalProcesses": "Procese Totale",
     "doneProcesses": "Procese Efectuate",
-    "startTime": "Inceput",
-    "endTime": "Sfarsit",
-    "file": "Fisier",
+    "startTime": "Început",
+    "endTime": "Sfârșit",
+    "file": "Fișier",
     "history": "Istoria"
   },
   "user-profile": {
@@ -544,7 +544,7 @@
     "01000203": "Date nevalide!",
     "01000204": "Id nevalid!",
     "01000301": "Postul nevalid",
-    "01000302": "Introduceti denumirea pozitiei",
+    "01000302": "Introduceți denumirea poziției",
     "01000106": "Modul de acces necompletat",
     "01000108": "Cod incorect",
     "01000109": "Vârsta minimă trebuie să fie de 18 ani",
