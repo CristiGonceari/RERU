@@ -1,4 +1,4 @@
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isOpenAddTest">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isOpenAddTest && !isOpenAddEvaluation">
     <div class="card card-custom gutter-b" style="margin-left: 16px;">
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title"><b>{{'position.position-diagram' | translate}}</b></div>
@@ -118,6 +118,15 @@
         <div class="card-body">
             <app-position-add-test [eventId]="selectedEventId" [testTemplateId]="selectedTestTemplateId"
                 [positionId]="positionId" [usersDiagram]="usersDiagram" (newItemEvent)="onChangeAddTest($event)"></app-position-add-test>
+        </div>
+    </div>
+</div>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="isOpenAddEvaluation">
+    <div class="card card-custom gutter-b" style="margin-left: 16px;">
+        <div class="card-body">
+                <app-position-add-evaluation [eventId]="selectedEventId" [testTemplateId]="selectedTestTemplateId"
+                [positionId]="positionId" [usersDiagram]="usersDiagram" (newItemEvent)="onChangeAddEvaluation($event)">
+                </app-position-add-evaluation>
         </div>
     </div>
 </div>

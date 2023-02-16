@@ -648,6 +648,13 @@
     "birth-place":"Место рождения",
     "residence-address":"Адрес места проживания",
     "parents-residence-address":"Aдрес проживания родителей",
+    "abbreviations":{
+      "city":"г. ",
+      "street":"ул. ",
+      "boulevard":"бул. ",
+      "apartment":"кв. ",
+      "post-code":"почтовый индекс. "
+    },
     "modal":{
       "country": "Страна",
       "region": "Регион",

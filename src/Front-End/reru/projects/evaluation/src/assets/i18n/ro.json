@@ -51,7 +51,9 @@
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
         "delete": "A fost sters cu succes!",
-        "login": "Logare cu succes!"
+        "login": "Logare cu succes!",
+        "success-add-mgs": "Documentul a fost adăugat cu succes",
+        "success-edit-mgs": "Documentul a fost editat cu succes"
       },
       "error": "A avut loc o eroare!"
     },
@@ -103,7 +105,8 @@
     "documents-management": "Management de Șabloane",
     "administration": "Administrare candidați",
     "positions": "Poziții vacante",
-    "required-documents": "Documente Necesare"
+    "required-documents": "Documente Necesare",
+    "today":"Astăzi"
   },
   "position": {
     "administration": "Administrare",
@@ -485,6 +488,13 @@
     "have-a-good-day": "Bine ai venit!",
     "my-activities": "Activitățile mele",
     "my-evaluated-tests": "Testele personal evaluate",
+    "notifications": "Notificări",
+    "check-notifications": "Verificați notificările",
+    "new-notification": "Notificări noi",
+    "tests": "Teste",
+    "evaluations": "Evaluări",
+    "notice1": "Notite: Afiseaza notificarile noi aparute",
+    "notice2": "avand numarul total de notificari",
     "enclosed-mode":"Mod restrâns"
   },
   "questions": {

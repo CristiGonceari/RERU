@@ -882,14 +882,25 @@
     "title": {
       "success": "Succes",
       "error": "Eroare",
-      "warning": "Atenție"
+      "warning": "Atenție",
+      "contractor": "Angajat"
     },
     "body": {
       "success": {
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
         "delete": "A fost sters cu succes!",
-        "login": "Logare cu succes!"
+        "login": "Logare cu succes!",
+        "success-add-mgs": "Documentul a fost adăugat cu succes",
+        "success-edit-mgs": "Documentul a fost editat cu succes",
+        "contractor-update": "Angajatul a fost actualizat!",
+        "contractor-delete": "Angajatul a fost șters!",
+        "contractor-dismiss": "Angajatul a fost concediat!",
+        "contact-update": "Contactul a fost actualizat cu succes!",
+        "contact-delete": "Contactul a fost șters cu succes!", 
+        "contact-add": "Contactul a fost adăugat cu succes",
+        "validation-fail": "Validarea a eșuat!",
+        "server-error": "A apărut o eroare de Server!"
       },
       "error": "A avut loc o eroare!"
     },
