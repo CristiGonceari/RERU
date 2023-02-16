@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <!-- <div class="card-body"> -->
-                    <div class="card-header border-0 pt-0 pb-0 pr-5">
+                    <div class="card-header border-0 pt-0 pb-0 pr-5" *ngIf="this.showFilter">
                         <div class="row w-100">
                             <div class="col"> 
                                 <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testName=$event"
