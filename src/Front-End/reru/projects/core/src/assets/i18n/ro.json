@@ -256,7 +256,7 @@
     "full-name": "NPP",
     "email":"Poștă electronică",
     "lastName": "Numele de familie",
-    "father-name": "Patronimic",
+    "father-name": "Patronimic(opțional)",
     "idnp": "IDNP",
     "role": "Rolul",
     "actions": "Acțiuni",
@@ -324,7 +324,7 @@
     "access-mode": "Modul de acces",
     "code-length": "Codul trebuie să conțină 4 cifre!",
     "enter-code": "Introduceți codul",
-    "verify-process": "Procesul de verificare email",
+    "verify-process": "Găsiți codul necesar în e-mailul dvs.",
     "Employee": "Angajat",
     "Candidate": "Candidat"
   },
@@ -632,16 +632,16 @@
     "citizenship":"Cetățenia",
     "state-language-level":"Nivelul de cunoaștere a limbii de stat",
     "sex":"Sex",
-    "home-phone":"Telefon fix",
-    "work-phone":"Telefon de serviciu"
+    "home-phone":"Telefon fix(opțional)",
+    "work-phone":"Telefon de serviciu(opțional)"
   },
   "bulletin":{
     "series":"Seria",
     "emited-by":"Emis de",
     "relase-day":"Data eliberării",
     "adresses":"Adresa",
-    "birth-place":"Locul nașterii",
-    "residence-address":"Adresa de rezidență",
+    "birth-place":"Locul nasterii",
+    "residence-address":"Adresa de reşedința",
     "parents-residence-address":"Adresa de reședință a părinților",
     "abbreviations":{
       "city":"or. ",
@@ -652,8 +652,8 @@
     },
     "modal":{
       "country": "Țara",
-      "region": "Regiunea",
-      "city": "Orașul",
+      "region": "Raionul",
+      "city": "Localitatea",
       "street": "Strada",
       "building": "Bloc",
       "apartment": "Apartament",
@@ -779,7 +779,9 @@
     "AlternativeService" : "Serviciu de alternativă",
     "PerformedMilitaryService" : "Serviciul militar indeplinit",
     "Recruit" : "Recrut",
-    "Reservist" : "Rezervist"
+    "Reservist" : "Rezervist",
+    "Disobedient" : "Nesupus/ă",
+    "MilitaryChair" : "Catedra militară"
   },
   "stepper":{
     "button-update-and-next":"Actualizează și treci la pasul următor",
@@ -821,6 +823,7 @@
     "only-letters-numbers-dash-and-dot": "Trebuie să conţină doar litere, cifre şi - .",
     "only-letters-numbers-and-symbols": "Trebuie să conţină doar litere, cifre şi - , . ",
     "only-letters-numbers-and-some-symbols": "Trebuie să conţină doar litere, cifre şi - , . \" \" ",
-    "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com"
+    "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com",
+    "only-year": "Vă rugăm să furnizați un format valid AAAA"
   }
 }

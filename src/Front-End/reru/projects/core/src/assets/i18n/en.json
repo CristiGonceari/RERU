@@ -253,7 +253,7 @@
     "full-name": "Full name",
     "email":"Email",
     "lastName": "Last name",
-    "father-name": "Father name",
+    "father-name": "Father name(optional)",
     "idnp": "IDNP",
     "role": "Role",
     "actions": "Actions",
@@ -321,7 +321,7 @@
     "access-mode": "Access mode",
     "code-length": "Code should consist of 4 numbers!",
     "enter-code": "Enter the code",
-    "verify-process": "Email verification process",
+    "verify-process": "Find the necessary code in your email.",
     "Employee": "Employee",
     "Candidate": "Candidate"
   },
@@ -635,8 +635,8 @@
     "citizenship":"Citizenship",
     "state-language-level":"Level of knowledge of the state language",
     "sex":"Gender",
-    "home-phone":"Home Phone",
-    "work-phone":"Work phone"
+    "home-phone":"Home Phone(optional)",
+    "work-phone":"Work phone(optional)"
   },
   "bulletin":{
     "name":"Bulletin",
@@ -782,7 +782,9 @@
     "AlternativeService" : "Alternative service",
     "PerformedMilitaryService" : "Performed military service",
     "Recruit" : "Recruit",
-    "Reservist" : "Reservist"
+    "Reservist" : "Reservist",
+    "Disobedient" : "Absence",
+    "MilitaryChair" : "Military Chair"
   },
   "stepper":{
     "button-update-and-next":"Update and Next",
@@ -824,6 +826,7 @@
     "only-letters-numbers-dash-and-dot": "Should contain only letters, numbers and - .",
     "only-letters-numbers-and-symbols": "Should contain only letters, numbers and - , . ",
     "only-letters-numbers-and-some-symbols": "Should contain only letters, numbers and - , . \" \" ",
-    "valid-email": "Email needs to be valid. For example: codwer@mail.com"
+    "valid-email": "Email needs to be valid. For example: codwer@mail.com",
+    "only-year": "Please provide a valid format AAAA"
   }
 }

@@ -4512,8 +4512,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("Faculty")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("GraduationYear")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("GraduationYear")
+                        .HasColumnType("text");
 
                     b.Property<string>("Institution")
                         .HasColumnType("text");
@@ -4539,8 +4539,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("YearOfAdmission")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("YearOfAdmission")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -6123,6 +6123,16 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 4,
                             Name = "AlternativeService"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "MilitaryChair"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Disobedient"
                         });
                 });
 

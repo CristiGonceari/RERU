@@ -27,13 +27,13 @@ namespace CODWER.RERU.Core.Application.Users.EditCandidate
                 .SetValidator(x => new ItemMustExistValidator<CandidateNationality>(appDbContext, ValidationCodes.INVALID_ID,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.Data.WorkPhone).NotEmpty()
-               .WithMessage(ValidationMessages.InvalidInput)
-               .WithErrorCode(ValidationCodes.EMPTY_USER_WORK_PHONE);
+            //RuleFor(x => x.Data.WorkPhone).NotEmpty()
+            //   .WithMessage(ValidationMessages.InvalidInput)
+            //   .WithErrorCode(ValidationCodes.EMPTY_USER_WORK_PHONE);
 
-            RuleFor(x => x.Data.HomePhone).NotEmpty()
-               .WithMessage(ValidationMessages.InvalidInput)
-               .WithErrorCode(ValidationCodes.EMPTY_USER_HOME_PHONE);
+            //RuleFor(x => x.Data.HomePhone).NotEmpty()
+            //   .WithMessage(ValidationMessages.InvalidInput)
+            //   .WithErrorCode(ValidationCodes.EMPTY_USER_HOME_PHONE);
 
         }
     }
