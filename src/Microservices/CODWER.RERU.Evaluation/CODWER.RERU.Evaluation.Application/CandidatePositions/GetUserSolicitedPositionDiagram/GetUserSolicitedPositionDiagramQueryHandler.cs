@@ -64,7 +64,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
              _appDbContext.EventTestTemplates
                 .Include(x => x.TestTemplate)
                 .Where(x => x.EventId == eventId)
-                .OrderBy(x => x.CreateDate)
+                .OrderBy(x => x.EventId)
                 .ThenBy(x => x.TestTemplateId)
                 .Select(x => _mapper.Map<TestTemplateDiagramDto>(x))
                 .ToList();
@@ -98,7 +98,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
             return _appDbContext.EventTestTemplates
                 .Where(x => x.EventId == eventId &&
                             x.TestTemplateId == testTemplateId)
-                .OrderBy(x => x.CreateDate)
+                .OrderBy(x => x.EventId)
                 .Select(x => _mapper.Map<TestsByTestTemplateDiagramDto>(x))
                 .ToList();
         }
