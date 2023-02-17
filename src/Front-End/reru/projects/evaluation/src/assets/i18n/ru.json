@@ -51,7 +51,9 @@
         "create": "Создан успешно!",
         "update": "Обновлен успешно!",
         "delete": "Удален успешно!",
-        "login": "Авторизация успешно!"
+        "login": "Авторизация успешно!",
+        "success-add-mgs": "Документ успешно добавлен",
+        "success-edit-mgs": "Документ успешно обновлён"
       },
       "error": "Произошла ошибка!"
     },
@@ -103,7 +105,8 @@
     "documents-management": "Управление шаблонами",
     "administration": "Администрация кандидатов",
     "positions": "Вакансии",
-    "required-documents": "Необходимые документы"
+    "required-documents": "Необходимые документы",
+    "today":"Сегодня"
   },
   "position": {
     "administration": "Администрирование",
@@ -485,6 +488,13 @@
     "have-a-good-day": "Добро пожаловать!",
     "my-activities": "Мои действия",
     "my-evaluated-tests": "Тесты проверенные мною ",
+    "notifications": "Уведомления",
+    "check-notifications": "Проверить уведомления",
+    "new-notification": "Новые уведомления",
+    "tests": "Тесты",
+    "evaluations": "Оценки",
+    "notice1": "Примечания: показать новые уведомления",
+    "notice2": "с общим количеством уведомлений",
     "enclosed-mode": "Скрытый режим"
   },
   "questions": {

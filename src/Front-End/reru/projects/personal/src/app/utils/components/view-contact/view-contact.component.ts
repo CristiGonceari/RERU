@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
 import { ContactModel } from '../../models/contact.model';
 import { Contractor } from '../../models/contractor.model';
 import { ContactService } from '../../services/contact.service';
+import { I18nService } from '../../services/i18n.service';
 import { NotificationUtil } from '../../util/notification.util';
 
 @Component({
@@ -11,14 +13,29 @@ import { NotificationUtil } from '../../util/notification.util';
   templateUrl: './view-contact.component.html',
   styleUrls: ['./view-contact.component.scss']
 })
-export class ViewContactComponent{
+export class ViewContactComponent implements OnInit{
   @Input() contact: ContactModel;
   @Input() contractor: Contractor;
   @Input() isView: boolean;
   @Output() update: EventEmitter<void> = new EventEmitter<void>();
+  notification = {
+    warning: 'Warning',
+    error: 'Error',
+    success: 'Success',
+    contactDelete: 'Contact has been successfully deleted!',
+    validationFail: 'Validation failed!',
+    serverError: 'Server error occured!'
+  }
+
   constructor(private modalService: NgbModal,
               private contactService: ContactService,
-              private notificationService: NotificationsService) { }
+              private notificationService: NotificationsService,
+              public translate: I18nService) { }
+
+  ngOnInit(): void {
+    this.translateData();
+    this.subscribeForLanguageChange();
+  }
 
   // openContactEditModal(): void {
   //   const modalRef = this.modalService.open(EditContactModalComponent, { centered: true, size: 'lg' });
@@ -33,19 +50,43 @@ export class ViewContactComponent{
   //   modalRef.result.then(() => this.delete(), () => { });
   // }
 
+  translateData(): void {
+		forkJoin([
+      this.translate.get('notification.title.warning'),
+      this.translate.get('notification.title.error'),
+      this.translate.get('notification.title.success'),
+      this.translate.get('notification.body.contact-delete'),
+      this.translate.get('notification.body.validation-fail'),
+      this.translate.get('notification.body.server-error'),
+		]).subscribe(
+			([ warning, error, success, contactDelete, validationFail, serverError]) => {
+        this.notification.warning = warning;
+        this.notification.error = error;
+        this.notification.success = success;
+        this.notification.contactDelete = contactDelete;
+        this.notification.validationFail = validationFail;
+        this.notification.serverError = serverError;
+			}
+		);
+	}
+
+  subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
+
   delete(): void {
     this.contactService.delete(this.contact.id).subscribe(response => {
       if (response.success) {
-        this.notificationService.success('Success', 'Contact has been successfully deleted!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.contactDelete, NotificationUtil.getDefaultMidConfig());
         this.update.emit();
       }
     }, error => {
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation error!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     })
   }
 }

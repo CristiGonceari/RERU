@@ -15,6 +15,8 @@ import { TransferNewPositionModalComponent } from '../../../utils/modals/transfe
 import { AddOldPositionModalComponent } from '../../../utils/modals/add-old-position-modal/add-old-position-modal.component';
 import { PagedSummary } from '../../../utils/models/paged-summary.model';
 import { UserStatus } from '../../../utils/models/user-status.enum';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n.service';
 @Component({
   selector: 'app-contractors-table',
   templateUrl: './contractors-table.component.html',
@@ -34,13 +36,29 @@ export class ContractorsTableComponent implements OnInit {
   keyword: string;
   filters: any = {};
   userStatus: number;
+  notification = {
+    contractor: 'Contractor',
+    warning: 'Warning',
+    error: 'Error',
+    success: 'Success',
+    contractorUpdate: 'Contractor updated!',
+    contractorDelete: 'Contractor deleted!',
+    contractorDismiss: 'Contractor dismissed!',
+    validationFail: 'Validation failed!',
+    serverError: 'Server error occured!'
+  }
+
   constructor(private contractorService: ContractorService,
     private modalService: NgbModal,
     private notificationService: NotificationsService,
-    private positionService: PositionService) { }
+    private positionService: PositionService,
+    public translate: I18nService) { }
 
   ngOnInit(): void {
     this.list();
+    
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   list(data: any = {}): void {
@@ -74,20 +92,51 @@ export class ContractorsTableComponent implements OnInit {
     modalRef.result.then((contractor: Contractor) => this.updateContractorName(contractor), () => { });
   }
 
+  translateData(): void {
+		forkJoin([
+			this.translate.get('notification.title.contractor'),
+      this.translate.get('notification.title.warning'),
+      this.translate.get('notification.title.error'),
+      this.translate.get('notification.title.success'),
+			this.translate.get('notification.body.contractor-update'),
+      this.translate.get('notification.body.contractor-delete'),
+      this.translate.get('notification.body.contractor-dismiss'),
+      this.translate.get('notification.body.validation-fail'),
+      this.translate.get('notification.body.server-error'),
+		]).subscribe(
+			([ contractor, warning, error, success, contractorUpdate, contractorDelete,
+          contractorDismiss, validationFail, serverError]) => {
+				this.notification.contractor = contractor;
+        this.notification.warning = warning;
+        this.notification.error = error;
+        this.notification.success = success;
+				this.notification.contractorUpdate = contractorUpdate;
+				this.notification.contractorDelete = contractorDelete;
+        this.notification.contractorDismiss = contractorDismiss;
+        this.notification.validationFail = validationFail;
+        this.notification.serverError = serverError;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
+
   updateContractorName(contractor: Contractor): void {
     this.isLoading = true;
     this.contractorService.updateName(contractor).subscribe(() => {
       this.list();
-      this.notificationService.success('Contractor', 'Contractor updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.contractor, this.notification.contractorUpdate, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       this.isLoading = false;
       this.list();
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation failed!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -101,7 +150,7 @@ export class ContractorsTableComponent implements OnInit {
     this.isLoading = true;
     this.contractorService.delete(id).subscribe(response => {
       this.list();
-      this.notificationService.success('Success', 'Contractor deleted!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.success, this.notification.contractorDelete, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -115,16 +164,16 @@ export class ContractorsTableComponent implements OnInit {
     this.isLoading = true;
     this.positionService.changeCurrentPosition(contractor).subscribe(() => {
       this.list();
-      this.notificationService.success('Contractor', 'Contractor updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.contractor, this.notification.contractorUpdate, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       this.isLoading = false;
       this.list();
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation failed!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -143,16 +192,16 @@ export class ContractorsTableComponent implements OnInit {
   dismiss(id: number): void {
     this.positionService.dismissCurrent({ contractorId: id }).subscribe(() => {
       this.list();
-      this.notificationService.success('Contractor', 'Contractor dismissed!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.contractor, this.notification.contractorDismiss, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       this.isLoading = false;
       this.list();
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation failed!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -166,16 +215,16 @@ export class ContractorsTableComponent implements OnInit {
     this.isLoading = true;
     this.positionService.transferToNewPosition(contractor).subscribe(() => {
       this.list();
-      this.notificationService.success('Contractor', 'Contractor updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.contractor, this.notification.contractorUpdate, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       this.isLoading = false;
       this.list();
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation failed!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 
@@ -189,16 +238,16 @@ export class ContractorsTableComponent implements OnInit {
     this.isLoading = true;
     this.positionService.addPreviousPosition(data).subscribe(() => {
       this.list();
-      this.notificationService.success('Contractor', 'Contractor updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notification.contractor, this.notification.contractorUpdate, NotificationUtil.getDefaultMidConfig());
     }, (error) => {
       this.isLoading = false;
       this.list();
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation failed!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 
