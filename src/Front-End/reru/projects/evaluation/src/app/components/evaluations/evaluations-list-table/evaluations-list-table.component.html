@@ -17,32 +17,32 @@
                     </div>
                 </div>
                 <!-- <div class="card-body"> -->
-                    <div class="card-header border-0 pt-0 pb-0 pr-5">
+                    <div class="card-header border-0 pt-0 pb-0 pr-5" *ngIf="this.showFilter">
                         <div class="row w-100">
-                            <div class="col">
-                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testName', $event)"
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testName=$event"
                                     [placeholder]="'button.search-name' | translate" #testName>
                                 </erp-shared-search-input>
                             </div>
-                            <div class="col">
-                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('userName', $event)"
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.userName=$event"
                                     [placeholder]="'verify-test.search-student' | translate" #userName>
                                 </erp-shared-search-input>
                             </div>
-                            <div class="col">
-                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('evaluatorName', $event)"
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.evaluatorName=$event"
                                     [placeholder]="'evaluations.search-evaluator' | translate" #evaluatorName>
                                 </erp-shared-search-input>
                             </div>
-                            <div class="col">
-                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testEvent', $event)"
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testEvent=$event"
                                     [placeholder]="'events.search-event' | translate" #testEvent>
                                 </erp-shared-search-input>
                             </div>
                         </div>
                         <div class="row w-100 mt-3">
-                            <div class="col">
-                                <erp-shared-search-input (handleSearch)="testsTable.setFilter('testLocation', $event)"
+                            <div class="col"> 
+                                <erp-shared-search-input [useDebounce]="false" [showIcon]="false" (handleSearch)="testsTable.filters.testLocation=$event"
                                     [placeholder]="'events.search-location' | translate" #testLocation>
                                 </erp-shared-search-input>
                             </div>
@@ -53,8 +53,7 @@
                             <div class="col">
                                 <div class="input-group input-group-sm input-group-solid">
                                     <input id="from" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
-                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom"
-                                        (ngModelChange)="testsTable.getTests({dtFrom: $event})" autocomplete="off" />
+                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off" />
                                     <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
                                         autocomplete="off" class="form-control form-control-lg form-control-solid"
                                         [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
@@ -65,8 +64,7 @@
                             <div class="col">
                                 <div class="input-group input-group-sm input-group-solid">
                                     <input id="from" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
-                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo"
-                                        (ngModelChange)="testsTable.getTests({toDate: $event})" autocomplete="off" />
+                                        class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo" autocomplete="off" />
                                     <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
                                         autocomplete="off" class="form-control form-control-lg form-control-solid"
                                         [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
