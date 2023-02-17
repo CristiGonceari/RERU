@@ -30,6 +30,6 @@ export class ReferenceService extends AbstractService {
 	}
 
 	getArticleRoles(): Observable<any> {
-		return this.http.get(`${this.baseUrl}/${this.routeUrl}/roles/select-items`);
+		return this.http.get(`${this.baseUrl}/${this.routeUrl}/article-roles/select-values`);
 	}
 }
