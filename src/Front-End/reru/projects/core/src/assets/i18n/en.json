@@ -647,6 +647,13 @@
     "birth-place":"Birth place",
     "residence-address":"Residence address",
     "parents-residence-address":"Parents' residence address",
+    "abbreviations":{
+      "city":"ci. ",
+      "street":"str. ",
+      "boulevard":"blvd. ",
+      "apartment":"ap. ",
+      "post-code":"Post code. "
+    },
     "modal":{
       "country": "Country",
       "region": "Region",

@@ -42,6 +42,14 @@ export class BulletinComponent implements OnInit {
   title: string;
   description: string;
 
+  abreviation = {
+    city: 'or.',
+    street: 'str.',
+    boulevard: 'bl.',
+    apartment: 'ap.',
+    postCode: 'Post Code'
+  }
+
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -60,6 +68,8 @@ export class BulletinComponent implements OnInit {
 
     this.initForm(this.userId);
     this.getUserGeneralDatas(this.userId);
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   ngOnDestroy() {
@@ -269,11 +279,33 @@ export class BulletinComponent implements OnInit {
     }
 
     if (data.region) {
-      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''} ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
+      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''} ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
     }
 
-    return `${data.country || ''}, ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''}  ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
+    return `${data.country || ''}, ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''}  ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
   }
+  
+  translateData(): void {
+		forkJoin([
+			this.translate.get('bulletin.abbreviations.city'),
+			this.translate.get('bulletin.abbreviations.street'),
+			this.translate.get('bulletin.abbreviations.boulevard'),
+			this.translate.get('bulletin.abbreviations.apartment'),
+			this.translate.get('bulletin.abbreviations.post-code'),
+		]).subscribe(
+			([ city, street, boulevard, apartment, postCode	]) => {
+				this.abreviation.city = city;
+				this.abreviation.street = street;
+				this.abreviation.boulevard = boulevard;
+				this.abreviation.apartment = apartment;
+				this.abreviation.postCode = postCode;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
 
   hasCountryOnly(data: AddressModel): boolean {
     if (!data.city && !data.street && !data.building && !data.apartment && data.country) {
