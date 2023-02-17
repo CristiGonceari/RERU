@@ -9,9 +9,9 @@
         <div class="col-sm-12">
           <div class="card">
             <div class="card-body">
-              <app-loading-spinner  contentHeight="20rem" height="5rem" width="5rem"
+              <app-loading-spinner *ngIf="bulletinValuesLoading" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
-                <div class="container p-lg-2 p-0" >
+                <div class="container p-lg-2 p-0" *ngIf="!bulletinValuesLoading">
                     <div class="row">
                       <div class="col">
                         <div class="form-group row align-items-center mb-2">
@@ -92,19 +92,19 @@
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.birth-place' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-                <input readonly autocomplete="off" [value]="renderBirthPlace()" [ngClass]="addressValidation(bulletinForm.value.birthPlace)"  (click)="openBulletinAddressModal('birthPlace')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-birth-place' | translate"/>
+                <input readonly autocomplete="off" [value]="renderBirthPlace()" [ngClass]="birthPlaceValidation(bulletinForm.value.birthPlace)"  (click)="openBulletinAddressModal('birthPlace', true)" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-birth-place' | translate"/>
         </div>
     </div>
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.residence-address' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-            <input readonly autocomplete="off" [value]="renderResidenceAddress()"  [ngClass]="addressValidation(bulletinForm.value.residenceAddress)" (click)="openBulletinAddressModal('residenceAddress')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-living-address' | translate"/>
+            <input readonly autocomplete="off" [value]="renderResidenceAddress()"  [ngClass]="addressValidation(bulletinForm.value.residenceAddress)" (click)="openBulletinAddressModal('residenceAddress', false)" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-living-address' | translate"/>
         </div>
     </div>
     <div class="form-group row required">
         <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.parents-residence-address' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-            <input readonly autocomplete="off" [value]="renderParentResidenceAddress()"  [ngClass]="addressValidation(bulletinForm.value.parentsResidenceAddress)" (click)="openBulletinAddressModal('parentsResidenceAddress')" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-residence-address' | translate"/>
+            <input readonly autocomplete="off" [value]="renderParentResidenceAddress()"  [ngClass]="addressValidation(bulletinForm.value.parentsResidenceAddress)" (click)="openBulletinAddressModal('parentsResidenceAddress', false)" class="form-control form-control-solid pointer" type="text" [placeholder]="'personal.insert-residence-address' | translate"/>
         </div>
     </div>
     </div>
