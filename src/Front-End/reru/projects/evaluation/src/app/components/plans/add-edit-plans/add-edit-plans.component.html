@@ -24,9 +24,9 @@
                                         <div class="form-group row">
                                             <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <input id="from" [owlDateTime]="fromDate" placeholder="Date Time"
+                                                <input id="from" [owlDateTime]="fromDate" placeholder="{{'events.start-date' | translate}}"
                                                     class="shadow-input" name="date" formControlName="fromDate" [(ngModel)]="fromData" />
-                                                <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="Date Time"
+                                                <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="{{'events.start-date' | translate}}"
                                                     class="form-control form-control-lg form-control-solid" [value]="fromData | dateFilter:'dd/MM/yy HH:mm'"/>
                                                 <owl-date-time #fromDate></owl-date-time>
                                             </div>
@@ -34,9 +34,9 @@
                                         <div class="form-group row">
                                             <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <input id="tillDate" [owlDateTime]="tillDate" placeholder="Date Time"
+                                                <input id="tillDate" [owlDateTime]="tillDate" placeholder="{{'events.end-date' | translate}}"
                                                     class="shadow-input" name="date" formControlName="tillDate" [(ngModel)]="toData" />
-                                                <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="Date Time"
+                                                <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="{{'events.end-date' | translate}}"
                                                     class="form-control form-control-lg form-control-solid" [value]="toData | dateFilter:'dd/MM/yy HH:mm'"/>
                                                 <owl-date-time #tillDate></owl-date-time>
                                             </div>

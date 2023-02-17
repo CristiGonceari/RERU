@@ -285,7 +285,6 @@ export class StudyComponent implements OnInit {
   }
 
   generateStudies(study?, contractorId?): FormGroup {
-
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -294,8 +293,8 @@ export class StudyComponent implements OnInit {
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null),
-      graduationYear: this.fb.control((study && study.graduationYear) || null),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
       contractorId: this.fb.control(contractorId || null, [])
     });
   }
@@ -324,6 +323,25 @@ export class StudyComponent implements OnInit {
 
   isInvalidPattern(form, field: string): boolean {
     return ValidatorUtil.isInvalidPattern(form, field);
+  }
+
+  isLengthValidator(form, field: string): boolean {
+    return ValidatorUtil.isIdnpLengthValidator(form, field);
+  }
+
+  studyButtonValidator(value) {
+    let result: boolean;
+
+    for (let i = 0; i < value.length; i++) {
+      if (value[i].studyTypeId == 5) {
+        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution)
+      } else if (value[i].studyTypeId == 1 || value[i].studyTypeId == 2) {
+        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution && value[i].specialty)
+      } else {
+        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution && value[i].specialty && value[i].faculty)
+      }
+    }
+    return result;
   }
 
   removeModernLanguage(index: number): void {
@@ -368,6 +386,20 @@ export class StudyComponent implements OnInit {
       });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
+  }
+
+  validateCreateStudyButton() {
+    let result: boolean;
+
+    for (let i = 0; i < this.studyForm.value.studies.length; i++) {
+      result = (this.studyForm.value.studies[i].institution &&
+        this.studyForm.value.studies[i].studyTypeId &&
+        this.studyForm.value.studies[i].studyFrequency &&
+        this.studyForm.value.studies[i].faculty &&
+        this.studyForm.value.studies[i].specialty) == null
+    }
+
+    return result;
   }
 
   creteModernLanguage() {
@@ -418,6 +450,7 @@ export class StudyComponent implements OnInit {
 
   buildStudiesForm(): Observable<any> {
     const request = this.parseStudies(this.studyForm.getRawValue().studies, this.contractorId);
+
     return this.studyService.addMultiple(request);
   }
 
@@ -621,5 +654,9 @@ export class StudyComponent implements OnInit {
       });
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
+  }
+
+  hasErrors(field): boolean {
+    return this.studyForm.touched && this.studyForm.get(field).invalid;
   }
 }

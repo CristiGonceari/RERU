@@ -259,8 +259,8 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     DefaultSingleColumnValue(3, study.StudyType.Name, workSheet);
                     DefaultSingleColumnValue(4, study.Faculty, workSheet);
                     DefaultSingleColumnValue(5, study.StudyFrequency.ToString(), workSheet);
-                    DefaultSingleColumnValue(6, study.YearOfAdmission?.ToString("dd-MM-yyyy"), workSheet);
-                    DefaultSingleColumnValue(7, study.GraduationYear?.ToString("dd-MM-yyyy"), workSheet);
+                    DefaultSingleColumnValue(6, study.YearOfAdmission, workSheet);
+                    DefaultSingleColumnValue(7, study.GraduationYear, workSheet);
                     DefaultSingleColumnValue(8, study.Specialty, workSheet);
                     _row++;
                 }

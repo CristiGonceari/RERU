@@ -42,6 +42,14 @@ export class BulletinComponent implements OnInit {
   title: string;
   description: string;
 
+  abreviation = {
+    city: 'or.',
+    street: 'str.',
+    boulevard: 'bl.',
+    apartment: 'ap.',
+    postCode: 'Post Code'
+  }
+
   constructor(private fb: FormBuilder,
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -60,6 +68,8 @@ export class BulletinComponent implements OnInit {
 
     this.initForm(this.userId);
     this.getUserGeneralDatas(this.userId);
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   ngOnDestroy() {
@@ -131,12 +141,19 @@ export class BulletinComponent implements OnInit {
       series: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       emittedBy: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
-      birthPlace: this.buildAddress(),
+      birthPlace: this.buildBirthPlaceAddress(),
       parentsResidenceAddress: this.buildAddress(),
       residenceAddress: this.buildAddress()
     });
   }
-  
+
+  birthPlaceValidation(address){
+    return address.country && 
+    address.region && 
+    address.city 
+       ? 'is-valid' : 'is-invalid';
+  }
+
   addressValidation(address)
   {
     return address.country && 
@@ -154,7 +171,7 @@ export class BulletinComponent implements OnInit {
       emittedBy: this.fb.control((existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       id: this.fb.control(bulletinId, []),
-      birthPlace: this.buildExistentAddress(this.parseAddress(birthPlace)),
+      birthPlace: this.buildBirthPlaceExistentAddress(this.parseAddress(birthPlace)),
       parentsResidenceAddress: this.buildExistentAddress(this.parseAddress(residenceAddress)),
       residenceAddress: this.buildExistentAddress(this.parseAddress(parentsResidenceAddress))
     });
@@ -181,6 +198,23 @@ export class BulletinComponent implements OnInit {
     });
   }
 
+  buildBirthPlaceAddress(data: AddressModel = <AddressModel>{}): FormGroup {
+    return this.fb.group({
+      country: this.fb.control(data.country || 'Moldova', [Validators.required]),
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+    });
+  }
+
+  buildBirthPlaceExistentAddress(data: AddressModel = <AddressModel>{}): FormGroup {
+    return this.fb.group({
+      id: this.fb.control(data.id, []),
+      country: this.fb.control(data.country || 'Moldova', [Validators.required]),
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+    });
+  }
+
   buildExistentAddress(data: AddressModel = <AddressModel>{}): FormGroup {
     return this.fb.group({
       id: this.fb.control(data.id, []),
@@ -195,8 +229,9 @@ export class BulletinComponent implements OnInit {
     });
   }
 
-  openBulletinAddressModal(field: string): void {
+  openBulletinAddressModal(field: string, isBirthPlace : boolean): void {
     const modalRef = this.modalService.open(BulletinAddressModalComponent);
+    modalRef.componentInstance.isBirthPlace = isBirthPlace;
     if (this.existentBulletin != null) {
       modalRef.componentInstance.addressForm = this.buildExistentAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
       modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => { });
@@ -244,11 +279,33 @@ export class BulletinComponent implements OnInit {
     }
 
     if (data.region) {
-      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''} ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
+      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''} ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
     }
 
-    return `${data.country || ''}, ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''}  ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
+    return `${data.country || ''}, ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''}  ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
   }
+  
+  translateData(): void {
+		forkJoin([
+			this.translate.get('bulletin.abbreviations.city'),
+			this.translate.get('bulletin.abbreviations.street'),
+			this.translate.get('bulletin.abbreviations.boulevard'),
+			this.translate.get('bulletin.abbreviations.apartment'),
+			this.translate.get('bulletin.abbreviations.post-code'),
+		]).subscribe(
+			([ city, street, boulevard, apartment, postCode	]) => {
+				this.abreviation.city = city;
+				this.abreviation.street = street;
+				this.abreviation.boulevard = boulevard;
+				this.abreviation.apartment = apartment;
+				this.abreviation.postCode = postCode;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
 
   hasCountryOnly(data: AddressModel): boolean {
     if (!data.city && !data.street && !data.building && !data.apartment && data.country) {
