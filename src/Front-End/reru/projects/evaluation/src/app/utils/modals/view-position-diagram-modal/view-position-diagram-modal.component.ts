@@ -58,13 +58,21 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   }
 
   openAddTest(value) {
-    let data = {
-      isOpenAddTest: true,
-      selectedEventId: value.eventId,
-      selectedTestTemplateId: value.testTemplateId
-    }
-
-    this.activeModal.close(data);
+    if(value.mode == 0){
+      let data = {
+        isOpenAddTest: true,
+        selectedEventId: value.eventId,
+        selectedTestTemplateId: value.testTemplateId
+      }
+			this.activeModal.close(data);
+		}else if(value.mode == 2){
+      let data = {
+        isOpenAddEvaluation: true,
+        selectedEventId: value.eventId,
+        selectedTestTemplateId: value.testTemplateId
+      }
+			this.activeModal.close(data);
+		}
   }
 
   close(): void {
@@ -167,6 +175,7 @@ export class ViewPositionDiagramModalComponent implements OnInit {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
+
   routeToUserProfileSolicitedTests(userId) {
     this.router.navigate(['../../../../user-profile/', userId, 'solicited-tests'], { relativeTo: this.route });
     this.close();

@@ -6,8 +6,8 @@ export interface StudyModel {
     institutionAddress: string;
     faculty: string;
     specialty: string;
-    yearOfAdmission: Date;
-    graduationYear: Date;
+    yearOfAdmission: string;
+    graduationYear: string;
     studyTypeId: number;
     contractorId: number
 }

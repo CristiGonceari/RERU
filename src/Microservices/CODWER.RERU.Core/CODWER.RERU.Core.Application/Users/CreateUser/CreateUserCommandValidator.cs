@@ -32,9 +32,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.EMPTY_USER_LAST_NAME);
 
-            RuleFor(x => x.FatherName).NotEmpty()
-                .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
+            //RuleFor(x => x.FatherName).NotEmpty()
+            //    .WithMessage(ValidationMessages.InvalidInput)
+            //    .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
 
             RuleFor(x => x.Email).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)

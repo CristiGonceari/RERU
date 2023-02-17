@@ -29,7 +29,7 @@ namespace CODWER.RERU.Core.Application.Users.DeactivateUser {
 
                 await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    Subject = "Account Deactivation",
+                    Subject = "Dezactivarea contului",
                     To = userProfile.Email,
                     HtmlTemplateAddress = "Templates/DeactivateUser.html",
                     ReplacedValues = new Dictionary<string, string>()

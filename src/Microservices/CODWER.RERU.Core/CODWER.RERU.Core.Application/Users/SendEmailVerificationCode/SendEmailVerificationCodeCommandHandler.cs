@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.SendEmailVerificationCode
 
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Email verification",
+                Subject = "Verificarea email-ului",
                 To = request.Email,
                 HtmlTemplateAddress = "Templates/EmailVerification.html",
                 ReplacedValues = new Dictionary<string, string>()

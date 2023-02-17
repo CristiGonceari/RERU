@@ -259,8 +259,8 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     DefaultSingleColumnValue(3, study.StudyType.Name, workSheet);
                     DefaultSingleColumnValue(4, study.Faculty, workSheet);
                     DefaultSingleColumnValue(5, study.StudyFrequency.ToString(), workSheet);
-                    DefaultSingleColumnValue(6, study.YearOfAdmission?.ToString("dd-MM-yyyy"), workSheet);
-                    DefaultSingleColumnValue(7, study.GraduationYear?.ToString("dd-MM-yyyy"), workSheet);
+                    DefaultSingleColumnValue(6, study.YearOfAdmission, workSheet);
+                    DefaultSingleColumnValue(7, study.GraduationYear, workSheet);
                     DefaultSingleColumnValue(8, study.Specialty, workSheet);
                     _row++;
                 }
@@ -338,8 +338,8 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                 foreach (var militaryObligation in userProfileMilitaryObligations)
                 {
                     DefaultMultipleColumnValue(1, 2, militaryObligation.MilitaryObligationType.ToString(), workSheet);
-                    DefaultSingleColumnValue(3, militaryObligation.MobilizationYear.ToString("dd-MM-yyyy"), workSheet);
-                    DefaultSingleColumnValue(4, militaryObligation.WithdrawalYear.ToString("dd-MM-yyyy"), workSheet);
+                    DefaultSingleColumnValue(3, militaryObligation.MobilizationYear.Value.ToString("dd-MM-yyyy"), workSheet);
+                    DefaultSingleColumnValue(4, militaryObligation.WithdrawalYear.Value.ToString("dd-MM-yyyy"), workSheet);
                     DefaultSingleColumnValue(5, militaryObligation.Efectiv, workSheet);
                     DefaultSingleColumnValue(6, militaryObligation.MilitarySpecialty, workSheet);
                     DefaultSingleColumnValue(7, militaryObligation.Degree, workSheet);
@@ -348,7 +348,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                         8, 
                         militaryObligation.MilitaryBookletSeries + ", " + 
                         militaryObligation.MilitaryBookletNumber + ", " + 
-                        militaryObligation.MilitaryBookletReleaseDay.ToString("dd-MM-yyyy") + ", " + 
+                        militaryObligation.MilitaryBookletReleaseDay.Value.ToString("dd-MM-yyyy") + ", " + 
                         militaryObligation.MilitaryBookletEminentAuthority, workSheet
                     );
                     _row++;

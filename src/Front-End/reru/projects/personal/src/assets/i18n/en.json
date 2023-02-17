@@ -880,14 +880,25 @@
     "title": {
       "success": "Success",
       "error": "Error",
-      "warning": "Warning"
+      "warning": "Warning",
+      "contractor": "Contractor"
     },
     "body": {
       "success": {
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
-        "login": "Login successfully!"
+        "login": "Login successfully!",
+        "success-add-mgs": "Document was successfuly added",
+        "success-edit-mgs": "Document was successfuly updated",
+        "contractor-update": "Contractor updated!",
+        "contractor-delete": "Contractor deleted!",
+        "contractor-dismiss": "Contractor dismissed!",
+        "contact-update": "Contact has been successfully updated!",
+        "contact-delete": "Contact has been successfully deleted!",
+        "contact-add": "Contact has been successfully added!",
+        "validation-fail": "Validation failed!",
+        "server-error": "Server error occurred!"
       },
       "error": "There has been an error!"
     },

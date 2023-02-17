@@ -15,11 +15,11 @@
     "administration": "Administrare",
     "nomenclatures": "Nomenclatoare",
     "personal": "Angajați",
-    "personal-description": "Angajati, Date personale, functii detinute",
+    "personal-description": "Angajați, Date personale, funcții deținute",
     "contractor-type": "Tipuri de angajați",
     "configuration": "Configurare",
     "departments": "Departamente",
-    "departments-description": "Departamente, functii, functii actuale, rezumat",
+    "departments-description": "Departamente, funcții, funcții actuale, rezumat",
     "roles": "Roluri",
     "employee-functions": "Funcțiile angajaților",
     "roles-description": "Roluri, liste, roluri coduri",
@@ -29,7 +29,7 @@
     "organization-chart": "Organigrame",
     "my-vacations": "Concediile mele",
     "configurations": "Configurări",
-    "configurations-description":"Configurari, sarbatori",
+    "configurations-description":"Configurări, sărbători",
     "my-profile":"Profilul meu",
     "reports": "Rapoarte",
     "vacantions":"Concedii",
@@ -161,7 +161,7 @@
     "insert-study-frequency": "Introdu frecvența",
     "insert-study-type": "Introdu tipul studiilor",
     "daily": "La zi",
-    "part-time": "Fara frecvență",
+    "part-time": "Fără frecvență",
     "change-your-account-details": "Schimbă datele personale",
     "add-vacantion-for-contractor": "Adaugă un concediu",
     "account": "Cont",
@@ -170,7 +170,7 @@
     "reset-password-information": "Resetarea parolei",
     "reset-password-description": "După resetarea parolei, veți primi un email informativ cu datele contului dvs",
     "are-you-sure-want-to-delete-study": "Sunteți sigur că doriți să ștergeți instituția?",
-    "are-you-sure-want-to-delete-instruction": "Sunteți sigur că dotiți să ștergeți instruirea?",
+    "are-you-sure-want-to-delete-instruction": "Sunteți sigur că doriți să ștergeți instruirea?",
     "add-position": "Adăugare funcție",
     "generate-order": "Generare ordin",
     "individual-contract-request": "Contract individual de muncă",
@@ -302,8 +302,8 @@
     "are-you-sure-you-want-to-delete-department": "Sunteți sigur că doriți să ștergeți departamentul <b>{{name}}</b>?",
     "department-description": "Descriere departament",
     "type-department-description": "Introdu descriere departament",
-    "bulk-import-departments-succes": "Departamentele au fost adaugate cu succes!",
-    "bulk-import-departments-error": "Departamentele nu au fost adaugate cu succes!"
+    "bulk-import-departments-succes": "Departamentele au fost adăugate cu succes!",
+    "bulk-import-departments-error": "Departamentele nu au fost adăugate cu succes!"
   },
   "roles": {
     "title": "Roluri",
@@ -318,8 +318,8 @@
     "type-whole-name": "Introdu numele întreg",
     "type-code": "Introdu un cod",
     "edit-role-details": "Editează detaliile rolului",
-    "bulk-import-roles-succes": "Rolurile au fost adaugate cu succes!",
-    "bulk-import-roles-error": "Rolurile nu au fost adaugate cu succes!"
+    "bulk-import-roles-succes": "Rolurile au fost adăugate cu succes!",
+    "bulk-import-roles-error": "Rolurile nu au fost adăugate cu succes!"
   },
   "employee-functions": {
     "title": "Funcțiile angajaților",
@@ -334,8 +334,8 @@
     "type-whole-name": "Introdu numele întreg",
     "type-code": "Introdu un cod",
     "edit-employee-function-details": "Editează detaliile funcției",
-    "bulk-import-employee-functions-succes": "Funcțiile angajaților au fost adaugate cu succes!",
-    "bulk-import-employee-functions-error": "Funcțiile angajaților nu au fost adaugate cu succes!"
+    "bulk-import-employee-functions-succes": "Funcțiile angajaților au fost adăugate cu succes!",
+    "bulk-import-employee-functions-error": "Funcțiile angajaților nu au fost adăugate cu succes!"
   },
   "positions": {
     "title": "Funcții",
@@ -370,7 +370,7 @@
     "edit-vacation": "Modifică concediu",
     "are-you-sure-want-to-delete-vacation": "Sunteți sigur că doriți să ștergeți concediul?",
     "configure-vacations": "Configurare concedii",
-    "paid-vacation-days": "Zile de concediu platit",
+    "paid-vacation-days": "Zile de concediu plătit",
     "unpaid-vacation-days": "Zile de concediu neplătit",
     "include-off-days": "Zilele de odihnă se includ în concediu",
     "include-holidays": "Sărbătorile naționale se include în concediu",
@@ -443,9 +443,9 @@
     "title": "Ghidul Utilizatorului",
     "heading1": "Dacă v-ati confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
     "heading2": "In el puteți găsi răspunsul la orice întrebare.",
-    "heading3": "Cum îmi schimb parola? Cum adaug un nou angajat? Cum pot adauga sau redacta o poziție?",
+    "heading3": "Cum îmi schimb parola? Cum adaug un nou angajat? Cum pot adăuga sau redacta o poziție?",
     "heading4": "Răspunsul la aceste întrebări, precum și la multe altele, poate fi găsit in ghid. Îl puteți descarcă facând click pe butonul de mai jos.",
-    "heading5": "Pentru a găsi rapid informațiile de care aveți nevoie în ghidul descărcat, apăsați combinația de taste CTRL + F.  În colțul din dreapta sus se va deschide o bara de căutare!"
+    "heading5": "Pentru a găsi rapid informațiile de care aveți nevoie în ghidul descărcat, apăsați combinația de taste CTRL + F.  În colțul din dreapta sus se va deschide o bară de căutare!"
   },
   "department-content": {
     "template": "Șablon",
@@ -470,7 +470,7 @@
     "access-restricted-to-vacation": "Nu aveți acces la concedii!",
     "access-restricted-to-requests": "Nu aveți acces la cereri!",
     "access-restricted-to-cim": "Nu aveți acces la Contractul Individual de Muncă!",
-    "drag-identity-into-delimited-zone": "Trage actele de identitate in zona delimitata!",
+    "drag-identity-into-delimited-zone": "Trage actele de identitate în zona delimitata!",
     "bulletin-diplome-documents": "(Buletin, diploma de studii, permis de conducere, acte de identitate...)"
   },
   "button": {
@@ -717,9 +717,9 @@
     "close": "Închide",
     "save-changes": "Salveaza",
     "departament": "Detalii",
-    "departament-and-role": "Departamentul si rolul",
-    "print-curent-list": "Printeaza lista curenta",
-    "print-all-list": "Printeaza toata lista",
+    "departament-and-role": "Departamentul și rolul",
+    "print-curent-list": "Printează lista curenta",
+    "print-all-list": "Printează toată lista",
     "hours-value": "ore (se indică durata concretă a timpului de muncă)",
     "unpaid-leave-value": "concediu neplătit",
     "suspension-of-contract-value": "perioada de suspendare a contractului individual de muncă",
@@ -744,7 +744,7 @@
     "article-title": "Denumirea Șablonului",
     "document-fileType": "Tipul Șablonului",
     "are-you-sure-you-want-to-delete-documents": "Sunteți sigur/ă că doriți să ștergeți documentul <b>{{name}}</b>?",
-    "test-convert": "Testeaza Comversia",
+    "test-convert": "Testează Comversia",
     "configure-document": "Configurează Documentul",
     "key-list": "Harta de chei"
   },
@@ -766,8 +766,8 @@
   "documentKeys":
   {
      "TodayDateKey": "Data pentru ziua de azi",
-     "OrderNrKey": "Numarul ordinului curent",
-     "RequestNrKey": "Numarul pentru cererea curenta",
+     "OrderNrKey": "Numărul ordinului curent",
+     "RequestNrKey": "Numărul pentru cererea curentă",
      "NameKey": "Numele Angajatului",
      "LastNameKey": "Prenumele Angajatului",
      "FatherNameKey": "Patronimicul Angajatului",
@@ -775,25 +775,25 @@
      "BulletinSeriesKey": "Seria buletinului",
      "BulletinRelaseByKey": "Buletinul angajatului a fost emis de",
      "BulletinRelaseDayKey": "Data emiterii buletinului",
-     "BirthdayKey": "Ziua de nastere a angajatului",
-     "WorkPlaceKey": "Locul de munca a angajatului",
-     "EmploymentDateKey": "Ziua angajarii",
-     "WorkHoursKey": "Numarul ore de munca pe zi conform contractului",
+     "BirthdayKey": "Ziua de naștere a angajatului",
+     "WorkPlaceKey": "Locul de muncă a angajatului",
+     "EmploymentDateKey": "Ziua angajării",
+     "WorkHoursKey": "Numărul ore de muncă pe zi conform contractului",
      "SalaryKey": "Salariu angajatului",
      "SexTypeKey": "Sexul angajatului",
-     "RoleKey": "Rolul angajatului in companie",
-     "DissmisalDateKey": "Data demisionarii angajatului",
+     "RoleKey": "Rolul angajatului în companie",
+     "DissmisalDateKey": "Data demisionării angajatului",
      "InternshipDaysKey": "Zilele de stagiere a angajatului",
-     "AddressKey": "Adresa de locuinta a angajatului",
-     "VacationUnnusedKey": "Zilele de vacanta nefolosite calculate per angajat",
+     "AddressKey": "Adresa de locuință a angajatului",
+     "VacationUnnusedKey": "Zilele de vacanță nefolosite calculate per angajat",
      "VacationTypeKey": "Tipul concediului",
      "VacationDaysCountKey": "Totalul de zile disponibile de concediului",
-     "VacationFrom": "Inceputul concediului",
-     "VacationToKey": "Sfirsitul concediului",
+     "VacationFrom": "Începutul concediului",
+     "VacationToKey": "Sfârșitul concediului",
      "CompanyKey": "Numele companiei",
-     "CompanyPostCodeKey": "Codul postal al companiei",
-     "CompanyCityKey": "Orasul de locatiune al compamiei",
-     "CompanyStreetKey": "Adresa de locatie a companiei",
+     "CompanyPostCodeKey": "Codul poștal al companiei",
+     "CompanyCityKey": "Orașul de locațiune al compamiei",
+     "CompanyStreetKey": "Adresa de locație a companiei",
      "CompanyIdnoKey": "IDNO-ul companiei",
      "DirectorNameKey": "Numele directorului",
      "DirectorLastName": "Prenumele directorului",
@@ -882,14 +882,25 @@
     "title": {
       "success": "Succes",
       "error": "Eroare",
-      "warning": "Atenție"
+      "warning": "Atenție",
+      "contractor": "Angajat"
     },
     "body": {
       "success": {
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
-        "delete": "A fost sters cu succes!",
-        "login": "Logare cu succes!"
+        "delete": "A fost șters cu succes!",
+        "login": "Logare cu succes!",
+        "success-add-mgs": "Documentul a fost adăugat cu succes",
+        "success-edit-mgs": "Documentul a fost editat cu succes",
+        "contractor-update": "Angajatul a fost actualizat!",
+        "contractor-delete": "Angajatul a fost șters!",
+        "contractor-dismiss": "Angajatul a fost concediat!",
+        "contact-update": "Contactul a fost actualizat cu succes!",
+        "contact-delete": "Contactul a fost șters cu succes!", 
+        "contact-add": "Contactul a fost adăugat cu succes",
+        "validation-fail": "Validarea a eșuat!",
+        "server-error": "A apărut o eroare de Server!"
       },
       "error": "A avut loc o eroare!"
     },
@@ -1107,7 +1118,7 @@
     "emited-by":"Emis de",
     "relase-day":"Data eliberarii",
     "adresses":"Adresa",
-    "birth-place":"Locul nasterii",
+    "birth-place":"Locul nașterii",
     "residence-address":"Adresa de rezidenta",
     "parents-residence-address":"Adresa de reședință a părinților",
     "modal":{
@@ -1150,7 +1161,7 @@
 
   },
   "material-status":{
-    "name": "Starea civilă lă data completării dosarului personal",
+    "name": "Starea civilă la data completării dosarului personal",
     "kinship-relation": "Relații de rudenie sau afinate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
     "table-function": "Funcția (poziția) deținută",
@@ -1170,6 +1181,7 @@
     "year-of-mobilization" : "Anul mobilizării",
     "year-of-withdrawal" : "Anul retragerii",
     "efectiv": "Efectiv",
+
     "military-specialty": "Specialitate militară",
     "degree": "Gradul",
     "military-booklet": "Livret militar",
@@ -1207,7 +1219,7 @@
     "1": "Studii de bază",
     "2": "Universitare",
     "3": "PostUniversitare",
-    "4": "Cursuri de Perfectionare",
+    "4": "Cursuri de Perfecționare",
     "5": "Cursuri de Specializare"
   },
   "studyFrequency":{
@@ -1216,9 +1228,9 @@
   },
   "materialStatusType": {
     "1": "Celibatar",
-    "2": "Casatorit",
-    "3": "Recasatorit",
-    "4": "Vaduv"
+    "2": "Căsătorit",
+    "3": "Recăsătorit",
+    "4": "Văduv"
   },
   "kinshipDegree":{
     "Brother" : "Frate",
@@ -1265,6 +1277,6 @@
     "select": "Selectează"
   },
   "table": {
-    "number" : "Numarul"
+    "number" : "Numărul"
   }
 }

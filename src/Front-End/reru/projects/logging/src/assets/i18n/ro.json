@@ -28,7 +28,7 @@
     "title": "Logarea",
     "subtitle": "Tabelul de logare",
     "from": "De la",
-    "to": "Pana La",
+    "to": "Până La",
     "project": "Proiect",
     "event": "Eveniment",
     "user-name": "Utilizator",
@@ -52,14 +52,14 @@
   "user-profile": {
     "overview": "Vizualizarea profilului personal",
     "edit-title": "Editarea profilului personal",
-    "edit-subtitle": "Inserta datele personale",
+    "edit-subtitle": "Inserează datele personale",
     "personal-details": "Datele profilului:",
     "change-personal-data": "Schimbare datelor profilului personal",
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
-    "wrong-name": "Camp trebue să incepe cu 1 caracter",
+    "empty-name": "Câmpul este obligatoriu, cel puțin 1 caracter",
+    "wrong-name": "Câmpul trebuie să înceapă cu 1 caracter",
     "available-modules": "Module disponibile"
   },
   "notification": {
@@ -74,9 +74,9 @@
       "success": {
         "create": "A fost creat cu succes!",
         "update": "A fost actualizat cu succes!",
-        "delete": "A fost sters cu succes!",
+        "delete": "A fost șters cu succes!",
         "login": "Logare cu succes!",
-        "delete-log": "Logurile ai fost șterse!"
+        "delete-log": "Logurile au fost șterse!"
       },
       "error": "A avut loc o eroare!"
     },

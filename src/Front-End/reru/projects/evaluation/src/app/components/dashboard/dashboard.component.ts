@@ -21,6 +21,7 @@ import {
 } from "ng-apexcharts";
 import { forkJoin, Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
+import { I18nService } from '../../utils/services/i18n/i18n.service';
 
 export type NotificationsChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -67,6 +68,11 @@ export class DashboardComponent implements OnInit {
 
   fileStatus = {status: '', requestType: '', percent: 0 }
   filenames: string[] = [];
+  dashboard = {
+    newNotification: "New notifications",
+    tests: "Tests",
+    evaluatins: "Evaluations"
+  }
 
   // Apex Chart
   public notificationsChart: Partial<NotificationsChartOptions>;
@@ -76,37 +82,12 @@ export class DashboardComponent implements OnInit {
               private fileService : CloudFileService,
               private notificationService: NotificationsService,
               private testService: TestService,
+              public translate: I18nService
     ) {
-      this.notificationsChart = {
-        series: [25],
-        chart: {
-          height: 250,
-          type: "radialBar"
-        },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: "70%"
-            },
-            dataLabels: {
-              show: true,
-              name: {
-                  color: '#1BC5BD'
-              },
-              value: {
-                formatter: () => '25/100'
-              }
-            }
-          }
-        },
-        labels: ["New notifications"],
-        fill: {
-          colors: ['#1BC5BD']
-        }
-      };
+      
 
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString().slice(2);
+      const currentYear = new Date().getFullYear().toString();
       const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
 
       this.evaluationsChartOptions = {
@@ -131,11 +112,59 @@ export class DashboardComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.translateData();
+    this.subscribeForLanguageChange();
+
     this.retrieveProfile();
     this.getDemoList();
     this.countTestsAndEvaluations().subscribe(series => {this.evaluationsChartOptions.series = series;});
     //this.evaluationsChartOptions.series = this.generateData(10, 100, 15);
+    this.notificationsChart = {
+      series: [25],
+      chart: {
+        height: 250,
+        type: "radialBar"
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            size: "70%"
+          },
+          dataLabels: {
+            show: true,
+            name: {
+                color: '#1BC5BD'
+            },
+            value: {
+              formatter: () => '25/100'
+            }
+          }
+        }
+      },
+      labels: [this.dashboard.newNotification],
+      fill: {
+        colors: ['#1BC5BD']
+      }
+    };
   }
+
+  translateData(): void {
+		forkJoin([
+			this.translate.get('dashboard.new-notification'),
+			this.translate.get('dashboard.tests'),
+			this.translate.get('dashboard.evaluations'),
+		]).subscribe(
+			([ newNotification, tests, evaluatins ]) => {
+				this.dashboard.newNotification = newNotification;
+				this.dashboard.tests = tests;
+				this.dashboard.evaluatins = evaluatins;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
 
   countTestsAndEvaluations() {
     return forkJoin([
@@ -143,11 +172,11 @@ export class DashboardComponent implements OnInit {
       this.testService.getNrEvaluations()
     ]).pipe(map(([tests, evaluations]) => [
       {
-        name: "Teste",
+        name: this.dashboard.tests,
         data: tests.data
       },
       {
-        name: "Evaluări",
+        name: this.dashboard.evaluatins,
         data: evaluations.data
       }
     ]));

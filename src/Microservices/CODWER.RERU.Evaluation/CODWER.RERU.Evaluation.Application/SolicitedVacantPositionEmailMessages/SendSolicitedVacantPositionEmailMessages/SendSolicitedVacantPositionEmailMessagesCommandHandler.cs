@@ -116,7 +116,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedVacantPositionEmailMessage
         {
             await _notificationService.PutEmailInQueue(new QueuedEmailData
             {
-                Subject = "Pozitie solicitata",
+                Subject = "Poziție solicitată",
                 To = solicitedPosition.UserProfile.Email,
                 HtmlTemplateAddress = "Templates/Evaluation/EmailNotificationTemplate.html",
                 ReplacedValues = new Dictionary<string, string>()

@@ -7,6 +7,7 @@ using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System;
 
 namespace CODWER.RERU.Core.Application.Studies
 {
@@ -25,7 +26,7 @@ namespace CODWER.RERU.Core.Application.Studies
             When(x => x.YearOfAdmission != null && x.GraduationYear != null, () =>
             {
                 RuleFor(x => x)
-                   .Must(x => x.YearOfAdmission < x.GraduationYear)
+                   .Must(x => Int64.Parse(x.YearOfAdmission) < Int64.Parse(x.GraduationYear))
                     .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
             });
         }

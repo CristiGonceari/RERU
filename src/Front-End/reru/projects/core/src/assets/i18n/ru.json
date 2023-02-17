@@ -261,7 +261,7 @@
     "full-name": "ФИО",
     "email":"Электронная почта",
     "lastName": "Фамилия",
-    "father-name": "Отчество",
+    "father-name": "Отчество(по желанию)",
     "idnp": "IDNP",
     "role": "Роль",
     "actions": "Действия",
@@ -333,7 +333,7 @@
     "access-mode": "Режим доступа",
     "code-length": "Код должен содержать 4 цифры!",
     "enter-code": "Введите код",
-    "verify-process": "Процесс проверки электронной почты",
+    "verify-process": "Найдите нужный код в своем сообщении электронной почты.",
     "Employee": "Сотрудник",
     "Candidate": "Кандидат"
   },
@@ -636,8 +636,8 @@
     "citizenship":"Гражданство",
     "state-language-level":"Уровень владения государственным языком",
     "sex":"Пол",
-    "home-phone":"Домашний телефон",
-    "work-phone":"Рабочий телефон"
+    "home-phone":"Домашний телефон(по желанию)",
+    "work-phone":"Рабочий телефон(по желанию)"
   },
   "bulletin":{
     "name":"Удостоверение личности",
@@ -648,6 +648,13 @@
     "birth-place":"Место рождения",
     "residence-address":"Адрес места проживания",
     "parents-residence-address":"Aдрес проживания родителей",
+    "abbreviations":{
+      "city":"г. ",
+      "street":"ул. ",
+      "boulevard":"бул. ",
+      "apartment":"кв. ",
+      "post-code":"почтовый индекс. "
+    },
     "modal":{
       "country": "Страна",
       "region": "Регион",
@@ -777,7 +784,9 @@
     "AlternativeService" : "Альтернативная военная служба",
     "PerformedMilitaryService" : "Военная служба успешно пройдена",
     "Recruit" : "Рекрут",
-    "Reservist" : "Резервист"
+    "Reservist" : "Резервист",
+    "Disobedient" : "Hесуществующая",
+    "MilitaryChair" : "Bоенная кафедра"
   },
   "stepper":{
     "button-update-and-next":"Обновите и перейдите к следующему шагу",
@@ -819,6 +828,7 @@
     "only-letters-numbers-dash-and-dot": "Должен содержать только буквы, цифры и - .",
     "only-letters-numbers-and-symbols": "Должен содержать только буквы, цифры и - , . ",
     "only-letters-numbers-and-some-symbols": "Должен содержать только буквы, цифры и - , . \" \" ",
-    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com"
+    "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com",
+    "only-year": "Укажите допустимый формат AAAA"
   }
 }
