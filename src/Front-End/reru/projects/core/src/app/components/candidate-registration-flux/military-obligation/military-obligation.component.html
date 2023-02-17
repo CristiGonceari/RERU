@@ -331,7 +331,7 @@
             <div class="col">
                 <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3">
                     <button class="btn btn-success h-35px" *ngIf="addOrEditMilitaryObligationButton"
-                        [disabled]="ilitaryObligationsButtonValidator(militaryObligationForm.value.obligations)"
+                        [disabled]="militaryObligationsButtonValidator(militaryObligationForm.value.obligations)"
                         (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
                     <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditMilitaryObligationButton"
                         [disabled]="militaryObligationsButtonValidator(militaryObligationForm.value.obligations)"

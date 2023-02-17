@@ -30,9 +30,9 @@ namespace CODWER.RERU.Core.Application.Addresses
                     .WithMessage(ValidationMessages.InvalidInput);
 
 
-                RuleFor(x => x.PostCode).NotEmpty()
-                    .WithErrorCode(ValidationCodes.INVALID_INPUT)
-                    .WithMessage(ValidationMessages.InvalidInput);
+                //RuleFor(x => x.PostCode).NotEmpty()
+                //    .WithErrorCode(ValidationCodes.INVALID_INPUT)
+                //    .WithMessage(ValidationMessages.InvalidInput);
 
             });
 
