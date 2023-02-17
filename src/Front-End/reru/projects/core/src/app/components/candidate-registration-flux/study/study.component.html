@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-12">
-                                        <div class="form-group row required">
+                                        <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' |
                                                 translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
@@ -84,14 +84,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-6 col-12">
-                                        <div class="form-group row required">
+                                        <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{'study.faculty' |
                                                 translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <input formControlName="faculty" autocomplete="off"
                                                     class="form-control form-control-solid" type="text"
-                                                    [placeholder]="'study.faculty' | translate" />
-                                                <div *ngIf="isInvalidPattern(study, 'faculty')"
+                                                    [placeholder]="'study.faculty' | translate" 
+                                                    />
+                                                <div *ngIf="isInvalidPattern(study, 'faculty') && isLengthValidator(study, 'faculty')"
                                                     class="invalid-feedback d-block">
                                                     {{'validations.only-letters-and-dash' | translate}}</div>
                                             </div>
@@ -119,8 +120,13 @@
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision' |
                                                 translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <app-date [parent]="study" [date]="'yearOfAdmission'"
-                                                    [placeholder]="'study.year-of-admision' | translate"></app-date>
+                                                <input formControlName="yearOfAdmission" autocomplete="off"
+                                                    class="form-control form-control-solid" type="text" maxlength="4"
+                                                    minlength="4"
+                                                    [placeholder]="'study.year-of-admision' | translate" />
+                                                <div *ngIf="isLengthValidator(study, 'yearOfAdmission') || isInvalidPattern(study, 'yearOfAdmission')"
+                                                    class="invalid-feedback d-block">
+                                                    {{'validations.only-year' | translate}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -129,8 +135,12 @@
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year' |
                                                 translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <app-date [parent]="study" [date]="'graduationYear'"
-                                                    [placeholder]="'study.graduation-year' | translate"></app-date>
+                                                <input formControlName="graduationYear" autocomplete="off"
+                                                    class="form-control form-control-solid" type="text" maxlength="4"
+                                                    minlength="4" [placeholder]="'study.graduation-year' | translate" />
+                                                <div *ngIf="isLengthValidator(study, 'graduationYear') || isInvalidPattern(study, 'graduationYear')"
+                                                    class="invalid-feedback d-block">
+                                                    {{'validations.only-year' | translate}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +156,8 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="studyForm.controls.studies.controls.length > 1" class="separator separator-dashed"></div>
+                            <div *ngIf="studyForm.controls.studies.controls.length > 1"
+                                class="separator separator-dashed"></div>
                         </div>
                     </div>
                     <div class="row pt-4">
@@ -161,10 +172,10 @@
                         <div class="col">
                             <div class="d-flex justify-content-end my-3">
                                 <button class="btn btn-success h-35px" *ngIf="addOrEditStudyButton"
-                                    [disabled]="studyForm && studyForm.invalid "
+                                    [disabled]="studyButtonValidator(studyForm.value.studies)"
                                     (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
                                 <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditStudyButton"
-                                    [disabled]="studyForm && studyForm.invalid"
+                                    [disabled]="studyButtonValidator(studyForm.value.studies)"
                                     (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
                             </div>
                         </div>
@@ -180,7 +191,8 @@
                     <div class="row">
                         <div class="col">
                             <h4 class="d-sm-block d-none">{{'language.modern-language-level' | translate}}</h4>
-                            <h4 class="d-sm-none d-block font-size-small">{{'language.modern-language-level' | translate}}</h4>
+                            <h4 class="d-sm-none d-block font-size-small">{{'language.modern-language-level' |
+                                translate}}</h4>
                         </div>
                     </div>
                 </mat-panel-title>
@@ -196,45 +208,54 @@
                         <div class="d-lg-none d-flex flex-column gap-2">
                             <div class="row" [ngClass]="{'more': languageForm.controls.modernLanguages.controls.length > 1  &&
                                 (languageForm.controls.modernLanguages.controls.length - 1) !== i}"
-                                    *ngFor="let modernLanguage of languageForm.controls.modernLanguages.controls;let i = index"
-                                    [formGroupName]="i">
-                                    <div class="col d-flex flex-column gap-4">
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
-                                            <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                *ngFor="let modernLanguage of languageForm.controls.modernLanguages.controls;let i = index"
+                                [formGroupName]="i">
+                                <div class="col d-flex flex-column gap-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'table.number' | translate}}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'language.name' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <select class="form-control" formControlName="modernLanguageId">
-                                                    <option value="null">{{'module-access.select' | translate}}</option>
-                                                    <option *ngFor="let item of modernLanguages" [value]="item.value">
-                                                        {{item.label }}
-                                                    </option>
-                                                </select>
-                                            </div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder text-center">{{i + 1}}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'language.qualifier' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <select class="form-control" formControlName="knowledgeQuelifiers">
-                                                    <option value="null">{{'module-access.select' | translate}}</option>
-                                                    <option *ngFor="let item of knowledgeQuelifiersEnum"
-                                                        [value]="item.value">{{
-                                                        'languageKnowledge.' + item.label | translate}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row" *ngIf="i > 0">
-                                            <div class="col">
-                                                <button class="btn btn-icon float-right" (click)="removeModernLanguage(i)">
-                                                    <span class="font-size-h2">&times;</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1" class="separator separator-dashed"></div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'language.name' | translate}}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <select class="form-control" formControlName="modernLanguageId">
+                                                <option value="null">{{'module-access.select' | translate}}</option>
+                                                <option *ngFor="let item of modernLanguages" [value]="item.value">
+                                                    {{item.label }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'language.qualifier' | translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <select class="form-control" formControlName="knowledgeQuelifiers">
+                                                <option value="null">{{'module-access.select' | translate}}</option>
+                                                <option *ngFor="let item of knowledgeQuelifiersEnum"
+                                                    [value]="item.value">{{
+                                                    'languageKnowledge.' + item.label | translate}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="i > 0">
+                                        <div class="col">
+                                            <button class="btn btn-icon float-right" (click)="removeModernLanguage(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1"
+                                        class="separator separator-dashed"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive d-lg-block d-none">
@@ -310,7 +331,8 @@
                     <div class="row">
                         <div class="col">
                             <h4 class="d-sm-block d-none">{{'recommendation.recommendation-name' | translate}}</h4>
-                            <h4 class="d-sm-none  d-block font-size-small">{{'recommendation.recommendation-name' | translate}}</h4>
+                            <h4 class="d-sm-none  d-block font-size-small">{{'recommendation.recommendation-name' |
+                                translate}}</h4>
                         </div>
                     </div>
                 </mat-panel-title>
@@ -328,53 +350,70 @@
                                 (recommendationForm.controls.recommendation.controls.length - 1) !== i}"
                                 *ngFor="let recommendation of recommendationForm.controls.recommendation.controls; let i = index"
                                 [formGroupName]="i">
-                                    <div class="col d-flex flex-column gap-4">
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
-                                            <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                <div class="col d-flex flex-column gap-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'table.number' | translate}}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-user-name' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="name" autocomplete="off"
+                                        <div class="col">
+                                            <p class="font-weight-bolder text-center">{{i + 1}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-name' |
+                                                translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
                                                 [placeholder]="'recommendation.user-name' | translate" />
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-user-last-name' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="lastName" autocomplete="off"
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-last-name' |
+                                                translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
                                                 [placeholder]="'recommendation.last-name' | translate" />
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-function' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="function" autocomplete="off"
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-function' | translate
+                                                }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
                                                 [placeholder]="'recommendation.table-function' | translate" />
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'recommendation.table-subdivision' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="subdivision" autocomplete="off"
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-subdivision' |
+                                                translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="subdivision" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
                                                 [placeholder]="'recommendation.table-subdivision' | translate" />
-                                            </div>
                                         </div>
-                                        <div class="row" *ngIf="i > 0">
-                                            <div class="col">
-                                                <button class="btn btn-icon float-right" (click)="removeRecommendation(i)">
-                                                    <span class="font-size-h2">&times;</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1" class="separator separator-dashed"></div>
                                     </div>
+                                    <div class="row" *ngIf="i > 0">
+                                        <div class="col">
+                                            <button class="btn btn-icon float-right" (click)="removeRecommendation(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="languageForm.controls.modernLanguages.controls.length > 1"
+                                        class="separator separator-dashed"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive d-lg-block d-none">
@@ -386,7 +425,7 @@
                                         <th scope="col">{{ 'recommendation.table-user-last-name' | translate }}</th>
                                         <th scope="col">{{ 'recommendation.table-function' | translate }}</th>
                                         <th scope="col">{{ 'recommendation.table-subdivision' | translate }}</th>
-                                        <th scope="col" class="w-10px"w></th>
+                                        <th scope="col" class="w-10px" w></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -439,10 +478,12 @@
                             <div class="d-flex justify-content-end my-3">
                                 <button class="btn btn-success h-35px" *ngIf="addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid "
-                                    (click)="createRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
+                                    (click)="createRecommendationForStudy()">{{'stepper.button-update' |
+                                    translate}}</button>
                                 <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid"
-                                    (click)="createRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
+                                    (click)="createRecommendationForStudy()">{{'stepper.button-add' |
+                                    translate}}</button>
                             </div>
                         </div>
                     </div>

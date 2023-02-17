@@ -159,6 +159,19 @@ export class MilitaryObligationComponent implements OnInit {
       contractorId: this.fb.control(contractorId || null, []),
     });
   }
+ 
+  militaryObligationsButtonValidator(value) {
+    let result: boolean;
+
+    for (let i = 0; i < value.length; i++) {
+      if (value[i].militaryObligationType == 1 ||  value[i].militaryObligationType == 4 || value[i].militaryObligationType == 6 ) {
+        result = !(value[i].militaryObligationType && value[i].efectiv && value[i].militarySpecialty && value[i].degree && value[i].militaryBookletSeries && value[i].militaryBookletNumber && value[i].militaryBookletEminentAuthority)
+      }else {
+        result = this.militaryObligationForm.invalid
+      }
+    }
+    return result;
+  }
 
   createMilitaryObligations() {
     this.buildMilitaryObligationForm().subscribe(response => {
