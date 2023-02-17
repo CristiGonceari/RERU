@@ -437,7 +437,7 @@
   },
   "message": {
     "no-record": "There are no records found.",
-    "there-are-errors-to-be-fixed": "You have entered invalid data, please check the form!",
+    "required": "Fill in the required fields!",
     "use-date-format": "Use the following date format dd.MM.YYYY, for e.g. 31.08.2020",
     "use-letters-numbers-and-dash": "Please use letters, numbers and symbol -",
     "date-from-is-more-than": "Start date is bigger than end date.",
