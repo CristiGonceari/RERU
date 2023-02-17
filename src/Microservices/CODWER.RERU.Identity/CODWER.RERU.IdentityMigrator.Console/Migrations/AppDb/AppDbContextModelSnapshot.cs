@@ -1950,7 +1950,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<int>("MilitaryBookletNumber")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("MilitaryBookletReleaseDay")
+                    b.Property<DateTime?>("MilitaryBookletReleaseDay")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("MilitaryBookletSeries")
@@ -1962,7 +1962,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("MilitarySpecialty")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("MobilizationYear")
+                    b.Property<DateTime?>("MobilizationYear")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdateById")
@@ -1971,7 +1971,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("WithdrawalYear")
+                    b.Property<DateTime?>("WithdrawalYear")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
