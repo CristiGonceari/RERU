@@ -436,7 +436,7 @@
   },
   "message": {
     "no-record": "Nu a fost găsită nicio înregistrare.",
-    "there-are-errors-to-be-fixed": "Ați introdus date invalide, verificați forma!",
+    "required": "Completați câmpurile obligatorii!",
     "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020",
     "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
     "date-from-is-more-than": "Data început este mai mare decât data sfârșit.",
