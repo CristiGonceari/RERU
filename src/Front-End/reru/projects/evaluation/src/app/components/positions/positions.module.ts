@@ -19,6 +19,7 @@ import { DiagramComponent } from './position-details/diagram/diagram.component';
 import { PositionsComponent } from './positions.component';
 import { SearchMedicalColumnComponent } from './search-medical-column/search-medical-column.component';
 import { PositionAddTestComponent } from './position-details/position-add-test/position-add-test.component';
+import { PositionAddEvaluationComponent } from './position-details/position-add-evaluation/position-add-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PositionAddTestComponent } from './position-details/position-add-test/p
     DiagramComponent, 
     SearchMedicalColumnComponent,
     PositionAddTestComponent,
+    PositionAddEvaluationComponent,
   ],
   imports: [
     CommonModule,

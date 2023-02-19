@@ -150,12 +150,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
 
                 content += $@"<p> Locatia: ""{location.Address ?? "Nici o adresă asignata"}"", ""{location.Name ?? "Nici o locație asignată"}"" </p>";
 
-                if (string.IsNullOrEmpty(location.Address))
+                if (!string.IsNullOrEmpty(location.Description))
                 {
                      content += $@"<p> ""{location.Description}""</p>";
                 }
-
-                content += "<p> Prezența fizică este obligatorie. </p>";
             }
 
             return content;

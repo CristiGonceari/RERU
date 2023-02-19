@@ -9,10 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { FileService } from 'projects/personal/src/app/utils/services/file.service';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { DocumentsTemplateListOfKeys } from '../../../utils/models/DocumentsTemplatesListOfKeys';
 import { DocumentKeyEnum } from '../../../utils/models/documentKeys.enum';
 import { CategoryKeyEnum } from '../../../utils/models/categoryKeyEnum';
+import { I18nService } from '../../../utils/services/i18n.service';
 
 
 
@@ -34,6 +35,11 @@ export class AddComponent implements OnInit {
   public firebase_Data : Observable<DocumentsTemplateListOfKeys>;
   keysEnum = DocumentKeyEnum;
   categoryKeyEnum = CategoryKeyEnum;
+  notification = {
+    success: 'Success',
+    successAddMsg: 'Document was successfully added',
+    successEditMsg: 'Document was successfully updated',
+  }
 
   constructor(
     private documentTemplateService: DocumentsTemplateService,
@@ -41,6 +47,7 @@ export class AddComponent implements OnInit {
     private notificationService: NotificationsService,
     private activatedRoute: ActivatedRoute,
     private fileService: FileService ,
+    public translate: I18nService
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +60,9 @@ export class AddComponent implements OnInit {
       this.isLoading = false;
     }
     this.getListOfKeys();
+    
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
  
   addWordButtonToCkEditor(word){
@@ -102,15 +112,33 @@ export class AddComponent implements OnInit {
     if (this.documentId) {
       this.documentTemplateService.edit(editDocument).subscribe(() => {
         this.backCancel();
-        this.notificationService.success('Success', 'Document was successfully updated', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.successEditMsg, NotificationUtil.getDefaultMidConfig());
       });
     } else {
       this.documentTemplateService.create(createDocument).subscribe(() => {
         this.backCancel();
-        this.notificationService.success('Success', 'Document was successfully added', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.successAddMsg, NotificationUtil.getDefaultMidConfig());
       });
     }
   }
+
+  translateData(): void {
+		forkJoin([
+			this.translate.get('notification.title.success'),
+			this.translate.get('notification.body.success-add-mgs'),
+			this.translate.get('notification.body.success-edit-mgs'),
+		]).subscribe(
+			([ success, successAddMsg, successEditMsg ]) => {
+				this.notification.success = success;
+				this.notification.successAddMsg = successAddMsg;
+				this.notification.successEditMsg = successEditMsg;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
 
   backCancel() {
     this.location.back();

@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
+import { forkJoin } from 'rxjs';
 import { ContactModel } from '../../models/contact.model';
 import { SelectItem } from '../../models/select-item.model';
 import { ContactService } from '../../services/contact.service';
+import { I18nService } from '../../services/i18n.service';
 import { ReferenceService } from '../../services/reference.service';
 import { NotificationUtil } from '../../util/notification.util';
 import { EnterSubmitListener } from '../../util/submit.util';
@@ -19,11 +21,21 @@ export class EditContactModalComponent extends EnterSubmitListener implements On
   contactForm: FormGroup;
   types: SelectItem[] = [];
   isLoading: boolean = true;
+  notification = {
+    warning: 'Warning',
+    error: 'Error',
+    success: 'Success',
+    contactUpdate: 'Contact has been successfully updated!',
+    validationFail: 'Validation failed!',
+    serverError: 'Server error occured!'
+  }
+  
   constructor(private activeModal: NgbActiveModal,
     private fb: FormBuilder,
     private reference: ReferenceService,
     private contactService: ContactService,
-    private notificationService: NotificationsService) {
+    private notificationService: NotificationsService,
+    public translate: I18nService) {
       super();
       this.callback = this.submit;
      }
@@ -31,6 +43,9 @@ export class EditContactModalComponent extends EnterSubmitListener implements On
   ngOnInit(): void {
     this.initDropdownData();
     this.retrieveContact();
+
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   retrieveContact(): void {
@@ -57,22 +72,46 @@ export class EditContactModalComponent extends EnterSubmitListener implements On
     });
   }
 
+  translateData(): void {
+		forkJoin([
+      this.translate.get('notification.title.warning'),
+      this.translate.get('notification.title.error'),
+      this.translate.get('notification.title.success'),
+      this.translate.get('notification.body.contact-update'),
+      this.translate.get('notification.body.validation-fail'),
+      this.translate.get('notification.body.server-error'),
+		]).subscribe(
+			([ warning, error, success, contactUpdate, validationFail, serverError]) => {
+        this.notification.warning = warning;
+        this.notification.error = error;
+        this.notification.success = success;
+        this.notification.contactUpdate = contactUpdate;
+        this.notification.validationFail = validationFail;
+        this.notification.serverError = serverError;
+			}
+		);
+	}
+
+  subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
+
   submit(): void {
     this.isLoading = true;
     this.contactService.updateContact(this.parseData(this.contactForm.value)).subscribe(response => {
       if (response.success) {
-        this.notificationService.success('Contact', 'Contact has been successfully updated!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.success(this.notification.success, this.notification.contactUpdate, NotificationUtil.getDefaultMidConfig());
         this.isLoading = false;
         this.close();
       }
     }, error => {
       this.isLoading = false;
       if (error.status === 400) {
-        this.notificationService.warn('Warning', 'Validation error occured!', NotificationUtil.getDefaultMidConfig());
+        this.notificationService.warn(this.notification.warning, this.notification.validationFail, NotificationUtil.getDefaultMidConfig());
         return;
       }
 
-      this.notificationService.error('Error', 'Server error occured!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notification.error, this.notification.serverError, NotificationUtil.getDefaultMidConfig());
     });
   }
 

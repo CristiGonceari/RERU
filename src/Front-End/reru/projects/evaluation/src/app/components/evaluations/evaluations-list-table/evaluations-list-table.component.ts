@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { SearchDepartmentComponent } from '../../../utils/components/search-department/search-department.component';
 import { SearchEmployeeFunctionComponent } from '../../../utils/components/search-employee-function/search-employee-function.component';
 import { SearchRoleComponent } from '../../../utils/components/search-role/search-role.component';
@@ -11,17 +11,9 @@ import { SearchRoleComponent } from '../../../utils/components/search-role/searc
 export class EvaluationsListTableComponent implements OnInit {
   title: string;
 
-  @ViewChild('testName') testName: any;
-  @ViewChild('testEvent') testEvent: any;
-  @ViewChild('testLocation') testLocation: any;
-  @ViewChild('userName') userName: any;
-  @ViewChild('evaluatorName') evaluatorName: any;
-  @ViewChild('selectedResult') selectedResult: any;
-  @ViewChild(SearchDepartmentComponent) departmentId: SearchDepartmentComponent;
-  @ViewChild(SearchRoleComponent) roleId: SearchRoleComponent;
-  @ViewChild(SearchEmployeeFunctionComponent) functionId: SearchEmployeeFunctionComponent;
+  showFilter: boolean = true;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
   }
@@ -32,14 +24,8 @@ export class EvaluationsListTableComponent implements OnInit {
   }
 
   clearFields() {
-    this.testName.value = '';
-    this.testEvent.value = '';
-    this.testLocation.value = '';
-    this.userName.value = '';
-    this.evaluatorName.value = '';
-    this.selectedResult.getTestResults();
-    this.departmentId.department = '';
-    this.roleId.role = '';
-    this.functionId.function = '';
+    this.showFilter=false;
+    this.cd.detectChanges();
+    this.showFilter=true;
   }
 }

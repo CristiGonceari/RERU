@@ -31,7 +31,7 @@ namespace CODWER.RERU.Core.Application.Users.ActivateUser {
 
                 await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
-                    Subject = "Account Activation",
+                    Subject = "Activarea contului",
                     To = userProfile.Email,
                     HtmlTemplateAddress = "Templates/ActivateUser.html",
                     ReplacedValues = new Dictionary<string, string>()

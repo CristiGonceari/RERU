@@ -16,15 +16,15 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations
                .SetValidator(new ExistInEnumValidator<MilitaryObligationTypeEnum>());
 
 
-            RuleFor(x => x.MobilizationYear)
-                   .NotEmpty()
-                   .WithErrorCode(ValidationCodes.INVALID_INPUT)
-                   .WithMessage(ValidationMessages.InvalidInput);
+            //RuleFor(x => x.MobilizationYear)
+            //       .NotEmpty()
+            //       .WithErrorCode(ValidationCodes.INVALID_INPUT)
+            //       .WithMessage(ValidationMessages.InvalidInput);
 
-            RuleFor(x => x.WithdrawalYear)
-                   .NotEmpty()
-                   .WithErrorCode(ValidationCodes.INVALID_INPUT)
-                   .WithMessage(ValidationMessages.InvalidInput);
+            //RuleFor(x => x.WithdrawalYear)
+            //       .NotEmpty()
+            //       .WithErrorCode(ValidationCodes.INVALID_INPUT)
+            //       .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.Efectiv)
                    .NotEmpty()
@@ -51,10 +51,10 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations
                    .WithErrorCode(ValidationCodes.EMPTY_MILITARY_BOOKLET_NUMBER)
                    .WithMessage(ValidationMessages.InvalidInput);
 
-            RuleFor(x => x.MilitaryBookletReleaseDay)
-                   .NotEmpty()
-                   .WithErrorCode(ValidationCodes.INVALID_INPUT)
-                   .WithMessage(ValidationMessages.InvalidInput);
+            //RuleFor(x => x.MilitaryBookletReleaseDay)
+            //       .NotEmpty()
+            //       .WithErrorCode(ValidationCodes.INVALID_INPUT)
+            //       .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.MilitaryBookletEminentAuthority)
                    .NotEmpty()

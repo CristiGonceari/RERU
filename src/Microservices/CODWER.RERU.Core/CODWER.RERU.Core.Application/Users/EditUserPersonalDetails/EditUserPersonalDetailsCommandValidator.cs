@@ -37,9 +37,9 @@ namespace CODWER.RERU.Core.Application.Users.EditUserPersonalDetails
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_USER_LAST_NAME);
 
-            RuleFor(r => r.Data.FatherName)
-                .NotEmpty()
-                .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
+            //RuleFor(r => r.Data.FatherName)
+            //    .NotEmpty()
+            //    .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
 
             RuleFor(r => r.Data.PhoneNumber)
                 .Must(x => Regex.IsMatch(x, @"^(\+373[0-9]{8})$"))

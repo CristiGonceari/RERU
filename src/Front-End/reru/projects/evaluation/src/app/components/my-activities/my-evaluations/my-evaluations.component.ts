@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintModalComponent } from '@erp/shared';
@@ -19,7 +19,6 @@ import { PrintTableService } from '../../../utils/services/print-table/print-tab
 	styleUrls: ['../table-inherited.component.scss', 'my-evaluations.component.scss']
 })
 export class MyEvaluationsComponent implements OnInit {
-	@ViewChild('evaluatedName') evaluatedName: any;
 	fromDate: string;
 	tillDate: string;
 	testRowList: [] = [];
@@ -33,9 +32,10 @@ export class MyEvaluationsComponent implements OnInit {
 	printTranslates: any[];
 	title: string;
 	filters: any = {};
-	evaluationName: string;
 	searchFrom: string;
 	searchTo: string;
+	showFilter: boolean = true;
+
 
 	constructor(
 		private testService: TestService,
@@ -43,7 +43,8 @@ export class MyEvaluationsComponent implements OnInit {
 		public translate: I18nService,
 		private modalService: NgbModal,
 		private enumStringTranslatorService: EnumStringTranslatorService,
-		private printTableService: PrintTableService
+		private printTableService: PrintTableService,
+		private cd: ChangeDetectorRef
 	) { }
 
 	ngOnInit(): void {
@@ -97,8 +98,9 @@ export class MyEvaluationsComponent implements OnInit {
 
 	resetFilters(): void {
 		this.filters = {};
-		this.evaluatedName.key = '';
-		this.evaluationName = '';
+		this.showFilter = false;
+		this.cd.detectChanges();
+		this.showFilter = true;
 		this.searchFrom = '';
 		this.searchTo = '';
 		this.fromDate = '';

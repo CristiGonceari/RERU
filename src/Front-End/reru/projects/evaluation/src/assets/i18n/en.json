@@ -51,7 +51,9 @@
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
-        "login": "Login successfully!"
+        "login": "Login successfully!",
+        "success-add-mgs": "Document was successfuly added",
+        "success-edit-mgs": "Document was successfuly updated"
       },
       "error": "There has been an error!"
     },
@@ -103,7 +105,8 @@
     "documents-management": "Document Management",
     "administration": "Administration candidates",
     "positions": "Vacant positions",
-    "required-documents": "Required Documents"
+    "required-documents": "Required Documents",
+    "today":"Today"
   },
   "position": {
     "administration": "Administration",
@@ -486,6 +489,13 @@
     "have-a-good-day": "Welcome, have a good day!",
     "my-activities": "My activities", 
     "my-evaluated-tests": "My evaluated Tests",
+    "notifications": "Notifications",
+    "check-notifications": "Check notifications",
+    "new-notification": "New notifications",
+    "tests": "Tests",
+    "evaluations": "Evaluations",
+    "notice1": "Notes: displays new notifications ",
+    "notice2": "with the total number of notifications",
     "enclosed-mode": "Enclosed mode"
   },
   "questions": {
