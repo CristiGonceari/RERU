@@ -131,4 +131,10 @@ export class AddEditEventsComponent implements OnInit {
 	backClicked() {
 		this.location.back();
 	}
+
+	cantAdd() {
+		return this.name == null ||
+			this.startDate == null ||
+			this.endDate == null
+	}
 }

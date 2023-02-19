@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CVU.ERP.Common.EnumConverters;
 using System.Linq;
 using CODWER.RERU.Evaluation360.Application.References.GetEmployeeFunctions;
+using CODWER.RERU.Evaluation360.Application.BLL.References.GetEvaluation360Roles;
 
 namespace CODWER.RERU.Evaluation360.API.Controllers
 {
@@ -47,6 +48,14 @@ namespace CODWER.RERU.Evaluation360.API.Controllers
             var filteredList = items.Where(x => x.Label == UserStatusEnum.Employee.ToString()).ToList();
 
             return filteredList;
+        }
+
+        [HttpGet("article-roles/select-values")]
+        public async Task<List<SelectItem>> GetArticleRoles()
+        {
+            var query = new GetEvaluation360RolesQuery();
+
+            return await Sender.Send(query);
         }
      }
 }

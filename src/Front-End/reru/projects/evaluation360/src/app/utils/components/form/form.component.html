@@ -755,7 +755,7 @@
     </div>
   </div>
 </form>
-<div *ngIf="showWarnning" class="text-danger">{{'message.there-are-errors-to-be-fixed' | translate }}</div>
+<div *ngIf="showWarnning" class="text-danger">{{'message.required' | translate }}</div>
 <div *ngIf="!isLoading && evaluationRole === EvaluatinRoleEnum.Evaluator" class="d-flex flex-xl-row flex-column justify-content-center gap-2">
   <button type="button" class="btn btn-secondary order-xl-1 order-2" routerLink="../../">{{ 'button.cancel' | translate }}</button>
   <button type="button" class="btn btn-warning order-xl-1 order-1" (click)="submit(ActionFormEnum.isSave)">{{ 'button.save' | translate }}</button>
