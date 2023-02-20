@@ -1,7 +1,11 @@
-<div class="d-flex align-items-center justify-content-between mb-2">
-    <span class="font-weight-bold mr-2" style="font-weight: bold !important;">{{'personal.contact-type-name.'+contact.typeName | translate}}:</span>
-    <div>
-        <span [ngClass]="{'pr-2': !isView}">{{contact?.value || '-'}}</span>
+<div class="row pt-2"> 
+    <div class="col-md-4 p-0">
+        <span class="font-weight-bold" style="font-weight: bold !important;">{{'personal.contact-type-name.'+contact.typeName | translate}}:</span>
+    </div>
+    <div class="col-md-7 p-0">
+        <span>{{contact?.value || '-'}}</span>
+    </div>
+    <div class="col-md-1 p-0">
         <ng-container *ngIf="!isView">
             <app-view-contact-dropdown 
                 [index]="1" 

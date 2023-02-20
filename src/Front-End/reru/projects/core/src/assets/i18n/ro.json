@@ -328,6 +328,9 @@
     "Employee": "Angajat",
     "Candidate": "Candidat"
   },
+  "locations": {
+    "description":"Descriere"
+  },
   "user": {
     "edit-title": "Editarea utilizatorului",
     "delete-title": "Ștergerea utilizatorului",
@@ -561,7 +564,16 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
-    "select-file-format": "Selectați formatul fișierului"
+    "select-file-format": "Selectați formatul fișierului",
+    "full-username": "Numele utilizatorului (N.P.P.)",
+    "last-name": "Nume",
+    "first-name": "Prenume",
+    "father-name": "Patronimic",
+    "department-colaborator-id": "Id Departament",
+    "role-colaborator-id": "Id Rol",
+    "function-colaborator-id": "Id Funcție angajat",
+    "birth-day": "Data nașterii",
+    "phone-number": "Nr. telefon" 
   },
   "guide": {
     "title": "Ghidul Utilizatorului"

@@ -98,11 +98,11 @@ export class ContractorsTableComponent implements OnInit {
       this.translate.get('notification.title.warning'),
       this.translate.get('notification.title.error'),
       this.translate.get('notification.title.success'),
-			this.translate.get('notification.body.contractor-update'),
-      this.translate.get('notification.body.contractor-delete'),
-      this.translate.get('notification.body.contractor-dismiss'),
-      this.translate.get('notification.body.validation-fail'),
-      this.translate.get('notification.body.server-error'),
+			this.translate.get('notification.body.success.contractor-update'),
+      this.translate.get('notification.body.success.contractor-delete'),
+      this.translate.get('notification.body.success.contractor-dismiss'),
+      this.translate.get('notification.body.success.validation-fail'),
+      this.translate.get('notification.body.success.server-error'),
 		]).subscribe(
 			([ contractor, warning, error, success, contractorUpdate, contractorDelete,
           contractorDismiss, validationFail, serverError]) => {

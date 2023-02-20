@@ -337,6 +337,9 @@
     "Employee": "Сотрудник",
     "Candidate": "Кандидат"
   },
+  "locations": {
+    "description":"Описание"
+  },
   "user": {
     "edit-title": "Обновить Пользователя",
     "delete-title": "Удаление Пользователя",
@@ -564,7 +567,16 @@
     "sorted-by": "Отсортировано по",
     "error-msg": "Укажите, пожалуйста, необходимые поля для печати",
     "print-msg": "Укажите, пожалуйста, ориентацию печати и необходимые поля.",
-    "select-file-format": "Выбери формат файла"
+    "select-file-format": "Выбери формат файла",
+    "full-username": "Имя пользователя (N.P.P.)",
+    "last-name": "Имя",
+    "first-name": "Фамилия",
+    "father-name": "Отчество",
+    "department-colaborator-id": "Идентиф. Отдела",
+    "role-colaborator-id": "Идентиф. Роли",
+    "function-colaborator-id": "Идентиф. Функции Сотрудника",
+    "birth-day": "Дата рождения",
+    "phone-number": "Ном. телефона" 
   },
   "guide": {
     "title": "Гид пользователя"
