@@ -68,7 +68,7 @@ export class AddContractorContactModalComponent extends EnterSubmitListener impl
   translateData(): void {
 		forkJoin([
       this.translate.get('notification.title.success'),
-      this.translate.get('notification.body.contact-add'),
+      this.translate.get('notification.body.success.contact-add'),
 		]).subscribe(
 			([ success, contactAdd]) => {
         this.notification.success = success;

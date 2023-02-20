@@ -446,6 +446,12 @@
     "doesnt-need-countersign": "Doesn't need countersign (for recruits of high rank)",
     "final-points-should-be-between-1-and-4": "The final points should be between 1 and 4"
   },
+  "print": {
+    "print-table": "Print table",
+    "sorted-by": "Sorted by",
+    "error-msg": "Please select the required fields for printing",
+    "print-msg": "Please specify the required fields and print orientation."
+  },
   "guide": {
     "title": "User Guide"
   },

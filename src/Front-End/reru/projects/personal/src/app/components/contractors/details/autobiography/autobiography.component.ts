@@ -12,6 +12,8 @@ import { DataService } from '../data.service';
 import { Contractor } from 'projects/personal/src/app/utils/models/contractor.model';
 import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
 import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
+import { I18nService } from 'projects/personal/src/app/utils/services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -38,6 +40,20 @@ export class AutobiographyComponent implements OnInit {
   autobiographyData;
   registrationFluxStep;
 
+  notifications = {
+    success: 'Success',
+    error: 'Error',
+    autobiographySuccesAdd:  'Autobiography was added!',
+    autobiographyErrorAdd:  'Autobiography was not added!',
+    autobiographySuccesUpdate:  'Autobiography was updated!',
+    autobiographyErrorUpdate:  'Autobiography was not updated!',
+    needCompleteStep: 'Need to complete step ',
+    stepSuccesAdd: 'Step was added!',
+    stepErrorAdd:  'Step was not added!',
+    stepSuccesUpdate: 'Step was updated!',
+    stepErrorUpdate:  'Step was not updated!'
+  }
+
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -53,6 +69,7 @@ export class AutobiographyComponent implements OnInit {
     private registrationFluxService: RegistrationFluxStepService,
     private ds: DataService,
     private contractorService: ContractorService,
+    private translate: I18nService,
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +79,9 @@ export class AutobiographyComponent implements OnInit {
 
     this.initForm();
     this.subscribeForParams();
+    
+		this.translateData();
+		this.subscribeForLanguageChange();
   }
 
   initForm(data?): void {
@@ -128,13 +148,46 @@ export class AutobiographyComponent implements OnInit {
     
   }
 
+  translateData(): void {
+    forkJoin([
+      this.translate.get('notification.title.success'),
+      this.translate.get('notification.title.error'),
+      this.translate.get('notification.body.success.autobiography-succes-add-msg'),
+      this.translate.get('notification.body.autobiography-error-add'),
+      this.translate.get('notification.body.success.autobiography-succes-update-msg'),
+      this.translate.get('notification.body.autobiography-error-update'),
+      this.translate.get('notification.body.need-complete-step'),
+      this.translate.get('notification.body.success.step-succes-add-msg'),
+      this.translate.get('notification.body.step-error-add'),
+      this.translate.get('notification.body.success.step-succes-update-msg'),
+      this.translate.get('notification.body.step-error-update'),
+    ]).subscribe(([success, error, autobiographySuccesAdd, autobiographyErrorAdd, autobiographySuccesUpdate, 
+      autobiographyErrorUpdate, needCompleteStep, stepSuccesAdd, stepErrorAdd,stepSuccesUpdate, stepErrorUpdate]) => {
+      this.notifications.success = success;
+      this.notifications.error = error;
+      this.notifications.autobiographySuccesAdd = autobiographySuccesAdd;
+      this.notifications.autobiographyErrorAdd = autobiographyErrorAdd;
+      this.notifications.autobiographySuccesUpdate = autobiographySuccesUpdate;
+      this.notifications.autobiographyErrorUpdate = autobiographyErrorUpdate;
+      this.notifications.needCompleteStep = needCompleteStep;
+      this.notifications.stepSuccesAdd = stepSuccesAdd;
+      this.notifications.stepErrorAdd = stepErrorAdd;
+      this.notifications.stepSuccesUpdate = stepSuccesUpdate;
+      this.notifications.stepErrorUpdate = stepErrorUpdate;
+    });
+  }
+
+  subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
+
   createAutobiography(){
     
     this.autobiographyService.add(this.parseAutobiography(this.autobiographyForm.value, this.contractor.id)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was added!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notifications.success, this.notifications.autobiographySuccesAdd, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractor.id);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not added!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notifications.error, this.notifications.autobiographyErrorAdd, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -149,10 +202,10 @@ export class AutobiographyComponent implements OnInit {
 
   updateAutobiography(){
     this.autobiographyService.update(this.parseAutobiography(this.autobiographyForm.value, this.contractor.id)).subscribe(res => {
-      this.notificationService.success('Success', 'Autobiography was updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notifications.success, this.notifications.autobiographySuccesUpdate, NotificationUtil.getDefaultMidConfig());
       this.getUserAutobiography(this.contractor.id);
     }, error => {
-      this.notificationService.error('Error', 'Autobiography was not updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notifications.error, this.notifications.autobiographyErrorUpdate, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -196,7 +249,7 @@ export class AutobiographyComponent implements OnInit {
           this.ds.sendData(datas);
         }
       }else{
-      this.notificationService.error('Error', 'Need to complete step ' + el + '!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notifications.error, this.notifications.needCompleteStep + el + '!', NotificationUtil.getDefaultMidConfig());
       }
     });
   }
@@ -208,9 +261,9 @@ export class AutobiographyComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notifications.success, this.notifications.stepSuccesAdd, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notifications.error, this.notifications.stepErrorAdd, NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -223,9 +276,9 @@ export class AutobiographyComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.success(this.notifications.success, this.notifications.stepSuccesUpdate, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      this.notificationService.error(this.notifications.error, this.notifications.stepErrorUpdate, NotificationUtil.getDefaultMidConfig());
     })
   }
 }
