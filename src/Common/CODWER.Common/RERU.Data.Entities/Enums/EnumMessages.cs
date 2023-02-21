@@ -7,7 +7,7 @@ namespace RERU.Data.Entities.Enums
     public static class EnumMessages
     {
         public const string question = "Întrebări";
-        public const string testtemplate = "Șabloane de Test";
+        public const string testtemplate = "Șabloane de test";
         public const string test = "Test";
 
         public const string Random = "Întâmplător";
