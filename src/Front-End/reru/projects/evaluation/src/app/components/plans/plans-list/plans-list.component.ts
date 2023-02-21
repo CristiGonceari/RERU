@@ -84,26 +84,26 @@ export class PlansListComponent implements OnInit {
 		}
 	}
 
-	  getFilteredEvents(data: any = {}) :void {
-		this.setTimeToSearch();
+  getFilteredEvents(data: any = {}) :void {
+  this.setTimeToSearch();
 
-      let params = {
-        fromDate: this.searchFrom,
-        tillDate: this.searchTo,
-        page: data.page || this.pagination.currentPage,
-        itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
-      }
-      if(this.searchFrom != null || this.searchTo != null) {
-        this.planService.list(params).subscribe(res => {
-          if(res && res.data) {
-            this.fromDate = res.data.fromDate;
-            this.tillDate = res.data.tillDate;
-            this.plans = res.data.items || [];
-            this.pagination = res.data.pagedSummary;
-          }
-        })
-      }
-	  }
+    let params = {
+      fromDate: this.searchFrom,
+      tillDate: this.searchTo,
+      page: data.page || this.pagination.currentPage,
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+    }
+    if(this.searchFrom != null || this.searchTo != null) {
+      this.planService.list(params).subscribe(res => {
+        if(res && res.data) {
+          this.fromDate = res.data.fromDate;
+          this.tillDate = res.data.tillDate;
+          this.plans = res.data.items || [];
+          this.pagination = res.data.pagedSummary;
+        }
+      })
+    }
+  }
 
   getListByDate(data: any = {}): void {
     this.isLoading = true;
@@ -260,7 +260,7 @@ export class PlansListComponent implements OnInit {
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(() => this.delete(id), () => {});
- }
+  }
 
  delete(id){
   this.isLoadingCalendar = false;
@@ -276,7 +276,7 @@ export class PlansListComponent implements OnInit {
      this.list();
      this.isLoadingCalendar = true;
    })
- }
+  }
 
   navigate(id) {
     this.router.navigate(['plan/', id, 'overview'], { relativeTo: this.route });
