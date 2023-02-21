@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using CVU.ERP.Common.DataTransferObjects.Users;
+using CVU.ERP.StorageService.Entities;
 using RERU.Data.Entities.Enums;
 
 namespace CVU.ERP.Module.Application.TableExportServices.Implementations
@@ -62,6 +63,9 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     result = EnumMessages.Translate(@enum);
                     break;
                 case TestingLocationType @enum:
+                    result = EnumMessages.Translate(@enum);
+                    break;
+                case FileTypeEnum @enum:
                     result = EnumMessages.Translate(@enum);
                     break;
                 case null:
