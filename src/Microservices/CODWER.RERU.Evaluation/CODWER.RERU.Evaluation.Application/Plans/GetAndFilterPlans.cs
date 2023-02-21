@@ -18,7 +18,27 @@ namespace CODWER.RERU.Evaluation.Application.Plans
 
             if (fromDate != null && tillDate != null)
             {
-                plans = plans.Where(x => x.FromDate >= fromDate && x.TillDate <= tillDate);
+                var startDate = (DateTime)fromDate;
+                var endDate = (DateTime)tillDate;
+
+                foreach (var p in plans)
+                {
+                    bool isIncluded = false;
+
+                    for (var dt = p.FromDate.Date; dt <= p.TillDate; dt = dt.AddDays(1))
+                    {
+                        if (startDate.Date <= dt && endDate.Date >= dt)
+                        {
+                            isIncluded = true;
+                            break;
+                        }
+                    }
+
+                    if (!isIncluded)
+                    {
+                        plans = plans.Where(x => x.Id != p.Id);
+                    }
+                }
             }
             else if (fromDate != null)
             {
