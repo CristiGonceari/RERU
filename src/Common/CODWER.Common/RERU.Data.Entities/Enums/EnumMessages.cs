@@ -1,9 +1,15 @@
 ﻿using CVU.ERP.Common.DataTransferObjects.Users;
+using CVU.ERP.StorageService.Entities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RERU.Data.Entities.Enums
 {
     public static class EnumMessages
     {
+        public const string question = "Întrebări";
+        public const string testtemplate = "Șabloane de Test";
+        public const string test = "Test";
+
         public const string Random = "Întâmplător";
         public const string Strict = "Ordonat";
         public const string Programmed = "Programat";
@@ -124,6 +130,17 @@ namespace RERU.Data.Entities.Enums
         public const string General_locotenent_al_serviciului_intern = "General-locotenent al serviciului intern";
         public const string General_colonel_al_serviciului_intern = "General-colonel al serviciului intern";
 
+        
+        public static string Translate(FileTypeEnum fileType)
+        {
+            return fileType switch
+            {
+                FileTypeEnum.question => question,
+                FileTypeEnum.testtemplate => testtemplate,
+                FileTypeEnum.test => test,
+                _ => "-"
+            };
+        }
 
         public static string Translate(TestStatusEnum testStatus)
         {
