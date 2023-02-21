@@ -336,7 +336,7 @@ data:
             "PostLogoutRedirectUris": ["http://reru-stage.codwer.com/"],
             "AllowedCorsOrigins": ["http://reru-stage.codwer.com"],
             "AllowAccessTokensViaBrowser": true,
-            "AccessTokenLifetime": 3600
+            "AccessTokenLifetime": 3000000
           }
         ]
       },
