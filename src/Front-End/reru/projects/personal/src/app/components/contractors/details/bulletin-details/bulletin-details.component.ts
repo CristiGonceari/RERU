@@ -71,6 +71,9 @@ export class BulletinDetailsComponent implements OnInit {
 
     this.initForm();
     this.subscribeForUser();
+
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   ngOnDestroy(){
@@ -266,11 +269,11 @@ export class BulletinDetailsComponent implements OnInit {
 
   translateData(): void {
 		forkJoin([
-			this.translate.get('bulletin.abbreviations.city'),
-			this.translate.get('bulletin.abbreviations.street'),
-			this.translate.get('bulletin.abbreviations.boulevard'),
-			this.translate.get('bulletin.abbreviations.apartment'),
-			this.translate.get('bulletin.abbreviations.post-code'),
+			this.translate.get('entity.bulletin.abbreviations.city'),
+			this.translate.get('entity.bulletin.abbreviations.street'),
+			this.translate.get('entity.bulletin.abbreviations.boulevard'),
+			this.translate.get('entity.bulletin.abbreviations.apartment'),
+			this.translate.get('entity.bulletin.abbreviations.post-code'),
 		]).subscribe(
 			([ city, street, boulevard, apartment, postCode	]) => {
 				this.abreviation.city = city;
