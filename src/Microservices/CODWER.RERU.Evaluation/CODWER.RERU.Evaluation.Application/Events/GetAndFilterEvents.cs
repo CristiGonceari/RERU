@@ -27,27 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.Events
 
             if (fromDate != null && tillDate != null)
             {
-                var startDate = (DateTime)fromDate;
-                var endDate = (DateTime)tillDate;
-
-                foreach (var e in events) 
-                {
-                    bool isIncluded = false;
-
-                    for (var dt = e.FromDate.Date; dt <= e.TillDate; dt = dt.AddDays(1))
-                    {
-                        if (startDate.Date <= dt && endDate.Date >= dt)
-                        {
-                            isIncluded = true;
-                            break;
-                        }
-                    }
-
-                    if (!isIncluded) 
-                    {
-                       events = events.Where(x => x.Id != e.Id);
-                    }
-                }
+                events = events.Where(x => x.FromDate >= fromDate && x.TillDate <= tillDate);
             }
             else if (fromDate != null)
             {
