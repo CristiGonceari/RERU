@@ -107,7 +107,7 @@ export class EventsListTableComponent implements OnInit {
 		this.dateTimeTo = '';
 		this.searchFrom = '';
 		this.searchTo = '';
-		this.name = '';
+		this.name.value = '';
 		this.getListByDate();
 	}
 
