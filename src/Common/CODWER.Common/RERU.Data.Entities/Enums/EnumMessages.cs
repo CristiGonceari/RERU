@@ -273,8 +273,8 @@ namespace RERU.Data.Entities.Enums
         {
             return testingLocationType switch
             {
-                TestingLocationType.Class => New,
-                TestingLocationType.ComputerClass => Refused,
+                TestingLocationType.Class => Class,
+                TestingLocationType.ComputerClass => ComputerClass,
                 _ => "-"
             };
         }
