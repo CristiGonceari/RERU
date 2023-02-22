@@ -9,10 +9,12 @@ import { AddressModel, ContractorBulletinModel } from 'projects/personal/src/app
 import { Contractor } from 'projects/personal/src/app/utils/models/contractor.model';
 import { BulletinService } from 'projects/personal/src/app/utils/services/bulletin.service';
 import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
+import { I18nService } from 'projects/personal/src/app/utils/services/i18n.service';
 import { RegistrationFluxStepService } from 'projects/personal/src/app/utils/services/registration-flux-step.service';
 import { NotificationUtil } from 'projects/personal/src/app/utils/util/notification.util';
 import { ObjectUtil } from 'projects/personal/src/app/utils/util/object.util';
 import { ValidatorUtil } from 'projects/personal/src/app/utils/util/validator.util';
+import { forkJoin } from 'rxjs';
 import { DataService } from '../data.service';
 
 @Component({
@@ -42,6 +44,14 @@ export class BulletinDetailsComponent implements OnInit {
   registrationFluxStep;
   isDone:boolean;
 
+  abreviation = {
+    city: 'or.',
+    street: 'str.',
+    boulevard: 'bl.',
+    apartment: 'ap.',
+    postCode: 'Post Code'
+  }
+
   constructor(private bulletinService: BulletinService,
               private fb: FormBuilder,
               private modalService: NgbModal,
@@ -50,6 +60,7 @@ export class BulletinDetailsComponent implements OnInit {
               private ds: DataService,
               private registrationFluxService: RegistrationFluxStepService,
               private route: ActivatedRoute,
+              private translate: I18nService
     ) { }
 
   ngOnInit(): void {
@@ -60,6 +71,9 @@ export class BulletinDetailsComponent implements OnInit {
 
     this.initForm();
     this.subscribeForUser();
+
+    this.translateData();
+    this.subscribeForLanguageChange();
   }
 
   ngOnDestroy(){
@@ -111,6 +125,15 @@ export class BulletinDetailsComponent implements OnInit {
       this.initExistentForm(this.contractor.id, this.bulletinId, this.existentBulletin, birthPlace, residenceAddress, parentsResidenceAddress);
       this.toAddOrUpdateButton = true;
     })
+  }
+
+  addressValidation(address)
+  {
+    return address.country && 
+    address.region && 
+    address.city && 
+    address.postCode 
+       ? 'is-valid' : 'is-invalid';
   }
 
   parseAddress(data){
@@ -238,11 +261,33 @@ export class BulletinDetailsComponent implements OnInit {
     }
 
     if (data.region) {
-      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' + data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''} ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
+      return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''} ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
     }
 
-    return `${data.country || ''}, ${data.city ? 'or. ' + data.city + ',' : ''} ${data.street ? 'str ' +data.street + ',' : ''} ${data.building ? 'bl. ' + data.building + ',' : ''} ${data.apartment ? 'ap. ' + data.apartment + ',' : ''}  ${data.postCode ? 'Post Code. ' + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
+    return `${data.country || ''}, ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''}  ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
   }
+
+  translateData(): void {
+		forkJoin([
+			this.translate.get('entity.bulletin.abbreviations.city'),
+			this.translate.get('entity.bulletin.abbreviations.street'),
+			this.translate.get('entity.bulletin.abbreviations.boulevard'),
+			this.translate.get('entity.bulletin.abbreviations.apartment'),
+			this.translate.get('entity.bulletin.abbreviations.post-code'),
+		]).subscribe(
+			([ city, street, boulevard, apartment, postCode	]) => {
+				this.abreviation.city = city;
+				this.abreviation.street = street;
+				this.abreviation.boulevard = boulevard;
+				this.abreviation.apartment = apartment;
+				this.abreviation.postCode = postCode;
+			}
+		);
+	}
+
+	subscribeForLanguageChange(): void {
+		this.translate.change.subscribe(() => this.translateData());
+	}
 
    hasCountryOnly(data: AddressModel): boolean {
     if (!data.city && !data.street && !data.building && !data.apartment && data.country) {

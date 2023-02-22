@@ -77,9 +77,9 @@ export class EditContactModalComponent extends EnterSubmitListener implements On
       this.translate.get('notification.title.warning'),
       this.translate.get('notification.title.error'),
       this.translate.get('notification.title.success'),
-      this.translate.get('notification.body.contact-update'),
-      this.translate.get('notification.body.validation-fail'),
-      this.translate.get('notification.body.server-error'),
+      this.translate.get('notification.body.success.contact-update'),
+      this.translate.get('notification.body.success.validation-fail'),
+      this.translate.get('notification.body.success.server-error'),
 		]).subscribe(
 			([ warning, error, success, contactUpdate, validationFail, serverError]) => {
         this.notification.warning = warning;

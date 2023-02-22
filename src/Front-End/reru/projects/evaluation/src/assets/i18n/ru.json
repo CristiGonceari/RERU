@@ -137,6 +137,7 @@
     "search-column": "Поиск по медицинской колонке",
     "search-from-active-date": "Поиск по активному из",
     "search-from-inactive-date": "Поиск по активным до",
+    "in-progress": "В процессе...",
     "users": "Пользователи"
   },
   "documents-templates":{

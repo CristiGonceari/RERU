@@ -111,7 +111,7 @@
     "positions-held": "Занимаемые должности",
     "list-position-held": "Список должностей",
     "contact-type-name": {
-      "Email": "Email",
+      "Email": "Электронная почта",
       "PhoneNumber": "Номер телефона"
     },
     "transfer-date": "Дата перевода",
@@ -656,7 +656,14 @@
       "city": "Город",
       "street": "Улица",
       "building": "Блок",
-      "apartment": "Квартира"
+      "apartment": "Квартира",
+      "abbreviations":{
+        "city":"г. ",
+        "street":"ул. ",
+        "boulevard":"бул. ",
+        "apartment":"кв. ",
+        "post-code":"почтовый индекс. "
+      }
     },
     "individual-contract": {
       "title": "Индивидуальный трудовой договор",
@@ -897,10 +904,19 @@
         "contact-update": "Контакт был успешно обновлен!",
         "contact-delete": "Контакт был успешно удален!",
         "contact-add": "Контакт был успешно добавлен!",
+        "autobiography-succes-add-msg": "Автобиография была добавлена!",
+        "autobiography-succes-update-msg": "Автобиография была обновлена!",
+        "step-succes-add-msg": "Шаг был добавлен!",
+        "step-succes-update-msg": "Шаг был обновлен!",
         "validation-fail": "Проверка не удалась!",
         "server-error": "Произошла ошибка сервера!"
       },
-      "error": "Произошла ошибка!"
+      "error": "Произошла ошибка!",
+      "autobiography-error-add":  "Автобиография не была добавлена!",
+      "autobiography-error-update":  "Автобиография не была обновлена!",
+      "need-complete-step": "Необходимо завершить шаг ",
+      "step-error-add":  "Шаг не был добавлен!",
+      "step-error-update":  "Шаг не был обновлен!"
     },
     "required": "Это поле обязательно",
     "success": "Успешно",

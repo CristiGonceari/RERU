@@ -107,23 +107,23 @@ export class UserListTableComponent implements OnInit {
          
 		for (let i = 1; i <= headersHtml.length - 2; i++) {
 			if (i == 1) {
-				this.headersToPrint.push({ value: "userName", label: "Numele utilizatorului (N.P.P.)", isChecked: true })
+				this.headersToPrint.push({ value: "userName", label: this.printTranslates[5], isChecked: true })
 			} else if (i == 2) {
-				this.headersToPrint.push({ value: "lastName", label: "Nume", isChecked: true })
+				this.headersToPrint.push({ value: "lastName", label: this.printTranslates[6], isChecked: true })
 			} else if (i == 3) {
-				this.headersToPrint.push({ value: "firstName", label: "Prenume", isChecked: true })
+				this.headersToPrint.push({ value: "firstName", label: this.printTranslates[7], isChecked: true })
 			} else if (i == 4) {
-				this.headersToPrint.push({ value: "fatherName", label: "Patronimic", isChecked: true })
+				this.headersToPrint.push({ value: "fatherName", label: this.printTranslates[8], isChecked: true })
 			} else if (i == 8) {
-				this.headersToPrint.push({ value: "departmentColaboratorId", label: "Id Department", isChecked: true })
+				this.headersToPrint.push({ value: "departmentColaboratorId", label: this.printTranslates[9], isChecked: true })
 			} else if (i == 10) {
-				this.headersToPrint.push({ value: "roleColaboratorId", label: "Id Rol", isChecked: true })
+				this.headersToPrint.push({ value: "roleColaboratorId", label: this.printTranslates[10], isChecked: true })
 			} else if (i == 12) {
-				this.headersToPrint.push({ value: "functionColaboratorId", label: "Id Funcție angajat", isChecked: true })
+				this.headersToPrint.push({ value: "functionColaboratorId", label: this.printTranslates[11], isChecked: true })
 			} else if (i == 13) {
-				this.headersToPrint.push({ value: "birthday", label: "Data nașterii", isChecked: true })
+				this.headersToPrint.push({ value: "birthday", label: this.printTranslates[12], isChecked: true })
 			} else if (i == 14) {
-				this.headersToPrint.push({ value: "phoneNumber", label: "Nr. telefon", isChecked: true })
+				this.headersToPrint.push({ value: "phoneNumber", label: this.printTranslates[13], isChecked: true })
 			} else {
 				this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 			}
@@ -143,14 +143,24 @@ export class UserListTableComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format', 'full-username', 'last-name', 'first-name', 'father-name',
+								'department-colaborator-id', 'role-colaborator-id', 'function-colaborator-id', 'birth-day', 'phone-number' ]
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
-      		this.translate.get('print.select-file-format')
-		]).subscribe(
+      		this.translate.get('print.select-file-format'),
+			this.translate.get('print.full-username'),
+			this.translate.get('print.last-name'),
+			this.translate.get('print.first-name'),
+			this.translate.get('print.father-name'),
+			this.translate.get('print.department-colaborator-id'),
+			this.translate.get('print.role-colaborator-id'),
+			this.translate.get('print.function-colaborator-id'),
+			this.translate.get('print.birth-day'),
+			this.translate.get('print.phone-number'),
+			]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {
 					this.printTranslates[i] = items[i];

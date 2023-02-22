@@ -325,6 +325,9 @@
     "Employee": "Employee",
     "Candidate": "Candidate"
   },
+  "locations": {
+    "description":"Description"
+  },
   "user": {
     "edit-title": "Edit User",
     "delete-title": "Delete User",
@@ -559,7 +562,16 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields.",
-    "select-file-format": "Select file format"
+    "select-file-format": "Select file format",
+    "full-username": "User Name (L.F.F.)",
+    "last-name": "Last Name",
+    "first-name": "First name",
+    "father-name": "Patronymic",
+    "department-colaborator-id": "Department Id",
+    "role-colaborator-id": "Role Id",
+    "function-colaborator-id": "Employee Function Id",
+    "birth-day": "Birth Date",
+    "phone-number": "Phone num." 
   },
   "guide": {
     "title": "User Guide"
