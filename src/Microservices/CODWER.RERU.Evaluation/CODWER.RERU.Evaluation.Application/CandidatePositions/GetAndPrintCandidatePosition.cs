@@ -34,12 +34,12 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
 
             if (data.ActiveFrom.HasValue)
             {
-                positions = positions.Where(x => x.From <= data.ActiveFrom);
+                positions = positions.Where(x => x.From >= data.ActiveFrom);
             }
 
             if (data.ActiveTo.HasValue)
             {
-                positions = positions.Where(x => x.To >= data.ActiveTo);
+                positions = positions.Where(x => x.To <= data.ActiveTo);
             }
 
             return positions;
