@@ -3,30 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  ManualParserLoader,
-  LocalizeRouterSettings,
-  LocalizeRouterService,
-} from '@gilsdav/ngx-translate-router';
+import { ManualParserLoader, LocalizeRouterSettings } from '@gilsdav/ngx-translate-router';
 import { CookieService } from 'ngx-cookie-service';
-
-import { environment } from '../../../../environments/environment';
-
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import {
-  LOCALIZE_DEFAULT_LANGUAGE,
-  LANGUAGE_CODE_RO,
-  LANGUAGE_CODE_EN,
-  LANGUAGE_CODE_RU,
-} from '../../constants/i18n.constant';
+import { LOCALIZE_DEFAULT_LANGUAGE, LANGUAGE_CODE_RO, LANGUAGE_CODE_EN, LANGUAGE_CODE_RU } from '../../constants/i18n.constant';
+import { environment } from 'projects/logging/src/environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function ManualLoaderFactory (
+export function ManualLoaderFactory(
   translate: TranslateService,
   location: Location,
   settings: LocalizeRouterSettings,
@@ -35,7 +23,11 @@ export function ManualLoaderFactory (
     translate,
     location,
     settings,
-    [LANGUAGE_CODE_RO, LANGUAGE_CODE_EN, LANGUAGE_CODE_RU],
+    [
+      LANGUAGE_CODE_RO, 
+      LANGUAGE_CODE_EN, 
+      LANGUAGE_CODE_RU
+    ],
     'ROUTES.',
     '!',
   );
@@ -62,14 +54,8 @@ export class I18nService {
       text: '',
     },
   ];
-  private readonly browserLanguage: string;
-  constructor(
-    private translate: TranslateService,
-    private localizeService: LocalizeRouterService,
-    private cookieService: CookieService,
-  ) {
-    this.browserLanguage = translate.getBrowserLang();
-    translate.addLangs([LANGUAGE_CODE_RO, LANGUAGE_CODE_EN, LANGUAGE_CODE_RU]);
+  constructor(private translate: TranslateService,
+              private cookieService: CookieService) {
     this.initializeAppTranslation();
   }
 
@@ -78,7 +64,11 @@ export class I18nService {
   }
 
   get currentLanguage(): string {
-    return this.translate.currentLang || this.translate.getDefaultLang() || this.defaultLanguage;
+    return this.translate.currentLang;
+  }
+
+  get langs(): any {
+    return this.languages;
   }
 
   /**
@@ -86,25 +76,22 @@ export class I18nService {
    * the language received in the url, else loads the default language
    */
   initializeAppTranslation(): void {
-    this.translateData();
-    Promise.resolve().then(() => {
-      const code = this.cookieService.get(this.languageKey);
+    this.translateLanguagePrefixes()
+      .then(() => this.resolveDefaultLanguage())
+      .then((languageCode: string) => {
 
-      if (code) {
-        this.languages.map(language => {
-          if (code && language.code === code) {
-            this.use(language.code);
-          }
-        });
-        return;
-      }
+        if (languageCode) {
+          this.use(languageCode, true);
+          return;
+        }
 
-      this.use(this.defaultLanguage);
+        return this.use(this.defaultLanguage, true);
     });
   }
 
-  use(code: string): void {
+  use(code: string, isInit: boolean = false): void {
     code = code || this.translate.getDefaultLang();
+    if (!isInit) this.cookieService.set(this.languageKey, code);
     this.translate.use(code).subscribe(() => this.change$.next(code));
   }
 
@@ -112,18 +99,39 @@ export class I18nService {
     return this.translate.get(key);
   }
 
-  get langs(): any {
-    return this.languages;
-  }
-
-  translateData(): void {
-    const requests = [];
-    this.languages.map(l => requests.push(this.translate.get(`languages.${l.code}`)));
-
-    forkJoin(requests).subscribe((response: string[]) => {
-      response.map((text: string, index: number) => {
-        this.languages[index].text = text;
+  translateLanguagePrefixes(): Promise<boolean> {
+    return new Promise((resolve, _) => {
+      const requests = [];
+      this.languages.map(l => requests.push(this.translate.get(`languages.${l.code}`)));
+  
+      forkJoin(requests).subscribe((response: string[]) => {
+        response.map((text: string, index: number) => {
+          this.languages[index].text = text;
+          resolve(true);
+        });
       });
     });
+  }
+
+  /**
+   * Finds out which default language to use, the priority:
+   * 1. GETs code FROM URL (from redirect example)
+   * 2. Uses Cookie set by use before
+   * 3. Resolves the null language in cases it's missing, then it's set the default one
+   * 
+   * @returns {Promise<string>} language code for e.g. en, ro, ru
+   */
+  resolveDefaultLanguage(): Promise<string> {
+    const URL = window.location.hash;
+    
+    for(let i = 0; i < this.languages.length; i++) {
+      if (URL.includes(`#/${this.languages[i].code}`)) {
+        this.cookieService.delete(this.languageKey);
+        this.cookieService.set(this.languageKey, this.languages[i].code);
+        return Promise.resolve(this.languages[i].code);
+      }
+    }
+
+    return Promise.resolve(this.cookieService.get(this.languageKey));
   }
 }

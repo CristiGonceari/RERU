@@ -90,7 +90,7 @@ export class EvaluatedTestsTableComponent {
       'userName',
       'testTemplateName',
       'accumulatedPercentage',
-      'resultValue'
+      'result'
     ];
 
     for (let i = 0; i < headersHtml.length; i++) {

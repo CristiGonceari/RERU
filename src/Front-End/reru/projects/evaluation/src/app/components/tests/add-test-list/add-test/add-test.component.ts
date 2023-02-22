@@ -84,7 +84,10 @@ export class AddTestComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.isTestEvent) this.getEvents();
+    if(this.isTestEvent) {
+      this.showName = true;
+      this.getEvents();
+    }
     this.getActiveTestTemplateWithoutEvent();
     this.getProcessService.currentSendToCancelRequest.subscribe(msg => { this.cancelRequest = msg });
     
