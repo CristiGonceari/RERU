@@ -549,6 +549,7 @@
     "questions-left": "Осталось вопросов"
   },
   "require-documents":{
+    "documents":"Документы",
     "document-details": "Детали документа",
     "name": "Имя",
     "must-be-on-candidate": "Обязательна к применению",
