@@ -22,7 +22,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 		BrowserAnimationsModule,
 		HttpClientModule,
 		SimpleNotificationsModule.forRoot(),
-		TranslateModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

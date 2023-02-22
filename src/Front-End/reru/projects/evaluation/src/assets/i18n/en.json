@@ -550,6 +550,7 @@
     "questions-left": "Questions left"
   },
   "require-documents":{
+    "documents":"Documents",
     "document-details": "Document details",
     "name": "Name",
     "must-be-on-candidate": "Mandatory for applications",

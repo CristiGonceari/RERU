@@ -549,6 +549,7 @@
     "questions-left": "Întrebări rămase"
   },
   "require-documents":{
+    "documents":"Documente",
     "document-details": "Detaliile documentului",
     "name": "Nume",
     "must-be-on-candidate": "Obligatoriu la candidare",
