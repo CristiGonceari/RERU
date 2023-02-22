@@ -130,7 +130,7 @@
                                         (handle)="backClicked()">
                                     </app-button>
                                     <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()">
+                                        (handle)="onSave()" [disable]="!candidatePositions">
                                     </app-add-button>
                                 </div>
                                 <div class="d-md-none d-block pt-10">
