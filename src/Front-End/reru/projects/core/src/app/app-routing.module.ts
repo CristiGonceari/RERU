@@ -17,6 +17,7 @@ import { MainComponent } from './components/main/main.component';
 import { PermissionRouteGuard } from '@erp/shared';
 import { Exception404Component } from '@erp/shared';
 import { Exception500Component } from '@erp/shared';
+import { environment } from '../environments/environment';
 
 
 const routes: Routes = [
@@ -109,6 +110,7 @@ const routes: Routes = [
 			scrollPositionRestoration: 'enabled',
 		}),
 		LocalizeRouterModule.forRoot(routes, {
+			defaultLangFunction: (_, cachedLang) => cachedLang || environment.DEFAULT_LANGUAGE,
 			parser: {
 				provide: LocalizeParser,
 				useFactory: ManualLoaderFactory,
