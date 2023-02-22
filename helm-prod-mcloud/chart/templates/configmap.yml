@@ -336,7 +336,7 @@ data:
             "PostLogoutRedirectUris": ["https://reru.mai.gov.md/"],
             "AllowedCorsOrigins": ["https://reru.mai.gov.md"],
             "AllowAccessTokensViaBrowser": true,
-            "AccessTokenLifetime": 3600
+            "AccessTokenLifetime": 3000000
           }
         ]
       },

@@ -72,8 +72,8 @@
                             <erp-shared-search-input (handleSearch)="get({name: $event, page: 1, itemsPerPage: pagination.pageSize})" [placeholder]="'button.search' | translate" #search></erp-shared-search-input>
                         </div>
                         <div class="col-md-2 col-12">
-                            <app-button (click)="search.clear()" [value]="'button.reset' | translate" class="font-size-h5 h-100"
-                            [ngClass]="{'bg-primary': search.key.length}"></app-button>
+                            <app-button (click)="search.clearSearch()" [value]="'button.reset' | translate" class="font-size-h5 h-100"
+                            [ngClass]="{'bg-primary': search.key?.length}"></app-button>
                         </div>
                     </div>
                     <app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'5rem'" [width]="'5rem'"

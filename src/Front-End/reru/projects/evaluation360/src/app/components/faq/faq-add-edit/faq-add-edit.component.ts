@@ -99,7 +99,7 @@ export class FaqAddEditComponent implements OnInit {
 
   checkConfirmButton(article: string, form){
     if (article !== '' && !form.invalid){
-      return false
+      return false;
     }
     return true;
   }
@@ -190,6 +190,7 @@ export class FaqAddEditComponent implements OnInit {
   }
 
   saveArticle(): void {
+    this.isLoading = true;
     if (this.articleId) {
       this.editArticle();
     } else {

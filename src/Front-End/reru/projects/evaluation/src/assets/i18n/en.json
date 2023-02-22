@@ -137,6 +137,7 @@
     "search-column": "Search by medical column",
     "search-from-active-date": "Search by active from",
     "search-from-inactive-date": "Search by active until",
+    "in-progress": "In progress...",
     "users": "Users"
   },
   "documents-templates":{

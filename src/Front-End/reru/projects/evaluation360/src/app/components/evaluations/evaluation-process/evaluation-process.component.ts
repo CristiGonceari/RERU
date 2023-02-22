@@ -85,8 +85,8 @@ export class EvaluationProcessComponent implements OnInit {
       this.translate.get('notification.body.success.rejected'),
       this.translate.get('notification.body.success.countersigned'),
       this.translate.get('notification.body.success.with-succes'),
-      this.translate.get('notification.body.validation-error'),
-      this.translate.get('notification.body.server-error'),
+      this.translate.get('notification.body.success.validation-error'),
+      this.translate.get('notification.body.success.server-error'),
       this.translate.get('notification.body.success.evaluated-known')
     ]).subscribe(([success, warning, error, evWas, sent, saved, accepted, rejected,
                    countersigned, withSucces, validationError, serverError, evaluatedKnown]) => {

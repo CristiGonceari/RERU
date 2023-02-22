@@ -51,6 +51,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   title: string;
   description: string;
+  inProgress: string;
   no: string;
   yes: string;
 
@@ -310,10 +311,20 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'În progres...')
+        forkJoin([
+					this.translate.get('position.in-progress'),
+				]).subscribe(([inProgress]) => {
+					this.inProgress = inProgress;
+				});
+        this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'În progres...')
+        forkJoin([
+					this.translate.get('position.in-progress'),
+				]).subscribe(([inProgress]) => {
+					this.inProgress = inProgress;
+				});
+        this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
         break;
       case HttpEventType.Response:
         this.fileStatus.requestType = "Done";

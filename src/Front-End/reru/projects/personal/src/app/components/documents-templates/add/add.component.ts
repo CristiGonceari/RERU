@@ -125,8 +125,8 @@ export class AddComponent implements OnInit {
   translateData(): void {
 		forkJoin([
 			this.translate.get('notification.title.success'),
-			this.translate.get('notification.body.success-add-mgs'),
-			this.translate.get('notification.body.success-edit-mgs'),
+			this.translate.get('notification.body.success.success-add-mgs'),
+			this.translate.get('notification.body.success.success-edit-mgs'),
 		]).subscribe(
 			([ success, successAddMsg, successEditMsg ]) => {
 				this.notification.success = success;

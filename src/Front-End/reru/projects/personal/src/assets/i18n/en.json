@@ -658,7 +658,14 @@
       "city": "City",
       "street": "Street",
       "building": "Building",
-      "apartment": "Apartment"
+      "apartment": "Apartment",
+      "abbreviations":{
+        "city":"ci. ",
+        "street":"str. ",
+        "boulevard":"blvd. ",
+        "apartment":"ap. ",
+        "post-code":"Post code. "
+      }
     },
     "individual-contract": {
       "title": "Individual Employment Contract",
@@ -897,10 +904,19 @@
         "contact-update": "Contact has been successfully updated!",
         "contact-delete": "Contact has been successfully deleted!",
         "contact-add": "Contact has been successfully added!",
+        "autobiography-succes-add-msg":  "Autobiography was added!",
+        "autobiography-succes-update-msg":  "Autobiography was updated!",
+        "step-succes-add-msg": "Step was added!",
+        "step-succes-update-msg": "Step was updated!",
         "validation-fail": "Validation failed!",
         "server-error": "Server error occurred!"
       },
-      "error": "There has been an error!"
+      "error": "There has been an error!",
+      "autobiography-error-add":  "Autobiography was not added!",
+      "autobiography-error-update":  "Autobiography was not updated!",
+      "need-complete-step": "Need to complete step ",
+      "step-error-add":  "Step was not added!",
+      "step-error-update":  "Step was not updated!"
     },
     "required": "The field is required",
     "success": "Success",
