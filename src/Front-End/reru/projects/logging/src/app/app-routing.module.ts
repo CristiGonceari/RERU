@@ -6,6 +6,7 @@ import { ManualLoaderFactory } from './utils/services/i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { Location } from '@angular/common';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
 	{ path: 'auth-callback', component: AuthenticationCallbackComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
 			scrollPositionRestoration: 'enabled',
 		}),
 		LocalizeRouterModule.forRoot(routes, {
+			defaultLangFunction: (_, cachedLang) => cachedLang || environment.DEFAULT_LANGUAGE,
 			parser: {
 				provide: LocalizeParser,
 				useFactory: ManualLoaderFactory,
