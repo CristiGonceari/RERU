@@ -27,6 +27,8 @@ export class UserFilesComponent implements OnInit {
   files: any;
   docTitle: string;
   docDescription: string;
+  no: string;
+  yes: string;
 	pagination: PaginationSummary = new PaginationSummary();
 
   headersToPrint = [];
@@ -102,11 +104,22 @@ export class UserFilesComponent implements OnInit {
   }
 
   openDeleteDocumentModal(id: string): void {
+    forkJoin([
+      this.translate.get('files.delete-document'),
+      this.translate.get('files.remove-msg'),
+      this.translate.get('button.no'),
+      this.translate.get('button.yes'),
+    ]).subscribe(([docTitle, docDescription, no, yes]) => {
+      this.docTitle = docTitle;
+      this.docDescription = docDescription;
+      this.no = no;
+      this.yes = yes;
+    })
     const modalRef = this.modalService.open(ConfirmModalComponent, { centered: true });
-    modalRef.componentInstance.title = "Sterge document";
-		modalRef.componentInstance.description = "Sigur doriti sa stergeti acest document?";
-    modalRef.componentInstance.buttonNo = "Nu";
-		modalRef.componentInstance.buttonYes = "Da";
+    modalRef.componentInstance.title = this.docTitle;
+		modalRef.componentInstance.description = this.docDescription;
+    modalRef.componentInstance.buttonNo = this.no;
+		modalRef.componentInstance.buttonYes = this.yes;
     modalRef.result.then(() => this.removeFile(id), () => {});
   }
 
