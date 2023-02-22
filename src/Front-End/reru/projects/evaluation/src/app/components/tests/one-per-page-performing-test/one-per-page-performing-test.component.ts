@@ -112,39 +112,20 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.summary();
     this.getTestById();
     this.testQuestionService.setData(false);
     this.styleNodesService.addStyle('breadcrumb', this.stylesToApply);
   }
 
-  ngOnDestroy() {
-    this.styleNodesService.removeStyle('breadcrumb');
-  }
-
-  subscribeForHashedAnswers() {
-    this.testQuestionService.answerSubject.subscribe(res => {
-      // if (res && res != undefined && this.hashedOptions.length > 0) {
-      //   const index = this.hashedOptions.findIndex(x => x.id == res.optionId);
-      //   this.hashedOptions[index].answer = res.answer;
-      //   this.hashedOptions.forEach(element => {
-      //     this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
-      //   });
-      // }
-
-      if (res && res != undefined && this.hashedOptions.length > 0) {
-        res.forEach(element => {
-          const index = this.hashedOptions.findIndex(x => x.id == element.optionId);
-          if (index > -1) {
-            this.hashedOptions[index].answer = element.answer;
-          }
-        });
-        this.hashedOptions.forEach(element => {
-          this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
-        });
-
+  getTestById() {
+    this.testService.getTest(this.testId).subscribe(
+      res => {
+        this.testDto = res.data;
+        this.testDto.idnp = '2005003116257';
+        this.startTimer();
+        this.summary();
       }
-    })
+    )
   }
 
   startTimer() {
@@ -160,6 +141,88 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
         this.finalizeTest();
       }
     }, 1000)
+  }
+
+  milisecondsToHms(miliseconds) {
+    const seconds = Number(miliseconds / 1000);
+    const h = Math.floor(seconds % (3600 * 24) / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = Math.floor(seconds % 60);
+
+    return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
+  }
+
+  summary() {
+    this.testQuestionService.summary(this.testId).subscribe((res) => {
+      for (let i = 1; i <= res.data.length; i++) {
+        this.pager.push(i);
+      };
+      this.testQuestionSummary = res.data;
+      this.count = this.testQuestionSummary.length;
+      this.pageColor(res.data);
+      
+      this.getTestTemplateSettings();
+    });
+  }
+
+  pageColor(data) {
+    this.viewed = data.filter(st => st.answerStatus === 1).map(id => id.index);
+    this.skipped = data.filter(st => st.answerStatus === 2).map(id => id.index);
+    this.answered = data.filter(st => st.answerStatus === 3).map(id => id.index);
+  }
+
+  getTestQuestions(questionIndex?: number) {
+    this.isLoading = true;
+    this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
+
+    if (this.questionUnit.timeLimit)
+      clearInterval(this.timerInterval);
+
+    if (this.testQuestionSummary.find(x => x.index === this.questionIndex).isClosed) {
+      this.questionIndex = this.testQuestionSummary.find(x => x.isClosed === false).index;
+    }
+
+    this.testQuestionService.getTestQuestion({ testId: this.testId, questionIndex: this.questionIndex })
+      .subscribe(
+        (res) => {
+          this.questionUnit = res.data;
+          this.testOptionsList = res.data.options;
+          this.hashedOptions = res.data.hashedOptions;
+          this.fileId = res.data.mediaFileId;
+          this.isLoadingMedia = false;
+          this.isLoading = false;
+          if (this.questionUnit.timeLimit)
+            this.startQuestionTimer();
+          if (this.questionUnit.answerStatus == AnswerStatusEnum.None)
+            this.testQuestionService.postTestQuestions(this.parse(AnswerStatusEnum.Viewed)).subscribe(
+              (res) => {
+                this.testQuestionService.summary(this.testId).subscribe(
+                  res => {
+                    this.viewed = res.data.filter(st => st.answerStatus === 1).map(id => id.index);
+                  });
+              });
+          this.ngDoBoostrap();
+          this.checkIfHadFile();
+          this.files = [];
+        },
+        (error) => {
+          this.isLoading = false;
+          error.error.messages.some(x => {
+            if (x.code === '03020604' || x.code === '03001503')
+              this.finalizeTest();
+          })
+        }
+      )
+  }
+
+  getTestTemplateSettings() {
+    this.testTemplateService.getTestTemplateSettings({ testTemplateId: this.testDto.testTemplateId }).subscribe(
+      res => {
+        this.testTemplateSettings = res.data;
+        if (res.data == null) this.testTemplateSettings = new TestTemplateSettings();
+        this.getTestQuestions();
+      }
+    );
   }
 
   startQuestionTimer() {
@@ -181,15 +244,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  milisecondsToHms(miliseconds) {
-    const seconds = Number(miliseconds / 1000);
-    const h = Math.floor(seconds % (3600 * 24) / 3600);
-    const m = Math.floor(seconds % 3600 / 60);
-    const s = Math.floor(seconds % 60);
-
-    return ` ${h < 10 ? '0' + h : h} : ${m < 10 ? '0' + m : m} : ${s < 10 ? '0' + s : s}`;
-  }
-
   ngDoBoostrap() {
     this.subscribeForHashedAnswers();
     const el = createCustomElement(HashOptionInputComponent, { injector: this.injector });
@@ -197,27 +251,20 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
   }
 
-  getTestById() {
-    this.testService.getTest(this.testId).subscribe(
-      res => {
-        this.testDto = res.data;
-        this.testDto.idnp = '2005003116257';
-        this.getTestTemplateSettings(res.data.testTemplateId);
-        this.startTimer();
+  subscribeForHashedAnswers() {
+    this.testQuestionService.answerSubject.subscribe(res => {
+      if (res && res != undefined && this.hashedOptions.length > 0) {
+        res.forEach(element => {
+          const index = this.hashedOptions.findIndex(x => x.id == element.optionId);
+          if (index > -1) {
+            this.hashedOptions[index].answer = element.answer;
+          }
+        });
+        this.hashedOptions.forEach(element => {
+          this.testAnswersInput.push({ optionId: element.id, answerValue: element.answer })
+        });
       }
-    )
-  }
-
-  summary() {
-    this.testQuestionService.summary(this.testId).subscribe((res) => {
-      for (let i = 1; i <= res.data.length; i++) {
-        this.pager.push(i);
-      };
-      this.testQuestionSummary = res.data;
-      this.count = this.testQuestionSummary.length;
-      this.pageColor(res.data);
-      this.getTestQuestions();
-    });
+    })
   }
 
   getViewed(page) {
@@ -395,26 +442,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.files[0] = event.addedFiles[0];
   }
 
-  checkIfDisabled(index) {
-    return this.testQuestionSummary.find(x => x.index == index).isClosed;
-  }
-
-  getTestTemplateSettings(testTemplateId) {
-    this.testTemplateService.getTestTemplateSettings({ testTemplateId: testTemplateId }).subscribe(
-      res => {
-        this.testTemplateSettings = res.data;
-        this.isLoading = false;
-        if (res.data == null) this.testTemplateSettings = new TestTemplateSettings();
-      }
-    );
-  }
-
-  pageColor(data) {
-    this.viewed = data.filter(st => st.answerStatus === 1).map(id => id.index);
-    this.skipped = data.filter(st => st.answerStatus === 2).map(id => id.index);
-    this.answered = data.filter(st => st.answerStatus === 3).map(id => id.index);
-  }
-
   postAnswer(status) {
     this.testQuestionService.postTestQuestions(this.parse(status)).subscribe(
       res => {
@@ -427,7 +454,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
             if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.submitTest();
-            }
+            } 
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
               this.disableBtn = false;
               const isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
@@ -436,12 +463,17 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
                 isNotClosedAnswers.filter(x => x.index > this.questionIndex)[0].index :
                 isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
               this.getTestQuestions(this.questionIndex);
-            } else {
+            } 
+            else {
               this.disableBtn = false;
               if (this.questionIndex < this.count) {
                 this.getTestQuestions(this.questionIndex + 1);
               } else {
-                this.getTestQuestions(1);
+                if (this.testQuestionSummary.every(x => x.answerStatus === AnswerStatusEnum.Answered)) {
+                  this.submitTest();
+                } else {
+                  this.getTestQuestions(1);
+                }
               }
             }
           });
@@ -455,50 +487,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   skipQuestion() {
     this.isLoading = true;
     this.postAnswer(+this.answerStatusEnum.Skipped);
-  }
-
-  getTestQuestions(questionIndex?: number) {
-    this.isLoading = true;
-    this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
-
-    if (this.questionUnit.timeLimit)
-      clearInterval(this.timerInterval);
-
-    if (this.testQuestionSummary.find(x => x.index === this.questionIndex).isClosed) {
-      this.questionIndex = this.testQuestionSummary.find(x => x.isClosed === false).index;
-    }
-
-    this.testQuestionService.getTestQuestion({ testId: this.testId, questionIndex: this.questionIndex })
-      .subscribe(
-        (res) => {
-          this.questionUnit = res.data;
-          this.testOptionsList = res.data.options;
-          this.hashedOptions = res.data.hashedOptions;
-          this.fileId = res.data.mediaFileId;
-          this.isLoadingMedia = false;
-          this.isLoading = false;
-          if (this.questionUnit.timeLimit)
-            this.startQuestionTimer();
-          if (this.questionUnit.answerStatus == AnswerStatusEnum.None)
-            this.testQuestionService.postTestQuestions(this.parse(AnswerStatusEnum.Viewed)).subscribe(
-              (res) => {
-                this.testQuestionService.summary(this.testId).subscribe(
-                  res => {
-                    this.viewed = res.data.filter(st => st.answerStatus === 1).map(id => id.index);
-                  });
-              });
-          this.ngDoBoostrap();
-          this.checkIfHadFile();
-          this.files = [];
-        },
-        (error) => {
-          this.isLoading = false;
-          error.error.messages.some(x => {
-            if (x.code === '03020604' || x.code === '03001503')
-              this.finalizeTest();
-          })
-        }
-      )
   }
 
   submitTest() {
@@ -544,5 +532,9 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.finalizeTest();
     clearInterval(this.interval);
     clearInterval(this.timerInterval);
+  }
+
+  ngOnDestroy() {
+    this.styleNodesService.removeStyle('breadcrumb');
   }
 }
