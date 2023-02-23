@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.References.GetCoreRoles;
 using CODWER.RERU.Core.Application.References.GetEmployeeFunctions;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
+using RERU.Data.Entities.PersonalEntities.Enums;
 
 namespace CODWER.RERU.Core.API.Controllers
 {
@@ -144,6 +145,22 @@ namespace CODWER.RERU.Core.API.Controllers
             var query = new GetCoreRolesQuery();
 
             return await Mediator.Send(query);
+        }
+
+        [HttpGet("study-profiles/select-values")]
+        public async Task<List<SelectItem>> GetStudyProfilesEnum()
+        {
+            var items = EnumConverter<StudyProfileEnum>.SelectValues;
+
+            return items;
+        }
+
+        [HttpGet("study-courses/select-values")]
+        public async Task<List<SelectItem>> GetStudyCoursesEnum()
+        {
+            var items = EnumConverter<StudyCourseType>.SelectValues;
+
+            return items;
         }
     }
 }

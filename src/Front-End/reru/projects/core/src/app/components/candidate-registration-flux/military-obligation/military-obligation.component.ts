@@ -12,6 +12,7 @@ import { ObjectUtil } from '../../../utils/util/object.util';
 import { RegistrationFluxStepService } from '../../../utils/services/registration-flux-step.service';
 import { DataService } from '../data.service';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ValidatorUtil } from '../../../utils/util/validator.util';
 
 @Component({
   selector: 'app-military-obligation',
@@ -87,6 +88,22 @@ export class MilitaryObligationComponent implements OnInit {
     });
   }
 
+  enableDates(value) {
+    let militaryType = this.militaryObligationTypeEnum?.filter(el => el.value == value.militaryObligationType);
+
+    if (militaryType?.length > 0) {
+      if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 6) {
+        return false
+      }
+    }
+    return true;
+  }
+
+  inputValidator(form, field) {
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid
+      ? 'is-valid' : 'is-invalid';
+  }
+
   getUserGeneralData() {
 
     this.userProfile.getCandidateProfile(this.userId).subscribe(res => {
@@ -153,24 +170,35 @@ export class MilitaryObligationComponent implements OnInit {
       militarySpecialty: this.fb.control((militaryObligation && militaryObligation.militarySpecialty) || null, [Validators.required]),
       degree: this.fb.control((militaryObligation && militaryObligation.degree) || null, [Validators.required]),
       militaryBookletSeries: this.fb.control((militaryObligation && militaryObligation.militaryBookletSeries) || null, [Validators.required]),
-      militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, []),
+      militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, [Validators.required]),
       militaryBookletReleaseDay: this.fb.control((militaryObligation && militaryObligation.militaryBookletReleaseDay) || null, [Validators.required]),
       militaryBookletEminentAuthority: this.fb.control((militaryObligation && militaryObligation.militaryBookletEminentAuthority) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
   }
- 
-  militaryObligationsButtonValidator(value) {
-    let result: boolean;
 
-    for (let i = 0; i < value.length; i++) {
-      if (value[i].militaryObligationType == 1 ||  value[i].militaryObligationType == 4 || value[i].militaryObligationType == 6 ) {
-        result = !(value[i].militaryObligationType && value[i].efectiv && value[i].militarySpecialty && value[i].degree && value[i].militaryBookletSeries && value[i].militaryBookletNumber && value[i].militaryBookletEminentAuthority)
-      }else {
-        result = this.militaryObligationForm.invalid
+  militaryObligationsButtonValidator(military) {
+    let results: boolean[] = [];
+
+    for (let i = 0; i < military.length; i++) {
+      let militaryType = this.militaryObligationTypeEnum?.filter(el => el.value == military[i].value.militaryObligationType);
+
+      if (militaryType?.length > 0) {
+        if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 6) {
+          results.push(
+            !(military[i].value.militaryObligationType &&
+              military[i].value.efectiv &&
+              military[i].value.militarySpecialty &&
+              military[i].value.degree &&
+              military[i].value.militaryBookletSeries &&
+              military[i].value.militaryBookletNumber &&
+              military[i].value.militaryBookletEminentAuthority))
+        } else {
+          results.push((military[i].invalid));
+        }
       }
     }
-    return result;
+    return results.some((x) => x == true) ? true : false;
   }
 
   createMilitaryObligations() {

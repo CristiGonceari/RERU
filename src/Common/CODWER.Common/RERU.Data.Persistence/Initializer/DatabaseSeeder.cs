@@ -411,11 +411,18 @@ namespace RERU.Data.Persistence.Initializer
         {
             var newStudyTypes = new List<StudyType>()
             {
-                new StudyType { Name = "Studii de Baza", TranslateId = 1 },
-                new StudyType { Name = "Universitare", TranslateId = 2 },
-                new StudyType { Name = "PostUniversitare", TranslateId = 3 },
-                new StudyType { Name = "Cursuri de Perfectionare", TranslateId = 4 },
-                new StudyType { Name = "Cursuri de Specializare", TranslateId = 5 },
+                new StudyType { Name = "Medii incomplete(8/9 clase)", TranslateId = 6, ValidationId = 1},
+                new StudyType { Name = "Medii generale(10/11 clase)", TranslateId = 7, ValidationId = 2},
+                new StudyType { Name = "Bacalaureat(12 clase)", TranslateId = 8, ValidationId = 3},
+                new StudyType { Name = "Medii de specializare(colegiu, centrul de excelenta)", TranslateId = 9, ValidationId = 4},
+                new StudyType { Name = "Superioare scurte/de scurta durata(colegiu)", TranslateId = 10, ValidationId = 5},
+                new StudyType { Name = "Superioare universitare(fara licenta)", TranslateId = 11, ValidationId = 6},
+                new StudyType { Name = "Superioare de licenta", TranslateId = 12, ValidationId = 7},
+                new StudyType { Name = "Superioare de master", TranslateId = 13, ValidationId = 8},
+                new StudyType { Name = "Superioare de doctorat", TranslateId = 14, ValidationId = 9},
+                new StudyType { Name = "Postdoctorat", TranslateId = 15, ValidationId = 10},
+                new StudyType { Name = "Cursuri de formare perofesionala", TranslateId = 16, ValidationId = 11}
+
             };
 
             var types = appDbContext.StudyTypes.ToList();

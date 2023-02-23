@@ -4,7 +4,7 @@
         <i class="flaticon-calendar-1"></i>
       </button>
     </div>
-    <input class="form-control"
+      <input class="form-control"
           [placeholder]="placeholder"
           container="body"
           ngbDatepicker
@@ -13,18 +13,19 @@
           #d="ngbDatepicker"
           [ngModel]="dateModel"
           [ngClass]="{
-            'is-invalid': isPatternError || isInvalid, 
+            'is-invalid': !inputValidator(parent, date), 
+            'is-valid': inputValidator(parent, date), 
             'form-control-lg': isLarge,
             'form-control-sm': isSmall,
             'form-control-solid': isSolid
           }"
           (ngModelChange)="handleChange($event)">
-    <div *ngIf="!isDisabled && !isReverse" class="input-group-append">
-      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-        <i class="flaticon-calendar-1"></i>
-      </button>
-    </div>
-    <div *ngIf="isPatternError || isInvalid" class="invalid-feedback">
+          <div *ngIf="!isDisabled && !isReverse" class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+              <i class="flaticon-calendar-1"></i>
+            </button>
+          </div>
+    <div *ngIf="inputValidator(parent, date)" class="invalid-feedback">
       {{ 'user.date-format' | translate}}
     </div>
   </div>
