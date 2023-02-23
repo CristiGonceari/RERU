@@ -688,7 +688,36 @@
     "qualification": "Qualification",
     "institution-address": "Institution Address",
     "year-of-admision": "Year of admission",
-    "graduation-year" : "Graduation Year"
+    "graduation-year" : "Graduation Year",
+    "study-act-name": "Certificate of graduation (series, number, date of issue)",
+    "study-act-series": "Series",
+    "study-act-number": "Number",
+    "diploma-act-name": "Doctor's degree diploma (series, number, date of issue)",
+    "certificate-act-name": "Certificate (series, number, date of issue)",
+    "study-act-emitted-date": "Release day",
+    "profile": "Profile",
+    "study-form" : "Form of education",
+    "study-title": "Title(licensed in...)",
+    "doctor-title": "Title(doctor in...)",
+    "study-coureses-type": "Courses type",
+    "study-credit-number": "No. of hours/credits",
+    "study-period-date": "Study period (beginning, end)",
+    "study-period-start-date": "Start date",
+    "study-period-end-date": "End date",
+    "not-selected-study-type": "No one type of studies selected."
+  },
+  "study-profiles":{
+    "1": "Real",
+    "2": "Humanist",
+    "3": "Arts",
+    "4": "Sport",
+    "5": "Etc"
+  },
+  "study-courses":{
+    "1": "Initial",
+    "2": "Perfecting",
+    "3": "Retraining",
+    "4": "Specialization"
   },
   "language":{
     "modern-language-level": "The level of knowledge of the modern language",
@@ -763,11 +792,23 @@
     "2": "University",
     "3": "Postgraduate",
     "4": "Improvement courses",
-    "5": "Training courses"
+    "5": "Training courses",
+    "6": "Incomplete grades (8th/9th grade)",
+    "7": "General education (10/11 grades)",
+    "8": "Baccalaureate (12 classes)",
+    "9": "Specialization environments (college, center of excellence)",
+    "10": "Short/short-term higher education (college)",
+    "11": "Higher university degrees (without a bachelor's degree)",
+    "12": "Bachelor's degree",
+    "13": "Master's degree",
+    "14": "Higher doctorate",
+    "15": "Postdoctoral",
+    "16": "Vocational training courses"
   },
   "studyFrequency":{
     "Daily":"Daily",
-    "LowFrequency": "Low Frequency"
+    "LowFrequency": "Low Frequency",
+    "Remote": "Remote"
   },
   "materialStatusType": {
     "1": "Bachelor",
