@@ -88,6 +88,8 @@
     "file-name": "Denumirea documentului",
     "download": "Descarcă",
     "delete": "Șterge",
+    "delete-document": "Șterge document",
+    "remove-msg":"Sigur doriți să ștergeți acest document?",
     "upload-doc": "Încarcă document",
     "import-users": "Importă utilizatori",
     "import-departments": "Importă departamente",

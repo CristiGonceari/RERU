@@ -84,7 +84,7 @@
     "file-name": "Document name",
     "download": "Download",
     "delete": "Delete",
-    "delete-document": "Detele document",
+    "delete-document": "Delete document",
     "remove-msg":"Are you sure you want to delete this document?",
     "upload-doc": "Upload document",
     "import-users": "Import users",
