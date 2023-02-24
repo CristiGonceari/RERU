@@ -6148,6 +6148,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         },
                         new
                         {
+                            Id = 2,
+                            Name = "Reservist"
+                        },
+                        new
+                        {
                             Id = 3,
                             Name = "PerformedMilitaryService"
                         },
