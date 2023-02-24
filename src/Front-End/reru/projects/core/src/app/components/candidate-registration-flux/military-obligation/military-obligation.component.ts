@@ -92,7 +92,7 @@ export class MilitaryObligationComponent implements OnInit {
     let militaryType = this.militaryObligationTypeEnum?.filter(el => el.value == value.militaryObligationType);
 
     if (militaryType?.length > 0) {
-      if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 6) {
+      if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 2) {
         return false
       }
     }
@@ -184,7 +184,7 @@ export class MilitaryObligationComponent implements OnInit {
       let militaryType = this.militaryObligationTypeEnum?.filter(el => el.value == military[i].value.militaryObligationType);
 
       if (militaryType?.length > 0) {
-        if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 6) {
+        if (militaryType[0].value == 1 || militaryType[0].value == 4 || militaryType[0].value == 2) {
           results.push(
             !(military[i].value.militaryObligationType &&
               military[i].value.efectiv &&

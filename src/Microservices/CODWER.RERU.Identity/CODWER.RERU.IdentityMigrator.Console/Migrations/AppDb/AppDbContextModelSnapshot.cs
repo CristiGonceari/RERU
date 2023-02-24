@@ -6149,7 +6149,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 2,
-                            Name = "Reservist"
+                            Name = "Disobedient"
                         },
                         new
                         {
@@ -6165,11 +6165,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 5,
                             Name = "MilitaryChair"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Disobedient"
                         });
                 });
 
