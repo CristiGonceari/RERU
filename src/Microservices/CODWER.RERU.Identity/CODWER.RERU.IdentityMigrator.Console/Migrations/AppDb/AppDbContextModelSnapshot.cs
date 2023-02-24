@@ -1956,7 +1956,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("MilitaryBookletSeries")
                         .HasColumnType("text");
 
-                    b.Property<int>("MilitaryObligationType")
+                    b.Property<int?>("MilitaryObligationType")
                         .HasColumnType("integer");
 
                     b.Property<string>("MilitarySpecialty")
@@ -8423,8 +8423,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("MilitaryObligationType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Contractor");
                 });
