@@ -10,8 +10,8 @@ using RERU.Data.Persistence.Context;
 namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230224083216_Undo_MilitaryObligationEnum")]
-    partial class Undo_MilitaryObligationEnum
+    [Migration("20230224090316_Change_Recruit_To_Disobedient")]
+    partial class Change_Recruit_To_Disobedient
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -6151,7 +6151,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 2,
-                            Name = "Reservist"
+                            Name = "Disobedient"
                         },
                         new
                         {
@@ -6167,11 +6167,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 5,
                             Name = "MilitaryChair"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Disobedient"
                         });
                 });
 

@@ -6149,7 +6149,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 2,
-                            Name = "Reservist"
+                            Name = "Disobedient"
                         },
                         new
                         {
@@ -6165,11 +6165,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 5,
                             Name = "MilitaryChair"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Disobedient"
                         });
                 });
 
@@ -8428,7 +8423,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("MilitaryObligationType")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Contractor");
                 });
@@ -9606,7 +9601,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

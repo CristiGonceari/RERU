@@ -11,11 +11,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 name: "FK_Studies_StudyTypes_StudyTypeId",
                 table: "Studies");
 
-            migrationBuilder.DeleteData(
-                table: "MilitaryObligationTypeEnum",
-                keyColumn: "Id",
-                keyValue: 2);
-
             migrationBuilder.AddColumn<int>(
                 name: "ValidationId",
                 table: "StudyTypes",
@@ -265,11 +260,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                 oldClrType: typeof(int),
                 oldType: "integer",
                 oldNullable: true);
-
-            migrationBuilder.InsertData(
-                table: "MilitaryObligationTypeEnum",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Reservist" });
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Studies_StudyTypes_StudyTypeId",
