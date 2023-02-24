@@ -10,4 +10,14 @@ export interface StudyModel {
     graduationYear: string;
     studyTypeId: number;
     contractorId: number
+    studyProfile: number,
+    studyCourse: number,
+    startStudyPeriod: string,
+    endStudyPeriod: string,
+    title: string,
+    qualification: string,
+    creditCount: number,
+    studyActSeries: string,
+    studyActNumber: number,
+    studyActRelaseDay: string
 }

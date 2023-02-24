@@ -7,7 +7,7 @@ namespace RERU.Data.Entities
 {
     public class MilitaryObligation : SoftDeleteBaseEntity
     {
-        public MilitaryObligationTypeEnum MilitaryObligationType { get; set; }
+        public MilitaryObligationTypeEnum? MilitaryObligationType { get; set; }
         public DateTime? MobilizationYear { get; set; }
         public DateTime? WithdrawalYear { get; set; }
         public string Efectiv { get; set; }

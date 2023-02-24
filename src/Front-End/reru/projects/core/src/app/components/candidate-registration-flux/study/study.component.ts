@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { ReferenceService } from '../../../utils/services/reference.service';
@@ -32,6 +32,7 @@ export class StudyComponent implements OnInit {
   @Output() isDoneStep = new EventEmitter<{ isDone: boolean }>();
 
   isLoadingStudies: boolean = true;
+  isLoadingStudiesContent: boolean = false;
   isLoadingLanguages: boolean = true;
   isLoadingRecommandations: boolean = true;
 
@@ -40,7 +41,8 @@ export class StudyComponent implements OnInit {
   recommendationForm: FormGroup;
   panelOpenState: boolean = true;
 
-  studyTypes: SelectItem[];
+  studyTypes;
+  // studyTypes: SelectItem[];
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
   selectedItems: SelectItem[] = [{ label: '', value: '' }];
@@ -58,6 +60,8 @@ export class StudyComponent implements OnInit {
 
   modernLanguages;
   knowledgeQuelifiersEnum;
+  studyProfilesEnum;
+  studyCoursesEnum;
 
   addOrEditStudyButton: boolean;
   addOrEditLanguagesButton: boolean;
@@ -66,6 +70,8 @@ export class StudyComponent implements OnInit {
 
   title: string;
   description: string;
+
+  studyFirstForm: boolean = false;
 
   constructor(private referenceService: ReferenceService,
     private fb: FormBuilder,
@@ -93,6 +99,72 @@ export class StudyComponent implements OnInit {
   ngOnDestroy() {
     // clear message
     this.ds.clearData();
+  }
+
+  enableFirstStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableSecondStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 4 || studyType[0].validationId == 5 || studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableThirdStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 6 || studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableFourthStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 11) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  disableThirdStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 6) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  disableSecondStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+        return true
+      }
+    }
+    return false;
   }
 
   initForm(data?, studyType?: StudyEnum): void {
@@ -149,6 +221,14 @@ export class StudyComponent implements OnInit {
 
     this.referenceService.getKnowledgeQuelifiersEnum().subscribe(res => {
       this.knowledgeQuelifiersEnum = res.data
+    });
+
+    this.referenceService.getStudyCoursesEnum().subscribe(res => {
+      this.studyCoursesEnum = res.data
+    });
+
+    this.referenceService.getStudyProfilesEnum().subscribe(res => {
+      this.studyProfilesEnum = res.data
     });
   }
 
@@ -249,9 +329,7 @@ export class StudyComponent implements OnInit {
           this.initForm(study[i], StudyEnum.Studies)
         }
       }
-
     }
-
   }
 
   initExistentLanguageForm(language) {
@@ -288,19 +366,28 @@ export class StudyComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) || null),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null, [Validators.required]),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
       graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
+      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
+      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
+      studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
+      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, [])
     });
   }
 
   generateModernLanguage(language?, modernLanguageId?, contractorId?) {
-
     return this.fb.group({
       id: this.fb.control((language && language.id) || null, []),
       knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
@@ -310,7 +397,6 @@ export class StudyComponent implements OnInit {
   }
 
   generateRecommendation(recommendation?, contractorId?) {
-
     return this.fb.group({
       id: this.fb.control((recommendation && recommendation.id) || null, []),
       name: this.fb.control((recommendation && recommendation.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -329,19 +415,172 @@ export class StudyComponent implements OnInit {
     return ValidatorUtil.isIdnpLengthValidator(form, field);
   }
 
-  studyButtonValidator(value) {
-    let result: boolean;
+  studyTypeFieldsValidator(index) {
+    this.isLoadingStudiesContent =true;
+    const studies = this.studyForm.controls.studies as FormArray;
+    let study = studies.controls[index];
 
-    for (let i = 0; i < value.length; i++) {
-      if (value[i].studyTypeId == 5) {
-        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution)
-      } else if (value[i].studyTypeId == 1 || value[i].studyTypeId == 2) {
-        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution && value[i].specialty)
-      } else {
-        result = !(value[i].studyTypeId && value[i].studyFrequency && value[i].institution && value[i].specialty && value[i].faculty)
+    let studyType = this.studyTypes?.filter(el => el.value == study.value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+        study.get("title").setValue(null);
+        study.get("studyFrequency").setValue(null);
+        study.get("studyCourse").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("specialty").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 6) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+        study.get("creditCount").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+      } else if (studyType[0].validationId == 11) {
+        study.get("faculty").setValue(null);
+        study.get("graduationYear").setValue(null);
+        study.get("specialty").setValue(null);
+        study.get("studyFrequency").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("yearOfAdmission").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
       }
     }
-    return result;
+    setTimeout(() => {
+    this.isLoadingStudiesContent =false;
+    }, 100)
+  }
+
+  studyButtonValidator(study) {
+    let results: boolean[] = [];
+    
+    for (let i = 0; i < study.length; i++) {
+
+      let studyType = this.studyTypes?.filter(el => el.value == study[i].value.studyTypeId);
+      if (studyType?.length > 0) {
+        if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+            
+        } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 6) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+            
+        } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
+            (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 11) {
+          results.push(!(
+            (study[i].value.studyCourse && !ValidatorUtil.isInvalidPattern(study[i], "studyCourse")) &&
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.creditCount && !ValidatorUtil.isInvalidPattern(study[i], "creditCount")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.startStudyPeriod && !ValidatorUtil.isInvalidPattern(study[i], "startStudyPeriod")) &&
+            (study[i].value.endStudyPeriod && !ValidatorUtil.isInvalidPattern(study[i], "endStudyPeriod")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        }
+      }
+    }
+    return results.some((x) => x == true) ? true : false;
   }
 
   removeModernLanguage(index: number): void {
@@ -487,7 +726,17 @@ export class StudyComponent implements OnInit {
       specialty: data.specialty,
       yearOfAdmission: data.yearOfAdmission,
       graduationYear: data.graduationYear,
-      contractorId: contractorId
+      contractorId: contractorId,
+      studyCourse: data.studyCourse,
+      startStudyPeriod: data.startStudyPeriod,
+      endStudyPeriod: data.endStudyPeriod,
+      title: data.title,
+      studyProfile: data.studyProfile,
+      qualification: data.qualification,
+      creditCount: data.creditCount,
+      studyActSeries: data.studyActSeries,
+      studyActNumber: data.studyActNumber,
+      studyActRelaseDay: data.studyActRelaseDay
     })
   }
 
@@ -658,5 +907,10 @@ export class StudyComponent implements OnInit {
 
   hasErrors(field): boolean {
     return this.studyForm.touched && this.studyForm.get(field).invalid;
+  }
+
+  inputValidator(form, field) {
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid
+      ? 'is-valid' : 'is-invalid';
   }
 }

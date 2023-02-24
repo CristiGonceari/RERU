@@ -73,4 +73,12 @@ export class ReferenceService extends AbstractService{
   getCoreRoles(): Observable<any> {
     return this.http.get(`${this.coreUrl}/${this.urlRoute}/article-roles/select-values`);
   }
+
+  getStudyCoursesEnum(): Observable<any>{
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/study-courses/select-values`);
+  }
+
+  getStudyProfilesEnum(): Observable<any>{
+    return this.http.get(`${this.coreUrl}/${this.urlRoute}/study-profiles/select-values`);
+  }
 }

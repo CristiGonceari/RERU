@@ -88,6 +88,8 @@
     "file-name": "Denumirea documentului",
     "download": "Descarcă",
     "delete": "Șterge",
+    "delete-document": "Șterge document",
+    "remove-msg":"Sigur doriți să ștergeți acest document?",
     "upload-doc": "Încarcă document",
     "import-users": "Importă utilizatori",
     "import-departments": "Importă departamente",
@@ -274,7 +276,7 @@
     "priority":"Prioritate",
     "status": "Statut",
     "profile-photo": "Poza de profil",
-    "number" : "Numarul",
+    "number" : "Numărul",
     "npp": "N.P.P.",
     "posture": "Postură"
   },
@@ -684,7 +686,36 @@
     "qualification": "Calificarea",
     "institution-address": "Adresa instituţiei",
     "year-of-admision": "Anul admiterii",
-    "graduation-year" : "Anul absolvirii"
+    "graduation-year" : "Anul absolvirii",
+    "study-act-name": "Actul de studii(seria, nr, data eliberarii)",
+    "study-act-series": "Seria",
+    "study-act-number": "Numărul",
+    "diploma-act-name": "Diploma de doctor habilitat(seria, nr, data eliberarii)",
+    "certificate-act-name": "Certificatul(seria, nr, data eliberarii)",
+    "study-act-emitted-date": "Data eliberării",
+    "profile": "Profilul",
+    "study-form" : "Form de învățământ",
+    "study-title": "Titlul(licentiat în...)",
+    "doctor-title": "Titlul(doctor în...)",
+    "study-coureses-type": "Tipuri de cursuri",
+    "study-credit-number": "Nr. de ore/credite",
+    "study-period-date": "Perioada de studii(început, sfârșit)",
+    "study-period-start-date": "Data de început",
+    "study-period-end-date": "Data de încheiere",
+    "not-selected-study-type": "Nici un tip de studii selectat."
+  },
+  "study-profiles":{
+    "1": "Real",
+    "2": "Umanist",
+    "3": "Arte",
+    "4": "Sportiv",
+    "5": "Etc"
+  },
+  "study-courses":{
+    "1": "Inițiale",
+    "2": "Perfecționare",
+    "3": "Specializare",
+    "4": "Recalificare"
   },
   "language":{
     "modern-language-level": "Nivelul de cunoaștere a limbii moderne",
@@ -760,11 +791,24 @@
     "2": "Universitare",
     "3": "PostUniversitare",
     "4": "Cursuri de Perfecționare",
-    "5": "Cursuri de Specializare"
+    "5": "Cursuri de Specializare",
+    "6": "Medii incomplete(8/9 clase)",
+    "7": "Medii generale(10/11 clase)",
+    "8": "Bacalaureat(12 clase)",
+    "9": "Medii de specializare(colegiu, centrul de excelentă)",
+    "10": "Superioare scurte/de scurta durata(colegiu)",
+    "11": "Superioare universitare(fara licentă)",
+    "12": "Superioare de licentă",
+    "13": "Superioare de master",
+    "14": "Superioare de doctorat",
+    "15": "Postdoctorat",
+    "16": "Cursuri de formare perofesională"
+
   },
   "studyFrequency":{
     "Daily":"Frecvența la zi",
-    "LowFrequency": "Frecvența redusa"
+    "LowFrequency": "Frecvența redusa",
+    "Remote": "La distanță"
   },
   "materialStatusType": {
     "1": "Celibatar/ă",

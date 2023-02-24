@@ -6,5 +6,6 @@ namespace RERU.Data.Entities
     {
         public string Name { get; set; }
         public int TranslateId { get; set; }
+        public int? ValidationId { get; set; }
     }
 }
