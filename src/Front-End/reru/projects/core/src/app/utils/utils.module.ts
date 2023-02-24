@@ -18,6 +18,7 @@ import { BulletinAddressModalComponent } from './modals/bulletin-address-modal/b
 import { SearchDepartmentComponent } from './components/search-department/search-department.component';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
+import { StepperDateTimeComponent } from './components/stepper-date-time/stepper-date-time.component';
 import { SharedModule } from '@erp/shared';
 
 const commonComponents = [
@@ -33,7 +34,8 @@ const commonComponents = [
   BulletinAddressModalComponent,
   SearchDepartmentComponent,
   SearchRoleComponent,
-  SearchEmployeeFunctionComponent
+  SearchEmployeeFunctionComponent,
+  StepperDateTimeComponent
 ];
 
 @NgModule({

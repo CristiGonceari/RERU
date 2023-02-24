@@ -3,6 +3,7 @@
     public enum StudyFrequencyEnum
     {
         Daily = 1,
-        LowFrequency = 2
+        LowFrequency = 2,
+        Remote = 3
     }
 }

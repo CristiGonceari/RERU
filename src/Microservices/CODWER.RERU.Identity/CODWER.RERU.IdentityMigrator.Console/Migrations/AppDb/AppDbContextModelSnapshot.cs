@@ -1956,7 +1956,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("MilitaryBookletSeries")
                         .HasColumnType("text");
 
-                    b.Property<int>("MilitaryObligationType")
+                    b.Property<int?>("MilitaryObligationType")
                         .HasColumnType("integer");
 
                     b.Property<string>("MilitarySpecialty")
@@ -4506,7 +4506,13 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("CreditCount")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("EndStudyPeriod")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Faculty")
@@ -4524,14 +4530,38 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Qualification")
+                        .HasColumnType("text");
+
                     b.Property<string>("Specialty")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("StartStudyPeriod")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("StudyActNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("StudyActRelaseDay")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("StudyActSeries")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("StudyCourse")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("StudyFrequency")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StudyTypeId")
+                    b.Property<int?>("StudyProfile")
                         .HasColumnType("integer");
+
+                    b.Property<int?>("StudyTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdateById")
                         .HasColumnType("text");
@@ -4546,7 +4576,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.HasIndex("ContractorId");
 
+                    b.HasIndex("StudyCourse");
+
                     b.HasIndex("StudyFrequency");
+
+                    b.HasIndex("StudyProfile");
 
                     b.HasIndex("StudyTypeId");
 
@@ -4583,6 +4617,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("ValidationId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -6112,7 +6149,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         new
                         {
                             Id = 2,
-                            Name = "Reservist"
+                            Name = "Disobedient"
                         },
                         new
                         {
@@ -6128,11 +6165,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 5,
                             Name = "MilitaryChair"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Disobedient"
                         });
                 });
 
@@ -6856,6 +6888,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 2,
                             Name = "LowFrequency"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Remote"
                         });
                 });
 
@@ -7279,6 +7316,87 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         {
                             Id = 3,
                             Name = "Rejected"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyCourseType>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("StudyCourseType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Initial"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Perfecting"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Specialization"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Retraining"
+                        });
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyProfileEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("StudyProfileEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Real"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Humanist"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Arts"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Sport"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Etc"
                         });
                 });
 
@@ -8305,8 +8423,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("MilitaryObligationType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Contractor");
                 });
@@ -9031,16 +9148,24 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .WithMany("Studies")
                         .HasForeignKey("ContractorId");
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyCourseType>", null)
+                        .WithMany()
+                        .HasForeignKey("StudyCourse")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.StudyFrequencyEnum>", null)
                         .WithMany()
                         .HasForeignKey("StudyFrequency")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyProfileEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("StudyProfile")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RERU.Data.Entities.StudyType", "StudyType")
                         .WithMany()
-                        .HasForeignKey("StudyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudyTypeId");
 
                     b.Navigation("Contractor");
 
@@ -9476,7 +9601,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -9762,6 +9887,24 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StageStatusEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StageStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyCourseType>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyCourseType>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyProfileEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.PersonalEntities.Enums.StudyProfileEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)

@@ -11,7 +11,6 @@ import { ValidatorUtil } from '../../util/validator.util';
 })
 export class BulletinAddressModalComponent extends EnterSubmitListener {
   @Input() addressForm: FormGroup;
-  @Input() isBirthPlace: boolean;
 
   constructor(private activeModal: NgbActiveModal) {
     super();
