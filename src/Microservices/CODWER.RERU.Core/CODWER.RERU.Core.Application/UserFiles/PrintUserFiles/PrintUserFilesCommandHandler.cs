@@ -3,7 +3,6 @@ using CODWER.RERU.Core.Application.Common.Providers;
 using CODWER.RERU.Core.DataTransferObjects.Files;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
-using CVU.ERP.ServiceProvider;
 using CVU.ERP.StorageService;
 using CVU.ERP.StorageService.Entities;
 using MediatR;
@@ -17,16 +16,13 @@ namespace CODWER.RERU.Core.Application.UserFiles.PrintUserFiles
     public class PrintUserFilesCommandHandler : BaseHandler, IRequestHandler<PrintUserFilesCommand, FileDataDto>
     {
         private readonly IStorageFileService _storageFileService;
-        private readonly ICurrentApplicationUserProvider _currentApplication;
         private readonly IExportData<File, GetFilesDto> _printer;
 
         public PrintUserFilesCommandHandler(ICommonServiceProvider commonServiceProvider,
             IStorageFileService storageFileService,
-            ICurrentApplicationUserProvider currentApplication,
             IExportData<File, GetFilesDto> printer) : base(commonServiceProvider)
         {
             _storageFileService = storageFileService;
-            _currentApplication = currentApplication;
             _printer = printer;
         }
 
