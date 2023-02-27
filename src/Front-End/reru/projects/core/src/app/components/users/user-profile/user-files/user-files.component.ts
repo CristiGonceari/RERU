@@ -48,6 +48,11 @@ export class UserFilesComponent implements OnInit {
   ngOnInit(): void {
 		this.isLoading = true;
     this.subsribeForParams();
+    this.detectUserId();
+  }
+
+  detectUserId(){
+    this.userId = this.router.url.split('/')[2];
   }
   
   subsribeForParams(data: any = {}) {
@@ -221,15 +226,35 @@ export class UserFilesComponent implements OnInit {
 	}
 
 	printTable(data): void {
+    let parameters = {
+      fields : data.fields,
+      orientation: data.orientation,
+      tableExportFormat: data.tableExportFormat,
+      tableName: data.tableName,
+      userProfileId: this.userId
+    }
 		this.canDownloadFile = true;
-		this.myFiles.print(data).subscribe(response => {
-			if (response) {
-				const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
-				const blob = new Blob([response.body], { type: response.body.type });
-				const file = new File([blob], data.tableName.trim(), { type: response.body.type });
-				saveAs(file);
-				this.canDownloadFile = false;
-			}
-		}, () => this.canDownloadFile = false);
+    
+    if(this.router.url.includes('/my-documents')){
+      this.myFiles.print(data).subscribe(response => {
+        if (response) {
+          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+          const blob = new Blob([response.body], { type: response.body.type });
+          const file = new File([blob], data.tableName.trim(), { type: response.body.type });
+          saveAs(file);
+          this.canDownloadFile = false;
+        }
+      }, () => this.canDownloadFile = false);
+    }else{
+      this.userFilesService.print(parameters).subscribe(response => {
+        if (response) {
+          const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].substring(2).slice(0, -2);
+          const blob = new Blob([response.body], { type: response.body.type });
+          const file = new File([blob], data.tableName.trim(), { type: response.body.type });
+          saveAs(file);
+          this.canDownloadFile = false;
+        }
+      }, () => this.canDownloadFile = false);
+    }
 	}
 }

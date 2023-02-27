@@ -30,4 +30,11 @@ export class UserFilesService extends AbstractService{
 	create(data): Observable<any> {
 		return this.client.post<any>(`${this.coreUrl}/${this.urlRoute}`, data);
 	}
+
+	print(data): Observable<any> {
+		return this.client.put(`${this.coreUrl}/${this.urlRoute}/print`, data, {
+			responseType: 'blob',
+			observe: 'response',
+		});
+	}
 }
