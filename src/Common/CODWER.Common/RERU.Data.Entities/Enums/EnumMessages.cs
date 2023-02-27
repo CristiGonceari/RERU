@@ -136,7 +136,6 @@ namespace RERU.Data.Entities.Enums
         private const string Female = "Femeie";
         private const string Male = "Bărbat";
 
-
         public static string Translate(FileTypeEnum fileType)
         {
             return fileType switch
