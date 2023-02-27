@@ -702,7 +702,9 @@
     "study-period-date": "Perioada de studii(început, sfârșit)",
     "study-period-start-date": "Data de început",
     "study-period-end-date": "Data de încheiere",
-    "not-selected-study-type": "Nici un tip de studii selectat."
+    "not-selected-study-type": "Nici un tip de studii selectat.",
+    "add-study": "Adăugați un alt tip de studiu",
+    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul"
   },
   "study-profiles":{
     "1": "Real",
@@ -730,7 +732,6 @@
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei"
-
   },
   "material-status":{
     "name": "Starea civilă la data completării dosarului personal",
@@ -745,7 +746,8 @@
     "birthday-date": "Data nașterii",
     "residence": "Domiciliul",
     "work-place": "Locul de muncă",
-    "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului"
+    "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului",
+    "add-button-hint": "Apăsați butonul pentru a adăuga starea civilă"
   },
   "military-obligation":{
     "paragraf-name": "Date biografice a rudelor apropiate candidatului",
@@ -759,7 +761,14 @@
     "series":"Seria",
     "number": "Numărul",
     "relase-day":"Data eliberării",
-    "eminent-authority" : "Autoritatea Eminentă"
+    "eminent-authority" : "Autoritatea Eminentă",
+    "institution-name": "Denumirea (instituției/organizației/întreprinderii)",
+    "institution-adress": "Adresa (instituției/organizației/întreprinderii)",
+    "period": "Perioada",
+    "start-obligation-period": "Data de început",
+    "end-obligation-period": "Data de încheiere",
+    "recruitment-booklet": "Adeverinţă de recrutare",
+    "military-obligation-add-button-hint": "Apăsați butonul pentru a adăuga obligația militară"
   },
   "autobiography":{
     "title":"Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:",
@@ -846,7 +855,9 @@
     "button-update":"Actualizează",
     "button-add":"Adaugă",
     "button-end": "Finalizează",
-    "button-save-and-next-withoud-datas": "Treci la pasul următor fără a completa"
+    "button-save-and-next-withoud-datas": "Treci la pasul următor fără a completa",
+    "button-next-hint":"Apăsați butonul pentru a trece la pasul următor",
+    "select-value": "Selectați valoarea"
   },
   "step":{
     "GeneralData": "Date Generale",

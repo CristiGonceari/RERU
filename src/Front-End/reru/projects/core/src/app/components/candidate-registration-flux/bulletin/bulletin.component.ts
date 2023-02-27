@@ -441,4 +441,8 @@ export class BulletinComponent implements OnInit {
     })
   }
 
+  inputValidator(form, field) {
+    return form.get(field).valid
+      ? 'is-valid' : 'is-invalid';
+  }
 }
