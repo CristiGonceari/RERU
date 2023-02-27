@@ -706,7 +706,9 @@
     "study-period-date": "Study period (beginning, end)",
     "study-period-start-date": "Start date",
     "study-period-end-date": "End date",
-    "not-selected-study-type": "No one type of studies selected."
+    "not-selected-study-type": "No one type of studies selected.",
+    "add-study": "Add another study type",
+    "study-add-button-hint": "Press the button to add the study"
   },
   "study-profiles":{
     "1": "Real",
@@ -762,7 +764,14 @@
     "series":"Series",
     "number": "Number",
     "relase-day":"Release day",
-    "eminent-authority" : "Eminent Authority"
+    "eminent-authority" : "Eminent Authority",
+    "institution-name": "Name (of the institution/organisation/company)",
+    "institution-adress": "Address (of the institution/organization/company)",
+    "period": "Period",
+    "start-obligation-period": "Start date",
+    "end-obligation-period": "End date",
+    "recruitment-booklet": "Recruitment certificate",
+    "military-obligation-add-button-hint": "Press the button to add military obligation"
   },
   "autobiography":{
     "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",
@@ -848,7 +857,9 @@
     "button-update":"Update",
     "button-add":"Add",
     "button-end": "Complete",
-    "button-save-and-next-withoud-datas": "Pass without adding data"
+    "button-save-and-next-withoud-datas": "Pass without adding data",
+    "button-next-hint":"Press the button to go to the next step",
+    "select-value": "Select value"
   },
   "step":{
     "GeneralData": "General Data",

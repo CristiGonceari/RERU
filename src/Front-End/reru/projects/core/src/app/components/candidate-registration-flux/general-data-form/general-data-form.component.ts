@@ -257,4 +257,9 @@ export class GeneralDataFormComponent implements OnInit {
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
+  
+  inputValidator(form, field) {
+    return form.get(field).valid
+      ? 'is-valid' : 'is-invalid';
+  }
 }

@@ -8,3 +8,37 @@ input[type="checkbox"] {
     height: 15px;
     width: 15px;
 }
+
+
+.pulse{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.animation{
+    animation: animate 3s linear infinite
+
+}
+
+.pulse i{
+    justify-content: center;
+    align-items: center;
+    font-size: 5px;
+    color: #fff;
+    height: 100%;
+    cursor: pointer
+}
+
+@keyframes animate{
+    0%{box-shadow: 0 0 0 0 #757575 , 0 0 0 0 #757575}
+    40%{box-shadow: 0 0 0 15px rgb(255, 109, 74, 0) , 0 0 0 0 #757575}
+}
+
+.input-style{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: auto;
+    padding: 0px
+}

@@ -46,7 +46,7 @@
                        autocomplete="off"
                        class="form-control form-control-solid" 
                        type="text" 
-                       [ngClass]="{'is-invalid': isTouched('series') && isInvalidPattern('series') }"
+                       [ngClass]="inputValidator(bulletinForm, 'series')"
                        [placeholder]="'bulletin.series' | translate"/>
                 <div *ngIf="isInvalidPattern('series')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-dash-and-dot' | translate}}</div>
         </div>
@@ -63,7 +63,11 @@
             </svg><!--end::Svg Icon--></span>
             {{'bulletin.emited-by' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-                <input [ngClass]="{'is-invalid': isTouched('emittedBy') && isInvalidPattern('emittedBy') }" formControlName="emittedBy" autocomplete="off"  class="form-control form-control-solid" type="text" [placeholder]="'bulletin.emited-by' | translate"/>
+                <input 
+                    formControlName="emittedBy" autocomplete="off"  
+                    class="form-control form-control-solid" type="text" 
+                    [placeholder]="'bulletin.emited-by' | translate"
+                    [ngClass]="inputValidator(bulletinForm, 'emittedBy')" />
                 <div *ngIf="isInvalidPattern('emittedBy')" class="invalid-feedback d-block">{{'validations.only-letters-numbers-dash-and-dot' | translate}}</div>
         </div>
     </div>
@@ -79,7 +83,7 @@
             </svg><!--end::Svg Icon--></span>
             {{'bulletin.relase-day' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
-                <app-date [parent]="bulletinForm" [date]="'releaseDay'" [placeholder]="'bulletin.relase-day' | translate"></app-date>
+                <app-stepper-date-time [parent]="bulletinForm" [date]="'releaseDay'" [placeholder]="'bulletin.relase-day' | translate"></app-stepper-date-time>
         </div>
     </div>
     </div>
@@ -111,6 +115,7 @@
     <div class="row mx-lg-10 m-0">
         <div class="col">
             <div class="row d-flex justify-content-md-end">
+                <app-stepper-arrow-hint *ngIf="bulletinForm && bulletinForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
                 <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
                     (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
