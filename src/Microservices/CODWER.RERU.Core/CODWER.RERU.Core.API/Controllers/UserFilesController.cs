@@ -2,6 +2,7 @@
 using CODWER.RERU.Core.Application.UserFiles.GetUserFile;
 using CODWER.RERU.Core.Application.UserFiles.GetUserFiles;
 using CODWER.RERU.Core.Application.UserFiles.RemoveUserFiles;
+using CODWER.RERU.Core.Application.UserFiles.PrintUserFiles;
 using CODWER.RERU.Core.DataTransferObjects.Files;
 using CVU.ERP.Common.Pagination;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper.Attributes;
@@ -54,6 +55,16 @@ namespace CODWER.RERU.Core.API.Controllers
             var result = await Mediator.Send(command);
 
             return result;
+        }
+
+        [HttpPut("print")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserModules([FromBody] PrintUserFilesCommand command)
+        {
+            var result = await Mediator.Send(command);
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
         }
     }
 }
