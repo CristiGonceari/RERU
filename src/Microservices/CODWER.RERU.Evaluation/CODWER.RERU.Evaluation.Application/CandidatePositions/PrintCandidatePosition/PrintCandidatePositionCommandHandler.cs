@@ -47,14 +47,11 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
             };
 
             var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, filterData);
-            var positionsDto = _mapper.Map<List<CandidatePositionDto>>(positions);
-
-            positionsDto = await GetResponsiblePersonName(positionsDto, positions);
 
             var result = _printer.ExportTableSpecificFormatList(new TableListData<CandidatePositionDto>
             {
                 Name = request.TableName,
-                Items = positionsDto,
+                Items = GetResponsiblePersonName(positions),
                 Fields = request.Fields,
                 Orientation = request.Orientation,
                 ExportFormat = request.TableExportFormat
@@ -63,8 +60,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
             return result;
         }
 
-        private async Task<List<CandidatePositionDto>> GetResponsiblePersonName(List<CandidatePositionDto> positionsDto, IEnumerable<CandidatePosition> candidatePositions)
+        private  List<CandidatePositionDto> GetResponsiblePersonName(IEnumerable<CandidatePosition> candidatePositions)
         {
+            var positionsDto = _mapper.Map<List<CandidatePositionDto>>(candidatePositions);
             var positions = candidatePositions.ToList();
 
             foreach (var item in positionsDto)
@@ -72,21 +70,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
                 var position = positions.FirstOrDefault(x => x.Id == item.Id);
 
                 item.ResponsiblePerson = _candidatePositionService.GetResponsiblePersonName(int.Parse(position?.CreateById ?? "0"));
-                item.ResponsiblePersonId = int.Parse(position?.CreateById ?? "0");
-                item.Events = await GetAttachedEvents(item.Id);
             }
 
             return positionsDto;
         }
-
-        private async Task<List<SelectItem>> GetAttachedEvents(int candidatePositionId) => await _appDbContext.EventVacantPositions
-                .Include(x => x.Event)
-                .Where(x => x.CandidatePositionId == candidatePositionId)
-                .Select(e => _mapper.Map<SelectItem>(new Event
-                {
-                    Id = e.Event.Id,
-                    Name = e.Event.Name
-                }))
-                .ToListAsync();
     }
 }
