@@ -52,7 +52,7 @@
               <tbody class="text-dark-75">
                 <tr *ngFor="let module of modules">
                   <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
-                    <svg-icon [key]="module.icon" [width]="32" [height]="32"></svg-icon>
+                    <svg-icon [key]="module.icon" [useToolTip]="false" [width]="32" [height]="32"></svg-icon>
                   </td>
                   <td [class.no-actions]="!viewDetails" (dblclick)="navigateToDetails(module.id)">
                     <a [routerLink]="['..', module.id, 'overview']"

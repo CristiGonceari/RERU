@@ -278,9 +278,9 @@
                 </span>
                 <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}
                 </span>
-                  <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                  <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
               </a>
                 <a *ngIf="step.value == stepEnum.Bulletin" [routerLink]="'./bulletin/' + step.value" class="navi-link py-4">
@@ -296,9 +296,9 @@
                     </span>
                   </span>
                   <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}</span>
-                  <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                  <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
                 </a>
                   <a *ngIf="step.value == stepEnum.Study" [routerLink]="'./studies/' + step.value" class="navi-link py-4">
@@ -314,9 +314,9 @@
                       </span>
                     </span>
                     <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}</span>
-                    <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                    <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
                   </a>
                   <a *ngIf="step.value == stepEnum.MilitaryObligation" [routerLink]="'./ranks/' + step.value" class="navi-link py-4">
@@ -331,9 +331,9 @@
                       </span>
                     </span>
                     <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}</span>
-                    <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                    <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
                   </a>
                   <a *ngIf="step.value == stepEnum.MaterialStatus" [routerLink]="'./family/' + step.value" class="navi-link py-4">
@@ -349,9 +349,9 @@
                 </span>
                     </span>
                     <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}</span>
-                    <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                    <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
                   </a>
                   <a *ngIf="step.value == stepEnum.Autobiography" [routerLink]="'./autobiography/' + step.value" class="navi-link py-4">
@@ -367,9 +367,9 @@
                 </span>
                     </span>
                     <span class="navi-text font-size-lg">{{ 'step.' + step.label | translate}}</span>
-                    <svg-icon *ngIf="step.isDone == false" key="error" [width]="24" [height]="24">
+                    <svg-icon *ngIf="step.isDone == false" key="error" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
-                        <svg-icon *ngIf="step.isDone == true" key="success" [width]="24" [height]="24">
+                        <svg-icon *ngIf="step.isDone == true" key="success" [useToolTip]="false" [width]="24" [height]="24">
                         </svg-icon>
                   </a>
             </div>
