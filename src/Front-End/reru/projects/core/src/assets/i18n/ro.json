@@ -95,7 +95,8 @@
     "import-departments": "Importă departamente",
     "import-roles": "Importă roluri",
     "modal-title": "Încărcarea documentelor",
-    "modal-description": "Încarcă document sau apasă aici pentru încărcare"
+    "modal-description": "Încarcă document sau apasă aici pentru încărcare",
+    "success-add-doc": "Documentul a fost încărcat cu succes"
   },
   "login": {
     "admin-panel": "Panou de Administrare",

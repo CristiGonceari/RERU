@@ -91,7 +91,8 @@
     "import-departments": "Import departments",
     "import-roles": "Import roles",
     "modal-title": "Upload file modal",
-    "modal-description": "Drop file here or click to upload"
+    "modal-description": "Drop file here or click to upload",
+    "success-add-doc": "Document has been successfully uploaded"
   },
   "login": {
     "admin-panel": "Administration Panel",
