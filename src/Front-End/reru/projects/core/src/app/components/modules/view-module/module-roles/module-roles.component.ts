@@ -63,8 +63,7 @@ export class ModuleRolesComponent implements OnInit {
 	getHeaders(name: string): void {
 		this.translateData();
 		let headersHtml = document.getElementsByTagName('th');
-		let headersDto = ['name', 'type', 'isAssignByDefault'];
-         console.log("headrs:", headersHtml)
+		let headersDto = ['name', 'isAssignByDefault', 'type'];
 		for (let i = 0; i <= headersHtml.length - 2; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}

@@ -111,8 +111,8 @@
                         <ngx-dropzone-label>
                             <h4 class="m-0">{{'button.attach' | translate}}</h4>
                         </ngx-dropzone-label>
-                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                            <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" ngbTooltip="{{f.name}}">
+                            <ngx-dropzone-label>{{ checkLength(f.name) }}</ngx-dropzone-label>
                         </ngx-dropzone-preview>
                     </ngx-dropzone>
                 </div>

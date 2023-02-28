@@ -13,11 +13,16 @@ namespace RERU.Data.Entities
         public string Efectiv { get; set; }
         public string MilitarySpecialty { get; set; }
         public string Degree { get; set; }
+        public string InstitutionName { get; set; }
+        public string InstitutionAdress { get; set; }
 
         public string MilitaryBookletSeries { get; set; }
-        public int MilitaryBookletNumber { get; set; }
+        public int? MilitaryBookletNumber { get; set; }
         public DateTime? MilitaryBookletReleaseDay { get; set; }
         public string MilitaryBookletEminentAuthority { get; set; }
+
+        public DateTime? StartObligationPeriod { get; set; }
+        public DateTime? EndObligationPeriod { get; set; }
 
         public int? ContractorId { get; set; }
         public Contractor Contractor { get; set; }

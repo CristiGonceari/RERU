@@ -5,6 +5,7 @@ import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { SidebarItemType } from './utils/models/sidebar.model';
 import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -64,7 +65,8 @@ export class AppComponent {
     private localize: LocalizeRouterService,
     private appSettingsService: AppSettingsService,
     private authenticationService: AuthenticationService,
-    public navigation: NavigationService
+    public navigation: NavigationService,
+    private titleService: Title
   ) {
     this.appSettings = this.appSettingsService.settings;
     this.navigation.startSaveHistory();
@@ -91,13 +93,16 @@ export class AppComponent {
     forkJoin([
       this.translate.get('sidebar.home'),
       this.translate.get('faq.help'),
-			this.translate.get('faq.faq')
+			this.translate.get('faq.faq'),
+			this.translate.get('dashboard.title')
 
-    ]).subscribe(([home, help, faq]) => {
+    ]).subscribe(([home, help, faq, title]) => {
       this.sidebarItems[0].name = home;
       this.sidebarItems[1].name = help;
 			this.sidebarItems[2].name = faq;
+      this.title = title;
     });
+    this.titleService.setTitle(this.title);
   }
 
   logout() {

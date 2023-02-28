@@ -8,6 +8,7 @@ import { InternalGetTestIdService } from '../app/utils/services/internal-get-tes
 import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
 import { Test } from './utils/models/tests/test.model';
 import { NotificationsService } from 'angular2-notifications';
+import { Title } from '@angular/platform-browser';
 // import { IAppConfig } from '../../utils/models/app-config.model';
 
 @Component({
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		showProgressBar: true;
 	};
 
+	title = 'evaluation';
 
 	sidebarItems: any[] = [
 		{
@@ -330,6 +332,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		public navigation: NavigationService,
 		private internalGetTest: InternalGetTestIdService,
 		public notificationService: NotificationsService,
+		private titleService: Title
 
 	) {
 		this.appSettings = this.appSettingsService.settings;
@@ -392,7 +395,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.translate.get('sidebar.required-documents'),
 			this.translate.get('faq.help'),
 			this.translate.get('faq.faq'),
-		]).subscribe(([home, activities, settings, categories, questions, tests, test,  verifyTest, evaluations, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration,solicitedTest, position, requiredDocuments, help, faq]) => {
+			this.translate.get('dashboard.title'),
+		]).subscribe(([home, activities, settings, categories, questions, tests, test,  verifyTest, evaluations, statistic, event, location, events, plan, documentsManagement, documentsTemplate, administration,solicitedTest, position, requiredDocuments, help, faq, title]) => {
 			this.sidebarItems[0].name = home;
 			this.sidebarItems[1].name = activities;
 			this.sidebarItems[2].name = settings;
@@ -415,7 +419,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.sidebarItems[19].name = requiredDocuments;
 			this.sidebarItems[20].name = help;
 			this.sidebarItems[21].name = faq;
+			this.title = title;
 		});
+		this.titleService.setTitle(this.title);
 	}
 
 	setIntrvl() {

@@ -23,7 +23,9 @@ namespace CODWER.RERU.Core.Application.ModulePermissions.PrintModulePermissions
 
         public async Task<FileDataDto> Handle(PrintModulePermissionsCommand request, CancellationToken cancellationToken)
         {
-            var moduleRoles = AppDbContext.ModulePermissions.Where(m => m.ModuleId == request.ModuleId);
+            var moduleRoles = AppDbContext.ModulePermissions.Where(m => m.ModuleId == request.ModuleId)
+                .OrderBy(m => m.Code)
+                .AsQueryable();
 
             moduleRoles = GetAndFilterModulePermissions.Filter(moduleRoles, request.Code, request.Description);
 

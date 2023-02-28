@@ -66,6 +66,9 @@ namespace RERU.Data.Entities.Enums
         public const string Class = "Clasă";
         public const string ComputerClass = "Clasă cu calculatoare";
 
+        public const string Dynamic = "Dinamic";
+        public const string Static = "Static";
+
         public const string Secondary = "Medii";
         public const string Higher = "Superioare";
         public const string Master = "Masterat";
@@ -130,7 +133,12 @@ namespace RERU.Data.Entities.Enums
         public const string General_locotenent_al_serviciului_intern = "General-locotenent al serviciului intern";
         public const string General_colonel_al_serviciului_intern = "General-colonel al serviciului intern";
 
-        
+        public const string Medium = "Mediu";
+        public const string Basic = "De bază";
+
+        private const string Female = "Femeie";
+        private const string Male = "Bărbat";
+
         public static string Translate(FileTypeEnum fileType)
         {
             return fileType switch
@@ -296,6 +304,16 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
+        public static string Translate(ModuleTypeEnum moduleTypeEnum)
+        {
+            return moduleTypeEnum switch
+            {
+                ModuleTypeEnum.Dynamic => Dynamic,
+                ModuleTypeEnum.Default => Static,
+                _ => "—"
+            };
+        }
+
         public static string Translate(EducationEnum? education)
         {
             return education switch
@@ -401,5 +419,29 @@ namespace RERU.Data.Entities.Enums
                 _ => "—"
             };
         }
+
+        public static string Translate(StateLanguageLevel? stateLanguageLevel)
+        {
+            return stateLanguageLevel switch
+            {
+                StateLanguageLevel.Basic => Basic,
+                StateLanguageLevel.Medium => Medium,
+                StateLanguageLevel.Good => Good,
+                StateLanguageLevel.VeryGood => VeryGood,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(SexTypeEnum? sexTypeEnum)
+        {
+            return sexTypeEnum switch
+            {
+                SexTypeEnum.Male => Male,
+                SexTypeEnum.Female => Female,
+                _ => "—"
+            };
+        }
+
+        
     }
 }
