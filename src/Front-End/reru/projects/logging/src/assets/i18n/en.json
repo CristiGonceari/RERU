@@ -194,6 +194,7 @@
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
     "succes-edit-msg": "Article was successfully edited",
+    "emptyName": "Name is required",
     "overview": "Overview"
   },
   "guide": {
