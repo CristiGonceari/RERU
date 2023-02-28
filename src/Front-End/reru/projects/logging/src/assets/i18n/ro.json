@@ -39,6 +39,7 @@
     "view-details": "Vizualizare detalii",
     "delete-logs": "Ștergeți din jurnale",
     "npp": "N.P.P.",
+    "module": "Modul",
     "enclosed-mode":"Mod restrâns"
    },
    "delete-log-modal":{
