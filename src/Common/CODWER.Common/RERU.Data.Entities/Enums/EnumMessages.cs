@@ -66,6 +66,9 @@ namespace RERU.Data.Entities.Enums
         public const string Class = "Clasă";
         public const string ComputerClass = "Clasă cu calculatoare";
 
+        public const string Dynamic = "Dinamic";
+        public const string Static = "Static";
+
         public const string Secondary = "Medii";
         public const string Higher = "Superioare";
         public const string Master = "Masterat";
@@ -130,7 +133,7 @@ namespace RERU.Data.Entities.Enums
         public const string General_locotenent_al_serviciului_intern = "General-locotenent al serviciului intern";
         public const string General_colonel_al_serviciului_intern = "General-colonel al serviciului intern";
 
-        
+
         public static string Translate(FileTypeEnum fileType)
         {
             return fileType switch
@@ -293,6 +296,16 @@ namespace RERU.Data.Entities.Enums
                 TestingLocationType.Class => Class,
                 TestingLocationType.ComputerClass => ComputerClass,
                 _ => "-"
+            };
+        }
+
+        public static string Translate(ModuleTypeEnum moduleTypeEnum)
+        {
+            return moduleTypeEnum switch
+            {
+                ModuleTypeEnum.Dynamic => Dynamic,
+                ModuleTypeEnum.Default => Static,
+                _ => "—"
             };
         }
 
