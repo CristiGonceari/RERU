@@ -36,9 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
                 .Include(t => t.CandidatePosition)
                 .Include(x => x.SolicitedVacantPositionUserFiles)
                 .Include(x => x.CandidatePosition.RequiredDocumentPositions)
-                .Where(t => t.UserProfileId == currentUserProfileId)
-                .OrderByDescending(x => x.Id)
-                .AsQueryable();
+                .Where(t => t.UserProfileId == currentUserProfileId);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<SolicitedVacantPosition>
             {
