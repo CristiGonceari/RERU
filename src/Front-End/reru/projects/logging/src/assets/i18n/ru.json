@@ -39,6 +39,7 @@
     "view-details": "Просмотр деталей",
     "delete-logs": "Удалить из журналов",
     "npp": "Ф.И.О.",
+    "module": "Модуль",
     "enclosed-mode": "Скрытый режим"
    },
    "delete-log-modal":{
@@ -194,6 +195,7 @@
     "succes-remove-msg": "Статья была успешно удалена",
     "succes-add-msg": "Статья была успешно добавлена",
     "succes-edit-msg": "Статья была успешно обновлена",
+    "emptyName": "Имя обязательное",
     "overview": "Обзор"
   },
   "guide": {

@@ -578,6 +578,8 @@ export class StudyComponent implements OnInit {
             (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
           ))
         }
+      }else{
+        results.push(true);
       }
     }
     return results.some((x) => x == true) ? true : false;

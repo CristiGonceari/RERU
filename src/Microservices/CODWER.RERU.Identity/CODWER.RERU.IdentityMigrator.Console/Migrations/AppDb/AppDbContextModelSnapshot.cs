@@ -1941,13 +1941,22 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<string>("Efectiv")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("EndObligationPeriod")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("InstitutionAdress")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InstitutionName")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("MilitaryBookletEminentAuthority")
                         .HasColumnType("text");
 
-                    b.Property<int>("MilitaryBookletNumber")
+                    b.Property<int?>("MilitaryBookletNumber")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("MilitaryBookletReleaseDay")
@@ -1963,6 +1972,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("MobilizationYear")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("StartObligationPeriod")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdateById")
@@ -8423,7 +8435,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("MilitaryObligationType")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Contractor");
                 });
@@ -9601,7 +9613,7 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.MilitaryObligationTypeEnum>", null)
                         .WithMany()
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

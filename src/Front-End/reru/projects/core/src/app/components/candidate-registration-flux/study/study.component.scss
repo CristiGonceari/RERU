@@ -1,6 +1,8 @@
 .btn.btn-icon {
     background: #3699ff;
     color: #FFF;
+    width: auto;
+    min-width: 40px;
     span {
         color: inherit;
     }
@@ -36,3 +38,4 @@ button {
         width: 100%;
     }
 }
+

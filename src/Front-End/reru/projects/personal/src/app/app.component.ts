@@ -5,6 +5,7 @@ import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { forkJoin } from 'rxjs';
 import { AppSettingsService, IAppSettings, AuthenticationService, NavigationService } from '@erp/shared';
 import { I18nService } from './utils/services/i18n.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-root',
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 		lastOnBottom: true;
 		showProgressBar: true;
 	};
+
+	title = 'personal';
+	
 	sidebarItems: any[] = [
 		{
 			type: SidebarItemType.ITEM,
@@ -214,7 +218,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private appConfigService: AppSettingsService,
 		private cd: ChangeDetectorRef,
 		private authenticationService: AuthenticationService,
-		public navigation: NavigationService
+		public navigation: NavigationService,
+		private titleService: Title
 	) {
 		this.appSettings = this.appConfigService.settings;
 		this.navigation.startSaveHistory();
@@ -268,7 +273,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// this.translate.get('sidebar.nomenclatures'),
 			// this.translate.get('sidebar.configurations'),
 			this.translate.get('sidebar.help'),
-			this.translate.get('sidebar.faq')
+			this.translate.get('sidebar.faq'),
+			this.translate.get('pages.start.title')
 		]).subscribe(
 			([
 				home,
@@ -286,7 +292,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 				// nomenclatures,
 				// configurations,
 				help,
-				faq
+				faq,
+				title
 			]) => {
 				this.sidebarItems[0].name = home;
 				this.sidebarItems[1].name = myProfile;
@@ -304,8 +311,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 				// this.sidebarItems[12].name = configurations;
 				this.sidebarItems[8].name = help;
 				this.sidebarItems[9].name = faq;
+				this.title = title;
 			}
 		);
+		this.titleService.setTitle(this.title);
 	}
 
 	logout(): void {

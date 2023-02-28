@@ -12,6 +12,7 @@ export class SvgIconComponent implements OnInit {
 	@Input() key: string;
 	@Input() height: number = 50;
 	@Input() width: number = 50;
+	@Input() useToolTip = true;
 	isLoading: boolean = false;
 	path: string;
 

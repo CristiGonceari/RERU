@@ -1189,7 +1189,15 @@
     "birthday-date": "Data nasterii",
     "residence": "Domiciliu",
     "work-place": "Locul de muncă",
-    "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului"
+    "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului",
+    "add-succes": "Starea civilă a fost adăugată!",
+    "add-error": "Starea civilă nu a fost adăugată!",
+    "update-succes": "Starea civilă a fost actualizată!",
+    "update-error": "Starea civilă nu a fost actualizată!",
+    "kinship-add-succes": "Relații de rudenie sau afinate au fost adăugate!",
+    "kinship-add-error": "Relații de rudenie sau afinate nu au fost adăugate!",
+    "kinship-update-succes": "Relații de rudenie sau afinate au fost actualizate!",
+    "kinship-update-error": "Relații de rudenie sau afinate nu au fost actualizate!"
   },
   "military-obligation":{
     "paragraf-name": "Date biografice a rudelor apropiate candidatului",

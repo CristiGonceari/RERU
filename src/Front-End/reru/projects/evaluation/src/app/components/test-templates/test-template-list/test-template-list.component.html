@@ -36,13 +36,13 @@
               <erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-              <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
-            </div>
-            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <app-search-test-mode (filter)="testTable.setFilter('mode', $event)" #mode></app-search-test-mode>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <app-search-qualifying-type (filter)="testTable.setFilter('qualifyingType', $event)" #qualifyingType></app-search-qualifying-type>
+            </div>
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
+              <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
             </div>
             <div class="col-lg-auto col-12 d-lg-block d-none text-center">
               <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>

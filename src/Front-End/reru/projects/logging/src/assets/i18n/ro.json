@@ -39,6 +39,7 @@
     "view-details": "Vizualizare detalii",
     "delete-logs": "Ștergeți din jurnale",
     "npp": "N.P.P.",
+    "module": "Modul",
     "enclosed-mode":"Mod restrâns"
    },
    "delete-log-modal":{
@@ -198,6 +199,7 @@
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
     "succes-edit-msg": "Articol a fost editat cu succes",
+    "emptyName": "Numele este obligatoriu",
     "overview": "Prezentare generală"
   },
   "guide": {

@@ -1,9 +1,15 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
+﻿using AutoMapper;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.DataTransferObjects.CandidatePositions;
 using CVU.ERP.Common.DataTransferObjects.Files;
+using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using CVU.ERP.Module.Application.TableExportServices;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,11 +20,19 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
 
         private readonly AppDbContext _appDbContext;
         private readonly IExportData<CandidatePosition, CandidatePositionDto> _printer;
+        private readonly ICandidatePositionService _candidatePositionService;
+        private readonly IMapper _mapper;
 
-        public PrintCandidatePositionCommandHandler(AppDbContext appDbContext, IExportData<CandidatePosition, CandidatePositionDto> printer)
+        public PrintCandidatePositionCommandHandler(
+            AppDbContext appDbContext, 
+            IExportData<CandidatePosition, CandidatePositionDto> printer, 
+            ICandidatePositionService candidatePositionService,
+            IMapper mapper)
         {
             _appDbContext = appDbContext;
             _printer = printer;
+            _candidatePositionService = candidatePositionService;
+            _mapper = mapper;
         }
 
         public async Task<FileDataDto> Handle(PrintCandidatePositionCommand request, CancellationToken cancellationToken)
@@ -34,16 +48,31 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.PrintCandidatePo
 
             var positions = GetAndPrintCandidatePosition.Filter(_appDbContext, filterData);
 
-            var result = _printer.ExportTableSpecificFormat(new TableData<CandidatePosition>
+            var result = _printer.ExportTableSpecificFormatList(new TableListData<CandidatePositionDto>
             {
                 Name = request.TableName,
-                Items = positions,
+                Items = GetResponsiblePersonName(positions),
                 Fields = request.Fields,
                 Orientation = request.Orientation,
                 ExportFormat = request.TableExportFormat
             });
 
             return result;
+        }
+
+        private  List<CandidatePositionDto> GetResponsiblePersonName(IEnumerable<CandidatePosition> candidatePositions)
+        {
+            var positionsDto = _mapper.Map<List<CandidatePositionDto>>(candidatePositions);
+            var positions = candidatePositions.ToList();
+
+            foreach (var item in positionsDto)
+            {
+                var position = positions.FirstOrDefault(x => x.Id == item.Id);
+
+                item.ResponsiblePerson = _candidatePositionService.GetResponsiblePersonName(int.Parse(position?.CreateById ?? "0"));
+            }
+
+            return positionsDto;
         }
     }
 }

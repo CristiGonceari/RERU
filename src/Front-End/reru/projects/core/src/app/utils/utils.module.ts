@@ -19,6 +19,7 @@ import { SearchDepartmentComponent } from './components/search-department/search
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
 import { StepperDateTimeComponent } from './components/stepper-date-time/stepper-date-time.component';
+import { StepperArrowHintComponent } from './components/stepper-arrow-hint/stepper-arrow-hint.component';
 import { SharedModule } from '@erp/shared';
 
 const commonComponents = [
@@ -35,7 +36,8 @@ const commonComponents = [
   SearchDepartmentComponent,
   SearchRoleComponent,
   SearchEmployeeFunctionComponent,
-  StepperDateTimeComponent
+  StepperDateTimeComponent,
+  StepperArrowHintComponent
 ];
 
 @NgModule({

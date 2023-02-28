@@ -39,6 +39,7 @@
    "view-details": "View details",
    "delete-logs": "Delete Logs",
    "npp": "L.F.F.",
+   "module": "Module",
    "enclosed-mode": "Enclosed mode"
   },
   "delete-log-modal":{
@@ -194,6 +195,7 @@
     "succes-remove-msg": "Article was successfully deleted",
     "succes-add-msg": "Article was successfully added",
     "succes-edit-msg": "Article was successfully edited",
+    "emptyName": "Name is required",
     "overview": "Overview"
   },
   "guide": {
