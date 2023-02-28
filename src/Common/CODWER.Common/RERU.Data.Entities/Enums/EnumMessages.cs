@@ -133,6 +133,11 @@ namespace RERU.Data.Entities.Enums
         public const string General_locotenent_al_serviciului_intern = "General-locotenent al serviciului intern";
         public const string General_colonel_al_serviciului_intern = "General-colonel al serviciului intern";
 
+        public const string Medium = "Mediu";
+        public const string Basic = "De bază";
+
+        private const string Female = "Femeie";
+        private const string Male = "Bărbat";
 
         public static string Translate(FileTypeEnum fileType)
         {
@@ -414,5 +419,29 @@ namespace RERU.Data.Entities.Enums
                 _ => "—"
             };
         }
+
+        public static string Translate(StateLanguageLevel? stateLanguageLevel)
+        {
+            return stateLanguageLevel switch
+            {
+                StateLanguageLevel.Basic => Basic,
+                StateLanguageLevel.Medium => Medium,
+                StateLanguageLevel.Good => Good,
+                StateLanguageLevel.VeryGood => VeryGood,
+                _ => "—"
+            };
+        }
+
+        public static string Translate(SexTypeEnum? sexTypeEnum)
+        {
+            return sexTypeEnum switch
+            {
+                SexTypeEnum.Male => Male,
+                SexTypeEnum.Female => Female,
+                _ => "—"
+            };
+        }
+
+        
     }
 }

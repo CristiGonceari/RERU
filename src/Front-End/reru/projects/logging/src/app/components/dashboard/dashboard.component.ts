@@ -81,7 +81,7 @@ export class DashboardComponent implements AfterViewInit {
     this.searchFrom = '';
     this.searchTo = '';
 
-    this.selectedProject = '';
+    this.selectedProject.value = '';
     this.selectedEvent = '';
     this.searchUserName.value = '';
     this.searchEventName.value = '';
