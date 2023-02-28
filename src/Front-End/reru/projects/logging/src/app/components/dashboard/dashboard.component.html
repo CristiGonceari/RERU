@@ -19,7 +19,7 @@
               <div class="input-group input-group-sm input-group-solid">
                 <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
                   (change)="atachProject($event)" (change)="getLoggingValues($event.target.value)">
-                  <option class="default-option text-muted" selected value="">{{ 'dashboard.project' | translate }}
+                  <option class="default-option text-muted" selected value="">{{ 'dashboard.module' | translate }}
                   </option>
                   <option *ngFor="let item of projects" [value]="item">
                     {{ item }}
@@ -104,7 +104,7 @@
             <table class="datatable table font-size-lg" style="overflow: visible">
               <thead class="text-uppercase text-muted">
                 <tr>
-                  <th scope="col" class="text-center">{{'dashboard.project' | translate }}</th>
+                  <th scope="col" class="text-center">{{'dashboard.module' | translate }}</th>
                   <th scope="col" class="text-center">{{'dashboard.user-name' | translate }} {{'dashboard.npp'
                     |translate }}</th>
                   <th scope="col" class="text-center">{{'dashboard.user-identifier' | translate }}</th>

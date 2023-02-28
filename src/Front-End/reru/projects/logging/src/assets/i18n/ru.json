@@ -39,6 +39,7 @@
     "view-details": "Просмотр деталей",
     "delete-logs": "Удалить из журналов",
     "npp": "Ф.И.О.",
+    "module": "Модуль",
     "enclosed-mode": "Скрытый режим"
    },
    "delete-log-modal":{

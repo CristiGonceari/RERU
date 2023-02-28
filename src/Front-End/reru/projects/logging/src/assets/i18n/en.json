@@ -39,6 +39,7 @@
    "view-details": "View details",
    "delete-logs": "Delete Logs",
    "npp": "L.F.F.",
+   "module": "Module",
    "enclosed-mode": "Enclosed mode"
   },
   "delete-log-modal":{
