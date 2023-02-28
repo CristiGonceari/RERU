@@ -417,6 +417,10 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
   }
 
+  checkLength(fileName) {
+    return fileName.length <= 20 ? fileName : fileName.slice(0, 20) + "...";
+  }
+
   deleteFile() {
     this.hadFile = false;
   }
