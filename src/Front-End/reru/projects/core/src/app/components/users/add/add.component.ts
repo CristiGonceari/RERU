@@ -162,9 +162,11 @@ export class AddComponent implements OnInit {
 
       this.userService.addUserAvatar(request).subscribe(() => {
         this.isLoading = false;
-        this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));
-        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        this.ngZone.run(() => this.router.navigate(['../'], { relativeTo: this.route }));        
       })
+
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+
     }, () => {
       forkJoin([
         this.translate.get('notification.title.error'),
