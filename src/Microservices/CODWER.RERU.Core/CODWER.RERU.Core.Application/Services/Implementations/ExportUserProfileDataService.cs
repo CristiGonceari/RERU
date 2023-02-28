@@ -175,10 +175,16 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             _row++;
 
             DefaultSingleHeadColumn(3, "Nivelul de cunoaștere a limbii de stat:", workSheet);
-            DefaultMultipleColumnValue(4, 5, string.IsNullOrEmpty(userProfile.Contractor?.StateLanguageLevel?.ToString()) ? " - - - - -" : userProfile.Contractor.StateLanguageLevel.ToString(), workSheet);
+            DefaultMultipleColumnValue(4, 5, string.IsNullOrEmpty(userProfile.Contractor?.StateLanguageLevel?.ToString()) 
+                ? " - - - - -" 
+                : EnumMessages.Translate(userProfile.Contractor?.StateLanguageLevel), workSheet);
 
             DefaultSingleHeadColumn(6, "Sex:", workSheet);
-            DefaultMultipleColumnValue(7, 8, string.IsNullOrEmpty(userProfile.Contractor?.Sex?.ToString()) ? " - - - - -" : userProfile.Contractor.Sex.ToString(), workSheet);
+            DefaultMultipleColumnValue(7, 8, 
+                string.IsNullOrEmpty(userProfile.Contractor?.Sex?.ToString()) 
+                    ? " - - - - -" 
+                    : EnumMessages.Translate(userProfile.Contractor?.Sex)
+                , workSheet);
             _row++;
 
             DefaultSingleHeadColumn(3, "Buletinul de identitate (seria, eliberat la data, de catre):", workSheet);
@@ -222,7 +228,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             DefaultMultipleColumnValue(4, 5, string.IsNullOrEmpty(userProfile.Department?.Name) ? " - - - - -" : userProfile.Department?.Name, workSheet);
 
             DefaultSingleHeadColumn(6, "Mod Acces:", workSheet);
-            DefaultMultipleColumnValue(7, 8, string.IsNullOrEmpty(userProfile.AccessModeEnum.ToString()) ? " - - - - -" : userProfile.AccessModeEnum.ToString(), workSheet);
+            DefaultMultipleColumnValue(7, 8, string.IsNullOrEmpty(userProfile.AccessModeEnum.ToString()) ? " - - - - -" : EnumMessages.Translate(userProfile.AccessModeEnum.Value), workSheet);
             _row++;
 
             DefaultSingleHeadColumn(3, "Rol:", workSheet);

@@ -1188,7 +1188,15 @@
     "birthday-date": "Date of birth",
     "residence": "Residence",
     "work-place": "Work place",
-    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives"
+    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives",
+    "add-succes": "Material status was added!",
+    "add-error": "Material status was not added!",
+    "update-succes": "Material status was updated!",
+    "update-error": "Material status was not updated!",
+    "kinship-add-succes": "Kinship relation was added!",
+    "kinship-add-error": "Kinship relation was not added!",
+    "kinship-update-succes": "Kinship relation was updated!",
+    "kinship-update-error": "Kinship relation was not updated!"
   },
   "military-obligation":{
     "paragraf-name": "Biographical data of the relatives close to the candidate",
