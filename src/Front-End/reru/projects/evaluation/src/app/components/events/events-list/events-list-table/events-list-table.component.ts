@@ -74,6 +74,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getFilteredEvents(data: any = {}): void {
+		this.selectedDay = null;
 		this.setTimeToSearch();
 
 		let params = {

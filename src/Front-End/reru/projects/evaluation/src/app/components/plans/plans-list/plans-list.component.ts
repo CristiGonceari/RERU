@@ -85,7 +85,8 @@ export class PlansListComponent implements OnInit {
 	}
 
   getFilteredEvents(data: any = {}) :void {
-  this.setTimeToSearch();
+    this.selectedDay = null;
+    this.setTimeToSearch();
 
     let params = {
       fromDate: this.searchFrom,
