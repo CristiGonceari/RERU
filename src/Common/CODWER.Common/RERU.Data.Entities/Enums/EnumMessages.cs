@@ -442,6 +442,14 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        
+        public static string Translate(RoleTypeEnum moduleTypeEnum)
+        {
+            return moduleTypeEnum switch
+            {
+                RoleTypeEnum.Dynamic => Dynamic,
+                RoleTypeEnum.Default => Static,
+                _ => "-"
+            };
+        }
     }
 }
