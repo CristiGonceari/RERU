@@ -109,6 +109,7 @@ export class PlansListComponent implements OnInit {
     this.isLoading = true;
 
     if (data.date != null) {
+      this.clearDateFields();
       this.selectedDay = this.parseDates(data.date);
       this.displayDate = this.parseDatesForTable(data.date)
     }
@@ -129,14 +130,16 @@ export class PlansListComponent implements OnInit {
   }
 
   clearFields(){
-		  
-		this.dateTimeFrom = '';
+		this.clearDateFields();
+		this.getListByDate();
+	}
+
+  clearDateFields(){
+    this.dateTimeFrom = '';
 		this.dateTimeTo = '';
 		this.searchFrom = '';
 		this.searchTo = '';
-		
-		this.getListByDate();
-	}
+  }
 
   list(data: any = {}): void {
     this.isLoading = true;
