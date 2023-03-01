@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col">
       <div class="d-flex justify-content-end my-3">
-        <app-stepper-arrow-hint *ngIf="isChecked && allowToFinish" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+        <app-stepper-arrow-hint *ngIf="isChecked && allowToFinish" [description]="'stepper.button-end' | translate"></app-stepper-arrow-hint>
         <button class="btn btn-success h-35px"
         [disabled]="isChecked == false || !allowToFinish" 
         (click)="addRegistrationFluxStep()"

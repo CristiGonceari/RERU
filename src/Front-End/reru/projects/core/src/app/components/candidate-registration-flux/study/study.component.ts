@@ -392,7 +392,7 @@ export class StudyComponent implements OnInit {
       id: this.fb.control((language && language.id) || null, []),
       knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       contractorId: this.fb.control(contractorId || null, []),
-      modernLanguageId: this.fb.control(modernLanguageId || null, []),
+      modernLanguageId: this.fb.control(modernLanguageId || null, [Validators.required]),
     });
   }
 
@@ -914,5 +914,8 @@ export class StudyComponent implements OnInit {
   inputValidator(form, field) {
     return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid
       ? 'is-valid' : 'is-invalid';
+  }
+  demo(value){
+    console.log("this.languageForm", value);
   }
 }

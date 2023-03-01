@@ -61,6 +61,7 @@
     <div class="col">
         <div class="col d-flex justify-content-end my-3">
             <app-stepper-arrow-hint *ngIf="autobiographyData" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+            <app-stepper-arrow-hint *ngIf="autobiographyData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint>
             <button class="btn btn-success h-35px" *ngIf="autobiographyData" matStepperNext
                 (click)="addRegistrationFluxStep()">
                 {{'stepper.button-next' | translate}}
