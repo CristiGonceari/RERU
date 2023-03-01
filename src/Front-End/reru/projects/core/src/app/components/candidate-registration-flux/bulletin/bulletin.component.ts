@@ -24,7 +24,7 @@ export class BulletinComponent implements OnInit {
 
   bulletinForm: FormGroup;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
   toAddOrUpdateButton: boolean;
 
   userId;
@@ -89,6 +89,7 @@ export class BulletinComponent implements OnInit {
         this.getExistentBulletin(this.contractorId);
       } else {
         this.toAddOrUpdateButton = false;
+        this.isLoading = false;
       }
 
       this.getExistentStep(this.stepId, this.contractorId);
@@ -117,6 +118,7 @@ export class BulletinComponent implements OnInit {
 
       this.initExistentForm(this.userId, this.bulletinId, this.existentBulletin, birthPlace, residenceAddress, parentsResidenceAddress);
       this.toAddOrUpdateButton = true;
+      this.isLoading = false;
     })
   }
 

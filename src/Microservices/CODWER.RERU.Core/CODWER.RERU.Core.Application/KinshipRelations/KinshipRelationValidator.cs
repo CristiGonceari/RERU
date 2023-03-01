@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
 using CODWER.RERU.Core.Application.Validators.EnumValidators;
 using CODWER.RERU.Core.DataTransferObjects.KinshipRelation;
+using CVU.ERP.Common;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
 using RERU.Data.Entities.Enums;
@@ -10,7 +11,7 @@ namespace CODWER.RERU.Core.Application.KinshipRelations
 {
     public class KinshipRelationValidator : AbstractValidator<KinshipRelationDto>
     {
-        public KinshipRelationValidator(AppDbContext appDbContext)
+        public KinshipRelationValidator(AppDbContext appDbContext, IDateTime dateTime)
         {
             RuleFor(x => (int)x.KinshipDegree)
                .SetValidator(new ExistInEnumValidator<KinshipDegreeEnum>());
@@ -49,6 +50,10 @@ namespace CODWER.RERU.Core.Application.KinshipRelations
                    .NotNull()
                    .WithErrorCode(ValidationCodes.EMPTY_KINSHIP_RELATION_RESIDENCE_ADDRESS)
                    .WithMessage(ValidationMessages.InvalidInput);
+
+            RuleFor(r => r.BirthDate)
+               .Must(x => x < dateTime.Now.AddYears(-18))
+               .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
 
         }
     }

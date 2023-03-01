@@ -41,7 +41,7 @@ namespace CODWER.RERU.Core.Application.Studies
             When(x => x.StartStudyPeriod != null && x.EndStudyPeriod != null, () =>
             {
                 RuleFor(x => x)
-                   .Must(x => x.StartStudyPeriod < x.EndStudyPeriod)
+                   .Must(x => x.StartStudyPeriod.Value.Date < x.EndStudyPeriod.Value.Date)
                     .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
             });
 

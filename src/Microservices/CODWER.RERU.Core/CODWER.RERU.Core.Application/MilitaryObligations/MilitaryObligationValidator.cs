@@ -22,11 +22,29 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations
                    .WithErrorCode(ValidationCodes.EMPTY_MILITARY_OBLIGATION_TYPE)
                    .WithMessage(ValidationMessages.InvalidInput);
 
+            RuleFor(x => x.ContractorId)
+                .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.EMPTY_BULLETIN_EMITTER,
+                   ValidationMessages.InvalidReference));
+
             When(x => x.ContractorId != null, () =>
             {
                 RuleFor(x => x.ContractorId)
                  .SetValidator(new ItemMustExistValidator<Contractor>(appDbContext, ValidationCodes.EMPTY_BULLETIN_EMITTER,
                     ValidationMessages.InvalidReference));
+            });
+
+            When(x => x.StartObligationPeriod != null && x.EndObligationPeriod != null, () =>
+            {
+                RuleFor(x => x)
+                   .Must(x => x.StartObligationPeriod.Value.Date < x.EndObligationPeriod.Value.Date)
+                    .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
+            });
+
+            When(x => x.MobilizationYear != null && x.WithdrawalYear != null, () =>
+            {
+                RuleFor(x => x)
+                   .Must(x => x.MobilizationYear.Value.Date < x.WithdrawalYear.Value.Date)
+                    .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
             });
 
             //RuleFor(x => x.MobilizationYear)
