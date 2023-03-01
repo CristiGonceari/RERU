@@ -25,13 +25,16 @@
                             *ngFor="let study of studyForm.controls.studies.controls;let i = index">
                             <div [formGroupName]="i">
                                 <div class="row justify-content-center">
-                                    <app-stepper-arrow-hint *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'" [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
+                                    <app-stepper-arrow-hint
+                                        *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'"
+                                        [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
                                     <div class="col-xl-6 col-12">
                                         <div class="form-group row required">
                                             <label class="col-xl-3 col-lg-3 col-form-label"
                                                 for="studyTypeId">{{'study.study-type' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <select class="form-control" formControlName="studyTypeId" (change)="studyTypeFieldsValidator(i)">
+                                                <select class="form-control" formControlName="studyTypeId"
+                                                    (change)="studyTypeFieldsValidator(i)">
                                                     <option value="null">{{'module-access.select' | translate}}</option>
                                                     <option *ngFor="let item of studyTypes" [value]="item.value">{{
                                                         'studyTypes.' + item.translateId | translate}}
@@ -42,14 +45,14 @@
                                     </div>
                                 </div>
                                 <div class="card-body border">
-                                    <app-loading-spinner *ngIf="isLoadingStudiesContent" contentHeight="20rem" height="5rem" width="5rem"
-                                            colorClass="text-primary"></app-loading-spinner>
+                                    <app-loading-spinner *ngIf="isLoadingStudiesContent" contentHeight="20rem"
+                                        height="5rem" width="5rem" colorClass="text-primary"></app-loading-spinner>
                                     <div *ngIf="enableFirstStudyTypeForm(study.value) && !isLoadingStudiesContent">
                                         <div class="row">
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' |translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institution" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -64,7 +67,7 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institutionAddress" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -72,7 +75,8 @@
                                                             [ngClass]="inputValidator(study, 'institutionAddress')" />
                                                         <div *ngIf="isInvalidPattern(study, 'institutionAddress')"
                                                             class="invalid-feedback d-block">
-                                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                                            {{'validations.only-letters-numbers-and-dash' | translate}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,13 +85,14 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision'| translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision'|
+                                                        translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="yearOfAdmission" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
                                                             maxlength="4" minlength="4"
-                                                            [placeholder]="'study.year-of-admision' | translate" 
-                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')"/>
+                                                            [placeholder]="'study.year-of-admision' | translate"
+                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')" />
                                                         <div *ngIf="isLengthValidator(study, 'yearOfAdmission') || isInvalidPattern(study, 'yearOfAdmission')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-year' | translate}}</div>
@@ -97,9 +102,7 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year'
-                                                        |
-                                                        translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="graduationYear" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -115,11 +118,12 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row required required">
+                                                <div class="form-group row required">
                                                     <label class="col-xl-3 col-lg-3 col-form-label"
                                                         for="studyProfile">{{'study.profile' | translate}}</label>
-                                                    <div class="col-lg-9 col-xl-9" >
-                                                        <select class="form-control" formControlName="studyProfile" [ngClass]="inputValidator(study, 'studyProfile')">
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <select class="form-control" formControlName="studyProfile"
+                                                            [ngClass]="inputValidator(study, 'studyProfile')">
                                                             <option value="null">{{'module-access.select' | translate}}
                                                             </option>
                                                             <option *ngFor="let item of studyProfilesEnum"
@@ -133,7 +137,8 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group row required">
-                                                    <label class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' |translate}}</label>
+                                                    <label
+                                                        class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' | translate}}</label>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-4 col-xl-4">
@@ -155,7 +160,8 @@
                                                             {{'validations.only-numbers' | translate}}</div>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4">
-                                                        <app-stepper-date-time [parent]="study" [date]="'studyActRelaseDay'"
+                                                        <app-stepper-date-time [parent]="study"
+                                                            [date]="'studyActRelaseDay'"
                                                             [placeholder]="'study.study-act-emitted-date' | translate"></app-stepper-date-time>
                                                     </div>
                                                 </div>
@@ -167,7 +173,7 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' |translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institution" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -180,9 +186,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'|translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'|translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institutionAddress" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -200,9 +206,12 @@
                                                 <div class="form-group row required">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-form' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control" formControlName="studyFrequency" [ngClass]="inputValidator(study, 'studyFrequency')">
-                                                            <option value="null">{{'module-access.select' | translate}}</option>
-                                                            <option *ngFor="let item of studyFrequences" [value]="item.value">{{
+                                                        <select class="form-control" formControlName="studyFrequency"
+                                                            [ngClass]="inputValidator(study, 'studyFrequency')">
+                                                            <option value="null">{{'module-access.select' | translate}}
+                                                            </option>
+                                                            <option *ngFor="let item of studyFrequences"
+                                                                [value]="item.value">{{
                                                                 'studyFrequency.' + item.label | translate}}</option>
                                                         </select>
                                                     </div>
@@ -210,14 +219,14 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' |translate}}</label>
+                                            <div class="col-xl-6 col-12">
+                                                <div class="form-group row required">
+                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="specialty" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.specialty' | translate" 
-                                                            [ngClass]="inputValidator(study, 'specialty')"/>
+                                                            [placeholder]="'study.specialty' | translate"
+                                                            [ngClass]="inputValidator(study, 'specialty')" />
                                                         <div *ngIf="isInvalidPattern(study, 'specialty')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -225,25 +234,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row" *ngIf="disableSecondStudyTypeField(study.value)">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification' |translate}}</label>
+                                                <div class="form-group row required"
+                                                    *ngIf="disableSecondStudyTypeField(study.value)">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.qualification' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="qualification" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.qualification' | translate" 
-                                                            [ngClass]="inputValidator(study, 'qualification')"/>
+                                                            [placeholder]="'study.qualification' | translate"
+                                                            [ngClass]="inputValidator(study, 'qualification')" />
                                                         <div *ngIf="isInvalidPattern(study, 'qualification')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" *ngIf="!disableSecondStudyTypeField(study.value)">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.doctor-title' |translate}}</label>
+                                                <div class="form-group row required"
+                                                    *ngIf="!disableSecondStudyTypeField(study.value)">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.doctor-title' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="title" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.doctor-title' | translate" 
-                                                            [ngClass]="inputValidator(study, 'title')"/>
+                                                            [placeholder]="'study.doctor-title' | translate"
+                                                            [ngClass]="inputValidator(study, 'title')" />
                                                         <div *ngIf="isInvalidPattern(study, 'title')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -253,15 +266,15 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
                                                         class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision'|translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="yearOfAdmission" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
                                                             maxlength="4" minlength="4"
-                                                            [placeholder]="'study.year-of-admision' | translate" 
-                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')"/>
+                                                            [placeholder]="'study.year-of-admision' | translate"
+                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')" />
                                                         <div *ngIf="isLengthValidator(study, 'yearOfAdmission') || isInvalidPattern(study, 'yearOfAdmission')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-year' | translate}}</div>
@@ -269,9 +282,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year'|translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year'|translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="graduationYear" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -287,9 +300,11 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="form-group row">
-                                                    <label *ngIf="disableSecondStudyTypeField(study.value)" class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' |translate}}</label>
-                                                    <label *ngIf="!disableSecondStudyTypeField(study.value)" class="col-xl-6 col-lg-6 col-form-label">{{'study.diploma-act-name' |translate}}</label>
+                                                <div class="form-group row required">
+                                                    <label *ngIf="disableSecondStudyTypeField(study.value)"
+                                                        class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' | translate}}</label>
+                                                    <label *ngIf="!disableSecondStudyTypeField(study.value)"
+                                                        class="col-xl-6 col-lg-6 col-form-label">{{'study.diploma-act-name' | translate}}</label>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-4 col-xl-4">
@@ -311,7 +326,8 @@
                                                             {{'validations.only-numbers' | translate}}</div>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4">
-                                                        <app-stepper-date-time [parent]="study" [date]="'studyActRelaseDay'"
+                                                        <app-stepper-date-time [parent]="study"
+                                                            [date]="'studyActRelaseDay'"
                                                             [placeholder]="'study.study-act-emitted-date' | translate"></app-stepper-date-time>
                                                     </div>
                                                 </div>
@@ -324,8 +340,7 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' |
-                                                        translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institution" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -338,9 +353,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institutionAddress" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -356,25 +371,28 @@
                                         <div class="row">
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-form' |translate}}</label>
+                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-form' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control" formControlName="studyFrequency" [ngClass]="inputValidator(study, 'studyFrequency')">
-                                                            <option value="null">{{'module-access.select' | translate}}</option>
-                                                            <option *ngFor="let item of studyFrequences" [value]="item.value">{{
+                                                        <select class="form-control" formControlName="studyFrequency"
+                                                            [ngClass]="inputValidator(study, 'studyFrequency')">
+                                                            <option value="null">{{'module-access.select' | translate}}
+                                                            </option>
+                                                            <option *ngFor="let item of studyFrequences"
+                                                                [value]="item.value">{{
                                                                 'studyFrequency.' + item.label | translate}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.faculty' | translate}}</label>
+                                            <div class="col-xl-6 col-12">
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.faculty'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="faculty" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.faculty' | translate" 
-                                                            [ngClass]="inputValidator(study, 'faculty')"
-                                                            />
+                                                            [placeholder]="'study.faculty' | translate"
+                                                            [ngClass]="inputValidator(study, 'faculty')" />
                                                         <div *ngIf="isInvalidPattern(study, 'faculty') && isLengthValidator(study, 'faculty')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -383,26 +401,30 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                             <div class="col-xl-6 col-12" >
-                                                <div class="form-group row" *ngIf="disableThirdStudyTypeField(study.value)">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification' | translate}}</label>
+                                            <div class="col-xl-6 col-12">
+                                                <div class="form-group row required"
+                                                    *ngIf="disableThirdStudyTypeField(study.value)">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="qualification" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.qualification' | translate" 
-                                                            [ngClass]="inputValidator(study, 'qualification')"/>
+                                                            [placeholder]="'study.qualification' | translate"
+                                                            [ngClass]="inputValidator(study, 'qualification')" />
                                                         <div *ngIf="isInvalidPattern(study, 'qualification')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" *ngIf="!disableThirdStudyTypeField(study.value)">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-title' | translate}}</label>
+                                                <div class="form-group row required"
+                                                    *ngIf="!disableThirdStudyTypeField(study.value)">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.study-title' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="title" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.study-title' | translate" 
-                                                            [ngClass]="inputValidator(study, 'title')"/>
+                                                            [placeholder]="'study.study-title' | translate"
+                                                            [ngClass]="inputValidator(study, 'title')" />
                                                         <div *ngIf="isInvalidPattern(study, 'title')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -410,13 +432,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' |translate}}</label>
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.specialty' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="specialty" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.specialty' | translate" 
-                                                            [ngClass]="inputValidator(study, 'specialty')"/>
+                                                            [placeholder]="'study.specialty' | translate"
+                                                            [ngClass]="inputValidator(study, 'specialty')" />
                                                         <div *ngIf="isInvalidPattern(study, 'specialty')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -426,16 +449,15 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
                                                         class="col-xl-3 col-lg-3 col-form-label">{{'study.year-of-admision'|translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="yearOfAdmission" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
                                                             maxlength="4" minlength="4"
-                                                            [placeholder]="'study.year-of-admision' | translate" 
-                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')"
-                                                            />
+                                                            [placeholder]="'study.year-of-admision' | translate"
+                                                            [ngClass]="inputValidator(study, 'yearOfAdmission')" />
                                                         <div *ngIf="isLengthValidator(study, 'yearOfAdmission') || isInvalidPattern(study, 'yearOfAdmission')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-year' | translate}}</div>
@@ -443,9 +465,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year'|translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year'|translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="graduationYear" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -461,8 +483,9 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' |translate}}</label>
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-6 col-lg-6 col-form-label">{{'study.study-act-name' | translate}}</label>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-4 col-xl-4">
@@ -484,13 +507,13 @@
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4">
-                                                        <app-stepper-date-time [parent]="study" [date]="'studyActRelaseDay'"
+                                                        <app-stepper-date-time [parent]="study"
+                                                            [date]="'studyActRelaseDay'"
                                                             [placeholder]="'study.study-act-emitted-date' | translate"></app-stepper-date-time>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div *ngIf="enableFourthStudyTypeForm(study.value)&& !isLoadingStudiesContent">
                                         <div class="row">
@@ -499,9 +522,12 @@
                                                     <label class="col-xl-3 col-lg-3 col-form-label"
                                                         for="studyCourse">{{'study.study-coureses-type' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        <select class="form-control" formControlName="studyCourse" [ngClass]="inputValidator(study, 'studyCourse')">
-                                                            <option value="null">{{'module-access.select' | translate}}</option>
-                                                            <option *ngFor="let item of studyCoursesEnum" [value]="item.value">{{
+                                                        <select class="form-control" formControlName="studyCourse"
+                                                            [ngClass]="inputValidator(study, 'studyCourse')">
+                                                            <option value="null">{{'module-access.select' | translate}}
+                                                            </option>
+                                                            <option *ngFor="let item of studyCoursesEnum"
+                                                                [value]="item.value">{{
                                                                 'study-courses.' + item.value | translate}}
                                                             </option>
                                                         </select>
@@ -513,7 +539,7 @@
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution' |translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label ">{{'study.institution' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institution" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -526,9 +552,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
+                                                <div class="form-group row required">
                                                     <label
-                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="institutionAddress" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
@@ -539,17 +565,18 @@
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
                                                     </div>
                                                 </div>
-                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                             <div class="col-xl-6 col-12" >
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification' |translate}}</label>
+                                            <div class="col-xl-6 col-12">
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="qualification" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.qualification' | translate" 
-                                                            [ngClass]="inputValidator(study, 'qualification')"/>
+                                                            [placeholder]="'study.qualification' | translate"
+                                                            [ngClass]="inputValidator(study, 'qualification')" />
                                                         <div *ngIf="isInvalidPattern(study, 'qualification')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -557,13 +584,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-3 col-lg-3 col-form-label">{{'study.study-credit-number' |translate}}</label>
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.study-credit-number' | translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
                                                         <input formControlName="creditCount" autocomplete="off"
                                                             class="form-control form-control-solid" type="number"
-                                                            [placeholder]="'study.study-credit-number' | translate" 
-                                                            [ngClass]="inputValidator(study, 'creditCount')"/>
+                                                            [placeholder]="'study.study-credit-number' | translate"
+                                                            [ngClass]="inputValidator(study, 'creditCount')" />
                                                         <div *ngIf="isInvalidPattern(study, 'creditCount')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -571,24 +599,25 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row required">
                                             <div class="col-xl-2">
-                                                <label
-                                                class="col-form-label">{{'study.study-period-date' | translate}}</label>
+                                                <label class="col-form-label">{{'study.study-period-date' | translate}}</label>
                                             </div>
                                             <div class="col-5">
-                                                        <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
-                                                            [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
+                                                <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
+                                                    [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
                                             </div>
                                             <div class="col-5">
-                                                        <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
-                                                            [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
+                                                <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
+                                                    [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
                                             </div>
                                         </div>
                                         <div class="row mt-5">
                                             <div class="col">
-                                                <div class="form-group row">
-                                                    <label class="col-xl-6 col-lg-6 col-form-label">{{'study.certificate-act-name' |translate}}</label>
+                                                <div class="form-group row required">
+                                                    <label
+                                                        class="col-xl-6 col-lg-6 col-form-label">{{'study.certificate-act-name'
+                                                        |translate}}</label>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-4 col-xl-4">
@@ -610,14 +639,16 @@
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4">
-                                                        <app-stepper-date-time [parent]="study" [date]="'studyActRelaseDay'"
+                                                        <app-stepper-date-time [parent]="study"
+                                                            [date]="'studyActRelaseDay'"
                                                             [placeholder]="'study.study-act-emitted-date' | translate"></app-stepper-date-time>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-center" *ngIf="!enableFirstStudyTypeForm(study.value)   && !enableSecondStudyTypeForm(study.value) && !enableThirdStudyTypeForm(study.value) && !enableFourthStudyTypeForm(study.value) && !isLoadingStudiesContent">
+                                    <div class="text-center"
+                                        *ngIf="!enableFirstStudyTypeForm(study.value)   && !enableSecondStudyTypeForm(study.value) && !enableThirdStudyTypeForm(study.value) && !enableFourthStudyTypeForm(study.value) && !isLoadingStudiesContent">
                                         {{ 'study.not-selected-study-type' | translate }}
                                     </div>
                                 </div>
@@ -639,15 +670,17 @@
                     <div class="row pt-4">
                         <div class="col">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-icon" (click)="addStudy()"><span
-                                        class="m-5">+ {{ 'study.add-study' | translate }}</span></button>
+                                <button class="btn btn-icon" (click)="addStudy()"><span class="m-5">+ {{
+                                        'study.add-study' | translate }}</span></button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-end my-3 ">
-                                <app-stepper-arrow-hint *ngIf="userStudies == null && !studyButtonValidator(studyForm.controls.studies.controls)" [description]="'study.study-add-button-hint' | translate"></app-stepper-arrow-hint>
+                                <app-stepper-arrow-hint
+                                    *ngIf="userStudies == null && !studyButtonValidator(studyForm.controls.studies.controls)"
+                                    [description]="'study.study-add-button-hint' | translate"></app-stepper-arrow-hint>
                                 <button class="btn btn-success h-35px" *ngIf="addOrEditStudyButton"
                                     [disabled]="studyButtonValidator(studyForm.controls.studies.controls)"
                                     (click)="createStudies()">{{'stepper.button-update' | translate}}</button>
@@ -668,8 +701,7 @@
                     <div class="row">
                         <div class="col">
                             <h4 class="d-sm-block d-none">{{'language.modern-language-level' | translate}}</h4>
-                            <h4 class="d-sm-none d-block font-size-small">{{'language.modern-language-level' |
-                                translate}}</h4>
+                            <h4 class="d-sm-none d-block font-size-small">{{'language.modern-language-level' | translate}}</h4>
                         </div>
                     </div>
                 </mat-panel-title>
@@ -701,7 +733,8 @@
                                             <p class="font-weight-bolder">{{ 'language.name' | translate}}</p>
                                         </div>
                                         <div class="col-12">
-                                            <select class="form-control" formControlName="modernLanguageId">
+                                            <select class="form-control" formControlName="modernLanguageId"
+                                                [ngClass]="inputValidator(modernLanguage, 'modernLanguageId')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of modernLanguages" [value]="item.value">
                                                     {{item.label }}
@@ -714,7 +747,9 @@
                                             <p class="font-weight-bolder">{{ 'language.qualifier' | translate }}</p>
                                         </div>
                                         <div class="col-12">
-                                            <select class="form-control" formControlName="knowledgeQuelifiers">
+                                            <select class="form-control form-control-lg form-control-solid"
+                                                name="knowledgeQuelifiers" formControlName="knowledgeQuelifiers"
+                                                [ngClass]="inputValidator(modernLanguage, 'knowledgeQuelifiers')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of knowledgeQuelifiersEnum"
                                                     [value]="item.value">{{
@@ -752,7 +787,8 @@
                                         [formGroupName]="i">
                                         <th scope="row">{{i + 1}}</th>
                                         <td>
-                                            <select class="form-control" formControlName="modernLanguageId">
+                                            <select class="form-control" formControlName="modernLanguageId"
+                                                [ngClass]="inputValidator(modernLanguage, 'modernLanguageId')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of modernLanguages" [value]="item.value">
                                                     {{item.label }}
@@ -760,7 +796,8 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control" formControlName="knowledgeQuelifiers">
+                                            <select class="form-control" formControlName="knowledgeQuelifiers"
+                                                [ngClass]="inputValidator(modernLanguage, 'knowledgeQuelifiers')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of knowledgeQuelifiersEnum"
                                                     [value]="item.value">{{
@@ -808,8 +845,7 @@
                     <div class="row">
                         <div class="col">
                             <h4 class="d-sm-block d-none">{{'recommendation.recommendation-name' | translate}}</h4>
-                            <h4 class="d-sm-none  d-block font-size-small">{{'recommendation.recommendation-name' |
-                                translate}}</h4>
+                            <h4 class="d-sm-none  d-block font-size-small">{{'recommendation.recommendation-name' | translate}}</h4>
                         </div>
                     </div>
                 </mat-panel-title>
@@ -838,24 +874,32 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-name' |
-                                                translate }}</p>
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-name' | translate }}</p>
                                         </div>
                                         <div class="col-12">
                                             <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.user-name' | translate" />
+                                                [placeholder]="'recommendation.user-name' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-last-name' |
-                                                translate }}</p>
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-user-last-name' | translate }}</p>
                                         </div>
                                         <div class="col-12">
                                             <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.last-name' | translate" />
+                                                [placeholder]="'recommendation.last-name' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -866,18 +910,27 @@
                                         <div class="col-12">
                                             <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.table-function' | translate" />
+                                                [placeholder]="'recommendation.table-function' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <p class="font-weight-bolder">{{ 'recommendation.table-subdivision' |
-                                                translate }}</p>
+                                            <p class="font-weight-bolder">{{ 'recommendation.table-subdivision' | translate }}</p>
                                         </div>
                                         <div class="col-12">
                                             <input formControlName="subdivision" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.table-subdivision' | translate" />
+                                                [placeholder]="'recommendation.table-subdivision' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'subdivision')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'subdivision')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" *ngIf="i > 0">
@@ -914,22 +967,42 @@
                                         <td>
                                             <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.user-name' | translate" />
+                                                [placeholder]="'recommendation.user-name' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.last-name' | translate" />
+                                                [placeholder]="'recommendation.last-name' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.table-function' | translate" />
+                                                [placeholder]="'recommendation.table-function' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="subdivision" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'recommendation.table-subdivision' | translate" />
+                                                [placeholder]="'recommendation.table-subdivision' | translate"
+                                                [ngClass]="inputValidator(recommendation, 'subdivision')" />
+                                            <div *ngIf="isInvalidPattern(recommendation, 'subdivision')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                         <td *ngIf="i > 0">
                                             <button class="btn btn-icon" (click)="removeRecommendation(i)">
@@ -955,12 +1028,10 @@
                             <div class="d-flex justify-content-end my-3">
                                 <button class="btn btn-success h-35px" *ngIf="addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid "
-                                    (click)="createRecommendationForStudy()">{{'stepper.button-update' |
-                                    translate}}</button>
+                                    (click)="createRecommendationForStudy()">{{'stepper.button-update' | translate}}</button>
                                 <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditRecommendationsButton"
                                     [disabled]="recommendationForm && recommendationForm.invalid"
-                                    (click)="createRecommendationForStudy()">{{'stepper.button-add' |
-                                    translate}}</button>
+                                    (click)="createRecommendationForStudy()">{{'stepper.button-add' | translate}}</button>
                             </div>
                         </div>
                     </div>
@@ -971,9 +1042,9 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-end">
-                <app-stepper-arrow-hint *ngIf="userStudies != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
-                <button class="btn btn-success h-35px" matStepperNext
-                    [disabled]="(userStudies == null)"
+                <app-stepper-arrow-hint *ngIf="userStudies != null"
+                    [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+                <button class="btn btn-success h-35px" matStepperNext [disabled]="(userStudies == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
             </div>
         </div>

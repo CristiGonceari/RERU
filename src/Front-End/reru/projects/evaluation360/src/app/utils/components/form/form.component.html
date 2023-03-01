@@ -599,8 +599,7 @@
     <div class="form-group row">
           <label for="finalEvaluationQualification" class="col-lg-2 col-12 col-form-label">{{'evaluations.evaluation-final-calificative' | translate }}</label>
           <div class="col-lg-5 col-12 pb-lg-0 pb-7">
-            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm">
-            </app-qualification-select>
+            <app-qualification-select field="finalEvaluationQualification" [formGroup]="evaluationForm" class="deep"></app-qualification-select>
           </div>
           <div class="col-lg-5 col-12 d-flex align-items-center">
             <input [disabled]="true" #finalEvalNum 

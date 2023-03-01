@@ -71,6 +71,9 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                 case ModuleTypeEnum @enum:
                     result = EnumMessages.Translate(@enum);
                     break;
+                case RoleTypeEnum @enum:
+                    result = EnumMessages.Translate(@enum);
+                    break;
                 case null:
                     result = "-";
                     break;

@@ -19,7 +19,9 @@
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingMaterialStatus">
                     <div class="row mt-lg-10 mt-0">
-                        <app-stepper-arrow-hint class="col" *ngIf="materialStatusForm.value.materialStatusTypeId == null || materialStatusForm.value.materialStatusTypeId == 'null'" [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
+                        <app-stepper-arrow-hint class="col"
+                            *ngIf="materialStatusForm.value.materialStatusTypeId == null || materialStatusForm.value.materialStatusTypeId == 'null'"
+                            [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
                         <div class="col-xl-7 col-12 mx-auto">
                             <div class="form-group row required">
                                 <label class="col-auto col-form-label"
@@ -39,7 +41,9 @@
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-end mb-3">
-                                <app-stepper-arrow-hint *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null" [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint>
+                                <app-stepper-arrow-hint
+                                    *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null"
+                                    [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint>
                                 <button class="btn btn-outline-success" *ngIf="addOrEditMaterialStatusButton"
                                     [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')"
                                     (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
@@ -58,7 +62,8 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <h4 class="d-sm-block d-none">{{'material-status.kinship-relation' | translate}}</h4>
-                    <h4 class="d-sm-none d-block font-size-small">{{'material-status.kinship-relation' | translate}}</h4>
+                    <h4 class="d-sm-none d-block font-size-small">{{'material-status.kinship-relation' | translate}}
+                    </h4>
                 </mat-panel-title>
                 <mat-panel-description class="align-items-center justify-content-end">
                     {{ 'step-obligation.optional' | translate }}
@@ -71,19 +76,27 @@
                 <div *ngIf="!isLoadingKinshipRelationWithUserProfile">
                     <div formArrayName="relationWithUserProfile">
                         <div class="d-lg-none d-flex flex-column gap-4">
-                            <div class="row" [ngClass]="{'more': kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length > 1  &&
+                            <div class="row"
+                                [ngClass]="{'more': kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length > 1  &&
                                 (kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length - 1) !== i}"
                                 *ngFor="let relation of kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls; let i = index"
                                 [formGroupName]="i">
                                 <div class="col d-flex flex-column gap-4">
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
-                                        <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'table.number' | translate}}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder text-center">{{i + 1}}</p>
+                                        </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{ 'material-status.kinship-degree' | translate}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.kinship-degree' | translate}}</p>
+                                        </div>
                                         <div class="col-12">
-                                            <select class="form-control" formControlName="kinshipDegree">
+                                            <select class="form-control" formControlName="kinshipDegree"
+                                                [ngClass]="inputValidator(relation, 'kinshipDegree')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{
                                                     'kinshipDegree.' + item.label | translate}}
@@ -92,47 +105,78 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{ 'material-status.user-name' | translate}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.user-name' | translate}}
+                                            </p>
+                                        </div>
                                         <div class="col-12">
                                             <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.user-name' | translate" />
+                                                [placeholder]="'material-status.user-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{ 'material-status.last-name' | translate}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.last-name' | translate}}
+                                            </p>
+                                        </div>
                                         <div class="col-12">
                                             <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.last-name' | translate" />
+                                                [placeholder]="'material-status.last-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{ 'material-status.table-function' | translate}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.table-function' | translate}}</p>
+                                        </div>
                                         <div class="col-12">
                                             <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-function' | translate" />
+                                                [placeholder]="'material-status.table-function' | translate"
+                                                [ngClass]="inputValidator(relation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col"><p class="font-weight-bolder">{{ 'material-status.table-subdivision' | translate}}</p></div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.table-subdivision' | translate}}</p>
+                                        </div>
                                         <div class="col-12">
                                             <input formControlName="subdivision" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-subdivision' | translate" />
+                                                [placeholder]="'material-status.table-subdivision' | translate"
+                                                [ngClass]="inputValidator(relation, 'subdivision')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'subdivision')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" *ngIf="i > 0">
                                         <div class="col">
                                             <button class="btn btn-icon float-right"
-                                                    (click)="removeKinshipRelationWithUserProfile(i)">
-                                                    <span class="font-size-h2">&times;</span>
-                                                </button>
+                                                (click)="removeKinshipRelationWithUserProfile(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
                                         </div>
                                     </div>
 
-                                    <div *ngIf="kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length > 1" class="separator separator-dashed"></div>
+                                    <div *ngIf="kinshipRelationWithUserProfileForm.controls.relationWithUserProfile.controls.length > 1"
+                                        class="separator separator-dashed"></div>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +200,8 @@
                                         [formGroupName]="i">
                                         <th scope="row">{{i + 1}}</th>
                                         <td>
-                                            <select class="form-control" formControlName="kinshipDegree">
+                                            <select class="form-control" formControlName="kinshipDegree"
+                                                [ngClass]="inputValidator(relation, 'kinshipDegree')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{
                                                     'kinshipDegree.' + item.label | translate}}
@@ -166,22 +211,42 @@
                                         <td>
                                             <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.user-name' | translate" />
+                                                [placeholder]="'material-status.user-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.last-name' | translate" />
+                                                [placeholder]="'material-status.last-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-function' | translate" />
+                                                [placeholder]="'material-status.table-function' | translate"
+                                                [ngClass]="inputValidator(relation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                         <td>
                                             <input formControlName="subdivision" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-subdivision' | translate" />
+                                                [placeholder]="'material-status.table-subdivision' | translate"
+                                                [ngClass]="inputValidator(relation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                         <td *ngIf="i > 0">
                                             <div class="row justify-content-end mb-3 mr-7">
@@ -207,7 +272,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-end my-3">
-                                <button class="btn btn-success h-35px" *ngIf="addOrEditKinshipRelationWithUserProfileButton"
+                                <button class="btn btn-success h-35px"
+                                    *ngIf="addOrEditKinshipRelationWithUserProfileButton"
                                     [disabled]="kinshipRelationWithUserProfileForm && kinshipRelationWithUserProfileForm.invalid "
                                     (click)="creteKinshipRelationWithUserProfile()">{{'stepper.button-update' | translate}}</button>
                                 <button class="btn btn-outline-success h-35px"
@@ -240,94 +306,151 @@
                 <app-loading-spinner *ngIf="isLoadingKinshipRelation" contentHeight="20rem" height="5rem" width="5rem"
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingKinshipRelation">
-                    <div formArrayName="relation" >
+                    <div formArrayName="relation">
 
                         <div class="d-lg-none d-flex flex-column gap-2">
                             <div class="row" [ngClass]="{'more': kinshipRelationForm.controls.relation.controls.length > 1  &&
                                         (kinshipRelationForm.controls.relation.controls.length - 1) !== i}"
-                                        *ngFor="let relation of kinshipRelationForm.controls.relation.controls; let i = index"
-                                        [formGroupName]="i">
-                                    <div class="col d-flex flex-column gap-4">
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
-                                            <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                *ngFor="let relation of kinshipRelationForm.controls.relation.controls; let i = index"
+                                [formGroupName]="i">
+                                <div class="col d-flex flex-column gap-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'table.number' | translate}}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'material-status.kinship-degree' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <select class="form-control" formControlName="kinshipDegree">
-                                                    <option value="null">{{'module-access.select' | translate}}</option>
-                                                    <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{
-                                                        'kinshipDegree.' + item.label | translate}}
-                                                    </option>
-                                                </select>
-                                            </div>
+                                        <div class="col">
+                                            <p class="font-weight-bolder text-center">{{i + 1}}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'material-status.user-name' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="name" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.user-name' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'material-status.last-name' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="lastName" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.last-name' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'material-status.birthday-date' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <app-date [parent]="relation" [date]="'birthDate'"
-                                                [placeholder]="'material-status.birthday-date' | translate"></app-date>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{'material-status.birth-place' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="birthLocation" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.birth-place' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'material-status.table-function' | translate }}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="function" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-function' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'material-status.work-place' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="workLocation" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.work-place' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col"><p class="font-weight-bolder">{{ 'material-status.residence' | translate}}</p></div>
-                                            <div class="col-12">
-                                                <input formControlName="residenceAddress" autocomplete="off"
-                                                class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.residence' | translate" />
-                                            </div>
-                                        </div>
-                                        <div class="row" *ngIf="i > 0">
-                                            <div class="col">
-                                                <button class="btn btn-icon float-right" (click)="removeKinshipRelation(i)">
-                                                    <span class="font-size-h2">&times;</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div *ngIf="kinshipRelationForm.controls.relation.controls.length > 1" class="separator separator-dashed"></div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.kinship-degree' | translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <select class="form-control" formControlName="kinshipDegree"
+                                                [ngClass]="inputValidator(relation, 'kinshipDegree')">
+                                                <option value="null">{{'module-access.select' | translate}}</option>
+                                                <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{
+                                                    'kinshipDegree.' + item.label | translate}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'material-status.user-name' | translate}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="name" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.user-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'material-status.last-name' | translate}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="lastName" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.last-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.birthday-date' | translate}}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <app-stepper-date-time [parent]="relation" [date]="'birthDate'"
+                                                [placeholder]="'material-status.birthday-date' | translate"></app-stepper-date-time>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{'material-status.birth-place' | translate}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="birthLocation" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.birth-place' | translate"
+                                                [ngClass]="inputValidator(relation, 'birthLocation')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'birthLocation')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.table-function' | translate }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="function" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.table-function' | translate"
+                                                [ngClass]="inputValidator(relation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.work-place' | translate}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="workLocation" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.work-place' | translate"
+                                                [ngClass]="inputValidator(relation, 'workLocation')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'workLocation')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="font-weight-bolder">{{ 'material-status.residence' | translate}}
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <input formControlName="residenceAddress" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'material-status.residence' | translate"
+                                                [ngClass]="inputValidator(relation, 'residenceAddress')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'residenceAddress')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="i > 0">
+                                        <div class="col">
+                                            <button class="btn btn-icon float-right" (click)="removeKinshipRelation(i)">
+                                                <span class="font-size-h2">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="kinshipRelationForm.controls.relation.controls.length > 1"
+                                        class="separator separator-dashed"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -346,7 +469,8 @@
                                     <tr>
                                         <th>{{ 'material-status.kinship-degree' | translate }} </th>
                                         <td>
-                                            <select class="form-control" formControlName="kinshipDegree">
+                                            <select class="form-control" formControlName="kinshipDegree"
+                                                [ngClass]="inputValidator(relation, 'kinshipDegree')">
                                                 <option value="null">{{'module-access.select' | translate}}</option>
                                                 <option *ngFor="let item of kinshipDegreeEnum" [value]="item.value">{{
                                                     'kinshipDegree.' + item.label | translate}}
@@ -359,7 +483,12 @@
                                         <td>
                                             <input formControlName="name" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.user-name' | translate" />
+                                                [placeholder]="'material-status.user-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'name')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'name')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -367,14 +496,19 @@
                                         <td>
                                             <input formControlName="lastName" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.last-name' | translate" />
+                                                [placeholder]="'material-status.last-name' | translate"
+                                                [ngClass]="inputValidator(relation, 'lastName')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'lastName')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-and-dash' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>{{ 'material-status.birthday-date' | translate}}</th>
                                         <td>
-                                            <app-date [parent]="relation" [date]="'birthDate'"
-                                                [placeholder]="'material-status.birthday-date' | translate"></app-date>
+                                            <app-stepper-date-time [parent]="relation" [date]="'birthDate'"
+                                                [placeholder]="'material-status.birthday-date' | translate"></app-stepper-date-time>
                                         </td>
                                     </tr>
                                     <tr>
@@ -382,7 +516,12 @@
                                         <td>
                                             <input formControlName="birthLocation" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.birth-place' | translate" />
+                                                [placeholder]="'material-status.birth-place' | translate"
+                                                [ngClass]="inputValidator(relation, 'birthLocation')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'birthLocation')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -390,7 +529,12 @@
                                         <td>
                                             <input formControlName="function" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.table-function' | translate" />
+                                                [placeholder]="'material-status.table-function' | translate"
+                                                [ngClass]="inputValidator(relation, 'function')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'function')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -398,7 +542,12 @@
                                         <td>
                                             <input formControlName="workLocation" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.work-place' | translate" />
+                                                [placeholder]="'material-status.work-place' | translate"
+                                                [ngClass]="inputValidator(relation, 'workLocation')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'workLocation')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -406,7 +555,12 @@
                                         <td>
                                             <input formControlName="residenceAddress" autocomplete="off"
                                                 class="form-control form-control-solid" type="text"
-                                                [placeholder]="'material-status.residence' | translate" />
+                                                [placeholder]="'material-status.residence' | translate"
+                                                [ngClass]="inputValidator(relation, 'residenceAddress')" />
+                                            <div *ngIf="isInvalidPattern(relation, 'residenceAddress')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-dash-and-dot' | translate}}
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr *ngIf="i > 0">
@@ -451,8 +605,10 @@
                 <mat-panel-title>
                     <div class="row">
                         <div class="col">
-                            <h4 class="d-sm-block d-none">{{'material-status.kinship-criminal-data-name' | translate}}</h4>
-                            <h4 class="d-sm-none d-block font-size-smaller">{{'material-status.kinship-criminal-data-name' | translate}}</h4>
+                            <h4 class="d-sm-block d-none">{{'material-status.kinship-criminal-data-name' | translate}}
+                            </h4>
+                            <h4 class="d-sm-none d-block font-size-smaller">
+                                {{'material-status.kinship-criminal-data-name' | translate}}</h4>
                         </div>
                     </div>
                 </mat-panel-title>
@@ -472,7 +628,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-end mb-3">
-                                <button class="btn btn-success h-35px" *ngIf="addOrEditKinshipRelationCriminalDataButton"
+                                <button class="btn btn-success h-35px"
+                                    *ngIf="addOrEditKinshipRelationCriminalDataButton"
                                     [disabled]="kinshipRelationCriminalDataForm.value.text == null || kinshipRelationCriminalDataForm.value.text == '' "
                                     (click)="updateKinshipRelationCriminalData()">{{'stepper.button-update' | translate}}</button>
                                 <button class="btn btn-outline-success h-35px"
@@ -489,7 +646,9 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-end">
-                <app-stepper-arrow-hint *ngIf="!(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+                <app-stepper-arrow-hint
+                    *ngIf="!(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
+                    [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
                 <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
