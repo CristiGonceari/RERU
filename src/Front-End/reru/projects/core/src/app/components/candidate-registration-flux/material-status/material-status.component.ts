@@ -297,7 +297,7 @@ export class MaterialStatusComponent implements OnInit {
       lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required]),
       subdivision: this.fb.control((kinship && kinship.subdivision) || null, [Validators.required]),
-      kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, []),
+      kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
   }
@@ -312,8 +312,8 @@ export class MaterialStatusComponent implements OnInit {
       birthDate: this.fb.control((kinship && kinship.birthDate) || null, [Validators.required]),
       birthLocation: this.fb.control((kinship && kinship.birthLocation) || null, [Validators.required]),
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required]),
-      workLocation: this.fb.control((kinship && kinship.workLocation) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      residenceAddress: this.fb.control((kinship && kinship.residenceAddress) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      workLocation: this.fb.control((kinship && kinship.workLocation) || null, [Validators.required]),
+      residenceAddress: this.fb.control((kinship && kinship.residenceAddress) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
   }
@@ -666,4 +666,14 @@ export class MaterialStatusComponent implements OnInit {
       this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
+
+  inputValidator(form, field) {
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid
+      ? 'is-valid' : 'is-invalid';
+  }
+
+  isInvalidPattern(form, field: string): boolean {
+    return ValidatorUtil.isInvalidPattern(form, field);
+  }
+
 }

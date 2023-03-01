@@ -18,7 +18,7 @@
                                 <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
                                 <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
                             </div>
-                            <div class="row">
+                            <div class="row required">
                                 <div class="col"><p class="font-weight-bolder">{{ 'military-obligation.name' | translate}}</p></div>
                                 <div class="col-12">
                                     <select class="form-control" 
@@ -32,7 +32,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableNameAndAdressField(obligation.value)">
+                            <div class="row required" *ngIf="enableNameAndAdressField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.institution-name'  | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="institutionName" autocomplete="off"
@@ -44,7 +44,7 @@
                                         {{'validations.only-letters-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableNameAndAdressField(obligation.value)">
+                            <div class="row required" *ngIf="enableNameAndAdressField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.institution-adress'  | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="institutionAdress" autocomplete="off"
@@ -56,21 +56,21 @@
                                         {{'validations.only-letters-numbers-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableYearsField(obligation.value)">
+                            <div class="row required" *ngIf="enableYearsField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-mobilization' | translate}}</p></div>
                                 <div class="col-12">
                                     <app-stepper-date-time [parent]="obligation" [date]="'mobilizationYear'"
                                     [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-stepper-date-time>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableYearsField(obligation.value)">
+                            <div class="row required" *ngIf="enableYearsField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-withdrawal' | translate}}</p></div>
                                 <div class="col-12">
                                     <app-stepper-date-time [parent]="obligation" [date]="'withdrawalYear'"
                                     [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-stepper-date-time>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enablePeriodField(obligation.value)">
+                            <div class="row required" *ngIf="enablePeriodField(obligation.value)">
                                 <div class="col">
                                     <p class="font-weight-bolder">{{'military-obligation.period' | translate}}</p>
                                     <div class="row">
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                            <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.efectiv' | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="efectiv" autocomplete="off"
@@ -97,7 +97,7 @@
                                         {{'validations.only-letters-numbers-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                            <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.military-specialty' | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="militarySpecialty" autocomplete="off"
@@ -109,7 +109,7 @@
                                         {{'validations.only-letters-numbers-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                            <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
                                 <div class="col"><p class="font-weight-bolder">{{'military-obligation.degree' | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="degree" autocomplete="off"
@@ -121,13 +121,13 @@
                                         {{'validations.only-letters-numbers-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                            <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
                                 <div class="col">
                                     <p class="font-weight-bolder" *ngIf="!enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.military-booklet' | translate}}</p>
                                     <p class="font-weight-bolder" *ngIf="enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.recruitment-booklet' | translate}}</p>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                            <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
                                 <div class="col"><p>{{'military-obligation.series' | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="militaryBookletSeries" autocomplete="off"
@@ -139,7 +139,7 @@
                                                     {{'validations.only-letters-numbers-and-dash' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                            <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
                                 <div class="col"><p>{{'military-obligation.number' | translate}}</p></div>
                                 <div class="col-12">
                                     <input formControlName="militaryBookletNumber" autocomplete="off"
@@ -151,7 +151,7 @@
                                                     {{'validations.only-numbers' | translate}}</div>
                                 </div>
                             </div>
-                            <div class="row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                            <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
                                 <div class="col"><p>{{'military-obligation.relase-day' | translate}}</p></div>
                                 <div class="col-12">
                                     <app-stepper-date-time [parent]="obligation" [date]="'militaryBookletReleaseDay'"
