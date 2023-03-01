@@ -8,5 +8,9 @@
         padding: 3px 20px;
         border-bottom: 1px solid black;
         font-weight: bold;
-      }
+    }
+}
+
+.deep::ng-deep select {
+    background: #F3F6F9;
 }
