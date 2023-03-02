@@ -81,7 +81,20 @@ export class DashboardComponent implements OnInit {
         series: [],
         chart: {
           height: 350,
-          type: "area"
+          type: "area",
+          toolbar: {
+            export: {
+              csv: {
+                filename: "Grafic Teste și Evaluări"
+              },
+              svg: {
+                filename: "Grafic Teste și Evaluări",
+              },
+              png: {
+                filename: "Grafic Teste și Evaluări",
+              }
+            }
+          }
         },
         dataLabels: {
           enabled: false

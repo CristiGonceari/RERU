@@ -83,4 +83,8 @@ export class EvaluationService extends AbstractService {
 			}
     });
   }
+
+  getNrEvaluations(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/HomePage/evaluations-count`);
+	}
 }

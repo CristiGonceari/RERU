@@ -71,7 +71,8 @@
     "subtitle": "Start Page",
     "enclosed-mode":"Enclosed mode",
     "hello-username": "Hello",
-    "have-a-good-day": "Welcome, have a good day!"
+    "have-a-good-day": "Welcome, have a good day!",
+    "evaluations": "Evaluations"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",
@@ -480,5 +481,9 @@
   "user-state": {
     "Employee": "Employee",
     "Candidate": "Candidate"
+  },
+  "graph-evaluations": {
+    "name": "Evaluations",
+    "note": "Notes: Evaluations taken over a year sorted by month"
   }
 }

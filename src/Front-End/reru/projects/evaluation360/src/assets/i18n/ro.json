@@ -71,7 +71,8 @@
     "subtitle": "Pagina de start",
     "enclosed-mode":"Mod restrâns",
     "hello-username": "Salut",
-    "have-a-good-day": "Bine ai venit!"
+    "have-a-good-day": "Bine ai venit!",
+    "evaluations": "Evaluări"
   },
   "footer": {
     "all-rights-reserved": "Toate drepturile rezervate",
@@ -479,5 +480,9 @@
   "user-state": {
    "Employee": "Angajat",
    "Candidate": "Candidat"
+  },
+  "graph-evaluations": {
+    "name": "Evaluări",
+    "note": "Notițe: Evaluări efectuate timp de un an sortate după luni"
   }
 }
