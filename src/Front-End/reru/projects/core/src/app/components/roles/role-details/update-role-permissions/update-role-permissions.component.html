@@ -15,7 +15,7 @@
             <th scope="col">{{'table.description' | translate}}</th>
           </tr>
         </thead>
-        <tbody [formGroup]="permissionForm" class="text-dark-75">
+        <tbody *ngIf="permissionForm" [formGroup]="permissionForm" class="text-dark-75">
           <tr *ngFor="let item of permissions ; let i= index">
             <td style="vertical-align: baseline">
               <label class="checkbox checkbox-lg checkbox-inline">

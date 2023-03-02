@@ -723,7 +723,8 @@
   "language":{
     "modern-language-level": "Nivelul de cunoaștere a limbii moderne",
     "name": "Denumirea limbii",
-    "qualifier" : "Calificator al cunoștințelor"
+    "qualifier" : "Calificator al cunoștințelor",
+    "add-language": "Adăugați o altă limbă modernă"
   },
   "recommendation":{
     "recommendation-name": "Recomandare la studiii",
@@ -732,7 +733,8 @@
     "table-function": "Funcția (poziția) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
-    "last-name": "Prenumele persoanei"
+    "last-name": "Prenumele persoanei",
+    "add-recommendation": "Adăugați o altă recomandare"
   },
   "material-status":{
     "name": "Starea civilă la data completării dosarului personal",
@@ -748,7 +750,9 @@
     "residence": "Domiciliul",
     "work-place": "Locul de muncă",
     "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului",
-    "add-button-hint": "Apăsați butonul pentru a adăuga starea civilă"
+    "add-button-hint": "Apăsați butonul pentru a adăuga starea civilă",
+    "add-material-status": "Adăugați o altă relație",
+    "add-material-status-biographical-data": "Adăugați o altă dată biografică"
   },
   "military-obligation":{
     "paragraf-name": "Date biografice a rudelor apropiate candidatului",
@@ -769,7 +773,8 @@
     "start-obligation-period": "Data de început",
     "end-obligation-period": "Data de încheiere",
     "recruitment-booklet": "Adeverinţă de recrutare",
-    "military-obligation-add-button-hint": "Apăsați butonul pentru a adăuga obligația militară"
+    "military-obligation-add-button-hint": "Apăsați butonul pentru a adăuga obligația militară",
+    "add-military-obligation": "Adăugați o altă obligație"
   },
   "autobiography":{
     "title":"Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:",

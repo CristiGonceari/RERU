@@ -727,7 +727,8 @@
   "language":{
     "modern-language-level": "The level of knowledge of the modern language",
     "name": "language Name",
-    "qualifier" : "Qualifier of knowledge"
+    "qualifier" : "Qualifier of knowledge",
+    "add-language": "Add another modern language"
   },
   "recommendation":{
     "recommendation-name": "Study recommendation",
@@ -736,7 +737,8 @@
     "table-function": "Position held",
     "table-subdivision": "MAI subdivision",
     "user-name": "First Name",
-    "last-name": "Last Name"
+    "last-name": "Last Name",
+    "add-recommendation": "Add another recommendation"
   },
   "material-status":{
     "name": "Marital status on the date of completion of the personal file",
@@ -751,7 +753,9 @@
     "birthday-date": "Date of birth",
     "residence": "Residence",
     "work-place": "Work place",
-    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives"
+    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives",
+    "add-material-status": "Add another kinship",
+    "add-material-status-biographical-data": "Add another biographical date"
   },
   "military-obligation":{
     "paragraf-name": "Biographical data of the relatives close to the candidate",
@@ -772,7 +776,8 @@
     "start-obligation-period": "Start date",
     "end-obligation-period": "End date",
     "recruitment-booklet": "Recruitment certificate",
-    "military-obligation-add-button-hint": "Press the button to add military obligation"
+    "military-obligation-add-button-hint": "Press the button to add military obligation",
+    "add-military-obligation": "Add another obligation"
   },
   "autobiography":{
     "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",
