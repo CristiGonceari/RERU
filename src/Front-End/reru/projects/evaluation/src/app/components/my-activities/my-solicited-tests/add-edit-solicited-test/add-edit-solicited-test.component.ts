@@ -36,7 +36,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
   title: string;
   description: string;
   isLoading: boolean = true;
-  isLoadingValue: boolean = true;
   solicitedPositionId;
   solicitedTest: AddEditSolicitedTest;
   candidatePositions = new SelectItem();
