@@ -570,7 +570,8 @@
     "startTime": "Început",
     "endTime": "Sfârșit",
     "file": "Fișier",
-    "history": "Istoria"
+    "history": "Istoria",
+    "validDuring": "Valabil in perioada"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
