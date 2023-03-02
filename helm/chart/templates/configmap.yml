@@ -471,7 +471,7 @@ data:
 
         "CoreSettings": {
           "Tenant": {
-            "Name": "Evaluare MAI [Mediul de testare și dezvoltare]"
+            "Name": "Evaluare MAI [Development ENV]"
           },
           "ActiveTime": {
             "TokenLifetime": "0.00:05:00"
