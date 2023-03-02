@@ -74,6 +74,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getFilteredEvents(data: any = {}): void {
+		this.selectedDay = null;
 		this.setTimeToSearch();
 
 		let params = {
@@ -103,12 +104,16 @@ export class EventsListTableComponent implements OnInit {
 
 	clearFields() {
 		this.filters = {};
+		this.clearDateFields();
+		this.name.value = '';
+		this.getListByDate();
+	}
+
+	clearDateFields() {
 		this.dateTimeFrom = '';
 		this.dateTimeTo = '';
 		this.searchFrom = '';
 		this.searchTo = '';
-		this.name.value = '';
-		this.getListByDate();
 	}
 
 	list(data: any = {}) {
@@ -149,6 +154,7 @@ export class EventsListTableComponent implements OnInit {
 		this.isLoading = true;
 
 		if (data.date != null) {
+			this.clearDateFields();
 			this.selectedDay = this.parseDates(data.date);
 			this.displayDate = this.parseDatesForTable(data.date)
 		}
