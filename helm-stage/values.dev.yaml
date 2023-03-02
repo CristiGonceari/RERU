@@ -10,7 +10,14 @@ ingress:
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
-    ingress.kubernetes.io/rewrite-target: "https://reru.mai.gov.md/"
+    nginx.ingress.kubernetes.io/permanent-redirect: https://reru.mai.gov.md
+    nginx.ingress.kubernetes.io/rewrite-target: https://reru.mai.gov.md
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location ~ /preview {
+         rewrite /preview https://reru.mai.gov.md;
+      }
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+         rewrite /preview https://reru.mai.gov.md;
 #     nginx.ingress.kubernetes.io/configuration-snippet: |
 #       add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 
@@ -24,7 +31,14 @@ ingress_back:
     nginx.org/proxy-connect-timeout: "3600"
     nginx.org/proxy-read-timeout: "3600"
     nginx.org/proxy-send-timeout: "3600"
-    ingress.kubernetes.io/rewrite-target: "https://reru.mai.gov.md/"
+    nginx.ingress.kubernetes.io/permanent-redirect: https://reru.mai.gov.md
+    nginx.ingress.kubernetes.io/rewrite-target: https://reru.mai.gov.md
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location ~ /preview {
+         rewrite /preview https://reru.mai.gov.md;
+      }
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /preview https://reru.mai.gov.md;
     # nginx.ingress.kubernetes.io/configuration-snippet: |
     #   add_header Content-Security-Policy "frame-ancestors mpass.staging.egov.md;";
 
