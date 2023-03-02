@@ -40,7 +40,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   solicitedTest: AddEditSolicitedTest;
   candidatePositions = new SelectItem();
 
-  uploadForm: FormGroup;
+  addEditSolicitedPositionForm: FormGroup;
 
   eventsWithTestList: any[] = [];
   requiredDocumentsList: any[] = [];
@@ -68,7 +68,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   ngOnInit(): void {
     this.initData();
-    this.initForm();
 
     if (this.solicitedPositionId == null) {
       this.retrievePositions();
@@ -77,24 +76,16 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   initData(): void {
     this.solicitedPositionId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.initForm();
 
     if (this.solicitedPositionId != null) this.getSolicitedPosition(this.solicitedPositionId)
   }
 
-  initForm(data?){
-    if (data == null) {
-      this.uploadForm = this.fb.group({
-        id: this.fb.control(null, []),
-        candidatePositionId: this.fb.control(null, []),
-        solicitedTestStatus: this.fb.control(null, [])
+  initForm(data?, id?){
+      this.addEditSolicitedPositionForm = this.fb.group({
+        id: this.fb.control(id || null, []),
+        candidatePositionId: this.fb.control(data || null, [])
       });
-    }else{
-      this.uploadForm = this.fb.group({
-        id: this.fb.control(data && data.id, []),
-        candidatePositionId: this.fb.control(data && data.candidatePositionId, []),
-        solicitedTestStatus: this.fb.control(data && data.solicitedTestStatus, [])
-      });
-    }
   }
 
   getSolicitedPosition(solicitedPositionId) {
@@ -104,7 +95,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
       this.selected = this.candidatePositions[0];
       this.getEventsAndDocuments();
       this.isLoading = false;
-      this.initForm(res.data);
+      this.initForm(res.data[0].value, solicitedPositionId);
   });
   }
 
@@ -154,7 +145,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
         }
       })
     } else {
-      this.eventCandidatePositionService.getEventVacandPostition(this.uploadForm.value.candidatePositionId).subscribe(res => {
+      this.eventCandidatePositionService.getEventVacandPostition(this.addEditSolicitedPositionForm.value.candidatePositionId).subscribe(res => {
         if (res && res.data) {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
@@ -202,18 +193,18 @@ export class AddEditSolicitedTestComponent implements OnInit {
     };
   }
 
-  parseToEdit() {
+  parseToEdit(form) {
     return {
       data: {
-        id: this.solicitedPositionId || 0,
-        candidatePositionId: +this.selected.value || 0,
+        id: form.value.id ,
+        candidatePositionId: form.value.candidatePositionId,
         solicitedTestStatus: 0
       }
     }
   }
 
   add() {
-    this.solicitedTestService.addMySolicitedTest(this.parse(this.uploadForm)).subscribe(res => {
+    this.solicitedTestService.addMySolicitedTest(this.parse(this.addEditSolicitedPositionForm)).subscribe(res => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('solicited-test.succes-add-msg'),
@@ -237,7 +228,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   edit() {
-    this.solicitedTestService.editMySolicitedTest(this.parseToEdit()).subscribe(res => {
+    this.solicitedTestService.editMySolicitedTest(this.parseToEdit(this.addEditSolicitedPositionForm)).subscribe(res => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('solicited-test.succes-edit-msg'),
