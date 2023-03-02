@@ -7,6 +7,7 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
+    <form [formGroup]="uploadForm">
     <div class="card card-custom gutter-b erp-shared-desktop-wide">
         <div class="card-body p-0">
             <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
@@ -29,8 +30,9 @@
                                                 </div>
                                                 <select class="form-control form-control-lg form-control-solid"
                                                     *ngIf="!isEdit" name="selectedStatus" id="selectedStatus"
-                                                    [(ngModel)]="candidatePositions.value"
+                                                     formControlName="candidatePositionId"
                                                     (change)="getEventsAndDocuments()">
+                                                    <option selected disabled hidden value="null">{{'solicited-test.select-candidate-position' | translate}}</option>
                                                     <option *ngFor="let item of candidatePositions"
                                                         [ngValue]="item.value">
                                                         {{ item.label }}
@@ -158,4 +160,5 @@
             </div>
         </div>
     </div>
+</form>
 </erp-shared-content>
