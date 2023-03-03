@@ -574,6 +574,7 @@
     "role-colaborator-id": "Role Id",
     "function-colaborator-id": "Employee Function Id",
     "birth-day": "Birth Date",
+    "max-print-rows": "Maximum 3000 rows can be printed",
     "phone-number": "Phone num." 
   },
   "guide": {

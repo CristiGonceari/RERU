@@ -1116,7 +1116,8 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields.",
-    "select-file-format": "Select file format"
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "general-datas":{
     "general-data":"General Data",

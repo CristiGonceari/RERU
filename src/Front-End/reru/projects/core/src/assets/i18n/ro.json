@@ -576,6 +576,7 @@
     "role-colaborator-id": "Id Rol",
     "function-colaborator-id": "Id Funcție angajat",
     "birth-day": "Data nașterii",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri",
     "phone-number": "Nr. telefon" 
   },
   "guide": {

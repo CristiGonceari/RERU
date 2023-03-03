@@ -450,7 +450,9 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select the required fields for printing",
-    "print-msg": "Please specify the required fields and print orientation."
+    "print-msg": "Please specify the required fields and print orientation.",
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "guide": {
     "title": "User Guide"
