@@ -99,7 +99,7 @@ export class ListModuleComponent implements OnInit {
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
       		this.translate.get('print.select-file-format'),
-			  this.translate.get('print.max-print-rows')
+			this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i=0; i<this.printTranslates.length; i++) {
