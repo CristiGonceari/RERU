@@ -342,6 +342,7 @@
     "please-wait": "Please wait while system import users ...",
     "birthday": "Birthday",
     "phone": "Contact phone",
+    "phone-full": "Contact phone (+373 xx xxx xxx)",
     "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
