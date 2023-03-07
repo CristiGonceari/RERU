@@ -98,12 +98,14 @@ export class ListComponent implements AfterViewInit {
 	}
 
   translateData(): void {
-		this.printTranslates = Array.from(Array(4).keys()).map(el => el+'');
+		this.printTranslates = Array.from(Array(6).keys()).map(el => el+'');
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
-			this.translate.get('button.cancel')
+			this.translate.get('button.cancel'),
+      this.translate.get('print.select-file-format'),
+      this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {
