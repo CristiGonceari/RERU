@@ -411,7 +411,10 @@
     "sure": "Are you sure you want to remove this module?"
   },
   "dashboard": {
-    "enclosed-mode": "Enclosed mode"
+    "enclosed-mode": "Enclosed mode",
+    "my-activities": "For admission to studies",
+    "solicited-position": "To apply for a public position with special status",
+    "my-tests": "For MAI employees"
   },
   "pages": {
     "users": {
