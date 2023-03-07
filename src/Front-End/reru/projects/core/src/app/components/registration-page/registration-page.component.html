@@ -167,7 +167,7 @@
               <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
-                  formControlName="phoneNumber" [placeholder]="'user.phone' | translate"
+                  formControlName="phoneNumber" [placeholder]="'user.phone-full' | translate"
                   [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
                 <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"

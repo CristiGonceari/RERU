@@ -324,7 +324,7 @@
     "access-mode": "Access mode",
     "code-length": "Code should consist of 4 numbers!",
     "enter-code": "Enter the code",
-    "verify-process": "Find the necessary code in your email.",
+    "verify-process": "You will find the verification code in the letter that came to your e-mail with which you registered in the system.",
     "Employee": "Employee",
     "Candidate": "Candidate"
   },
@@ -342,6 +342,7 @@
     "please-wait": "Please wait while system import users ...",
     "birthday": "Birthday",
     "phone": "Contact phone",
+    "phone-full": "Contact phone (+373 xx xxx xxx)",
     "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
