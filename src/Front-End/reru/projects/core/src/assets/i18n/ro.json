@@ -413,7 +413,10 @@
     "sure": "Sunteți sigur(-ă) că doriți să ștergeți modulul?"
   },
   "dashboard": {
-    "enclosed-mode":"Mod restrâns"
+    "enclosed-mode":"Mod restrâns",
+    "my-activities": "Pentru admitere la studii",
+    "solicited-position": "Pentru accedere la o funcție publică cu statut special",
+    "my-tests": "Pentru angajații MAI"
   },
   "pages": {
     "users": {
