@@ -65,4 +65,9 @@ export class DashboardComponent implements OnInit {
   getTestId() {
     this.internalService.getTestIdForFastStart().subscribe(() => {});
   }
+
+  getEvaluationModuleUrl(): string {
+    const evaluationModule = this.modules.find(module => module.module.name === 'evaluation');
+    return evaluationModule ? evaluationModule.module.publicUrl : '';
+  }  
 }

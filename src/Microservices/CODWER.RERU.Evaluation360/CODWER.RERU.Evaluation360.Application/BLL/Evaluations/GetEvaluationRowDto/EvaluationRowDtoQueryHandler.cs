@@ -151,8 +151,6 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                     mf = mea;
                 }
 
-                Console.WriteLine("score1 = " + evaluation.Score1 + " m1 = " + m1 + " m2 = " + m2 + " m3 = " + m3 + " m4 = " + m4 + " pb = " + pb + " mea = " + mea);
-
                 if (mf != null) evaluation.Points = Math.Round(mf.Value, 2);
             }
         }

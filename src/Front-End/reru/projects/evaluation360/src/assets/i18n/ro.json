@@ -71,7 +71,8 @@
     "subtitle": "Pagina de start",
     "enclosed-mode":"Mod restrâns",
     "hello-username": "Salut",
-    "have-a-good-day": "Bine ai venit!"
+    "have-a-good-day": "Bine ai venit!",
+    "evaluations": "Evaluări"
   },
   "footer": {
     "all-rights-reserved": "Toate drepturile rezervate",
@@ -449,7 +450,9 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare."
+    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare.",
+    "select-file-format": "Selectați formatul fișierului",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "guide": {
     "title": "Ghidul Utilizatorului"
@@ -479,5 +482,9 @@
   "user-state": {
    "Employee": "Angajat",
    "Candidate": "Candidat"
+  },
+  "graph-evaluations": {
+    "name": "Evaluări",
+    "note": "Notițe: Evaluări efectuate timp de un an sortate după luni"
   }
 }

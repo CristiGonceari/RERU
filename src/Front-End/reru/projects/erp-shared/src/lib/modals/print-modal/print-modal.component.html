@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> </h3>
+  <h3 class="modal-title">{{translateData[0]}}: <b> {{tableData.tableName}} </b> <small>{{'('+ translateData[5] + ')'}}</small> </h3>
   <mat-form-field>
     <mat-select placeholder="{{translateData[4]}}" [(ngModel)]="selectedFormat"
       (change)="selectedFormat = $event.target.value">

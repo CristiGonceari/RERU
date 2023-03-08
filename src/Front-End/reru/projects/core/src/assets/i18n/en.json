@@ -324,7 +324,7 @@
     "access-mode": "Access mode",
     "code-length": "Code should consist of 4 numbers!",
     "enter-code": "Enter the code",
-    "verify-process": "Find the necessary code in your email.",
+    "verify-process": "You will find the verification code in the letter that came to your e-mail with which you registered in the system.",
     "Employee": "Employee",
     "Candidate": "Candidate"
   },
@@ -342,6 +342,7 @@
     "please-wait": "Please wait while system import users ...",
     "birthday": "Birthday",
     "phone": "Contact phone",
+    "phone-full": "Contact phone (+373 xx xxx xxx)",
     "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
@@ -410,7 +411,10 @@
     "sure": "Are you sure you want to remove this module?"
   },
   "dashboard": {
-    "enclosed-mode": "Enclosed mode"
+    "enclosed-mode": "Enclosed mode",
+    "my-activities": "For admission to studies",
+    "solicited-position": "To apply for a public position with special status",
+    "my-tests": "For MAI employees"
   },
   "pages": {
     "users": {
@@ -574,6 +578,7 @@
     "role-colaborator-id": "Role Id",
     "function-colaborator-id": "Employee Function Id",
     "birth-day": "Birth Date",
+    "max-print-rows": "Maximum 3000 rows can be printed",
     "phone-number": "Phone num." 
   },
   "guide": {

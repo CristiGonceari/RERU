@@ -570,7 +570,8 @@
     "startTime": "Început",
     "endTime": "Sfârșit",
     "file": "Fișier",
-    "history": "Istoria"
+    "history": "Istoria",
+    "validDuring": "Valabil in perioada"
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -1054,7 +1055,8 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
-    "select-file-format": "Selectați formatul fișierului"
+    "select-file-format": "Selectați formatul fișierului",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "guide": {
     "title": "Ghidul Utilizatorului"

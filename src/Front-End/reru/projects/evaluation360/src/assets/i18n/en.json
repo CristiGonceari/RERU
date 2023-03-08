@@ -71,7 +71,8 @@
     "subtitle": "Start Page",
     "enclosed-mode":"Enclosed mode",
     "hello-username": "Hello",
-    "have-a-good-day": "Welcome, have a good day!"
+    "have-a-good-day": "Welcome, have a good day!",
+    "evaluations": "Evaluations"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",
@@ -450,7 +451,9 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select the required fields for printing",
-    "print-msg": "Please specify the required fields and print orientation."
+    "print-msg": "Please specify the required fields and print orientation.",
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "guide": {
     "title": "User Guide"
@@ -480,5 +483,9 @@
   "user-state": {
     "Employee": "Employee",
     "Candidate": "Candidate"
+  },
+  "graph-evaluations": {
+    "name": "Evaluations",
+    "note": "Notes: Evaluations taken over a year sorted by month"
   }
 }

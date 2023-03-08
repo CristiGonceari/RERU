@@ -327,7 +327,7 @@
     "access-mode": "Modul de acces",
     "code-length": "Codul trebuie să conțină 4 cifre!",
     "enter-code": "Introduceți codul",
-    "verify-process": "Găsiți codul necesar în e-mailul dvs.",
+    "verify-process": "Codul de verificare îl găsiți în scrisoarea de pe email-ul Dvs. cu care v-ați înregistrat.",
     "Employee": "Angajat",
     "Candidate": "Candidat"
   },
@@ -345,6 +345,7 @@
     "please-wait": "Vă rugăm să așteptați până sistemul adaugă utilizatori ...",
     "birthday": "Data nașterii",
     "phone": "Telefon de contact",
+    "phone-full": "Telefon de contact (+373 xx xxx xxx)",
     "date-format": "Vă rugăm să furnizați un format valid ZZ.LL.AAAA"
   },
   "word": {
@@ -412,7 +413,10 @@
     "sure": "Sunteți sigur(-ă) că doriți să ștergeți modulul?"
   },
   "dashboard": {
-    "enclosed-mode":"Mod restrâns"
+    "enclosed-mode":"Mod restrâns",
+    "my-activities": "Pentru admitere la studii",
+    "solicited-position": "Pentru accedere la o funcție publică cu statut special",
+    "my-tests": "Pentru angajații MAI"
   },
   "pages": {
     "users": {
@@ -576,6 +580,7 @@
     "role-colaborator-id": "Id Rol",
     "function-colaborator-id": "Id Funcție angajat",
     "birth-day": "Data nașterii",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri",
     "phone-number": "Nr. telefon" 
   },
   "guide": {

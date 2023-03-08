@@ -8,6 +8,8 @@ using FluentValidation;
 using FluentValidation.Validators;
 using System.Linq;
 using RERU.Data.Persistence.Context;
+using System;
+using CVU.ERP.Common;
 
 namespace CODWER.RERU.Core.Application.Users.InregistrateUser
 {
@@ -15,7 +17,7 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
     {
         private readonly AppDbContext _appDbContext;
 
-        public InregistrateUserCommandValidator(IValidator<CreateUserDto> createUserDto, AppDbContext appDbContext)
+        public InregistrateUserCommandValidator(IValidator<CreateUserDto> createUserDto, AppDbContext appDbContext, IDateTime dateTime)
         {
             _appDbContext = appDbContext;
 
@@ -34,6 +36,10 @@ namespace CODWER.RERU.Core.Application.Users.InregistrateUser
             //RuleFor(x => x.FatherName).NotEmpty()
             //    .WithMessage(ValidationMessages.InvalidInput)
             //    .WithErrorCode(ValidationCodes.EMPTY_USER_FATHER_NAME);
+
+            RuleFor(r => r.BirthDate)
+                .Must(x => x < dateTime.Now.AddYears(-18))
+                .WithErrorCode(ValidationCodes.INVALID_USER_BIRTH_DATE);
 
             RuleFor(x => x.Email).NotEmpty()
                 .WithMessage(ValidationMessages.InvalidInput)
