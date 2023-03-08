@@ -571,7 +571,8 @@
     "startTime": "Start Time",
     "endTime": "End Time",
     "file": "File",
-    "history": "History"
+    "history": "History",
+    "validDuring": "Valid during"
   },
 
   "answers": {

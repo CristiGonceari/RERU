@@ -570,7 +570,8 @@
     "startTime": "Время начала",
     "endTime": "Время окончания",
     "file": "Файл",
-    "history": "История"
+    "history": "История",
+    "validDuring": "Действует в течение"
   },
   "answers": {
     "option-settings": "Настройка Опции",
