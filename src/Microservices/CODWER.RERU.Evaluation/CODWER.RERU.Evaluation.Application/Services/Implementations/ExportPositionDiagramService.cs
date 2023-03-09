@@ -107,6 +107,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     testCol++;
                 }
 
+                testCol = 3;
                 userRow++;
             }
         }
