@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   messageText: string;
   modules: ApplicationUserModuleModel[];
-
+  
   testId: string;
   showMultipleQuestionsPerPega: boolean;
   isLoading: boolean = true;
@@ -66,8 +66,10 @@ export class DashboardComponent implements OnInit {
     this.internalService.getTestIdForFastStart().subscribe(() => {});
   }
 
-  getEvaluationModuleUrl(): string {
-    const evaluationModule = this.modules.find(module => module.module.name === 'evaluation');
-    return evaluationModule ? evaluationModule.module.publicUrl : '';
-  }  
+  navigateToOption(id): void {
+		let host = window.location.host;
+    if (id == 1 ) window.open(`http://${host}/reru-evaluation/#/my-activities/my-solicited-position`)
+		else if (id == 2 ) window.open(`http://${host}/reru-evaluation/#/my-activities/add-solicited-position`)
+    else if (id == 3 ) window.open(`http://${host}/reru-evaluation/#/my-activities/my-tests`)
+	}
 }
