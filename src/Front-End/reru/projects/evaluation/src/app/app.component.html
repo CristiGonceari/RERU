@@ -1,6 +1,6 @@
 <app-layout [title]="'dashboard.title' | translate" [moduleCode]="'01'" [hasBackground]="true" [config]="appSettings" [languages]="translate.langs"
   [currentLanguage]="translate.currentLanguage" [sidebarItems]="sidebarItems"
-  [letter]="'assets/images/evaluation-logo.png'" [logo]="'assets/logo_transparent.png'" (navigate)="navigate($event)"
+  [letter]="'assets/images/MAI_Sign.png'" [logo]="'assets/logo_transparent.png'" (navigate)="navigate($event)"
   (changeLanguage)="translate.use($event)" (logout)="logout()">
   <app-location-back-button *ngIf="!getCurrentLocation()" [value]="'button.back' | translate"></app-location-back-button>
   <router-outlet></router-outlet>
