@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { PaginationModel } from '../../utils/models/pagination.model';
 import { LoggingService } from '../../utils/services/logging-service/logging.service';
 import { FormGroup } from '@angular/forms';
@@ -47,9 +47,12 @@ export class DashboardComponent implements AfterViewInit {
   headersToPrint = [];
   printTranslates: any[];
 
+  showFilter: boolean = true;
+
   constructor(private loggingService: LoggingService,
     public modalService: NgbModal,
-    public translate: I18nService) { }
+    public translate: I18nService,
+    private cd: ChangeDetectorRef) { }
 
 
   ngAfterViewInit(): void {
@@ -81,13 +84,17 @@ export class DashboardComponent implements AfterViewInit {
     this.searchFrom = '';
     this.searchTo = '';
 
-    this.selectedProject.value = '';
+    this.selectedProject = '';
     this.selectedEvent = '';
     this.searchUserName.value = '';
     this.searchEventName.value = '';
     this.searchEventMessage.value = '';
     this.searchJsonMessage.value = '';
     this.searchUserIdentifier.value = '';
+
+    this.showFilter = false;
+		this.cd.detectChanges();
+		this.showFilter = true;
 
     this.getLoggingValues();
     this.retriveDropdowns();

@@ -16,10 +16,11 @@
           </div>
           <div class="row w-100">
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
+              <div class="input-group input-group-sm input-group-solid" *ngIf="showFilter">
                 <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
                   (change)="atachProject($event)" (change)="getLoggingValues($event.target.value)">
-                  <option class="default-option text-muted" selected value="">{{ 'dashboard.module' | translate }}
+                  <option class="default-option text-muted" selected value="">
+                    {{ 'dashboard.module' | translate }}
                   </option>
                   <option *ngFor="let item of projects" [value]="item">
                     {{ item }}
