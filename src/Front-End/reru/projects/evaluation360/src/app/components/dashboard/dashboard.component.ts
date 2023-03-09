@@ -29,7 +29,7 @@ export type TodaysEvaluations = {
 })
 export class DashboardComponent {
   dashboard = {
-    tests: "Tests",
+    categories: "Categorii",
     evaluations: "Evaluations"
   }
 
@@ -51,7 +51,8 @@ export class DashboardComponent {
           toolbar: {
             export: {
               csv: {
-                filename: "Grafic Evaluări 360"
+                filename: "Grafic Evaluări 360",
+                headerCategory: this.dashboard.categories
               },
               svg: {
                 filename: "Grafic Evaluări 360",
@@ -84,9 +85,11 @@ export class DashboardComponent {
 
   translateData(): void {
 		forkJoin([
+      this.translate.get('dashboard.categories'),
 			this.translate.get('dashboard.evaluations'),
 		]).subscribe(
-			([evaluations ]) => {
+			([categories, evaluations]) => {
+        this.dashboard.categories = categories;
 				this.dashboard.evaluations = evaluations;
 			}
 		);
