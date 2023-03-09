@@ -24,6 +24,8 @@ namespace CODWER.RERU.Evaluation.Application.References.GetQuestionCategoryValue
         public async Task<List<SelectItem>> Handle(GetQuestionCategoryValueQuery request, CancellationToken cancellationToken)
         {
             var questionCategories = await _appDbContext.QuestionCategories
+                .OrderByDescending(x => x.CreateDate)
+                .ThenBy(x => x.Name)
                 .AsQueryable()
                 .Select(u => _mapper.Map<SelectItem>(u))
                 .ToListAsync();
