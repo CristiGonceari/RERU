@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit {
 
   navigateToOption(id): void {
 		let host = window.location.host;
-    if (id == 1 ) window.open(`http://${host}/reru-evaluation/#/my-activities/my-solicited-position`)
-		else if (id == 2 ) window.open(`http://${host}/reru-evaluation/#/my-activities/add-solicited-position`)
-    else if (id == 3 ) window.open(`http://${host}/reru-evaluation/#/my-activities/my-tests`)
+    if (id == 1 ) window.location.href = `http://${host}/reru-evaluation/#/my-activities/my-solicited-position`
+		else if (id == 2 ) window.location.href = `http://${host}/reru-evaluation/#/my-activities/add-solicited-position`
+    else if (id == 3 ) window.location.href = `http://${host}/reru-evaluation/#/my-activities/my-tests`
 	}
 }
