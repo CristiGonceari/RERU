@@ -267,7 +267,7 @@
       "3": "Detașare",
       "4": "Neschimbat"
     },
-    "function": "Funcția",
+    "function": "Funcție",
     "appointment-date": "Data numirii",
     "administrative-act-of-service": "Actul administrativ (raportul de serviciu)",
     "partial-evaluations-results": "Rezultate evaluarii parțiale",
@@ -456,7 +456,7 @@
     "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "faq": {
     "help": "Ajutor",

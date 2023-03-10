@@ -261,7 +261,7 @@
     "lastName": "Numele de familie",
     "father-name": "Patronimic(opțional)",
     "idnp": "IDNP",
-    "role": "Rolul",
+    "role": "Rol",
     "actions": "Acțiuni",
     "type": "Tip",
     "code": "Cod",
@@ -269,7 +269,7 @@
     "publicUrl": "Adresă URL publică",
     "internalUrl": "Gateway intern",
     "title": "Titlul",
-    "username": "Numele utilizatorului",
+    "username": "Nume utilizator",
     "active": "Activ",
     "description": "Descriere",
     "permission": "Permisiune",
@@ -324,10 +324,10 @@
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statut",
     "search-by-user-posture": "Căutați după postură",
-    "access-mode": "Modul de acces",
+    "access-mode": "Mod de acces",
     "code-length": "Codul trebuie să conțină 4 cifre!",
     "enter-code": "Introduceți codul",
-    "verify-process": "Codul de verificare îl găsiți în scrisoarea de pe email-ul Dvs. cu care v-ați înregistrat.",
+    "verify-process": "Codul îl găsiți pe email-ul cu care v-ați înregistrat.",
     "Employee": "Angajat",
     "Candidate": "Candidat"
   },
@@ -400,10 +400,10 @@
   "module-access": {
     "title": "Accesul utilizatorului la module",
     "module": "Titlul modulului",
-    "role": "Rolul",
+    "role": "Rol",
     "manage": "Gestionarea accesului la modul",
     "module-access-info": "Informații despre acces la module",
-    "user-name": "Numele utilizatorului",
+    "user-name": "Nume utilizator",
     "select": "Selectează",
     "remove-access-message": "Sunteți sigur(-ă) că doriți să eliminați accesul la acest modul?",
     "module-role-upd": "Rolul de acces la modul este actualizat!"
@@ -572,7 +572,7 @@
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
     "select-file-format": "Selectați formatul fișierului",
-    "full-username": "Numele utilizatorului (N.P.P.)",
+    "full-username": "Nume utilizator (N.P.P.)",
     "last-name": "Nume",
     "first-name": "Prenume",
     "father-name": "Patronimic",
@@ -584,7 +584,7 @@
     "phone-number": "Nr. telefon" 
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "faq": {
     "overview": "Prezentare generală",
@@ -735,7 +735,7 @@
     "recommendation-name": "Recomandare la studiii",
     "table-user-name": "Numele persoanei ce a recomandat",
     "table-user-last-name": "Prenumele persoanei ce a recomandat",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
@@ -745,7 +745,7 @@
     "name": "Starea civilă la data completării dosarului personal",
     "kinship-relation": "Relații de rudenie sau afinitate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",

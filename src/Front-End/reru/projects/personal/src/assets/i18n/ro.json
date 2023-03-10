@@ -34,7 +34,7 @@
     "reports": "Rapoarte",
     "vacantions":"Concedii",
     "guide": "Ghid",
-    "guide-description": "Ghidul Utilizatorului",
+    "guide-description": "Ghid Utilizator",
     "documentsTemplates" : "Șabloane",
     "help": "Ajutor",
     "faq": "Întrebări frecvente"
@@ -440,7 +440,7 @@
     "server-warn": "A apărut o eroare de Server!"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului",
+    "title": "Ghid Utilizator",
     "heading1": "Dacă v-ati confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
     "heading2": "In el puteți găsi răspunsul la orice întrebare.",
     "heading3": "Cum îmi schimb parola? Cum adaug un nou angajat? Cum pot adăuga sau redacta o poziție?",
@@ -577,10 +577,10 @@
     },
     "department": {
       "single": "Departament",
-      "title": "Departamentul"
+      "title": "Departament"
     },
     "role": {
-      "title": "Rolul",
+      "title": "Rol",
       "name": "Denumire",
       "from-date": "Angajarea din data",
       "to-date": "Angajarea pâna la",
@@ -590,12 +590,12 @@
       "no": "Nr"
     },
     "employee-functions": {
-      "title": "Funcția",
+      "title": "Funcție",
       "name": "Nume",
       "file": "Fișier",
       "code": "Cod",
       "no": "Nu",
-      "type": "Tipul",
+      "type": "Tip",
       "search-funciton": "Selectează funcția",
       "last-function": "Ultima funcție"
     },
@@ -604,7 +604,7 @@
       "from-date": "Din data",
       "generated-date": "Data generării",
       "work-hours": "Ore lucrate pe zi",
-      "role": "Funcția",
+      "role": "Funcție",
       "department": "Departament",
       "probation-day-period": "Durata stagierii",
       "work-place": "Locul de muncă (adresa)",
@@ -615,7 +615,7 @@
       "actions": "Acțiuni"
     },
     "vacation": {
-      "type": "Tipul",
+      "type": "Tip",
       "vacation-day": "Data",
       "from-date": "Din data",
       "to-date":"Până la",
@@ -1171,7 +1171,7 @@
     "recommendation-name": "Recomandare la studiii",
     "table-user-name": "Numele persoanei ce a recomandat",
     "table-user-last-name": "Prenumele persoanei ce a recomandat",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei"
@@ -1181,7 +1181,7 @@
     "name": "Starea civilă la data completării dosarului personal",
     "kinship-relation": "Relații de rudenie sau afinate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",

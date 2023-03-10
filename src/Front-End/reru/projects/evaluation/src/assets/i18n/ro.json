@@ -377,7 +377,7 @@
     "remove-test-category-msg": "Sigur doriți să ștergeți această categrie din acest șablon de test?",
     "test-type-data": "Introduceți detaliile șablonului testului și confirmați",
     "test-type-details": "Detaliile șablonului testului",
-    "mode": "Tipul",
+    "mode": "Tip",
     "finalize-test": "Finalizați testul",
     "finalize-poll": "Finalizați sondajul",
     "seconds-to-complete": "secunde pentru finalizare",
@@ -509,7 +509,7 @@
     "used-in-test": "Folosit în test",
     "category": "Categorie",
     "answers": "Răspunsul",
-    "type": "Tipul",
+    "type": "Tip",
     "subtitle": "Gestionarea întrebărilor",
     "new-question": "Întrebarea Nouă",
     "add-question": "Adaugă întrebare",
@@ -1060,7 +1060,7 @@
     "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "solicited-test": {
     "solicited-tests": "Poziții solicitate",
