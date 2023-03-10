@@ -155,15 +155,14 @@
                                     <span class="text-muted mr-2">Nu aveți cont?</span>
                                     <a href="@(Model.RegistrationPageUrl)" id="kt_login_signup" class="font-weight-bold">Înregistrează-te</a>
                                  </div>
-
-                                 <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-7 py-3 my-3" name="button" value="login">Logare</button>
+                                <button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-7 py-3 my-3" name="button" value="login">Logare</button>
                                 <div class="my-3 mr-2">
                                     <span class="text-muted mr-2">Vreți să candidați?</span>
                                     <a href="@(Model.PositionsPageUrl)" id="kt_login_signup" class="font-weight-bold">Poziții vacante</a>
                                 </div>
                             </div>
 
-                                @*@if (Model.VisibleExternalProviders.Any())
+                                @if (Model.VisibleExternalProviders.Any())
                                 {
                                     <div class="class="text-center"">
                                         <p>or sign in with:</p>
@@ -182,7 +181,7 @@
                                                     }
                                                 </ul>
                                         </div>
-                                }*@
+                                }
                             </form>
                         </div>
                     }

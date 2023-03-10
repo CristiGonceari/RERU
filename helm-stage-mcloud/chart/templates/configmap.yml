@@ -344,6 +344,17 @@ data:
         "RegistrationPageUrl": "https://reru.mai.gov.md/#/registration-page",
         "PositionsPageUrl": "https://reru.mai.gov.md/#/vacant-positions-page",
         "ResetPassPageUrl": "https://reru.mai.gov.md/#/reset-password"
+      },
+       "MPassSaml": {
+        "SamlRequestIssuer": "https://reru.mai.gov.md",
+        "IdentityProviderCertificatePath": "Files/Certificates/mpass.staging.egov.md.cer",
+        "SamlLoginDestination": "https://mpass.gov.md/login/saml",
+        "SamlLogoutDestination": "https://mpass.gov.md/logout/saml",
+        "ServiceRootUrl": "https://reru.mai.gov.md/#/"
+      },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
       }
     }
 

@@ -344,6 +344,17 @@ data:
         "RegistrationPageUrl": "http://reru-stage.codwer.com/#/registration-page",
         "PositionsPageUrl": "http://reru-stage.codwer.com/#/vacant-positions-page",
         "ResetPassPageUrl": "http://reru-stage.codwer.com/#/reset-password"
+      },
+      "MPassSaml": {
+        "SamlRequestIssuer": "https://reru.mai.gov.md",
+        "IdentityProviderCertificatePath": "Files/Certificates/mpass.staging.egov.md.cer",
+        "SamlLoginDestination": "https://mpass.gov.md/login/saml",
+        "SamlLogoutDestination": "https://mpass.gov.md/logout/saml",
+        "ServiceRootUrl": "http://reru-stage.codwer.com/#/"
+      },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
       }
     }
 
