@@ -346,7 +346,7 @@ data:
         "ResetPassPageUrl": "http://reru-stage.codwer.com/#/reset-password"
       },
       "MPassSaml": {
-        "SamlRequestIssuer": "http://reru-stage.codwer.com",
+        "SamlRequestIssuer": "http://reru.codwer.com",
         "IdentityProviderCertificatePath": "Files/Certificates/mpass.staging.egov.md.cer",
         "SamlLoginDestination": "https://mpass.staging.egov.md/login/saml",
         "SamlLogoutDestination": "https://mpass.staging.egov.md/logout/saml",
