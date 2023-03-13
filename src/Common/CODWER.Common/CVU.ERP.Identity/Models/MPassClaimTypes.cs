@@ -7,7 +7,7 @@
         public const string FirstName = "FirstName";
         public const string LastName = "LastName";
         public const string BirthDate = "BirthDate";
-        public const string PhoneNumber = "family_name";
+        public const string PhoneNumber = "MobilePhone";
         public const string EmailAdress = "EmailAddress";
 
     }

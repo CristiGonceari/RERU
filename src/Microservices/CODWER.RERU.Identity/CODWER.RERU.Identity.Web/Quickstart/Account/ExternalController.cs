@@ -173,7 +173,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
             // retrieve return URL
-            var zz = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl");
             var returnUrl = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl") ?? "~/";
 
             // check if external login is in the context of an OIDC request

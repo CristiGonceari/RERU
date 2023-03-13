@@ -147,9 +147,9 @@
                                         <div class="checkbox-inline">
                                             <a href="@(Model.ResetPassPageUrl)" id="kt_login_signup" class="font-weight-bold">Aţi uitat parola?</a>
                                         </div>
+                                       
                                     </div>
                                 }
-
                             <div class="form-group d-flex flex-wrap justify-content-between align-items-end mt-2">
                                 <div class="my-3 mr-2">
                                     <span class="text-muted mr-2">Nu aveți cont?</span>
@@ -162,25 +162,67 @@
                                 </div>
                             </div>
 
-                                @if (Model.VisibleExternalProviders.Any())
+                               @* @if (Model.VisibleExternalProviders.Any())
                                 {
                                     <div class="class="text-center"">
-                                        <p>or sign in with:</p>
+                                        <p>Autentificare cu:</p>
                                                 <ul class="list-inline">
                                                     @foreach (var provider in Model.VisibleExternalProviders)
                                                     {
                                                         <li class="list-inline-item">
-                                                            <a class="btn btn-secondary"
-                                                               asp-controller="External"
-                                                               asp-action="Challenge"
-                                                               asp-route-scheme="@provider.AuthenticationScheme"
-                                                               asp-route-returnUrl="@Model.ReturnUrl">
-                                                                @provider.DisplayName
-                                                            </a>
+                                                           
+                                                                @if (@provider.DisplayName == "MPass")
+                                                                {
+                                                                    <a class="font-weight-bold"
+                                                                            asp-controller="External"
+                                                                            asp-action="Challenge"
+                                                                            asp-route-scheme="@provider.AuthenticationScheme"
+                                                                            asp-route-returnUrl="@Model.ReturnUrl">
+                                                                    <img src="~/mpass-logo.png" class="max-h-20px" alt="" />
+                                                                    </a>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                     <a class="btn btn-secondary"
+                                                                       asp-controller="External"
+                                                                       asp-action="Challenge"
+                                                                       asp-route-scheme="@provider.AuthenticationScheme"
+                                                                       asp-route-returnUrl="@Model.ReturnUrl">
+                                                                            @provider.DisplayName
+                                                                      </a>
+                                                                }
+                                                          
                                                         </li>
                                                     }
                                                 </ul>
                                         </div>
+                                }*@
+                                @if (Model.VisibleExternalProviders.Any())
+                                {
+                                    <div class="form-group d-flex flex-wrap justify-content-center p-2 mt-3 border">
+                                        <div class="checkbox-inline">
+                                            @foreach (var provider in Model.VisibleExternalProviders)
+                                            {
+                                                <a class="font-weight-bold" style="font-size: 30px;"
+                                                                asp-controller="External"
+                                                                asp-action="Challenge"
+                                                                asp-route-scheme="@provider.AuthenticationScheme"
+                                                                asp-route-returnUrl="@Model.ReturnUrl">
+                                                    @if (@provider.DisplayName == "MPass")
+                                                    {
+                                                        <h1>Autentificare  
+                                                            <img src="~/mpass-logo.png" class="max-h-30px" alt="" />
+                                                        </h1>
+                                                    }
+                                                    else
+                                                    {
+                                                         <h1>Autentificare @provider.DisplayName</h1> 
+                                                    }
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
                                 }
                             </form>
                         </div>
