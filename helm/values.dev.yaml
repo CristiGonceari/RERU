@@ -217,6 +217,8 @@ microservices:
           value: "http://reru.codwer.com"
         - name: ConnectionStrings__Identity
           value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
+        - name: ConnectionStrings__RERU
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-DEV;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
         - name: IDENTITY_ISSUER_URI
           value: "http://reru.codwer.com/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI
