@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,18 +20,25 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+	<PackageReference Include="Age.Integrations.MPass.Saml" Version="6.0.13" />
+	  
+	<PackageReference Include="AutoMapper" Version="10.1.1" />
+	<PackageReference Include="AutoMapper.Collection" Version="7.0.1" />
+	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
-  </ItemGroup>
-
 
 
   <ItemGroup>
-    <None Update="926_reru.mai.pki.gov.md _eSystems-Trust.pfx">
+    <None Update="Files\Certificates\926_reru.mai.pki.gov.md _eSystems-Trust.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	  <None Update="Files\Certificates\mpass.staging.egov.md.cer">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Files\Certificates\RERU-Codwer-DEV.pfx">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
     <None Update="tempkey.jwk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -41,9 +48,18 @@
     <None Update="erp_platform.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Templates\UserRegister.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Identity\CVU.ERP.Identity.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Logging\CVU.ERP.Logging.csproj" />
+    <ProjectReference Include="..\..\..\Common\CODWER.Common\CVU.ERP.Notifications\CVU.ERP.Notifications.csproj" />
   </ItemGroup>
 </Project>
