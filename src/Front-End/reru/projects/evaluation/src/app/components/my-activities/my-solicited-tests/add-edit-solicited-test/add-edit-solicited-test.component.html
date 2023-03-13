@@ -21,7 +21,7 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-xl-right text-left">{{
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                 'solicited-test.position-to-candidate' | translate }}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <div *ngIf="isEdit"
@@ -43,7 +43,7 @@
                                         <div *ngIf="showCard">
                                             <div class="form-group row"
                                                 *ngFor="let event of eventsWithTestList">
-                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                     'events.event' | translate }}</label>
                                                 <div class="col-lg-9 col-xl-9 col-form-label">
                                                     <p>{{ event.eventName }} :</p>
@@ -57,7 +57,7 @@
                                         <div *ngIf="showCard && !isEdit">
                                             <div class="form-group row"
                                                 *ngFor="let requiredDocument of requiredDocumentsList; let i = index">
-                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                     requiredDocument.name }}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <div class="form-group row">
