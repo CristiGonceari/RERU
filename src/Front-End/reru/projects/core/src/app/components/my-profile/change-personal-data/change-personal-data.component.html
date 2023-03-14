@@ -89,7 +89,7 @@
                       </label>
                       <div class="col-lg-9 col-xl-9">
                         <input class="form-control form-control-lg form-control-solid" name="phoneNumber"
-                          type="text" formControlName="phoneNumber" maxlength="12" minlength="12"
+                          type="text" formControlName="phoneNumber" [placeholder]="'user.phone-full' | translate" maxlength="12" minlength="12"
                           [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': personalDataForm?.get('phoneNumber').valid}" />
                         <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                           <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"
