@@ -303,8 +303,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // the most common claim type for that are the sub claim and the NameIdentifier
             // depending on the external provider, some other claim type might be used
 
-            //if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null)
-            if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null || externalUser.FindFirst(MPassClaimTypes.PhoneNumber) == null)
+            if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null)
+                //if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null || externalUser.FindFirst(MPassClaimTypes.PhoneNumber) == null)
             {
                 throw new Exception("Unknown user email or phoneNumber");
             }
@@ -392,7 +392,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 Idnp = claims.First(x => x.Type == MPassClaimTypes.UserName).Value,
                 Email = claims.First(x => x.Type == MPassClaimTypes.EmailAdress).Value,
                 BirthDate = DateTime.Parse(claims.First(x => x.Type == MPassClaimTypes.BirthDate).Value),
-                PhoneNumber = claims.First(x => x.Type == MPassClaimTypes.PhoneNumber).Value,
+                //PhoneNumber = claims.First(x => x.Type == MPassClaimTypes.PhoneNumber).Value,
                 EmailNotification = true,
             };
 
