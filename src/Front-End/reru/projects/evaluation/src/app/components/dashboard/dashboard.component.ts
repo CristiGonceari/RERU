@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
   fileStatus = {status: '', requestType: '', percent: 0 }
   filenames: string[] = [];
   dashboard = {
-    categories: "Categories",
+    categories: "Period",
     tests: "Tests",
     evaluations: "Evaluations"
   }
@@ -76,8 +76,8 @@ export class DashboardComponent implements OnInit {
       this.translateData();
       
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString();
-      const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
+      const currentYear = new Date().getFullYear();
+      const months = ["Ian ", "Fеb ", "Mаr ", "Аpr ", "Mai ", "Iun ", "Iul ", "Аug ", "Sеp ", "Оct ", "Noi ", "Dеc "];
 
       this.evaluationsChartOptions = {
         series: [],
@@ -107,7 +107,7 @@ export class DashboardComponent implements OnInit {
         },
         xaxis: {
           type: "category",
-          categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
+          categories: months.slice(currentMonth + 1).map(month => month + (currentYear - 1))
               .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
         }
       };
