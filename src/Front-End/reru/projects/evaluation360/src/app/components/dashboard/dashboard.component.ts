@@ -29,7 +29,7 @@ export type TodaysEvaluations = {
 })
 export class DashboardComponent {
   dashboard = {
-    categories: "Categorii",
+    categories: "Period",
     evaluations: "Evaluations"
   }
 
@@ -38,10 +38,12 @@ export class DashboardComponent {
   constructor(public translate: I18nService,
               private evaluationService: EvaluationService,
     ) {
+
+      this.translateData();
       
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString();
-      const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
+      const currentYear = new Date().getFullYear();
+      const months = ["Ian ", "Fеb ", "Mаr ", "Аpr ", "Mai ", "Iun ", "Iul ", "Аug ", "Sеp ", "Оct ", "Noi ", "Dеc "];
 
       this.evaluationsChartOptions = {
         series: [],
@@ -71,14 +73,13 @@ export class DashboardComponent {
         },
         xaxis: {
           type: "category",
-          categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
+          categories: months.slice(currentMonth + 1).map(month => month + (currentYear - 1))
               .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
         }
       };
     }
 
   ngOnInit(): void {
-    this.translateData();
     this.subscribeForLanguageChange();
     this.countEvaluations360().subscribe(series => {this.evaluationsChartOptions.series = series;});
   }

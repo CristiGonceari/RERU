@@ -107,7 +107,7 @@ export class AddComponent implements OnInit {
       fatherName: this.fb.control(""),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      phoneNumber: this.fb.control("+373", [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$"), Validators.maxLength(12), Validators.minLength(12)]),
+      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$"), Validators.maxLength(12), Validators.minLength(12)]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
       functionColaboratorId: this.fb.control(null, [Validators.required]),
