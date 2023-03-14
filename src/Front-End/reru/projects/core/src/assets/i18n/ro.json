@@ -416,7 +416,10 @@
     "enclosed-mode":"Mod restrâns",
     "my-activities": "Pentru admitere la studii",
     "solicited-position": "Pentru accedere la o funcție publică cu statut special",
-    "my-tests": "Pentru angajații MAI"
+    "my-tests": "Pentru angajații MAI",
+    "request-position": "Solicită poziția",
+    "my-solicited-tests": "Pozițiile mele solicitate",
+    "tests": "Teste"
   },
   "pages": {
     "users": {
