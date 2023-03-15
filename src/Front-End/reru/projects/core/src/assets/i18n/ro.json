@@ -5,9 +5,9 @@
     "ru": "Русский"
   },
   "right-sidebar": {
-    "header": "Profilul utilizatorului",
+    "header": "Profil utilizator",
     "my-profile": "Profilul meu",
-    "change-password": "Schimbarea parolei",
+    "change-password": "Schimbare parolă",
     "logout": "Ieșire",
     "registration": "Înregistrare Core",
     "core-dashboard": "Tabloul de bord principal"
@@ -94,7 +94,7 @@
     "import-users": "Importă utilizatori",
     "import-departments": "Importă departamente",
     "import-roles": "Importă roluri",
-    "modal-title": "Încărcarea documentelor",
+    "modal-title": "Încărcare documente",
     "modal-description": "Încarcă document sau apasă aici pentru încărcare",
     "success-add-doc": "Documentul a fost încărcat cu succes"
   },
@@ -175,16 +175,16 @@
     "cancel": "Anulează",
     "confirm": "Confirmă",
     "delete": "Șterge",
-    "view-user": "Vizualizarea profilului utilizatorului",
-    "add-user": "Adaugarea utilizatorului",
-    "edit-user": "Editarea profilului utilizatorului",
-    "delete-user": "Ștergerea utilizatorului",
-    "activate-user": "Activarea utilizatorului",
-    "deactivate-user": "Dezactivarea utilizatorului",
-    "add-module": "Adaugarea modulului",
-    "edit-module": "Editarea modulului",
-    "add-role": "Adaugarea rolului",
-    "edit-role": "Editarea rolului",
+    "view-user": "Vizualizare profil utilizator",
+    "add-user": "Adăugare utilizator",
+    "edit-user": "Editare profil utilizator",
+    "delete-user": "Ștergere utilizator",
+    "activate-user": "Activare utilizator",
+    "deactivate-user": "Dezactivare utilizator",
+    "add-module": "Adăugare modul",
+    "edit-module": "Editare modul",
+    "add-role": "Adăugare rol",
+    "edit-role": "Editare rol",
     "submit": "Confirm",
     "back": "Înapoi",
     "navigate": "Navighează",
@@ -261,7 +261,7 @@
     "lastName": "Numele de familie",
     "father-name": "Patronimic(opțional)",
     "idnp": "IDNP",
-    "role": "Rolul",
+    "role": "Rol",
     "actions": "Acțiuni",
     "type": "Tip",
     "code": "Cod",
@@ -269,7 +269,7 @@
     "publicUrl": "Adresă URL publică",
     "internalUrl": "Gateway intern",
     "title": "Titlul",
-    "username": "Numele utilizatorului",
+    "username": "Nume utilizator",
     "active": "Activ",
     "description": "Descriere",
     "permission": "Permisiune",
@@ -308,8 +308,8 @@
     "history": "Istoria"
   },
   "user-profile": {
-    "overview": "Vizualizarea profilului personal",
-    "edit-title": "Editarea profilului personal",
+    "overview": "Vizualizare profil personal",
+    "edit-title": "Editare profil personal",
     "edit-subtitle": "Inserta datele personale",
     "personal-details": "Datele profilului:",
     "change-personal-data": "Schimbare datelor profilului personal",
@@ -324,10 +324,10 @@
     "idnp-length": "IDNP trebuie să conține 13 cifre!",
     "search-by-user-state": "Căutați după statut",
     "search-by-user-posture": "Căutați după postură",
-    "access-mode": "Modul de acces",
+    "access-mode": "Mod de acces",
     "code-length": "Codul trebuie să conțină 4 cifre!",
     "enter-code": "Introduceți codul",
-    "verify-process": "Codul de verificare îl găsiți în scrisoarea de pe email-ul Dvs. cu care v-ați înregistrat.",
+    "verify-process": "Codul îl găsiți pe email-ul cu care v-ați înregistrat.",
     "Employee": "Angajat",
     "Candidate": "Candidat"
   },
@@ -335,8 +335,8 @@
     "description":"Descriere"
   },
   "user": {
-    "edit-title": "Editarea utilizatorului",
-    "delete-title": "Ștergerea utilizatorului",
+    "edit-title": "Editare utilizator",
+    "delete-title": "Ștergere utilizator",
     "block-title": "Blocare/Deblocare",
     "remove-sure": "Sunteți sigur(-ă) că doriți să ștergeți acest utilizator?",
     "succes-remove": "Utilizatorul a fost șters cu succes!",
@@ -353,7 +353,7 @@
     "search-idnp": "Căutați după IDNP"
   },
   "set-password": {
-    "title": "Setarea Parolei",
+    "title": "Setare Parolă",
     "subheader": "Introduceți parola utilizatorului",
     "password": "Parola",
     "succes-set-password": "Parola a fost setată cu succes!",
@@ -363,15 +363,15 @@
     "fill-corectly": "Completați corect toate câmpurile!"
   },
   "reset-password": {
-    "title": "Resetarea Parolei",
+    "title": "Resetare Parolă",
     "subheader": "Confirmați-vă acțiunea",
     "reset-pass-msg": "Sigur doriți să resetați parola utilizatorului",
     "success-reset-password": "Parola a fost transmisă pe e-mail",
     "success-reset": "Parola a fost resetată cu succes!"
   },
   "change-password-comp": {
-    "title": "Schimbarea parolei",
-    "password-details": "Detaliile parolei",
+    "title": "Schimbare parolă",
+    "password-details": "Detalii parolă",
     "old-password": "Parola veche",
     "new-password": "Parola noua",
     "repeat-password": "Repetați parola",
@@ -386,51 +386,54 @@
     "password-are-not-the-same": "Parola nouă și parola repetată trebie să coincidă"
   },
   "deactivate-user": {
-    "title": "Dezactivarea utilizatorului",
+    "title": "Dezactivare utilizator",
     "deactivate": "Sigur doriți să dezactivați acest utilizator?",
     "deactivate-msg": "Sigur doriți să dezactivați ",
     "success-deactivate": "Utilizatorul a fost dezactivat cu succes!"
   },
   "activate-user": {
-    "title": "Activarea utilizatorului",
+    "title": "Activare utilizator",
     "activate": "Sigur doriți să activați acest utilizator?",
     "activate-msg": "Sigur doriți să activați ",
     "success-activate": "Utilizatorul a fost activat cu succes!"
   },
   "module-access": {
     "title": "Accesul utilizatorului la module",
-    "module": "Titlul modulului",
-    "role": "Rolul",
-    "manage": "Gestionarea accesului la modul",
+    "module": "Titlu modul",
+    "role": "Rol",
+    "manage": "Gestionare acces la modul",
     "module-access-info": "Informații despre acces la module",
-    "user-name": "Numele utilizatorului",
+    "user-name": "Nume utilizator",
     "select": "Selectează",
     "remove-access-message": "Sunteți sigur(-ă) că doriți să eliminați accesul la acest modul?",
     "module-role-upd": "Rolul de acces la modul este actualizat!"
   },
   "remove-module": {
-    "title": "Ștergerea modulului",
+    "title": "Ștergere modul",
     "sure": "Sunteți sigur(-ă) că doriți să ștergeți modulul?"
   },
   "dashboard": {
     "enclosed-mode":"Mod restrâns",
     "my-activities": "Pentru admitere la studii",
     "solicited-position": "Pentru accedere la o funcție publică cu statut special",
-    "my-tests": "Pentru angajații MAI"
+    "my-tests": "Pentru angajații MAI",
+    "request-position": "Solicită poziția",
+    "my-solicited-tests": "Pozițiile mele solicitate",
+    "tests": "Teste"
   },
   "pages": {
     "users": {
-      "title": "Gestionarea utilizatorilor aplicației",
-      "user-list": "Lista utilizatorilor",
+      "title": "Gestionare utilizatori aplicație",
+      "user-list": "Listă utilizatori",
       "new": "Utilizator nou",
-      "edit": "Editarea utilizatorului",
-      "details": "Detaliile utilizatorului",
+      "edit": "Editare utilizator",
+      "details": "Detalii utilizator",
       "send-email": "Notificare prin email"
     },
     "user-details": {
-      "title": "Profilul utilizatorului",
-      "overview": "Vizualizarea profilului",
-      "details": "Vizualizarea generală a detaliilor profilului utilizatorului",
+      "title": "Profil utilizator",
+      "overview": "Vizualizare profil",
+      "details": "Vizualizare generală a detaliilor profilului utilizatorului",
       "module-access": "Acces la module",
       "email": "E-mail",
       "give-module-access": "Dați accesul",
@@ -442,13 +445,13 @@
     },
     "modules": {
       "title": "Module",
-      "subtitle": "Gestionarea modulelor aplicației",
+      "subtitle": "Gestionare module aplicație",
       "list-module": "Lista de module",
       "details": "Vizualizați detaliile",
       "edit": "Editați modulul",
       "navigate": "Navigați la modul",
       "remove": "Ștergeți modulul",
-      "development": "Dezvoltarea modulelor",
+      "development": "Dezvoltare module",
       "info": "Informații despre modul",
       "delete-msg": "Sigur doriți să ștergeți acest modul",
       "succes-delete-msg": "Modulul a fost șters cu succes!",
@@ -456,25 +459,25 @@
       "success-edit": "Modulul a fost editat cu succes!"
     },
     "access-roles": {
-      "title": "Gestionarea rolulilor de acces"
+      "title": "Gestionare roluri de acces"
     },
     "dashboard": {
       "title": "Tabloul de bord principal",
       "subtitle": "Pagina de start"
     },
     "modules-details": {
-      "title": "Detaliile modulului",
-      "overview": "Vizualizarea modulului",
-      "roles": "Rolurile modulului",
-      "permissions": "Permisiunile modulului",
+      "title": "Detalii modul",
+      "overview": "Vizualizare modul",
+      "roles": "Roluri modul",
+      "permissions": "Permisiuni modul",
       "search-by-code": "Căutați după codul permisiunii",
       "search-by-description": "Căutați după numele permisiunii"
     },
     "roles": {
       "view-permissions": "Vizualizați permisiunile",
-      "details": "Detaliile rolului",
-      "permissions": "Permisiunile rolului",
-      "update-permissions": "Editarea permisiunilor",
+      "details": "Detalii rol",
+      "permissions": "Permisiuni rol",
+      "update-permissions": "Editare permisiuni",
       "management": "Managementul rolului",
       "name": "Numele rolului",
       "use-as-default": "Folosiți ca rol implicit",
@@ -487,11 +490,11 @@
       "success-upd-permissions": "Permisiunile pentru rolul modulului au fost actualizate cu succes!"
     },
     "positions": {
-      "management": "Gestionarea pozițiilor vacante",
-      "add": "Adaugă poziție",
+      "management": "Gestionare poziții vacante",
+      "add": "Adăugă poziție",
       "edit": "Editează poziție",
       "remove": "Elimină poziție",
-      "details": "Detaliile poziției",
+      "details": "Detalii poziție",
       "subtitle": "Gestionați pozițiile vacante",
       "list": "Lista de poziții vacante",
       "success-create": "Poziția a fost adăugată cu succes",
@@ -506,7 +509,7 @@
     "title": "Încărcați imaginea de profil",
     "drop-msg": "Plasați imaginea aici sau faceți clic pentru a încărca imaginea.",
     "sure-image-msg": "Asigurați-vă că încărcați o imagine.",
-    "remove": "Ștergerea avatarului",
+    "remove": "Ștergere avatar",
     "sure-remove-msg": "Sunteți sigur(-ă) că doriți să ștergeți avatarul?",
     "upload-btn": "Încarcă"
   },
@@ -572,7 +575,7 @@
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
     "select-file-format": "Selectați formatul fișierului",
-    "full-username": "Numele utilizatorului (N.P.P.)",
+    "full-username": "Nume utilizator (N.P.P.)",
     "last-name": "Nume",
     "first-name": "Prenume",
     "father-name": "Patronimic",
@@ -584,38 +587,38 @@
     "phone-number": "Nr. telefon" 
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "faq": {
     "overview": "Prezentare generală",
     "help": "Ajutor",
     "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea întrebărilor",
-    "new-article": "Adaugă Articol",
+    "manage-faq": "Gestionare întrebări",
+    "new-article": "Adăugare Articol",
     "delete-article": "Șterge Articol",
-    "article-title": "Titlul Articolului",
+    "article-title": "Titlu Articol",
     "name": "Nume",
     "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
     "remove": "Ștergeți articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
-    "succes-remove-msg": "Articol a fost șters cu succes",
-    "succes-add-msg": "Articol a fost adăugat cu succes",
-    "succes-edit-msg": "Articol a fost editat cu succes",
-    "article-details": "Detaliile articolului",
+    "succes-remove-msg": "Articolul a fost șters cu succes",
+    "succes-add-msg": "Articolul a fost adăugat cu succes",
+    "succes-edit-msg": "Articolul a fost editat cu succes",
+    "article-details": "Detalii articol",
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Rolurile modulului"
+    "module-roles": "Roluri modul"
   },
   "departments": {
     "overview": "Prezentare generală",
     "help": "Ajutor",
     "departments": "Departamente",
     "department": "Departament",
-    "subtitle": "Gestionarea departamentelor",
-    "new-department": "Adaugă departament",
+    "subtitle": "Gestionare departamente",
+    "new-department": "Adăugare departament",
     "delete-department": "Șterge department",
     "name": "Nume",
     "remove": "Ștergeți departament",
@@ -624,7 +627,7 @@
     "succes-add-msg": "Departamentul a fost adăugat cu succes",
     "succes-edit-msg": "Departamentul a fost editat cu succes",
     "department-data": "Introduceți detaliile departamentului și confirmați",
-    "department-details": "Detaliile departamentului",
+    "department-details": "Detalii departament",
     "search-department": "Căutați după departament"
   },
   "user-roles": {
@@ -632,8 +635,8 @@
     "help": "Ajutor",
     "roles": "Roluri",
     "role": "Rol",
-    "subtitle": "Gestionarea rolurilor",
-    "new-role": "Adaugă rol",
+    "subtitle": "Gestionare roluri",
+    "new-role": "Adăugare rol",
     "delete-role": "Șterge rol",
     "name": "Nume",
     "remove": "Ștergeți rol",
@@ -642,14 +645,14 @@
     "succes-add-msg": "Rolul a fost adăugat cu succes",
     "succes-edit-msg": "Rolul a fost editat cu succes",
     "user-role-data": "Introduceți detaliile rolului și confirmați",
-    "user-role-details": "Detaliile rolului",
+    "user-role-details": "Detalii rol",
     "search-role": "Căutați după rol",
     "employee-function": "Funcție angajat",
     "search-by-function": "Căutați după funcție"
   },
   "general-datas":{
-    "nationality": "Naţionalitatea",
-    "citizenship":"Cetățenia",
+    "nationality": "Naţionalitate",
+    "citizenship":"Cetățenie",
     "state-language-level":"Nivelul de cunoaștere a limbii de stat",
     "sex":"Sex",
     "home-phone":"Telefon fix(opțional)",
@@ -735,7 +738,7 @@
     "recommendation-name": "Recomandare la studiii",
     "table-user-name": "Numele persoanei ce a recomandat",
     "table-user-last-name": "Prenumele persoanei ce a recomandat",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
@@ -745,7 +748,7 @@
     "name": "Starea civilă la data completării dosarului personal",
     "kinship-relation": "Relații de rudenie sau afinitate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
