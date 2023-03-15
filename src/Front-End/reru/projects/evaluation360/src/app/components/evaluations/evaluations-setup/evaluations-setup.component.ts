@@ -121,9 +121,12 @@ export class EvaluationsSetupComponent implements OnInit {
 		modalRef.componentInstance.roles = [...this.roles];
 		modalRef.componentInstance.userStatuses = [...this.userStatuses];
 		modalRef.componentInstance.functions = [...this.functions];
-		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? ([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
+		modalRef.componentInstance.exceptUserIds = isAttachEvaluated ? 
+			([this.evaluationForm.get('counterSignerUserProfileId').value] || []) : 
+			this.evaluationForm?.get('evaluatedUserProfileIds')?.value || 0;
 		modalRef.componentInstance.attachedUsers = isAttachEvaluated ? 
-		(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : [this.evaluationForm.get('counterSignerUserProfileId').value] || [];
+			(this.evaluationForm?.get('evaluatedUserProfileIds')?.value || []) : 
+			[this.evaluationForm.get('counterSignerUserProfileId').value] || null;
 		modalRef.result.then((data) => {
 			if (isAttachEvaluated) {
 				this.evaluationForm.get('evaluatedUserProfileIds').patchValue([...data.selectedUsers])

@@ -52,7 +52,7 @@ id="kt_datatable">
     <thead class="text-uppercase text-muted">
         <tr>
             <th scope="col" style="width: 50px">
-                <span>
+                <span *ngIf="inputType == 'checkbox'">
                     <label class="checkbox checkbox-lg checkbox-inline" [ngbTooltip]="tooltip">
                         <input type="checkbox" value="" name="option"
                             [checked]="paginatedAttachedIds"
