@@ -368,7 +368,7 @@
     "reset-pass-msg": "Sigur doriți să resetați parola utilizatorului",
     "success-reset-password": "Parola a fost transmisă pe e-mail",
     "success-reset": "Parola a fost resetată cu succes!",
-    "page-title":"Pagina de resetarea a parolei"
+    "page-title":"Pagina de resetare a parolei"
   },
   "change-password-comp": {
     "title": "Schimbare parolă",
