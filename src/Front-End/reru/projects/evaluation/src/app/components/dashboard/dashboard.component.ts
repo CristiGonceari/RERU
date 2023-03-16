@@ -59,6 +59,7 @@ export class DashboardComponent implements OnInit {
   fileStatus = {status: '', requestType: '', percent: 0 }
   filenames: string[] = [];
   dashboard = {
+    categories: "Period",
     tests: "Tests",
     evaluations: "Evaluations"
   }
@@ -72,10 +73,11 @@ export class DashboardComponent implements OnInit {
               private testService: TestService,
               public translate: I18nService
     ) {
+      this.translateData();
       
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString();
-      const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
+      const currentYear = new Date().getFullYear();
+      const months = ["Ian ", "Fеb ", "Mаr ", "Аpr ", "Mai ", "Iun ", "Iul ", "Аug ", "Sеp ", "Оct ", "Noi ", "Dеc "];
 
       this.evaluationsChartOptions = {
         series: [],
@@ -85,7 +87,8 @@ export class DashboardComponent implements OnInit {
           toolbar: {
             export: {
               csv: {
-                filename: "Grafic Teste și Evaluări"
+                filename: "Grafic Teste și Evaluări",
+                headerCategory: this.dashboard.categories
               },
               svg: {
                 filename: "Grafic Teste și Evaluări",
@@ -104,7 +107,7 @@ export class DashboardComponent implements OnInit {
         },
         xaxis: {
           type: "category",
-          categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
+          categories: months.slice(currentMonth + 1).map(month => month + (currentYear - 1))
               .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
         }
       };
@@ -121,10 +124,12 @@ export class DashboardComponent implements OnInit {
 
   translateData(): void {
 		forkJoin([
+      this.translate.get('dashboard.categories'),
 			this.translate.get('dashboard.tests'),
 			this.translate.get('dashboard.evaluations'),
 		]).subscribe(
-			([ tests, evaluations ]) => {
+			([ categories, tests, evaluations ]) => {
+        this.dashboard.categories = categories;
 				this.dashboard.tests = tests;
 				this.dashboard.evaluations = evaluations;
 			}
@@ -136,6 +141,7 @@ export class DashboardComponent implements OnInit {
 	}
 
   countTestsAndEvaluations() {
+    this.subscribeForLanguageChange();
     return forkJoin([
       this.testService.getNrTests(),
       this.testService.getNrEvaluations()

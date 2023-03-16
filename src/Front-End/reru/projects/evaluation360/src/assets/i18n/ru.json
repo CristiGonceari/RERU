@@ -70,9 +70,8 @@
     "title": "Тесты 360",
     "subtitle": "Начальная страница",
     "enclosed-mode":"Скрытый режим",
-    "hello-username": "Здравствуйте",
-    "have-a-good-day": "Добро пожаловать!",
-    "evaluations": "Оценки"
+    "evaluations": "Оценки",
+    "categories": "Период"
   },
   "footer": {
     "all-rights-reserved": "Все права защищены",

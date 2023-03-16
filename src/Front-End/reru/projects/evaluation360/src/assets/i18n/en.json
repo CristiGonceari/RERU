@@ -70,9 +70,8 @@
     "title": "Evaluation 360",
     "subtitle": "Start Page",
     "enclosed-mode":"Enclosed mode",
-    "hello-username": "Hello",
-    "have-a-good-day": "Welcome, have a good day!",
-    "evaluations": "Evaluations"
+    "evaluations": "Evaluations",
+    "categories": "Period"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",

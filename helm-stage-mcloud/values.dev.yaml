@@ -218,6 +218,8 @@ microservices:
           value: "https://reru.mai.gov.md"
         - name: ConnectionStrings__Identity
           value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Identity-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false;"
+        - name: ConnectionStrings__RERU
+          value: "server=prod-db-pgsql-postgresql.prod-pgsql;database=RERU-Common-MSTAGE;Username=postgres;Password=FXW}t,HLjM:TSpZ;Pooling=false"
         - name: IDENTITY_ISSUER_URI
           value: "https://reru.mai.gov.md/ms/reru-identity-new"
         - name: IDENTITY_DISCOVERY_ENDPOINT_URI

@@ -5,9 +5,9 @@
     "ru": "Русский"
   },
   "right-sidebar": {
-    "header": "Profilul utilizatorului",
+    "header": "Profil utilizator",
     "my-profile": "Profilul meu",
-    "change-password": "Schimbarea parolei",
+    "change-password": "Schimbare parolă",
     "logout": "Ieșire"
   },
   "expired-token": {
@@ -26,7 +26,7 @@
   },
   "dashboard": {
     "title": "Logarea",
-    "subtitle": "Tabelul de logare",
+    "subtitle": "Tabel de logare",
     "from": "De la",
     "to": "Până La",
     "project": "Proiect",
@@ -43,7 +43,7 @@
     "enclosed-mode":"Mod restrâns"
    },
    "delete-log-modal":{
-    "title": "Ştergerea jurnalelor mai vechi de:",
+    "title": "Ştergere jurnale mai vechi de:",
     "years": "Selectați numărul de ani"
   },
    "details-modal":{
@@ -51,8 +51,8 @@
     "file-json": "Fişier JSON"
   },
   "user-profile": {
-    "overview": "Vizualizarea profilului personal",
-    "edit-title": "Editarea profilului personal",
+    "overview": "Vizualizare profil personal",
+    "edit-title": "Editare profil personal",
     "edit-subtitle": "Inserează datele personale",
     "personal-details": "Datele profilului:",
     "change-personal-data": "Schimbare datelor profilului personal",
@@ -187,14 +187,14 @@
     "help": "Ajutor",
     "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea întrebărilor",
+    "manage-faq": "Gestionare întrebări",
     "new-article": "Adaugă Articol",
     "delete-article": "Șterge Articol",
-    "article-title": "Titlul Articolului",
+    "article-title": "Titlu Articol",
     "name": "Nume",
     "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
-    "remove": "Ștergeți articol",
+    "remove": "Ștergere articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
     "succes-remove-msg": "Articol a fost șters cu succes",
     "succes-add-msg": "Articol a fost adăugat cu succes",
@@ -203,7 +203,7 @@
     "overview": "Prezentare generală"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "modal":{
     "delete": "Șterge",
