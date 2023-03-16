@@ -411,7 +411,7 @@ data:
         "IdentityProviderCertificatePath": "Files/Certificates/mpass.staging.egov.md.cer",
         "SamlLoginDestination": "https://mpass.staging.egov.md/login/saml",
         "SamlLogoutDestination": "https://mpass.staging.egov.md/logout/saml",
-        "ServiceRootUrl": "http://reru.codwer.com"
+        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-identity-new"
       },
       "Certificate": {
         "Path": "Files/Certificates/RERU-Codwer-DEV.pfx",
