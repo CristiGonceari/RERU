@@ -193,7 +193,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             // check if external login is in the context of an OIDC request
             var context = await _interaction.GetAuthorizationContextAsync(returnDefaultUrl);
-            await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+            //await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, user.Id, name, true, context?.Client.ClientId));
 
             if (context != null)
             {
