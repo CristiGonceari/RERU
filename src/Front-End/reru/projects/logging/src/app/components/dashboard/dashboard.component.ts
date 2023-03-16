@@ -34,7 +34,6 @@ export class DashboardComponent implements AfterViewInit {
   selectedEvent: any;
   loggingValues: [] = [];
 
-  projects: any = [];
   events: any = [];
   event: string = '';
   form: FormGroup;
@@ -47,7 +46,7 @@ export class DashboardComponent implements AfterViewInit {
   headersToPrint = [];
   printTranslates: any[];
 
-  showFilter: boolean = true;
+  showFilters: boolean = true;
 
   constructor(private loggingService: LoggingService,
     public modalService: NgbModal,
@@ -92,16 +91,15 @@ export class DashboardComponent implements AfterViewInit {
     this.searchJsonMessage.value = '';
     this.searchUserIdentifier.value = '';
 
-    this.showFilter = false;
+    this.showFilters = false;
 		this.cd.detectChanges();
-		this.showFilter = true;
+		this.showFilters = true;
 
     this.getLoggingValues();
     this.retriveDropdowns();
   }
 
   retriveDropdowns() {
-    this.loggingService.getProjectSelectItem().subscribe((res) => (this.projects = res.data));
     this.loggingService.getEventSelectItem().subscribe((res) => (this.events = res.data));
   }
 
@@ -228,5 +226,4 @@ export class DashboardComponent implements AfterViewInit {
       }
     }, () => this.downloadFile = false);
   }
-
 }
