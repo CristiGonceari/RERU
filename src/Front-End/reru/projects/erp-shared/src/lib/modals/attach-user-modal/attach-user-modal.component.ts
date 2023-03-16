@@ -72,5 +72,9 @@ export class AttachUserModalComponent {
   ngOnInit() {
     this.translateData();
     this.inputType === 'checkbox' ? this.modalTitle : this.modalTitle = this.modalTitle2;
+
+    if (this.inputType !== 'checkbox' && (this.attachedUsers[0] === null || this.attachedUsers[0] === undefined)) {
+      this.attachedUsers.splice(0, 1);
+    }
   }
 }
