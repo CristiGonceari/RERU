@@ -364,7 +364,8 @@
     "subheader": "Confirm your action",
     "reset-pass-msg": "Are you sure you want to reset password for user",
     "success-reset-password": "Password has been send to your email",
-    "success-reset": "Password was reseted successfully!"
+    "success-reset": "Password was reseted successfully!",
+    "page-title":"Password reset page"
   },
   "change-password-comp": {
     "title": "Change password",
