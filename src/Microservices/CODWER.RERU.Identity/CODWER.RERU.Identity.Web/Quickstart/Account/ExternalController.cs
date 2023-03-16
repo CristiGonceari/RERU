@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
 using AutoMapper;
+using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
@@ -23,6 +24,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
@@ -57,7 +59,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IConfiguration configuration,
             AppDbContext appDbContext,
             IMapper mapper,
-            INotificationService notificationService
+            INotificationService notificationService,
+            IAuthenticationSchemeProvider schemeProvider
             )
         {
             _userManager = userManager;
@@ -95,7 +98,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             {
                 props = new AuthenticationProperties
                 {
-                    RedirectUri = Url.Action(nameof(CallbackMPass)),
+                    RedirectUri = Url.Action(nameof(CallbackMPass), new { returnDefaultUrl = returnUrl}),
                     Items =
                 {
                     { "returnUrl", returnUrl },
@@ -122,7 +125,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         }
 
         [HttpGet]
-        public async Task<IActionResult> CallbackMPass()
+        public async Task<IActionResult> CallbackMPass(string returnDefaultUrl)
         {
 
             var result = await HttpContext.AuthenticateAsync(MPassSamlDefaults.AuthenticationScheme);
@@ -136,6 +139,19 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             {
                 var externalClaims = result.Principal.Claims.Select(c => $"{c.Type}: {c.Value}");
                 _logger.LogDebug("External claims: {@claims}", externalClaims);
+            }
+
+            if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null)
+            //if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null || result.Principal.FindFirst(MPassClaimTypes.PhoneNumber) == null)
+            {
+                //var userName = result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
+                //var invalidLoginModel = new LoginInputModel() { Username = userName , ReturnUrl = returnDefaultUrl };
+                //return await _accountControllers.Login(returnDefaultUrl);
+                // throw new Exception("Unknown user email or phoneNumber");
+
+                ModelState.AddModelError(string.Empty, AccountOptions.InvalidMPassCredentialsErrorMessage);
+
+                return Redirect(returnDefaultUrl);
             }
 
             // lookup our user and external provider info
@@ -173,10 +189,11 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
             // retrieve return URL
-            var returnUrl = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl") ?? "~/";
+            //var returnUrl = returnDefaultUrl ?? "~/";
 
             // check if external login is in the context of an OIDC request
-            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            var context = await _interaction.GetAuthorizationContextAsync(returnDefaultUrl);
+            //await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
             await _events.RaiseAsync(new UserLoginSuccessEvent(provider, user.Id, name, true, context?.Client.ClientId));
 
             if (context != null)
@@ -185,11 +202,11 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 {
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
-                    return this.LoadingPage("Redirect", returnUrl);
+                    return this.LoadingPage("Redirect", returnDefaultUrl);
                 }
             }
 
-            return Redirect(returnUrl);
+            return Redirect(returnDefaultUrl);
         }
 
         /// <summary>
@@ -298,18 +315,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private async Task<(ERPIdentityUser user, string provider, IEnumerable<Claim> claims)> FindUserFromMPassProviderAsync(AuthenticateResult result)
         {
             var externalUser = result.Principal;
-
-            // try to determine the unique id of the external user (issued by the provider)
-            // the most common claim type for that are the sub claim and the NameIdentifier
-            // depending on the external provider, some other claim type might be used
-
-            if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null)
-                //if (externalUser.FindFirst(MPassClaimTypes.EmailAdress) == null || externalUser.FindFirst(MPassClaimTypes.PhoneNumber) == null)
-            {
-                throw new Exception("Unknown user email or phoneNumber");
-            }
-            //var userIdClaim = externalUser.FindFirst(MPassClaimTypes.EmailAdress) ??
-            //                  throw new Exception("Unknown user email");
 
             var claims = externalUser.Claims.ToList();
 

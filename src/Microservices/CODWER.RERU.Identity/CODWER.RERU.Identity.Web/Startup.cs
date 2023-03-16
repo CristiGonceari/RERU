@@ -94,21 +94,12 @@ namespace CODWER.RERU.Identity.Web
             services.AddAuthentication()
                 .AddCookie(options =>
                 {
-                    options.Cookie.Name = "auth";
-                    options.Cookie.Path = "/mj/arij";
-                    options.LoginPath = "/account/login";
-                    options.LogoutPath = "/account/logout";
                     //Setting to None to allow POST from MPass (default is Lax)
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-
                 })
-                .AddMPassSaml(Configuration.GetSection("MPassSaml"), options =>
-                {
-                    options.SignedOutRedirectUri = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.ReturnUrlParameter = IdentityServerConstants.DefaultCookieAuthenticationScheme;
-                });
+                .AddMPassSaml(Configuration.GetSection("MPassSaml"));
                 //.AddSaml2(options =>
                 //{
                 //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
