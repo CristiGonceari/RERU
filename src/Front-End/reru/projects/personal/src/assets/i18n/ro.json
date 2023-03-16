@@ -262,7 +262,7 @@
     "value-list": "Lista valorilor",
     "nomenclature-name": "Nume nomenclator",
     "edit-nomenclature": "Editează nomenclator",
-    "are-you-sure-you-want-to-disable-nomenclature": "Sunteți sigur că doriți să dezactivezi nomenclatorul {{name}}?",
+    "are-you-sure-you-want-to-disable-nomenclature": "Sunteți sigur că doriți să dezactivați nomenclatorul {{name}}?",
     "add-record": "Adaugă câmp",
     "create-header-nomenclature": "Adăugare coloane nomenclator",
     "add-column": "Adaugă coloană",
@@ -326,7 +326,7 @@
     "title-description-list": "Lista funcții angajați",
     "add-employee-function": "Adăugare funcție",
     "adding-employee-function": "Adaugă funcție",
-    "new-employee-function": "Funcție noua",
+    "new-employee-function": "Funcție nouă",
     "type-employee-function-data": "Introdu datele funcției",
     "employee-function-details": "Detaliile funcției",
     "employee-function-name": "Numele funcției",
@@ -373,7 +373,7 @@
     "paid-vacation-days": "Zile de concediu plătit",
     "unpaid-vacation-days": "Zile de concediu neplătit",
     "include-off-days": "Zilele de odihnă se includ în concediu",
-    "include-holidays": "Sărbătorile naționale se include în concediu",
+    "include-holidays": "Sărbătorile naționale se includ în concediu",
     "type-number-of-days": "Introdu numărul de zile",
     "working-week-holidays": "Zile lucrătoare",
     "study-vacation-days": "Zile de concediu pentru studii",
@@ -400,7 +400,7 @@
   "organigram": {
     "add-organigram": "Adaugă organigramă",
     "title-description-list": "Lista organigramelor",
-    "new-organigram": "Organigrama nouă",
+    "new-organigram": "Organigramă nouă",
     "organigram-name": "Nume organigramă",
     "organigram-head": "Capul organigramei",
     "organigram-view": "Vizualizare organigramă",
@@ -441,10 +441,10 @@
   },
   "guide": {
     "title": "Ghid Utilizator",
-    "heading1": "Dacă v-ati confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
-    "heading2": "In el puteți găsi răspunsul la orice întrebare.",
+    "heading1": "Dacă v-ați confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
+    "heading2": "În el puteți găsi răspunsul la orice întrebare.",
     "heading3": "Cum îmi schimb parola? Cum adaug un nou angajat? Cum pot adăuga sau redacta o poziție?",
-    "heading4": "Răspunsul la aceste întrebări, precum și la multe altele, poate fi găsit in ghid. Îl puteți descarcă facând click pe butonul de mai jos.",
+    "heading4": "Răspunsul la aceste întrebări, precum și la multe altele, poate fi găsit în ghid. Îl puteți descărcaa făcând click pe butonul de mai jos.",
     "heading5": "Pentru a găsi rapid informațiile de care aveți nevoie în ghidul descărcat, apăsați combinația de taste CTRL + F.  În colțul din dreapta sus se va deschide o bară de căutare!"
   },
   "department-content": {
@@ -499,7 +499,7 @@
     "disable": "Dezactivează",
     "more": "mai multe",
     "remove": "Șterge",
-    "save": "Salveaza",
+    "save": "Salvează",
     "emit": "Activează",
     "giveup": "Renunță",
     "forward": "Înainte",
@@ -707,7 +707,7 @@
     "family-component": {
       "first-name": "Prenume",
       "last-name": "Nume",
-      "birthday": "Zi de nastere",
+      "birthday": "Zi de naștere",
       "relation-name": "Relație",
       "actions": "Acțiuni"
     }
@@ -718,14 +718,14 @@
     "name": "Numele",
     "worked-hours": "Orele Lucrate",
     "free-hours": "Orele Libere",
-    "working-days" : "Zile Lucratoare",
+    "working-days" : "Zile Lucrătoare",
     "time-values": "Valorile de pontaj",
-    "select-values": "Selectati valorile",
+    "select-values": "Selectați valorile",
     "close": "Închide",
-    "save-changes": "Salveaza",
+    "save-changes": "Salvează",
     "departament": "Detalii",
     "departament-and-role": "Departamentul și rolul",
-    "print-curent-list": "Printează lista curenta",
+    "print-curent-list": "Printează lista curentă",
     "print-all-list": "Printează toată lista",
     "hours-value": "ore (se indică durata concretă a timpului de muncă)",
     "unpaid-leave-value": "concediu neplătit",
@@ -751,7 +751,7 @@
     "article-title": "Denumire Șablon",
     "document-fileType": "Tip Șablon",
     "are-you-sure-you-want-to-delete-documents": "Sunteți sigur/ă că doriți să ștergeți documentul <b>{{name}}</b>?",
-    "test-convert": "Testează Comversia",
+    "test-convert": "Testează Conversia",
     "configure-document": "Configurează Documentul",
     "key-list": "Harta de chei"
   },
@@ -909,7 +909,7 @@
         "autobiography-succes-add-msg": "Autobiografia a fost adăugată!",
         "autobiography-succes-update-msg": "Autobiografia a fost actualizată!",
         "step-succes-add-msg": "Pasul a fost adăugat!",
-        "step-succes-update-msg": "Step a fost actualizat!",
+        "step-succes-update-msg": "Pasul a fost actualizat!",
         "validation-fail": "Validarea a eșuat!",
         "server-error": "A apărut o eroare de Server!"
       },
@@ -978,7 +978,7 @@
     "02005003": "Valoarea cifre este nevalidă",
     "02005004": "Valoarea dublă este nevalidă",
     "02005005": "Această valoare este nevalidă",
-    "02005006": "Valoarea de tip date nu este valida",
+    "02005006": "Valoarea de tip date nu este validă",
     "02005007": "Valoarea DateTime este nevalidă",
     "02005008": "Valoarea e-mailului este nevalidă",
     "02006001": "Coloana din nomenclatură nu a fost găsită",
@@ -1045,14 +1045,14 @@
   "user-profile": {
     "overview": "Vizualizare profil personal",
     "edit-title": "Editare profil personal",
-    "edit-subtitle": "Inserta datele personale",
+    "edit-subtitle": "Inserează datele personale",
     "personal-details": "Datele profilului:",
     "change-personal-data": "Schimbare datelor profilului personal",
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
-    "wrong-name": "Camp trebue să incepe cu 1 caracter",
+    "empty-name": "Câmp obligator, cel puțin 1 caracter",
+    "wrong-name": "Câmpul trebue să incepeapă cu 1 caracter",
     "available-modules": "Module disponibile"
   },
   "faq": {
@@ -1133,7 +1133,7 @@
   "bulletin":{
     "series":"Seria",
     "emited-by":"Emis de",
-    "relase-day":"Data eliberarii",
+    "relase-day":"Data eliberării",
     "adresses":"Adresa",
     "birth-place":"Locul nașterii",
     "residence-address":"Adresa de rezidenta",
@@ -1149,7 +1149,7 @@
     }
   },
   "study":{
-    "institution": "Instituția de învățâmânt",
+    "institution": "Instituția de învățământ",
     "study-frequency": "Frecvența",
     "study-type": "Tip studii",
     "faculty": "Facultatea",
@@ -1186,8 +1186,8 @@
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
     "biography-data": "Date biografice ale rudelor apropiate candidatului",
-    "birth-place":"Locul nasterii",
-    "birthday-date": "Data nasterii",
+    "birth-place":"Locul nașterii",
+    "birthday-date": "Data nașterii",
     "residence": "Domiciliu",
     "work-place": "Locul de muncă",
     "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului",
@@ -1234,8 +1234,8 @@
     "Female": "Feminin"
   },
   "languageKnowledge":{
-    "Basic": "Cunostinte bază",
-    "BasicKnowledge": "Cunostinte bază",
+    "Basic": "Cunoștințe de bază",
+    "BasicKnowledge": "Cunoștințe de bază",
     "Medium": "Mediu",
     "Good" : "Bine",
     "VeryGood": "Foarte bine"
@@ -1248,8 +1248,8 @@
     "5": "Cursuri de Specializare"
   },
   "studyFrequency":{
-    "Daily":"Frecvența la zi",
-    "LowFrequency": "Frecvența redusa"
+    "Daily":"Frecvență la zi",
+    "LowFrequency": "Frecvență redusa"
   },
   "materialStatusType": {
     "1": "Celibatar",
@@ -1272,13 +1272,13 @@
     "WifesSisters" : "Surorile soției"
   },
   "militaryObligationType":{
-    "AlternativeService" : "Serviciu de alternativa",
-    "PerformedMilitaryService" : "Serviciul militar indeplinit",
+    "AlternativeService" : "Serviciu de alternativă",
+    "PerformedMilitaryService" : "Serviciul militar îndeplinit",
     "Recruit" : "Recrut",
     "Reservist" : "Rezervist"
   },
   "stepper":{
-    "button-update-and-next":"Actualizeaza și treci la pasul următor",
+    "button-update-and-next":"Actualizează și treci la pasul următor",
     "button-save-and-next":"Adaugă și treci la pasul următor",
     "button-next":"Finalizați pasul",
     "button-update":"Actualizează",
@@ -1289,7 +1289,7 @@
     "GeneralData": "Date Generale",
     "Bulletin": "Buletin",
     "Study": "Studii",
-    "MaterialStatus": "Starea civila",
+    "MaterialStatus": "Starea civilă",
     "MilitaryObligation": "Obligație militară",
     "Autobiography": "Autobiografie",
     "Declaration": "Declaraţie"

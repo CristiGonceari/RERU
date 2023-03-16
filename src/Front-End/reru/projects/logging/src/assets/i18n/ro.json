@@ -86,7 +86,7 @@
   "modules": {
     "core": "Core",
     "personal": "Management Personal",
-    "crm": "Management Clienti",
+    "crm": "Management Clienți",
     "documents": "Management Documente",
     "inventory": "Inventar",
     "tasks": "Misiuni",
@@ -149,7 +149,7 @@
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
     "finalize-test": "Sigur doriți să finalizați acest test",
     "finalize-poll": "Sigur doriți să finalizați acest sondaj",
-    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebare",
+    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebarea",
     "bulk-uploadMsg": "Încărcați fișierul modificat",
     "bulk-dropMsg": "Plasați fișierele aici sau faceți clic pentru a încărcare",
     "bulk-beSureMsg": "Asigurați-vă că încărcați șablonul necesar",
