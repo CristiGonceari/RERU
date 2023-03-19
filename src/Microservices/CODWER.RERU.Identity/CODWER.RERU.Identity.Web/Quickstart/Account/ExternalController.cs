@@ -142,8 +142,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             }
 
             if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null)
-            //if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null || result.Principal.FindFirst(MPassClaimTypes.PhoneNumber) == null)
-            {
+                //if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null || result.Principal.FindFirst(MPassClaimTypes.PhoneNumber) == null)
+                {
                 //var userName = result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
                 //var invalidLoginModel = new LoginInputModel() { Username = userName , ReturnUrl = returnDefaultUrl };
                 //return await _accountControllers.Login(returnDefaultUrl);
@@ -151,17 +151,39 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidMPassCredentialsErrorMessage);
 
+                //return View($"Login/{(returnDefaultUrl == "~/" ? "" : returnDefaultUrl)}");
                 return Redirect(returnDefaultUrl);
+
             }
 
             // lookup our user and external provider info
-            var (user, provider, claims) = await FindUserFromMPassProviderAsync(result);
-            if (user == null)
+            var (identityUser, provider, claims, emailAdress) = await FindUserFromMPassProviderAsync(result);
+            if (identityUser == null)
             {
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                user = await AutoProvisionMPassUserAsync(provider, claims);
+                identityUser = await AutoProvisionMPassUserAsync(provider, claims);
+            }
+            else
+            {
+                // find userProfile
+                var userProfile = await _appDbContext.UserProfiles
+                        .Include(up => up.Identities.Where(i => i.Type == MPassSamlDefaults.AuthenticationScheme))
+                        .FirstOrDefaultAsync(up => up.Email == emailAdress);
+
+                if (userProfile.Identities.Count() == 0)
+                {
+                    var newIdentityUserProfile = new UserProfileIdentity()
+                    {
+                        UserProfileId = userProfile.Id,
+                        Type = provider,
+                        Identificator = identityUser.Id
+                    };
+
+                    userProfile.Identities.Add(newIdentityUserProfile);
+                    await _appDbContext.SaveChangesAsync();
+                }
             }
 
             // this allows us to collect any additional claims or properties
@@ -171,12 +193,12 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             var localSignInProps = new AuthenticationProperties();
             ProcessLoginCallback(result, additionalLocalClaims, localSignInProps, MPassClaimTypes.SessionIndex);
 
-            var principal = await _signInManager.CreateUserPrincipalAsync(user);
+            var principal = await _signInManager.CreateUserPrincipalAsync(identityUser);
             additionalLocalClaims.AddRange(principal.Claims);
-            var name = principal.FindFirst(JwtClaimTypes.Name)?.Value ?? user.Id;
+            var name = principal.FindFirst(JwtClaimTypes.Name)?.Value ?? identityUser.Id;
 
 
-            var isuser = new IdentityServerUser(user.Id)
+            var isuser = new IdentityServerUser(identityUser.Id)
             {
                 DisplayName = name,
                 IdentityProvider = provider,
@@ -194,7 +216,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // check if external login is in the context of an OIDC request
             var context = await _interaction.GetAuthorizationContextAsync(returnDefaultUrl);
             //await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, user.Id, name, true, context?.Client.ClientId));
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, identityUser.Id, name, true, context?.Client.ClientId));
 
             if (context != null)
             {
@@ -312,7 +334,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return (user, provider, providerUserId, claims);
         }
 
-        private async Task<(ERPIdentityUser user, string provider, IEnumerable<Claim> claims)> FindUserFromMPassProviderAsync(AuthenticateResult result)
+        private async Task<(ERPIdentityUser identityUser, string provider, IEnumerable<Claim> claims, string emailAdress)> FindUserFromMPassProviderAsync(AuthenticateResult result)
         {
             var externalUser = result.Principal;
 
@@ -323,9 +345,9 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             // find external user
             //var user = await _userManager.FindByNameAsync(claims.Find(x => x.Type == MPassClaimTypes.UserName).Value);
-            var user = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
+            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
 
-            return (user, provider, claims);
+            return (identityUser, provider, claims, emailAdress);
         }
 
         private async Task<ERPIdentityUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
@@ -423,13 +445,13 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _appDbContext.UserProfiles.Add(userProfile);
             await _appDbContext.SaveChangesAsync();
 
-            var user = new ERPIdentityUser
+            var identityUser = new ERPIdentityUser
             {
                 Email = newUser.Email.Replace(" ", string.Empty),
                 UserName = newUser.Email.Replace(" ", string.Empty),
             };
 
-            var identityResult = await _userManager.CreateAsync(user, password);
+            var identityResult = await _userManager.CreateAsync(identityUser, password);
             if (!identityResult.Succeeded)
             {
                 throw new Exception(identityResult.Errors.First().Description);
@@ -439,21 +461,31 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 await _notificationService.PutEmailInQueue(new QueuedEmailData
                 {
                     Subject = "Cont nou",
-                    To = user.Email,
+                    To = identityUser.Email,
                     HtmlTemplateAddress = "Templates/UserRegister.html",
                     ReplacedValues = new Dictionary<string, string>()
                         {
                             { "{FirstName}", userProfile.FullName }
                         }
                 });
+
+
+                var newIdentityUserProfile = new List<UserProfileIdentity>()
+                {
+                    new UserProfileIdentity() {UserProfileId = userProfile.Id, Type = provider, Identificator = identityUser.Id },
+                    new UserProfileIdentity() {UserProfileId = userProfile.Id, Type = "local", Identificator = identityUser.Id }
+            };
+
+                userProfile.Identities.AddRange(newIdentityUserProfile);
+                await _appDbContext.SaveChangesAsync();
             }
-            
+
             var providerSesionId = claims.First(x => x.Type == MPassClaimTypes.SessionIndex).Value;
 
-            identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerSesionId, provider));
+            identityResult = await _userManager.AddLoginAsync(identityUser, new UserLoginInfo(provider, providerSesionId, provider));
             if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
 
-            return user;
+            return identityUser;
         }
 
         // if the external login is OIDC-based, there are certain things we need to preserve to make logout work
