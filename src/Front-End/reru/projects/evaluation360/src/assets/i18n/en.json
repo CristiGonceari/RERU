@@ -335,7 +335,7 @@
     "select": "Select",
     "save": "Save",
     "actions": "Actions",
-    "attach": "Attach file",
+    "attach": "Attach",
     "reject": "Reject",
     "accept": "Accept",
     "edit": "Edit",
@@ -477,7 +477,12 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "Media (image, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Invalid file type"
   },
   "user-state": {
     "Employee": "Employee",

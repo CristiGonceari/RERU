@@ -334,7 +334,7 @@
     "delete": "Șterge",
     "select": "Selectează",
     "save": "Salvează",
-    "attach": "Atașați fișierul",
+    "attach": "Atașează",
     "actions": "Acțiuni",
     "reject": "Respinge",
     "accept": "Acceptă",
@@ -476,7 +476,12 @@
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Roluri modul"
+    "module-roles": "Roluri modul",
+    "media": "Media",
+    "media-type": "Media (imagine, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Tip de fișier nevalid"
   },
   "user-state": {
    "Employee": "Angajat",
