@@ -70,7 +70,7 @@
 
 				<div class="topbar-item" style="white-space: nowrap; font-size: 14px; font-weight: 500">
 					{{ authUserModel?.user?.firstName }} {{ authUserModel?.user?.lastName }}
-					<div class="btn flex-shrink-0 mr-7 pt-4" (click)="toggle(sidebarView.USER)">
+					<div class="btn flex-shrink-0 mr-sm-7 mr-0" (click)="toggle(sidebarView.USER)">
 						<div class="symbol symbol-40 symbol-sm-s" *ngIf="avatarString">
 							<img [src]="avatar" />
 						</div>
