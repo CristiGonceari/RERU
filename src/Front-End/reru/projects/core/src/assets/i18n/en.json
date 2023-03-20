@@ -87,10 +87,11 @@
     "delete-document": "Delete document",
     "remove-msg":"Are you sure you want to delete this document?",
     "upload-doc": "Upload document",
+    "import": "Import (.xlsx)",
     "import-users": "Import users",
     "import-departments": "Import departments",
     "import-roles": "Import roles",
-    "modal-title": "Upload file modal",
+    "modal-title": "Upload file modal (pdf, doc, xlsx, png, jpg...)",
     "modal-description": "Drop file here or click to upload",
     "success-add-doc": "Document has been successfully uploaded"
   },
@@ -609,7 +610,9 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "Media (image, document, audio, video)"
   },
   "departments": {
     "overview": "Overview",

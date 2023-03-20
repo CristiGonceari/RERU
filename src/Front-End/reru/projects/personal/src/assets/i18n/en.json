@@ -234,7 +234,7 @@
     "quick-access": "Quick access",
     "department-component": "Department component",
     "dismissal-request": "Dismissal request",
-    "add-photo": "Add profile photo"
+    "add-photo": "Add profile photo (png, jpg, jpeg...)"
   },
   "nomenclature": {
     "title": "Nomenclature",
@@ -463,7 +463,7 @@
     "select-file-format": "Select file format",
     "are-you-sure-want-to-delete-document": "Are you sure you want to delete the document <b>{{name}}</b>?",
     "add-document": "Add document",
-    "file": "File",
+    "file": "File (.xlsx)",
     "access-restricted-to-orders": "Don't have access to orders!",
     "access-restricted-to-identity": "Don't have access to identity files!",
     "access-restricted-to-vacation": "Don't have access to vacations!",
@@ -1073,7 +1073,12 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "Media (image, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Invalid file type"
   },
   "locations": {
     "locations": "Testing locations",

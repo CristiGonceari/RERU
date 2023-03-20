@@ -5,10 +5,10 @@
 <div class="form-group row mb-10">
     <div class="col-lg-9 col-xl-9 pt-4 pl-10">
       <div *ngIf="fileId">
-        <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-add-edit-media-file>
+        <app-upload-avatar [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-upload-avatar>
       </div>
       <div *ngIf="!fileId">
-        <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-add-edit-media-file>
+        <app-upload-avatar (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-upload-avatar>
       </div>
     </div>
   </div>

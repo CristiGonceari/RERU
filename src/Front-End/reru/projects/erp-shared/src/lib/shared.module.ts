@@ -44,6 +44,9 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { GetMediaFileComponent } from './components/get-media-file/get-media-file.component';
 import { ShowImageModalComponent } from './modals/show-image-modal/show-image-modal.component';
 import { AddEditMediaFileComponent } from './components/add-edit-media-file/add-edit-media-file.component';
+import { AddEditMediaFileXlsxComponent } from './components/add-edit-media-file-xlsx/add-edit-media-file-xlsx.component';
+import { UploadAvatarComponent } from './components/upload-avatar/upload-avatar.component';
+import { AddDocumentComponent } from './components/add-document/add-document.component'
 import { UploadFileModalComponent } from './modals/upload-file-modal/upload-file-modal.component';
 import { INTERNAL_NOTIFY_INTERCEPTOR } from './interceptors/internal-notify.interceptor';
 import { GoToTestModalComponent } from './modals/go-to-test-modal/go-to-test-modal.component';
@@ -88,6 +91,9 @@ const commonExports = [
 	LocationBackButtonComponent,
 	SearchInputComponent,
 	AddEditMediaFileComponent,
+	AddEditMediaFileXlsxComponent,
+	UploadAvatarComponent,
+	AddDocumentComponent,
 	GetMediaFileComponent,
 	ShowImageModalComponent,
 	ContentComponent,

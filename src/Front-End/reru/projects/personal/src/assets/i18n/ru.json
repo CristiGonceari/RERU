@@ -234,7 +234,7 @@
     "quick-access": "Быстрый доступ",
     "department-component": "Состав отдела",
     "dismissal-request": "Заявление об увольнении",
-    "add-photo": "Добавить фото профиля"
+    "add-photo": "Добавить фото профиля (png, jpg, jpeg...)"
   },
   "nomenclature": {
     "title": "Номенклатура",
@@ -461,7 +461,7 @@
     "select-file-format": "Выбери формат файла",
     "are-you-sure-want-to-delete-document": "Вы уверены, что хотите удалить документ <b>{{name}}</b>?",
     "add-document": "Добавить файл",
-    "file": "Файл",
+    "file": "Файл  (.xlsx)",
     "access-restricted-to-orders": "Доступ к приказам запрещен!",
     "access-restricted-to-identity": "Доступ к удостоверению личности запрещен!",
     "access-restricted-to-vacation": "Доступ к отпускным запрещен!",
@@ -520,7 +520,7 @@
     "close": "Закрыть",
     "attach": "Прикрепить",
     "add": "Добавить",
-    "import": "Импорт",
+    "import": "Импортировать",
     "reset": "Сброс",
     "upload": "Загрузить",
     "applay": "Применить",
@@ -1073,7 +1073,12 @@
     "contains-media": "Содержит медиа",
     "info-tag": "Если роль не выбрана, статья доступна для всех ролей",
     "info-roles": "Роли, которые могут просматривать эту статью",
-    "module-roles": "Роли модуля"
+    "module-roles": "Роли модуля",
+    "media": "Медиа",
+    "media-type": "Медиа (изображение, документ, аудио, видео)"
+  },
+  "media":{
+    "invalid-type": "Неверный тип файла"
   },
   "locations": {
     "locations": "Локации",

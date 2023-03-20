@@ -66,7 +66,7 @@
                                                                 (change)="setFile($event, i, requiredDocument.id)"
                                                                 class="form-control" type="file" name="file"
                                                                 id="file" required> -->
-                                                            <app-add-edit-media-file (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-edit-media-file>
+                                                            <app-add-document (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-document>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -117,7 +117,7 @@
                                                                         (change)="setFile($event, i, item.requiredDocumentId)"
                                                                         class="form-control" type="file"
                                                                         name="file" id="file" required> -->
-                                                                        <app-add-edit-media-file (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-edit-media-file>
+                                                                        <app-add-document (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-document>
                                                                 </div>
                                                             </div>
                                                         </div>

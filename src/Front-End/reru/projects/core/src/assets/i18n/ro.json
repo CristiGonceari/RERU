@@ -91,10 +91,11 @@
     "delete-document": "Șterge document",
     "remove-msg":"Sigur doriți să ștergeți acest document?",
     "upload-doc": "Încarcă document",
+    "import": "Importă (.xlsx)",
     "import-users": "Importă utilizatori",
     "import-departments": "Importă departamente",
     "import-roles": "Importă roluri",
-    "modal-title": "Încărcare documente",
+    "modal-title": "Încărcarea documentelor (pdf, doc, xlsx, png, jpg...)",
     "modal-description": "Încarcă document sau apasă aici pentru încărcare",
     "success-add-doc": "Documentul a fost încărcat cu succes"
   },
@@ -611,7 +612,9 @@
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Roluri modul"
+    "module-roles": "Roluri modul",
+    "media": "Media",
+    "media-type": "Media (imagine, document, audio, video)"
   },
   "departments": {
     "overview": "Prezentare generală",
