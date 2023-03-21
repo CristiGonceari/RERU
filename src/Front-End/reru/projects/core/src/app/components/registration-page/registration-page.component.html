@@ -12,7 +12,8 @@
   <nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark p-0">
     <div class="container-fluid">
       <div class="d-flex pt-2">
-        <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
+        <img src="../../../assets/logo_2.png" alt="..." class="mr-5 img-thumbnail" style="max-height: 40px;">
+        <img src="../../../assets/MAI_Sign.png" alt="..." style="max-height: 40px;">
         <h2 style="color: white;" class="ml-3 pt-1 mb-3">
           {{'registration-page.registration-candidate-page' | translate }}</h2>
       </div>
@@ -197,13 +198,8 @@
             <div class="form-row">
               <div class="form-group photo-upload col-md-6">
                 <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
-                <div *ngIf="fileId">
-                  <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                  </app-add-edit-media-file>
-                </div>
-                <div *ngIf="!fileId">
-                  <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                  </app-add-edit-media-file>
+                <div>
+                  <app-upload-avatar (handleFile)="checkFile($event)"></app-upload-avatar>
                 </div>
               </div>
             </div>

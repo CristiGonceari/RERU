@@ -329,6 +329,6 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   cantAdd() {
-    return this.candidatePositions.value == undefined;
+    return this.candidatePositions == undefined;
   }
 }

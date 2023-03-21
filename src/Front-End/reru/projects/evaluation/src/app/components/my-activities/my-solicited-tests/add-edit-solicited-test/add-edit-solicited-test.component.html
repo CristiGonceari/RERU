@@ -48,8 +48,9 @@
                                                 <div class="col-lg-9 col-xl-9 col-form-label">
                                                     <p>{{ event.eventName }} :</p>
                                                     <ol>
-                                                        <li *ngFor="let item of event.testTemplateNames">{{ item
-                                                            }}</li>
+                                                        <li *ngFor="let item of event.testTemplateNames">
+                                                            {{ item }}
+                                                        </li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -66,7 +67,7 @@
                                                                 (change)="setFile($event, i, requiredDocument.id)"
                                                                 class="form-control" type="file" name="file"
                                                                 id="file" required> -->
-                                                            <app-add-edit-media-file (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-edit-media-file>
+                                                            <app-add-document (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-document>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -117,7 +118,7 @@
                                                                         (change)="setFile($event, i, item.requiredDocumentId)"
                                                                         class="form-control" type="file"
                                                                         name="file" id="file" required> -->
-                                                                        <app-add-edit-media-file (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-edit-media-file>
+                                                                        <app-add-document (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-document>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -132,7 +133,7 @@
                                         (handle)="backClicked()">
                                     </app-button>
                                     <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()" [disable]="!candidatePositions">
+                                        (handle)="onSave()" [disable]="cantAdd()">
                                     </app-add-button>
                                 </div>
                                 <div class="d-md-none d-block pt-10">
