@@ -21,7 +21,9 @@
 						[logo]="letter" 
 						[currentLanguage]="currentLanguage" 
 						[languages]="languages"
-						(changeLanguage)="changeLanguage.emit($event)" [isCustomHeader]="isCustomHeader"></app-header>
+						(changeLanguage)="changeLanguage.emit($event)" 
+						[isCustomHeader]="isCustomHeader">
+			</app-header>
 				
 			<app-sidebar [title]="title" [menuItems]="sidebarItems" (navigate)="navigate.emit($event)"></app-sidebar>
 
