@@ -20,21 +20,12 @@ export class DashboardComponent implements AfterViewInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading: boolean = true;
 
-  @ViewChild('eventName') searchEventName: any;
-  @ViewChild('userName') searchUserName: any;
-  @ViewChild('eventMessage') searchEventMessage: any;
-  @ViewChild('userIdentifier') searchUserIdentifier: any;
-  @ViewChild('jsonMessage') searchJsonMessage: any;
-
   dateTimeFrom: string;
   dateTimeTo: string;
   searchFrom: string;
   searchTo: string;
-  selectedProject: any;
-  selectedEvent: any;
   loggingValues: [] = [];
 
-  events: any = [];
   event: string = '';
   form: FormGroup;
 
@@ -46,16 +37,16 @@ export class DashboardComponent implements AfterViewInit {
   headersToPrint = [];
   printTranslates: any[];
 
+  filters: any = {};
   showFilters: boolean = true;
 
-  constructor(private loggingService: LoggingService,
+  constructor(
+    private loggingService: LoggingService,
     public modalService: NgbModal,
     public translate: I18nService,
     private cd: ChangeDetectorRef) { }
 
-
   ngAfterViewInit(): void {
-    this.retriveDropdowns();
     this.getLoggingValues();
     this.getTranslates()
   }
@@ -74,8 +65,9 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  initFilters() {
-    this.pagination.currentPage = 1;
+  resetFilters() {
+    this.filters = {};
+		this.pagination.currentPage = 1;
 
     this.dateTimeFrom = '';
     this.dateTimeTo = '';
@@ -83,24 +75,11 @@ export class DashboardComponent implements AfterViewInit {
     this.searchFrom = '';
     this.searchTo = '';
 
-    this.selectedProject = '';
-    this.selectedEvent = '';
-    this.searchUserName.value = '';
-    this.searchEventName.value = '';
-    this.searchEventMessage.value = '';
-    this.searchJsonMessage.value = '';
-    this.searchUserIdentifier.value = '';
-
     this.showFilters = false;
 		this.cd.detectChanges();
 		this.showFilters = true;
 
     this.getLoggingValues();
-    this.retriveDropdowns();
-  }
-
-  retriveDropdowns() {
-    this.loggingService.getEventSelectItem().subscribe((res) => (this.events = res.data));
   }
 
   setTimeToSearch(): void {
@@ -120,18 +99,20 @@ export class DashboardComponent implements AfterViewInit {
 
   getLoggingValues(data: any = {}) {
     this.setTimeToSearch();
+    this.isLoading = true;
 
     let params = {
       fromDate: this.searchFrom || '',
       toDate: this.searchTo || '',
-      projectName: this.selectedProject || '',
-      event: this.searchEventName.value || '',
-      eventMessage: this.searchEventMessage.value || '',
-      jsonMessage: this.searchJsonMessage.value.replace(/\s+/g, '') || '',
-      userName: this.searchUserName.value || '',
-      userIdentifier: this.searchUserIdentifier.value || '',
+      projectName: this.filters.projectName || '',
+      event: this.filters.eventName || '',
+      eventMessage: this.filters.eventMessage || '',
+      jsonMessage: this.filters.jsonMessage && this.filters.jsonMessage.replace(/\s+/g, '') || '',
+      userName: this.filters.userName || '',
+      userIdentifier: this.filters.userIdentifier || '',
       page: data.page || 1,
       itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      ...this.filters
     };
 
     this.loggingService.getLoggingValues(params).subscribe((res) => {
@@ -143,13 +124,11 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
-  atachProject(item: any) {
-    this.selectedProject = item.target.value;
-  }
-
-  atachEvent(item: any) {
-    this.selectedEvent = item.target.value;
-  }
+  setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+		this.getLoggingValues();
+	}
 
   viewJSON(id, items): void {
     const modalRef = this.modalService.open(DetailsModalComponent, { centered: true, size: <any>'xl' });
@@ -182,12 +161,12 @@ export class DashboardComponent implements AfterViewInit {
       orientation: 2,
       fromDate: this.searchFrom || '',
       toDate: this.searchTo || '',
-      projectName: this.selectedProject || '',
-      event: this.searchEventName.value || '',
-      eventMessage: this.searchEventMessage.value || '',
-      jsonMessage: this.searchJsonMessage.value.replace(/\s+/g, '') || '',
-      userName: this.searchUserName.value || '',
-      userIdentifier: this.searchUserIdentifier.value || ''
+      projectName: this.filters.projectName || '',
+      event: this.filters.eventName || '',
+      eventMessage: this.filters.eventMessage || '',
+      jsonMessage: this.filters.jsonMessage && this.filters.jsonMessage.replace(/\s+/g, '') || '',
+      userName: this.filters.userName || '',
+      userIdentifier: this.filters.userIdentifier || ''
     };
     const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'lg' });
     modalRef.componentInstance.tableData = printData;
