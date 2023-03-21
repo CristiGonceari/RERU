@@ -46,6 +46,7 @@ export class AttachUserModalComponent {
   public confirm(): void {
     this.activeModal.close({
       selectedUsers: this.inputType === 'checkbox' ? [...this.attachedUsers] : [...this.attachedUsers.filter(el => !!el)],
+      exceptUserIds: this.inputType === 'checkbox' ? [...this.attachedUsers.filter(el => !!el)] : [...this.attachedUsers],
     });
   }
 
