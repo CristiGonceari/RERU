@@ -1,5 +1,5 @@
 <select class="form-control form-control-solid h-35px" name="selectedStatus" id="selectedProject" 
-        (change)="filter.emit($event)">
+        (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected value="">{{ 'dashboard.module' | translate }}</option>
     <option *ngFor="let project of projects" [value]="project">
         {{ project }}
