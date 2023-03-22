@@ -9,7 +9,7 @@
   </div>
 </div>
 <div *ngIf="!isLoadingMedia">
-  <div class="d-flex">
+  <div class="d-flex flex-wrap justify-content-center justify-content-sm-start">
     <app-confirm-button type="button" class="btn p-0" (click)="drop.showFileSelector()">{{'button.attach' | translate}}</app-confirm-button>
     <p class="mb-0 ml-5 mt-2 font-weght-lighter text-truncate">{{fileName}}</p>
     <p *ngIf="docUrl" class="mx-5 my-auto h1 cursor-pointer" (click)="onRemoved(true)"> &#215; </p>
@@ -19,9 +19,9 @@
                   style="display: contents !important;" [expandable]="true"
                   (change)="onSelect($event)" [multiple]="false" #drop>
       <div *ngIf="imageUrl" class="d-flex" (click)="showImage(imageUrl)" class="cursor-pointer">
-        <img [src]="imageUrl" class="h-200px rounded">
+        <img [src]="imageUrl" class="h-auto w-100 rounded">
       </div>
-      <video *ngIf="videoUrl" class="h-200px rounded" controls>
+      <video *ngIf="videoUrl" class="h-auto w-100 rounded" controls>
         <source [src]="videoUrl">
       </video>
       <audio *ngIf="audioUrl" controls>

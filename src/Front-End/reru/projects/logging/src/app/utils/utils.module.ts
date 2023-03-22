@@ -9,8 +9,10 @@ import { DetailsModalComponent } from './modals/details-modal/details-modal.comp
 import { DeleteLogsModalComponent } from './modals/delete-logs-modal/delete-logs-modal.component';
 import { DateFilterPipe } from './pipes/date-filter.pipe';
 
+import { SearchModuleComponent } from './components/search-module/search-module.component';
+
 @NgModule({
-  declarations: [DetailsModalComponent, DeleteLogsModalComponent, DateFilterPipe],
+  declarations: [DetailsModalComponent, DeleteLogsModalComponent, DateFilterPipe, SearchModuleComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -22,7 +24,8 @@ import { DateFilterPipe } from './pipes/date-filter.pipe';
   ],
   exports: [
     TranslateModule,
-    DateFilterPipe
+    DateFilterPipe,
+    SearchModuleComponent
   ]
 })
 export class UtilsModule { }

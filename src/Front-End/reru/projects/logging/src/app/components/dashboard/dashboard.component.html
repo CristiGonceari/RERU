@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col">
       <div class="card card-custom gutter-b">
-        <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;">
+        <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;" *ngIf="showFilters">
           <div class="card-title py-3">
             <h3 class="card-label" id="title">{{'dashboard.title' | translate}}</h3>
           </div>
@@ -16,30 +16,22 @@
           </div>
           <div class="row w-100">
             <div class="col">
-              <div class="input-group input-group-sm input-group-solid">
-                <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
-                  (change)="atachProject($event)" (change)="getLoggingValues($event.target.value)">
-                  <option class="default-option text-muted" selected value="">{{ 'dashboard.module' | translate }}
-                  </option>
-                  <option *ngFor="let item of projects" [value]="item">
-                    {{ item }}
-                  </option>
-                </select>
-              </div>
+              <app-search-module (filter)="setFilter('projectName', $event)">
+              </app-search-module>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="getLoggingValues({eventName: $event})"
-                [placeholder]="'dashboard.event' | translate" #eventName>
+              <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
+                [placeholder]="'dashboard.event' | translate">
               </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="getLoggingValues({userName: $event})"
-                [placeholder]="'dashboard.user-name' | translate" #userName>
+              <erp-shared-search-input (handleSearch)="setFilter('userName', $event)"
+                [placeholder]="'dashboard.user-name' | translate">
               </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="getLoggingValues({eventMessage: $event})"
-                [placeholder]="'dashboard.event-message' | translate" #eventMessage>
+              <erp-shared-search-input (handleSearch)="setFilter('eventMessage', $event)"
+                [placeholder]="'dashboard.event-message' | translate">
               </erp-shared-search-input>
             </div>
             <div class="col">
@@ -73,17 +65,17 @@
               </div>
             </div>
             <div class="co">
-              <erp-shared-search-input (handleSearch)="getLoggingValues({userIdentifier: $event})"
-                [placeholder]="'dashboard.user-identifier' | translate" #userIdentifier>
+              <erp-shared-search-input (handleSearch)="setFilter('userIdentifier', $event)"
+                [placeholder]="'dashboard.user-identifier' | translate">
               </erp-shared-search-input>
             </div>
             <div class="col">
-              <erp-shared-search-input (handleSearch)="getLoggingValues({jsonMessage: $event})"
-                [placeholder]="'dashboard.json-message' | translate" #jsonMessage>
+              <erp-shared-search-input (handleSearch)="setFilter('jsonMessage', $event)"
+                [placeholder]="'dashboard.json-message' | translate">
               </erp-shared-search-input>
             </div>
             <div class="col-1">
-              <button class="btn btn-secondary reset" (click)="initFilters()">
+              <button class="btn btn-secondary reset" (click)="resetFilters()">
                 {{'button.reset' | translate }}
               </button>
             </div>

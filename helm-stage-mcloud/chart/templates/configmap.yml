@@ -348,8 +348,8 @@ data:
        "MPassSaml": {
         "SamlRequestIssuer": "https://reru.mai.gov.md",
         "IdentityProviderCertificatePath": "Files/Certificates/mpass.staging.egov.md.cer",
-        "SamlLoginDestination": "https://mpass.staging.egov.md/login/saml",
-        "SamlLogoutDestination": "https://mpass.staging.egov.md/logout/saml",
+        "SamlLoginDestination": "https://mpass.gov.md/login/saml",
+        "SamlLogoutDestination": "https://mpass.gov.md/logout/saml",
         "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-identity-new"
       },
       "Certificate": {

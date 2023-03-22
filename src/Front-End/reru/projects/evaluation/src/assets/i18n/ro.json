@@ -266,7 +266,7 @@
     "print-result": "Imprimă rezultatul",
     "print-test-info": "Imprimă informațiile testului",
     "performing-test": "Imprimarea efectuării testului",
-    "attach": "Atașați fișierul",
+    "attach": "Atașează",
     "confirm-print": "Confirmă și Printează",
     "send-email": "Email notificarea",
     "full-screen": "Mod ecran complet"
@@ -513,7 +513,7 @@
     "subtitle": "Gestionare întrebări",
     "new-question": "Întrebarea Nouă",
     "add-question": "Adaugă întrebare",
-    "bulk-import": "Bulk Import",
+    "bulk-import": "Importă (.xlsx)",
     "search-question": "Căutați după denumirea întrebării",
     "search-category": "Căutați după denumirea categoriei",
     "search-question-type": "Căutați după tip",
@@ -681,7 +681,7 @@
     "succes-add-msg": "Opțiunea a fost adăugată cu succes",
     "succes-update-msg": "Opțiunea a fost actualizată cu succes",
     "succes-update-options-msg": "Opțiunile au fost actualizate cu succes",
-    "bulk-import": "Bulk Import",
+    "bulk-import": "Import (.xlsx)",
     "formula-for-one-answer": "Formula de calcul pentru întrebări cu un răspuns",
     "formula-for-multiple-answers": "Formula de calcul pentru întrebări cu răspunsuri multiple",
     "negative-score": "Permite scor negativ"
@@ -720,7 +720,9 @@
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Roluri modul"
+    "module-roles": "Roluri modul",
+    "media": "Media",
+    "media-type": "Media (imagine, document, audio, video)"
   },
   "locations": {
     "locations": "Locații de testare",

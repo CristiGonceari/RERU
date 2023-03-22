@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="form-group row align-items-center mb-2" *ngIf="fileId!=null">
-                <label class="col-xl-2 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">Media:</label>
+                <label class="col-xl-2 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">{{ 'faq.media' | translate}}:</label>
                 <div class="col-lg-9 col-xl-10">
                   <div *ngIf="fileId!=null">
                     <app-get-media-file [fileId]="fileId"></app-get-media-file>

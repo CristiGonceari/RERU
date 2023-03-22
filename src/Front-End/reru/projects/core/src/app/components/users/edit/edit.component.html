@@ -95,14 +95,7 @@
                 <div class="form-group row mb-10">
                   <label class="col-xl-3 col-lg-3 col-form-label">{{ 'table.profile-photo' | translate }}</label>
                   <div class="col-lg-9 col-xl-9">
-                    <div *ngIf="fileId">
-                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                        (disableBtn)="disableBtn"></app-add-edit-media-file>
-                    </div>
-                    <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
-                    </div>
+                      <app-upload-avatar (handleFile)="checkFile($event)"></app-upload-avatar>
                   </div>
                 </div>
               </div>

@@ -59,8 +59,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IConfiguration configuration,
             AppDbContext appDbContext,
             IMapper mapper,
-            INotificationService notificationService,
-            IAuthenticationSchemeProvider schemeProvider
+            INotificationService notificationService
             )
         {
             _userManager = userManager;
@@ -143,16 +142,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null)
                 //if (result.Principal.FindFirst(MPassClaimTypes.EmailAdress) == null || result.Principal.FindFirst(MPassClaimTypes.PhoneNumber) == null)
-                {
-                //var userName = result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
-                //var invalidLoginModel = new LoginInputModel() { Username = userName , ReturnUrl = returnDefaultUrl };
-                //return await _accountControllers.Login(returnDefaultUrl);
-                // throw new Exception("Unknown user email or phoneNumber");
+            {
 
-                ModelState.AddModelError(string.Empty, AccountOptions.InvalidMPassCredentialsErrorMessage);
-
-                //return View($"Login/{(returnDefaultUrl == "~/" ? "" : returnDefaultUrl)}");
-                return Redirect(returnDefaultUrl);
+                var vm = new MPassErrorRedirectViewModel() 
+                { 
+                    RedirectLoginUri = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl"),
+                    RedirectMPassUri = Configuration.GetValue<string>("MPassSaml:SamlLoginDestination")
+                };
+                return View(vm);
 
             }
 
