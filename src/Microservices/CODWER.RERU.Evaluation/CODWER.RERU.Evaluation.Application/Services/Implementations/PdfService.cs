@@ -265,7 +265,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             var parsed = _generatePdf.GetPDF(source);
 
-            return FileDataDto.GetPdf("Position_Diagram.pdf", parsed);
+            return FileDataDto.GetPdf("Borderoul_Pozitiei.pdf", parsed);
         }
 
         #endregion
@@ -281,7 +281,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             myDictionary.Add("{nr_test_question}", testTemplate.QuestionCount.ToString());
             myDictionary.Add("{test_time}", testTemplate.Duration.ToString());
             myDictionary.Add("{min_percentage}", testTemplate.MinPercent.ToString());
-            myDictionary.Add("{test_mode}", testTemplate.Mode.ToString());
+            myDictionary.Add("{test_mode}", EnumMessages.Translate(testTemplate.Mode)); 
             myDictionary.Add("{settings_replace}", GetParsedSettingsForTestTemplate(testTemplate));
             myDictionary.Add("{rules_name}", DecodeRules(testTemplate.Rules));
             myDictionary.Add("{category_replace}", await GetTableContent(testTemplate.TestTemplateQuestionCategories.ToList()));

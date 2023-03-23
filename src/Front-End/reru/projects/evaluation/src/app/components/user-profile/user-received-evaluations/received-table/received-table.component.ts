@@ -116,7 +116,7 @@ export class ReceivedTableComponent implements OnInit {
       'evaluatorIdnp',
       'eventName',
       'testStatus',
-      'resultValue'
+      'result'
     ];
 
     for (let i = 0; i < headersHtml.length - 1; i++) {
