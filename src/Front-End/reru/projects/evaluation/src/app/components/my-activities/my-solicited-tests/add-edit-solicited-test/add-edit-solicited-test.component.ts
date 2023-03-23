@@ -23,6 +23,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   showCard: boolean = false;
   isEdit: boolean = false;
   isDeleting: boolean = false;
+  disabledConfirm: boolean = true;
 
   selected;
 
@@ -146,6 +147,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
       })
     } else {
       this.eventCandidatePositionService.getEventVacandPostition(this.addEditSolicitedPositionForm.value.candidatePositionId).subscribe(res => {
+        if (this.addEditSolicitedPositionForm.value.candidatePositionId) this.disabledConfirm = false;
         if (res && res.data) {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
@@ -326,9 +328,5 @@ export class AddEditSolicitedTestComponent implements OnInit {
   updateStatus(loaded: number, total: number | undefined, requestType: string) {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
-  }
-
-  cantAdd() {
-    return this.candidatePositions == undefined;
-  }
+  }  
 }

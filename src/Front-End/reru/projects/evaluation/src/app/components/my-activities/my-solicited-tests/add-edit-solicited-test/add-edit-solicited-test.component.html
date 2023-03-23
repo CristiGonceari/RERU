@@ -133,12 +133,12 @@
                                         (handle)="backClicked()">
                                     </app-button>
                                     <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()" [disable]="cantAdd()">
+                                        (handle)="onSave()" [disabled]="isEdit ? false : disabledConfirm">
                                     </app-add-button>
                                 </div>
                                 <div class="d-md-none d-block pt-10">
-                                    <app-add-button width="100%" [disabled]="cantAdd()" class="btn w-100" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()">
+                                    <app-add-button width="100%" class="btn w-100" [value]="'button.confirm' | translate"
+                                        (handle)="onSave()" [disabled]="isEdit ? false : disabledConfirm">
                                     </app-add-button>
                                     <app-button width="100%" class="btn w-100" [value]="'button.cancel' | translate"
                                         (handle)="backClicked()">
