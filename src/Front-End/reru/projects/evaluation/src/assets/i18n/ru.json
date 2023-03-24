@@ -470,7 +470,8 @@
     "set-points-to-zero": "Если ответ неверный укажите количество пунктов 0",
     "finish-verification-msg": "Вы уверены, что хотите завершить проверку теста?",
     "succes-verified-msg": "Тест был проверен успешно",
-    "evaluated-tests": "Оценочные тесты"
+    "evaluated-tests": "Оценочные тесты",
+    "actions": "Действия"
   },
   "dashboard": {
     "title": "Оценивание",
