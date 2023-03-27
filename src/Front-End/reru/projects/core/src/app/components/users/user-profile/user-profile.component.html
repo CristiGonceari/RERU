@@ -105,7 +105,7 @@
           <div class="d-flex flex-column" *ngIf="fileId">
             <app-loading-spinner *ngIf="avatarLoading" [colorClass]="'text-primary'" [contentHeight]="'5rem'"
               [height]="'2rem'" [width]="'2rem'"></app-loading-spinner>
-            <div class="my-3 d-flex justify-content-center">
+            <div class="my-3">
               <app-get-media-file *ngIf="!avatarLoading" [fileId]="fileId"></app-get-media-file>
             </div>
             <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
