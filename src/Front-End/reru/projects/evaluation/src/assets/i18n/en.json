@@ -471,7 +471,8 @@
     "set-points-to-zero": "If answer is false, set points to 0",
     "finish-verification-msg": "Are you sure you want to complete test verification?",
     "succes-verified-msg": "Test was successfully verified",
-    "evaluated-tests": "Evaluated tests"
+    "evaluated-tests": "Evaluated tests",
+    "actions": "Actions"
   },
   "dashboard": {
     "title": "Evaluation",

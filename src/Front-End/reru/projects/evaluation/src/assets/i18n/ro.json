@@ -470,7 +470,8 @@
     "set-points-to-zero": "Dacă răspunsul este fals, setați punctele la 0",
     "finish-verification-msg": "Sigur doriți să finalizați verificarea testului?",
     "succes-verified-msg": "Testul a fost verificat cu succes",
-    "evaluated-tests": "Teste evaluate"
+    "evaluated-tests": "Teste evaluate",
+    "actions": "Acțiuni"
   },
   "dashboard": {
     "title": "Evaluare",
