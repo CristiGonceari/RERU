@@ -55,24 +55,20 @@ export class ChangePersonalDataComponent implements OnInit {
 	}
 
 	initForm(oldPersonalData: PersonalData): void {
+		var matchesPattern = '^(?! )[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$|^[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_. ]*[a-zA-zăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$';
+		
 		this.personalDataForm = this.fb.group({
 			firstName: this.fb.control(oldPersonalData.firstName, [
 				Validators.required,
-				Validators.pattern(
-					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
-				),
+				Validators.pattern(matchesPattern),
 			]),
 			lastName: this.fb.control(oldPersonalData.lastName, [
 				Validators.required,
-				Validators.pattern(
-					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
-				),
+				Validators.pattern(matchesPattern),
 			]),
 			fatherName: this.fb.control(oldPersonalData.fatherName, [
 				Validators.required,
-				Validators.pattern(
-					'^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'
-				),
+				Validators.pattern(matchesPattern),
 			]),
 			phoneNumber: this.fb.control(oldPersonalData.phoneNumber, [
 				Validators.required,
