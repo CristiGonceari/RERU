@@ -132,9 +132,17 @@ export class UserFilesComponent implements OnInit {
   }
 
   removeFile(id): void {
+    forkJoin([
+      this.translate.get('notification.title.success'),
+			this.translate.get('notification.body.success.file-deleted')
+    ]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+    });
+
     this.isLoading = true;
     this.userFilesService.delete(id).subscribe(() => {
-      this.notificationService.success('Success', 'Fișier șters!', NotificationUtil.getDefaultConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
       this.subsribeForParams();
       this.isLoading = false;
     });

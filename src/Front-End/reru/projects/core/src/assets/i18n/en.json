@@ -124,7 +124,8 @@
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
-        "login": "Login successfully!"
+        "login": "Login successfully!",
+        "file-deleted":"File deleted!"
       },
       "error": "There has been an error!",
       "pls-select-role": "Please select a role!",
