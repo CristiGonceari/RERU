@@ -275,6 +275,7 @@
     "priority":"Priority",
     "status": "Status",
     "profile-photo": "Profile Photo",
+    "profile-photo-ext": "(.png, .jpg, ...)",
     "number" : "Number",
     "npp": "L.F.F.",
     "posture": "Posture"
@@ -612,7 +613,7 @@
     "info-roles": "The roles that can view this article",
     "module-roles": "Module roles",
     "media": "Media",
-    "media-type": "Media (image, document, audio, video)"
+    "media-type": "(image, document, audio, video)"
   },
   "departments": {
     "overview": "Overview",

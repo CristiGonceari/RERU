@@ -465,6 +465,7 @@
     "are-you-sure-want-to-delete-document": "Sunteți sigur că doriți să ștergeți documentul <b>{{name}}</b>?",
     "add-document": "Adaugă document",
     "file": "Fișier",
+    "file-type": "Fișier (.xlsx)",
     "access-restricted-to-orders": "Nu aveți acces la ordine!",
     "access-restricted-to-identity": "Nu aveți acces la documente de identitate!",
     "access-restricted-to-vacation": "Nu aveți acces la concedii!",
@@ -524,6 +525,7 @@
     "close": "Închide",
     "add": "Adaugă",
     "import": "Importă",
+    "import-type": "Importă (.xlsx)",
     "reset": "Resetare",
     "upload": "Încarcă",
     "applay": "Aplică filtru",
@@ -1078,7 +1080,7 @@
     "info-roles": "Rolurile care pot vizualiza acest articol",
     "module-roles": "Roluri modul",
     "media": "Media",
-    "media-type": "Media (imagine, document, audio, video)"
+    "media-type": "(imagine, document, audio, video)"
   },
   "media":{
     "invalid-type": "Tip de fișier nevalid"

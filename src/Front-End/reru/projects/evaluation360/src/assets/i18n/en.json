@@ -479,7 +479,7 @@
     "info-roles": "The roles that can view this article",
     "module-roles": "Module roles",
     "media": "Media",
-    "media-type": "Media (image, document, audio, video)"
+    "media-type": "(image, document, audio, video)"
   },
   "media":{
     "invalid-type": "Invalid file type"

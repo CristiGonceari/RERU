@@ -98,10 +98,11 @@
                     <div *ngIf="fileId">
                       <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
                         (disableBtn)="disableBtn"></app-add-edit-media-file>
+                      <p>{{ 'faq.media-type' | translate}}</p>
                     </div>
                     <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
+                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn"></app-add-edit-media-file>
+                      <p>{{ 'faq.media-type' | translate}}</p>
                     </div>
                   </div>
                 </div>
