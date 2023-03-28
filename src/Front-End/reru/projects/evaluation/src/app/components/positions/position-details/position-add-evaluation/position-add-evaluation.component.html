@@ -34,12 +34,12 @@
 <h3 *ngIf="!isStartAddingTests" class="mb-10 font-weight-bold text-dark">{{'evaluations.evaluation-data' | translate}}
 </h3>
 <div *ngIf="!isStartAddingTests" class="row my-10 px-8 my-lg-15 px-lg-10 justify-content-center">
-    <div class="col-12 col-xl-6 col-xxl-7 mb-5">
+    <div class="col-12 mb-5">
         <div class="form" id="kt_contact_add_form">
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-12 col-xxl-10">
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        <label class="col-lg-3 col-xl-3 col-form-label text-lg-right text-center">
                             {{'events.event' | translate}}
                         </label>
                         <div class="card col-lg-9 col-xl-9">
@@ -54,8 +54,9 @@
                         </div>
                     </div>
                     <div class="form-group row" *ngIf="showEventCard">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                            {{'events.event-overview' | translate}}</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
+                            {{'events.event-overview' | translate}}
+                        </label>
                            
                         <div class="card ml-5 col-lg-8 col-xl-8 erp-shared-desktop-wide">
                             <app-loading-spinner class="card-body" 
@@ -65,28 +66,28 @@
                             <div class="card-body" *ngIf="!isLoading">
                                 <div class="form-group row align-items-center mb-2">
                                     <label
-                                        class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        class="col-6 col-xxl-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
                                         {{'events.start-date' | translate}}:
                                     </label>
-                                    <div class="col-lg-9 col-xl-6">
+                                    <div class="col-6 col-xxl-6">
                                         <p class="font-size-lg m-0">{{eventDatas.fromDate | date: 'd/M/yy, HH:mm'}}</p>
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center mb-2">
-                                    <label style="white-space: nowrap;"
-                                        class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                    <label
+                                        class="col-6 col-xxl-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
                                         {{'events.end-date' | translate}}:
                                     </label>
-                                    <div class="col-lg-9 col-xl-6">
+                                    <div class="col-6 col-xxl-6">
                                         <p class="font-size-lg m-0">{{eventDatas.tillDate | date: 'd/M/yy, HH:mm'}}</p>
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center mb-2" *ngIf="eventDatas.description">
                                     <label
-                                        class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
+                                        class="col-6 col-xxl-3 col-form-label font-weight-bold text-left text-lg-right text-muted">
                                         {{'locations.description' | translate}}:
                                     </label>
-                                    <div class="col-lg-9 col-xl-6">
+                                    <div class="col-6 col-xxl-6">
                                         <p class="font-size-lg m-0">{{eventDatas.description}}</p>
                                     </div>
                                 </div>
@@ -94,7 +95,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
                             {{'verify-test.select-test-type' | translate}}
                         </label>
                         <div class="card col-lg-9 col-xl-9">
@@ -112,9 +113,9 @@
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
                             {{'evaluations.evaluated' | translate}}</label>
-                        <div class="col-lg-9 col-xl-9">
+                        <div class="col-lg-9 col-xl-9 text-lg-left text-center">
                             <button class="btn btn-light-primary" (click)="attachUsers()"
                                 [style.background-color]="userListToAdd.length > 0 ? '#C9F7F5': '#FFE2E5'"
                                 [style.color]="userListToAdd.length > 0 ? '#0bb7af': '#F64E60'">
@@ -123,9 +124,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
                             {{'events.evaluator' | translate}}</label>
-                        <div class="col-lg-9 col-xl-9">
+                        <div class="col-lg-9 col-xl-9 text-lg-left text-center">
                             <button class="btn btn-light-primary" (click)="attachEvaluators()"
                                 [style.background-color]="evaluatorList.length > 0 ? '#C9F7F5': '#FFE2E5'"
                                 [style.color]="evaluatorList.length > 0 ? '#0bb7af': '#F64E60'">
@@ -135,8 +136,9 @@
                     </div>
                     <div class="form-group row" [formGroup]="settingsForm" *ngIf="showEventCard">
 
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                            {{'Email' | translate}}</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
+                            {{'Email' | translate}}
+                        </label>
                         <span></span>
                         <button type="button" class="btn btn-icon" ngbTooltip="{{'tooltips.option11' | translate}}">
                             <i class="fas fa-question-circle"></i>
@@ -148,8 +150,9 @@
                         </label>
                     </div>
                     <div class="form-group row" *ngIf="settingsForm.value.sendTimeAndLocationEmail && showEventCard">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
-                            {{'verify-test.programmed-time' | translate}}</label>
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
+                            {{'verify-test.programmed-time' | translate}}
+                        </label>
                         <div class="col-lg-9 col-xl-9">
                             <input id="from" [owlDateTime]="dtFrom" placeholder="{{'verify-test.programmed-time' | translate}}" autocomplete="off"
                                 class="shadow-input" name="date" [(ngModel)]="date" />
@@ -160,7 +163,7 @@
                         </div>
                     </div>
                     <div class="form-group row" *ngIf="settingsForm.value.sendTimeAndLocationEmail && showEventCard">
-                        <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-lg-right text-center">
                             {{'events.location' | translate}}
                         </label>
                         <div class="col-lg-9 col-xl-9">
@@ -175,7 +178,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right border-top pt-10">
+            <div class="col-xxl-10 text-right border-top pt-10">
                 <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                 </app-button>
                 <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest()">
