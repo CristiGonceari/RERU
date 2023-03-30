@@ -254,28 +254,33 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   uploadFiles(res) {
     this.isLoading = false;
-    this.files.forEach(el => {
+    let finishedRequests: number = 1;
+
+    for (const el of this.files) {
       if (this.files[this.files.length - 1] === el) {
         let request = new FormData();
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
-          this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
-            this.reportProggress(res);
-            // this.backClicked();
+            this.solicitedVacantPositionUserFileService.create(request).subscribe(async res => {
+              
+            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
           });
         }
-
       } else {
         let request = new FormData();
         request = this.parseFiles(request, res, el);
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
-          this.solicitedVacantPositionUserFileService.create(request).subscribe();
+          this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
+
+            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
+          });
         }
       }
-    })
+    }
+
   }
 
   parseFiles(request: FormData, res, el) {
@@ -304,10 +309,11 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.location.back();
   }
 
-  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>, finishedRequests?: number): number {
+    this.isLoadingMedia = true;
+
     switch (httpEvent.type) {
       case HttpEventType.Sent:
-        this.isLoadingMedia = true;
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
@@ -316,12 +322,15 @@ export class AddEditSolicitedTestComponent implements OnInit {
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
         break;
+
       case HttpEventType.Response:
-        this.fileStatus.requestType = "Done";
-        this.backClicked();
-        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-        this.isLoadingMedia = false;
-        break;
+        if (this.files.length == finishedRequests) {
+          this.fileStatus.requestType = "Done";
+          this.isLoadingMedia = false;
+          this.backClicked();
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        }
+        return 1;
     }
   }
 
