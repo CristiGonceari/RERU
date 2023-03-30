@@ -816,7 +816,7 @@
     "attach-test-type-to-event": "Atașați șablonul de teste la eveniment",
     "test-type-name": "Șablonul testului",
     "client": "Client",
-    "attempts": "Încercări",
+    "attempts": "Încercări (max. 100)",
     "search-event": "Căutați după eveniment",
     "search-location": "Căutați după locație",
     "search-colaborator-id": "Căutați după cod colaborator departament",
