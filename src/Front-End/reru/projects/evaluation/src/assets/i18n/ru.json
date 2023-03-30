@@ -819,7 +819,7 @@
     "attach-test-type-to-event": "Прикрепите шаблон теста к событию",
     "test-type-name": "Шаблон теста",
     "client": "Клиент",
-    "attempts": "Попытки",
+    "attempts": "Попытки (макс. 100)",
     "search-event": "Поиск по событию",
     "search-location": "Поиск по локации",
     "search-colaborator-id": "Поиск по коду colaborator отделение",

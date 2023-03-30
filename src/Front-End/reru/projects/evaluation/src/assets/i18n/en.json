@@ -821,7 +821,7 @@
     "attach-test-type-to-event": "Attach test template to event",
     "test-type-name": "Test template",
     "client": "Client",
-    "attempts": "Attempts",
+    "attempts": "Attempts (max. 100)",
     "search-event": "Search by event",
     "search-location": "Search by location",
     "search-colaborator-id": "Search by colaborator departamanet code",
