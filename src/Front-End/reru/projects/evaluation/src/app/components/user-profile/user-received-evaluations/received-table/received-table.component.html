@@ -1,5 +1,5 @@
 <div class="row w-100 mb-5 mt-0">
-    <div class="col">
+    <div class="col-12 col-sm-5">
         <div class="input-group input-group-sm input-group-solid">
             <input type="text" [owlDateTimeTrigger]="dtFrom"
               class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
@@ -13,7 +13,7 @@
             <owl-date-time #dtFrom></owl-date-time>
         </div>
     </div>
-    <div class="col">
+    <div class="col-12 col-sm-5 pt-sm-0 pt-2">
         <div class="input-group input-group-sm input-group-solid">
             <input type="text" [owlDateTimeTrigger]="toDate"
               class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
@@ -27,14 +27,14 @@
             <owl-date-time #toDate></owl-date-time>
         </div>
     </div>
-    <div class="col-1">
+    <div class="col-12 col-sm-2 pt-sm-0 pt-2 w-100">
         <div class="w-100 text-right">
             <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
         </div>
     </div>
 </div>
 
-<div class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+<div class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
     id="kt_datatable">
     <app-loading-spinner *ngIf="isLoading || downloadFile" [contentHeight]="'20vh'" [height]="'5rem'" [width]="'5rem'"
         [colorClass]="'text-primary'">
