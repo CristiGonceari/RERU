@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace CODWER.RERU.Core.Application.Validators.DTO.Users 
 {
@@ -15,7 +15,7 @@ namespace CODWER.RERU.Core.Application.Validators.DTO.Users
                 .MinimumLength(1)
                 .WithErrorCode(MessageCodes.INVALID_INPUT)
                 .WithMessage(MessageCodes.MINIMUM_LENGTH_REQUIRED)
-                .Matches("^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$")
+                .Matches("^(?! )[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$|^[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_. ]*[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$")
                 .WithErrorCode(MessageCodes.INVALID_INPUT)
                 .WithMessage(MessageCodes.NAME_SHOULD_NOT_START_WITH_NUMBER);
         }

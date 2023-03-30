@@ -461,7 +461,8 @@
     "select-file-format": "Выбери формат файла",
     "are-you-sure-want-to-delete-document": "Вы уверены, что хотите удалить документ <b>{{name}}</b>?",
     "add-document": "Добавить файл",
-    "file": "Файл  (.xlsx)",
+    "file": "Файл",
+    "file-type": "Файл (.xlsx)",
     "access-restricted-to-orders": "Доступ к приказам запрещен!",
     "access-restricted-to-identity": "Доступ к удостоверению личности запрещен!",
     "access-restricted-to-vacation": "Доступ к отпускным запрещен!",
@@ -521,6 +522,7 @@
     "attach": "Прикрепить",
     "add": "Добавить",
     "import": "Импортировать",
+    "import-type": "Импортировать (.xlsx)",
     "reset": "Сброс",
     "upload": "Загрузить",
     "applay": "Применить",
@@ -1075,7 +1077,7 @@
     "info-roles": "Роли, которые могут просматривать эту статью",
     "module-roles": "Роли модуля",
     "media": "Медиа",
-    "media-type": "Медиа (изображение, документ, аудио, видео)"
+    "media-type": "(изображение, документ, аудио, видео)"
   },
   "media":{
     "invalid-type": "Неверный тип файла"

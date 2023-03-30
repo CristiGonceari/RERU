@@ -199,6 +199,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 case QuestionTypeEnum.HashedAnswer:
                     return await GenerateHashedTemplate($"{questionType.ToString()}Template");
                 case QuestionTypeEnum.FileAnswer:
+                    return await GenerateFreeTextTemplate($"{questionType.ToString()}Template");
                 default:
                     return null;
             }

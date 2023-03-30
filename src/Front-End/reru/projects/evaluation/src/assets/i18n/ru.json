@@ -470,7 +470,8 @@
     "set-points-to-zero": "Если ответ неверный укажите количество пунктов 0",
     "finish-verification-msg": "Вы уверены, что хотите завершить проверку теста?",
     "succes-verified-msg": "Тест был проверен успешно",
-    "evaluated-tests": "Оценочные тесты"
+    "evaluated-tests": "Оценочные тесты",
+    "actions": "Действия"
   },
   "dashboard": {
     "title": "Оценивание",
@@ -722,7 +723,7 @@
     "info-roles": "Роли, которые могут просматривать эту статью",
     "module-roles": "Роли модуля",
     "media": "Медиа",
-    "media-type": "Медиа (изображение, документ, аудио, видео)"
+    "media-type": "(изображение, документ, аудио, видео)"
   },
   "locations": {
     "locations": "Локации",
@@ -818,7 +819,7 @@
     "attach-test-type-to-event": "Прикрепите шаблон теста к событию",
     "test-type-name": "Шаблон теста",
     "client": "Клиент",
-    "attempts": "Попытки",
+    "attempts": "Попытки (макс. 100)",
     "search-event": "Поиск по событию",
     "search-location": "Поиск по локации",
     "search-colaborator-id": "Поиск по коду colaborator отделение",

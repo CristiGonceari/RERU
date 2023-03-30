@@ -478,7 +478,7 @@
     "info-roles": "Rolurile care pot vizualiza acest articol",
     "module-roles": "Roluri modul",
     "media": "Media",
-    "media-type": "Media (imagine, document, audio, video)"
+    "media-type": "(imagine, document, audio, video)"
   },
   "media":{
     "invalid-type": "Tip de fișier nevalid"
