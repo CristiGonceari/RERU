@@ -25,9 +25,12 @@
                             *ngFor="let study of studyForm.controls.studies.controls;let i = index">
                             <div [formGroupName]="i">
                                 <div class="row justify-content-center">
-                                    <app-stepper-arrow-hint
+                                    <app-stepper-arrow-hint class="d-md-block d-none"
                                         *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'"
                                         [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
+                                    <app-stepper-arrow-hint-down class="d-md-none d-block"
+                                        *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'"
+                                        [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint-down>
                                     <div class="col-xl-6 col-12">
                                         <div class="form-group row required">
                                             <label class="col-xl-3 col-lg-3 col-form-label"
@@ -1039,11 +1042,13 @@
             </form>
         </mat-expansion-panel>
     </mat-accordion>
-    <div class="row">
+    <div class="row m-0">
         <div class="col">
-            <div class="d-flex justify-content-end">
-                <app-stepper-arrow-hint *ngIf="userStudies != null"
+            <div class="row d-flex justify-content-end">
+                <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="userStudies != null"
                     [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+                <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="userStudies != null"
+                    [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
                 <button class="btn btn-success h-35px" matStepperNext [disabled]="(userStudies == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
             </div>

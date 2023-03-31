@@ -9,17 +9,17 @@
 <erp-shared-content *ngIf="!isLoading">
     <div class="card card-custom gutter-b w-100">
         <div class="card-header font-size-lg">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-wrap">
                 <span class="text-muted mr-3">{{'evaluations.evaluation' | translate}}:</span>
                 <span class="mb-0 h4">{{testData.testTemplateName}}</span>
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-wrap">
                 <span class="text-muted mr-3">{{'verify-test.student' | translate}}:</span>
                 <span class="mb-0 h4">{{testData.userName}} </span>
                 <span class="text-dark-50 font-size-lg font-weight-light ml-2"> (idnp: {{testData.idnp}})
                 </span>
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center flex-wrap">
                 <span class="text-muted mr-3">{{'verify-test.result' | translate}}:</span>
                 <span class="mb-0 h4">{{ translateResultValue(result) }}</span>
             </div>
@@ -46,26 +46,37 @@
                     *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
                     <span class="h4">{{'tests.options' | translate}}:</span>
                     <div *ngFor="let item of options"
-                        class="d-flex border border-secondary rounded d-flex py-3 my-5"
+                        class="d-flex border border-secondary rounded w-100 py-3 my-5"
                         [class.bg-successTransparent]="item.isSelected">
-                        <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                        <label class="col-3 px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
                             <input type="checkbox" value="{{ item.id }}" name="option"
                                 [checked]="item.isSelected" />
                             <span [class.bg-success]="item.isSelected"></span>
                         </label>
-                        {{ item.answer }}
-                        <div class="form-group row align-items-center">
-                            <div class="col-lg-6 col-xl-3 w-100 d-flex">
-                                <div *ngIf="item.optionMediaFileId">
-                                    <app-get-media-file [fileId]="item.optionMediaFileId">
-                                    </app-get-media-file>
+                        <div class="col-10">
+                            <div class="form-group row align-items-center">
+                                {{ item.answer }}
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                                    <div *ngIf="item.optionMediaFileId">
+                                        <app-get-media-file [fileId]="item.optionMediaFileId">
+                                        </app-get-media-file>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid text-center" *ngIf="questionType == enum.FileAnswer && hadFile == true">
-                    <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
+
+
+                <div class="text-center h-auto mb-3 w-100" *ngIf="questionType == enum.FileAnswer && hadFile == true">
+                    <button (click)="getFile()" class="btn btn-light-success font-weight-bold d-md-block d-none mx-auto"
+                        ngbTooltip="{{fileName}}">
+                        <i class="flaticon-profile"></i>
+                        {{ checkFileNameLength() }}
+                    </button>
+                    <button (click)="getFile()" class="btn btn-light-success font-weight-bold  d-md-none d-block w-100"
                         ngbTooltip="{{fileName}}">
                         <i class="flaticon-profile"></i>
                         {{ checkFileNameLength() }}

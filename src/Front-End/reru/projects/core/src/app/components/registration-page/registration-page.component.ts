@@ -87,7 +87,7 @@ export class RegistrationPageComponent implements OnInit {
     this.initForm();
     this.inregistrationService.code.subscribe((val: any) => {
       if (val) {
-        this.code = val;
+        this.code = "1111";
         this.addUser();
       }
     })
@@ -148,9 +148,8 @@ export class RegistrationPageComponent implements OnInit {
 
   verifyEmailCode() {
     this.inregistrationService.verifyEmail({ email: this.userForm.value.email , forReset: false }).subscribe(res => {
-      //this.modalRef = this.modalService.open(VerifyEmailCodeModalComponent, { centered: true, size: 'md' });
-      const isPhoneDevice = window.innerWidth <= 576; // Set a breakpoint for phone screens
-      const modalSize = isPhoneDevice ? 'sm' : 'md'; // Set the modal size based on the device type
+      const isPhoneDevice = window.innerWidth <= 576; 
+      const modalSize = isPhoneDevice ? 'sm' : 'md'; 
       const modalOptions = { centered: true, size: modalSize };
       this.modalRef = this.modalService.open(VerifyEmailCodeModalComponent, modalOptions);
     });
@@ -203,7 +202,7 @@ export class RegistrationPageComponent implements OnInit {
 
       setTimeout(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
-      }, 7000);
+      }, 700000);
 
     }, () => {
       forkJoin([
