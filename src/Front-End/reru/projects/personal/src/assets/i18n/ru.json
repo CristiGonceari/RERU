@@ -911,7 +911,8 @@
         "step-succes-add-msg": "Шаг был добавлен!",
         "step-succes-update-msg": "Шаг был обновлен!",
         "validation-fail": "Проверка не удалась!",
-        "server-error": "Произошла ошибка сервера!"
+        "server-error": "Произошла ошибка сервера!",
+        "picture": "Картинка была добавлена!"
       },
       "error": "Произошла ошибка!",
       "autobiography-error-add":  "Автобиография не была добавлена!",

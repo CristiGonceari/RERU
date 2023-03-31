@@ -548,7 +548,8 @@
     "search-by-status": "Căutați după statut",
     "add-tags": "Inserează taguri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile",
-    "questions-left": "Întrebări rămase"
+    "questions-left": "Întrebări rămase",
+    "answer-text": "Scrie aici..."
   },
   "require-documents":{
     "documents":"Documente",

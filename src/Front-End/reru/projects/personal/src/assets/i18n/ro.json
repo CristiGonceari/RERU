@@ -913,7 +913,8 @@
         "step-succes-add-msg": "Pasul a fost adăugat!",
         "step-succes-update-msg": "Pasul a fost actualizat!",
         "validation-fail": "Validarea a eșuat!",
-        "server-error": "A apărut o eroare de Server!"
+        "server-error": "A apărut o eroare de Server!",
+        "picture": "Poza a fost adăugată!"
       },
       "error": "A avut loc o eroare!",
       "autobiography-error-add":  "Autobiografia nu a fost adăugată!",
