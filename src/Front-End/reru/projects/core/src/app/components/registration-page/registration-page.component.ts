@@ -202,7 +202,7 @@ export class RegistrationPageComponent implements OnInit {
 
       setTimeout(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
-      }, 700000);
+      }, 7000);
 
     }, () => {
       forkJoin([
