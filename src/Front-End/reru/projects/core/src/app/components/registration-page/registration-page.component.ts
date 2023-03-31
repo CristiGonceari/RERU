@@ -87,7 +87,7 @@ export class RegistrationPageComponent implements OnInit {
     this.initForm();
     this.inregistrationService.code.subscribe((val: any) => {
       if (val) {
-        this.code = "1111";
+        this.code = val;
         this.addUser();
       }
     })
