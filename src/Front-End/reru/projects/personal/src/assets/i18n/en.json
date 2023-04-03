@@ -911,7 +911,8 @@
         "step-succes-add-msg": "Step was added!",
         "step-succes-update-msg": "Step was updated!",
         "validation-fail": "Validation failed!",
-        "server-error": "Server error occurred!"
+        "server-error": "Server error occurred!",
+        "picture": "The picture has been added!"
       },
       "error": "There has been an error!",
       "autobiography-error-add":  "Autobiography was not added!",

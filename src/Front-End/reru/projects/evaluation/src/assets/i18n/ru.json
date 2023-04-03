@@ -548,7 +548,8 @@
     "search-by-status": "Поиск по статусу",
     "add-tags": "Добавить тэги",
     "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса",
-    "questions-left": "Осталось вопросов"
+    "questions-left": "Осталось вопросов",
+    "answer-text": "Напишите сюда..."
   },
   "require-documents":{
     "documents":"Документы",

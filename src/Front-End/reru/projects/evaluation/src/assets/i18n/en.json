@@ -549,7 +549,8 @@
     "search-by-status": "Search by status",
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options",
-    "questions-left": "Questions left"
+    "questions-left": "Questions left",
+    "answer-text": "Write here..."
   },
   "require-documents":{
     "documents":"Documents",
