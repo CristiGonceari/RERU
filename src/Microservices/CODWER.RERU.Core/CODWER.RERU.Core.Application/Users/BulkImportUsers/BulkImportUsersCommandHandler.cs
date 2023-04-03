@@ -250,8 +250,17 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
         {
-           var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
-           var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
+            var requiredColumns = new string[] { "Nume", "Prenume", "Patronimic", "Idnp", "Email", "Id Departament", "Id Rol", "Id Funcție", "Data nașterii", "Nr. telefon" };
+            var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).ToArray();
+            var missingColumns = requiredColumns.Except(headers, StringComparer.OrdinalIgnoreCase).ToArray();
+            if (missingColumns.Any())
+            {
+                workSheet.Cells[1, 12].Value = $"Coloanele lipsă sunt: {string.Join(", ", missingColumns)}";
+                return false;
+            }
+            
+            var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
+            var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
 
            return isEmailValid && isIdnpValid;
         }
