@@ -247,7 +247,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	delete(id) {
-		this.isLoadingCalendar = false;
+		this.isLoadingCalendar = true;
 		this.eventService.deleteEvent(id).subscribe(() => {
 			forkJoin([
 				this.translate.get('modal.success'),
@@ -258,7 +258,6 @@ export class EventsListTableComponent implements OnInit {
 			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.list();
-			this.isLoadingCalendar = true;
 		})
 	}
 

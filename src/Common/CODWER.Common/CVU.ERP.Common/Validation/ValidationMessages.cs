@@ -7,5 +7,6 @@
         public static string InvalidInput = "INVALID_INPUT";
         public static string InvalidFileName = "INVALID_FILE_NAME";
         public static string InvalidFileExtension = "INVALID_FILE_EXTENSION";
+        public static string CannotDeleteEventInUse = "CAN_NOT_DELETE_EVENT_IN_USE";
     }
 }

@@ -935,6 +935,7 @@
     "03000206": "Tipul de test nu există în eveniment",
     "03000207": "Adăugați eveniment sau evaluator",
     "03000208": "Data începutului evenimentului nu poate fi din trecut",
+    "03000211": "Evenimentele în uz nu pot fi șterse",
     "03000301": "Evaluatorul există deja în eveniment",
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
