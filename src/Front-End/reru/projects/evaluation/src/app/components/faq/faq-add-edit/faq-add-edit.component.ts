@@ -21,6 +21,7 @@ export class FaqAddEditComponent implements OnInit {
   title: string;
   articleId;
   isLoading: boolean = true;
+  isButtonPressed: boolean = false;
   public Editor = DecoupledEditor;
   public onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
@@ -191,6 +192,7 @@ export class FaqAddEditComponent implements OnInit {
   }
 
   saveArticle(): void {
+    this.isButtonPressed = true;
     if (this.articleId) {
       this.editArticle();
     } else {

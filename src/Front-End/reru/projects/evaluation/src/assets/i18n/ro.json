@@ -1085,7 +1085,8 @@
     "select-candidate-position": "Selectați poziția",
     "position-to-candidate": "Poziția pentru care candidați",
     "available-from": "Valabil de la",
-    "available-to": "Valabil pâna la"
+    "available-to": "Valabil pâna la",
+    "doc-ext": "(.pdf, .png, .jpg)"
   },
   "evaluations": {
     "evaluation": "Evaluare",
