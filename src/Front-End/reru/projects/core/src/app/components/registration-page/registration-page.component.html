@@ -11,10 +11,13 @@
 <body>
   <nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark p-0">
     <div class="container-fluid">
-      <div class="d-flex pt-2">
-        <img src="../../../assets/logo_2.png" alt="..." class="img-thumbnail" style="max-height: 40px;">
-        <h2 style="color: white;" class="ml-3 pt-1 mb-3">
+      <div class="d-flex gap-2 align-items-center justify-content-around">
+        <img src="../../../assets/logo_2.png" alt="..." class="mr-5 img-thumbnail" style="max-height: 40px;">
+        <img src="../../../assets/MAI_Sign.png" alt="..." style="max-height: 40px;">
+        <h2 style="color: white;" class="d-md-block d-none ml-3 pt-1 mb-3">
           {{'registration-page.registration-candidate-page' | translate }}</h2>
+        <h4 style="color: white;" class="d-md-none d-block ml-3 pt-1 mb-3">
+            {{'registration-page.registration-candidate-page' | translate }}</h4>
       </div>
       <div class=" d-flex justify-content-end" id="navbarSupportedContent">
         <div class="topbar">
@@ -167,7 +170,7 @@
               <div class="form-group col-md-6">
                 <label for="inputPassword4">{{ 'user.phone' | translate }}</label>
                 <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
-                  formControlName="phoneNumber" [placeholder]="'user.phone' | translate"
+                  formControlName="phoneNumber" [placeholder]="'user.phone-full' | translate"
                   [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
                 <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                   <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"
@@ -197,13 +200,9 @@
             <div class="form-row">
               <div class="form-group photo-upload col-md-6">
                 <label for="inputAddress">{{ 'table.profile-photo' | translate }}</label>
-                <div *ngIf="fileId">
-                  <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                  </app-add-edit-media-file>
-                </div>
-                <div *ngIf="!fileId">
-                  <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                  </app-add-edit-media-file>
+                <div>
+                  <app-upload-avatar (handleFile)="checkFile($event)"></app-upload-avatar>
+                  <p>{{ 'table.profile-photo-ext' | translate}}</p>
                 </div>
               </div>
             </div>
@@ -253,7 +252,7 @@
           </form>
         </div>
         <div *ngIf="success && !isLoadingMedia" class="col-xl-12 col-lg-12 col-md-12 col-xs-12"
-          style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px;">
+          style="border: 1px solid #212529; border-radius: 9px; padding: 11px; margin-bottom: 7px; margin-top: 80px !important;">
           <div class="alert alert-dark" role="alert">
             {{ 'registration-page.success-message' | translate }}
           </div>

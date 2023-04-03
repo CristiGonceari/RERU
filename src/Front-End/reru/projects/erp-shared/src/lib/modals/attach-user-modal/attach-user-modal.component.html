@@ -1,6 +1,6 @@
 <div class="modal-header px-7">
 	<div class="d-flex justify-content-between w-100">
-		<h3 class="modal-title">{{'button.attach-evaluateds' | translate}}</h3>
+		<h3 class="modal-title">{{ modalTitle }}</h3>
 		<div class="d-flex gap-2">
 			<a (click)="view = modalViewEnum.isTable" href="javascript:void(0)" class="btn btn-icon btn-hover-light btn-lg mr-4" content="body" ngbTooltip="Tabel mod">
 				<span class="svg-icon">
@@ -36,6 +36,7 @@
 									  [view]="view"
 									  [userStatuses]="userStatuses"
 									  [attachedUsers]="attachedUsers"
+									  [exceptUserIds]="exceptUserIds"
 									  [inputType]="inputType"
 									  (changeAttachedUser)="handleChangeAttachedUsers($event)"
 									  [roles]="roles"></erp-shared-attach-user-table>
@@ -47,6 +48,7 @@
 										  [view]="view"
 										  [userStatuses]="userStatuses"
 										  [attachedUsers]="attachedUsers"
+										  [exceptUserIds]="exceptUserIds"
 										  [inputType]="inputType"
 										  [roles]="roles" 
 										  (changeAttachedUser)="handleChangeAttachedUsers($event)"></erp-shared-attach-user-table>

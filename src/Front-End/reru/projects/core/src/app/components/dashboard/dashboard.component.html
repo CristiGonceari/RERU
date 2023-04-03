@@ -9,7 +9,7 @@
 		<div class="col">
 			<div class="card card-custom gutter-b card-stretch card-shadowless">
 				<div class="card-body d-flex d-md-block justify-content-md-start justify-content-center">
-					<ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0 flex-column flex-md-row" role="tablist">
+					<!--  <ul class="dashboard-tabs nav nav-pills nav-danger row row-paddingless m-0 p-0 flex-column flex-md-row" role="tablist">
 						<li *ngFor="let userModule of modules" class="nav-item d-flex flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 							<a class="nav-link d-flex flex-grow-1 rounded flex-column align-items-center"
 								data-toggle="pill"
@@ -23,7 +23,45 @@
 								</span>
 							</a>
 						</li>
-					</ul>
+					</ul> -->
+					<div class="row">
+						<div _ngcontent-fxi-c124="" class="col-xl-3">
+							<a _ngcontent-fxi-c124="" (click)="navigateToOption(1)" class="card card-custom bg-dark-o-100 bg-hover-state-secondary card-stretch gutter-b bgi-no-repeat slide-in-blurred-bottom h-100" style="background-position: right 20px bottom 10px; background-size: 25% auto; background-image: url(assets/position-list.png);">
+						<div _ngcontent-fxi-c124="" class="card-body">
+									<div _ngcontent-fxi-c124="" class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">{{'dashboard.my-solicited-tests' | translate}}</div>
+									<div _ngcontent-fxi-c124="" class="font-weight-bold text-inverse-primary font-size-sm default">{{'dashboard.my-activities' | translate}}</div>
+								</div>
+							</a>
+						</div>
+						<div _ngcontent-fxi-c124="" class="col-xl-3">
+							<a _ngcontent-fxi-c124="" (click)="navigateToOption(2)" class="card card-custom bg-success bg-hover-state-primary card-stretch gutter-b bgi-no-repeat slide-in-blurred-bottom h-100" style="background-position: right 20px bottom 10px; background-size: 29% auto; background-image: url(assets/position-add.png);">
+							<div _ngcontent-fxi-c124="" class="card-body">
+										<div _ngcontent-fxi-c124="" class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">{{'dashboard.request-position' | translate}}</div>
+										<div _ngcontent-fxi-c124="" class="font-weight-bold text-inverse-primary font-size-sm default">{{'dashboard.solicited-position' | translate}}</div>
+									</div>
+								</a>
+							</div>
+							<div _ngcontent-fxi-c124="" class="col-xl-3">
+									<a _ngcontent-fxi-c124=""(click)="navigateToOption(3)" class="card card-custom bg-primary bg-hover-state-primary card-stretch gutter-b bgi-no-repeat slide-in-blurred-bottom h-100" style="background-position: right 20px bottom 10px; background-size: 26% auto; background-image: url(assets/studying-exam.svg);">
+								<div _ngcontent-fxi-c124="" class="card-body">
+											<div _ngcontent-fxi-c124="" class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">{{'dashboard.tests' | translate}}</div>
+											<div _ngcontent-fxi-c124="" class="font-weight-bold text-inverse-primary font-size-sm default">{{'dashboard.my-tests' | translate}}</div>
+										</div>
+									</a>
+								</div>
+					</div>
+					<!-- <div class="pt-5">
+						<button (click)="navigateToOption(1)" class="btn btn-success btn-shadow-hover font-weight-bolder w-100 h-35px">
+							{{'dashboard.my-activities' | translate}}</button>
+					</div>
+					<div class="pt-5">
+						<button (click)="navigateToOption(2)" class="btn btn-success btn-shadow-hover font-weight-bolder w-100 h-35px">
+							{{'dashboard.solicited-position' | translate}}</button>
+					</div>
+					<div class="pt-5">
+						<button (click)="navigateToOption(3)" class="btn btn-success btn-shadow-hover font-weight-bolder w-100 h-35px">
+							{{'dashboard.my-tests' | translate}}</button>
+					</div> -->
 				</div>
 			</div>
 		</div>

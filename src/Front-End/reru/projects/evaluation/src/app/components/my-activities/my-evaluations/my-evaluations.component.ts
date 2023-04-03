@@ -117,7 +117,7 @@ export class MyEvaluationsComponent implements OnInit {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'result'];
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'resultValue'];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
@@ -138,13 +138,14 @@ export class MyEvaluationsComponent implements OnInit {
 
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format', 'max-print-rows']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
-      		this.translate.get('print.select-file-format')
+      		this.translate.get('print.select-file-format'),
+			this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {

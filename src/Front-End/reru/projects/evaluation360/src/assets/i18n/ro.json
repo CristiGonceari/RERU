@@ -5,27 +5,27 @@
     "ru": "Русский"
   },
   "right-sidebar": {
-    "header": "Profilul utilizatorului",
+    "header": "Profil utilizator",
     "my-profile": "Profilul meu",
-    "change-password": "Schimbarea parolei",
+    "change-password": "Schimbare parolă",
     "logout": "Ieșire"
   },
   "user-profile": {
-    "overview": "Vizualizarea profilului",
-    "edit-title": "Editarea profilului personal",
+    "overview": "Vizualizare profil",
+    "edit-title": "Editare profil personal",
     "edit-subtitle": "Inserează datele personale",
     "personal-details": "Datele profilului:",
-    "change-personal-data": "Schimbare datelor profilului personal",
-    "change-personal-details": "Schimbare datelor profilului personal:",
+    "change-personal-data": "Schimbarea datelor profilului personal",
+    "change-personal-details": "Schimbarea datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Câmpul este obligatoriu, cel puțin 1 caracter",
+    "empty-name": "Câmp obligatoriu, cel puțin 1 caracter",
     "wrong-name": "Câmpul trebuie să înceapă cu 1 caracter",
     "available-modules": "Module disponibile",
-    "user-profile": "Profilul utilizatorului",
-    "user-details": "Vizualizarea profilului utilizatorului",
+    "user-profile": "Profil utilizator",
+    "user-details": "Vizualizare profil utilizator",
     "user-email": "E-mail",
-    "general-overview": "Prezentarea generală a profilului utilizatorului",
+    "general-overview": "Prezentare generală a profilului utilizatorului",
     "navigate-core-msg": "Sunteți sigur(-ă) că doriți să navigați la vizualizarea generală a profilului utilizatorului?",
     "search-by-user-state": "Căutați după statutul utilizatorului",
     "npp": "N.P.P."
@@ -70,8 +70,8 @@
     "title": "Evaluare 360",
     "subtitle": "Pagina de start",
     "enclosed-mode":"Mod restrâns",
-    "hello-username": "Salut",
-    "have-a-good-day": "Bine ai venit!"
+    "evaluations": "Evaluări",
+    "categories": "Perioada"
   },
   "footer": {
     "all-rights-reserved": "Toate drepturile rezervate",
@@ -80,10 +80,10 @@
   },
   "evaluations": {
     "title": "Evaluare",
-    "manage-evaluations": "Gestionarea evaluărilor",
+    "manage-evaluations": "Gestionare evaluări",
     "evaluated-employees": "Angajații evaluați",
     "countersigner": "Contrasemnatar",
-    "evaluation-type": "Funcția exercitată",
+    "evaluation-type": "Funcție exercitată",
     "select-evaluated-person": "Selectează angajatul evaluat",
     "select-countersigner": "Selectează contrasemnatarul",
     "select-evaluation-type": "Selectează funcția exercitată",
@@ -205,7 +205,7 @@
     },
     "counter-signer-comments": {
       "1": "A fost respectată procedura de evaluare şi cerinţele stabilite de Regulament",
-      "2": "A fost verifică corectitudinea informaţiilor înscrise în fişa de evaluare",
+      "2": "A fost verificată corectitudinea informaţiilor înscrise în fişa de evaluare",
       "3": "Au fost respectate perioadele şi termenele de realizare a procedurilor de evaluare",
       "4": "Aprecierile consemnate în fişa de evaluare de către evaluator corespund realităţii"
     },
@@ -239,7 +239,7 @@
       "to-date": "Până la"
     },
     "subdivision": "Subdiviziunea",
-    "evaluated-name": "Numele, prenumele angajatului",
+    "evaluated-name": "Nume, prenume angajat",
     "evaluated-function": "Funcția angajatului",
     "evaluated-period-from": "Perioada evaluată de la",
     "evaluated-period-to": "Perioada evaluată până la",
@@ -254,7 +254,7 @@
       "1": "Intern",
       "2": "Extern"
     },
-    "course-name": "Denumirea cursului",
+    "course-name": "Denumire curs",
     "period-running-activity-from": "Perioada desfășurării de la",
     "period-running-activity-to": "Perioada desfășurării până la",
     "administrative-act-of-course": "Actul administrativ (curs)",
@@ -265,10 +265,10 @@
       "3": "Detașare",
       "4": "Neschimbat"
     },
-    "function": "Funcția",
+    "function": "Funcție",
     "appointment-date": "Data numirii",
     "administrative-act-of-service": "Actul administrativ (raportul de serviciu)",
-    "partial-evaluations-results": "Rezultate evaluarii parțiale",
+    "partial-evaluations-results": "Rezultate evaluării parțiale",
     "final-points": "Punctaj final",
     "calificative": "Calificativ",
     "saction-applied-evalution-course": "Sancţiuni disciplinare aplicate pe parcursul perioadei evaluate",
@@ -334,7 +334,7 @@
     "delete": "Șterge",
     "select": "Selectează",
     "save": "Salvează",
-    "attach": "Atașați fișierul",
+    "attach": "Atașează",
     "actions": "Acțiuni",
     "reject": "Respinge",
     "accept": "Acceptă",
@@ -349,7 +349,7 @@
     "settings": "Setări",
     "categories": "Categorii",
     "title": "Categorii",
-    "subtitle": "Gestionarea categoriilor",
+    "subtitle": "Gestionare categorii",
     "new-category": "Adaugă categorie",
     "add-categories": "Adăugați categorii",
     "edit-categories": "Editați categoria",
@@ -357,12 +357,12 @@
     "delete-category": "Șterge Categoria",
     "category-name": "Nume",
     "total-questions": "Total întrebări",
-    "empty-name": "Câmpul este obligatoriu, cel puțin 1 caracter",
+    "empty-name": "Câmp obligatoriu, cel puțin 1 caracter",
     "wrong-name": "Câmpul trebuie să inceapă cu 1 caracter",
     "view-details": "Detalii",
     "overview": "Prezentare generală",
     "category-data": "Introdu datele categoriei și confirmă",
-    "category-details": "Detaliile categoriei",
+    "category-details": "Detalii categorie",
     "remove": "Ștergeți categoria",
     "remove-msg": "Sigur doriți să ștergeți această categorie?",
     "remove-questions-in-category": "Toate întrebările din această categorie vor fi eliminate",
@@ -373,7 +373,7 @@
   },
   "locations": {
     "locations": "Locații de testare",
-    "manage-locations": "Gestionarea locațiilor",
+    "manage-locations": "Gestionare locații",
     "add-location": "Adaugă locație",
     "name": "Nume",
     "location-name": "Numele locației de testare",
@@ -385,7 +385,7 @@
     "persons": "Persoane responsabile",
     "clients": "Clienți înregistrați",
     "location-data": "Introduceți detaliile locației și confirmați",
-    "location-details": "Detaliile locației",
+    "location-details": "Detalii locație",
     "attach": "Atașează",
     "attach-res": "Atașați persoana responsabilă",
     "attach-to-location": "Atașați persoana responsabilă la locația de testare",
@@ -435,7 +435,7 @@
     "attached-users": "Utilizatori atașați"
   },
   "message": {
-    "no-record": "Nu a fost găsită nicio înregistrare.",
+    "no-record": "Nu a fost găsită nici o înregistrare.",
     "required": "Completați câmpurile obligatorii!",
     "use-date-format": "Folosiți formatul ZZ.LL.AAAA, de ex. 31.08.2020",
     "use-letters-numbers-and-dash": "Folosiți doar litere, cifre și simbolul -",
@@ -449,19 +449,21 @@
     "print-table": "Printare tabel",
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
-    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare."
+    "print-msg": "Vă rugăm să specificați câmpurile necesare și orientarea de imprimare.",
+    "select-file-format": "Selectați formatul fișierului",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului"
+    "title": "Ghid Utilizator"
   },
   "faq": {
     "help": "Ajutor",
     "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea întrebărilor",
+    "manage-faq": "Gestionare întrebări",
     "new-article": "Adaugă articol",
     "delete-article": "Șterge articol",
-    "article-title": "Titlul articolului",
+    "article-title": "Titlu articol",
     "name": "Nume",
     "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
@@ -470,14 +472,23 @@
     "succes-remove-msg": "Articolul a fost șters cu succes",
     "succes-add-msg": "Articolul a fost adăugat cu succes",
     "succes-edit-msg": "Articolul a fost editat cu succes",
-    "article-details": "Detaliile articolului",
+    "article-details": "Detalii articol",
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Rolurile modulului"
+    "module-roles": "Roluri modul",
+    "media": "Media",
+    "media-type": "(imagine, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Tip de fișier nevalid"
   },
   "user-state": {
    "Employee": "Angajat",
    "Candidate": "Candidat"
+  },
+  "graph-evaluations": {
+    "name": "Evaluări",
+    "note": "Notițe: Evaluări efectuate timp de un an sortate după luni"
   }
 }

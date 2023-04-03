@@ -7,6 +7,7 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
+    <form [formGroup]="addEditSolicitedPositionForm">
     <div class="card card-custom gutter-b erp-shared-desktop-wide">
         <div class="card-body p-0">
             <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
@@ -20,7 +21,7 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-xl-right text-left">{{
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                 'solicited-test.position-to-candidate' | translate }}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <div *ngIf="isEdit"
@@ -29,8 +30,9 @@
                                                 </div>
                                                 <select class="form-control form-control-lg form-control-solid"
                                                     *ngIf="!isEdit" name="selectedStatus" id="selectedStatus"
-                                                    [(ngModel)]="candidatePositions.value"
+                                                     formControlName="candidatePositionId"
                                                     (change)="getEventsAndDocuments()">
+                                                    <option selected disabled hidden value="null">{{'solicited-test.select-candidate-position' | translate}}</option>
                                                     <option *ngFor="let item of candidatePositions"
                                                         [ngValue]="item.value">
                                                         {{ item.label }}
@@ -41,13 +43,14 @@
                                         <div *ngIf="showCard">
                                             <div class="form-group row"
                                                 *ngFor="let event of eventsWithTestList">
-                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                     'events.event' | translate }}</label>
                                                 <div class="col-lg-9 col-xl-9 col-form-label">
                                                     <p>{{ event.eventName }} :</p>
                                                     <ol>
-                                                        <li *ngFor="let item of event.testTemplateNames">{{ item
-                                                            }}</li>
+                                                        <li *ngFor="let item of event.testTemplateNames">
+                                                            {{ item }}
+                                                        </li>
                                                     </ol>
                                                 </div>
                                             </div>
@@ -55,7 +58,7 @@
                                         <div *ngIf="showCard && !isEdit">
                                             <div class="form-group row"
                                                 *ngFor="let requiredDocument of requiredDocumentsList; let i = index">
-                                                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-center text-sm-left text-lg-right">{{
                                                     requiredDocument.name }}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <div class="form-group row">
@@ -64,7 +67,8 @@
                                                                 (change)="setFile($event, i, requiredDocument.id)"
                                                                 class="form-control" type="file" name="file"
                                                                 id="file" required> -->
-                                                            <app-add-edit-media-file (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-edit-media-file>
+                                                            <app-add-document (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-document>
+                                                            <p>{{ 'solicited-test.doc-ext' | translate}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,7 +119,8 @@
                                                                         (change)="setFile($event, i, item.requiredDocumentId)"
                                                                         class="form-control" type="file"
                                                                         name="file" id="file" required> -->
-                                                                        <app-add-edit-media-file (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-edit-media-file>
+                                                                        <app-add-document (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-document>
+                                                                        <p>{{ 'solicited-test.doc-ext' | translate}}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -130,12 +135,12 @@
                                         (handle)="backClicked()">
                                     </app-button>
                                     <app-add-button class="btn mr-2" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()" [disable]="!candidatePositions">
+                                        (handle)="onSave()" [disabled]="isEdit ? false : disabledConfirm">
                                     </app-add-button>
                                 </div>
                                 <div class="d-md-none d-block pt-10">
-                                    <app-add-button width="100%" [disabled]="cantAdd()" class="btn w-100" [value]="'button.confirm' | translate"
-                                        (handle)="onSave()">
+                                    <app-add-button width="100%" class="btn w-100" [value]="'button.confirm' | translate"
+                                        (handle)="onSave()" [disabled]="isEdit ? false : disabledConfirm">
                                     </app-add-button>
                                     <app-button width="100%" class="btn w-100" [value]="'button.cancel' | translate"
                                         (handle)="backClicked()">
@@ -158,4 +163,5 @@
             </div>
         </div>
     </div>
+</form>
 </erp-shared-content>

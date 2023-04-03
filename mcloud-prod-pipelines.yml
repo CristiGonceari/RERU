@@ -19,7 +19,7 @@ stages:
     displayName: Building Images and  publishing images
     jobs:
       - job: Build
-        timeoutInMinutes: 120
+        timeoutInMinutes: 150
         displayName: Build images
         pool:
           name: "Default"

@@ -174,9 +174,9 @@
                         <label class="col-xl-3 col-lg-3 col-form-label text-right">
                             {{'verify-test.programmed-time' | translate}}</label>
                         <div class="col-lg-9 col-xl-9">
-                            <input id="from" [owlDateTime]="dtFrom" placeholder="Date Time" autocomplete="off"
+                            <input id="from" [owlDateTime]="dtFrom" placeholder="{{'verify-test.programmed-time' | translate}}" autocomplete="off"
                                 class="shadow-input" name="date" [(ngModel)]="date" />
-                            <input id="from" [owlDateTimeTrigger]="dtFrom" placeholder="Date Time" autocomplete="off"
+                            <input id="from" [owlDateTimeTrigger]="dtFrom" placeholder="{{'verify-test.programmed-time' | translate}}" autocomplete="off"
                                 class="form-control form-control-lg form-control-solid"
                                 [value]="date | dateFilter:'dd/MM/yy HH:mm'" />
                             <owl-date-time #dtFrom></owl-date-time>

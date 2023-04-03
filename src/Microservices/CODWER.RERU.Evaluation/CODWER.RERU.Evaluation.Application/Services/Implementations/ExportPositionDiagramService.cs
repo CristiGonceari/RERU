@@ -11,6 +11,7 @@ using OfficeOpenXml.Style;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using System;
 
 namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 {
@@ -55,7 +56,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task SetDiagramTitle(PositionDiagramDto eventsDiagram, CandidatePosition candidatePosition, ExcelWorksheet workSheet)
         {
-            workSheet.Rows.Height = 35;
             workSheet.Columns.Width = 32;
             workSheet.Columns.AutoFit();
 
@@ -101,12 +101,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                     foreach (var test in testTemplate.Tests)
                     {
-                        workSheet.Cells[userRow, testCol, userRow, testCol].Value = $@"- {EnumMessages.Translate(test.Result)}, {test.PassDate:dd/MM/yyyy HH:mm}, {EnumMessages.Translate(test.Status)}";
+                        workSheet.Cells[userRow, testCol, userRow, testCol].Value += $@"- {EnumMessages.Translate(test.Result)}, {test.PassDate:dd/MM/yyyy HH:mm}, {EnumMessages.Translate(test.Status)}{Environment.NewLine}";
                     }
 
                     testCol++;
                 }
 
+                testCol = 3;
                 userRow++;
             }
         }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+using System;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using CVU.ERP.Identity.Context;
@@ -16,8 +16,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sustainsys.Saml2;
-using Sustainsys.Saml2.Metadata;
+using Age.Integrations.MPass.Saml;
+using RERU.Data.Persistence.Context;
+using AutoMapper.EquivalencyExpression;
+using CVU.ERP.Notifications.Services;
+using CVU.ERP.Notifications.Services.Implementations;
+using CVU.ERP.Common;
+using CVU.ERP.Infrastructure;
 
 namespace CODWER.RERU.Identity.Web
 {
@@ -35,6 +40,12 @@ namespace CODWER.RERU.Identity.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<PlatformConfig>(Configuration.GetSection("PlatformConfig"));
+            services.Configure<MPassSamlOptions>(MPassSamlDefaults.AuthenticationScheme, Configuration.GetSection("MPassSaml"));
+            services.AddSystemCertificate(Configuration.GetSection("Certificate"));
+
+            services.AddAutoMapper(cfg => { cfg.AddCollectionMappers(); }, AppDomain.CurrentDomain.GetAssemblies());
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IDateTime, MachineDateTime>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -50,6 +61,10 @@ namespace CODWER.RERU.Identity.Web
             services.AddDbContext<IdentityDbContext>(options =>
                         options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Identity),
                             b => b.MigrationsAssembly(typeof(IdentityDbContext).GetTypeInfo().Assembly.GetName().Name)));
+
+            services.AddDbContext<AppDbContext>(options =>
+                        options.UseNpgsql(Configuration.GetConnectionString(ConnectionString.Common),
+                            b => b.MigrationsAssembly(typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name)));
 
             services.AddIdentity<ERPIdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
@@ -72,28 +87,37 @@ namespace CODWER.RERU.Identity.Web
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ERPIdentityUser>();
 
+
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
             services.AddAuthentication()
-                            .AddSaml2(options =>
-                            {
-                                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                                options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
-                                // options.SPOptions.ReturnUrl = new Uri("http://localhost:5000");
-                                options.SPOptions.EntityId = new EntityId(Configuration.GetValue<string>("SAML_ENTITY_ID"));
-                                options.IdentityProviders.Add(
-                                    new IdentityProvider(
-                                        new EntityId(Configuration.GetValue<string>("SAML_METADATA_ENDPOINT")), options.SPOptions)
-                                    {
-                                        LoadMetadata = true
-                                    });
-                                //options.SPOptions.PublicOrigin = new Uri("ms/identity-new/saml2");
-                                options.SPOptions.ServiceCertificates.Add(new X509Certificate2("erp_platform.pfx", "7Q[CM8fbv(!^JdJD"));
-                                options.SPOptions.ValidateCertificates = false;
-                                options.SPOptions.MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
-                            });
-
+                .AddCookie(options =>
+                {
+                    //Setting to None to allow POST from MPass (default is Lax)
+                    options.Cookie.SameSite = SameSiteMode.None;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                })
+                .AddMPassSaml(Configuration.GetSection("MPassSaml"));
+                //.AddSaml2(options =>
+                //{
+                //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                //    options.SignOutScheme = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+                //    // options.SPOptions.ReturnUrl = new Uri("http://localhost:5000");
+                //    options.SPOptions.EntityId = new EntityId(Configuration.GetValue<string>("SAML_ENTITY_ID"));
+                //    options.IdentityProviders.Add(
+                //        new IdentityProvider(
+                //            new EntityId(Configuration.GetValue<string>("SAML_METADATA_ENDPOINT")), options.SPOptions)
+                //        {
+                //            LoadMetadata = true
+                //        });
+                //    //options.SPOptions.PublicOrigin = new Uri("ms/identity-new/saml2");
+                //    options.SPOptions.ServiceCertificates.Add(new X509Certificate2("erp_platform.pfx", "7Q[CM8fbv(!^JdJD"));
+                //    options.SPOptions.ValidateCertificates = false;
+                //    options.SPOptions.MinIncomingSigningAlgorithm = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
+                //});
+           
             services.AddCors();
             services.AddSwaggerGen();
         }

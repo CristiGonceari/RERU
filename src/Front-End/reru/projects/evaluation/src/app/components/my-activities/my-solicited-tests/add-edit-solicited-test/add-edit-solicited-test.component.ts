@@ -11,7 +11,7 @@ import { CandidatePositionService } from 'projects/evaluation/src/app/utils/serv
 import { EventCandidatePositionService } from 'projects/evaluation/src/app/utils/services/event-candidate-position/event-candidate-position.service';
 import { SolicitedVacantPositionUserFileService } from 'projects/evaluation/src/app/utils/services/solicited-vacant-position-user-file/solicited-vacant-position-user-file.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { saveAs } from 'file-saver';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -23,6 +23,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   showCard: boolean = false;
   isEdit: boolean = false;
   isDeleting: boolean = false;
+  disabledConfirm: boolean = true;
 
   selected;
 
@@ -40,7 +41,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   solicitedTest: AddEditSolicitedTest;
   candidatePositions = new SelectItem();
 
-  uploadForm: FormGroup;
+  addEditSolicitedPositionForm: FormGroup;
 
   eventsWithTestList: any[] = [];
   requiredDocumentsList: any[] = [];
@@ -62,7 +63,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private candidatePosition: CandidatePositionService,
     private eventCandidatePositionService: EventCandidatePositionService,
-    private solicitedVacantPositionUserFileService: SolicitedVacantPositionUserFileService
+    private solicitedVacantPositionUserFileService: SolicitedVacantPositionUserFileService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -75,18 +77,27 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   initData(): void {
     this.solicitedPositionId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.initForm();
 
     if (this.solicitedPositionId != null) this.getSolicitedPosition(this.solicitedPositionId)
   }
 
+  initForm(data?, id?){
+      this.addEditSolicitedPositionForm = this.fb.group({
+        id: this.fb.control(id || null, []),
+        candidatePositionId: this.fb.control(data || null, [])
+      });
+  }
+
   getSolicitedPosition(solicitedPositionId) {
     this.isEdit = true;
-    this.candidatePosition.getPositionValues({ id: solicitedPositionId }).subscribe((res) => (
-      this.candidatePositions = res.data,
-      this.selected = this.candidatePositions[0],
-      this.getEventsAndDocuments(),
-      this.isLoading = false
-    ));
+    this.candidatePosition.getPositionValues({ id: solicitedPositionId }).subscribe(res => {
+      this.candidatePositions = res.data;
+      this.selected = this.candidatePositions[0];
+      this.getEventsAndDocuments();
+      this.isLoading = false;
+      this.initForm(res.data[0].value, solicitedPositionId);
+  });
   }
 
   getFiles() {
@@ -129,20 +140,19 @@ export class AddEditSolicitedTestComponent implements OnInit {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
           this.getFiles(),
-
-            this.showCard = true;
+          this.showCard = true;
         } else {
           this.showCard = false;
         }
       })
     } else {
-      this.eventCandidatePositionService.getEventVacandPostition(+this.candidatePositions.value).subscribe(res => {
+      this.eventCandidatePositionService.getEventVacandPostition(this.addEditSolicitedPositionForm.value.candidatePositionId).subscribe(res => {
+        if (this.addEditSolicitedPositionForm.value.candidatePositionId) this.disabledConfirm = false;
         if (res && res.data) {
           this.eventsWithTestList = res.data.events;
           this.requiredDocumentsList = res.data.requiredDocuments;
           this.getFiles(),
-
-            this.showCard = true;
+          this.showCard = true;
         } else {
           this.showCard = false;
         }
@@ -176,27 +186,27 @@ export class AddEditSolicitedTestComponent implements OnInit {
     };
   }
 
-  parse() {
+  parse(form) {
     return {
       data: {
         solicitedTestStatus: 0,
-        candidatePositionId: this.candidatePositions.value || 0
+        candidatePositionId: form.value.candidatePositionId || 0
       }
     };
   }
 
-  parseToEdit() {
+  parseToEdit(form) {
     return {
       data: {
-        id: this.solicitedPositionId,
-        candidatePositionId: +this.selected.value,
+        id: form.value.id ,
+        candidatePositionId: form.value.candidatePositionId,
         solicitedTestStatus: 0
       }
     }
   }
 
   add() {
-    this.solicitedTestService.addMySolicitedTest(this.parse()).subscribe(res => {
+    this.solicitedTestService.addMySolicitedTest(this.parse(this.addEditSolicitedPositionForm)).subscribe(res => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('solicited-test.succes-add-msg'),
@@ -220,7 +230,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
   }
 
   edit() {
-    this.solicitedTestService.editMySolicitedTest(this.parseToEdit()).subscribe(res => {
+    this.solicitedTestService.editMySolicitedTest(this.parseToEdit(this.addEditSolicitedPositionForm)).subscribe(res => {
       forkJoin([
         this.translate.get('modal.success'),
         this.translate.get('solicited-test.succes-edit-msg'),
@@ -244,28 +254,33 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   uploadFiles(res) {
     this.isLoading = false;
-    this.files.forEach(el => {
+    let finishedRequests: number = 1;
+
+    for (const el of this.files) {
       if (this.files[this.files.length - 1] === el) {
         let request = new FormData();
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
-          this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
-            this.reportProggress(res);
-            // this.backClicked();
+            this.solicitedVacantPositionUserFileService.create(request).subscribe(async res => {
+              
+            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
           });
         }
-
       } else {
         let request = new FormData();
         request = this.parseFiles(request, res, el);
         request = this.parseFiles(request, res, el);
 
         if (el.file.file != null) {
-          this.solicitedVacantPositionUserFileService.create(request).subscribe();
+          this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
+
+            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
+          });
         }
       }
-    })
+    }
+
   }
 
   parseFiles(request: FormData, res, el) {
@@ -294,10 +309,11 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.location.back();
   }
 
-  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>, finishedRequests?: number): number {
+    this.isLoadingMedia = true;
+
     switch (httpEvent.type) {
       case HttpEventType.Sent:
-        this.isLoadingMedia = true;
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
@@ -306,21 +322,20 @@ export class AddEditSolicitedTestComponent implements OnInit {
       case HttpEventType.DownloadProgress:
         this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
         break;
+
       case HttpEventType.Response:
-        this.fileStatus.requestType = "Done";
-        this.backClicked();
-        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-        this.isLoadingMedia = false;
-        break;
+        if (this.files.length == finishedRequests) {
+          this.fileStatus.requestType = "Done";
+          this.isLoadingMedia = false;
+          this.backClicked();
+          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+        }
+        return 1;
     }
   }
 
   updateStatus(loaded: number, total: number | undefined, requestType: string) {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
-  }
-
-  cantAdd() {
-    return this.candidatePositions.value == undefined;
-  }
+  }  
 }

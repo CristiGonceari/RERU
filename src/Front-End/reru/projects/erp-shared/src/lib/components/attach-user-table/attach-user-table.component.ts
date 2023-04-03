@@ -112,8 +112,9 @@ export class AttachUserTableComponent implements OnInit {
 
   onItemChange(event: Event): void {
     if ((<HTMLInputElement>event.target).checked == true) {
+      if (this.inputType !== 'checkbox') this.attachedUsers.splice(0, 1);
       this.attachedUsers.push(+(<HTMLInputElement>event.target).value);
-    } 
+    }
 
     if ((<HTMLInputElement>event.target).checked == false) {
       this.attachedUsers.splice(this.attachedUsers.indexOf(+(<HTMLInputElement>event.target).value), 1);

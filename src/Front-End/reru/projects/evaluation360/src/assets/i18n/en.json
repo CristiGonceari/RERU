@@ -70,8 +70,8 @@
     "title": "Evaluation 360",
     "subtitle": "Start Page",
     "enclosed-mode":"Enclosed mode",
-    "hello-username": "Hello",
-    "have-a-good-day": "Welcome, have a good day!"
+    "evaluations": "Evaluations",
+    "categories": "Period"
   },
   "footer": {
     "all-rights-reserved": "All rights reserved",
@@ -335,7 +335,7 @@
     "select": "Select",
     "save": "Save",
     "actions": "Actions",
-    "attach": "Attach file",
+    "attach": "Attach",
     "reject": "Reject",
     "accept": "Accept",
     "edit": "Edit",
@@ -450,7 +450,9 @@
     "print-table": "Print table",
     "sorted-by": "Sorted by",
     "error-msg": "Please select the required fields for printing",
-    "print-msg": "Please specify the required fields and print orientation."
+    "print-msg": "Please specify the required fields and print orientation.",
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "guide": {
     "title": "User Guide"
@@ -475,10 +477,19 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "(image, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Invalid file type"
   },
   "user-state": {
     "Employee": "Employee",
     "Candidate": "Candidate"
+  },
+  "graph-evaluations": {
+    "name": "Evaluations",
+    "note": "Notes: Evaluations taken over a year sorted by month"
   }
 }

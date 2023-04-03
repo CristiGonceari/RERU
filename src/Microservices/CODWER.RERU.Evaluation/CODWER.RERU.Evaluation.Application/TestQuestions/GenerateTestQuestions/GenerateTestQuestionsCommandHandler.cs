@@ -147,7 +147,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GenerateTestQuestions
                 .Include(x => x.Test)
                 .Include(x => x.QuestionUnit)
                     .ThenInclude(x => x.QuestionCategory)
-                .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test && x.QuestionUnit.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId)
+                .Where(x => x.HashGroupKey == test.HashGroupKey && test.TestTemplate.Mode == TestTemplateModeEnum.Test && x.QuestionUnit.QuestionCategoryId == testTemplateQuestionCategory.QuestionCategoryId && x.QuestionUnit.QuestionType == testTemplateQuestionCategory.QuestionType)
                 .DistinctBy2(x => x.Index)
                 .OrderBy(x => x.Index)
                 .ToList();

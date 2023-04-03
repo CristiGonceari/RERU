@@ -1,0 +1,35 @@
+﻿@model CODWER.RERU.Identity.Web.Quickstart.Account.MPassErrorRedirectViewModel
+
+<body>
+ <nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark p-0">
+    <div class="container-fluid">
+      <div class="d-flex pt-2 pb-2">
+        <img src="~/logo_RERU.png" class="img-thumbnail mr-5" width="40" height="40">
+        <img src="~/MAI_Sign.png" class="mx-auto" width="85" height="40"/>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container-fluid h-100">
+        <div class="container h-100">
+            <div class="card mt-10">
+                <div class="card-header alert alert-danger text-center">
+                     <h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                        </svg>
+                        Eroare la logare cu MPass
+                    </h1>
+                </div>
+                <div class="card-body text-center bg-white pt-5">
+                    <p class="card-text">Profilul MPass nu conține un e-mail sau un număr de telefon pentru a vă conecta în sistem.</p>
+                    <p class="card-text mb-10">Pentru autentificare in SI RERU, emailul setat in MPass este obligatoriu.</p>
+                    <a class="btn btn-primary" href="@Model.RedirectLoginUri">Returneaza la pagina de logare</a>
+                    <a class="btn btn-secondary" href="@Model.RedirectMPassUri">Seteaza email si telefon in MPass</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

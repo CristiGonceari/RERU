@@ -60218,18 +60218,23 @@ body {
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 0 15px;
-    height: 50px;
     background-color: #ffffff;
     border-bottom: 1px solid #EBEDF3; }
-    .header-mobile-fixed .topbar {
-      position: fixed;
-      z-index: 96; }
-    .topbar-mobile-on .topbar {
-      z-index: 2;
-      -webkit-transition: all 0.3s ease;
-      transition: all 0.3s ease;
-      margin-top: 55px; } }
+  .header-mobile-fixed .topbar {
+    height: 50px;
+    position: fixed;
+    z-index: 96;
+    flex-wrap: nowrap;
+    padding: 0 15px; }
+  .topbar-mobile-on .topbar {
+    z-index: 2;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 55px;
+    height: auto;
+    padding: 0.5rem 0px 0px 0px; 
+    flex-wrap: wrap;} }
+
 
 .aside {
   position: fixed;

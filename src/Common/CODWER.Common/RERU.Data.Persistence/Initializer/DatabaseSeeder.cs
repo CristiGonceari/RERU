@@ -457,8 +457,7 @@ namespace RERU.Data.Persistence.Initializer
                                              "<span style=\\\"color:black;\\\">" +
                                              "<i>Dl/Dna {user_name_key}, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span>" +
                                              "</p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Ne pare rău, nu sunteți eligibil/ă pentru testele de evaluare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                             "<i>Cu respect MAI.</i></span></p>";
+                                             "<i>Ne pare rău, nu întruniți criteriile de eligibilitate pentru funcția sus menționată.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">";
 
             var oldObjectMessageToApprove = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Approve);
             var newMessageToApprove = "<p style=\\\"text-align:center;\\\">" +
@@ -467,14 +466,13 @@ namespace RERU.Data.Persistence.Initializer
                                               "</span></p><p style=\\\"text-align:center;\\\">" +
                                               "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
                                               "<p style=\\\"text-align:center;\\\">" +
-                                              "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electronică cu privire la data/ora/locația și modul de desfășurare a acestora.</i></span></p>";
+                                              "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electoronica cu privire la data/ora /locația și modul de desfășurare a acestora.</i></span></p>";
 
             var oldObjectMessageToWait = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Waiting);
             var newMessageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
                                             "<i>Dl/Dna {user_name_key}, vă mulțumim pentru depunerea actelor la funcția vacantă solicitată!</i></span></p>" +
                                             "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                            "<i>Sunteți asignat/ă cu statut de asteptare.</i></span></p><p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
-                                            "<i>Vă rugăm să examinați documentele necesare atașate postului vacant.</i></span></p>";
+                                            "<i>La moment, sunteti poziționat/ă în statut de așteptare. În scurt timp, veți fi informat, care sunt carențele.</i></span></p>";
 
             if (oldObjectMessageToReject is null)
             {

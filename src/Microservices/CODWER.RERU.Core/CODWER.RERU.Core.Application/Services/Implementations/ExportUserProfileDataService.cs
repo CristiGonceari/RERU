@@ -264,7 +264,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     DefaultSingleColumnValue(2, study.InstitutionAddress, workSheet);
                     DefaultSingleColumnValue(3, study.StudyType.Name, workSheet);
                     DefaultSingleColumnValue(4, study.Faculty, workSheet);
-                    DefaultSingleColumnValue(5, study.StudyFrequency.ToString(), workSheet);
+                    DefaultSingleColumnValue(5, TranslateStudyFrequencyEnum(study.StudyFrequency).ToString(), workSheet);
                     DefaultSingleColumnValue(6, study.YearOfAdmission, workSheet);
                     DefaultSingleColumnValue(7, study.GraduationYear, workSheet);
                     DefaultSingleColumnValue(8, study.Specialty, workSheet);
@@ -420,13 +420,13 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
                 foreach (var kinshipRelation in kinshipRelationsWithUserProfiles)
                 {
-                    DefaultSingleColumnValue(1, kinshipRelation.KinshipDegree.ToString(), workSheet);
+                    DefaultSingleColumnValue(1, TranslateKinshipDegreeEnum(kinshipRelation.KinshipDegree), workSheet); //aici tre sa modific
 
                     DefaultMultipleColumnValue(2, 3, kinshipRelation.Name, workSheet);
                     DefaultMultipleColumnValue(4, 5, kinshipRelation.LastName, workSheet);
                     DefaultMultipleColumnValue(6, 7, kinshipRelation.Function, workSheet);
 
-                    DefaultSingleColumnValue(8, kinshipRelation.KinshipDegree.ToString(), workSheet);
+                    DefaultSingleColumnValue(8, kinshipRelation.Subdivision.ToString(), workSheet);
                     _row++;
                 }
             }
@@ -459,7 +459,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
                 foreach (var kinshipRelation in kinshipRelations)
                 {
-                    DefaultSingleColumnValue(1, kinshipRelation.KinshipDegree.ToString(), workSheet);
+                    DefaultSingleColumnValue(1, TranslateKinshipDegreeEnum(kinshipRelation.KinshipDegree), workSheet);
                     DefaultSingleColumnValue(2, kinshipRelation.Name, workSheet);
                     DefaultSingleColumnValue(3, kinshipRelation.LastName, workSheet);
                     DefaultSingleColumnValue(4, kinshipRelation.BirthDate.ToString("dd-MM-yyyy"), workSheet);
@@ -836,6 +836,83 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
 
             return workSheet;
+        }
+
+        private string TranslateStudyFrequencyEnum(StudyFrequencyEnum frequency)
+        {
+            string translatedFrequency = "";
+
+            switch (frequency)
+            {
+                case StudyFrequencyEnum.Daily:
+                    translatedFrequency = "Zilnic";
+                    break;
+
+                case StudyFrequencyEnum.LowFrequency:
+                    translatedFrequency = "Frecvență redusă";
+                    break;
+
+                case StudyFrequencyEnum.Remote:
+                    translatedFrequency = "La distanță";
+                    break;
+            }
+
+            return translatedFrequency;
+        }
+        
+        private string TranslateKinshipDegreeEnum(KinshipDegreeEnum degree)
+        {        
+            string translatedKinshipDegreeEnum = "";
+
+            switch (degree)
+            {
+                case KinshipDegreeEnum.Father:
+                    translatedKinshipDegreeEnum = "Tată";
+                    break;
+
+                case KinshipDegreeEnum.Mother:
+                    translatedKinshipDegreeEnum = "Mamă";
+                    break;
+
+                case KinshipDegreeEnum.Brother:
+                    translatedKinshipDegreeEnum = "Frate";
+                    break;
+                case KinshipDegreeEnum.Sister:
+                    translatedKinshipDegreeEnum = "Soră";
+                    break;
+
+                case KinshipDegreeEnum.Wife:
+                    translatedKinshipDegreeEnum = "Soție";
+                    break;
+
+                case KinshipDegreeEnum.Husband:
+                    translatedKinshipDegreeEnum = "Soț";
+                    break;
+                case KinshipDegreeEnum.Children:
+                    translatedKinshipDegreeEnum = "Copil";
+                    break;
+
+                case KinshipDegreeEnum.Parent:
+                    translatedKinshipDegreeEnum = "Părinte";
+                    break;
+
+                case KinshipDegreeEnum.HusbandsBrothers:
+                    translatedKinshipDegreeEnum = "Fratele soțului";
+                    break;
+                case KinshipDegreeEnum.HusbandsSisters:
+                    translatedKinshipDegreeEnum = "Sora soțului";
+                    break;
+
+                case KinshipDegreeEnum.WifesSisters:
+                    translatedKinshipDegreeEnum = "Sora soției";
+                    break;
+
+                case KinshipDegreeEnum.WifesBrothers:
+                    translatedKinshipDegreeEnum = "Fratele soției";
+                    break;
+            }
+
+            return translatedKinshipDegreeEnum;
         }
 
         private async Task<List<Test>> GetUserProfileEvaluatedTestsOrEvaluations(TestTemplateModeEnum mode)

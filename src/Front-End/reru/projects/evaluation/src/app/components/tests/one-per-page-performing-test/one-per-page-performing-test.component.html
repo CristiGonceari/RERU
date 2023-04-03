@@ -111,7 +111,7 @@
                         <ngx-dropzone-label>
                             <h4 class="m-0">{{'button.attach' | translate}}</h4>
                         </ngx-dropzone-label>
-                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" ngbTooltip="{{f.name}}">
+                        <ngx-dropzone-preview class="mx-auto" *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)" ngbTooltip="{{f.name}}">
                             <ngx-dropzone-label>{{ checkLength(f.name) }}</ngx-dropzone-label>
                         </ngx-dropzone-preview>
                     </ngx-dropzone>
@@ -140,7 +140,7 @@
                 </div>
                 <div *ngIf="questionUnit.questionType == questionTypeEnum.FreeText" >
                     <textarea class="form-control border rounded border-secondary p-7 my-7 w-100" rows="7"
-                        placeholder="Write here..." [(ngModel)]="questionUnit.answerText"
+                        placeholder="{{'questions.answer-text' | translate}}"  [(ngModel)]="questionUnit.answerText"
                         name="answerText"></textarea>
                 </div>
                 <div class="d-sm-flex d-none justify-content-between">

@@ -19,9 +19,12 @@
                     colorClass="text-primary"></app-loading-spinner>
                 <div *ngIf="!isLoadingMaterialStatus">
                     <div class="row mt-lg-10 mt-0">
-                        <app-stepper-arrow-hint class="col"
+                        <app-stepper-arrow-hint class="col d-md-block d-none"
                             *ngIf="materialStatusForm.value.materialStatusTypeId == null || materialStatusForm.value.materialStatusTypeId == 'null'"
                             [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
+                        <app-stepper-arrow-hint-down class="mx-auto d-md-none d-block"
+                            *ngIf="materialStatusForm.value.materialStatusTypeId == null || materialStatusForm.value.materialStatusTypeId == 'null'"
+                            [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint-down>
                         <div class="col-xl-7 col-12 mx-auto">
                             <div class="form-group row required">
                                 <label class="col-auto col-form-label"
@@ -40,16 +43,29 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="d-flex justify-content-end mb-3">
-                                <app-stepper-arrow-hint
-                                    *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null"
-                                    [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint>
-                                <button class="btn btn-outline-success" *ngIf="addOrEditMaterialStatusButton"
-                                    [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')"
-                                    (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
-                                <button class="btn btn-outline-success" *ngIf="!addOrEditMaterialStatusButton"
-                                    [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')"
-                                    (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
+                            <div class="d-flex row justify-content-end mb-3">
+                                <div class="d-none d-md-flex">
+                                    <app-stepper-arrow-hint
+                                        *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null"
+                                        [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint>
+                                    <button class="btn btn-outline-success mr-4" *ngIf="addOrEditMaterialStatusButton"
+                                        [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')"
+                                        (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
+                                    <button class="btn btn-outline-success mr-4" *ngIf="!addOrEditMaterialStatusButton"
+                                        [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')"
+                                        (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
+                                </div>
+                                <div class="col-lg-4 col-12 d-md-none d-block">
+                                    <app-stepper-arrow-hint-down
+                                        *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null"
+                                        [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint-down>
+                                    <button class="btn btn-outline-success" *ngIf="addOrEditMaterialStatusButton"
+                                        [disabled]="(materialStatusForm.value.materialStatusTypeId == null) || (materialStatusForm.value.materialStatusTypeId == 'null')"
+                                        (click)="updateMaterialStatus()">{{'stepper.button-update' | translate}}</button>
+                                    <button class="btn btn-outline-success" *ngIf="!addOrEditMaterialStatusButton"
+                                        [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')"
+                                        (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -264,8 +280,8 @@
                     <div class="row pt-4">
                         <div class="col">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-icon" (click)="addKinshipRelationWithUserProfile()"><span
-                                        class="font-size-h2">+</span></button>
+                                <button class="btn btn-icon w-auto" (click)="addKinshipRelationWithUserProfile()"><span
+                                        class="m-5">+ {{ 'material-status.add-material-status' | translate }}</span></button>
                             </div>
                         </div>
                     </div>
@@ -578,8 +594,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-icon" (click)="addKinshipRelation()"><span
-                                        class="font-size-h2">+</span></button>
+                                <button class="btn btn-icon w-auto" (click)="addKinshipRelation()"><span
+                                        class="m-5">+ {{ 'material-status.add-material-status-biographical-data' | translate }}</span></button>
                             </div>
                         </div>
                     </div>
@@ -643,12 +659,15 @@
             </form>
         </mat-expansion-panel>
     </mat-accordion>
-    <div class="row">
+    <div class="row m-0">
         <div class="col">
-            <div class="d-flex justify-content-end">
-                <app-stepper-arrow-hint
+            <div class="d-flex row justify-content-end">
+                <app-stepper-arrow-hint class="d-md-block d-none"
                     *ngIf="!(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
                     [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+                <app-stepper-arrow-hint-down class="d-md-none d-block"
+                    *ngIf="!(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
+                    [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
                 <button class="btn btn-success h-35px" matStepperNext
                     [disabled]="(materialStatusForm && materialStatusForm.invalid || userMaterialStatus == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>

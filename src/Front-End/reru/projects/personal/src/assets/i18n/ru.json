@@ -234,7 +234,7 @@
     "quick-access": "Быстрый доступ",
     "department-component": "Состав отдела",
     "dismissal-request": "Заявление об увольнении",
-    "add-photo": "Добавить фото профиля"
+    "add-photo": "Добавить фото профиля (png, jpg, jpeg...)"
   },
   "nomenclature": {
     "title": "Номенклатура",
@@ -462,6 +462,7 @@
     "are-you-sure-want-to-delete-document": "Вы уверены, что хотите удалить документ <b>{{name}}</b>?",
     "add-document": "Добавить файл",
     "file": "Файл",
+    "file-type": "Файл (.xlsx)",
     "access-restricted-to-orders": "Доступ к приказам запрещен!",
     "access-restricted-to-identity": "Доступ к удостоверению личности запрещен!",
     "access-restricted-to-vacation": "Доступ к отпускным запрещен!",
@@ -520,7 +521,8 @@
     "close": "Закрыть",
     "attach": "Прикрепить",
     "add": "Добавить",
-    "import": "Импорт",
+    "import": "Импортировать",
+    "import-type": "Импортировать (.xlsx)",
     "reset": "Сброс",
     "upload": "Загрузить",
     "applay": "Применить",
@@ -909,7 +911,8 @@
         "step-succes-add-msg": "Шаг был добавлен!",
         "step-succes-update-msg": "Шаг был обновлен!",
         "validation-fail": "Проверка не удалась!",
-        "server-error": "Произошла ошибка сервера!"
+        "server-error": "Произошла ошибка сервера!",
+        "picture": "Картинка была добавлена!"
       },
       "error": "Произошла ошибка!",
       "autobiography-error-add":  "Автобиография не была добавлена!",
@@ -1073,7 +1076,12 @@
     "contains-media": "Содержит медиа",
     "info-tag": "Если роль не выбрана, статья доступна для всех ролей",
     "info-roles": "Роли, которые могут просматривать эту статью",
-    "module-roles": "Роли модуля"
+    "module-roles": "Роли модуля",
+    "media": "Медиа",
+    "media-type": "(изображение, документ, аудио, видео)"
+  },
+  "media":{
+    "invalid-type": "Неверный тип файла"
   },
   "locations": {
     "locations": "Локации",
@@ -1116,7 +1124,8 @@
     "sorted-by": "Отсортировано по",
     "error-msg": "Укажите, пожалуйста, необходимые поля для печати",
     "print-msg": "Укажите, пожалуйста, ориентацию печати и необходимые поля.",
-    "select-file-format": "Выбери формат файла"
+    "select-file-format": "Выбери формат файла",
+    "max-print-rows": "Может быть напечатано не более 3000 строк"
   },
   "general-datas":{
     "general-data":"Общие данные",

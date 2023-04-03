@@ -98,14 +98,8 @@
                 <div class="form-group row">
                   <label class="col-xl-3 col-lg-3 col-form-label mt-1">{{ 'table.profile-photo' | translate }}</label>
                   <div class="col-lg-9 col-xl-9 mt-1">
-                    <div *ngIf="fileId">
-                      <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
-                        (disableBtn)="disableBtn"></app-add-edit-media-file>
-                    </div>
-                    <div *ngIf="!fileId">
-                      <app-add-edit-media-file (handleFile)="checkFile($event)" (disableBtn)="disableBtn">
-                      </app-add-edit-media-file>
-                    </div>
+                    <app-upload-avatar (handleFile)="checkFile($event)"></app-upload-avatar>
+                    <p>{{ 'table.profile-photo-ext' | translate}}</p>
                   </div>
                 </div>
               </diV>
@@ -115,7 +109,7 @@
                   <label class="col-xl-3 col-lg-3 col-form-label">{{ 'user.phone' | translate }}</label>
                   <div class="col-lg-9 col-xl-9">
                     <input class="form-control form-control-lg form-control-solid" name="phoneNumber" type="tel"
-                      formControlName="phoneNumber"  maxlength="12" minlength="12" 
+                      formControlName="phoneNumber" [placeholder]="'user.phone-full' | translate" maxlength="12" minlength="12" 
                       [ngClass]="{'is-invalid': hasErrors('phoneNumber'), 'is-valid': userForm.get('phoneNumber').valid}" />
                     <div *ngIf="hasErrors('phoneNumber')" class="fv-plugins-message-container">
                       <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber"

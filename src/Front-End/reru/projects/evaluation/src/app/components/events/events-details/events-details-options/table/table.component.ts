@@ -185,7 +185,6 @@ export class TableComponent implements OnInit {
     });
     const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
     modalRef.componentInstance.title = this.title;
-    modalRef.componentInstance.title = 'Delete';
     modalRef.componentInstance.description = `${this.description} ${this.currentDeleteName} ?`;
     modalRef.componentInstance.buttonNo = this.no;
     modalRef.componentInstance.buttonYes = this.yes;

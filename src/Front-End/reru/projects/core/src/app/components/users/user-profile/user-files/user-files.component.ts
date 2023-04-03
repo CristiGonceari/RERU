@@ -132,9 +132,17 @@ export class UserFilesComponent implements OnInit {
   }
 
   removeFile(id): void {
+    forkJoin([
+      this.translate.get('notification.title.success'),
+			this.translate.get('notification.body.success.file-deleted')
+    ]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+    });
+
     this.isLoading = true;
     this.userFilesService.delete(id).subscribe(() => {
-      this.notificationService.success('Success', 'Fișier șters!', NotificationUtil.getDefaultConfig());
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultConfig());
       this.subsribeForParams();
       this.isLoading = false;
     });
@@ -222,12 +230,14 @@ export class UserFilesComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format', 'max-print-rows']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
-			this.translate.get('button.cancel')
+			this.translate.get('button.cancel'),
+      this.translate.get('print.select-file-format'),
+      this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i = 0; i < this.printTranslates.length; i++) {

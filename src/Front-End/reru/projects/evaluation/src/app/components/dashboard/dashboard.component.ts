@@ -8,8 +8,6 @@ import { PaginationModel } from '../../utils/models/pagination.model';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { TestService } from 'projects/evaluation/src/app/utils/services/test/test.service';
 import {
-  ApexNonAxisChartSeries,
-  ApexPlotOptions,
   ApexChart,
   ApexFill,
   ApexAxisChartSeries,
@@ -19,17 +17,9 @@ import {
   ApexDataLabels,
   ApexYAxis
 } from "ng-apexcharts";
-import { forkJoin, Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { I18nService } from '../../utils/services/i18n/i18n.service';
-
-export type NotificationsChartOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  labels: string[];
-  plotOptions: ApexPlotOptions;
-  fill: ApexFill;
-};
 
 export type TodaysEvaluations = {
   series: ApexAxisChartSeries;
@@ -69,13 +59,12 @@ export class DashboardComponent implements OnInit {
   fileStatus = {status: '', requestType: '', percent: 0 }
   filenames: string[] = [];
   dashboard = {
-    newNotification: "New notifications",
+    categories: "Period",
     tests: "Tests",
-    evaluatins: "Evaluations"
+    evaluations: "Evaluations"
   }
 
   // Apex Chart
-  public notificationsChart: Partial<NotificationsChartOptions>;
   public evaluationsChartOptions: Partial<TodaysEvaluations>;
 
   constructor(private userService: UserProfileService,
@@ -84,18 +73,31 @@ export class DashboardComponent implements OnInit {
               private testService: TestService,
               public translate: I18nService
     ) {
+      this.translateData();
       
-
       const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear().toString();
-      const months = ["Ian ", "Feb ", "Mar ", "Apr ", "Mai ", "Iun ", "Iul ", "Aug ", "Sep ", "Oct ", "Noi ", "Dec "];
+      const currentYear = new Date().getFullYear();
+      const months = ["Ian ", "Fеb ", "Mаr ", "Аpr ", "Mai ", "Iun ", "Iul ", "Аug ", "Sеp ", "Оct ", "Noi ", "Dеc "];
 
       this.evaluationsChartOptions = {
-        series: [
-        ],
+        series: [],
         chart: {
           height: 350,
-          type: "area"
+          type: "area",
+          toolbar: {
+            export: {
+              csv: {
+                filename: "Grafic Teste și Evaluări",
+                headerCategory: this.dashboard.categories
+              },
+              svg: {
+                filename: "Grafic Teste și Evaluări",
+              },
+              png: {
+                filename: "Grafic Teste și Evaluări",
+              }
+            }
+          }
         },
         dataLabels: {
           enabled: false
@@ -105,7 +107,7 @@ export class DashboardComponent implements OnInit {
         },
         xaxis: {
           type: "category",
-          categories: months.slice(currentMonth + 1).map(month => month + (parseInt(currentYear) - 1))
+          categories: months.slice(currentMonth + 1).map(month => month + (currentYear - 1))
               .concat(months.slice(0, currentMonth + 1).map(month => month + currentYear))
         }
       };
@@ -118,46 +120,18 @@ export class DashboardComponent implements OnInit {
     this.retrieveProfile();
     this.getDemoList();
     this.countTestsAndEvaluations().subscribe(series => {this.evaluationsChartOptions.series = series;});
-    //this.evaluationsChartOptions.series = this.generateData(10, 100, 15);
-    this.notificationsChart = {
-      series: [25],
-      chart: {
-        height: 250,
-        type: "radialBar"
-      },
-      plotOptions: {
-        radialBar: {
-          hollow: {
-            size: "70%"
-          },
-          dataLabels: {
-            show: true,
-            name: {
-                color: '#1BC5BD'
-            },
-            value: {
-              formatter: () => '25/100'
-            }
-          }
-        }
-      },
-      labels: [this.dashboard.newNotification],
-      fill: {
-        colors: ['#1BC5BD']
-      }
-    };
   }
 
   translateData(): void {
 		forkJoin([
-			this.translate.get('dashboard.new-notification'),
+      this.translate.get('dashboard.categories'),
 			this.translate.get('dashboard.tests'),
 			this.translate.get('dashboard.evaluations'),
 		]).subscribe(
-			([ newNotification, tests, evaluatins ]) => {
-				this.dashboard.newNotification = newNotification;
+			([ categories, tests, evaluations ]) => {
+        this.dashboard.categories = categories;
 				this.dashboard.tests = tests;
-				this.dashboard.evaluatins = evaluatins;
+				this.dashboard.evaluations = evaluations;
 			}
 		);
 	}
@@ -167,6 +141,7 @@ export class DashboardComponent implements OnInit {
 	}
 
   countTestsAndEvaluations() {
+    this.subscribeForLanguageChange();
     return forkJoin([
       this.testService.getNrTests(),
       this.testService.getNrEvaluations()
@@ -176,26 +151,10 @@ export class DashboardComponent implements OnInit {
         data: tests.data
       },
       {
-        name: this.dashboard.evaluatins,
+        name: this.dashboard.evaluations,
         data: evaluations.data
       }
     ]));
-  }
-
-  generateData(baseval, count, yrange) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-      var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
-
-      series.push([x, y, z]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
   }
 
   retrieveProfile(): void {

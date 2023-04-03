@@ -67,13 +67,14 @@ export class LocationListTableComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format', 'max-print-rows']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
-      		this.translate.get('print.select-file-format')
+      		this.translate.get('print.select-file-format'),
+			this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i=0; i<this.printTranslates.length; i++) {

@@ -267,7 +267,7 @@
     "print-result": "Print result",
     "print-test-info": "Print test information",
     "performing-test": "Print performing test",
-    "attach": "Attach file",
+    "attach": "Attach",
     "confirm-print": "Confirm and Print",
     "send-email": "Email notification",
     "full-screen": "Full screen mode"
@@ -471,7 +471,8 @@
     "set-points-to-zero": "If answer is false, set points to 0",
     "finish-verification-msg": "Are you sure you want to complete test verification?",
     "succes-verified-msg": "Test was successfully verified",
-    "evaluated-tests": "Evaluated tests"
+    "evaluated-tests": "Evaluated tests",
+    "actions": "Actions"
   },
   "dashboard": {
     "title": "Evaluation",
@@ -495,6 +496,7 @@
     "new-notification": "New notifications",
     "tests": "Tests",
     "evaluations": "Evaluations",
+    "categories": "Period",
     "notice1": "Notes: displays new notifications ",
     "notice2": "with the total number of notifications",
     "enclosed-mode": "Enclosed mode"
@@ -513,7 +515,7 @@
     "subtitle": "Manage questions",
     "new-question": "New Question",
     "add-question": "Add question",
-    "bulk-import": "Bulk Import Question",
+    "bulk-import": "Import (.xlsx)",
     "search-question": "Search by question",
     "search-category": "Search by category",
     "search-question-type": "Search by type",
@@ -547,7 +549,8 @@
     "search-by-status": "Search by status",
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options",
-    "questions-left": "Questions left"
+    "questions-left": "Questions left",
+    "answer-text": "Write here..."
   },
   "require-documents":{
     "documents":"Documents",
@@ -571,7 +574,8 @@
     "startTime": "Start Time",
     "endTime": "End Time",
     "file": "File",
-    "history": "History"
+    "history": "History",
+    "validDuring": "Valid during"
   },
 
   "answers": {
@@ -681,7 +685,7 @@
     "succes-add-msg": "Option was successfully added",
     "succes-update-msg": "Option was successfully updated",
     "succes-update-options-msg": "Question status was updated",
-    "bulk-import":"Bulk Import Options",
+    "bulk-import":"Import (.xlsx)",
     "formula-for-one-answer": "Calculation formula for questions with one answer",
     "formula-for-multiple-answers": "Calculation formula for questions with multiple answers",
     "negative-score": "Allow negative score"
@@ -720,7 +724,9 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "(image, document, audio, video)"
   },
   "locations": {
     "locations": "Testing locations",
@@ -816,13 +822,13 @@
     "attach-test-type-to-event": "Attach test template to event",
     "test-type-name": "Test template",
     "client": "Client",
-    "attempts": "Attempts",
+    "attempts": "Attempts (max. 100)",
     "search-event": "Search by event",
     "search-location": "Search by location",
     "search-colaborator-id": "Search by colaborator departamanet code",
     "search-from": "Search from date",
     "search-to": "Search to date",
-    "import-users": "Bulk import users",
+    "import-users": "Import (.xlsx)",
     "bulk-message": "Please, use our special form to import users",
     "evaluators": "Evaluators",
     "evaluators-e": "evaluators",
@@ -1054,7 +1060,8 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields.",
-    "select-file-format": "Select file format"
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "guide": {
     "title": "User Guide"
@@ -1078,7 +1085,8 @@
     "select-candidate-position": "Select Position",
     "position-to-candidate": "Position to Candidate",
     "available-from": "Aviable from",
-    "available-to": "Aviable to"
+    "available-to": "Aviable to",
+    "doc-ext": "(.pdf, .png, .jpg)"
   },
   "evaluations": {
     "evaluation": "Evaluation",
@@ -1151,7 +1159,6 @@
   },
   "graph-tests-and-evaluations": {
     "name": "Tests and Evaluations",
-    "note": "Notes: Tests and Evaluations taken over a year sorted by month",
-    "statistics": "Statistics"
+    "note": "Notes: Tests and Evaluations taken over a year sorted by month"
   }
 }

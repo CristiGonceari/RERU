@@ -23,6 +23,9 @@ export * from './lib/components/location-back-button/location-back-button.compon
 export * from './lib/components/authentication/authentication-callback/authentication-callback.component';
 export * from './lib/components/search-input/search-input.component';
 export * from './lib/components/add-edit-media-file/add-edit-media-file.component';
+export * from './lib/components/add-edit-media-file-xlsx/add-edit-media-file-xlsx.component';
+export * from './lib/components/upload-avatar/upload-avatar.component'
+export * from './lib/components/add-document/add-document.component'
 export * from './lib/components/get-media-file/get-media-file.component';
 export * from './lib/components/content/content.component';
 export * from './lib/components/404/404.component';

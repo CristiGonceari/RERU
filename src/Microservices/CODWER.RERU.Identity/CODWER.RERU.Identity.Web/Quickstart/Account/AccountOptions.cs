@@ -16,5 +16,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         public static bool AutomaticRedirectAfterSignOut = true;
 
         public static string InvalidCredentialsErrorMessage = "Email sau parolă nevalidă";
+        public static string InvalidMPassCredentialsErrorMessage = "Profilul MPass nu conține un e-mail sau un număr de telefon pentru a vă conecta în sistem";
     }
 }

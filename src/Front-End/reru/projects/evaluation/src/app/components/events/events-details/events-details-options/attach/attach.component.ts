@@ -73,7 +73,7 @@ export class AttachComponent implements OnInit {
   }
 
   cantAdd(){
-   return this.id == undefined || this.id == 0
+   return this.id == undefined || this.id == 0 || this.attempts > 100;
   }
 
   parse() {

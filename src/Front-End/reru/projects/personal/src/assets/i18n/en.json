@@ -234,7 +234,7 @@
     "quick-access": "Quick access",
     "department-component": "Department component",
     "dismissal-request": "Dismissal request",
-    "add-photo": "Add profile photo"
+    "add-photo": "Add profile photo (png, jpg, jpeg...)"
   },
   "nomenclature": {
     "title": "Nomenclature",
@@ -464,6 +464,7 @@
     "are-you-sure-want-to-delete-document": "Are you sure you want to delete the document <b>{{name}}</b>?",
     "add-document": "Add document",
     "file": "File",
+    "file-type": "File (.xlsx)",
     "access-restricted-to-orders": "Don't have access to orders!",
     "access-restricted-to-identity": "Don't have access to identity files!",
     "access-restricted-to-vacation": "Don't have access to vacations!",
@@ -523,6 +524,7 @@
     "close": "Close",
     "add": "Add",
     "import": "Import",
+    "import-type": "Import (.xlsx)",
     "reset": "Reset",
     "upload": "Upload",
     "applay": "Apply filter",
@@ -909,7 +911,8 @@
         "step-succes-add-msg": "Step was added!",
         "step-succes-update-msg": "Step was updated!",
         "validation-fail": "Validation failed!",
-        "server-error": "Server error occurred!"
+        "server-error": "Server error occurred!",
+        "picture": "The picture has been added!"
       },
       "error": "There has been an error!",
       "autobiography-error-add":  "Autobiography was not added!",
@@ -1073,7 +1076,12 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "(image, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Invalid file type"
   },
   "locations": {
     "locations": "Testing locations",
@@ -1116,7 +1124,8 @@
     "sorted-by": "Sorted by",
     "error-msg": "Please select fields for print",
     "print-msg": "Please specify the print orientation and necessary fields.",
-    "select-file-format": "Select file format"
+    "select-file-format": "Select file format",
+    "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "general-datas":{
     "general-data":"General Data",

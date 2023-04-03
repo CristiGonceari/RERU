@@ -85,7 +85,8 @@ export class PlansListComponent implements OnInit {
 	}
 
   getFilteredEvents(data: any = {}) :void {
-  this.setTimeToSearch();
+    this.selectedDay = null;
+    this.setTimeToSearch();
 
     let params = {
       fromDate: this.searchFrom,
@@ -109,6 +110,7 @@ export class PlansListComponent implements OnInit {
     this.isLoading = true;
 
     if (data.date != null) {
+      this.clearDateFields();
       this.selectedDay = this.parseDates(data.date);
       this.displayDate = this.parseDatesForTable(data.date)
     }
@@ -129,14 +131,16 @@ export class PlansListComponent implements OnInit {
   }
 
   clearFields(){
-		  
-		this.dateTimeFrom = '';
+		this.clearDateFields();
+		this.getListByDate();
+	}
+
+  clearDateFields(){
+    this.dateTimeFrom = '';
 		this.dateTimeTo = '';
 		this.searchFrom = '';
 		this.searchTo = '';
-		
-		this.getListByDate();
-	}
+  }
 
   list(data: any = {}): void {
     this.isLoading = true;
@@ -213,13 +217,14 @@ export class PlansListComponent implements OnInit {
 	}
 
 	translateData(): void {
-		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format']
+		this.printTranslates = ['print-table', 'print-msg', 'sorted-by', 'cancel', 'select-file-format', 'max-print-rows']
 		forkJoin([
 			this.translate.get('print.print-table'),
 			this.translate.get('print.print-msg'),
 			this.translate.get('print.sorted-by'),
 			this.translate.get('button.cancel'),
-      		this.translate.get('print.select-file-format')
+      this.translate.get('print.select-file-format'),
+			this.translate.get('print.max-print-rows')
 		]).subscribe(
 			(items) => {
 				for (let i=0; i<this.printTranslates.length; i++) {

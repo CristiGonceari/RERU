@@ -8,8 +8,11 @@
     </div>
 </div>
 <div *ngIf="!isLoadingMedia">
-    <div *ngIf="imageUrl">
+    <div *ngIf="imageUrl" class="d-md-block d-none">
         <img [src]="imageUrl" class="h-200px rounded" style="cursor: zoom-in; max-width: -webkit-fill-available;" (click)="showImage(imageUrl)">
+    </div>
+    <div *ngIf="imageUrl" class="d-md-none d-block">
+        <img [src]="imageUrl" class="h-120px rounded" style="cursor: zoom-in; max-width: 120px" (click)="showImage(imageUrl)">
     </div>
     <video *ngIf="videoUrl" class="h-200px rounded" controls>
         <source [src]="videoUrl">

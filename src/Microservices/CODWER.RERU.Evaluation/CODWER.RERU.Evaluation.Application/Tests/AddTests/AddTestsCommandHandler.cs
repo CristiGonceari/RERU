@@ -60,10 +60,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             _excelWorksheet = _excelPackage.Workbook.Worksheets.Add("Sheet1");
 
-            _excelWorksheet.Cells[1, 1].Value = "Name";
+            _excelWorksheet.Cells[1, 1].Value = "Nume";
             _excelWorksheet.Cells[1, 2].Value = "Idnp";
             _excelWorksheet.Cells[1, 3].Value = "Email";
-            _excelWorksheet.Cells[1, 4].Value = "Result";
+            _excelWorksheet.Cells[1, 4].Value = "Rezultat";
             _excelWorksheet.Cells[1, 5].Value = "Error";
         }
 

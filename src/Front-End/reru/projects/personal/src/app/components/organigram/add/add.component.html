@@ -89,10 +89,10 @@
                                                         <form [formGroup]="uploadForm">
                                                             <div class="form-group row">
                                                                 <label for="file"
-                                                                    class="col-form-label col-auto">{{'document.file' | translate}}:</label>
+                                                                    class="col-form-label col-auto">{{'document.file-type' | translate}}:</label>
                                                                 <div class="col">
-                                                                    <app-add-edit-media-file (handleFile)="setFile($event)" class="form-control vertical-center" type="file" name="file" id="file"
-                                                                    ></app-add-edit-media-file>
+                                                                    <app-add-edit-media-file-xlsx (handleFile)="setFile($event)" class="form-control vertical-center" type="file" name="file" id="file"
+                                                                    ></app-add-edit-media-file-xlsx>
                                                                 </div>
                                                             </div>
                                                             <div class="row"

@@ -87,10 +87,11 @@
     "delete-document": "Delete document",
     "remove-msg":"Are you sure you want to delete this document?",
     "upload-doc": "Upload document",
+    "import": "Import (.xlsx)",
     "import-users": "Import users",
     "import-departments": "Import departments",
     "import-roles": "Import roles",
-    "modal-title": "Upload file modal",
+    "modal-title": "Upload file modal (pdf, doc, xlsx, png, jpg...)",
     "modal-description": "Drop file here or click to upload",
     "success-add-doc": "Document has been successfully uploaded"
   },
@@ -123,7 +124,8 @@
         "create": "Has been created successfully!",
         "update": "Has been updated successfully!",
         "delete": "Has been deleted successfully",
-        "login": "Login successfully!"
+        "login": "Login successfully!",
+        "file-deleted":"File deleted!"
       },
       "error": "There has been an error!",
       "pls-select-role": "Please select a role!",
@@ -274,6 +276,7 @@
     "priority":"Priority",
     "status": "Status",
     "profile-photo": "Profile Photo",
+    "profile-photo-ext": "(.png, .jpg, ...)",
     "number" : "Number",
     "npp": "L.F.F.",
     "posture": "Posture"
@@ -324,7 +327,7 @@
     "access-mode": "Access mode",
     "code-length": "Code should consist of 4 numbers!",
     "enter-code": "Enter the code",
-    "verify-process": "Find the necessary code in your email.",
+    "verify-process": "You will find the verification code in the letter that came to your e-mail with which you registered in the system.",
     "Employee": "Employee",
     "Candidate": "Candidate"
   },
@@ -342,6 +345,7 @@
     "please-wait": "Please wait while system import users ...",
     "birthday": "Birthday",
     "phone": "Contact phone",
+    "phone-full": "Contact phone (+373 xx xxx xxx)",
     "date-format": "Please provide a valid format ZZ.LL.AAAA"
   },
   "word": {
@@ -363,7 +367,8 @@
     "subheader": "Confirm your action",
     "reset-pass-msg": "Are you sure you want to reset password for user",
     "success-reset-password": "Password has been send to your email",
-    "success-reset": "Password was reseted successfully!"
+    "success-reset": "Password was reseted successfully!",
+    "page-title":"Password reset page"
   },
   "change-password-comp": {
     "title": "Change password",
@@ -410,7 +415,13 @@
     "sure": "Are you sure you want to remove this module?"
   },
   "dashboard": {
-    "enclosed-mode": "Enclosed mode"
+    "enclosed-mode": "Enclosed mode",
+    "my-activities": "For admission to studies",
+    "solicited-position": "To apply for a public position with special status",
+    "my-tests": "For MAI employees",
+    "request-position": "Request position",
+    "my-solicited-tests": "My solicited postion",
+    "tests": "Tests"
   },
   "pages": {
     "users": {
@@ -574,6 +585,7 @@
     "role-colaborator-id": "Role Id",
     "function-colaborator-id": "Employee Function Id",
     "birth-day": "Birth Date",
+    "max-print-rows": "Maximum 3000 rows can be printed",
     "phone-number": "Phone num." 
   },
   "guide": {
@@ -600,7 +612,9 @@
     "contains-media": "Contains media",
     "info-tag": "If no role is selected, the article is available for all roles",
     "info-roles": "The roles that can view this article",
-    "module-roles": "Module roles"
+    "module-roles": "Module roles",
+    "media": "Media",
+    "media-type": "(image, document, audio, video)"
   },
   "departments": {
     "overview": "Overview",
@@ -727,7 +741,8 @@
   "language":{
     "modern-language-level": "The level of knowledge of the modern language",
     "name": "language Name",
-    "qualifier" : "Qualifier of knowledge"
+    "qualifier" : "Qualifier of knowledge",
+    "add-language": "Add another modern language"
   },
   "recommendation":{
     "recommendation-name": "Study recommendation",
@@ -736,7 +751,8 @@
     "table-function": "Position held",
     "table-subdivision": "MAI subdivision",
     "user-name": "First Name",
-    "last-name": "Last Name"
+    "last-name": "Last Name",
+    "add-recommendation": "Add another recommendation"
   },
   "material-status":{
     "name": "Marital status on the date of completion of the personal file",
@@ -751,7 +767,9 @@
     "birthday-date": "Date of birth",
     "residence": "Residence",
     "work-place": "Work place",
-    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives"
+    "kinship-criminal-data-name": "Data on the criminal or misdemeanor liability of the candidate's close relatives",
+    "add-material-status": "Add another kinship",
+    "add-material-status-biographical-data": "Add another biographical date"
   },
   "military-obligation":{
     "paragraf-name": "Biographical data of the relatives close to the candidate",
@@ -772,7 +790,8 @@
     "start-obligation-period": "Start date",
     "end-obligation-period": "End date",
     "recruitment-booklet": "Recruitment certificate",
-    "military-obligation-add-button-hint": "Press the button to add military obligation"
+    "military-obligation-add-button-hint": "Press the button to add military obligation",
+    "add-military-obligation": "Add another obligation"
   },
   "autobiography":{
     "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",

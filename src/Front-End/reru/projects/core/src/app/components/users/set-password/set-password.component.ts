@@ -44,6 +44,7 @@ export class SetPasswordComponent implements OnInit {
       if (params.id) {
         this.getUserById(params.id);
         this.userId = params.id;
+        this.initForm(this.userId);
       }
     });
   }
@@ -58,9 +59,9 @@ export class SetPasswordComponent implements OnInit {
       this.passwordForm.get(field).hasError(error);
   }
 
-  initForm(user): void {
+  initForm(userId): void {
     this.passwordForm = this.fb.group({
-      id: this.fb.control(user.id, [Validators.required]),
+      id: this.fb.control(userId, [Validators.required]),
       password: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
       repeatNewPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
       emailNotification: this.fb.control(false, [Validators.required])
@@ -117,7 +118,6 @@ export class SetPasswordComponent implements OnInit {
 
   getUserById(id: string) {
     this.userService.getUser(id).subscribe(response => {
-      this.initForm(response);
       this.userData = response.data;
     });
   }

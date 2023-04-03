@@ -34,7 +34,7 @@
     "reports": "Rapoarte",
     "vacantions":"Concedii",
     "guide": "Ghid",
-    "guide-description": "Ghidul Utilizatorului",
+    "guide-description": "Ghid Utilizator",
     "documentsTemplates" : "Șabloane",
     "help": "Ajutor",
     "faq": "Întrebări frecvente"
@@ -82,11 +82,11 @@
     "select-department": "Selectează departamentul",
     "select-role": "Selectează rolul",
     "select-head": "Selectează",
-    "employee-last-name": "Numele angajatului",
-    "employee-first-name": "Prenumele angajatului",
+    "employee-last-name": "Nume angajat",
+    "employee-first-name": "Prenume angajat",
     "change-contractor-name": "Modifică numele unui angajat",
     "add-contractor-contact": "Adaugă contact pentru angajat",
-    "contact-type": "Tipul contactului",
+    "contact-type": "Tip contact",
     "select-contact-type": "Selectează tipul contactului",
     "the-contact": "Contactul",
     "write-contact": "Scrie contactul",
@@ -102,13 +102,13 @@
     },
     "citizenship": "Cetăţenie",
     "nationality": "Naționalitate",
-    "level-of-language": "Nivelul de cunoaștere a limbii materne",
+    "level-of-language": "Nivel de cunoaștere a limbii materne",
     "get-only-candidates": "Doar candidați",
     "get-only-empoyees": "Doar angajați",
     "are-you-sure-you-want-to-dismiss-contractor": "Ești sigur că vrei să eliberezi din funcție angajatul <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contact-from-contractor": "Ești sigur că vrei să ștergi contactul <b>{{type}} {{value}}</b> de la angajatul <b>{{name}}</b>?",
     "are-you-sure-you-want-to-delete-contractor": "Ești sigur că vrei să ștergi angajatul <b>{{name}}</b>?",
-    "general-presentation": "Prezentarea generală",
+    "general-presentation": "Prezentare generală",
     "positions-held": "Funcții deținute",
     "list-position-held": "Lista funcțiilor angajatului",
     "contact-type-name": {
@@ -148,7 +148,7 @@
     "general-data": "Date generale",
     "bulletin": "Buletin",
     "studies": "Studii",
-    "picture": "Adaugare Poză",
+    "picture": "Adăugare Poză",
     "request": "Cerere de angajare",
     "vacantions":"Concedii",
     "upload-identity-documents": "Încărcarea actelor de identitate",
@@ -167,14 +167,14 @@
     "account": "Cont",
     "access": "Acces",
     "add-access-description": "La adăugarea accestului, indicați un email valid pentru a transfera rechizitele. Ulterior, utilizatorul va fi împuternicit cu drepturi depline în tot sistemul de gestionare a personalului.",
-    "reset-password-information": "Resetarea parolei",
+    "reset-password-information": "Resetare parolă",
     "reset-password-description": "După resetarea parolei, veți primi un email informativ cu datele contului dvs",
     "are-you-sure-want-to-delete-study": "Sunteți sigur că doriți să ștergeți instituția?",
     "are-you-sure-want-to-delete-instruction": "Sunteți sigur că doriți să ștergeți instruirea?",
     "add-position": "Adăugare funcție",
     "generate-order": "Generare ordin",
     "individual-contract-request": "Contract individual de muncă",
-    "add-position-description": "După adaugarea funcției va fi generat automat ordinul de angajare pe care ultierior îl puteți găsi în meniul ordinele angajatului.",
+    "add-position-description": "După adăugarea funcției va fi generat automat ordinul de angajare pe care ultierior îl puteți găsi în meniul ordinele angajatului.",
     "insert-from-date": "Introdu din data",
     "insert-generated-day": "Introdu data generării",
     "do-you-want-to-proceed-order": "Doriți să generați ordinul de angajare?",
@@ -230,13 +230,13 @@
     "are-you-sure-want-to-delete-rank": "Sunteți sigur că doriți să ștergeți gradul militar {{name}}?",
     "family-component": "Componența familiei",
     "select-relation": "Selectează relația",
-    "add-relation": "Adaugă relație",
+    "add-relation": "Adăugare relație",
     "are-you-sure-you-want-to-delete-member": "Sunteți sigur că doriți să ștergeți membrul familiei {{name}}?",
     "quick-access": "Acces rapid",
     "department-component": "Componența departamentului",
     "dismissal-request": "Cereri de demisie",
     "add-dismissal-request": "Adaugă cerere de concediere",
-    "add-photo": "Adaugă poza de profil"
+    "add-photo": "Adaugă poza de profil (png, jpg, jpeg...)"
   },
   "nomenclature": {
     "title": "Nomenclatoare",
@@ -262,7 +262,7 @@
     "value-list": "Lista valorilor",
     "nomenclature-name": "Nume nomenclator",
     "edit-nomenclature": "Editează nomenclator",
-    "are-you-sure-you-want-to-disable-nomenclature": "Sunteți sigur că doriți să dezactivezi nomenclatorul {{name}}?",
+    "are-you-sure-you-want-to-disable-nomenclature": "Sunteți sigur că doriți să dezactivați nomenclatorul {{name}}?",
     "add-record": "Adaugă câmp",
     "create-header-nomenclature": "Adăugare coloane nomenclator",
     "add-column": "Adaugă coloană",
@@ -291,11 +291,11 @@
     "title": "Departamente",
     "departments-management": "Managementul departamentelor",
     "title-description-list": "Lista departamentelor",
-    "add-department": "Adaugă departament",
+    "add-department": "Adăugare departament",
     "new-department": "Departament nou",
     "type-department-data": "Introdu datele departamentului",
-    "department-details": "Detaliile departamentului",
-    "department-name": "Numele departamentului",
+    "department-details": "Detalii departament",
+    "department-name": "Nume departament",
     "type-whole-name": "Introdu numele întreg",
     "type-new-department-name": "Introdu numele noului departament",
     "edit-department-details": "Editează detaliile departamentului",
@@ -312,7 +312,7 @@
     "adding-role": "Adăugare rol",
     "new-role": "Rol nou",
     "type-role-data": "Introdu datele rolului",
-    "role-details": "Detaliile rolului",
+    "role-details": "Detalii rol",
     "role-name": "Numele rolului",
     "type-new-role-name": "Introdu numele rolului nou",
     "type-whole-name": "Introdu numele întreg",
@@ -326,7 +326,7 @@
     "title-description-list": "Lista funcții angajați",
     "add-employee-function": "Adăugare funcție",
     "adding-employee-function": "Adaugă funcție",
-    "new-employee-function": "Funcție noua",
+    "new-employee-function": "Funcție nouă",
     "type-employee-function-data": "Introdu datele funcției",
     "employee-function-details": "Detaliile funcției",
     "employee-function-name": "Numele funcției",
@@ -339,23 +339,23 @@
   },
   "positions": {
     "title": "Funcții",
-    "title-description-list": "Lista funcțiilor",
+    "title-description-list": "Listă funcții",
     "add-role": "Adaugă funcție",
     "adding-role": "Adăugare funcție",
     "new-role": "Funcție nouă",
     "type-role-data": "Introdu datele funcției",
-    "role-details": "Detaliile funcției",
+    "role-details": "Detalii funcție",
     "role-name": "Numele funcției",
     "type-new-role-name": "Introdu numele funcției noi",
     "type-whole-name": "Introdu numele întreg",
     "edit-role-details": "Editează detaliile funcției"
   },
   "vacation": {
-    "add-vacation": "Adaugă concediu",
+    "add-vacation": "Adăugare concediu",
     "title-description-list": "Lista concediilor",
     "new-vacation": "Concediu nou",
     "adding-vacation": "Adăugare concediu",
-    "vacation-type": "Tipul concediului",
+    "vacation-type": "Tip concediu",
     "available-days": "Zile disponibile",
     "start-date": "Data început",
     "end-date":"Data sfârșit",
@@ -373,7 +373,7 @@
     "paid-vacation-days": "Zile de concediu plătit",
     "unpaid-vacation-days": "Zile de concediu neplătit",
     "include-off-days": "Zilele de odihnă se includ în concediu",
-    "include-holidays": "Sărbătorile naționale se include în concediu",
+    "include-holidays": "Sărbătorile naționale se includ în concediu",
     "type-number-of-days": "Introdu numărul de zile",
     "working-week-holidays": "Zile lucrătoare",
     "study-vacation-days": "Zile de concediu pentru studii",
@@ -399,8 +399,8 @@
   },
   "organigram": {
     "add-organigram": "Adaugă organigramă",
-    "title-description-list": "Listă organigrame",
-    "new-organigram": "Organigrama nouă",
+    "title-description-list": "Lista organigramelor",
+    "new-organigram": "Organigramă nouă",
     "organigram-name": "Nume organigramă",
     "organigram-head": "Capul organigramei",
     "organigram-view": "Vizualizare organigramă",
@@ -440,11 +440,11 @@
     "server-warn": "A apărut o eroare de Server!"
   },
   "guide": {
-    "title": "Ghidul Utilizatorului",
-    "heading1": "Dacă v-ati confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
-    "heading2": "In el puteți găsi răspunsul la orice întrebare.",
+    "title": "Ghid Utilizator",
+    "heading1": "Dacă v-ați confruntat cu careva probleme, ghidul utilizatorului vă poate fi de folos.",
+    "heading2": "În el puteți găsi răspunsul la orice întrebare.",
     "heading3": "Cum îmi schimb parola? Cum adaug un nou angajat? Cum pot adăuga sau redacta o poziție?",
-    "heading4": "Răspunsul la aceste întrebări, precum și la multe altele, poate fi găsit in ghid. Îl puteți descarcă facând click pe butonul de mai jos.",
+    "heading4": "Răspunsul la aceste întrebări, precum și la multe altele, poate fi găsit în ghid. Îl puteți descărcaa făcând click pe butonul de mai jos.",
     "heading5": "Pentru a găsi rapid informațiile de care aveți nevoie în ghidul descărcat, apăsați combinația de taste CTRL + F.  În colțul din dreapta sus se va deschide o bară de căutare!"
   },
   "department-content": {
@@ -455,7 +455,7 @@
     "are-you-sure-you-want-to-delete-department-content": "Sunteți sigur că doriți să ștergeți pe <b>{{name}}</b>?"
   },
   "holidays": {
-    "add-holiday": "Adaugă sărbătoare",
+    "add-holiday": "Adăugare sărbătoare",
     "edit-holiday": "Editează sărbătoare",
     "national-holidays": "Sărbători naționale",
     "are-you-sure-you-want-to-delete-holiday": "Sunteți sigur că doriți să ștergeți sărbătoarea <b>{{name}}</b>?"
@@ -465,6 +465,7 @@
     "are-you-sure-want-to-delete-document": "Sunteți sigur că doriți să ștergeți documentul <b>{{name}}</b>?",
     "add-document": "Adaugă document",
     "file": "Fișier",
+    "file-type": "Fișier (.xlsx)",
     "access-restricted-to-orders": "Nu aveți acces la ordine!",
     "access-restricted-to-identity": "Nu aveți acces la documente de identitate!",
     "access-restricted-to-vacation": "Nu aveți acces la concedii!",
@@ -499,7 +500,7 @@
     "disable": "Dezactivează",
     "more": "mai multe",
     "remove": "Șterge",
-    "save": "Salveaza",
+    "save": "Salvează",
     "emit": "Activează",
     "giveup": "Renunță",
     "forward": "Înainte",
@@ -523,7 +524,8 @@
     "attach": "Atașează",
     "close": "Închide",
     "add": "Adaugă",
-    "import": "Importează",
+    "import": "Importă",
+    "import-type": "Importă (.xlsx)",
     "reset": "Resetare",
     "upload": "Încarcă",
     "applay": "Aplică filtru",
@@ -577,10 +579,10 @@
     },
     "department": {
       "single": "Departament",
-      "title": "Departamentul"
+      "title": "Departament"
     },
     "role": {
-      "title": "Rolul",
+      "title": "Rol",
       "name": "Denumire",
       "from-date": "Angajarea din data",
       "to-date": "Angajarea pâna la",
@@ -590,12 +592,12 @@
       "no": "Nr"
     },
     "employee-functions": {
-      "title": "Funcția",
+      "title": "Funcție",
       "name": "Nume",
       "file": "Fișier",
       "code": "Cod",
       "no": "Nu",
-      "type": "Tipul",
+      "type": "Tip",
       "search-funciton": "Selectează funcția",
       "last-function": "Ultima funcție"
     },
@@ -604,7 +606,7 @@
       "from-date": "Din data",
       "generated-date": "Data generării",
       "work-hours": "Ore lucrate pe zi",
-      "role": "Funcția",
+      "role": "Funcție",
       "department": "Departament",
       "probation-day-period": "Durata stagierii",
       "work-place": "Locul de muncă (adresa)",
@@ -615,7 +617,7 @@
       "actions": "Acțiuni"
     },
     "vacation": {
-      "type": "Tipul",
+      "type": "Tip",
       "vacation-day": "Data",
       "from-date": "Din data",
       "to-date":"Până la",
@@ -707,7 +709,7 @@
     "family-component": {
       "first-name": "Prenume",
       "last-name": "Nume",
-      "birthday": "Zi de nastere",
+      "birthday": "Zi de naștere",
       "relation-name": "Relație",
       "actions": "Acțiuni"
     }
@@ -718,14 +720,14 @@
     "name": "Numele",
     "worked-hours": "Orele Lucrate",
     "free-hours": "Orele Libere",
-    "working-days" : "Zile Lucratoare",
+    "working-days" : "Zile Lucrătoare",
     "time-values": "Valorile de pontaj",
-    "select-values": "Selectati valorile",
+    "select-values": "Selectați valorile",
     "close": "Închide",
-    "save-changes": "Salveaza",
+    "save-changes": "Salvează",
     "departament": "Detalii",
     "departament-and-role": "Departamentul și rolul",
-    "print-curent-list": "Printează lista curenta",
+    "print-curent-list": "Printează lista curentă",
     "print-all-list": "Printează toată lista",
     "hours-value": "ore (se indică durata concretă a timpului de muncă)",
     "unpaid-leave-value": "concediu neplătit",
@@ -748,10 +750,10 @@
   "documents-templates":{
     "title": "Șabloane",
     "title-description-list": "Șabloane",
-    "article-title": "Denumirea Șablonului",
-    "document-fileType": "Tipul Șablonului",
+    "article-title": "Denumire Șablon",
+    "document-fileType": "Tip Șablon",
     "are-you-sure-you-want-to-delete-documents": "Sunteți sigur/ă că doriți să ștergeți documentul <b>{{name}}</b>?",
-    "test-convert": "Testează Comversia",
+    "test-convert": "Testează Conversia",
     "configure-document": "Configurează Documentul",
     "key-list": "Harta de chei"
   },
@@ -775,11 +777,11 @@
      "TodayDateKey": "Data pentru ziua de azi",
      "OrderNrKey": "Numărul ordinului curent",
      "RequestNrKey": "Numărul pentru cererea curentă",
-     "NameKey": "Numele Angajatului",
-     "LastNameKey": "Prenumele Angajatului",
-     "FatherNameKey": "Patronimicul Angajatului",
+     "NameKey": "Nume Angajat",
+     "LastNameKey": "Prenume Angajat",
+     "FatherNameKey": "Patronimic Angajat",
      "IdnpKey": "IDNP din buletin",
-     "BulletinSeriesKey": "Seria buletinului",
+     "BulletinSeriesKey": "Serie buletin",
      "BulletinRelaseByKey": "Buletinul angajatului a fost emis de",
      "BulletinRelaseDayKey": "Data emiterii buletinului",
      "BirthdayKey": "Ziua de naștere a angajatului",
@@ -793,7 +795,7 @@
      "InternshipDaysKey": "Zilele de stagiere a angajatului",
      "AddressKey": "Adresa de locuință a angajatului",
      "VacationUnnusedKey": "Zilele de vacanță nefolosite calculate per angajat",
-     "VacationTypeKey": "Tipul concediului",
+     "VacationTypeKey": "Tip concediu",
      "VacationDaysCountKey": "Totalul de zile disponibile de concediului",
      "VacationFrom": "Începutul concediului",
      "VacationToKey": "Sfârșitul concediului",
@@ -802,9 +804,9 @@
      "CompanyCityKey": "Orașul de locațiune al compamiei",
      "CompanyStreetKey": "Adresa de locație a companiei",
      "CompanyIdnoKey": "IDNO-ul companiei",
-     "DirectorNameKey": "Numele directorului",
-     "DirectorLastName": "Prenumele directorului",
-     "MinisterSrlKey": "Tipul companiei"
+     "DirectorNameKey": "Nume director",
+     "DirectorLastName": "Prenume director",
+     "MinisterSrlKey": "Tip companie"
   },
   "categoriesKeys":
   {
@@ -823,19 +825,19 @@
     },
     "personal": {
       "title": "Angajați",
-      "subtitle": "Gestionarea angajaților"
+      "subtitle": "Gestionare angajați"
     },
     "nomenclature": {
       "title": "Nomenclatoare",
-      "subtitle": "Gestionarea nomenclatoarelor"
+      "subtitle": "Gestionare nomenclatoare"
     },
     "contractor-type": {
       "title": "Clasă angajați",
-      "subtitle": "Gestionarea claselor de angajați"
+      "subtitle": "Gestionare clase de angajați"
     },
     "department": {
       "title": "Departamente",
-      "subtitle": "Gestionarea departamentelor"
+      "subtitle": "Gestionare departamente"
     },
     "role": {
       "title": "Roluri"
@@ -909,9 +911,10 @@
         "autobiography-succes-add-msg": "Autobiografia a fost adăugată!",
         "autobiography-succes-update-msg": "Autobiografia a fost actualizată!",
         "step-succes-add-msg": "Pasul a fost adăugat!",
-        "step-succes-update-msg": "Step a fost actualizat!",
+        "step-succes-update-msg": "Pasul a fost actualizat!",
         "validation-fail": "Validarea a eșuat!",
-        "server-error": "A apărut o eroare de Server!"
+        "server-error": "A apărut o eroare de Server!",
+        "picture": "Poza a fost adăugată!"
       },
       "error": "A avut loc o eroare!",
       "autobiography-error-add":  "Autobiografia nu a fost adăugată!",
@@ -978,7 +981,7 @@
     "02005003": "Valoarea cifre este nevalidă",
     "02005004": "Valoarea dublă este nevalidă",
     "02005005": "Această valoare este nevalidă",
-    "02005006": "Valoarea de tip date nu este valida",
+    "02005006": "Valoarea de tip date nu este validă",
     "02005007": "Valoarea DateTime este nevalidă",
     "02005008": "Valoarea e-mailului este nevalidă",
     "02006001": "Coloana din nomenclatură nu a fost găsită",
@@ -1024,7 +1027,7 @@
   "right-sidebar": {
     "header": "Profilul utilizatorului",
     "my-profile": "Profilul meu",
-    "change-password": "Schimbarea parolei",
+    "change-password": "Schimbare parolă",
     "logout": "Ieșire"
   },
   "vacation-type": {
@@ -1043,44 +1046,49 @@
     "3": "Refuzat"
   },
   "user-profile": {
-    "overview": "Vizualizarea profilului personal",
-    "edit-title": "Editarea profilului personal",
-    "edit-subtitle": "Inserta datele personale",
+    "overview": "Vizualizare profil personal",
+    "edit-title": "Editare profil personal",
+    "edit-subtitle": "Inserează datele personale",
     "personal-details": "Datele profilului:",
     "change-personal-data": "Schimbare datelor profilului personal",
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Camp este obligatorie, cel puțin 1 caracter",
-    "wrong-name": "Camp trebue să incepe cu 1 caracter",
+    "empty-name": "Câmp obligator, cel puțin 1 caracter",
+    "wrong-name": "Câmpul trebue să incepeapă cu 1 caracter",
     "available-modules": "Module disponibile"
   },
   "faq": {
     "help": "Ajutor",
     "faq": "Întrebări frecvente",
     "subtitle": "Întrebări frecvente",
-    "manage-faq": "Gestionarea întrebărilor",
+    "manage-faq": "Gestionare întrebări",
     "new-article": "Adaugă Articol",
     "delete-article": "Șterge Articol",
-    "article-title": "Titlul Articolului",
+    "article-title": "Titlu Articol",
     "name": "Nume",
     "empty": "Câmpul este obligatoriu",
     "content": "Conţinut",
-    "remove": "Ștergeți articol",
+    "remove": "Ștergere articol",
     "remove-msg": "Sigur doriți să ștergeți acest articol?",
-    "succes-remove-msg": "Articol a fost șters cu succes",
-    "succes-add-msg": "Articol a fost adăugat cu succes",
-    "succes-edit-msg": "Articol a fost editat cu succes",
-    "faq-details": "Detaliile articolului",
-    "article-details": "Detaliile articolului",
+    "succes-remove-msg": "Articolul a fost șters cu succes",
+    "succes-add-msg": "Articolul a fost adăugat cu succes",
+    "succes-edit-msg": "Articolul a fost editat cu succes",
+    "faq-details": "Detalii articol",
+    "article-details": "Detalii articol",
     "contains-media": "Conține media",
     "info-tag": "Dacă nu este selectat nici un rol, articolul este disponibil pentru toate rolurile",
     "info-roles": "Rolurile care pot vizualiza acest articol",
-    "module-roles": "Rolurile modulului"
+    "module-roles": "Roluri modul",
+    "media": "Media",
+    "media-type": "(imagine, document, audio, video)"
+  },
+  "media":{
+    "invalid-type": "Tip de fișier nevalid"
   },
   "locations": {
     "locations": "Locații de testare",
-    "manage-locations": "Gestionarea locațiilor",
+    "manage-locations": "Gestionare locații",
     "add-location": "Adaugă locație",
     "name": "Nume",
     "location-name": "Numele locației de testare",
@@ -1092,7 +1100,7 @@
     "persons": "Persoane responsabile",
     "clients": "Clienți înregistrați",
     "location-data": "Introduceți detaliile locației și confirmați",
-    "location-details": "Detaliile locației",
+    "location-details": "Detalii locație",
     "attach": "Atașează",
     "attach-res": "Atașați persoana responsabilă",
     "attach-to-location": "Atașați persoana responsabilă la locația de testare",
@@ -1118,7 +1126,8 @@
     "sorted-by": "Sortat după",
     "error-msg": "Vă rugăm să selectați câmpurile necesare pentru imprimare",
     "print-msg": "Vă rugăm să specificați orientarea de imprimare și câmpurile necesare.",
-    "select-file-format": "Selectați formatul fișierului"
+    "select-file-format": "Selectați formatul fișierului",
+    "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "general-datas":{
     "nationality": "Naţionalitatea",
@@ -1132,7 +1141,7 @@
   "bulletin":{
     "series":"Seria",
     "emited-by":"Emis de",
-    "relase-day":"Data eliberarii",
+    "relase-day":"Data eliberării",
     "adresses":"Adresa",
     "birth-place":"Locul nașterii",
     "residence-address":"Adresa de rezidenta",
@@ -1148,7 +1157,7 @@
     }
   },
   "study":{
-    "institution": "Instituția de învățâmânt",
+    "institution": "Instituția de învățământ",
     "study-frequency": "Frecvența",
     "study-type": "Tip studii",
     "faculty": "Facultatea",
@@ -1170,7 +1179,7 @@
     "recommendation-name": "Recomandare la studiii",
     "table-user-name": "Numele persoanei ce a recomandat",
     "table-user-last-name": "Prenumele persoanei ce a recomandat",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei"
@@ -1180,13 +1189,13 @@
     "name": "Starea civilă la data completării dosarului personal",
     "kinship-relation": "Relații de rudenie sau afinate cu angajații MAI",
     "kinship-degree" : "Gradul de rudenie",
-    "table-function": "Funcția (poziția) deținută",
+    "table-function": "Funcție (poziție) deținută",
     "table-subdivision": "Subdiviziune MAI",
     "user-name": "Numele persoanei",
     "last-name": "Prenumele persoanei",
     "biography-data": "Date biografice ale rudelor apropiate candidatului",
-    "birth-place":"Locul nasterii",
-    "birthday-date": "Data nasterii",
+    "birth-place":"Locul nașterii",
+    "birthday-date": "Data nașterii",
     "residence": "Domiciliu",
     "work-place": "Locul de muncă",
     "kinship-criminal-data-name": "Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului",
@@ -1233,8 +1242,8 @@
     "Female": "Feminin"
   },
   "languageKnowledge":{
-    "Basic": "Cunostinte bază",
-    "BasicKnowledge": "Cunostinte bază",
+    "Basic": "Cunoștințe de bază",
+    "BasicKnowledge": "Cunoștințe de bază",
     "Medium": "Mediu",
     "Good" : "Bine",
     "VeryGood": "Foarte bine"
@@ -1247,8 +1256,8 @@
     "5": "Cursuri de Specializare"
   },
   "studyFrequency":{
-    "Daily":"Frecvența la zi",
-    "LowFrequency": "Frecvența redusa"
+    "Daily":"Frecvență la zi",
+    "LowFrequency": "Frecvență redusa"
   },
   "materialStatusType": {
     "1": "Celibatar",
@@ -1271,13 +1280,13 @@
     "WifesSisters" : "Surorile soției"
   },
   "militaryObligationType":{
-    "AlternativeService" : "Serviciu de alternativa",
-    "PerformedMilitaryService" : "Serviciul militar indeplinit",
+    "AlternativeService" : "Serviciu de alternativă",
+    "PerformedMilitaryService" : "Serviciul militar îndeplinit",
     "Recruit" : "Recrut",
     "Reservist" : "Rezervist"
   },
   "stepper":{
-    "button-update-and-next":"Actualizeaza și treci la pasul următor",
+    "button-update-and-next":"Actualizează și treci la pasul următor",
     "button-save-and-next":"Adaugă și treci la pasul următor",
     "button-next":"Finalizați pasul",
     "button-update":"Actualizează",
@@ -1286,9 +1295,9 @@
   },
   "step":{
     "GeneralData": "Date Generale",
-    "Bulletin": "Bulletin",
+    "Bulletin": "Buletin",
     "Study": "Studii",
-    "MaterialStatus": "Starea civila",
+    "MaterialStatus": "Starea civilă",
     "MilitaryObligation": "Obligație militară",
     "Autobiography": "Autobiografie",
     "Declaration": "Declaraţie"
