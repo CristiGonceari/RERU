@@ -68,6 +68,7 @@
                                                                 class="form-control" type="file" name="file"
                                                                 id="file" required> -->
                                                             <app-add-document (handleFile)="setFile($event, i, requiredDocument.id)"></app-add-document>
+                                                            <p>{{ 'solicited-test.doc-ext' | translate}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,6 +120,7 @@
                                                                         class="form-control" type="file"
                                                                         name="file" id="file" required> -->
                                                                         <app-add-document (handleFile)="setFile($event, i, item.requiredDocumentId)"></app-add-document>
+                                                                        <p>{{ 'solicited-test.doc-ext' | translate}}</p>
                                                                 </div>
                                                             </div>
                                                         </div>

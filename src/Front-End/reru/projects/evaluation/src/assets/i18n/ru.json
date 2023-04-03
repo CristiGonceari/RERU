@@ -1084,7 +1084,8 @@
     "select-candidate-position": "Выберите должность",
     "position-to-candidate": "Кандидируемая позиция",
     "available-from": "Действителен с",
-    "available-to": "Годен до"
+    "available-to": "Годен до",
+    "doc-ext": "(.pdf, .png, .jpg)"
   },
   "evaluations": {
     "evaluation": "Оценка",

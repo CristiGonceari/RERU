@@ -22,7 +22,7 @@
         <img [src]="imageUrl" class="h-auto w-100 rounded">
       </div>
       <video *ngIf="videoUrl" class="h-auto w-100 rounded" controls>
-        <source [src]="videoUrl">
+        <source [src]="videoUrl" type="video/mp4">
       </video>
       <audio *ngIf="audioUrl" controls>
         <source [src]="audioUrl" type="audio/mpeg">
