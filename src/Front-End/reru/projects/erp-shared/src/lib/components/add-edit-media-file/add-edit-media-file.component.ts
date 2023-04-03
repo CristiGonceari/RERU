@@ -64,9 +64,9 @@ export class AddEditMediaFileComponent implements OnInit {
   onSelect(event) {
     event.addedFiles.forEach((element) => {
       const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
-      const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv)$/gmi);
+      const regexVideo = new RegExp(/(.*?).(mp4|webm|ogv|mov)$/gmi);
       const regexAudio = new RegExp(/(.*?).(mp3|oga|wav|ogg|aac|opus)$/gmi);
-      const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx|mkv|txt|xls|avi|mov|flv|odp|key|tiff)$/gmi);
+      const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx|mkv|txt|xls|avi|flv|odp|key|tiff)$/gmi);
 
       this.onRemoved();
 
@@ -79,6 +79,7 @@ export class AddEditMediaFileComponent implements OnInit {
         this.videoFiles.push(...event.addedFiles);
         this.readFile(this.videoFiles[0]).then(fileContents => {
           this.videoUrl = fileContents;
+          this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl);
         });
       } else if (regexAudio.test(element.name)) {
         this.audioFiles.push(...event.addedFiles);
@@ -170,8 +171,14 @@ export class AddEditMediaFileComponent implements OnInit {
           const file = new File([blob], this.fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
-            else if (blob.type.includes('video')) this.videoUrl = fileContents;
-            else if (blob.type.includes('application')) this.docUrl = fileContents;
+            else if (blob.type.includes('video')) {
+              this.videoUrl = fileContents;
+              this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl);
+            }
+            else if (blob.type.includes('application')) {
+              this.docUrl = fileContents;
+              this.docUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.docUrl);
+            }
             else if (blob.type.includes('audio')) {
               this.audioUrl = fileContents;
               this.audioUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioUrl);

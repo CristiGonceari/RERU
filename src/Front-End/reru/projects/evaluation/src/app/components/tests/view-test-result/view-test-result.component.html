@@ -6,18 +6,18 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
-  <div class="card card-custom gutter-b w-100">
+  <div class="card card-custom gutter-b w-100 flex-wrap">
     <div class="card-header font-size-lg">
       <div class="d-flex align-items-center">
         <span class="text-muted mr-4">{{'tests.name' | translate}}:</span>
         <span class="mb-0 h4">{{testData.testTemplateName}}</span>
       </div>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center flex-wrap">
         <span class="text-muted mr-4">{{'verify-test.student' | translate}}:</span>
         <span class="mb-0 h4">{{testData.userName}}</span>
         <span class="text-dark-50 font-size-lg font-weight-light"> (idnp: {{testData.idnp}}) </span>
       </div>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center flex-wrap">
         <span class="text-muted mr-4">{{'verify-test.result' | translate}}:</span>
         <span class="mb-0 h4">{{ translateResultValue(result) }}</span>
       </div>
@@ -66,22 +66,24 @@
               <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
             </label>
             <div class="ml-5 w-100">
-              {{ item.answer }}
               <div class="form-group row align-items-center">
-                  <div class="col-lg-6 col-xl-3 w-100 d-flex">
-                    <div *ngIf="item.optionMediaFileId">
-                      <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
-                    </div>
+                {{item.answer}}
+              </div>
+              <div class="form-group row align-items-center">
+                <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                  <div *ngIf="item.optionMediaFileId">
+                    <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
                   </div>
                 </div>
-            </div>
-            <div class="ml-auto p-2">
-              <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
+              </div>
+              <div class="form-group row align-items-center">
+                <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == true">
-          <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
+        <div class="w-100 text-center" *ngIf="questionType == 5 && hadFile == true">
+          <button (click)="getFile()" class="btn btn-light-success font-weight-bold"
               ngbTooltip="{{fileName}}">
               <i class="flaticon-profile"></i>
               {{ checkFileNameLength() }}
@@ -111,8 +113,8 @@
             </p>
           </div>
         </div>
-        <div class="d-flex justify-content-between">
-          <div>
+        <div class="d-flex row justify-content-between m-4">
+          <div class="d-flex d-md-none justify-content-center w-100 mt-3">
             <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
               {{'verify-test.correct' | translate}}
             </span>
@@ -123,7 +125,26 @@
               {{accumulatedPoints}} / {{maxPoints}}
             </span>
           </div>
-          <div class="d-flex flex-row-reverse">
+          <div class="d-flex d-md-none flex-row-reverse mt-3 w-100">
+            <app-confirm-button class="btn" *ngIf="index != count" (handle)="next()"
+              [value]="'verify-test.next-question' | translate">
+            </app-confirm-button>
+            <button class="btn btn-light w-100" *ngIf="index == count" (click)="close()">
+              {{'button.close' | translate}}
+            </button>
+          </div>
+          <div class="d-none d-md-flex justify-content-center">
+            <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
+              {{'verify-test.correct' | translate}}
+            </span>
+            <span class="label label-lg label-light-primary label-inline h-35px px-5" *ngIf="correct===false">
+              {{'verify-test.not-correct' | translate}}
+            </span>
+            <span class="label label-lg label-light label-inline h-35px px-5 ml-5">
+              {{accumulatedPoints}} / {{maxPoints}}
+            </span>
+          </div>
+          <div class="d-none d-md-flex flex-row-reverse">
             <app-confirm-button class="btn" *ngIf="index != count" (handle)="next()"
               [value]="'verify-test.next-question' | translate">
             </app-confirm-button>

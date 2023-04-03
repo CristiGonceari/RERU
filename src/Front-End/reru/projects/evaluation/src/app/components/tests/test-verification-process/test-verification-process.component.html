@@ -54,27 +54,29 @@
         </div>
         <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
           <span class="h4">{{'tests.options' | translate}}:</span>
-          <div *ngFor="let item of options" class="d-flex border border-secondary rounded d-flex py-3 my-5"
+          <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
             [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
             [class.bg-successTransparent]="item.isSelected && item.isCorrect"
             [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
             [class.bg-light-warning]="!item.isSelected && item.isCorrect">
-            <label class="px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+            <label class="col-3 px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
               <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
               <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
             </label>
-            <div class="p-2 h-20px">
-              <p class="mb-0 font-size-lg option-label">{{item.answer}}</p>
-              <div class="form-group align-items-center">
+            <div class="col-10">
+              <div class="form-group row align-items-center">
+                {{item.answer}}
+              </div>
+              <div class="form-group row align-items-center">
                 <div class="col-lg-6 col-xl-3 w-100 d-flex">
                   <div *ngIf="item.optionMediaFileId">
                     <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="ml-auto p-2">
-              <p class="mb-0 font-size-lg option-label mr-5">{{item.points}}p. ({{item.percentages}}%)</p>
+              <div class="form-group row align-items-center">
+                <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+              </div>
             </div>
           </div>
         </div>
@@ -110,8 +112,8 @@
             </div>
         </span>
     </div>
-      <div class="d-flex justify-content-between" *ngIf="questionType == enum.OneAnswer || questionType == enum.MultipleAnswers">
-        <div class="d-flex">
+      <div class="d-flex row justify-content-between m-4" *ngIf="questionType == enum.OneAnswer || questionType == enum.MultipleAnswers">
+        <div class="d-flex d-md-none justify-content-center w-100">
           <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
             {{'verify-test.correct' | translate}}
           </span>
@@ -122,12 +124,55 @@
             {{accumulatedPoints}} / {{maxPoints}}
           </span>
         </div>
-        <div>
+        <div class="d-block d-md-none w-100 mt-3">
+          <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
+          </app-confirm-button>
+        </div>
+        <div class="d-none d-md-block">
+          <span class="label label-lg label-light-success label-inline h-35px px-5" *ngIf="correct===true">
+            {{'verify-test.correct' | translate}}
+          </span>
+          <span class="label label-lg label-light-primary label-inline h-35px px-5" *ngIf="correct===false">
+            {{'verify-test.not-correct' | translate}}
+          </span>
+          <span class="label label-lg label-light label-inline h-35px px-5 ml-5">
+            {{accumulatedPoints}} / {{maxPoints}}
+          </span>
+        </div>
+        <div class="d-none d-md-block">
           <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
           </app-confirm-button>
         </div>
       </div>
-      <div class="d-flex justify-content-between" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
+      <div class="d-flex d-md-none row justify-content-between mx-4" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
+        <div class="d-flex row">
+          <div class="btn-group btn-group-toggle mx-auto w-100" ngbRadioGroup name="radioBasic" [(ngModel)]="correct">
+            <label ngbButtonLabel class="btn-light-success" [class.active]="correct===true">
+              <input ngbButton type="radio" value="1" (change)="$event ? check($event) : null">
+              {{'verify-test.correct' | translate}}
+            </label>
+            <label ngbButtonLabel class="btn-light-primary" [class.active]="correct===false"
+              style="white-space: nowrap;">
+              <input ngbButton type="radio" value="0" (change)="$event ? check($event) : null">
+              {{'verify-test.not-correct' | translate}}
+            </label>
+          </div>
+          <div class="input-group mt-3">
+            <input type="text" class="form-control h-40px" placeholder="{{'questions.points' | translate}}"
+              value="points" [(ngModel)]="points">
+            <div class="input-group-append">
+              <span class="input-group-text text-dark">{{maxPoints}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 mx-auto">
+          <button type="button" (click)="verifyTest()"
+            class="btn btn-outline-success font-weight-bold font-size-h5 py-0">
+            {{'verify-test.verify' | translate}}
+          </button>
+        </div>
+      </div>
+      <div class="d-none d-md-flex justify-content-between" *ngIf="questionType != enum.OneAnswer && questionType != enum.MultipleAnswers">
         <div class="d-flex">
           <div class="btn-group btn-group-toggle mr-5" ngbRadioGroup name="radioBasic" [(ngModel)]="correct">
             <label ngbButtonLabel class="btn-light-success" [class.active]="correct===true">

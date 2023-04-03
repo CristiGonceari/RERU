@@ -548,7 +548,8 @@
     "search-by-status": "Поиск по статусу",
     "add-tags": "Добавить тэги",
     "bulk-import-options-msg":"Скачайте и воспользуйтесь, пожалуйста, нашей специальной формой для загрузки вопроса",
-    "questions-left": "Осталось вопросов"
+    "questions-left": "Осталось вопросов",
+    "answer-text": "Напишите сюда..."
   },
   "require-documents":{
     "documents":"Документы",
@@ -1083,7 +1084,8 @@
     "select-candidate-position": "Выберите должность",
     "position-to-candidate": "Кандидируемая позиция",
     "available-from": "Действителен с",
-    "available-to": "Годен до"
+    "available-to": "Годен до",
+    "doc-ext": "(.pdf, .png, .jpg)"
   },
   "evaluations": {
     "evaluation": "Оценка",
