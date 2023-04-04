@@ -54,9 +54,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             using (var p = new ExcelPackage())
             {
                 var ws = p.Workbook.Worksheets.Add($"{questionType.ToString()}OptionTemplate");
-                ws.Cells["A1"].Value = $"Option";
-                ws.Cells["B1"].Value = "IsCorrect (Yes-1, No-0)";
-                ws.Cells["C1"].Value = "Note: One option per row. Minimum two options and one of them in the column B to be true. New option must be in one line with first option. In Column B Please use only digits 0 1";
+                ws.Cells["A1"].Value = $"Opțiune";
+                ws.Cells["B1"].Value = "Corectitudine (Da-1, Nu-0)";
+                ws.Cells["C1"].Value = "Notiță: Doar o opțiune per rând. Cel puțin două opțiuni iar una dintre ele în coloana B să fie adevărată. " +
+                                       "\nOpțiunea nouă trebuie să fie într-o linie cu prima opțiune. În coloana B vă rugam să utilizați numai cifrele 0 și 1";
 
 
                 ws.Column(1).Width = 100;
