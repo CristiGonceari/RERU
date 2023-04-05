@@ -5,6 +5,8 @@ using CVU.ERP.Common.Validation;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 using System.Threading.Tasks;
+using RERU.Data.Entities.Enums;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
 {
@@ -21,19 +23,17 @@ namespace CODWER.RERU.Evaluation.Application.Events.DeleteEvent
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Id)
-                .MustAsync((id, cancellation) => EventInUse(id))
+                .MustAsync((id, cancellation) => CanDeleteEvent(id))
                 .WithErrorCode(ValidationCodes.CAN_NOT_DELETE_EVENT_IN_USE)
                 .WithMessage(ValidationMessages.CannotDeleteEventInUse);
         }
 
-        private async Task<bool> EventInUse(int id)
+        private async Task<bool> CanDeleteEvent(int eventId)
         {
-            var eventToDelete = _appDbContext.Events.Find(id);
+            bool hasTerminatedOrVerifiedTest = _appDbContext.Tests
+                .Any(t => t.EventId == eventId && (t.TestStatus == TestStatusEnum.Terminated || t.TestStatus == TestStatusEnum.Verified));
 
-            if (eventToDelete.TillDate > System.DateTime.Now) 
-                return false;
-
-            return true;
+            return !hasTerminatedOrVerifiedTest;
         }
     }
 }
