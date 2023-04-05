@@ -43,7 +43,11 @@
                     <div *ngIf="hasErrors('question')" class="fv-plugins-message-container">
                       <div *ngIf="hasError('question', 'required')" data-field="question" data-validator="notEmpty"
                         class="fv-help-block">
-                        {{ 'locations.empty-name' | translate }}</div>
+                        {{ 'locations.empty-name' | translate }}
+                      </div>
+                      <div *ngIf="questionForm.controls['question'].errors?.pattern" class="fv-help-block">
+                        {{ 'message.validation-hashed-question' | translate }}
+                      </div>
                     </div>
                   </div>
                 </div>

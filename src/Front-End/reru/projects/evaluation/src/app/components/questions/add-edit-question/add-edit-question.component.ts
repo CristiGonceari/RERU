@@ -252,6 +252,20 @@ export class AddEditQuestionComponent implements OnInit {
     } else {
       this.questionForm.get("question").setValue("");
     }
+    this.updateValidationForQuestion();
+  }
+
+  updateValidationForQuestion(){
+    if(this.questionForm.value.questionType == QuestionUnitTypeEnum.HashedAnswer){
+      this.questionForm.controls['question'].setErrors(null);
+      var matchHashedQuestion = new RegExp(/^([^[]]*)*((\[answer\]([^[]]*)+\[\/answer\])([^[]]*)*)+$/);
+      this.questionForm.controls['question'].setValidators([Validators.required, Validators.pattern(matchHashedQuestion)]);
+      this.questionForm.controls['question'].updateValueAndValidity();
+    } else{
+      this.questionForm.controls['question'].setErrors(null);
+      this.questionForm.controls['question'].setValidators(Validators.required);
+      this.questionForm.controls['question'].updateValueAndValidity();
+    }
   }
 
   private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
