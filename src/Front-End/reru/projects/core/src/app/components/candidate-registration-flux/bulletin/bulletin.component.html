@@ -117,10 +117,16 @@
             <div class="row d-flex justify-content-md-end">
                 <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="bulletinForm && bulletinForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
                 <app-stepper-arrow-hint-down  class="d-md-none d-block" *ngIf="bulletinForm && bulletinForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down >
-                <button class="btn btn-success h-35px" matStepperNext
+                <button class="d-md-block d-none btn btn-success h-35px" matStepperNext
                     [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
                     (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
-                <button class="btn btn-success h-35px" matStepperNext
+                <button class="d-md-block d-none btn btn-success h-35px" matStepperNext
+                    [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
+                    (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
+                <button class="d-md-none d-block btn btn-success h-45px" matStepperNext
+                    [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="toAddOrUpdateButton"
+                    (click)="updateBulletin()">{{'stepper.button-update-and-next' | translate}}</button>
+                <button class="d-md-none d-block btn btn-success h-45px" matStepperNext
                     [disabled]="bulletinForm && bulletinForm.invalid" *ngIf="!toAddOrUpdateButton"
                     (click)="createBulletin()">{{'stepper.button-save-and-next' | translate}}</button>
             </div>
