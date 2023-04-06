@@ -63,7 +63,11 @@ export class GetMediaFileComponent implements OnChanges {
           const file = new File([blob], fileName, { type: httpEvent.body.type });
           this.readFile(file).then(fileContents => {
             if (blob.type.includes('image')) this.imageUrl = fileContents;
-            else if (blob.type.includes('video')) this.videoUrl = fileContents;
+            else if (blob.type.includes('video'))
+            {
+              this.videoUrl = fileContents;
+              this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.videoUrl);
+            }
             else if (blob.type.includes('doc')) this.docUrl = fileContents;
             else if (blob.type.includes('audio')) {
               this.audioUrl = fileContents;
