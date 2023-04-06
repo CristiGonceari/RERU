@@ -15,7 +15,7 @@
         <img [src]="imageUrl" class="h-120px rounded" style="cursor: zoom-in; max-width: 120px" (click)="showImage(imageUrl)">
     </div>
     <video *ngIf="videoUrl" class="h-200px rounded" controls>
-        <source [src]="videoUrl">
+        <source [src]="videoUrl" type="video/mp4">
     </video>
     <audio *ngIf="audioUrl" controls class="w-100 d-md-inline-block d-none">
         <source [src]="audioUrl" type="audio/mpeg">

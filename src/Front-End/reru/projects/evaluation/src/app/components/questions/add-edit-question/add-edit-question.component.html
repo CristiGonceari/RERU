@@ -43,7 +43,17 @@
                     <div *ngIf="hasErrors('question')" class="fv-plugins-message-container">
                       <div *ngIf="hasError('question', 'required')" data-field="question" data-validator="notEmpty"
                         class="fv-help-block">
-                        {{ 'locations.empty-name' | translate }}</div>
+                        {{ 'locations.empty-name' | translate }}
+                      </div>
+                      <div *ngIf="questionForm.controls['question'].errors?.pattern" class="fv-help-block">
+                        {{ 'message.validation-hashed-question' | translate }}
+                      </div>
+                    </div>
+                    <div class="col-xs-4" style="margin-top: 10px;" *ngIf="questionForm.value.questionType == 4">
+                      <button (click)="insertQestionTag()" class="btn btn-secondary font-weight-bolder">{{"questions.add-tags" | translate}}</button>
+                      <button type="button" class="btn btn-icon" [ngbTooltip]="tooltip">
+                        <i class="fas fa-question-circle ml-3"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -116,12 +126,6 @@
               </app-add-button>
             </div>
           </div>
-        </div>
-        <div class="col-xs-4" style="margin-top: 10vh;" *ngIf="questionForm.value.questionType == 4">
-          <button (click)="insertQestionTag()" class="btn btn-secondary font-weight-bolder">{{"questions.add-tags" | translate}}</button>
-          <button type="button" class="btn btn-icon" [ngbTooltip]="tooltip">
-            <i class="fas fa-question-circle ml-3"></i>
-          </button>
         </div>
       </div>
       <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10" *ngIf="isLoadingMedia">
