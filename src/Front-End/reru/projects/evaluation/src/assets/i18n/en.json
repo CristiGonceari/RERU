@@ -299,7 +299,8 @@
     "status-msg": "Are you sure you want to assign this status to your test",
     "edit-options": "You can't edit options.",
     "no-record": "No record found.",
-    "negative-message": "This question cannot be negative."
+    "negative-message": "This question cannot be negative.",
+    "validation-hashed-question": "Missing answer between [answer]?[/answer] tags"
   },
   "categories": {
     "settings": "Settings",

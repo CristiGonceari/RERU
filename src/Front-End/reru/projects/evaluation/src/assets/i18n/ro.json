@@ -298,7 +298,8 @@
     "status-msg": "Sigur doriți să atribuiți această stare testului dvs.",
     "edit-options": "Nu puteți edita opțiunile.",
     "no-record": "Nu a fost găsită nicio înregistrare.",
-    "negative-message": "Această întrebare nu poate avea punctaj negativ."
+    "negative-message": "Această întrebare nu poate avea punctaj negativ.",
+    "validation-hashed-question": "Lipșeste răspunsul între tag-urile [answer]?[/answer]"
   },
   "categories": {
     "settings": "Setări",
