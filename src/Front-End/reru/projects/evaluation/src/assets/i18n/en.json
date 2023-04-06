@@ -794,6 +794,7 @@
     "name": "Name",
     "event-name": "Event name",
     "location": "Location",
+    "select-location": "Select location",
     "address": "Address",
     "computers": "Computers",
     "person": "Person",

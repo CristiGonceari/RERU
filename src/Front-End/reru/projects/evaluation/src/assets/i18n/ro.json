@@ -790,6 +790,7 @@
     "name": "Nume",
     "event-name": "Nume eveniment",
     "location": "Locație",
+    "select-location": "Selectați locația",
     "address": "Adresă",
     "computers": "Calculatoare",
     "person": "Persoana",

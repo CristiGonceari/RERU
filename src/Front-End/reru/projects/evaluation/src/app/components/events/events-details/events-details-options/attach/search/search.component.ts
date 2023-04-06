@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   @Input() searchTestTemplate: boolean;
   @Input() searchPerson: boolean;
   @Input() searchUser: boolean;
+  @Input() placeholderInput: string;
 
   list;
   form = new FormControl();

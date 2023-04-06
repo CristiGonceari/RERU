@@ -791,6 +791,7 @@
     "name": "Имя",
     "event-name": "Название события",
     "location": "Локация",
+    "select-location": "Выберите локацию",
     "address": "Адрес",
     "computers": "Компьютеры",
     "person": "Человек",
