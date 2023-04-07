@@ -792,7 +792,11 @@
     "name": "Имя",
     "event-name": "Название события",
     "location": "Локация",
+<<<<<<< HEAD
+    "select-location": "Выберите локацию",
+=======
     "select-template": "Выберите шаблон",
+>>>>>>> develop
     "address": "Адрес",
     "computers": "Компьютеры",
     "person": "Человек",

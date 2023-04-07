@@ -795,7 +795,11 @@
     "name": "Name",
     "event-name": "Event name",
     "location": "Location",
+<<<<<<< HEAD
+    "select-location": "Select location",
+=======
     "select-template": "Select template",
+>>>>>>> develop
     "address": "Address",
     "computers": "Computers",
     "person": "Person",

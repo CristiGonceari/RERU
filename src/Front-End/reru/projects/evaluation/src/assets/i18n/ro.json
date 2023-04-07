@@ -791,7 +791,11 @@
     "name": "Nume",
     "event-name": "Nume eveniment",
     "location": "Locație",
+<<<<<<< HEAD
+    "select-location": "Selectați locația",
+=======
     "select-template": "Selectați șablonul",
+>>>>>>> develop
     "address": "Adresă",
     "computers": "Calculatoare",
     "person": "Persoana",
