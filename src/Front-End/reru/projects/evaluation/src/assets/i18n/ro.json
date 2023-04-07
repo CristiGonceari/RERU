@@ -298,7 +298,8 @@
     "status-msg": "Sigur doriți să atribuiți această stare testului dvs.",
     "edit-options": "Nu puteți edita opțiunile.",
     "no-record": "Nu a fost găsită nicio înregistrare.",
-    "negative-message": "Această întrebare nu poate avea punctaj negativ."
+    "negative-message": "Această întrebare nu poate avea punctaj negativ.",
+    "validation-hashed-question": "Lipșeste răspunsul între tag-urile [answer]?[/answer]"
   },
   "categories": {
     "settings": "Setări",
@@ -533,7 +534,7 @@
     "remove-msg": "Sigur doriți să ștergeți acestă întrebare?",
     "add-options": "Adăugați opțiuni",
     "add-option": "Adăugați opțiunea",
-    "tags": "Taguri",
+    "tags": "Tag-uri",
     "question-type": "Selectați tipul întrebărilor",
     "select-questions": "Alegerea întrebărilor",
     "order-questions": "Ordinea întrebărilor",
@@ -546,7 +547,7 @@
     "succes-update-msg": "Întrebarea a fost actualizată cu succes",
     "succes-update-status-msg": "Statutul a fost actualizat",
     "search-by-status": "Căutați după statut",
-    "add-tags": "Inserează taguri",
+    "add-tags": "Adaugă tag-uri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile",
     "questions-left": "Întrebări rămase",
     "answer-text": "Scrie aici..."
@@ -677,7 +678,7 @@
     "show-user-name": "Afișați numele de utilizator în teste",
     "set-time-limit": "Setați limita de timp pentru fiecare întrebare (secunde)",
     "set-max-errors": "Setați maximum de erori",
-    "this-is-free-text": "Aceasta este o întrebare cu forma liberă",
+    "this-is-free-text": "Aceasta este întrebare de tip formă liberă",
     "delete-msg": "Sigur doriți sa ștergeți opțiunea?",
     "succes-delete-msg": "Opțiunea a fost ștearsă cu succes",
     "succes-add-msg": "Opțiunea a fost adăugată cu succes",
@@ -790,7 +791,11 @@
     "name": "Nume",
     "event-name": "Nume eveniment",
     "location": "Locație",
+<<<<<<< HEAD
     "select-location": "Selectați locația",
+=======
+    "select-template": "Selectați șablonul",
+>>>>>>> develop
     "address": "Adresă",
     "computers": "Calculatoare",
     "person": "Persoana",
@@ -936,6 +941,7 @@
     "03000206": "Tipul de test nu există în eveniment",
     "03000207": "Adăugați eveniment sau evaluator",
     "03000208": "Data începutului evenimentului nu poate fi din trecut",
+    "03000211": "Evenimentele în uz nu pot fi șterse",
     "03000301": "Evaluatorul există deja în eveniment",
     "03000302": "Evaluatorul există deja în test",
     "03000303": "Evaluatorul și candidatul nu pot fi aceeași persoană",
