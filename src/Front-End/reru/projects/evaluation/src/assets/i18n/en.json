@@ -299,7 +299,8 @@
     "status-msg": "Are you sure you want to assign this status to your test",
     "edit-options": "You can't edit options.",
     "no-record": "No record found.",
-    "negative-message": "This question cannot be negative."
+    "negative-message": "This question cannot be negative.",
+    "validation-hashed-question": "Missing answer between [answer]?[/answer] tags"
   },
   "categories": {
     "settings": "Settings",
@@ -794,6 +795,8 @@
     "name": "Name",
     "event-name": "Event name",
     "location": "Location",
+    "select-location": "Select location",
+    "select-template": "Select template",
     "address": "Address",
     "computers": "Computers",
     "person": "Person",
@@ -940,6 +943,7 @@
     "03000206": "Test Template does not exist in event",
     "03000207": "Add event or evaluator",
     "03000208": "Start day cannot be a date from the past",
+    "03000211": "Events in use cannot be deleted",
     "03000301": "Evaluator already exists in event",
     "03000302": "Evaluator already exists in test",
     "03000303": "Evaluator and candidate can not be the same person",

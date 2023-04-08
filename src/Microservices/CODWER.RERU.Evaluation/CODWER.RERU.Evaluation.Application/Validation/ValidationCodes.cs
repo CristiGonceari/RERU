@@ -26,6 +26,7 @@
         public static string START_DAY_CANT_BE_FROM_PAST = "03000208";
         public static string ONLY_ACTIVE_EVENT_CAN_BE_INACTIVE = "03000209";
         public static string INACTIVE_EVENT_CANT_BE_CHANGED = "03000210";
+        public static string CAN_NOT_DELETE_EVENT_IN_USE = "03000211";
 
         //event evaluator
         public static string EXISTENT_EVALUATOR_IN_EVENT = "03000301";

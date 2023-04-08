@@ -168,7 +168,7 @@
                               [routerLink]="['../edit-position', position.id]">
                               {{ 'button.edit' | translate }}
                             </button>
-                            <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                            <button *ngIf="isNotExpired(position.to)" class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                               (click)="editStatus(position.id)">
                               <span *ngIf="position.isActive === false">{{ 'statuses.activate' | translate }}</span>
                               <span *ngIf="position.isActive === true">{{ 'statuses.inactivate' | translate }}</span>
