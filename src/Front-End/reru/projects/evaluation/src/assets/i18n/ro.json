@@ -791,6 +791,8 @@
     "name": "Nume",
     "event-name": "Nume eveniment",
     "location": "Locație",
+    "select-location": "Selectați locația",
+    "select-template": "Selectați șablonul",
     "address": "Adresă",
     "computers": "Calculatoare",
     "person": "Persoana",

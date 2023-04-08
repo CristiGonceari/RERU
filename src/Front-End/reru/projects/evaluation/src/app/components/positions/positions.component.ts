@@ -58,6 +58,18 @@ export class PositionsComponent implements OnInit {
 		return this.documentTitle
 	}
 
+	isNotExpired(toDate): boolean{
+		if(!toDate){
+			return true;
+		}
+		var positionDate = new Date(toDate);
+		var now = new Date();
+		if(positionDate.getTime() < now.getTime()){
+			return false;
+		}
+		return true;
+	}
+
 	editStatus(id) {
 		this.isLoading = true;
 		this.positionService.editPositionStatus(id).subscribe(res => {

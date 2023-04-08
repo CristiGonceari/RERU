@@ -57,6 +57,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
+            return Redirect("https://reru.mai.gov.md/"); // redirect de pe reru-stage.codwer.com pentru o perioada pana la inchidere
+
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
 

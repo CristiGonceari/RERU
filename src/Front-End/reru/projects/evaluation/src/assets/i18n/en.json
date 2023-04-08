@@ -795,6 +795,8 @@
     "name": "Name",
     "event-name": "Event name",
     "location": "Location",
+    "select-location": "Select location",
+    "select-template": "Select template",
     "address": "Address",
     "computers": "Computers",
     "person": "Person",
