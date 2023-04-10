@@ -3,10 +3,6 @@
     <img alt="Logo" [src]="logo" class="logo-sticky max-h-35px">
   </a>
   <div class="d-flex align-items-center">
-    <button class="d-btn d-md-none p-0 fas fa-bars rounded-0 burger-icon-left burger-style" id="kt_aside_tablet_and_mobile_toggle"
-      (click)="toggle(sidebarView.MODULES)">
-      <span></span>
-    </button>
     <button class="btn btn-hover-text-primary p-0 ml-3" id="kt_header_mobile_topbar_toggle" (click)="toggleUserIcon()">
       <span class="svg-icon svg-icon-xl">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -22,6 +18,10 @@
           </g>
         </svg>
       </span>
+    </button>
+    <button class="d-btn d-md-none p-0 fas fa-bars rounded-0 burger-icon-left burger-style mr-3" id="kt_aside_tablet_and_mobile_toggle"
+      (click)="toggle(sidebarView.MODULES)">
+      <span></span>
     </button>
   </div>
 </div>
