@@ -29,6 +29,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string INVALID_USER_PHONE = "01000115";
         public static string WRONG_OLD_PASSWORD = "01000116";
         public static string OLD_PASSWORD_SAME_AS_NEW_PASSWORD = "01000117";
+        public static string PASSWORDS_NOT_MATCH = "01000118";
 
         //ARTICLES
         public static string EMPTY_NAME = "01000201";
