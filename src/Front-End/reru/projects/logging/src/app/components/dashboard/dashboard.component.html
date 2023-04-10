@@ -91,7 +91,7 @@
             [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
           <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
           <div *ngIf="!isLoading && !downloadFile"
-            class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+            class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
             id="kt_datatable">
             <table class="datatable table font-size-lg" style="overflow: visible">
               <thead class="text-uppercase text-muted">
