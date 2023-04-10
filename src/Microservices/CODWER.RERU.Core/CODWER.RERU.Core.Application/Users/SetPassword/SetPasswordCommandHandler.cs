@@ -5,9 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Common.Handlers;
 using CODWER.RERU.Core.Application.Common.Providers;
+using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Identity.Models;
 using CVU.ERP.Notifications.Email;
 using CVU.ERP.Notifications.Services;
+using CVU.ERP.ServiceProvider.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,20 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
             {
                 var upIdentity = userProfile.Identities.FirstOrDefault(upi => upi.Type == "local");
                 var identityServerUser = await UserManagementDbContext.Users.FirstOrDefaultAsync(u => u.Id == upIdentity.Identificator);
+
+                if (await _userManager.CheckPasswordAsync(identityServerUser, request.Data.Password))
+                {
+                    throw new ApplicationRequestValidationException(
+                        new List<ValidationMessage>()
+                        {
+                            new ()
+                            {
+                                MessageText = "old password same as new password", 
+                                Code = ValidationCodes.OLD_PASSWORD_SAME_AS_NEW_PASSWORD
+                            }
+                        }
+                    );
+                }
 
                 if (identityServerUser != null)
                 {
