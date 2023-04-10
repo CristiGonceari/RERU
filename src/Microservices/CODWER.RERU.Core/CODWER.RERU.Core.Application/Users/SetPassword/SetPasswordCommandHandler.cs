@@ -20,8 +20,8 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly INotificationService _notificationService;
 
-        public SetPasswordCommandHandler(ICommonServiceProvider commonServicepProvider, UserManager<ERPIdentityUser> userManager, INotificationService notificationService) 
-            : base (commonServicepProvider)
+        public SetPasswordCommandHandler(ICommonServiceProvider commonServiceProvider, UserManager<ERPIdentityUser> userManager, INotificationService notificationService) 
+            : base (commonServiceProvider)
         {
             _userManager = userManager;
             _notificationService = notificationService;
@@ -29,6 +29,7 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
 
         public async Task<Unit> Handle (SetPasswordCommand request, CancellationToken cancellationToken) 
         {
+
             var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Identities)
                 .FirstOrDefaultAsync (up => up.Id == request.Data.Id);
@@ -38,54 +39,33 @@ namespace CODWER.RERU.Core.Application.Users.SetPassword {
                 var upIdentity = userProfile.Identities.FirstOrDefault(upi => upi.Type == "local");
                 var identityServerUser = await UserManagementDbContext.Users.FirstOrDefaultAsync(u => u.Id == upIdentity.Identificator);
 
-                if (await _userManager.CheckPasswordAsync(identityServerUser, request.Data.Password))
-                {
-                    throw new ApplicationRequestValidationException(
-                        new List<ValidationMessage>()
-                        {
-                            new ()
-                            {
-                                MessageText = "old password same as new password", 
-                                Code = ValidationCodes.OLD_PASSWORD_SAME_AS_NEW_PASSWORD
-                            }
-                        }
-                    );
-                }
-
                 if (identityServerUser != null)
                 {
-                    if (request.Data.Password == request.Data.RepeatNewPassword)
+                    List<string> passwordErrors = new List<string>();
+
+                    var validators = _userManager.PasswordValidators;
+
+                    foreach (var validator in validators)
                     {
-                        List<string> passwordErrors = new List<string>();
+                        var result = await validator.ValidateAsync(_userManager, null, request.Data.Password);
 
-                        var validators = _userManager.PasswordValidators;
-
-                        foreach (var validator in validators)
+                        if (!result.Succeeded)
                         {
-                            var result = await validator.ValidateAsync(_userManager, null, request.Data.Password);
-
-                            if (!result.Succeeded)
+                            foreach (var error in result.Errors)
                             {
-                                foreach (var error in result.Errors)
-                                {
-                                    passwordErrors.Add(error.Description);
-                                    throw new Exception("Validation Error");
-                                }
-                            }
-                            else
-                            {
-                                identityServerUser.PasswordHash =
-                                    _userManager.PasswordHasher.HashPassword(identityServerUser, request.Data.Password);
-                                await _userManager.UpdateAsync(identityServerUser);
-
-                                userProfile.Password = request.Data.Password;
-                                await AppDbContext.SaveChangesAsync();
+                                passwordErrors.Add(error.Description);
+                                throw new Exception("Validation Error");
                             }
                         }
-                    }
-                    else
-                    {
-                        throw new Exception("New password and Repeat password aren't the same");
+                        else
+                        {
+                            identityServerUser.PasswordHash =
+                                _userManager.PasswordHasher.HashPassword(identityServerUser, request.Data.Password);
+                            await _userManager.UpdateAsync(identityServerUser);
+
+                            userProfile.Password = request.Data.Password;
+                            await AppDbContext.SaveChangesAsync();
+                        }
                     }
 
                     if (request.Data.EmailNotification)
