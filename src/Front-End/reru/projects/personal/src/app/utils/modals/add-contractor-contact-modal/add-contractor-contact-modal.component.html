@@ -17,7 +17,7 @@
             <label class="col-xl-3 col-lg-3 col-form-label" for="value">{{'personal.the-contact' | translate}}</label>
             <div class="col-lg-9 col-xl-9">
                 <input class="form-control" type="text" name="value" id="value" formControlName="value"
-                    [placeholder]="'personal.contact-type' | translate">
+                    [placeholder]="'personal.contact' | translate">
                 <span *ngIf="contactForm?.get('value')?.errors?.email" class="invalid-feedback d-block">{{'validations.valid-email' | translate}}</span>
             </div>
         </div>
