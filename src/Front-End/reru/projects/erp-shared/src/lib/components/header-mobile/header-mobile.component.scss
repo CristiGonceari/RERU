@@ -1,5 +1,11 @@
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 767px) {
     .header-mobile.header-mobile-fixed {
         padding: 0 0 0 60px;
     }
+}
+
+.burger-style{
+    border: 0px;
+    font-size: 24px;
+    color: #3699ff;
 }

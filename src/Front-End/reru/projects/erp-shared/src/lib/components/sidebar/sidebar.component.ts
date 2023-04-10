@@ -26,9 +26,7 @@ export class SidebarComponent implements OnInit {
 		this.subscribeForSidebarChanges();
 		if (!this.menuItems || !this.menuItems.length) {
 			this.sidebarService.toggle(SidebarView.SIDEBAR, null);
-		}
-		let height = window.innerWidth-360
-		this.sidebarHeight = `${height}px`;
+		} 
 	}
 
 	subscribeForSidebarChanges(): void {
