@@ -180,6 +180,14 @@ export class UserFilesComponent implements OnInit {
         if (res) this.subsribeForParams();
       })
     }
+    forkJoin([
+      this.translate.get('notification.title.success'),
+			this.translate.get('files.success-add-doc')
+    ]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+    });
+    this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
   }
 
   uploadDocuments(files): void {
