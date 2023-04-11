@@ -296,4 +296,9 @@ export class TestService extends AbstractService {
 	getNrEvaluations(): Observable<any> {
 		return this.http.get(`${this.baseUrl}/HomePage/evaluations-count`);
 	}
+	
+	generateTestResultFile(testId): Observable<any> {
+		return this.http.post(`${this.baseUrl}/${this.urlRoute}/add-test-result-file/${testId}`, testId);
+	}
+
 }

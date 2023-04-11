@@ -18,6 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
                 .Include(x => x.EventTestTemplates)
                 .ThenInclude(x => x.Event)
                 .Include(x => x.TestTemplateModuleRoles)
+                .Include(x => x.DocumentsForSign)
                 .OrderByDescending(x => x.Id)
                 .AsQueryable();
 

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 {
@@ -72,6 +73,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
             if (test.TestQuestions.All(x => x.QuestionUnit.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers))
             {
                 await _mediator.Send(new AutoCheckTestScoreCommand { TestId = test.Id });
+
                 test.TestStatus = TestStatusEnum.Verified;
                 test.FinalAccumulatedPercentage = test.AccumulatedPercentage;
                 test.FinalStatusResult = test.ResultStatus;
@@ -94,6 +96,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                     await _appDbContext.SaveChangesAsync();
 
                     await AutoVerificationTest(test);
+
+                    await _mediator.Send(new GenerateTestResultFileCommand { TestId = test.Id });
+
                 }
             }
         }

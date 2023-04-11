@@ -433,6 +433,11 @@ data:
       },
       "MNotify": {
         "BaseAddress": "https://mnotify.staging.egov.md:8443"
+      },
+      "MSign": {
+        "ApiAddress": "https://msign.staging.egov.md:8443/MSign.svc",
+        "FrontendAddress": "https://msign.staging.egov.md",
+        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-core"
       }
     }
 
@@ -505,7 +510,16 @@ data:
         },
       "PlatformConfig": {
           "BaseUrl": "http://reru-stage.codwer.com"  
-        }
+        },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
+      },
+      "MSign": {
+        "ApiAddress": "https://msign.staging.egov.md:8443/MSign.svc",
+        "FrontendAddress": "https://msign.staging.egov.md",
+        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-evaluation"
+      }
     }
 
   reru_evaluation360.appsettings.json: | 
@@ -577,7 +591,16 @@ data:
         },
       "PlatformConfig": {
           "BaseUrl": "http://reru-stage.codwer.com"  
-        }
+        },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
+      },
+      "MSign": {
+        "ApiAddress": "https://msign.staging.egov.md:8443/MSign.svc",
+        "FrontendAddress": "https://msign.staging.egov.md",
+        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-evaluation360"
+      }
     }
 
   reru_logging.appsettings.json: | 
@@ -612,6 +635,15 @@ data:
           "LoggingClient": {
             "BaseUrl": "http://reru-internal-gateway-service:8080/reru-logging/api"
           }
+        },
+         "Certificate": {
+          "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+          "Password": "926"
+        },
+        "MSign": {
+          "ApiAddress": "https://msign.staging.egov.md:8443/MSign.svc",
+          "FrontendAddress": "https://msign.staging.egov.md",
+          "ServiceRootUrl": "http://reru.codwer.com/ms/reru-logging"
         }
     }
 
@@ -692,6 +724,15 @@ data:
         "Idno": "1018600049308",
         "DirectorName": "Marius",
         "DirectorLastName": "Dumitrascu"
+      },
+      "Certificate": {
+        "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
+        "Password": "926"
+      },
+      "MSign": {
+        "ApiAddress": "https://msign.staging.egov.md:8443/MSign.svc",
+        "FrontendAddress": "https://msign.staging.egov.md",
+        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-personal"
       }
     }
 

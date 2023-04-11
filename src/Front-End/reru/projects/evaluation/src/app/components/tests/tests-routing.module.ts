@@ -7,6 +7,7 @@ import { AddTestListComponent } from './add-test-list/add-test-list.component';
 
 const routes: Routes = [
   { path: '', component: TestListComponent },
+  { path: 'signed/:id', component: TestListComponent },
   { path: 'add-test', component: AddTestListComponent },
   { path: 'verify-test/:id', component: TestVerificationProcessComponent },
 ];

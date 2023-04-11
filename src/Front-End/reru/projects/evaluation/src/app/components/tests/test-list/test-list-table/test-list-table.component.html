@@ -15,7 +15,7 @@
                 <th scope="col" style="width: 180px">{{ 'events.evaluator' | translate }} ({{ 'user-profile.npp' |
                     translate }})</th>
                 <th scope="col" style="width: 180px">{{ 'events.event' | translate }}</th>
-                <th scope="col" style="width: 150px;" class="text-center">{{ 'departments.department' | translate}} / 
+                <th scope="col" style="width: 150px;" class="text-center">{{ 'departments.department' | translate}} /
                     {{ 'user-roles.role' | translate }} / {{ 'user-roles.function' | translate }}</th>
                 <th scope="col" style="width: 100px;">{{ 'events.location' | translate }}</th>
                 <th scope="col" style="width: 108px">{{ 'verify-test.status' | translate }}</th>
@@ -81,11 +81,13 @@
                         <ng-template #positionsTipContent width='600px' height='60px'>
                             <dl class="list-group nav list-inline">
                                 <dt>
-                                    <span style="text-transform:uppercase;">{{ 'solicited-position.solicited-positions' | translate }} :</span>
+                                    <span style="text-transform:uppercase;">{{ 'solicited-position.solicited-positions'
+                                        | translate }} :</span>
                                     <div class="p-2">
-                                        <ol class="p-0"> 
+                                        <ol class="p-0">
                                             <li *ngFor="let positionName of item.candidatePositionNames; let i = index"
-                                                class="tooltip-text text-dark-50 font-size-lg font-weight-light text-left">{{ positionName || '-'}}</li>
+                                                class="tooltip-text text-dark-50 font-size-lg font-weight-light text-left">
+                                                {{ positionName || '-'}}</li>
                                         </ol>
                                     </div>
                                 </dt>
@@ -93,30 +95,35 @@
                         </ng-template>
                         <span class="font-size-lg" *ngIf="item.eventName">{{ item.eventName }}</span>
                         <div *ngIf="item.candidatePositionNames !== null">
-                            <span class="font-size-lg" 
-                            [ngbTooltip]="positionsTipContent" style="margin-left: 3px;">
-                            <span class="svg-icon svg-icon-primary svg-icon-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    width="6px" height="6px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="0" y="0" width="6" height="6" />
-                                        <path
-                                            d="M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z"
-                                            fill="#000000" opacity="0.3" />
-                                        <path
-                                            d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
-                                            fill="#000000" />
-                                        <rect fill="#000000" opacity="0.3" x="10" y="9" width="7" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.3" x="7" y="9" width="2" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.3" x="7" y="13" width="2" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.3" x="10" y="13" width="7" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.3" x="7" y="17" width="2" height="2" rx="1" />
-                                        <rect fill="#000000" opacity="0.3" x="10" y="17" width="7" height="2" rx="1" />
-                                    </g>
-                                </svg>
-                                <!--end::Svg Icon-->
+                            <span class="font-size-lg" [ngbTooltip]="positionsTipContent" style="margin-left: 3px;">
+                                <span class="svg-icon svg-icon-primary svg-icon-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="6px" height="6px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="6" height="6" />
+                                            <path
+                                                d="M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z"
+                                                fill="#000000" opacity="0.3" />
+                                            <path
+                                                d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
+                                                fill="#000000" />
+                                            <rect fill="#000000" opacity="0.3" x="10" y="9" width="7" height="2"
+                                                rx="1" />
+                                            <rect fill="#000000" opacity="0.3" x="7" y="9" width="2" height="2"
+                                                rx="1" />
+                                            <rect fill="#000000" opacity="0.3" x="7" y="13" width="2" height="2"
+                                                rx="1" />
+                                            <rect fill="#000000" opacity="0.3" x="10" y="13" width="7" height="2"
+                                                rx="1" />
+                                            <rect fill="#000000" opacity="0.3" x="7" y="17" width="2" height="2"
+                                                rx="1" />
+                                            <rect fill="#000000" opacity="0.3" x="10" y="17" width="7" height="2"
+                                                rx="1" />
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>
                             </span>
-                        </span>
                         </div>
                         <span class="font-size-lg" *ngIf="!item.eventName">-</span>
                     </td>
@@ -139,9 +146,11 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span style="text-transform:uppercase;" class="text-left">{{ 'departments.department' | translate }}
+                                    <span style="text-transform:uppercase;" class="text-left">{{
+                                        'departments.department' | translate }}
                                         :</span>
-                                    <p class="tooltip-text text-dark-50 font-size-lg font-weight-light">{{ item.departmentName || '-' }}</p>
+                                    <p class="tooltip-text text-dark-50 font-size-lg font-weight-light">{{
+                                        item.departmentName || '-' }}</p>
                                 </dt>
                                 <dt>
                                     <span class="svg-icon svg-icon-primary svg-icon-sm">
@@ -171,26 +180,40 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span style="text-transform:uppercase;" class="text-left">{{ 'user-roles.role' | translate }} :</span>
-                                    <p class="tooltip-text tooltip-text text-dark-50 font-size-lg font-weight-light">{{ item.roleName || '-' }}</p>
+                                    <span style="text-transform:uppercase;" class="text-left">{{ 'user-roles.role' |
+                                        translate }} :</span>
+                                    <p class="tooltip-text tooltip-text text-dark-50 font-size-lg font-weight-light">{{
+                                        item.roleName || '-' }}</p>
                                 </dt>
                                 <dt>
-                                    <span class="svg-icon svg-icon-primary svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/Star.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24"/>
-                                            <path d="M12,18 L7.91561963,20.1472858 C7.42677504,20.4042866 6.82214789,20.2163401 6.56514708,19.7274955 C6.46280801,19.5328351 6.42749334,19.309867 6.46467018,19.0931094 L7.24471742,14.545085 L3.94038429,11.3241562 C3.54490071,10.938655 3.5368084,10.3055417 3.92230962,9.91005817 C4.07581822,9.75257453 4.27696063,9.65008735 4.49459766,9.61846284 L9.06107374,8.95491503 L11.1032639,4.81698575 C11.3476862,4.32173209 11.9473121,4.11839309 12.4425657,4.36281539 C12.6397783,4.46014562 12.7994058,4.61977315 12.8967361,4.81698575 L14.9389263,8.95491503 L19.5054023,9.61846284 C20.0519472,9.69788046 20.4306287,10.2053233 20.351211,10.7518682 C20.3195865,10.9695052 20.2170993,11.1706476 20.0596157,11.3241562 L16.7552826,14.545085 L17.5353298,19.0931094 C17.6286908,19.6374458 17.263103,20.1544017 16.7187666,20.2477627 C16.5020089,20.2849396 16.2790408,20.2496249 16.0843804,20.1472858 L12,18 Z" fill="#000000"/>
-                                        </g>
-                                    </svg><!--end::Svg Icon--></span>
-                                    <span style="text-transform:uppercase;" class="text-left">{{ 'user-roles.employee-function' | translate }} :</span>
-                                    <p class="tooltip-text tooltip-text text-dark-50 font-size-lg font-weight-light">{{ item.functionName || '-' }}</p>
+                                    <span
+                                        class="svg-icon svg-icon-primary svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/General/Star.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M12,18 L7.91561963,20.1472858 C7.42677504,20.4042866 6.82214789,20.2163401 6.56514708,19.7274955 C6.46280801,19.5328351 6.42749334,19.309867 6.46467018,19.0931094 L7.24471742,14.545085 L3.94038429,11.3241562 C3.54490071,10.938655 3.5368084,10.3055417 3.92230962,9.91005817 C4.07581822,9.75257453 4.27696063,9.65008735 4.49459766,9.61846284 L9.06107374,8.95491503 L11.1032639,4.81698575 C11.3476862,4.32173209 11.9473121,4.11839309 12.4425657,4.36281539 C12.6397783,4.46014562 12.7994058,4.61977315 12.8967361,4.81698575 L14.9389263,8.95491503 L19.5054023,9.61846284 C20.0519472,9.69788046 20.4306287,10.2053233 20.351211,10.7518682 C20.3195865,10.9695052 20.2170993,11.1706476 20.0596157,11.3241562 L16.7552826,14.545085 L17.5353298,19.0931094 C17.6286908,19.6374458 17.263103,20.1544017 16.7187666,20.2477627 C16.5020089,20.2849396 16.2790408,20.2496249 16.0843804,20.1472858 L12,18 Z"
+                                                    fill="#000000" />
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                    <span style="text-transform:uppercase;" class="text-left">{{
+                                        'user-roles.employee-function' | translate }} :</span>
+                                    <p class="tooltip-text tooltip-text text-dark-50 font-size-lg font-weight-light">{{
+                                        item.functionName || '-' }}</p>
                                 </dt>
                             </dl>
                         </ng-template>
                         <span [ngbTooltip]="departmentAndRoleTipContent" *ngIf="item.departmentName">
                             <p class="text-truncate"> {{ item.departmentName || '-'}}<br>
-                                <span *ngIf="item.roleName" class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName }}</span>
+                                <span *ngIf="item.roleName"
+                                    class="text-dark-50 font-size-lg font-weight-light text-truncate">{{ item.roleName
+                                    }}</span>
                                 <br>
-                                <span *ngIf="item.functionName" class="text-dark-50 font-size-sm font-weight-light text-truncate">{{ item.functionName }}</span>
+                                <span *ngIf="item.functionName"
+                                    class="text-dark-50 font-size-sm font-weight-light text-truncate">{{
+                                    item.functionName }}</span>
                             </p>
                         </span>
                         <span *ngIf="!item.departmentName">
@@ -280,9 +303,9 @@
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                     <div ngbDropdownMenu aria-labelledby="action1">
-                                        <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator" ngbDropdownItem
-                                            [routerLink]="['verify-test', item.id]" [disabled]="!item.isEvaluator"
-                                            class="navi-link align-items-baseline px-6">
+                                        <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator"
+                                            ngbDropdownItem [routerLink]="['verify-test', item.id]"
+                                            [disabled]="!item.isEvaluator" class="navi-link align-items-baseline px-6">
                                             {{ 'button.verify' | translate }}
                                         </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
@@ -321,12 +344,126 @@
                                             class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                             {{'documents-templates.generate-document'| translate}}
                                         </button>
+                                        <button (click)="item.isOpenAccordeon = !item.isOpenAccordeon"
+                                            class="navi-link align-items-baseline px-6" ngbDropdownItem>
+                                            <div class="row w-100">
+                                                <div class="col-4">
+                                                    {{'documents.files'| translate}}
+                                                </div>
+                                                <div class="col-8">
+                                                    <svg *ngIf="item.isOpenAccordeon" xmlns="http://www.w3.org/2000/svg"
+                                                        width="16" height="16" fill="currentColor"
+                                                        class="bi bi-chevron-double-up text-danger" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                                                    </svg>
+                                                    <svg *ngIf="!item.isOpenAccordeon"
+                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor"
+                                                        class="bi bi-chevron-double-down text-success"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </button>
                                         <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                             (click)="removeTest(item.id)">
                                             {{ 'button.delete' | translate }}
                                         </button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="item.isOpenAccordeon" class="w-100 border" style="background-color: #adb0b7;">
+                    <td colspan="12">
+                        <app-loading-spinner *ngIf="isLoadingDocument" [contentHeight]="'10vh'" [height]="'5rem'"
+                            [width]="'5rem'" [colorClass]="'text-primary'">
+                        </app-loading-spinner>
+                        <div *ngIf="item.documentForSign.length > 0 && !isLoadingDocument">
+                            <div>
+                                <table class="border w-100">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="3" style="color: black;" class="border">{{'documents.files'| translate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{'documents.file'| translate}}</td>
+                                            <td>{{'documents.options'| translate}}</td>
+                                            <td>{{'documents.signed-by'| translate}}</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let doc of item.documentForSign">
+                                            <td class="border">{{ doc.fileName }}</td>
+                                            <td class="border">
+                                                <button type="button" class="btn mr-3"
+                                                    [ngClass]="checkSignButton(doc.signedDocuments) ? 'btn-warning' : 'btn-secondary'"
+                                                    [disabled]="checkSignButton(doc.signedDocuments)"
+                                                    (click)="signTestDocument(doc, item)" style="min-width: 100px;">
+                                                    <app-loading-spinner *ngIf="isLoadingSignButton"
+                                                        [contentHeight]="'1vh'" [height]="'1rem'"
+                                                        [width]="'1rem'"></app-loading-spinner>
+                                                    <div class="d-inline-flex" *ngIf="!isLoadingSignButton">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z">
+                                                            </path>
+                                                        </svg>
+                                                        <div *ngIf="!checkSignButton(doc.signedDocuments)">
+                                                            {{'documents.sign'| translate}}
+                                                        </div>
+                                                        <div *ngIf="checkSignButton(doc.signedDocuments)">
+                                                            {{'documents.signed'| translate}}
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <button class="btn mr-3" style="background: #1d6f42; color: white;"
+                                                    (click)="printTestDocumentForSign(doc.mediaFileId)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                        <path
+                                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                    </svg>
+                                                    {{'documents.download'| translate}}
+                                                </button>
+                                            </td>
+                                            <td class="border">
+                                                <div *ngFor="let users of doc.signedDocuments; let i = index"
+                                                    (click)="demo(users)">
+                                                    <li *ngIf="doc.signedDocuments.length > 0">{{ users.fullName }}</li>
+                                                </div>
+                                                <li *ngIf="doc.signedDocuments.length == 0">
+                                                    {{'documents.empty-siged-users'| translate}}</li>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div *ngIf="item.documentForSign.length == 0 && !isLoadingDocument">
+                            <div *ngIf="item.testStatus == 4">
+                                <button (click)="generateTestResult(item)" class="btn btn-light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                                    </svg>
+                                    {{'documents.generate-test-result'| translate}}
+                                </button>
+                            </div>
+                            <div *ngIf="item.testStatus != 4">
+                                {{'documents.empty-files'| translate}}
                             </div>
                         </div>
                     </td>
@@ -376,9 +513,7 @@
                     </td>
                     <td style="text-align: center;">
                         <p *ngIf="item.result == result.NoResult && item.modeStatus == 0"> - / {{item.minPercent}}%</p>
-                        <p *ngIf="item.result != result.NoResult && item.modeStatus == 0">{{ item.accumulatedPercentage
-                            }}% /
-                            {{item.minPercent}}%</p>
+                        <p *ngIf="item.result != result.NoResult && item.modeStatus == 0">{{ item.accumulatedPercentage}}% /{{item.minPercent}}%</p>
                         <p *ngIf="item.modeStatus == 1">-</p>
                     </td>
                     <td data-field="Actions" data-autohide-disabled="false"
@@ -401,9 +536,9 @@
                             </div>
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                                 <div ngbDropdownMenu aria-labelledby="action1">
-                                    <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator" ngbDropdownItem
-                                        [routerLink]="['verify-test', item.id]" [disabled]="!item.isEvaluator"
-                                        class="navi-link align-items-baseline px-6">
+                                    <button *ngIf="item.testStatus === status.Terminated && item.isEvaluator"
+                                        ngbDropdownItem [routerLink]="['verify-test', item.id]"
+                                        [disabled]="!item.isEvaluator" class="navi-link align-items-baseline px-6">
                                         {{ 'button.verify' | translate }}
                                     </button>
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem

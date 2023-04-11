@@ -36,6 +36,8 @@ namespace RERU.Data.Persistence.Context
         public virtual DbSet<EmployeeFunction> EmployeeFunctions { get; set; }
 
         public virtual DbSet<RegistrationFluxStep> RegistrationFluxSteps { get; set; }
+        public virtual DbSet<DocumentsForSign> DocumentsForSign { get; set; }
+        public virtual DbSet<SignedDocument> SignedDocuments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

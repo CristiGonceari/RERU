@@ -1,6 +1,7 @@
 using CVU.ERP.Module.API.DependencyInjection;
 using CVU.ERP.Module.API.Middlewares.ResponseWrapper;
 using CVU.ERP.Module.Common.Models;
+using CVU.ERP.MSignService.API.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -15,13 +16,20 @@ namespace CVU.ERP.Module
         public static IMvcBuilder AddERPModuleControllers (this IMvcBuilder builder) 
         {
             builder.AddCommonModuleControllers ();
+
+            builder.AddMSignCommonModuleControllers();
+
             return builder;
         }
 
         public static IServiceCollection AddERPModuleServices (this IServiceCollection services, IConfiguration configuration) 
         {
             services.Configure<ModuleConfiguration> (configuration.GetSection ("Module"));
-           
+
+            //MSign
+            services.AddMSignSoapClient(configuration.GetSection("MSign"));
+            services.AddSystemCertificate(configuration.GetSection("Certificate"));
+
             var sp = services.BuildServiceProvider ();
             var erpConfiguration = sp.GetService<IOptions<ModuleConfiguration>> ()?.Value;
 

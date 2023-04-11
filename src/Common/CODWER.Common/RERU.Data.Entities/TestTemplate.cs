@@ -13,6 +13,7 @@ namespace RERU.Data.Entities
             TestTemplateQuestionCategories = new HashSet<TestTemplateQuestionCategory>();
             EventTestTemplates = new HashSet<EventTestTemplate>();
             TestTemplateModuleRoles = new HashSet<TestTemplateModuleRole>();
+            DocumentsForSign = new HashSet<DocumentsForSign>();
         }
 
         public string Name { get; set; }
@@ -36,5 +37,7 @@ namespace RERU.Data.Entities
         public virtual ICollection<TestTemplateQuestionCategory> TestTemplateQuestionCategories { get; set; }
         public virtual ICollection<EventTestTemplate> EventTestTemplates { get; set; }
         public virtual ICollection<TestTemplateModuleRole> TestTemplateModuleRoles { get; set; }
+        public virtual ICollection<DocumentsForSign> DocumentsForSign { get; set; }
+
     }
 }
