@@ -8,6 +8,7 @@ import { SetPassword } from '../../../utils/models/set-password.model';
 import { Location } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ConfirmedValidator } from '../../../utils/form-validator/password.validator';
 
 @Component({
   selector: 'app-set-password',
@@ -65,6 +66,8 @@ export class SetPasswordComponent implements OnInit {
       password: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
       repeatNewPassword: this.fb.control('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&)(])[A-Za-z\d@$!%*#?&].{6,}')]),
       emailNotification: this.fb.control(false, [Validators.required])
+    }, { 
+      validator: ConfirmedValidator('password', 'repeatNewPassword')
     });
     this.isLoading = false;
   }
