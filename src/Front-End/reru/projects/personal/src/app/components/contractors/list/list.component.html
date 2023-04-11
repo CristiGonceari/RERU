@@ -15,7 +15,7 @@
     </div>
     <div class="card-header border-0 pt-0 pb-0 pr-5">
       <div class="row w-100">
-        <div class="col-lg-3 col-12 mb-2">
+        <div class="col-lg-2 col-12 mb-2">
           <app-search (handleRewrite)="contractorsTable.setKeyword($event)" (handleSearch)="contractorsTable.list({keyword: $event, page: 1})"></app-search>
         </div>
         <div class="col-lg-2 col-12 mb-2">
@@ -36,9 +36,9 @@
         <div class="col-lg-2 col-12 mt-lg-0 mt-3">
           <app-filter-employee-state (filter)="contractorsTable.userStatus = $event.target.value"></app-filter-employee-state>
         </div>
-        <div class="col-lg-1 col-12 mb-2">
-          <div class="row justify-content-lg-end justify-content-center confirmation-container">
-            <app-confirm-button style="max-width: 100px;" (handle)="contractorsTable.list({page: 1})" [value]="'button.apply-filter' | translate" ></app-confirm-button>
+        <div class="col-lg-2 col-12 mt-lg-0 mt-3 mb-2">
+          <div class="row justify-content-lg-end justify-content-center confirmation-container w-100">
+            <app-confirm-button class="w-100" (handle)="contractorsTable.list({page: 1})" [value]="'button.apply-filter' | translate" ></app-confirm-button>
           </div>
         </div>
       </div>
