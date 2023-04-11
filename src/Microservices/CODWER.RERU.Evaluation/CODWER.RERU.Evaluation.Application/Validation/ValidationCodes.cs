@@ -189,5 +189,9 @@
 
         //organigram
         public static string INVALID_ORGANIGRAM_ID = "03004001";
+
+        //documentsForSign
+        public static string INVALID_DOCUMENTS_FOR_SIGN_ID = "03005001";
+
     }
 }

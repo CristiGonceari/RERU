@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using RERU.Data.Persistence.Context;
 using Wkhtmltopdf.NetCore;
+using Age.Integrations.MSign.Soap;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Logging.API
 {
@@ -116,6 +118,12 @@ namespace CODWER.RERU.Logging.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
+                {
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    return Results.Redirect(msignRedirectUrl);
+                });
             });
         }
     }

@@ -6,6 +6,7 @@ using CODWER.RERU.Evaluation.DataTransferObjects.InternalTest;
 using CVU.ERP.Common.DataTransferObjects.TestDatas;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
+using CODWER.RERU.Evaluation.DataTransferObjects.DocumentForSign;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -44,6 +45,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
                 .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey))
                 .ForMember(x => x.IsVerificatedAutomat, opts => opts.MapFrom(src => CheckIfTestIsCalculatedBySystem(src)))
+                .ForMember(x => x.DocumentForSign, opts => opts.MapFrom(src => src.DocumentsForSign))
                 .ForMember(x => x.CreateById, opts => opts.MapFrom(src => src.CreateById));
 
             CreateMap<AddEditTestDto, Test>()
@@ -59,6 +61,18 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.ProgrammedTime, opts => opts.MapFrom(src => src.ProgrammedTime))
                 .ForMember(x => x.EndProgrammedTime, opts => opts.MapFrom(src => src.EndProgrammedTime))
                 .ForMember(x => x.CanStartWithoutConfirmation, opts => opts.MapFrom(src => CheckCanStartWithoutConfirmation(src)));
+
+            CreateMap<DocumentsForSign, DocumentForSignDto>()
+                .ForMember(x => x.DocumentForSignId, opts => opts.MapFrom(src => src.Id))
+                .ForMember(x => x.FileName, opts => opts.MapFrom(src => src.FileName))
+                .ForMember(x => x.MediaFileId, opts => opts.MapFrom(src => src.MediaFileId));
+
+            CreateMap<SignedDocument, SignedDocumentDto>()
+                .ForMember(x => x.UserProfileId, opts => opts.MapFrom(src => src.UserProfileId))
+                .ForMember(x => x.FullName, opts => opts.MapFrom(src => src.UserProfile.FullName))
+                .ForMember(x => x.SignRequestId, opts => opts.MapFrom(src => src.SignRequestId))
+                .ForMember(x => x.Status, opts => opts.MapFrom(src => src.Status));
+
         }
 
         private string GetVerifiationStatus(Test inputTest)

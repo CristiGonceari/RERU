@@ -31,6 +31,8 @@ using Microsoft.EntityFrameworkCore;
 using Wkhtmltopdf.NetCore;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using ServicesSetup = CODWER.RERU.Personal.API.Config.ServicesSetup;
+using Age.Integrations.MSign.Soap;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Personal.API
 {
@@ -170,6 +172,12 @@ namespace CODWER.RERU.Personal.API
 
             app.UseEndpoints(routes => {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
+                {
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    return Results.Redirect(msignRedirectUrl);
+                });
             });
 
             app.UseOpenApi();

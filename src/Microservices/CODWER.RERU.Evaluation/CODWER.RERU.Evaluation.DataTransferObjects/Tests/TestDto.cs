@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CODWER.RERU.Evaluation.DataTransferObjects.DocumentForSign;
 using RERU.Data.Entities.Enums;
 
 namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
@@ -46,5 +47,6 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string DepartmentName { get; set; }
         public string RoleName { get; set; }
         public string FunctionName { get; set; }
+        public List<DocumentForSignDto> DocumentForSign { get; set; }
     }
 }

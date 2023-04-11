@@ -29,6 +29,8 @@ using ServicesSetup = CODWER.RERU.Evaluation.API.Config.ServicesSetup;
 using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Microsoft.EntityFrameworkCore;
+using Age.Integrations.MSign.Soap;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Evaluation.API
 {
@@ -150,6 +152,7 @@ namespace CODWER.RERU.Evaluation.API
 
             app.UseEndpoints(routes => {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                });
             });
 
             app.UseOpenApi();

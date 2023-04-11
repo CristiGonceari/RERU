@@ -80,7 +80,34 @@
           </div>
         </div>
         <div class="flex-row-fluid">
-          <router-outlet></router-outlet>
+          <div class="mobile-container-menu">
+            <div class="card card-custom mb-7 ml-5 w-100">
+              <div class="d-flex align-items-center">
+                <div class="d-flex flex-column mx-auto mt-5">
+                  <a class="font-weight-bolder font-size-h5 text-dark-75">
+                    {{categoryName}}
+                  </a>
+                </div>
+              </div>
+              <div class="card-body px-2 pb-4 overflow-auto" style="padding-top: 12px !important;">
+                <div class="d-flex navi navi-bold navi-hover navi-active navi-link-rounded">
+                  <div class="navi-item mb-2">
+                    <a [routerLink]="['overview']" routerLinkActive="active" class="navi-link pr-3 py-4">
+                      <i class="flaticon-cogwheel-2 icon-md mr-3"></i>
+                    </a>
+                  </div>
+                  <div class="navi-item mb-2">
+                    <a [routerLink]="['question-details']" routerLinkActive="active" class="navi-link pr-3 py-4 h-100">
+                      <i class="far fa-question-circle icon-md mr-3"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex-row-fluid">
+            <router-outlet></router-outlet>
+          </div>
         </div>
       </div>
     </div>

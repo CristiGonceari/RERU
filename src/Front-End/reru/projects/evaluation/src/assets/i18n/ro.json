@@ -1164,5 +1164,19 @@
   "graph-tests-and-evaluations": {
     "name": "Teste și Evaluări",
     "note": "Notițe: Teste și Evaluări efectuate timp de un an sortate după luni"
+  },
+  "documents":{
+    "files": "Fişiere",
+    "file": "Fişier",
+    "options": "Opțiuni",
+    "signed-by": "Semnat de",
+    "sign": "Semnează",
+    "signed": "Semnat",
+    "download": "Descarcă",
+    "empty-siged-users": "Nu a fost semnat de niciun utilizator.",
+    "generate-test-result": "Generați fișierul pentru rezultatul testului",
+    "empty-files": "Nu există documente la semnat.",
+    "sign-file": "Semnează fișierul",
+    "sign-file-description": "Sigur doriți să semnați fișierul:"
   }
 }

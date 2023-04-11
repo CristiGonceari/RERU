@@ -34,8 +34,8 @@ using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Initializer;
 using Wkhtmltopdf.NetCore;
 using ServicesSetup = CODWER.RERU.Core.API.Config.ServicesSetup;
-
-
+using Age.Integrations.MSign.Soap;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Core.API
 {
@@ -203,6 +203,12 @@ namespace CODWER.RERU.Core.API
             app.UseEndpoints(routes =>
             {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
+                {
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    return Results.Redirect(msignRedirectUrl);
+                });
             });
 
             //app.UseOpenApi();
