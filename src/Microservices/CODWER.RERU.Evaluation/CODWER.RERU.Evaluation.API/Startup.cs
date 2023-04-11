@@ -152,7 +152,6 @@ namespace CODWER.RERU.Evaluation.API
 
             app.UseEndpoints(routes => {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                });
             });
 
             app.UseOpenApi();
