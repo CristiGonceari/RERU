@@ -280,7 +280,28 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
                         RecommendedFor = t.RecommendedFor,
                         NotRecommendedFor = t.NotRecommendedFor,
-                        DocumentsForSign = t.DocumentsForSign,
+
+                        //de scos de aici documents for sign
+                        DocumentsForSign = t.DocumentsForSign.Select(dfs => new DocumentsForSign
+                        {
+                            Id = dfs.Id,
+                            FileName = dfs.FileName,
+                            MediaFileId = dfs.MediaFileId,
+
+                            SignedDocuments = dfs.SignedDocuments.Select(sd=>new SignedDocument
+                            {
+                                UserProfileId = sd.UserProfileId,
+                                UserProfile = new UserProfile
+                                {
+                                    FirstName = sd.UserProfile.FirstName,
+                                    LastName = sd.UserProfile.LastName,
+                                    FatherName = sd.UserProfile.FatherName
+                                },
+                                
+                                SignRequestId = sd.SignRequestId,
+                                Status = sd.Status
+                            }).ToArray()
+                        }).ToArray(),
                     })
                     .AsQueryable();
         }

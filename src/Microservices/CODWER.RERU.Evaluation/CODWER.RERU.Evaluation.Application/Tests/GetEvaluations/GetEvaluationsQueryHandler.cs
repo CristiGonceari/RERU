@@ -5,6 +5,7 @@ using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
@@ -45,7 +46,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
                 FunctionId = request.FunctionId
             };
 
-            var tests = GetAndFilterTests.Filter(_appDbContext, filterData, currentUser);
+            var tests = GetAndFilterTestsOptimized.Filter(_appDbContext, filterData, currentUser);
 
             tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Evaluation);
 
