@@ -200,7 +200,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("dd.MM.yyyy")?.Split(delimiters, StringSplitOptions.None);
+            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
 
             return new CreateUserCommand
             {
@@ -213,7 +213,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0"),
                 //EmailNotification = bool.Parse(workSheet.Cells[i, 9]?.Value?.ToString() ?? "False"),
-                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
+                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
                 PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
@@ -222,7 +222,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("dd.MM.yyyy")?.Split(delimiters, StringSplitOptions.None);
+            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
 
             return new EditUserFromColaboratorCommand()
             {
@@ -236,7 +236,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0"),
                 FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0"),
                 //EmailNotification = bool.Parse(workSheet.Cells[i, 9]?.Value?.ToString() ?? "True"),
-                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1])),
+                BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0])),
                 PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString(),
                 AccessModeEnum = AccessModeEnum.CurrentDepartment
             };
@@ -273,16 +273,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             for (int i = 2; i <= workSheet.Dimension.Rows; i++)
             {
                 String[] delimiters = { ".", "/" };
-
-                if (string.IsNullOrWhiteSpace(workSheet.Cells[i, 9]?.Value.ToString()) || !Regex.IsMatch(workSheet.Cells[i, 9]?.Value?.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Data nașterii nu corespunde formatului dd.mm.yyyy \n";
-                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
-                    return false;
-                }
-
-                var dateStrings = DateTime.Parse(workSheet.Cells[i, 9]?.Value?.ToString()).ToString("dd.MM.yyyy")?.Split(delimiters, StringSplitOptions.None);
-
+                var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
                 var FirstName = workSheet.Cells[i, 1]?.Value?.ToString();
                 var LastName = workSheet.Cells[i, 2]?.Value?.ToString();
                 var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
@@ -291,7 +282,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 var DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0");
                 var RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0");
                 var FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0");
-                var BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[0]), int.Parse(dateStrings[1]));
+                var BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0]));
                 var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
                
                 if (string.IsNullOrWhiteSpace(FirstName) || !Regex.IsMatch(FirstName, @"^[a-zA-Z]+$"))
@@ -368,6 +359,20 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 {
                     workSheet.Cells[i, 12].Value += "ID Funcție nu există în baza de date\n";
                     workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(workSheet.Cells[i, 9]?.Value.ToString()) || !Regex.IsMatch(workSheet.Cells[i, 9]?.Value?.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+                {
+                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA \n";
+                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+                    return false;
+                }
+
+                if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
+                {
+                    workSheet.Cells[i, 12].Value += "Vârsta minimă trebuie să fie de 18 ani \n";
+                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
                     return false;
                 }
 
