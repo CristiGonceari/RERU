@@ -1,5 +1,5 @@
 <div class="row w-100 mb-5 mt-0">
-    <div class="col-12 col-sm-5">
+    <div class="col-lg col-12 pt-lg-0 pt-2">
         <div class="input-group input-group-sm input-group-solid">
             <input type="text" [owlDateTimeTrigger]="dtFrom"
               class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
@@ -13,7 +13,7 @@
             <owl-date-time #dtFrom></owl-date-time>
         </div>
     </div>
-    <div class="col-12 col-sm-5 pt-sm-0 pt-2">
+    <div class="col-lg col-12 pt-lg-0 pt-2">
         <div class="input-group input-group-sm input-group-solid">
             <input type="text" [owlDateTimeTrigger]="toDate"
               class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
@@ -27,9 +27,11 @@
             <owl-date-time #toDate></owl-date-time>
         </div>
     </div>
-    <div class="col-12 col-sm-2 pt-sm-0 pt-2 w-100">
-        <div class="w-100 text-right">
-            <app-button (handle)="resetFilters()" [value]="'button.reset' | translate"></app-button>
+    <div class="col-lg-auto col-12 pt-lg-0 pt-2">
+        <div class="text-right d-md-block d-none">
+            <app-button (handle)="resetFilters()" [value]="'button.reset' | translate" class="mr-5"></app-button>
+            <app-confirm-button (handle)="getUsersEvaluations({ page: 1 })" [value]="'button.search' | translate">
+            </app-confirm-button>
         </div>
     </div>
 </div>
