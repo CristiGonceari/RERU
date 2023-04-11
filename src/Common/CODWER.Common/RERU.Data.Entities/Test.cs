@@ -11,6 +11,7 @@ namespace RERU.Data.Entities
         {
             TestQuestions = new HashSet<TestQuestion>();
             EmailTestNotifications = new HashSet<EmailTestNotification>();
+            DocumentsForSign = new HashSet<DocumentsForSign>();
         }
 
         public int? AccumulatedPercentage { get; set; }
@@ -55,5 +56,6 @@ namespace RERU.Data.Entities
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
+        public virtual ICollection<DocumentsForSign> DocumentsForSign { get; set; }
     }
 }

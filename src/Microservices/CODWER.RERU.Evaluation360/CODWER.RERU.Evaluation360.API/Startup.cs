@@ -30,6 +30,8 @@ using CVU.ERP.Common.DataTransferObjects.Config;
 using CVU.ERP.Common.DataTransferObjects.ConnectionStrings;
 using Microsoft.EntityFrameworkCore;
 using CVU.ERP.Module.Common.Models;
+using Age.Integrations.MSign.Soap;
+using Microsoft.AspNetCore.Http;
 
 namespace CODWER.RERU.Evaluation360.API
 {
@@ -150,6 +152,12 @@ namespace CODWER.RERU.Evaluation360.API
 
             app.UseEndpoints(routes => {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
+                {
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    return Results.Redirect(msignRedirectUrl);
+                });
             });
 
             app.UseOpenApi();

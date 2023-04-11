@@ -653,6 +653,55 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("DocumentTemplateKeys");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.DocumentsForSign", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MediaFileId")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("TestId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TestTemplateId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.HasIndex("TestTemplateId");
+
+                    b.ToTable("DocumentsForSign");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.EmailNotification", b =>
                 {
                     b.Property<int>("Id")
@@ -4371,6 +4420,54 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.ToTable("RequiredDocumentPositions");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.SignedDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("CreateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DeleteTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DocumentsForSignId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SignRequestId")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdateById")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentsForSignId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("SignedDocuments");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPosition", b =>
                 {
                     b.Property<int>("Id")
@@ -6766,6 +6863,39 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         });
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SignRequestStatusEnum>", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SignRequestStatusEnum");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pending"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Success"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Rejected"
+                        });
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", b =>
                 {
                     b.Property<int>("Id")
@@ -8030,6 +8160,21 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.DocumentsForSign", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.Test", "Test")
+                        .WithMany("DocumentsForSign")
+                        .HasForeignKey("TestId");
+
+                    b.HasOne("RERU.Data.Entities.TestTemplate", "TestTemplate")
+                        .WithMany("DocumentsForSign")
+                        .HasForeignKey("TestTemplateId");
+
+                    b.Navigation("Test");
+
+                    b.Navigation("TestTemplate");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.EmailNotificationProperty", b =>
                 {
                     b.HasOne("RERU.Data.Entities.EmailNotification", "EmailNotification")
@@ -9095,6 +9240,30 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("RequiredDocument");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.SignedDocument", b =>
+                {
+                    b.HasOne("RERU.Data.Entities.DocumentsForSign", "DocumentsForSign")
+                        .WithMany("SignedDocuments")
+                        .HasForeignKey("DocumentsForSignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SignRequestStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Status")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RERU.Data.Entities.UserProfile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentsForSign");
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.SolicitedVacantPosition", b =>
                 {
                     b.HasOne("RERU.Data.Entities.CandidatePosition", "CandidatePosition")
@@ -9770,6 +9939,15 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SignRequestStatusEnum>", b =>
+                {
+                    b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SignRequestStatusEnum>", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", b =>
                 {
                     b.HasOne("SpatialFocus.EntityFrameworkCore.Extensions.EnumWithNumberLookup<RERU.Data.Entities.Enums.SolicitedPositionStatusEnum>", null)
@@ -10044,6 +10222,11 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Navigation("RequiredDocumentPositions");
                 });
 
+            modelBuilder.Entity("RERU.Data.Entities.DocumentsForSign", b =>
+                {
+                    b.Navigation("SignedDocuments");
+                });
+
             modelBuilder.Entity("RERU.Data.Entities.EmailNotification", b =>
                 {
                     b.Navigation("Properties");
@@ -10238,6 +10421,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.Test", b =>
                 {
+                    b.Navigation("DocumentsForSign");
+
                     b.Navigation("EmailTestNotifications");
 
                     b.Navigation("TestQuestions");
@@ -10259,6 +10444,8 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
             modelBuilder.Entity("RERU.Data.Entities.TestTemplate", b =>
                 {
+                    b.Navigation("DocumentsForSign");
+
                     b.Navigation("EventTestTemplates");
 
                     b.Navigation("Settings");
