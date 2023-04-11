@@ -32,7 +32,10 @@
 			</app-layout-content>
 
 			<app-sidebar-right [isCustomHeader]="isCustomHeader"
-							   (logOut)="logout.emit()">
+							   (logOut)="logout.emit()" 
+							   [title]="title" 
+							   [menuItems]="sidebarItems" 
+							   (navigate)="navigate.emit($event)">
 			</app-sidebar-right>
 			<app-footer></app-footer>
 		</div>
