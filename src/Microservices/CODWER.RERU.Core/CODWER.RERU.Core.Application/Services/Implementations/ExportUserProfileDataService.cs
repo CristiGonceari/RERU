@@ -264,7 +264,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
                     DefaultSingleColumnValue(2, study.InstitutionAddress, workSheet);
                     DefaultSingleColumnValue(3, study.StudyType.Name, workSheet);
                     DefaultSingleColumnValue(4, study.Faculty, workSheet);
-                    DefaultSingleColumnValue(5, study.StudyFrequency == null ? "- - - - -" : TranslateStudyFrequencyEnum(study.StudyFrequency.Value).ToString(), workSheet);
+                    DefaultSingleColumnValue(5, study.StudyFrequency.Value == null? "- - - - -" : TranslateStudyFrequencyEnum(study.StudyFrequency.Value).ToString(), workSheet);
                     DefaultSingleColumnValue(6, study.YearOfAdmission, workSheet);
                     DefaultSingleColumnValue(7, study.GraduationYear, workSheet);
                     DefaultSingleColumnValue(8, study.Specialty, workSheet);
