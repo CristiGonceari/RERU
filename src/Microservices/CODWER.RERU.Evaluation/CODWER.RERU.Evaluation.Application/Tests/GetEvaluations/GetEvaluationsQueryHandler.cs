@@ -54,7 +54,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
             return await CheckIfHasCandidatePosition(paginatedModel);
         }
 
-        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
+        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition2(PaginatedModel<TestDto> paginatedModel)
         {
             foreach (var item in paginatedModel.Items)
             {
@@ -76,6 +76,35 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 
                     item.CandidatePositionNames = candidatePositionNames;
                 }
+            }
+
+            return paginatedModel;
+        }
+
+        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
+        {
+            //pregatim datele
+            var itemsEvents = paginatedModel.Items.Select(i => i.EventId);
+            var itemsUsers = paginatedModel.Items.Select(i => i.UserId);
+
+            //trimitem un singur request la DB optimizat
+            var eventUsers = _appDbContext.EventUsers
+                .Include(x => x.EventUserCandidatePositions)
+                .ThenInclude(x => x.CandidatePosition)
+                .Where(x => itemsEvents.Contains(x.EventId) && itemsUsers.Contains(x.UserProfileId))
+                .ToList();
+
+            foreach (var item in paginatedModel.Items)
+            {
+                var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId); // nu mai facem call la DB dar la lista
+
+                if (eventUser is null  // check eventUser && eventUser.PositionId 
+                    || eventUser.PositionId is null
+                    || eventUser.PositionId == 0) continue;
+
+                item.CandidatePositionNames = eventUser.EventUserCandidatePositions //nu mai faci call la DB dar iai itemi din lista
+                        .Select(x => x.CandidatePosition.Name)
+                        .ToList();
             }
 
             return paginatedModel;

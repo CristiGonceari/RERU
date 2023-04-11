@@ -280,6 +280,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
                         RecommendedFor = t.RecommendedFor,
                         NotRecommendedFor = t.NotRecommendedFor,
+                        DocumentsForSign = t.DocumentsForSign,
                     })
                     .AsQueryable();
         }
