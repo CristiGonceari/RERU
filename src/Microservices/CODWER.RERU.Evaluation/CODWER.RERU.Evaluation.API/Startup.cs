@@ -155,7 +155,12 @@ namespace CODWER.RERU.Evaluation.API
 
                 routes.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
                 {
-                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    //For localhost
+                    //var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    //return Results.Redirect(msignRedirectUrl);
+
+                    //For stage
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "reru-evaluation/api/MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
                     return Results.Redirect(msignRedirectUrl);
                 });
             });
