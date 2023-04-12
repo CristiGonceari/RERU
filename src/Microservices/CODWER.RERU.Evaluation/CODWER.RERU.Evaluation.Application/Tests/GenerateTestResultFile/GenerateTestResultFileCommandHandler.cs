@@ -11,6 +11,7 @@ using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,14 +35,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile
             var test = await _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Include(t => t.UserProfile)
+                .Include(t  => t.DocumentsForSign)
+                .ThenInclude(dfs => dfs.SignedDocuments)
                 .FirstOrDefaultAsync(t => t.Id == request.TestId);
 
             var testResultPdf = await _pdfService.PrintTestResultPdf(request.TestId);
             testResultPdf.Name = testResultPdf.Name.Replace("Test_Result", (test.TestTemplate.Name.Replace(".", "/") + " (" + test.UserProfile.Idnp.Replace("\n", "") + ")").ToString());
 
-            var documentForSign = await _appDbContext.DocumentsForSign.FirstOrDefaultAsync(dfs => dfs.TestId == request.TestId);
-
-            if (documentForSign == null && test.TestStatus == TestStatusEnum.Verified)
+            if (test.DocumentsForSign.Count() == 0 && test.TestStatus == TestStatusEnum.Verified)
             {
                 var file = new AddFileDto
                 {
