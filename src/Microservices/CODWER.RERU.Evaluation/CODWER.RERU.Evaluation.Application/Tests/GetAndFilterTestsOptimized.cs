@@ -288,7 +288,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                             FileName = dfs.FileName,
                             MediaFileId = dfs.MediaFileId,
 
-                            SignedDocuments = dfs.SignedDocuments.Select(sd=>new SignedDocument
+                            SignedDocuments = dfs.SignedDocuments
+                            .Where(sd => sd.Status == SignRequestStatusEnum.Success)
+                            .Select(sd=>new SignedDocument
                             {
                                 UserProfileId = sd.UserProfileId,
                                 UserProfile = new UserProfile
