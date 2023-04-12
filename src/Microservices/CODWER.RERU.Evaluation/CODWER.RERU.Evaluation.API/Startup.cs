@@ -152,6 +152,12 @@ namespace CODWER.RERU.Evaluation.API
 
             app.UseEndpoints(routes => {
                 routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapGet("api/MSignRedirect/{msignRequestId}", async (string msignRequestId, string returnUrl, [FromServices] IMSignSoapClient msignClient) =>
+                {
+                    var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
+                    return Results.Redirect(msignRedirectUrl);
+                });
             });
 
             app.UseOpenApi();
