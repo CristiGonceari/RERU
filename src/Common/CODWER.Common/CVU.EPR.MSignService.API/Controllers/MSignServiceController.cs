@@ -110,10 +110,7 @@ namespace CVU.ERP.MSignService.API.Controllers
              return signRequestId;
         }
 
-        //For localhost
-        //[HttpPost("MSignCallback/{requestId}")]
-
-        [HttpGet("MSignCallback/{requestId}")]
+        [HttpPost("MSignCallback/{requestId}")]
         public async Task<IActionResult> CheckMSingResponse([FromRoute] string requestId, [FromQuery]string redirectUrl)
        {
             redirectUrl = redirectUrl.Replace("@", "/").Replace("$", "#");
