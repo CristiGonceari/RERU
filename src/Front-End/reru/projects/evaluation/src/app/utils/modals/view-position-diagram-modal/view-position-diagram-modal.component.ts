@@ -35,7 +35,8 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   no: string;
   yes: string;
   status = TestStatusEnum;
-  isActive: boolean = true;
+  isActive: boolean;
+  tooltip: string;
 
   stylesToApply: string = '.modal-dialog{ min-width: 97%; height: 95% }'
 
@@ -51,7 +52,24 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.styleNodesService.addStyle('modal-dialog', this.stylesToApply)
+    this.styleNodesService.addStyle('modal-dialog', this.stylesToApply);
+
+    this.positionService.getDiagram({ positionId: this.positionId }).subscribe(res => {
+			if (res && res.data) {
+				this.eventsDiagram.forEach(event => {
+					event.testTemplates.forEach(element => {
+						this.isActive = this.eventsDiagram.find(event => event.eventId === element.eventId)?.isActive;
+
+            forkJoin([
+              this.translate.get('tests.program-test'),
+              this.translate.get('events.expired-event'),
+            ]).subscribe(([tooltip1, tooltip2]) => {
+              this.isActive ? this.tooltip = tooltip1 :  this.tooltip = tooltip2;
+            });
+					});
+				});
+			}
+		});
   }
 
   translateResultValue(item) {

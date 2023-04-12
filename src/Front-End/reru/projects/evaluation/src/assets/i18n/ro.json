@@ -852,7 +852,8 @@
     "succes-detach-evaluator-msg": "Evaluatorul a fost eliminat cu succes",
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
     "show-user-name": "Afișează numele utilizatorului",
-    "from-event": "Din eveniment"
+    "from-event": "Din eveniment",
+    "expired-event": "Acest eveniment nu mai este activ"
   },
   "test-template":{
     "test-template": "Șablon de teste",

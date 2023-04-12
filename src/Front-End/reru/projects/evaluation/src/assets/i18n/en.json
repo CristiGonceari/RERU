@@ -857,7 +857,8 @@
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name",
-    "from-event": "From event"
+    "from-event": "From event",
+    "expired-event": "This event is no longer active"
   },
   "test-template": {
     "test-template": "Test template",
