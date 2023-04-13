@@ -66,8 +66,8 @@
                                             {{template.name}}
                                         </div>
                                         <div class="d-inline-block text-center" style="max-width: 170px;" *ngIf="template.testTemplateId > 0">
-                                            <button class="btn btn btn-warning w-auto" data-toggle="tooltip" data-placement="top"
-                                                title="{{'tests.program-test' | translate}}" (click)="openAddTest(template)">
+                                            <button class="btn btn btn-warning w-auto" data-toggle="tooltip" data-placement="top" 
+                                                (click)="openAddTest(template)" [disabled]="!isActive" [title]="tooltip" >
                                                 {{ 'tests.program-test' | translate }}
                                             </button>
                                         </div>

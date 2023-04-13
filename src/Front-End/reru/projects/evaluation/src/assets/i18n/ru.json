@@ -855,7 +855,8 @@
     "succes-detach-evaluator-msg": "Проверяющий был успешно удален",
     "succes-attach-detach-evaluator-msg": "Проверяющиe были успешно прикреплёны/удалены",
     "show-user-name": "Отображать имя пользователя",
-    "from-event": "С события"
+    "from-event": "С события",
+    "expired-event": "Это событие больше не активно"
   },
   "test-template":{
     "test-template": "Шаблон тестов",
