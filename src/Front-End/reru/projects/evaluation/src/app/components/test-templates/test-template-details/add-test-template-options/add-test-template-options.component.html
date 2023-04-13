@@ -8,8 +8,8 @@
 
       <div class="container">
         <div *ngIf="!isLoading" class="row justify-content-center">
-          <div class="form" id="kt_contact_add_form" [formGroup]="settingsForm">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
+          <div class="form w-100" id="kt_contact_add_form" [formGroup]="settingsForm">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 " *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="startWithoutConfirmation" formControlName="startWithoutConfirmation">
                 <span></span>
@@ -144,7 +144,7 @@
             </div>
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0" >
-              <label class="col-form-label p-0" style="white-space: nowrap; display: inline-flex;">
+              <label class="col-form-label p-0">
                 <span class="my-4 mr-3">{{'options.formula-for-one-answer' | translate}}</span>
               <select class="form-control form-control-sm form-control-solid mt-2" name="formulaForOneAnswer"
                 (ngModelChange)="selectScoreFormulaOneAnswer($event)"  formControlName="formulaForOneAnswer">
@@ -170,7 +170,7 @@
             </div>
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
-              <label class="col-form-label p-0" style="white-space: nowrap; display: inline-flex;">
+              <label class="col-form-label p-0">
                 <span class="my-2 mr-3">{{'options.formula-for-multiple-answers' | translate}}</span>
               <select class="form-control form-control-sm form-control-solid" name="formulaForMultipleAnswers"
                 (ngModelChange)="selectScoreFormulaMultipleAnswers($event)"
