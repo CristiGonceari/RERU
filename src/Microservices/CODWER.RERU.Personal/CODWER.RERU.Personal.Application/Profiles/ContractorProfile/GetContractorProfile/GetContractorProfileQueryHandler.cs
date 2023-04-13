@@ -49,6 +49,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                  {
                      Id = c.Id,
                      Code = c.Code,
+                     UserProfile = c.UserProfile,
                      FirstName = c.FirstName,
                      LastName = c.LastName,
                      FatherName = c.FatherName,
@@ -60,8 +61,7 @@ namespace CODWER.RERU.Personal.Application.Profiles.ContractorProfile.GetContrac
                     // Studies = c.Studies,
                      Contacts = c.Contacts,
                      Contracts = c.Contracts,
-                     UserProfile = c.UserProfile,
-                    // Bulletin = c.Bulletin
+                     // Bulletin = c.Bulletin
                  })
                 .FirstAsync(rt => rt.Id == _userProfile.Contractor.Id);
 

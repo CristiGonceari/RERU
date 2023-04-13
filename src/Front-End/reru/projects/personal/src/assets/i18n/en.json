@@ -1054,7 +1054,8 @@
     "logout": "Logout",
     "logout-msg": "Are you sure you want to logout from the system?",
     "empty-name": "Insert at least one symbol",
-    "wrong-name": "Wrong name , should start with symbol",
+    "wrong-name": "The field must start with a letter. No spaces at the beginning or end",
+    "wrong-phone": "Please provide a valid format +373 xxxxxxxx",
     "available-modules": "Available modules"
   },
   "faq": {

@@ -1057,7 +1057,8 @@
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
     "empty-name": "Câmp obligator, cel puțin 1 caracter",
-    "wrong-name": "Câmpul trebue să incepeapă cu 1 caracter",
+    "wrong-name": "Câmpul trebuie să înceapă cu o literă. Fără spații la început sau sfârșit",
+    "wrong-phone": "Vă rugăm să furnizați un format valid +373 xxxxxxxx",
     "available-modules": "Module disponibile"
   },
   "faq": {
