@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,10 +19,7 @@ import { saveAs } from 'file-saver';
   templateUrl: './plans-list.component.html',
   styleUrls: ['./plans-list.component.scss'],
 })
-
-
 export class PlansListComponent implements OnInit {
-
   @ViewChild(EventCalendarComponent) currentMonth: boolean;
 
   public calendar: CalendarDay[] = [];
@@ -51,7 +48,7 @@ export class PlansListComponent implements OnInit {
 	dateTimeTo: string;
 	searchFrom: string;
 	searchTo: string;
-	filters: any = {};
+  name: string = '';
 
   title: string;
   description: string;
@@ -61,6 +58,8 @@ export class PlansListComponent implements OnInit {
   displayMonth: string;
   displayYear: number;
   displayDate;
+
+  filters: any = {};
 
   constructor(private planService: PlanService,
               private router: Router,
@@ -89,10 +88,12 @@ export class PlansListComponent implements OnInit {
     this.setTimeToSearch();
 
     let params = {
+      name: this.name || '',
       fromDate: this.searchFrom,
       tillDate: this.searchTo,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
+      ...this.filters
     }
     if(this.searchFrom != null || this.searchTo != null) {
       this.planService.list(params).subscribe(res => {
@@ -118,7 +119,8 @@ export class PlansListComponent implements OnInit {
     const request = {
       date:  this.selectedDay,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      ...this.filters
     }
 
     this.planService.getByDate(request).subscribe(response => {
@@ -130,8 +132,16 @@ export class PlansListComponent implements OnInit {
     });
   }
 
+  setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+		this.getListByDate();
+	}
+
   clearFields(){
+    this.filters = {};
 		this.clearDateFields();
+		this.name = '';
 		this.getListByDate();
 	}
 
@@ -159,7 +169,8 @@ export class PlansListComponent implements OnInit {
       fromDate: this.parseDates(this.fromDate),
       tillDate: this.parseDates(this.tillDate),
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+      ...this.filters
     }
 
     this.planService.list(request).subscribe(response => {
@@ -206,8 +217,10 @@ export class PlansListComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
+      name: this.name || '',
       fromDate: this.searchFrom || null,
-      tillDate: this.searchTo || null
+      tillDate: this.searchTo || null,
+      ...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
 		modalRef.componentInstance.tableData = printData;
