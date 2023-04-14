@@ -316,7 +316,7 @@
     "change-personal-details": "Change personal profile details:",
     "logout": "Logout",
     "logout-msg": "Are you sure you want to logout from the system?",
-    "empty-name": "The field must contain only Latin letters",
+    "empty-name": "Field required",
     "wrong-name": "The field must contain only Latin letters",
     "empty-phone": "The field is required",
     "wrong-phone": "Please provide a valid format +373 xxxxxxxx",

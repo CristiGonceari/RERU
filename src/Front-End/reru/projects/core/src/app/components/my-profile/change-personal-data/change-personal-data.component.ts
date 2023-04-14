@@ -67,7 +67,6 @@ export class ChangePersonalDataComponent implements OnInit {
 				Validators.pattern(matchesPattern),
 			]),
 			fatherName: this.fb.control(oldPersonalData.fatherName, [
-				Validators.required,
 				Validators.pattern(matchesPattern),
 			]),
 			phoneNumber: this.fb.control(oldPersonalData.phoneNumber, [

@@ -319,7 +319,7 @@
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Câmpul trebuie sa conțină doar litere latine",
+    "empty-name": "Câmpul este obligatoriu",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "empty-phone": "Câmpul este obligatoriu",
     "wrong-phone": "Vă rugăm să furnizați un format valid +373 xxxxxxxx",
