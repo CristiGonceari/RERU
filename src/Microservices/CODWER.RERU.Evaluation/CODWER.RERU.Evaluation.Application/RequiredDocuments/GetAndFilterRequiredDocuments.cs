@@ -9,6 +9,7 @@ namespace CODWER.RERU.Evaluation.Application.RequiredDocuments
         public static IQueryable<RequiredDocument> Filter(AppDbContext appDbContext, string name, bool? mandatory)
         {
             var items = appDbContext.RequiredDocuments
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable()
                 .Select(x => new RequiredDocument
                 {
