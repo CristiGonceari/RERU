@@ -23,13 +23,14 @@ namespace CODWER.RERU.Evaluation.Application.RequiredDocuments.GetRequiredDocume
         public async Task<PaginatedModel<RequiredDocumentDto>> Handle(GetRequiredDocumentsQuery request, CancellationToken cancellationToken)
         {
             var items = _appDbContext.RequiredDocuments
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable()
                 .Select(x => new RequiredDocumentDto
-                                        {
-                                            Id = x.Id,
-                                            Name = x.Name,
-                                            Mandatory = x.Mandatory
-                                        });
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Mandatory = x.Mandatory
+                });
 
             var filteredItems = await Filter(items, request).ToListAsync();
 
