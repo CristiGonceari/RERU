@@ -102,7 +102,7 @@ namespace CVU.ERP.Module.Application.TableExportServices.Implementations
                     }
 
                     table {
-                        border - collapse: collapse;
+                        border-collapse: collapse;
                         width: 100%;
                     }
 
