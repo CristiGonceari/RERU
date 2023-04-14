@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "Profil utilizator",
-    "my-profile": "Profilul meu",
+    "my-profile": "Profilul personal",
     "change-password": "Schimbare parolă",
     "logout": "Ieșire",
     "registration": "Înregistrare Core",
@@ -153,7 +153,7 @@
   },
   "sidebar": {
     "home": "Acasă",
-    "profile": "Profilul meu",
+    "profile": "Profilul personal",
     "administration": "Administrare",
     "modules": "Module",
     "users": "Utilizatori",
@@ -435,7 +435,7 @@
       "send-email": "Notificare prin email"
     },
     "user-details": {
-      "title": "Profil utilizator",
+      "title": "Profilul personal",
       "overview": "Vizualizare profil",
       "details": "Vizualizare generală a detaliilor profilului utilizatorului",
       "module-access": "Acces la module",

@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "User profile",
-    "my-profile": "My profile",
+    "my-profile": "User's profile",
     "change-password": "Change password",
     "logout": "Logout",
     "registration": "Core Registration",
@@ -149,7 +149,7 @@
   },
   "sidebar": {
     "home": "Home",
-    "profile": "My profile",
+    "profile": "User's profile",
     "administration": "Administration",
     "modules": "Modules",
     "users": "Users",

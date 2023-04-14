@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "Профиль пользователя",
-    "my-profile": "Мой профиль",
+    "my-profile": "Профиль пользователя",
     "change-password": "Смена пароля",
     "logout": "Выход",
     "registration": "Core pегистрация",
@@ -157,7 +157,7 @@
   },
   "sidebar": {
     "home": "Главная",
-    "profile": "Мой профиль",
+    "profile": "Профиль пользователя",
     "administration": "Администрирование",
     "modules": "Модули",
     "users": "Пользователи",
