@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "User profile",
-    "my-profile": "User's profile",
+    "my-profile": "Personal profile",
     "change-password": "Change password",
     "logout": "Logout",
     "registration": "Core Registration",
@@ -149,7 +149,7 @@
   },
   "sidebar": {
     "home": "Home",
-    "profile": "User's profile",
+    "profile": "Personal profile",
     "administration": "Administration",
     "modules": "Modules",
     "users": "Users",
@@ -433,7 +433,7 @@
       "send-email": "Send email notification"
     },
     "user-details": {
-      "title": "User's profile",
+      "title": "Personal profile",
       "overview": "Overview profile",
       "details": "Overview user's profile details",
       "module-access": "Module access",
