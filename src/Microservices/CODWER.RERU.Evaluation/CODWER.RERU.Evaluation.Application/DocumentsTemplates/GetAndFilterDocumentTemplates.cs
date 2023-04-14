@@ -12,7 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.DocumentsTemplates
         public static IQueryable<DocumentTemplate> Filter(AppDbContext appDbContext, string name, FileTypeEnum fileType)
         {
             var documentTemplates = appDbContext.DocumentTemplates
-                .OrderByDescending(x => x.Id)
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
