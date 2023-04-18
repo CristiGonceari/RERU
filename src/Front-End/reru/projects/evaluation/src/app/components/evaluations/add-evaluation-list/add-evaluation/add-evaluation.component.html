@@ -201,7 +201,8 @@
             <div class="text-right border-top pt-10">
                 <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
                 </app-button>
-                <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest()">
+                <app-add-button class="btn mr-2" [value]="'button.confirm' | translate" (click)="createTest()" 
+                    [disabled]="disableBtn || cantAdd()">
                 </app-add-button>
             </div>
         </div>
