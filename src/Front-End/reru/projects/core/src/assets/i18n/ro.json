@@ -670,8 +670,8 @@
     "emited-by":"Emis de",
     "relase-day":"Data eliberării",
     "adresses":"Adresa",
-    "birth-place":"Locul nasterii",
-    "residence-address":"Adresa de reşedința",
+    "birth-place":"Locul nașterii",
+    "residence-address":"Adresa de reşedință",
     "parents-residence-address":"Adresa de reședință a părinților",
     "abbreviations":{
       "city":"or. ",
@@ -825,14 +825,14 @@
     "6": "Medii incomplete(8/9 clase)",
     "7": "Medii generale(10/11 clase)",
     "8": "Bacalaureat(12 clase)",
-    "9": "Medii de specializare(colegiu, centrul de excelentă)",
-    "10": "Superioare scurte/de scurta durata(colegiu)",
-    "11": "Superioare universitare(fara licentă)",
-    "12": "Superioare de licentă",
+    "9": "Medii de specializare(colegiu, centrul de excelență)",
+    "10": "Superioare scurte/de scurtă durată(colegiu)",
+    "11": "Superioare universitare(fără licență)",
+    "12": "Superioare de licență",
     "13": "Superioare de master",
     "14": "Superioare de doctorat",
     "15": "Postdoctorat",
-    "16": "Cursuri de formare perofesională"
+    "16": "Cursuri de formare profesională"
 
   },
   "studyFrequency":{
