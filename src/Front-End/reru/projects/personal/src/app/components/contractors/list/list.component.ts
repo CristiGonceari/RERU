@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -6,5 +6,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent {
-  constructor() { }
+  clearFields: boolean = false;
+
+  constructor(private cd: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+  }
+
+  startClearFields()
+  {
+    this.clearFields = true;
+    this.cd.detectChanges();
+    this.clearFields = false;
+  }
 }
+
+
