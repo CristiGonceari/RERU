@@ -287,14 +287,14 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                
                 if (string.IsNullOrWhiteSpace(FirstName) || !Regex.IsMatch(FirstName, @"^[a-zA-Z]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Numele trebuie să conțină doar litere \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Numele trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
                     return false;
                 }
                 
                 if (string.IsNullOrWhiteSpace(LastName) || !Regex.IsMatch(LastName, @"^[a-zA-Z]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Prenumele trebuie să conțină doar litere \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenumele trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
                     return false;
                 }
@@ -308,14 +308,14 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 if (string.IsNullOrWhiteSpace(Idnp) || Idnp.Length != 13 || !Regex.IsMatch(Idnp, @"^[0-9]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Idnp trebuie să conțină doar 13 cifre \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
                     workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
                     return false;
                 }
 
                 if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Email nu corespunde formatului \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
                     workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
                     return false;
                 }
@@ -364,7 +364,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 if (string.IsNullOrWhiteSpace(workSheet.Cells[i, 9]?.Value.ToString()) || !Regex.IsMatch(workSheet.Cells[i, 9]?.Value?.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA \n";
                     workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
                     return false;
                 }
@@ -378,7 +378,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber, @"^\+373") || PhoneNumber.Length != 12)
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obliatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
                     workSheet.Cells[i, 10].Style.Fill.SetBackground(_color);
                     return false;
                 }
