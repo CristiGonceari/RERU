@@ -712,6 +712,7 @@
     "profile": "Profilul",
     "study-form" : "Forma de învățământ",
     "study-title": "Titlul(licențiat în...)",
+    "master-title": "Titlul(master în...)",
     "doctor-title": "Titlul(doctor în...)",
     "study-coureses-type": "Tipuri de cursuri",
     "study-credit-number": "Nr. de ore/credite",
@@ -830,6 +831,7 @@
     "11": "Superioare universitare(fara licentă)",
     "12": "Superioare de licentă",
     "13": "Superioare de master",
+    "13": "Masterat",
     "14": "Superioare de doctorat",
     "15": "Postdoctorat",
     "16": "Cursuri de formare perofesională"
