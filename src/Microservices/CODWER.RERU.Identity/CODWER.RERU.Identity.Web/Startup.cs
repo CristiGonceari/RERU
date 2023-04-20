@@ -99,7 +99,10 @@ namespace CODWER.RERU.Identity.Web
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 })
-                .AddMPassSaml(Configuration.GetSection("MPassSaml"));
+                .AddMPassSaml(Configuration.GetSection("MPassSaml"), options => 
+                {
+                    options.InvalidResponseRedirectUri = "/External/CancelMPass" ;
+                });
                 //.AddSaml2(options =>
                 //{
                 //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;

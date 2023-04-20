@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
 using AutoMapper;
-using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
@@ -24,13 +23,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using RERU.Data.Entities;
 using RERU.Data.Entities.PersonalEntities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Identity.Web.Quickstart.Account
 {
+
     [SecurityHeaders]
     [AllowAnonymous]
     public class ExternalController : Controller
@@ -302,6 +301,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             }
 
             return Redirect(returnUrl);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CancelMPass() 
+        {
+            var redirectURl = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl");
+
+            return Redirect(redirectURl);
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>

@@ -97,8 +97,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
                     await AutoVerificationTest(test);
 
-                    await _mediator.Send(new GenerateTestResultFileCommand { TestId = test.Id });
-
+                    if (test.TestStatus == TestStatusEnum.Verified)
+                    {
+                        await _mediator.Send(new GenerateTestResultFileCommand { TestId = test.Id });
+                    }
                 }
             }
         }
