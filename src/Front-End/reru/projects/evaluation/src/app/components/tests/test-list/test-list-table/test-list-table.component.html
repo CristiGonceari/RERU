@@ -382,17 +382,17 @@
                         </div>
                     </td>
                 </tr>
-                <tr *ngIf="item.isOpenAccordeon" class="w-100 border" style="background-color: #adb0b7;">
+                <tr *ngIf="item.isOpenAccordeon" class="w-100 border" style="background-color: #f1f4f7">
                     <td colspan="12">
-                        <app-loading-spinner *ngIf="isLoadingDocument" [contentHeight]="'10vh'" [height]="'5rem'"
+                        <app-loading-spinner *ngIf="item.isLoadingAccordeon" [contentHeight]="'10vh'" [height]="'5rem'"
                             [width]="'5rem'" [colorClass]="'text-primary'">
                         </app-loading-spinner>
-                        <div *ngIf="item.documentForSign.length > 0 && !isLoadingDocument">
+                        <div *ngIf="item.documentForSign.length > 0 && !item.isLoadingAccordeon">
                             <div>
-                                <table class="border w-100">
+                                <table class="w-100" style="border: 1px solid grey !important">
                                     <thead>
                                         <tr>
-                                            <td colspan="3" style="color: black;" class="border">{{'documents.files'| translate}}</td>
+                                            <td colspan="3" style="color: black;" class="border border-dark">{{'documents.files'| translate}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{'documents.file'| translate}}</td>
@@ -402,8 +402,8 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let doc of item.documentForSign">
-                                            <td class="border">{{ doc.fileName }}</td>
-                                            <td class="border">
+                                            <td class="border border-dark">{{ doc.fileName }}</td>
+                                            <td class="border border-dark">
                                                 <button type="button" class="btn mr-3"
                                                     [ngClass]="checkSignButton(doc.signedDocuments) ? 'btn-warning' : 'btn-secondary'"
                                                     [disabled]="checkSignButton(doc.signedDocuments)"
@@ -413,7 +413,7 @@
                                                         [width]="'1rem'"></app-loading-spinner>
                                                     <div class="d-inline-flex" *ngIf="!isLoadingSignButton">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                            fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                                            fill="currentColor" class="bi bi-pen mr-1" viewBox="0 0 16 16">
                                                             <path
                                                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z">
                                                             </path>
@@ -438,7 +438,7 @@
                                                     {{'documents.download'| translate}}
                                                 </button>
                                             </td>
-                                            <td class="border">
+                                            <td class="border border-dark">
                                                 <div *ngFor="let users of doc.signedDocuments; let i = index"
                                                     (click)="demo(users)">
                                                     <li *ngIf="doc.signedDocuments.length > 0">{{ users.fullName }}</li>
@@ -451,9 +451,9 @@
                                 </table>
                             </div>
                         </div>
-                        <div *ngIf="item.documentForSign.length == 0 && !isLoadingDocument">
+                        <div *ngIf="item.documentForSign.length == 0 && !item.isLoadingAccordeon">
                             <div *ngIf="item.testStatus == 4">
-                                <button (click)="generateTestResult(item)" class="btn btn-light">
+                                <button (click)="generateTestResult(item)" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"

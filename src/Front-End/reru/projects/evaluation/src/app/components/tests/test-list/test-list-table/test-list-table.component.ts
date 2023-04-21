@@ -65,7 +65,6 @@ export class TestListTableComponent implements OnInit {
   roleName;
   functionName;
   isLoading: boolean = true;
-  isLoadingDocument: boolean = false;
   isLoadingSignButton: boolean = false;
   downloadFile: boolean = false;
   headersToPrint = [];
@@ -185,7 +184,7 @@ export class TestListTableComponent implements OnInit {
         this.isLoading = false;
 
         for (let i = 0; i < this.testTemplate.length; i++) {
-          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false });
+          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
         }
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
@@ -484,8 +483,7 @@ export class TestListTableComponent implements OnInit {
   }
 
   generateTestResult(item) {
-    this.isLoadingDocument = true;
-
+    item.isLoadingAccordeon = true;
     this.testService.generateTestResultFile(item.id).subscribe(res => {
       this.isLoading = true;
       this.getTestsBefore(item);
@@ -508,6 +506,7 @@ export class TestListTableComponent implements OnInit {
       }
 
       let redirectUrl: string = defaultUrl.replace(firstSymbol, "@").replace(secondSymbols, "$");
+      value.isLoadingAccordeon = true;
       let redirect = this.signatureService.redirectMSign(res.data, redirectUrl);
 
       forkJoin([
@@ -528,7 +527,7 @@ export class TestListTableComponent implements OnInit {
       modalRef.componentInstance.buttonNo = this.no;
       modalRef.componentInstance.buttonYes = this.yes;
       modalRef.result.then(
-        () => this.redirect(redirect), () => { })
+        () => this.redirect(redirect), () => { value.isLoadingAccordeon = false; })
 
       this.isLoadingSignButton = false;
     })
@@ -576,11 +575,10 @@ export class TestListTableComponent implements OnInit {
         this.pagination = res.data.pagedSummary;
         this.isCollpasedRow.length = res.data.items.length;
         this.isLoading = false;
-        this.isLoadingDocument = false;
-
+        item.isLoadingAccordeon = true;
 
         for (let i = 0; i < this.testTemplate.length; i++) {
-          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false });
+          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
         }
 
         for (let i = 1; i <= this.pagination.totalCount; i++) {
