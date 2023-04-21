@@ -716,6 +716,7 @@
     "profile": "Profile",
     "study-form" : "Form of education",
     "study-title": "Title(licensed in...)",
+    "master-title": "Title(master in...)",
     "doctor-title": "Title(doctor in...)",
     "study-coureses-type": "Courses type",
     "study-credit-number": "No. of hours/credits",
@@ -832,7 +833,7 @@
     "10": "Short/short-term higher education (college)",
     "11": "Higher university degrees (without a bachelor's degree)",
     "12": "Bachelor's degree",
-    "13": "Master's degree",
+    "13": "Master",
     "14": "Higher doctorate",
     "15": "Postdoctoral",
     "16": "Vocational training courses"

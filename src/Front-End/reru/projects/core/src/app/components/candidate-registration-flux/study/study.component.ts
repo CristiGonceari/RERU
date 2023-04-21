@@ -156,6 +156,17 @@ export class StudyComponent implements OnInit {
     return false;
   }
 
+  disableMasterStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 7) {
+        return true
+      }
+    }
+    return false;
+  }
+
   disableSecondStudyTypeField(value) {
     let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
 
