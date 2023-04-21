@@ -614,17 +614,23 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row required">
-                                            <div class="col-xl-2">
-                                                <label class="col-form-label">{{'study.study-period-date' | translate}}</label>
+                                        <div class="row">
+                                            <div class="col-xl-6 col-12">
+                                                <div class="form-group row required">
+                                                    <div class="col-xl-3 col-lg-3">
+                                                        <label class="col-form-label">{{'study.study-period-date' | translate}}</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-xl-9">
+                                                        <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
+                                                        [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-5">
-                                                <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
-                                                    [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
-                                            </div>
-                                            <div class="col-5">
-                                                <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
+                                            <div class="col-xl-6 col-12">
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
                                                     [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mt-5">
