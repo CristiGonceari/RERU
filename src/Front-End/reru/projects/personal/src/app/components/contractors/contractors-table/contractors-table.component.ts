@@ -62,7 +62,8 @@ export class ContractorsTableComponent implements OnInit {
   }
 
   list(data: any = {}): void {
-    if (data.hasOwnProperty('keyword')) this.keyword = data.keyword;
+    if (data.hasOwnProperty('keyword')) 
+      this.keyword = data.keyword;
     data = ObjectUtil.preParseObject({
       ...data,
       page: data.page || this.pagedSummary.currentPage,
@@ -253,5 +254,12 @@ export class ContractorsTableComponent implements OnInit {
 
   setFilter(field: string, value): void {
     this.filters[field] = value;
+  }
+
+  resetFilters()
+  {
+    this.filters = {};
+    this.keyword = '';
+    this.list({page: 1});
   }
 }
