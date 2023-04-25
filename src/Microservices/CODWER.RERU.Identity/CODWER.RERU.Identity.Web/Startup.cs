@@ -94,6 +94,7 @@ namespace CODWER.RERU.Identity.Web
             services.AddAuthentication()
                 .AddCookie(options =>
                 {
+                    options.LogoutPath = "/Account/Logout";
                     //Setting to None to allow POST from MPass (default is Lax)
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -102,6 +103,7 @@ namespace CODWER.RERU.Identity.Web
                 .AddMPassSaml(Configuration.GetSection("MPassSaml"), options => 
                 {
                     options.InvalidResponseRedirectUri = "/External/CancelMPass" ;
+                    options.SignedOutRedirectUri = "/Account/Logout";
                 });
                 //.AddSaml2(options =>
                 //{
