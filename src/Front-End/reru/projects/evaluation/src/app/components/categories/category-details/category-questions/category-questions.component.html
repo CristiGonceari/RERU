@@ -1,5 +1,5 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-  <div class="card card-custom mb-7 ml-5">
+  <div class="card card-custom mb-7">
     <div class="card-header flex-wrap border-0 py-5">
       <div class="card-title font-weight-bolder" id="title">{{'questions.questions' | translate}}</div>
       <div class="card-toolbar">
@@ -73,7 +73,7 @@
                       </span>
                     </div>
                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                      <div ngbDropdownMenu aria-labelledby="action1">
+                      <div ngbDropdownMenu aria-labelledby="action1"  class="mobile-dropdown-view">
                         <button [routerLink]="['../../../../questions/question-detail', question.id]"
                           class="navi-link align-items-center px-6" ngbDropdownItem>
                           {{'categories.view-details' | translate}}
