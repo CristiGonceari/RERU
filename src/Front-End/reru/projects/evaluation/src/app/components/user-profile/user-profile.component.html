@@ -23,14 +23,14 @@
                             <p class="font-weight-bolder font-size-h5 text-dark-75">
                                 {{user.lastName}} {{ user.firstName }}
                             </p>
-                            <p class="text-muted"
+                            <p class="text-muted d-inline-flex"
                                 *ngIf="user.departmentColaboratorId != null || user.roleColaboratorId != null">
                                 <span class="mr-2">
                                     <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
                                 </span>
                                 {{'statuses.employee' | translate}}
                             </p>
-                            <p class="text-muted"
+                            <p class="text-muted d-inline-flex"
                                 *ngIf="user.departmentColaboratorId == null && user.roleColaboratorId == null ">
                                 <span class="mr-2">
                                     <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
