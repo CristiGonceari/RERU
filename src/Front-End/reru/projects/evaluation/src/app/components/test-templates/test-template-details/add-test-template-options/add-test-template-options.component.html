@@ -11,7 +11,7 @@
           <div class="form w-100" id="kt_contact_add_form" [formGroup]="settingsForm">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 " *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
-                <input type="checkbox" name="startWithoutConfirmation" formControlName="startWithoutConfirmation">
+                <input type="checkbox" name="startWithoutConfirmation" formControlName="startWithoutConfirmation" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.start-without-confirmation' | translate}}
@@ -23,7 +23,7 @@
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
-                <input type="checkbox" name="startBeforeProgrammation" formControlName="startBeforeProgrammation">
+                <input type="checkbox" name="startBeforeProgrammation" formControlName="startBeforeProgrammation" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.start-before-programmed-time' | translate}}
@@ -35,7 +35,7 @@
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
-                <input type="checkbox" name="startAfterProgrammation" formControlName="startAfterProgrammation">
+                <input type="checkbox" name="startAfterProgrammation" formControlName="startAfterProgrammation" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.start-after-programmed-time' | translate}}
@@ -48,7 +48,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="possibleGetToSkipped" formControlName="possibleGetToSkipped"
-                  (ngModelChange)="possibleGetToSkippedChange($event)">
+                  (ngModelChange)="possibleGetToSkippedChange($event)" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.skipped-answer' | translate}}
@@ -61,7 +61,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0 && !showManyQuestionPerPage">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="possibleChangeAnswer" formControlName="possibleChangeAnswer"
-                  (ngModelChange)="possibleChangeAnswerChange($event)">
+                  (ngModelChange)="possibleChangeAnswerChange($event)" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.change-answer' | translate}}
@@ -74,7 +74,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="mode == 0">
               <label [ngClass]="{'disabled-area': disable}" class="checkbox checkbox-inline mr-3">
                 <input type="checkbox" name="canViewResultWithoutVerification"
-                  formControlName="canViewResultWithoutVerification">
+                  formControlName="canViewResultWithoutVerification" class="checkedBox">
                 <span></span>
                 <div class="col-form-label p-0 ml-3">
                   {{'options.view-result' | translate}}

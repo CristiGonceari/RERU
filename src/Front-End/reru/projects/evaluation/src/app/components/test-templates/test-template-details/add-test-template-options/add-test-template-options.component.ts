@@ -31,7 +31,10 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 	possibleChangeAnswer;
 	possibleGetToSkipped;
 	hidePagination;
+	startWithoutConfirmation;
 	setMaxErrors: boolean = false;
+	formulaForOneAnswerValue: boolean;
+	formulaForMultipleAnswersValue: boolean;
 
 	title: string;
 	description: string;
@@ -82,11 +85,13 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 			this.showNegativeInputOneAnswer = true;
 			if (this.settingsForm.value.negativeScoreForOneAnswer == null) {
 				this.settingsForm.value.negativeScoreForOneAnswer = false;
+				this.formulaForOneAnswerValue = false;
 			}
-		} else {
+		} else if (event === "0") {
 			this.showNegativeInputOneAnswer = false;
-			this.settingsForm.value.negativeScoreForOneAnswer = null;
+			this.formulaForOneAnswerValue = true;
 		}
+		this.subscribeForWrongAnswer();
 	}
 
 	selectScoreFormulaMultipleAnswers(event) {
@@ -94,10 +99,37 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 			this.showNegativeInputMultipleAnswers = true;
 			if (this.settingsForm.value.negativeScoreForMultipleAnswers == null) {
 				this.settingsForm.value.negativeScoreForMultipleAnswers = false;
+				this.formulaForMultipleAnswersValue = false;
 			}
-		} else {
+		} else if (event === "0") {
 			this.showNegativeInputMultipleAnswers = false;
 			this.settingsForm.value.negativeScoreForMultipleAnswers = null;
+			this.formulaForMultipleAnswersValue = true;
+		}
+		this.subscribeForWrongAnswer();
+	}
+
+	subscribeForWrongAnswer(){
+		if(this.formulaForOneAnswerValue && this.formulaForMultipleAnswersValue){
+			this.settingsForm.value.startWithoutConfirmation = true;
+			this.settingsForm.value.startBeforeProgrammation = true;
+			this.settingsForm.value.startAfterProgrammation = true;
+			this.settingsForm.value.possibleGetToSkipped = true;
+			this.settingsForm.value.possibleChangeAnswer = true;
+			this.settingsForm.value.canViewResultWithoutVerification = true;
+
+			this.setCheckBoesValues(true);
+		}
+		else{
+			this.setCheckBoesValues(false);
+		}
+	}
+
+	private setCheckBoesValues(value: boolean) {
+		var checkedBoxes = document.getElementsByClassName("checkedBox") as HTMLCollectionOf<HTMLInputElement>;
+		for (var i = 0; i < checkedBoxes.length; i++) {
+			if (checkedBoxes[i])
+				checkedBoxes[i].checked = value;
 		}
 	}
 
