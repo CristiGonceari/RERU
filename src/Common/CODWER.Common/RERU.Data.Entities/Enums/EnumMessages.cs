@@ -14,8 +14,8 @@ namespace RERU.Data.Entities.Enums
         public const string Strict = "Ordonat";
         public const string Programmed = "Programat";
         public const string AllowedToStart = "Permis să înceapă";
-        public const string InProgress = "În proces";
-        public const string Terminated = "Terminat";
+        public const string InProgress = "În progres";
+        public const string Terminated = "Finisat";
         public const string Verified = "Verificat";
         public const string Closed = "Închis";
         public const string FreeText = "Formă liberă";

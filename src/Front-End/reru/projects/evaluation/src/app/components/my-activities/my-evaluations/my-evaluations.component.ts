@@ -117,7 +117,7 @@ export class MyEvaluationsComponent implements OnInit {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'resultValue'];
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'result'];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
