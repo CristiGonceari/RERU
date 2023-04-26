@@ -13,6 +13,7 @@ using CVU.ERP.Notifications.Services;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
+using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
@@ -309,6 +310,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             var redirectURl = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl");
 
             return Redirect(redirectURl);
+        }
+
+        [HttpGet]
+        public async void MPassLogout()
+        {
+            await _signInManager.SignOutAsync();
+            // raise the logout event
+            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>
