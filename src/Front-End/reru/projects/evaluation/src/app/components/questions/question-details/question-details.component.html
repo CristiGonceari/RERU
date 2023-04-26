@@ -6,7 +6,7 @@
 
 <erp-shared-content *ngIf="!isLoading">
   <div class="d-flex flex-row">
-    <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px mb-7" id="kt_profile_aside">
+    <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px mb-7 mr-5" id="kt_profile_aside">
       <div class="card card-custom">
         <div class="card-body pt-4">
           <div style="overflow: visible" class="text-right">
@@ -78,7 +78,7 @@
     </div>
     <div class="flex-row-fluid">
       <div class="mobile-container-menu">
-        <div class="card card-custom mb-7 ml-5 w-100">
+        <div class="card card-custom mb-7 w-100">
           <div style="overflow: visible" class="text-right">
             <div ngbDropdown class="dropdown dropdown-inline">
               <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2 mt-2">
@@ -96,7 +96,7 @@
                 </span>
               </div>
               <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                <div ngbDropdownMenu aria-labelledby="action1">
+                <div ngbDropdownMenu aria-labelledby="action1" class="mobile-dropdown-view">
                   <button class="navi-link align-items-baseline px-6" *ngIf="status == 0"
                     [routerLink]="['./../../edit-question', questionId]" ngbDropdownItem>
                     {{'button.edit' | translate}}
