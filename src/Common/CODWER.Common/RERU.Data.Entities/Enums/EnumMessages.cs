@@ -38,7 +38,7 @@ namespace RERU.Data.Entities.Enums
         public const string Accepted = "Admis";
         public const string Rejected = "Respins";
 
-        public const string Recommended = "Se recomandă/Nu se recomanda";
+        public const string Recommended = "Se recomandă/Nu se recomandă";
         public const string PassedNotPassed = "Susținut/Nesusținut";
         public const string AbleNotAble = "Apt/Inapt";
         public const string AcceptedRejected = "Admis/Respins";

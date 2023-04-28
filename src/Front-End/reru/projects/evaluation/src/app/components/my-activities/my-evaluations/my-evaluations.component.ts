@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintModalComponent } from '@erp/shared';
 import { TestResultStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-result-status.enum';
@@ -11,7 +10,6 @@ import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/s
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 import { ObjectUtil } from '../../../utils/util/object.util';
-import { PrintTableService } from '../../../utils/services/print-table/print-table.service';
 
 @Component({
 	selector: 'app-my-evaluations',
@@ -39,11 +37,9 @@ export class MyEvaluationsComponent implements OnInit {
 
 	constructor(
 		private testService: TestService,
-		private activatedRoute: ActivatedRoute,
 		public translate: I18nService,
 		private modalService: NgbModal,
 		private enumStringTranslatorService: EnumStringTranslatorService,
-		private printTableService: PrintTableService,
 		private cd: ChangeDetectorRef
 	) { }
 
@@ -117,7 +113,7 @@ export class MyEvaluationsComponent implements OnInit {
 		this.translateData();
 		let evaluatedTestTable = document.getElementById('evaluatedTestTable')
 		let headersHtml = evaluatedTestTable.getElementsByTagName('th');
-		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'result'];
+		let headersDto = ['testTemplateName', 'userName', 'eventName', 'testStatus', 'resultValue'];
 		for (let i = 0; i < headersHtml.length - 1; i++) {
 			this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
 		}
