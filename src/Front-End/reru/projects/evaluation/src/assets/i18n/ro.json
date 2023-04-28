@@ -883,6 +883,7 @@
     "succes-remove-msg": "Plan a fost șters cu succes",
     "plan-name": "Numele planului",
     "attach-event": "Atașați eveniment",
+    "select-event":"Selectați evenimentul",
     "attach-event-to-plan": "Atașați evenimentul la plan",
     "remove-event-msg": "Sigur doriți să eliminați acest eveniment din acest plan?",
     "succes-remove-event-msg": "Evenimentul a fost eliminat cu succes",
