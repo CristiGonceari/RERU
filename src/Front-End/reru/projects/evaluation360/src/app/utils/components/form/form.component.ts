@@ -144,8 +144,11 @@ export class FormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // after DOM has loaded assign read-only values
-    this.Mf$.subscribe((value) => this.finalEvalNum.nativeElement.value = !isNaN(value) ? value.toFixed(2) : 0) ;
+    this.Mf$.subscribe((value) => {
+      if (this.finalEvalNum) {
+        this.finalEvalNum.nativeElement.value = !isNaN(value) ? value.toFixed(2) : 0
+      }
+    });
     this.focusEvaluatedCommentsArea();
     this.subscribeForSanctionChanges();
   }

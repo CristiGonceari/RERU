@@ -1,8 +1,8 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!isOpenAddTest && !isOpenAddEvaluation">
-    <div class="card card-custom gutter-b" style="margin-left: 16px;">
+    <div class="card card-custom gutter-b">
         <div class="card-header flex-wrap border-0 py-5">
             <div class="card-title"><b>{{'position.position-diagram' | translate}}</b></div>
-            <div style="overflow: visible" class="text-right">
+            <div class="d-none d-md-flex">
                 <div style="overflow: visible" class="text-right">
                     <b class="text-uppercase text-muted mx-2">{{'button.actions' | translate}}</b>
                     <div ngbDropdown class="dropdown dropdown-inline">
@@ -23,6 +23,44 @@
                         </div>
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                             <div ngbDropdownMenu aria-labelledby="action1">
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                    (click)="printPositionDiagram()">
+                                    {{'button.print' | translate}} (pdf)
+                                </button>
+                                <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
+                                    (click)="getPositionDiagramExcel()">
+                                    {{'button.export' | translate}} (xlsx)
+                                </button>
+                                <button class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem
+                                    (click)="openFullScreenMode()">
+                                    {{'button.full-screen' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex d-md-none">
+                <div style="overflow: visible" class="text-right">
+                    <b class="text-uppercase text-muted mx-2">{{'button.actions' | translate}}</b>
+                    <div ngbDropdown class="dropdown dropdown-inline">
+                        <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                            <span class="svg-icon svg-icon-md" ngbDropdownToggle>
+                                <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                    viewBox="0 0 24 24" version="1.1">
+                                    <g _ngcontent-pkv-c106="" stroke="none" stroke-width="1">
+                                        <rect _ngcontent-pkv-c106="" x="14" y="9" width="6" height="6" rx="3"
+                                            fill="black">
+                                        </rect>
+                                        <rect _ngcontent-pkv-c106="" x="3" y="9" width="6" height="6" rx="3"
+                                            fill="black" fill-opacity="0.7"></rect>
+                                    </g>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                            <div ngbDropdownMenu aria-labelledby="action1" class="mobile-dropdown-view1">
                                 <button class="navi-link align-items-baseline py-2 px-6 my-2" ngbDropdownItem
                                     (click)="printPositionDiagram()">
                                     {{'button.print' | translate}} (pdf)

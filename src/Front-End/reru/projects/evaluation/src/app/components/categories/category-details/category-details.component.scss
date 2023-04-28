@@ -20,3 +20,8 @@ tbody {
 .navi-item .active i{
     color: currentColor;
 }
+
+.mobile-dropdown-view {
+    width: auto !important;
+    transform: translate(-100px, 24px) !important;
+}
