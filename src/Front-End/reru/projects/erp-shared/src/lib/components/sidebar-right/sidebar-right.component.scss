@@ -3,3 +3,34 @@
     min-height: 156.6px;
   }
 }
+
+.aside-menu {
+  margin-right: -30px;
+  height: 90% !important;
+  background: transparent;
+  text-overflow: ellipsis !important;
+  overflow-y: scroll !important;
+  &::-webkit-scrollbar {
+    width: 5px !important;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #bcd6f1;
+  }
+}
+
+.aside-menu .menu-nav > .menu-item.btn-margin {
+  padding: 0 25px;
+}
+
+.aside-menu .menu-nav>.menu-item:not(.menu-item-parent):not(.menu-item-open):not(.menu-item-here):not(.menu-item-active):hover>.menu-link .menu-text,
+.aside-menu .menu-nav>.menu-item.menu-item-active>.menu-link .menu-text {
+  color: #3699FF;
+}
+
+.aside-menu .menu-nav>.menu-item:not(.menu-item-parent):not(.menu-item-open):not(.menu-item-here):not(.menu-item-active):hover>.menu-link .menu-icon.svg-icon svg g [fill],
+.aside-menu .menu-nav>.menu-item.menu-item-active>.menu-link .menu-icon.svg-icon svg g [fill] {
+  fill: #3699FF;
+}

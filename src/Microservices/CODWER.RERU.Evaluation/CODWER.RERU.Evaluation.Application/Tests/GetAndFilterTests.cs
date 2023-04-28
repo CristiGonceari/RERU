@@ -30,6 +30,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
                 .ThenBy(x => x.HashGroupKey)
+                .Include(x => x.DocumentsForSign)
+                .ThenInclude(x => x.SignedDocuments.Where(sd => sd.Status == SignRequestStatusEnum.Success))
+                .ThenInclude(x => x.UserProfile)
                 .Select(t => new Test
                 {
                     Id = t.Id,
@@ -54,8 +57,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     FinalStatusResult = t.FinalStatusResult,
                     FinalAccumulatedPercentage = t.FinalAccumulatedPercentage,
                     ShowUserName = t.ShowUserName,
-                    CreateById = t.CreateById
-                })
+                    CreateById = t.CreateById,
+                    DocumentsForSign = t.DocumentsForSign
+                }
+                )
                 .AsQueryable();
 
             var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);

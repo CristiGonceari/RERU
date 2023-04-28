@@ -852,7 +852,8 @@
     "succes-detach-evaluator-msg": "Evaluatorul a fost eliminat cu succes",
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
     "show-user-name": "Afișează numele utilizatorului",
-    "from-event": "Din eveniment"
+    "from-event": "Din eveniment",
+    "expired-event": "Acest eveniment nu mai este activ"
   },
   "test-template":{
     "test-template": "Șablon de teste",
@@ -882,6 +883,7 @@
     "succes-remove-msg": "Plan a fost șters cu succes",
     "plan-name": "Numele planului",
     "attach-event": "Atașați eveniment",
+    "select-event":"Selectați evenimentul",
     "attach-event-to-plan": "Atașați evenimentul la plan",
     "remove-event-msg": "Sigur doriți să eliminați acest eveniment din acest plan?",
     "succes-remove-event-msg": "Evenimentul a fost eliminat cu succes",
@@ -1071,7 +1073,7 @@
     "title": "Ghid Utilizator"
   },
   "solicited-test": {
-    "solicited-tests": "Poziții solicitate",
+    "solicited-tests": "Poziția solicitată",
     "solicited-position": "Solicită poziția",
     "my-solicited-tests": "Pozițiile mele solicitate",
     "solicited-time": "Timp solicitat",
@@ -1164,5 +1166,19 @@
   "graph-tests-and-evaluations": {
     "name": "Teste și Evaluări",
     "note": "Notițe: Teste și Evaluări efectuate timp de un an sortate după luni"
+  },
+  "documents":{
+    "files": "Fişiere",
+    "file": "Fişier",
+    "options": "Opțiuni",
+    "signed-by": "Semnat de",
+    "sign": "Semnează",
+    "signed": "Semnat",
+    "download": "Descarcă",
+    "empty-siged-users": "Nu a fost semnat de niciun utilizator.",
+    "generate-test-result": "Generați fișierul pentru rezultatul testului",
+    "empty-files": "Nu există documente la semnat.",
+    "sign-file": "Semnează fișierul",
+    "sign-file-description": "Sigur doriți să semnați fișierul:"
   }
 }

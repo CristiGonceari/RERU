@@ -122,16 +122,9 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' |
-                    translate}}</label>
-                  <div class="col-lg-9 col-xl-9" style="height: 44px;">
-                    <input type="text" [owlDateTimeTrigger]="startDate"
-                      class="form-control form-control-lg form-control-solid"
-                      [value]="birthDate | dateFilter:'dd/MM/yyyy'">
-                    <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                      name="date_time" [(ngModel)]="birthDate" [owlDateTime]="startDate"
-                      [ngModelOptions]="{standalone: true}" [readonly]="true">
-                    <owl-date-time #startDate pickerType="calendar"></owl-date-time>
+                  <label class="col-xl-3 col-lg-3 col-form-label">{{'user.birthday' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <app-date [parent]="userForm" [date]="'birthDate'" [placeholder]="dd-mm-yyyy"></app-date>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -140,7 +133,8 @@
                   </label>
                   <div class="col-lg-9 col-xl-9">
                     <select class="form-control form-control-lg form-control-solid" name="departmentColaboratorId"
-                      id="role" type="number" formControlName="departmentColaboratorId">
+                      id="role" type="number" formControlName="departmentColaboratorId"
+                      [ngClass]="{'is-invalid': hasErrors('departmentColaboratorId'), 'is-valid': userForm.get('departmentColaboratorId').valid}">
                       <option value="null">{{'module-access.select' | translate}}</option>
                       <option *ngFor="let item of departments" [value]="item.value">{{ item.label }}</option>
                     </select>
@@ -152,7 +146,8 @@
                   </label>
                   <div class="col-lg-9 col-xl-9">
                     <select class="form-control form-control-lg form-control-solid" name="roleColaboratorId"
-                      id="role" type="number" formControlName="roleColaboratorId">
+                      id="role" type="number" formControlName="roleColaboratorId"
+                      [ngClass]="{'is-invalid': hasErrors('roleColaboratorId'), 'is-valid': userForm.get('roleColaboratorId').valid}">
                       <option value="null">{{'module-access.select' | translate}}</option>
                       <option *ngFor="let item of roles" [value]="item.value">{{ item.label }}</option>
                     </select>
@@ -164,7 +159,8 @@
                   </label>
                   <div class="col-lg-9 col-xl-9">
                     <select class="form-control form-control-lg form-control-solid" name="functionColaboratorId"
-                      id="role" type="number" formControlName="functionColaboratorId">
+                      id="role" type="number" formControlName="functionColaboratorId"
+                      [ngClass]="{'is-invalid': hasErrors('functionColaboratorId'), 'is-valid': userForm.get('functionColaboratorId').valid}">
                       <option value="null">{{'module-access.select' | translate}}</option>
                       <option *ngFor="let item of employeeFunctions" [value]="item.value">{{ item.label }}</option>
                     </select>
@@ -176,7 +172,8 @@
                   </label>
                   <div class="col-lg-9 col-xl-9">
                     <select class="form-control form-control-lg form-control-solid" name="accessModeEnum" id="role"
-                      type="number" formControlName="accessModeEnum">
+                      type="number" formControlName="accessModeEnum"
+                      [ngClass]="{'is-invalid': hasErrors('accessModeEnum'), 'is-valid': userForm.get('accessModeEnum').valid}">
                       <option value="null">{{'module-access.select' | translate}}</option>
                       <option *ngFor="let item of accessModes" [value]="item.value">{{'statuses.' + item.label |
                         translate}}</option>
@@ -189,7 +186,7 @@
 
             <div class="text-right border-top pt-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
-              <app-add-button class="btn" [value]="'button.add' | translate" (handle)="addUser()">
+              <app-add-button class="btn" [value]="'button.add' | translate" (handle)="addUser()" [disabled]="!userForm.valid">
               </app-add-button>
             </div>
           </form>

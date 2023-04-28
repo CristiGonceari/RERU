@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Age.Integrations.MPass.Saml" Version="6.0.21" />
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
 
@@ -20,7 +21,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-	<PackageReference Include="Age.Integrations.MPass.Saml" Version="6.0.21" />
 	  
 	<PackageReference Include="AutoMapper" Version="10.1.1" />
 	<PackageReference Include="AutoMapper.Collection" Version="7.0.1" />

@@ -857,7 +857,8 @@
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name",
-    "from-event": "From event"
+    "from-event": "From event",
+    "expired-event": "This event is no longer active"
   },
   "test-template": {
     "test-template": "Test template",
@@ -886,6 +887,7 @@
     "succes-remove-msg": "Plan was successfully deleted",
     "plan-name": "Plan name",
     "attach-event": "Attach event",
+    "select-event":"Select the event",
     "attach-event-to-plan": "Attach event to plan",
     "remove-event-msg": "Are you sure you want to remove this event from this plan?",
     "succes-remove-event-msg": "Event was successfully deleted",
@@ -1164,5 +1166,19 @@
   "graph-tests-and-evaluations": {
     "name": "Tests and Evaluations",
     "note": "Notes: Tests and Evaluations taken over a year sorted by month"
+  },
+  "documents":{
+    "files": "Files",
+    "file": "File",
+    "options": "Options",
+    "signed-by": "Signed by",
+    "sign": "Sign",
+    "signed": "Signed",
+    "download": "Download",
+    "empty-siged-users": "Has not been signed by any user.",
+    "generate-test-result": "Generate file for the test result",
+    "empty-files": "No documents to sign",
+    "sign-file": "Sign file",
+    "sign-file-description": "Are you sure you want to sign the file:"
   }
 }

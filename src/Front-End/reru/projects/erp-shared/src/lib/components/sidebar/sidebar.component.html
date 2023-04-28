@@ -42,7 +42,7 @@
     </button>
   </div>
   <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1"
-    data-menu-dropdown-timeout="500" [style.height]="sidebarHeight">
+    data-menu-dropdown-timeout="500">
     <ul class="menu-nav">
       <ng-container *ngFor="let menuItem of menuItems; let i = index">
         <li *ngIf="menuItem.type === sidebarItemType.ITEM && hasPermission(menuItem)" class="menu-item"

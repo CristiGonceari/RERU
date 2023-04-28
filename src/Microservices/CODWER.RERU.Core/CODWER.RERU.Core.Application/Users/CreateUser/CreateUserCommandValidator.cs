@@ -70,6 +70,9 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
 
             RuleFor(x => x.Idnp)
               .Custom(CheckIfUniqueIdnpOnCreate);
+            
+            RuleFor(x => x.Email)
+                .Custom(CheckIfUniqueEmailOnCreate);
 
         }
 
@@ -101,6 +104,16 @@ namespace CODWER.RERU.Core.Application.Users.CreateUser
             if (exist)
             {
                 context.AddFail(ValidationCodes.DUPLICATE_IDNP_IN_SYSTEM, ValidationMessages.InvalidReference);
+            }
+        }
+
+        private void CheckIfUniqueEmailOnCreate(string email, CustomContext context)
+        {
+            var exist = _appDbContext.UserProfiles.Any(x => x.Email == email);
+
+            if (exist)
+            {
+                context.AddFail(ValidationCodes.DUPLICATE_EMAIL_IN_SYSTEM, ValidationMessages.InvalidReference);
             }
         }
     }

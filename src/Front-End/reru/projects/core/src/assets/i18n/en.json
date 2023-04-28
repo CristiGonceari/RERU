@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "User profile",
-    "my-profile": "My profile",
+    "my-profile": "Personal profile",
     "change-password": "Change password",
     "logout": "Logout",
     "registration": "Core Registration",
@@ -149,7 +149,7 @@
   },
   "sidebar": {
     "home": "Home",
-    "profile": "My profile",
+    "profile": "Personal profile",
     "administration": "Administration",
     "modules": "Modules",
     "users": "Users",
@@ -316,7 +316,7 @@
     "change-personal-details": "Change personal profile details:",
     "logout": "Logout",
     "logout-msg": "Are you sure you want to logout from the system?",
-    "empty-name": "The field must contain only Latin letters",
+    "empty-name": "Field required",
     "wrong-name": "The field must contain only Latin letters",
     "empty-phone": "The field is required",
     "wrong-phone": "Please provide a valid format +373 xxxxxxxx",
@@ -433,7 +433,7 @@
       "send-email": "Send email notification"
     },
     "user-details": {
-      "title": "User's profile",
+      "title": "Personal profile",
       "overview": "Overview profile",
       "details": "Overview user's profile details",
       "module-access": "Module access",
@@ -569,6 +569,7 @@
     "01000107": "Duplicate email in system",
     "01000909": "Invalid time range",
     "01000116": "Wrong old password",
+    "01000117": "New password and old password are the same",
     "01000105": "Invalid User"
   },
   "print": {
@@ -715,6 +716,7 @@
     "profile": "Profile",
     "study-form" : "Form of education",
     "study-title": "Title(licensed in...)",
+    "master-title": "Title(master in...)",
     "doctor-title": "Title(doctor in...)",
     "study-coureses-type": "Courses type",
     "study-credit-number": "No. of hours/credits",
@@ -831,7 +833,7 @@
     "10": "Short/short-term higher education (college)",
     "11": "Higher university degrees (without a bachelor's degree)",
     "12": "Bachelor's degree",
-    "13": "Master's degree",
+    "13": "Master",
     "14": "Higher doctorate",
     "15": "Postdoctoral",
     "16": "Vocational training courses"

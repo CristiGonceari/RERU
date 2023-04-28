@@ -9,7 +9,7 @@ namespace RERU.Data.Entities
     public class Study : SoftDeleteBaseEntity
     {
         public string Institution { get; set; }
-        public StudyFrequencyEnum StudyFrequency { get; set; }
+        public StudyFrequencyEnum? StudyFrequency { get; set; }
         public StudyProfileEnum? StudyProfile { get; set; }
         public StudyCourseType? StudyCourse { get; set; }
         public string Faculty { get; set; }

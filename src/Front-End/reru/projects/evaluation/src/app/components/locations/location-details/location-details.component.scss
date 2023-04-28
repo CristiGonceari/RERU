@@ -9,3 +9,14 @@ tbody {
 		}
 	}
 }
+
+.mobile-container-menu {
+    display: none;
+    @media screen and (max-width: 991px) {
+        display: flex;
+    }
+}
+
+.navi-item .active i{
+    color: currentColor;
+}

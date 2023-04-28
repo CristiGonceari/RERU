@@ -12,3 +12,11 @@ th,td {
     border-color: #BCBCBC;
     word-wrap: break-word;
 }
+
+.mobile-dropdown-view1 {
+    width: auto !important;
+    transform: translate(-160px, 0px) !important;
+    @media screen and (max-width: 358px) {
+        transform: translate(-50px, 30px) !important;
+    }
+}

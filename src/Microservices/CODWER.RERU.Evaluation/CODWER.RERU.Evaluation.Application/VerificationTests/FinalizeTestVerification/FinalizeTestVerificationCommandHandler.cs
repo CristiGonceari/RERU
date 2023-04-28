@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile;
 using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.Application.VerificationTests.AutoCheckTestScore;
 using CVU.ERP.Notifications.Email;
@@ -47,6 +48,8 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.FinalizeTestVerif
             await _appDbContext.SaveChangesAsync();
 
             await CalculateEvaluatorsAverage(testToFinalize);
+
+            await _mediator.Send(new GenerateTestResultFileCommand { TestId = request.TestId });
 
             return Unit.Value;
         }

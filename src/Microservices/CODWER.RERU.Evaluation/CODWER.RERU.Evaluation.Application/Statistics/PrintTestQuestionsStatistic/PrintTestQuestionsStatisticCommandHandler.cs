@@ -15,9 +15,9 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
     public class PrintTestQuestionsStatisticCommandHandler : IRequestHandler<PrintTestQuestionsStatisticCommand, FileDataDto>
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IExportData<TestQuestionStatisticDto, TestQuestionStatisticDto> _printer;
+        private readonly IExportData<PrintTestQuestionStatisticDto, PrintTestQuestionStatisticDto> _printer;
 
-        public PrintTestQuestionsStatisticCommandHandler(AppDbContext appDbContext, IExportData<TestQuestionStatisticDto, TestQuestionStatisticDto> printer)
+        public PrintTestQuestionsStatisticCommandHandler(AppDbContext appDbContext, IExportData<PrintTestQuestionStatisticDto, PrintTestQuestionStatisticDto> printer)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -59,18 +59,18 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
 
             var questionIntestTemplate = await _appDbContext.QuestionUnits.Include(x => x.QuestionCategory).Where(x => testQuestionsId.Contains(x.Id)).ToListAsync();
 
-            var answer = new List<TestQuestionStatisticDto>();
+            var answer = new List<PrintTestQuestionStatisticDto>();
 
             foreach (var questionToAnalize in questionIntestTemplate)
             {
                 if (!questionsInTests.Any(x => x.QuestionUnitId == questionToAnalize.Id))
                 {
-                    answer.Add(new TestQuestionStatisticDto()
+                    answer.Add(new PrintTestQuestionStatisticDto()
                     {
                         QuestionId = questionToAnalize.Id,
                         TotalUsed = 0,
                         CountByFilter = 0,
-                        Percent = 0,
+                        Percent = "0%",
                         CountCorrect = 0,
                         PercentCorrect = 0,
                         CountNotCorrect = 0,
@@ -85,11 +85,11 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
                 {
                     var questionsArray = questionsInTests.Where(x => x.QuestionUnitId == questionToAnalize.Id).ToList();
                     var total = questionsArray.Count();
-                    var correct = questionsArray.Where(x => x.IsCorrect == true).Count();
-                    var notCorrect = questionsArray.Where(x => x.IsCorrect == false && x.AnswerStatus == AnswerStatusEnum.Answered).Count();
-                    var skipped = questionsArray.Where(x => x.AnswerStatus == AnswerStatusEnum.Skipped).Count();
+                    var correct = questionsArray.Count(x => x.IsCorrect == true);
+                    var notCorrect = questionsArray.Count(x => x.IsCorrect == false && x.AnswerStatus == AnswerStatusEnum.Answered);
+                    var skipped = questionsArray.Count(x => x.AnswerStatus == AnswerStatusEnum.Skipped);
 
-                    answer.Add(new TestQuestionStatisticDto()
+                    answer.Add(new PrintTestQuestionStatisticDto()
                     {
                         QuestionId = questionToAnalize.Id,
                         TotalUsed = total,
@@ -112,7 +112,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
                     if (ans.TotalUsed != 0)
                     {
                         ans.CountByFilter = ans.CountCorrect;
-                        ans.Percent = ans.PercentCorrect;
+                        ans.Percent = $"{ans.PercentCorrect}%";
                     }
                 }
             }
@@ -124,7 +124,7 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
                     if (ans.TotalUsed != 0)
                     {
                         ans.CountByFilter = ans.CountNotCorrect;
-                        ans.Percent = ans.PercentNotCorrect;
+                        ans.Percent = $"{ans.PercentNotCorrect}%";
                     }
                 }
             }
@@ -136,14 +136,14 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.PrintTestQuestionsStatis
                     if (ans.TotalUsed != 0)
                     {
                         ans.CountByFilter = ans.CountSkipped;
-                        ans.Percent = ans.PercentSkipped;
+                        ans.Percent = $"{ans.PercentSkipped}%";
                     }
                 }
             }
 
             var statisctica = answer.OrderByDescending(x => x.CountByFilter).Take(request.ItemsPerPage).AsQueryable();
 
-            var result = _printer.ExportTableSpecificFormat(new TableData<TestQuestionStatisticDto>
+            var result = _printer.ExportTableSpecificFormat(new TableData<PrintTestQuestionStatisticDto>
             {
                 Name = request.TableName,
                 Items = statisctica,

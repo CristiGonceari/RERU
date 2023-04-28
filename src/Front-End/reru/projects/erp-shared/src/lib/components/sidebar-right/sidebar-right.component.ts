@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { ApplicationUserService } from '../../services/application-user.service';
-import { SidebarView } from '../../models/sidebar.model';
+import { SidebarItemType, SidebarView } from '../../models/sidebar.model';
 import { ApplicationUserModel } from '../../models/application-user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmLogoutModalComponent } from '../../modals/confirm-logout-modal/confirm-logout-modal.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../services/i18n.service';
+import { PermissionCheckerService } from '../../services/permission-checker.service';
 
 @Component({
 	selector: 'app-sidebar-right',
@@ -17,6 +18,7 @@ import { I18nService } from '../../services/i18n.service';
 export class SidebarRightComponent implements OnInit {
 	isOpenModules: boolean;
 	isOpenUser: boolean;
+	isOpen: boolean;
 	sidebarView = SidebarView;
 	authUserModel: ApplicationUserModel;
 	acronym: string;
@@ -31,10 +33,16 @@ export class SidebarRightComponent implements OnInit {
 	no: string;
 	yes: string;
 	isEnclosed: boolean;
+	sidebarItemType = SidebarItemType;
+	sidebarHeight: string;
+	isActiveTab: boolean[] = [true];
 
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
 	@Input() modules: any[] = [];
+	@Input() title: string;
+	@Input() menuItems: any[] = [];
+	@Output() navigate: EventEmitter<number> = new EventEmitter<number>();
 	@Output() logOut = new EventEmitter();
 
 	constructor(
@@ -42,13 +50,29 @@ export class SidebarRightComponent implements OnInit {
 		private applicationUserService: ApplicationUserService,
 		private modalService: NgbModal,
 		private sanitizer: DomSanitizer,
-		public translate: I18nService
+		public translate: I18nService,
+		private permissionCheckerService: PermissionCheckerService
 	) {}
 
 	ngOnInit(): void {
 		this.subscribeForSidebarChanges();
 		this.subscribeForUserChanges();
 		this.setAuthUserModel();
+		if (!this.menuItems || !this.menuItems.length) {
+			this.sidebarService.toggle(SidebarView.MODULES, null);
+		}
+		let height = window.innerWidth-360
+		this.sidebarHeight = `${height}px`;
+	}
+
+
+	navigateTo(index: number): void {
+		if (!isNaN(index)) {
+			this.isActiveTab = [];
+			this.isActiveTab[index] = true;
+			this.navigate.emit(index);
+		}
+		this.close();
 	}
 
 	setAuthUserModel(): void {
@@ -102,6 +126,7 @@ export class SidebarRightComponent implements OnInit {
 	}
 
 	subscribeForSidebarChanges(): void {
+		this.sidebarService.sidebar$.subscribe(response => (this.isOpen = response));
 		this.sidebarService.enclosed$.subscribe((response: boolean) => (this.isEnclosed = response));
 		this.sidebarService.modules$.subscribe((response: boolean) => (this.isOpenModules = response));
 		this.sidebarService.user$.subscribe((response: boolean) => {
@@ -157,5 +182,19 @@ export class SidebarRightComponent implements OnInit {
 
 	ngOnDestroy(): void {
 		this.close();
+	}
+
+	hasPermission(menuItem: any): boolean {
+		if (!menuItem.permission) {
+			return true;
+		}
+		return this.permissionCheckerService.isGranted(menuItem.permission);
+	}
+
+	hasPermissions(permissions: any): boolean {
+		if (!permissions) {
+			return true;
+		}
+		return this.permissionCheckerService.areGranted(permissions);
 	}
 }

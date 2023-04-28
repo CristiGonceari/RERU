@@ -122,23 +122,41 @@ export class GeneralComponent implements OnInit {
   }
 
   initForm(contractor: Contractor = <Contractor>{}): void {
+    var phonePattern = "^((\\+373-?)|0)?[0-9]{8}$"
+    var namePattern = '^(?! )[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$|^[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_. ]*[a-zA-zăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$';
+
     this.generalForm = this.fb.group({
       id: this.fb.control(contractor.id),
-      firstName: this.fb.control(contractor.firstName, [Validators.required]),
-      lastName: this.fb.control(contractor.lastName, [Validators.required]),
-      fatherName: this.fb.control(contractor.fatherName, [Validators.required]),
+      firstName: this.fb.control(contractor.firstName, [Validators.required, Validators.pattern(namePattern)]),
+      lastName: this.fb.control(contractor.lastName, [Validators.required, Validators.pattern(namePattern)]),
+      fatherName: this.fb.control(contractor.fatherName, [Validators.required, Validators.pattern(namePattern)]),
       // idnp: this.fb.control((contractor && contractor.idnp)  || null, [Validators.required]),
       birthDate: this.fb.control(contractor.birthDate, [Validators.required]),
       sex: this.fb.control(contractor.sex, [Validators.required]),
-      homePhone: this.fb.control((contractor && contractor.homePhone)  || null, [Validators.required]),
-      phoneNumber: this.fb.control((contractor && contractor.phoneNumber)  || null, [Validators.required]),
-      workPhone: this.fb.control((contractor && contractor.workPhone)  || null, [Validators.required]),
-      candidateNationalityId: this.fb.control( (contractor && contractor.candidateNationalityId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      candidateCitizenshipId: this.fb.control((contractor && contractor.candidateCitizenshipId)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      stateLanguageLevel: this.fb.control( (contractor && contractor.stateLanguageLevel)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      homePhone: this.fb.control((contractor && contractor.homePhone)  || null, [Validators.required, Validators.pattern(phonePattern)]),
+      phoneNumber: this.fb.control((contractor && contractor.phoneNumber)  || null, [Validators.required, Validators.pattern(phonePattern)]),
+      workPhone: this.fb.control((contractor && contractor.workPhone)  || null, [Validators.required, Validators.pattern(phonePattern)]),
+      candidateNationalityId: this.fb.control( (contractor && contractor.candidateNationalityId) || null, [Validators.required]),
+      candidateCitizenshipId: this.fb.control((contractor && contractor.candidateCitizenshipId)  || null, [Validators.required]),
+      stateLanguageLevel: this.fb.control( (contractor && contractor.stateLanguageLevel)  || null, [Validators.required]),
     });
     this.isLoadingAccessButton = false;
   }
+
+  formIsNotValid(): boolean {
+    return !this.generalForm.valid;
+  }
+
+  hasErrors(field): boolean {
+		return this.generalForm?.get(field)?.invalid;
+	}
+
+  hasError(field: string, error = 'required'): boolean {
+		return (
+			this.generalForm.get(field).invalid &&
+			this.generalForm.get(field).hasError(error)
+		);
+	}
 
   // searchBloodType: OperatorFunction<string, readonly SelectItem[]> = (text$: Observable<string>) => {
   //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());

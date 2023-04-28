@@ -23,6 +23,7 @@ using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Services.Implementations;
 using CVU.ERP.Common;
 using CVU.ERP.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CODWER.RERU.Identity.Web
 {
@@ -91,15 +92,24 @@ namespace CODWER.RERU.Identity.Web
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            services.AddAuthentication()
+            services.AddAuthentication(sharedOptions =>
+            {
+                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = MPassSamlDefaults.AuthenticationScheme;
+            })
                 .AddCookie(options =>
                 {
+                    options.LogoutPath = "/Account/Logout";
                     //Setting to None to allow POST from MPass (default is Lax)
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 })
-                .AddMPassSaml(Configuration.GetSection("MPassSaml"));
+                .AddMPassSaml(Configuration.GetSection("MPassSaml"), options => 
+                {
+                    options.InvalidResponseRedirectUri = "/External/CancelMPass" ;
+                    options.SignedOutRedirectUri = "/Account/Logout";
+                });
                 //.AddSaml2(options =>
                 //{
                 //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -182,6 +192,12 @@ namespace CODWER.RERU.Identity.Web
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapDefaultControllerRoute();
+
+                    endpoints.MapGet("/mpass-slo", () =>
+                    {
+                        return Results.Redirect("/External/MPassLogout");
+                    });
+
                 });
 
                 app.UseIdentityServer();
