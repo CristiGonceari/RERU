@@ -37,8 +37,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluated
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
                 .Where(t => (t.EvaluatorId == currentUserId ||
-                             _appDbContext.EventEvaluators.Any(x =>
-                                 x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                             _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && 
+                             t.TestTemplate.Mode == TestTemplateModeEnum.Test &&
+                            (t.EventId != null
+                                ? t.ProgrammedTime.Date <= request.Date.Date && t.EndProgrammedTime.Value.Date >= request.Date.Date
+                                : t.ProgrammedTime.Date == request.Date.Date))
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
             if (request.StartTime != null && request.EndTime != null)
