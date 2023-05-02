@@ -207,7 +207,7 @@ export class ViewEvaluationResultComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.router.navigate(['/my-activities']);
+    this.router.navigate(['/my-activities/my-evaluations']);
   }
 
   next(): void {

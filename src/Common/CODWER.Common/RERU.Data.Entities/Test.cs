@@ -26,7 +26,8 @@ namespace RERU.Data.Entities
         public string HashGroupKey { get; set; }
 
         public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
-            ? $"{ResultStatus}:({RecommendedForValue}/{NotRecommendedForValue})" : ResultStatus.ToString();
+            ? $"{EnumMessages.Translate(ResultStatus)}:({RecommendedForValue}/{NotRecommendedForValue})" 
+            : EnumMessages.Translate(ResultStatus).ToString();
 
         public string RecommendedFor { get; set; }
         public string RecommendedForValue => string.IsNullOrEmpty(RecommendedFor) ? "x" : RecommendedFor;

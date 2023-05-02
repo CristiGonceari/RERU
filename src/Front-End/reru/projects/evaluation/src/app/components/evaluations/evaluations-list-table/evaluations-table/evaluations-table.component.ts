@@ -274,7 +274,7 @@ export class EvaluationsTableComponent implements OnInit {
       'departmentName',
       'locationNames', 
       'testStatus', 
-      'result'
+      'resultValue'
     ];
     
 		for (let i = 0; i < headersHtml.length - 1; i++) {

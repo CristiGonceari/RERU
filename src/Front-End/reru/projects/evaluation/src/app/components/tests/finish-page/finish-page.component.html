@@ -44,19 +44,19 @@
                         </div>
                     </div>
                     <div class="text-center d-md-block d-none">
-                        <app-button *ngIf="viewResult" [routerLink]="['../../../my-activities']" classes="btn-lg font-size-h6 p-0 h-40px w-100px" [value]="'button.cancel' | translate">
+                        <app-button *ngIf="viewResult" [routerLink]="['../../../my-activities/my-tests']" classes="btn-lg font-size-h6 p-0 h-40px w-100px" [value]="'button.cancel' | translate">
                         </app-button>
                         <app-add-button *ngIf="viewResult" [routerLink]="['../../test-result', testId]" classes="btn-lg font-size-h6 p-0 h-40px w-100px" [value]="'tests.view' | translate">
                         </app-add-button>
-                        <app-add-button *ngIf="!viewResult" [routerLink]="['../../../my-activities']" classes="btn-lg font-size-h6 p-0 h-40px w-100px" [value]="'button.ok' | translate">
+                        <app-add-button *ngIf="!viewResult" [routerLink]="['../../../my-activities/my-tests']" classes="btn-lg font-size-h6 p-0 h-40px w-100px" [value]="'button.ok' | translate">
                         </app-add-button>
                     </div>
                     <div class="text-center d-md-none d-flex flex-column">
-                        <app-button *ngIf="viewResult" width="100%" [routerLink]="['../../../my-activities']" [value]="'button.cancel' | translate">
+                        <app-button *ngIf="viewResult" width="100%" [routerLink]="['../../../my-activities/my-tests']" [value]="'button.cancel' | translate">
                         </app-button>
                         <app-add-button *ngIf="viewResult" width="100%" [routerLink]="['../../test-result', testId]" [value]="'tests.view' | translate">
                         </app-add-button>
-                        <app-add-button *ngIf="!viewResult" width="100%" [routerLink]="['../../../my-activities']" [value]="'button.ok' | translate">
+                        <app-add-button *ngIf="!viewResult" width="100%" [routerLink]="['../../../my-activities/my-tests']" [value]="'button.ok' | translate">
                         </app-add-button>
                     </div>
                 </div>

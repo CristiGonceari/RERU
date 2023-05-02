@@ -211,7 +211,7 @@ export class ViewTestResultComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.router.navigate(['/my-activities']);
+    this.router.navigate(['/my-activities/my-tests']);
   }
 
   next(): void {
