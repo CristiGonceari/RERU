@@ -37,6 +37,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile
                 .Include(t => t.UserProfile)
                 .Include(t  => t.DocumentsForSign)
                 .ThenInclude(dfs => dfs.SignedDocuments)
+                .Select(t => new Test 
+                {
+                    Id = t.Id,
+                    TestTemplate =  new TestTemplate { Name = t.TestTemplate.Name },
+                    UserProfile = new UserProfile { Idnp = t.UserProfile.Idnp },
+                    DocumentsForSign = t.DocumentsForSign,
+                    TestStatus = t.TestStatus
+                })
                 .FirstOrDefaultAsync(t => t.Id == request.TestId);
 
             var testResultPdf = await _pdfService.PrintTestResultPdf(request.TestId);
@@ -66,7 +74,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile
                 return document.Id;
             }
 
-            throw new Exception("DocumentForSign already exists or test not verified");
+            return 0;
         }
 
         public static IFormFile ConvertToIFormFile(FileDataDto dtoFile)
