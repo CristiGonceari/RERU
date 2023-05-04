@@ -85,13 +85,15 @@ export class AddComponent implements AfterViewInit, OnInit {
   }
 
   initForm(): void {
+    var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+
     this.userForm = this.fb.group({
-      firstName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
-      lastName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
-      fatherName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$'),]),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      lastName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      fatherName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      phoneNumber: this.fb.control(null, [Validators.required]),
+      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern('^((\\+373-?)|0)?[0-9]{8}$')]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
       emailNotification: this.fb.control(false, [Validators.required]),

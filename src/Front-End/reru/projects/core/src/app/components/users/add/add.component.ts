@@ -101,10 +101,12 @@ export class AddComponent implements OnInit {
   }
 
   initForm(): void {
+    var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+
     this.userForm = this.fb.group({
-      firstName: this.fb.control(null, [Validators.required, Validators.pattern('^[a-zA-ZĂăÎîȘșȚțÂâ]+$'),]),
-      lastName: this.fb.control(null, [Validators.required, Validators.pattern('^[a-zA-ZĂăÎîȘșȚțÂâ]+$'),]),
-      fatherName: this.fb.control(""),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      lastName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      fatherName: this.fb.control("", [Validators.pattern(matchesPattern)]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$"), Validators.maxLength(12), Validators.minLength(12)]),
