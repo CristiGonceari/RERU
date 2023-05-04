@@ -94,11 +94,17 @@
                             </td>
                             <td>
                                 <div class="font-size-sm">
+                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.AlowedToStart">
+                                        {{'statuses.AlowedToStart' | translate}}
+                                    </span>
                                     <span class="text-dark-50" *ngIf="test.testStatus == enum.InProgress">
                                         {{'statuses.started' | translate}}
                                     </span>
-                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Verified">
+                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Terminated">
                                         {{'statuses.Terminated' | translate}}
+                                    </span>
+                                    <span class="text-dark-50" *ngIf="test.testStatus == enum.Verified">
+                                        {{'statuses.Verified' | translate}}
                                     </span>
                                     <span class="text-dark-50" *ngIf="test.testStatus == enum.Closed">
                                         {{'statuses.Closed' | translate}}

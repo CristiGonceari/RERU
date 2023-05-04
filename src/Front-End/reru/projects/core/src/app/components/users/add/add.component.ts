@@ -121,15 +121,7 @@ export class AddComponent implements OnInit {
     return ValidatorUtil.isIdnpLengthValidator(this.userForm, field);
   }
 
-  setBirthDate(): void {
-		if (this.birthDate) {
-			const date = new Date(this.birthDate);
-			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
-		}
-	}
-
   addUser(): void {
-    this.setBirthDate();
     let data = {
       firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName,
@@ -140,7 +132,7 @@ export class AddComponent implements OnInit {
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       functionColaboratorId: this.userForm.value.functionColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
-      birthDate: this.date || null,
+      birthDate: this.userForm.value.birthDate,
       phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }

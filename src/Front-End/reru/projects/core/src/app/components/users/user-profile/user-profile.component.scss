@@ -1,3 +1,20 @@
 .dropdown-toggle::after {
     display:none;
 }
+
+.mobile-container-menu {
+    display: none;
+    @media screen and (max-width: 991px) {
+        display: flex;
+    }
+}
+
+.navi-item .active svg{
+    color: currentColor;
+}
+
+.mobile-dropdown-view {
+    width: auto !important;
+    transform: translate(-233px, 38px) !important;
+}
+    

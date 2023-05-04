@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrintModalComponent } from '@erp/shared';
 import { TestResultStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-result-status.enum';
@@ -11,7 +10,6 @@ import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/s
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 import { ObjectUtil } from '../../../utils/util/object.util';
-import { PrintTableService } from '../../../utils/services/print-table/print-table.service';
 
 @Component({
 	selector: 'app-my-evaluations',
@@ -39,11 +37,9 @@ export class MyEvaluationsComponent implements OnInit {
 
 	constructor(
 		private testService: TestService,
-		private activatedRoute: ActivatedRoute,
 		public translate: I18nService,
 		private modalService: NgbModal,
 		private enumStringTranslatorService: EnumStringTranslatorService,
-		private printTableService: PrintTableService,
 		private cd: ChangeDetectorRef
 	) { }
 
