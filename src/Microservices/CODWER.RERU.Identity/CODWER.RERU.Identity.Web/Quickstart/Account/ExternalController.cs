@@ -313,11 +313,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         }
 
         [HttpGet]
-        public async void MPassLogout()
+        public async Task<IActionResult> MPassLogout()
         {
-            await _signInManager.SignOutAsync();
-            // raise the logout event
-            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            var idToken = await HttpContext.GetTokenAsync("id_token");
+
+            string url = Url.Action("Logout", new { logoutId = idToken });
+
+            return SignOut(new AuthenticationProperties { RedirectUri = url }, "Cookies", "oidc");
+
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>

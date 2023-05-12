@@ -52,7 +52,7 @@ namespace CVU.ERP.Notifications.Services.Implementations
                     break;
                 case NotificationType.Both:
                 {
-                    _emailService.BulkSendAsync(data);
+                    await _emailService.BulkSendAsync(data);
                     await BulkMnotify(data);
                     break;
                 }

@@ -81,6 +81,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
 
                 await SendEmailNotificationToCandidate(test);
             }
+
+            await _mediator.Send(new GenerateTestResultFileCommand { TestId = test.Id });
         }
 
         private async Task FinalizeAllTestsWithTheSameHash(Test testToFinalize)
@@ -96,11 +98,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.FinalizeTest
                     await _appDbContext.SaveChangesAsync();
 
                     await AutoVerificationTest(test);
-
-                    if (test.TestStatus == TestStatusEnum.Verified)
-                    {
-                        await _mediator.Send(new GenerateTestResultFileCommand { TestId = test.Id });
-                    }
                 }
             }
         }
