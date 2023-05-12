@@ -33,6 +33,12 @@ export class DocumentTemplatesTableComponent implements OnInit {
 	headersToPrint = [];
 	printTranslates: any[];
 	pagedSummary: PaginationModel = new PaginationModel();
+	notification = {
+		error: 'Error',
+		success: 'Success',
+		successDelete: 'Document deleted!',
+		errorMsg: 'There was an error deleting the document!'
+	  }
 
 	constructor(private documentService: DocumentTemplateService,
 		private modalService: NgbModal,
@@ -41,6 +47,7 @@ export class DocumentTemplatesTableComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getList()
+		this.translateNotifications()
 	}
 	getHeaders(name: string, documentType: string): void {
 		this.translateData();
@@ -62,6 +69,20 @@ export class DocumentTemplatesTableComponent implements OnInit {
 		modalRef.componentInstance.translateData = this.printTranslates;
 		modalRef.result.then(() => this.printTable(modalRef.result.__zone_symbol__value), () => { });
 		this.headersToPrint = [];
+	}
+	
+	translateNotifications(): void {
+		forkJoin([
+			this.translate.get('notification.title.success'),
+			this.translate.get('notification.title.error'),
+			this.translate.get('require-documents.success-delete-mgs'),
+			this.translate.get('require-documents.error-delete-mgs'),
+		]).subscribe(([success, error, successDelete, errorMsg]) => {
+			this.notification.error = error;
+			this.notification.success = success;
+			this.notification.successDelete = successDelete;
+			this.notification.errorMsg = errorMsg;
+		});
 	}
 
 	translateData(): void {
@@ -132,9 +153,9 @@ export class DocumentTemplatesTableComponent implements OnInit {
 	deleteDocument(id: number): void {
 		this.documentService.delete(id).subscribe(() => {
 			this.getList();
-			this.notificationService.success('Success', 'Document deleted!', NotificationUtil.getDefaultConfig());
+			this.notificationService.success(this.notification.success, this.notification.successDelete, NotificationUtil.getDefaultConfig());
 		}, (error) => {
-			this.notificationService.error('Error', 'There was an error deleting the document!', NotificationUtil.getDefaultConfig());
+			this.notificationService.error(this.notification.error, this.notification.errorMsg, NotificationUtil.getDefaultConfig());
 		})
 	}
 
