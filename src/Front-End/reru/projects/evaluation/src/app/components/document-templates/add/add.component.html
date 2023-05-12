@@ -13,20 +13,20 @@
           <div class="form-group row">
             <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.article-title' | translate}}</label>
               <div class="col-lg-6 col-xl-6">
-                <input type="text" class="form-control" [(ngModel)]="title"  placeholder="Name" required >
+                <input type="text" class="form-control" [(ngModel)]="title"  placeholder="{{'documents-templates.article-title' | translate}}" required >
               </div>
           </div>
           <div class="form-group row">
             <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.document-fileType' | translate}}</label>
             <div class="col-lg-6 col-xl-6">
-              <select class="form-control" [(ngModel)]="forEditFileType" required 
-                (change)="getListOfKeys(forEditFileType)">
-                <option class="default-option text-muted" selected="true" [value]="0">{{ 'documents-templates.select-document' | translate }}
+              <select class="form-control" [(ngModel)]="forEditFileType" required
+              (change)="getListOfKeys(forEditFileType)">
+              <option class="default-option text-muted" value="" disabled>{{ 'documents-templates.select-document' | translate }}
+              </option>
+              <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value == forEditFileType">
+                {{ 'document-test-modal.' + item.value | translate }}
                 </option>
-                <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value == forEditFileType">
-                  {{ 'document-test-modal.' + item.value |translate }}
-                </option>
-              </select>
+              </select>              
             </div>
           </div>
         </div>

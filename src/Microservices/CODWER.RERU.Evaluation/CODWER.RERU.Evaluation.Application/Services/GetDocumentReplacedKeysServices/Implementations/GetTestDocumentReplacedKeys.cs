@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CVU.ERP.Common;
 using CVU.ERP.StorageService.Entities;
 using Wkhtmltopdf.NetCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices.Implementations
 {
@@ -72,6 +73,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                                         .ToList();
 
             var myDictionary = new Dictionary<string, string>();
+            Location location = _appDbContext.EventLocations
+                                                .Include(x => x.Location)
+                                                .Where(x => x.EventId == test.EventId)
+                                                .Select(x => x.Location)
+                                                .First();
 
             foreach (var item in keys)
             {
@@ -87,7 +93,15 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                     case "{cheie_cu_punctaj_acumulat}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.AccumulatedPercentage.ToString()));
+                        if(test.AccumulatedPercentage == null)
+                        {
+
+                            myDictionary.Add(item, "- / " + test.TestTemplate.MinPercent + "%");
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, test.AccumulatedPercentage + "% / " + test.TestTemplate.MinPercent + "%");
+                        }
 
                         break;
 
@@ -99,13 +113,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                     case "{cheie_cu_statutul_testului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.TestPassStatus.ToString()));
+                        myDictionary.Add(item, EnumMessages.Translate(test.TestStatus));
 
                         break;
 
                     case "{cheie_cu_rezultatul_testului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.ResultStatus.ToString()));
+                        myDictionary.Add(item, EnumMessages.Translate(test.ResultStatus));
 
                         break;
 
@@ -153,25 +167,25 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                     case "{cheie_cu_numele_locatiei}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Name));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, location.Name));
 
                         break;
 
                     case "{cheie_cu_descrierea_locatiei}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Description));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, location.Description));
 
                         break;
 
                     case "{cheie_cu_adresa_locatiei}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Address));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, location.Address));
 
                         break;
 
                     case "{cheie_cu_numarul_de_locuri_ale_locatiei}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Location?.Places.ToString()));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, location.Places.ToString()));
 
                         break;
 
@@ -205,33 +219,78 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
                         break;
 
+                    case "{cheie_cu_departament_rol_funcție_evaluat}":
+
+                        string department = _appDbContext.Departments.Where(d => d.ColaboratorId == test.UserProfile.DepartmentColaboratorId).Select(d => d.Name).FirstOrDefault();
+                        string role = _appDbContext.Roles.Where(r => r.ColaboratorId == test.UserProfile.RoleColaboratorId).Select(r => r.Name).FirstOrDefault();
+                        string function = _appDbContext.EmployeeFunctions.Where(f => f.ColaboratorId == test.UserProfile.FunctionColaboratorId).Select(f => f.Name).FirstOrDefault();
+
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, department) + "/" + ValidateItemsForDictionary(item, role) + "/" + ValidateItemsForDictionary(item, function));
+
+                        break;
+
                     case "{cheie_cu_numele_evaluatorului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FirstName));
+                        if (test.EvaluatorId != null)
+                        {
+                            myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FirstName));
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "Verificat de sistem");
+                        }
 
                         break;
 
                     case "{cheie_cu_prenumele_evaluatorului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.LastName));
+                        if (test.EvaluatorId != null)
+                        {
+                            myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.LastName));
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "Verificat de sistem");
+                        }
 
                         break;
 
                     case "{cheie_cu_patronimicul_evaluatorului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FirstName));
+                        if (test.EvaluatorId != null)
+                        {
+                            myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.FatherName));
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "Verificat de sistem");
+                        }
 
                         break;
 
                     case "{cheie_cu_IDNP_evaluatorului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Idnp));
+                        if (test.EvaluatorId != null)
+                        {
+                            myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Idnp));
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "Verificat de sistem");
+                        }
 
                         break;
 
                     case "{cheie_cu_email_evaluatorului}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Email));
+                        if (test.EvaluatorId != null)
+                        {
+                            myDictionary.Add(item, ValidateItemsForDictionary(item, test.Evaluator?.Email));
+                        }
+                        else
+                        {
+                            myDictionary.Add(item, "Verificat de sistem");
+                        }
 
                         break;
                 }
@@ -250,7 +309,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
             var finalKeyName = keyName.Substring(1, keyName.Length - 2);
 
-            return finalKeyName + " nu este setata";
+            return finalKeyName + " nu este setată";
         }
     }
 }

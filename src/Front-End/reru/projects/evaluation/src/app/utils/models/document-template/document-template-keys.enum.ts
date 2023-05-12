@@ -13,6 +13,7 @@ export enum DocumentKeyEnum {
     AppraiserFatherNameKey = 12,
     AppraiserIdnpKey = 13, 
     AppraiserEmailKey = 14,
+    AppraiserDepartmentRoleFunction = 73,
     EvaluatorNameKey = 15,
     EvaluatorLastNameKey = 16,
     EvaluatorFatherNameKey = 17,
@@ -40,4 +41,6 @@ export enum DocumentKeyEnum {
     EvaluatorIdnpKey = 39,
     EvaluatorEmailKey = 40,
     TestNameKey = 41,
+    BasicTestTemplate = 71,
+    QualifyingType = 72
 }

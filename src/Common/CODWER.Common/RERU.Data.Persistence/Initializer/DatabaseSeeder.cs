@@ -33,17 +33,19 @@ namespace RERU.Data.Persistence.Initializer
                 //testType testtemplate
                 new DocumentTemplateKey { KeyName="{cheie_cu_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.testtemplate, TranslateId = 1 },
                 new DocumentTemplateKey { KeyName="{cheia_numelui_șablonului_de_testare}", Description= "Numele șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 22 },
-                new DocumentTemplateKey { KeyName="{cheia_numelui_categoriei_șablonului_de_testare}", Description= "Numarul de categorii din șablonul de test", FileType = FileTypeEnum.testtemplate, TranslateId = 23 },
+                new DocumentTemplateKey { KeyName="{cheia_numărului_de_categorii_șablonului_de_testare}", Description= "Numarul de categorii din șablonul de test", FileType = FileTypeEnum.testtemplate, TranslateId = 23 },
                 new DocumentTemplateKey { KeyName="{cheia_regulilor}", Description= "Reguli", FileType = FileTypeEnum.testtemplate, TranslateId = 24 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_total_de_întrebări}", Description= "Numarul de intrebari", FileType = FileTypeEnum.testtemplate, TranslateId = 25 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_numarul_total_de_intrebări}", Description= "Numarul de intrebari", FileType = FileTypeEnum.testtemplate, TranslateId = 25 },
                 new DocumentTemplateKey { KeyName="{cheie_minim_punctaj}", Description= "Punctajul Minim", FileType = FileTypeEnum.testtemplate, TranslateId = 26 },
                 new DocumentTemplateKey { KeyName="{cheie_de_durată}", Description= "Durata", FileType = FileTypeEnum.testtemplate, TranslateId = 27 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_numarul_de_maxim_posibile_erori}", Description= "Maxim posibile erori", FileType = FileTypeEnum.testtemplate, TranslateId = 28 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_un_singur_raspuns}", Description= "Formula pentru intrebari cu un raspuns", FileType = FileTypeEnum.testtemplate, TranslateId = 29 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_formula_pentru_răspunsuri_multiple}", Description= "Formula pentru intrebari cu respunsuri multiple", FileType = FileTypeEnum.testtemplate, TranslateId = 30 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_statutul_șablonului}", Description= "Statutul șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 31 },
-                new DocumentTemplateKey { KeyName="{cheie_modul_șablonului}", Description= "Modul șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 32 },
-                new DocumentTemplateKey { KeyName="{cheie_cu_ordinea_întrebărilor_in_test}", Description= "Ordinea întrebărilor in test", FileType = FileTypeEnum.testtemplate, TranslateId = 33 },
+                new DocumentTemplateKey { KeyName="{cheie_tipul_șablonului}", Description= "Tipul șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 32 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_ordinea_intrebărilor_in_test}", Description= "Ordinea întrebărilor in test", FileType = FileTypeEnum.testtemplate, TranslateId = 33 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_șablon_de_bază}", Description= "Șablonul de bază", FileType = FileTypeEnum.testtemplate, TranslateId = 71 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_tipul_de_calificare}", Description= "Tipul de calificare a șablonului de test", FileType = FileTypeEnum.testtemplate, TranslateId = 72 },
 
                 //testType test
                 new DocumentTemplateKey { KeyName="{cheie_pentru_data_de_azi}", Description= "Data pentru ziua de azi", FileType = FileTypeEnum.test, TranslateId = 34 },
@@ -68,6 +70,8 @@ namespace RERU.Data.Persistence.Initializer
                 new DocumentTemplateKey { KeyName="{cheie_cu_patronimicul_evaluatului}", Description= "Patronimicul evaluatului", FileType = FileTypeEnum.test, TranslateId = 12 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_IDNP_evaluatului}", Description= "IDNP din buletinul evaluatului", FileType = FileTypeEnum.test, TranslateId = 13 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_email_evaluatului}", Description= "E-mailul evaluatului", FileType = FileTypeEnum.test, TranslateId = 14 },
+                new DocumentTemplateKey { KeyName="{cheie_cu_departament_rol_funcție_evaluat}", Description= "Departamentul/Rolul/Funcția evaluatului", FileType = FileTypeEnum.test, TranslateId = 73 },
+                
                         //Evaluator
                 new DocumentTemplateKey { KeyName="{cheie_cu_numele_evaluatorului}", Description= "Numele evaluatorului", FileType = FileTypeEnum.test, TranslateId = 15 },
                 new DocumentTemplateKey { KeyName="{cheie_cu_prenumele_evaluatorului}", Description= "Prenumele evaluatorului", FileType = FileTypeEnum.test, TranslateId = 16 },
@@ -80,7 +84,7 @@ namespace RERU.Data.Persistence.Initializer
 
             foreach (var item in newValues)
             {
-                var existentKey = keys.FirstOrDefault(k => k.KeyName == item.KeyName);
+                var existentKey = keys.FirstOrDefault(k => k.KeyName == item.KeyName && k.TranslateId == item.TranslateId);
 
                 if (existentKey == null)
                 {

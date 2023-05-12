@@ -191,6 +191,7 @@
     "AppraiserFatherNameKey": "Patronimicul evaluatului",
     "AppraiserIdnpKey": "IDNP din buletinul evaluatului",
     "AppraiserEmailKey": "E-mailul evaluatului",
+    "AppraiserDepartmentRoleFunction": "Departament/Rol/Funcție",
     "EvaluatorNameKey": "Numele evaluatorului",
     "EvaluatorLastNameKey": "Prenumele evaluatorului",
     "EvaluatorFatherNameKey": "Patronimicul evaluatorului",
@@ -208,16 +209,19 @@
     "SettingsFormulaFoeOneAnswerKey": "Formula pentru întrebări cu un raspuns",
     "SettingsFormulaForMultipleAnswerKey": "Formula pentru întrebări cu răspunsuri multiple",
     "StatusKey": "Statutul șablonului de test",
-    "ModeKey": "Modul șablonului de test",
+    "ModeKey": "Tipul șablonului de test",
     "CategoriesSequenceKey": "Ordinea întrebărilor în test",
     "TodayDateKey2": "Data pentru ziua de azi",
-    "AccumulatedPercentageKey": "Punctaj Acumulat",
+    "AccumulatedPercentageKey": "Punctaj acumulat/Scor min",
     "MaxErrorsKey": "Maxim posibile erori",
     "TestPassStatusKey": "Statutul testului",
     "ResultStatusKey": "Rezultatul testului",
     "EvaluatorIdnpKey": "IDNP din buletinul evaluatorului",
     "EvaluatorEmailKey": "E-mailul evaluatorului",
-    "TestNameKey":"Numele testului"
+    "TestNameKey": "Numele testului",
+    "BasicTestTemplate": "Șablonul de bază",
+    "QualifyingType": "Tipul de calificare a șablonului de test"
+
   },
   "button": {
     "add": "Adaugă",
