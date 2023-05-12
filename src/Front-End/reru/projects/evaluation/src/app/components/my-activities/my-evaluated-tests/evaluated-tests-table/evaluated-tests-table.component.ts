@@ -110,11 +110,19 @@ export class EvaluatedTestsTableComponent {
       this.headersToPrint.push({ value: headersDto[i], label: headersHtml[i].innerHTML, isChecked: true })
     }
 
+    if (this.startTime == undefined)
+    {
+      this.startTime =  this.selectedDay;
+      this.endTime = this.selectedDay;
+    }
+
     let printData = {
       tableName: name,
       fields: this.headersToPrint,
       orientation: 2,
       date: this.selectedDay,
+      startTime: this.startTime,
+      endTime: this.endTime,
       ...this.filters
     };
 

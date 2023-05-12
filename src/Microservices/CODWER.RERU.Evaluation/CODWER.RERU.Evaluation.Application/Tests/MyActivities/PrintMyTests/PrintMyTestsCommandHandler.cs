@@ -20,7 +20,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests
         private readonly IExportData<Test, TestDto> _printer;
         private readonly IUserProfileService _userProfileService;
 
-        public PrintMyTestsCommandHandler(AppDbContext appDbContext, IExportData<Test, TestDto> printer, IUserProfileService userProfileService)
+        public PrintMyTestsCommandHandler(AppDbContext appDbContext, 
+            IExportData<Test, TestDto> printer, 
+            IUserProfileService userProfileService)
         {
             _appDbContext = appDbContext;
             _printer = printer;
@@ -38,23 +40,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
                 .Include(t => t.Event)
-                .Where(t => t.UserProfileId == currentUserId &&
-                            t.TestTemplate.Mode == TestTemplateModeEnum.Test &&
-                            (t.EventId != null
-                                ? t.ProgrammedTime.Date <= request.Date.Date && t.EndProgrammedTime.Value.Date >= request.Date.Date
-                                : t.ProgrammedTime.Date == request.Date.Date))
+                .Where(t => t.UserProfileId == currentUserId && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .OrderByDescending(x => x.CreateDate)
                 .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .AsQueryable();
 
-            var terminatedTests = myTests.Where(c => c.EndTime != null && c.EndTime.Value.Date != request.Date.Date).ToList();
-
-            if (terminatedTests.Count() > 0)
+            if (request.Date != null)
             {
-                foreach (var test in terminatedTests)
-                {
-                    myTests = myTests.Where(mt => mt.Id != test.Id);
-                }
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date <= request.Date && t.EndTime.Value.Date >= request.Date
+                                : t.ProgrammedTime.Date == request.Date));
+            }
+            else if (request.StartTime != null && request.EndTime != null)
+            {
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndTime.Value.Date <= request.EndTime
+                                : t.ProgrammedTime.Date >= request.StartTime && t.ProgrammedTime.Date <= request.EndTime));
             }
 
             if (!string.IsNullOrWhiteSpace(request.TestName))

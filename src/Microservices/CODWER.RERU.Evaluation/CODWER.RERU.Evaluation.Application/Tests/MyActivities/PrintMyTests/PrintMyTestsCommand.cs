@@ -7,7 +7,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests
 {
     public class PrintMyTestsCommand : TableParameter, IRequest<FileDataDto>
     {
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public string TestName { get; set; }
         public string EventName { get; set; }
     }

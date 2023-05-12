@@ -123,7 +123,7 @@ export class GeneralComponent implements OnInit {
 
   initForm(contractor: Contractor = <Contractor>{}): void {
     var phonePattern = "^((\\+373-?)|0)?[0-9]{8}$"
-    var namePattern = '^(?! )[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$|^[a-zA-ZăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_. ]*[a-zA-zăâîșțĂÂÎȘȚ][a-zA-ZăâîșțĂÂÎȘȚ0-9-_.]{0,20}$';
+    var namePattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
 
     this.generalForm = this.fb.group({
       id: this.fb.control(contractor.id),

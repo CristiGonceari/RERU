@@ -103,17 +103,19 @@ export class EditComponent implements OnInit {
 	}
 
 	initForm(user?: any): void {
+		var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+
 		this.userForm = this.fb.group({
 			id: this.fb.control(user.id, [Validators.required]),
 			firstName: this.fb.control((user && user.firstName) || null, [
 				Validators.required,
-				Validators.pattern('^[a-zA-ZĂăÎîȘșȚțÂâ]+$'),
+				Validators.pattern(matchesPattern),
 			]),
 			lastName: this.fb.control((user && user.lastName) || null, [
 				Validators.required,
-				Validators.pattern('^[a-zA-ZĂăÎîȘșȚțÂâ]+$'),
+				Validators.pattern(matchesPattern),
 			]),
-			fatherName: this.fb.control((user && user.fatherName) || null),
+			fatherName: this.fb.control((user && user.fatherName) || null, [Validators.pattern(matchesPattern)]),
 			phoneNumber: this.fb.control((user && user.phoneNumber) || "", [
 				Validators.required,
 				Validators.pattern(

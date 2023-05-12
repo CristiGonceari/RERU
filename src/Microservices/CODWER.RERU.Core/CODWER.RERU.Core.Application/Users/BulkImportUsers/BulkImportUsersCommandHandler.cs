@@ -27,7 +27,9 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private readonly AppDbContext _appDbContext;
         private readonly Color _color = Color.FromArgb(255, 0, 0);
    
-        public BulkImportUsersCommandHandler(AppDbContext appDbContext, IStorageFileService storageFileService, IMediator mediator)
+        public BulkImportUsersCommandHandler(AppDbContext appDbContext, 
+            IStorageFileService storageFileService, 
+            IMediator mediator)
         {
             _appDbContext = appDbContext;
             _storageFileService = storageFileService;
@@ -254,6 +256,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             var requiredColumns = new string[] { "Nume", "Prenume", "Patronimic", "Idnp", "Email", "Id Departament", "Id Rol", "Id Funcție", "Data nașterii", "Nr. telefon" };
             var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).ToArray();
             var missingColumns = requiredColumns.Except(headers, StringComparer.OrdinalIgnoreCase).ToArray();
+
             if (missingColumns.Any())
             {
                 workSheet.Cells[1, 12].Value += $"Adaugă coloana: {string.Join(", ", missingColumns)}";
@@ -270,6 +273,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private bool ValidateExcelWorksheet(ExcelWorksheet workSheet)
         {
+            bool isValid = true;
             for (int i = 2; i <= workSheet.Dimension.Rows; i++)
             {
                 String[] delimiters = { ".", "/" };
@@ -279,112 +283,114 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
                 var Idnp = workSheet.Cells[i, 4]?.Value?.ToString();
                 var Email = workSheet.Cells[i, 5]?.Value?.ToString();
-                var DepartmentColaboratorId = int.Parse(workSheet.Cells[i, 6]?.Value?.ToString() ?? "0");
-                var RoleColaboratorId = int.Parse(workSheet.Cells[i, 7]?.Value?.ToString() ?? "0");
-                var FunctionColaboratorId = int.Parse(workSheet.Cells[i, 8]?.Value?.ToString() ?? "0");
-                var BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0]));
+                var DepartmentColaboratorId = workSheet.Cells[i, 6]?.Value?.ToString();
+                var RoleColaboratorId = workSheet.Cells[i, 7]?.Value?.ToString();
+                var FunctionColaboratorId = workSheet.Cells[i, 8]?.Value?.ToString();
                 var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
+                DateTime BirthDate;
+
+                if (dateStrings != null && dateStrings.Length >= 3)
+                {
+                    BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0]));
+
+                    if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
+                    {
+                        workSheet.Cells[i, 12].Value += "Vârsta minimă trebuie să fie de 18 ani \n";
+                        workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+                        isValid = false;
+                    }
+                }
                
-                if (string.IsNullOrWhiteSpace(FirstName) || !Regex.IsMatch(FirstName, @"^[a-zA-Z]+$"))
+                if (string.IsNullOrWhiteSpace(FirstName) || !Regex.IsMatch(FirstName, @"^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Numele trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
                 
-                if (string.IsNullOrWhiteSpace(LastName) || !Regex.IsMatch(LastName, @"^[a-zA-Z]+$"))
+                if (string.IsNullOrWhiteSpace(LastName) || !Regex.IsMatch(LastName, @"^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenumele trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
-                if (!string.IsNullOrEmpty(FatherName) && !Regex.IsMatch(FatherName, @"^[a-zA-Z]*$"))
+                if (!string.IsNullOrEmpty(FatherName) && !Regex.IsMatch(FatherName, @"^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Patronimicul trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 3].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
                 if (string.IsNullOrWhiteSpace(Idnp) || Idnp.Length != 13 || !Regex.IsMatch(Idnp, @"^[0-9]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
                     workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
                 if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
                     workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
-                if (!Regex.IsMatch(DepartmentColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString(), @"^[0-9]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "ID Departament trebuie să conțină doar cifre \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Departament trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
-
-                if (DepartmentColaboratorId != 0 && _appDbContext.Departments.FirstOrDefault(i => i.ColaboratorId == DepartmentColaboratorId) == null)
+                else if (_appDbContext.Departments.FirstOrDefault(i => i.ColaboratorId == int.Parse(DepartmentColaboratorId)) == null)
                 {
                     workSheet.Cells[i, 12].Value += "ID Departament nu există în baza de date\n";
                     workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
-                if (!Regex.IsMatch(RoleColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(RoleColaboratorId) || !Regex.IsMatch(RoleColaboratorId.ToString(), @"^[0-9]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "ID Rol trebuie să conțină doar cifre \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Rol trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
-
-                if (RoleColaboratorId != 0 && _appDbContext.Roles.FirstOrDefault(i => i.ColaboratorId == RoleColaboratorId) == null)
+                else if (_appDbContext.Roles.FirstOrDefault(i => i.ColaboratorId == int.Parse(RoleColaboratorId)) == null)
                 {
                     workSheet.Cells[i, 12].Value += "ID Rol nu există în baza de date\n";
                     workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
-                if (!Regex.IsMatch(FunctionColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(FunctionColaboratorId) || !Regex.IsMatch(FunctionColaboratorId.ToString(), @"^[0-9]+$"))
                 {
-                    workSheet.Cells[i, 12].Value += "ID Funcție trebuie să conțină doar cifre \n";
+                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Funcție trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
-
-                if (FunctionColaboratorId != 0 && _appDbContext.EmployeeFunctions.FirstOrDefault(i => i.ColaboratorId == FunctionColaboratorId) == null)
+                else if (_appDbContext.EmployeeFunctions.FirstOrDefault(i => i.ColaboratorId == int.Parse(FunctionColaboratorId)) == null)
                 {
                     workSheet.Cells[i, 12].Value += "ID Funcție nu există în baza de date\n";
                     workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
                 if (string.IsNullOrWhiteSpace(workSheet.Cells[i, 9]?.Value.ToString()) || !Regex.IsMatch(workSheet.Cells[i, 9]?.Value?.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
                 {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA \n";
+                    workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este {workSheet.Cells[i, 9]?.Value?.ToString()} \n";
                     workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
-                    return false;
-                }
-
-                if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
-                {
-                    workSheet.Cells[i, 12].Value += "Vârsta minimă trebuie să fie de 18 ani \n";
-                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
 
                 if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber, @"^\+373") || PhoneNumber.Length != 12)
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
                     workSheet.Cells[i, 10].Style.Fill.SetBackground(_color);
-                    return false;
+                    isValid = false;
                 }
             }
 
-            return true;
+            return isValid;
         }
 
         private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column)

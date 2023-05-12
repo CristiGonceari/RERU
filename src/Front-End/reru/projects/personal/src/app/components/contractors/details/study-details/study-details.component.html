@@ -199,7 +199,7 @@
     <app-loading-spinner *ngIf="isLoading" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
     <div *ngIf="!isLoading">
-        <form *ngIf="studyForm" class="col border" [formGroup]="studyForm">
+        <form *ngIf="studyForm" class="table-responsive col border" [formGroup]="studyForm">
             <app-loading-spinner *ngIf="isLoadingStudies" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
             <div *ngIf="!isLoadingStudies">
@@ -334,7 +334,7 @@
                 </div>
             </div>
         </form>
-        <form *ngIf="languageForm" class="col border" [formGroup]="languageForm">
+        <form *ngIf="languageForm" class="table-responsive col border" [formGroup]="languageForm">
             <app-loading-spinner *ngIf="isLoadingLanguages" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
             <div *ngIf="!isLoadingLanguages">
@@ -398,7 +398,7 @@
                 </div>
             </div>
         </form>
-        <form *ngIf="recommendationForm" class="col border" [formGroup]="recommendationForm">
+        <form *ngIf="recommendationForm" class="table-responsive col border" [formGroup]="recommendationForm">
             <app-loading-spinner *ngIf="isLoadingRecommandations" contentHeight="20rem" height="5rem" width="5rem"
                 colorClass="text-primary"></app-loading-spinner>
             <div *ngIf="!isLoadingRecommandations">

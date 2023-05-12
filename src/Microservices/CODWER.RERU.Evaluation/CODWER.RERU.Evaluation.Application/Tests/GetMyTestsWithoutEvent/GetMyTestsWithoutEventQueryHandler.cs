@@ -45,9 +45,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent
 
 
             if (request.StartTime != null && request.EndTime != null) {
-                myTests = myTests.Where(p => p.StartTime >= request.StartTime && p.EndTime <= request.EndTime ||
-                                                    (request.StartTime <= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime >= request.EndTime) ||
-                                                    (request.StartTime >= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime <= request.EndTime));
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndTime.Value.Date <= request.EndTime
+                                : t.ProgrammedTime.Date >= request.StartTime && t.ProgrammedTime.Date <= request.EndTime));
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request); 
