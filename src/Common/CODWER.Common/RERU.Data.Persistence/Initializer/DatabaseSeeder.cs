@@ -470,7 +470,7 @@ namespace RERU.Data.Persistence.Initializer
                                               "</span></p><p style=\\\"text-align:center;\\\">" +
                                               "<span style=\\\"color:black;\\\"><i>Sunteți admis/ă la probele de evaluare.</i></span></p>" +
                                               "<p style=\\\"text-align:center;\\\">" +
-                                              "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electoronica cu privire la data/ora /locația și modul de desfășurare a acestora.</i></span></p>";
+                                              "<span style=\\\"color:black;\\\"><i>În următoarele zile veți primi notificări pe adresa electronică cu privire la data/ora /locația și modul de desfășurare a acestora.</i></span></p>";
 
             var oldObjectMessageToWait = appDbContext.SolicitedVacantPositionEmailMessages.FirstOrDefault(x => x.MessageType == SolicitedVacantPositionEmailMessageEnum.Waiting);
             var newMessageToWait = "<p style=\\\"text-align:center;\\\"><span style=\\\"color:black;\\\">" +
