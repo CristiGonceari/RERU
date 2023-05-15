@@ -24,6 +24,7 @@ using CVU.ERP.Notifications.Services.Implementations;
 using CVU.ERP.Common;
 using CVU.ERP.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CODWER.RERU.Identity.Web
 {
@@ -193,9 +194,12 @@ namespace CODWER.RERU.Identity.Web
                 {
                     endpoints.MapDefaultControllerRoute();
 
-                    endpoints.MapGet("/mpass-slo", () =>
+                    endpoints.MapGet("/mpass-slo", async context =>
                     {
-                        return Results.Redirect("/External/MPassLogout");
+                        var idToken = await context.GetTokenAsync("id_token");
+                        var redirectUrl = "/connect/endsession?id_token_hint=" + idToken;
+
+                        context.Response.Redirect(redirectUrl);
                     });
 
                 });
