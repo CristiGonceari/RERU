@@ -25,6 +25,7 @@ using CVU.ERP.Common;
 using CVU.ERP.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CODWER.RERU.Identity.Web
 {
@@ -200,6 +201,22 @@ namespace CODWER.RERU.Identity.Web
                         var redirectUrl = "/connect/endsession?id_token_hint=" + idToken;
 
                         context.Response.Redirect(redirectUrl);
+                    });
+
+                    endpoints.MapGet("/get-token-id", async context =>
+                    {
+                        // Retrieve the token_id from the request
+                        var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+                        var token_id = string.Empty;
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            var jwtHandler = new JwtSecurityTokenHandler();
+                            var jwtToken = jwtHandler.ReadJwtToken(token);
+                            token_id = jwtToken.Id;
+                        }
+
+                        // Further processing or return the token_id as needed
+                        await context.Response.WriteAsync($"Token ID: {token_id}");
                     });
 
                 });
