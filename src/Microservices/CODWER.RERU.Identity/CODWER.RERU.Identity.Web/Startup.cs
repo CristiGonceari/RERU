@@ -90,6 +90,12 @@ namespace CODWER.RERU.Identity.Web
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ERPIdentityUser>();
 
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "SessionCookie";
+                options.IdleTimeout = TimeSpan.FromMinutes(60); // Set the session timeout duration
+            });
+
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
@@ -151,6 +157,8 @@ namespace CODWER.RERU.Identity.Web
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.)
             app.UseSwaggerUI();
+
+            app.UseSession();
 
             app.Use(async (ctx, next) =>
             {
