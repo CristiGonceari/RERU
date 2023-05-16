@@ -590,7 +590,8 @@
     "phone-number": "Phone num." 
   },
   "guide": {
-    "title": "User Guide"
+    "title": "User Guide",
+    "candidate": "Candidate Guide"
   },
   "faq": {
     "overview": "Overview",
