@@ -16,5 +16,9 @@ export class GuideService extends AbstractService {
 	get(): Observable<any> {
 		return this.http.get(`${this.coreUrl}/${this.urlRoute}/ghid`, { responseType: 'blob', observe: 'response' });
 	}
+
+	getGhidCandidate(): Observable<any> {
+		return this.http.get(`${this.coreUrl}/${this.urlRoute}/ghidCandidate`, { responseType: 'blob', observe: 'response' });
+	}
 }
 

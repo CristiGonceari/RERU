@@ -105,11 +105,18 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                         {
                             myDictionary.Add(item, "-");
                         }
+
                         break;
 
-                    case "{cheie_cu_numarul_total_de_întrebări}":
+                    case "{cheie_cu_numarul_total_de_intrebări}":
 
                         myDictionary.Add(item, testTemplate.QuestionCount.ToString());
+
+                        break;
+
+                    case "{cheia_numărului_de_categorii_șablonului_de_testare}":
+
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.TestTemplateQuestionCategories.Count.ToString()));
 
                         break;
 
@@ -126,38 +133,57 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
                         break;
 
                     case "{cheie_cu_numarul_de_maxim_posibile_erori}":
-                       
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.MaxErrors.ToString()));
+
+                        if(testTemplate.Rules != null)
+                            {
+                                myDictionary.Add(item, testTemplate.Settings?.MaxErrors.ToString());
+                            }
+                            else
+                            {
+                                myDictionary.Add(item, "-");
+                            }
 
                         break;
 
                     case "{cheie_cu_formula_pentru_un_singur_raspuns}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.FormulaForOneAnswer.ToString()));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, EnumMessages.Translate(testTemplate.Settings?.FormulaForOneAnswer)));
 
                         break;
 
                     case "{cheie_cu_formula_pentru_răspunsuri_multiple}":
 
-                        myDictionary.Add(item, ValidateItemsForDictionary(item, testTemplate.Settings?.FormulaForMultipleAnswers.ToString()));
+                        myDictionary.Add(item, ValidateItemsForDictionary(item, EnumMessages.Translate(testTemplate.Settings?.FormulaForMultipleAnswers)));
 
                         break;
 
                     case "{cheie_cu_statutul_șablonului}":
 
-                        myDictionary.Add(item, testTemplate.Status.ToString());
+                        myDictionary.Add(item, EnumMessages.Translate(testTemplate.Status));
 
                         break;
 
-                    case "{cheie_modul_șablonului}":
+                    case "{cheie_tipul_șablonului}":
 
-                        myDictionary.Add(item, testTemplate.Mode.ToString());
+                        myDictionary.Add(item, EnumMessages.Translate(testTemplate.Mode));
 
                         break;
 
-                    case "{cheie_cu_ordinea_întrebărilor_in_test}":
+                    case "{cheie_cu_ordinea_intrebărilor_in_test}":
 
                         myDictionary.Add(item, testTemplate.CategoriesSequence.ToString());
+
+                        break;
+
+                    case "{cheie_cu_șablon_de_bază}":
+
+                        myDictionary.Add(item, EnumMessages.Translate(testTemplate.BasicTestTemplate));
+
+                        break;
+
+                    case "{cheie_cu_tipul_de_calificare}":
+
+                        myDictionary.Add(item, EnumMessages.Translate(testTemplate.QualifyingType));
 
                         break;
                 }
@@ -177,7 +203,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             {
                 var finalKeyName = keyName.Substring(1, keyName.Length - 2);
 
-                return finalKeyName + " nu a fost setata";
+                return finalKeyName + " nu a fost setată";
             }
         }
     }

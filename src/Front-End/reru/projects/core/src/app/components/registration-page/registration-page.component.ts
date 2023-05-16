@@ -19,6 +19,7 @@ import { VerifyEmailCodeModalComponent } from '../../utils/modals/verify-email-c
 import { saveAs } from 'file-saver';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { GuideService } from '../../utils/services/guide.service';
 
 @Component({
   selector: 'app-registration-page',
@@ -80,7 +81,8 @@ export class RegistrationPageComponent implements OnInit {
     private modalService: NgbModal,
     private applicationUserService: ApplicationUserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private guideService: GuideService
   ) { }
 
   ngOnInit(): void {
@@ -257,6 +259,22 @@ export class RegistrationPageComponent implements OnInit {
       saveAs(file);
       this.isLoadingButton = false;
     });
+  }
+
+  downloadGhid(): void {
+    this.isLoadingButton = true;
+    this.guideService.getGhidCandidate().subscribe((response : any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+      
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+      this.isLoadingButton = false;
+		});
   }
 
   checkFile(event) {

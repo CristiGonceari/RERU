@@ -592,7 +592,8 @@
     "phone-number": "Nr. telefon" 
   },
   "guide": {
-    "title": "Ghid Utilizator"
+    "title": "Ghid Utilizator",
+    "candidate": "Ghidul candidatului"
   },
   "faq": {
     "overview": "Prezentare generală",
