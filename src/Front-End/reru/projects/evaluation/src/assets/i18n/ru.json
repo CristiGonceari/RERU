@@ -521,6 +521,7 @@
     "bulk-import": "Импортировать (.xlsx)",
     "search-question": "Поиск по вопросу",
     "search-category": "Поиск по категории",
+    "search-category-mobile": "Поиск по категории",
     "search-question-type": "Поиск по типу",
     "step1": "Настройка типа вопроса и его категории",
     "step2": "Добавление вопроса и его ответов",

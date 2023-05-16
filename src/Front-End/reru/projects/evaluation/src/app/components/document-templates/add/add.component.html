@@ -11,13 +11,15 @@
       <div class="row card-title w-75">
         <div class="col-xl-12">
           <div class="form-group row">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.article-title' | translate}}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'documents-templates.article-title' | translate}}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'documents-templates.article-title' | translate}}</label>
               <div class="col-lg-6 col-xl-6">
                 <input type="text" class="form-control" [(ngModel)]="title"  placeholder="{{'documents-templates.article-title' | translate}}" required >
               </div>
           </div>
           <div class="form-group row">
-            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.document-fileType' | translate}}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'documents-templates.document-fileType' | translate}}</label>
+            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'documents-templates.document-fileType' | translate}}</label>
             <div class="col-lg-6 col-xl-6">
               <select class="form-control" [(ngModel)]="forEditFileType" required
               (change)="getListOfKeys(forEditFileType)">
@@ -98,8 +100,15 @@
         </div>
       </div>
     <div id="document-container">
-      <div class="text-right border-top py-5">
+      <div class="text-right border-top py-5 d-none d-md-block d-lg-block">
         <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backCancel()">
+        </app-button>
+        <app-add-button class="btn" (handle)="saveDocument()" [value]="'button.confirm' | translate"
+          [disabled]=" !title || !fileType || !editorValue">
+        </app-add-button>
+      </div>
+      <div class="text-right border-top py-5 pt-10 d-block d-md-none d-lg-none">
+        <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backCancel()">
         </app-button>
         <app-add-button class="btn" (handle)="saveDocument()" [value]="'button.confirm' | translate"
           [disabled]=" !title || !fileType || !editorValue">
