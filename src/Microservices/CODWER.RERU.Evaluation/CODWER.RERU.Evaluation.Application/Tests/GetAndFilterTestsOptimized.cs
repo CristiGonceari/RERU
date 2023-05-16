@@ -119,7 +119,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (request.DepartmentId.HasValue)
             {
-                tests = tests.Where(x => x.UserProfile.Department.Id == request.DepartmentId);
+                tests = tests.Where(x => x.UserProfile.DepartmentColaboratorId == request.DepartmentId);
             }
 
             if (!string.IsNullOrWhiteSpace(request.ColaboratorId))
@@ -129,12 +129,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
             if (request.RoleId.HasValue)
             {
-                tests = tests.Where(x => x.UserProfile.Role.Id == request.RoleId);
+                tests = tests.Where(x => x.UserProfile.RoleColaboratorId == request.RoleId);
             }
 
             if (request.FunctionId.HasValue)
             {
-                tests = tests.Where(x => x.UserProfile.EmployeeFunction.ColaboratorId == request.FunctionId);
+                tests = tests.Where(x => x.UserProfile.FunctionColaboratorId == request.FunctionId);
             }
 
             return tests;
@@ -177,21 +177,24 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                             Department = t.UserProfile.Department == null ? null : new Department
                             {
                                 Id = t.UserProfile.Department.Id,
-                                Name = t.UserProfile.Department.Name
+                                Name = t.UserProfile.Department.Name,
+                                ColaboratorId = t.UserProfile.Department.ColaboratorId,
                             },
 
-                            RoleColaboratorId = t.UserProfile.DepartmentColaboratorId,
+                            RoleColaboratorId = t.UserProfile.RoleColaboratorId,
                             Role = t.UserProfile.Role == null ? null : new Role
                             {
                                 Id = t.UserProfile.Role.Id,
-                                Name = t.UserProfile.Role.Name
+                                Name = t.UserProfile.Role.Name,
+                                ColaboratorId = t.UserProfile.Role.ColaboratorId,
                             },
 
                             FunctionColaboratorId = t.UserProfile.FunctionColaboratorId,
                             EmployeeFunction = t.UserProfile.EmployeeFunction == null ? null : new EmployeeFunction
                             {
                                 Id = t.UserProfile.EmployeeFunction.Id,
-                                Name = t.UserProfile.EmployeeFunction.Name
+                                Name = t.UserProfile.EmployeeFunction.Name,
+                                ColaboratorId = t.UserProfile.EmployeeFunction.ColaboratorId
                             }
                         },
 
@@ -280,7 +283,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
 
                         RecommendedFor = t.RecommendedFor,
                         NotRecommendedFor = t.NotRecommendedFor,
-
+                        
                         //de scos de aici documents for sign
                         DocumentsForSign = t.DocumentsForSign.Select(dfs => new DocumentsForSign
                         {
@@ -289,20 +292,20 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                             MediaFileId = dfs.MediaFileId,
 
                             SignedDocuments = dfs.SignedDocuments
-                            .Where(sd => sd.Status == SignRequestStatusEnum.Success)
-                            .Select(sd=>new SignedDocument
-                            {
-                                UserProfileId = sd.UserProfileId,
-                                UserProfile = new UserProfile
+                                .Where(sd => sd.Status == SignRequestStatusEnum.Success)
+                                .Select(sd=>new SignedDocument
                                 {
-                                    FirstName = sd.UserProfile.FirstName,
-                                    LastName = sd.UserProfile.LastName,
-                                    FatherName = sd.UserProfile.FatherName
-                                },
+                                    UserProfileId = sd.UserProfileId,
+                                    UserProfile = new UserProfile
+                                    {
+                                        FirstName = sd.UserProfile.FirstName,
+                                        LastName = sd.UserProfile.LastName,
+                                        FatherName = sd.UserProfile.FatherName
+                                    },
                                 
-                                SignRequestId = sd.SignRequestId,
-                                Status = sd.Status
-                            }).ToArray()
+                                    SignRequestId = sd.SignRequestId,
+                                    Status = sd.Status
+                                }).ToArray()
                         }).ToArray(),
                     })
                     .AsQueryable();
