@@ -317,9 +317,17 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         {
             var idToken = await HttpContext.GetTokenAsync("id_token");
 
-            string url = Url.Action("Logout", new { logoutId = idToken });
+            var id_Token = HttpContext.Session.GetString("id_token");
+            //string url = Url.Action("Logout", new { logoutId = idToken });
+            //return SignOut(new AuthenticationProperties { RedirectUri = url }, "Cookies", "oidc");
+            if (!string.IsNullOrEmpty(idToken))
+            {
+                // Do something with the id_token
+                return RedirectToAction("endsession", "connect", new { id_token_hint = id_Token });
+            }
 
-            return SignOut(new AuthenticationProperties { RedirectUri = url }, "Cookies", "oidc");
+            return NotFound();
+
 
         }
 
