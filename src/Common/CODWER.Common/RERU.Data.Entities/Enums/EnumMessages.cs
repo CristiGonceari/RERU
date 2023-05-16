@@ -14,8 +14,8 @@ namespace RERU.Data.Entities.Enums
         public const string Strict = "Ordonat";
         public const string Programmed = "Programat";
         public const string AllowedToStart = "Permis să înceapă";
-        public const string InProgress = "În proces";
-        public const string Terminated = "Terminat";
+        public const string InProgress = "În progres";
+        public const string Terminated = "Finisat";
         public const string Verified = "Verificat";
         public const string Closed = "Închis";
         public const string FreeText = "Formă liberă";
@@ -38,7 +38,7 @@ namespace RERU.Data.Entities.Enums
         public const string Accepted = "Admis";
         public const string Rejected = "Respins";
 
-        public const string Recommended = "Se recomandă/Nu se recomanda";
+        public const string Recommended = "Se recomandă/Nu se recomandă";
         public const string PassedNotPassed = "Susținut/Nesusținut";
         public const string AbleNotAble = "Apt/Inapt";
         public const string AcceptedRejected = "Admis/Respins";
@@ -138,6 +138,15 @@ namespace RERU.Data.Entities.Enums
 
         private const string Female = "Femeie";
         private const string Male = "Bărbat";
+
+        public const string ZeroPercent = "Răspuns greșit = 0%";
+        public const string OneDivideCountPercent = "Răspuns greșit = 1/n% (n-nr total de opțiuni)";
+        public const string MinusCorrectOption = "Răspuns greșit = (-1) * răspuns corect%";
+
+        public const string PregatireGenerala = "Pregătire generală";
+        public const string PregatireDeSpecialitate = "Pregatire de specialitate";
+        public const string InstructiaTragerii = "Instrucțiunea tragerii";
+        public const string InterventiaProfesionala = "Intervenția profesională";
 
         public static string Translate(FileTypeEnum fileType)
         {
@@ -247,7 +256,7 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
-        public static string Translate(QualifyingTypeEnum qualifyingType)
+        public static string Translate(QualifyingTypeEnum? qualifyingType)
         {
             return qualifyingType switch
             {
@@ -448,6 +457,29 @@ namespace RERU.Data.Entities.Enums
             {
                 RoleTypeEnum.Dynamic => Dynamic,
                 RoleTypeEnum.Default => Static,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(ScoreFormulaEnum? scoreFormula)
+        {
+            return scoreFormula switch
+            {
+                ScoreFormulaEnum.ZeroPercent => ZeroPercent,
+                ScoreFormulaEnum.OneDivideCountPercent => OneDivideCountPercent,
+                ScoreFormulaEnum.MinusCorrectOption => MinusCorrectOption,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(BasicTestTemplateEnum? basicTestTemplate)
+        {
+            return basicTestTemplate switch
+            {
+                BasicTestTemplateEnum.PregatireGenerala => PregatireGenerala,
+                BasicTestTemplateEnum.PregatireDeSpecialitate => PregatireDeSpecialitate,
+                BasicTestTemplateEnum.InstructiaTragerii => InstructiaTragerii,
+                BasicTestTemplateEnum.InterventiaProfesionala => InterventiaProfesionala,
                 _ => "-"
             };
         }

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	<PackageReference Include="QRCoder" Version="1.4.1" />
+	<PackageReference Include="Age.Integrations.MSign.Soap" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CVU.ERP.ServiceProvider\CVU.ERP.ServiceProvider.csproj" />
+    <ProjectReference Include="..\RERU.Data.Persistence\RERU.Data.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -322,4 +322,15 @@ export class AddEvaluationComponent implements OnInit {
       else if (whichUser == false) this.userListToAdd = modalRef.result.__zone_symbol__value.attachedItems;
     }, () => { });
   }
+
+  cantAdd(){
+    if(this.testEvent){
+      return this.event.value == null ||
+      this.userListToAdd.length <= 0 || this.evaluatorList.length <= 0 ||
+      this.testTemplate.value == null || this.testTemplate.value == ""
+    } else {
+      return this.testTemplate.value == null || this.testTemplate.value == "" ||
+      this.userListToAdd.length <= 0 || this.evaluatorList.length <= 0
+    }
+  }
 }

@@ -224,17 +224,38 @@
 
 <div id="kt_quick_actions" class="offcanvas offcanvas-right px-8 py-10" [ngClass]="{'offcanvas-on': isOpenModules}">
   <div class="offcanvas-header d-flex align-items-center justify-content-between pb-10">
-    <h3 class="font-weight-bold m-0">
-      Quick Actions
-      <small class="text-muted font-size-sm ml-2">finance & reports</small>
-    </h3>
+    <h4 class="app-text text-dark">{{ title }}</h4>
     <a href="javascript:;" (click)="toggle(sidebarView.MODULES)" class="btn btn-xs btn-icon btn-light btn-hover-primary"
       id="kt_quick_actions_close">
       &times;
     </a>
   </div>
+  <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1"
+    data-menu-dropdown-timeout="500">
+    <ul class="menu-nav">
+      <ng-container *ngFor="let menuItem of menuItems; let i = index">
+        <li *ngIf="menuItem.type === sidebarItemType.ITEM && hasPermission(menuItem)" class="menu-item"
+          [ngClass]="{ 'menu-item-active': isActiveTab[i] }" aria-haspopup="true">
+          <a class="menu-link" (click)="navigateTo(i)">
+            <span class="svg-icon svg-default menu-icon" [innerHTML]="menuItem.icon | safeHtml"></span>
+            <span class="menu-text">{{ menuItem.name }}</span>
+          </a>
+        </li>
+        <li *ngIf="menuItem.type === sidebarItemType.SECTION && hasPermissions(menuItem.permissions)"
+          class="menu-section">
+          <h4 class="menu-text">{{ menuItem.name }}</h4>
+          <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+        </li>
+        <li *ngIf="menuItem.type === sidebarItemType.BUTTON && hasPermission(menuItem)" class="menu-item btn-margin">
+          <button (click)="navigateTo(i)" class="btn btn-success">
+            {{ menuItem.name }}
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
 
-  <div class="offcanvas-content pr-5 mr-n5">
+  <!-- <div class="offcanvas-content pr-5 mr-n5">
     <div *ngFor="let module of modules; let i = index;" class="row gutter-b">
       <ng-container *ngFor="let item of module">
         <div class="col-6">
@@ -260,7 +281,7 @@
         </div>
       </ng-container>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <div id="kt_quick_user" class="offcanvas offcanvas-right px-8 py-10" [ngClass]="{'offcanvas-on': isOpenUser}">

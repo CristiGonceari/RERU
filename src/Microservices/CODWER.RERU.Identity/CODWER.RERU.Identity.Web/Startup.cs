@@ -23,6 +23,9 @@ using CVU.ERP.Notifications.Services;
 using CVU.ERP.Notifications.Services.Implementations;
 using CVU.ERP.Common;
 using CVU.ERP.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CODWER.RERU.Identity.Web
 {
@@ -87,19 +90,34 @@ namespace CODWER.RERU.Identity.Web
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ERPIdentityUser>();
 
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "SessionCookie";
+                options.IdleTimeout = TimeSpan.FromMinutes(60); // Set the session timeout duration
+            });
+
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            services.AddAuthentication()
+            services.AddAuthentication(sharedOptions =>
+            {
+                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = MPassSamlDefaults.AuthenticationScheme;
+            })
                 .AddCookie(options =>
                 {
+                    options.LogoutPath = "/Account/Logout";
                     //Setting to None to allow POST from MPass (default is Lax)
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 })
-                .AddMPassSaml(Configuration.GetSection("MPassSaml"));
+                .AddMPassSaml(Configuration.GetSection("MPassSaml"), options => 
+                {
+                    options.InvalidResponseRedirectUri = "/External/CancelMPass" ;
+                    options.SignedOutRedirectUri = "/Account/Logout";
+                });
                 //.AddSaml2(options =>
                 //{
                 //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -139,6 +157,8 @@ namespace CODWER.RERU.Identity.Web
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.)
             app.UseSwaggerUI();
+
+            app.UseSession();
 
             app.Use(async (ctx, next) =>
             {
@@ -182,6 +202,31 @@ namespace CODWER.RERU.Identity.Web
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapDefaultControllerRoute();
+
+                    endpoints.MapGet("/mpass-slo", async context =>
+                    {
+                        var idToken = await context.GetTokenAsync("id_token");
+                        var redirectUrl = "/connect/endsession?id_token_hint=" + idToken;
+
+                        context.Response.Redirect(redirectUrl);
+                    });
+
+                    endpoints.MapGet("/get-token-id", async context =>
+                    {
+                        // Retrieve the token_id from the request
+                        var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+                        var token_id = string.Empty;
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            var jwtHandler = new JwtSecurityTokenHandler();
+                            var jwtToken = jwtHandler.ReadJwtToken(token);
+                            token_id = jwtToken.Id;
+                        }
+
+                        // Further processing or return the token_id as needed
+                        await context.Response.WriteAsync($"Token ID: {token_id}");
+                    });
+
                 });
 
                 app.UseIdentityServer();

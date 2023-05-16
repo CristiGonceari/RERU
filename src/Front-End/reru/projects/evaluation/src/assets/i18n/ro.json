@@ -191,6 +191,7 @@
     "AppraiserFatherNameKey": "Patronimicul evaluatului",
     "AppraiserIdnpKey": "IDNP din buletinul evaluatului",
     "AppraiserEmailKey": "E-mailul evaluatului",
+    "AppraiserDepartmentRoleFunction": "Departament/Rol/Funcție",
     "EvaluatorNameKey": "Numele evaluatorului",
     "EvaluatorLastNameKey": "Prenumele evaluatorului",
     "EvaluatorFatherNameKey": "Patronimicul evaluatorului",
@@ -208,16 +209,19 @@
     "SettingsFormulaFoeOneAnswerKey": "Formula pentru întrebări cu un raspuns",
     "SettingsFormulaForMultipleAnswerKey": "Formula pentru întrebări cu răspunsuri multiple",
     "StatusKey": "Statutul șablonului de test",
-    "ModeKey": "Modul șablonului de test",
+    "ModeKey": "Tipul șablonului de test",
     "CategoriesSequenceKey": "Ordinea întrebărilor în test",
     "TodayDateKey2": "Data pentru ziua de azi",
-    "AccumulatedPercentageKey": "Punctaj Acumulat",
+    "AccumulatedPercentageKey": "Punctaj acumulat/Scor min",
     "MaxErrorsKey": "Maxim posibile erori",
     "TestPassStatusKey": "Statutul testului",
     "ResultStatusKey": "Rezultatul testului",
     "EvaluatorIdnpKey": "IDNP din buletinul evaluatorului",
     "EvaluatorEmailKey": "E-mailul evaluatorului",
-    "TestNameKey":"Numele testului"
+    "TestNameKey": "Numele testului",
+    "BasicTestTemplate": "Șablonul de bază",
+    "QualifyingType": "Tipul de calificare a șablonului de test"
+
   },
   "button": {
     "add": "Adaugă",
@@ -852,7 +856,8 @@
     "succes-detach-evaluator-msg": "Evaluatorul a fost eliminat cu succes",
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
     "show-user-name": "Afișează numele utilizatorului",
-    "from-event": "Din eveniment"
+    "from-event": "Din eveniment",
+    "expired-event": "Acest eveniment nu mai este activ"
   },
   "test-template":{
     "test-template": "Șablon de teste",
@@ -882,6 +887,7 @@
     "succes-remove-msg": "Plan a fost șters cu succes",
     "plan-name": "Numele planului",
     "attach-event": "Atașați eveniment",
+    "select-event":"Selectați evenimentul",
     "attach-event-to-plan": "Atașați evenimentul la plan",
     "remove-event-msg": "Sigur doriți să eliminați acest eveniment din acest plan?",
     "succes-remove-event-msg": "Evenimentul a fost eliminat cu succes",
@@ -1071,7 +1077,7 @@
     "title": "Ghid Utilizator"
   },
   "solicited-test": {
-    "solicited-tests": "Poziții solicitate",
+    "solicited-tests": "Poziția solicitată",
     "solicited-position": "Solicită poziția",
     "my-solicited-tests": "Pozițiile mele solicitate",
     "solicited-time": "Timp solicitat",
@@ -1164,5 +1170,19 @@
   "graph-tests-and-evaluations": {
     "name": "Teste și Evaluări",
     "note": "Notițe: Teste și Evaluări efectuate timp de un an sortate după luni"
+  },
+  "documents":{
+    "files": "Fişiere",
+    "file": "Fişier",
+    "options": "Opțiuni",
+    "signed-by": "Semnat de",
+    "sign": "Semnează",
+    "signed": "Semnat",
+    "download": "Descarcă",
+    "empty-siged-users": "Nu a fost semnat de niciun utilizator.",
+    "generate-test-result": "Generați fișierul pentru rezultatul testului",
+    "empty-files": "Nu există documente la semnat.",
+    "sign-file": "Semnează fișierul",
+    "sign-file-description": "Sigur doriți să semnați fișierul:"
   }
 }

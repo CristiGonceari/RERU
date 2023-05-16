@@ -10,28 +10,26 @@
     <div class="card-header flex-wrap border-0 py-5">
       <div class="row card-title w-75">
         <div class="col-xl-12">
-            <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.article-title' | translate}}</label>
-                <div class="col-lg-6 col-xl-6">
-                  <input type="text" class="form-control" [(ngModel)]="title"  placeholder="Name" required >
-                
-                </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.article-title' | translate}}</label>
+              <div class="col-lg-6 col-xl-6">
+                <input type="text" class="form-control" [(ngModel)]="title"  placeholder="{{'documents-templates.article-title' | translate}}" required >
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.document-fileType' | translate}}</label>
+            <div class="col-lg-6 col-xl-6">
+              <select class="form-control" [(ngModel)]="forEditFileType" required
+              (change)="getListOfKeys(forEditFileType)">
+              <option class="default-option text-muted" value="" disabled>{{ 'documents-templates.select-document' | translate }}
+              </option>
+              <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value == forEditFileType">
+                {{ 'document-test-modal.' + item.value | translate }}
+                </option>
+              </select>              
             </div>
-            <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'documents-templates.document-fileType' | translate}}</label>
-                <div class="col-lg-6 col-xl-6">
-                  <select class="form-control" [(ngModel)]="forEditFileType" required 
-                  (change)="getListOfKeys(forEditFileType)">
-                  <option class="default-option text-muted" selected="true" [value]="0">{{ 'documents-templates.select-document' | translate }}
-                  </option>
-                  <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value == forEditFileType">
-                    {{ 'document-test-modal.' + item.value |translate }}
-                  </option>
-                </select>
-                </div>
-            </div>
+          </div>
         </div>
-        
       </div>
       <button class="btn btn-success" (click)="ckEditorContentToPdf()">
         <i class="flaticon2-pie-chart"></i>
@@ -57,55 +55,57 @@
       </div> -->
     </div>
     <div class="card-body">
-      <div class="document-editor">
-        <div class="document-editor__toolbar"></div>
-        <ck-editor #editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
-          [config]="{height: 1134, width: 794}" [editor]="Editor" [fullPage]="true" debounce="300"
-          style="height: 1200px;" (blur)="ckEditorFocusCursor($event)">
-        </ck-editor>
-        <div id="document-container">
-          <div class="text-right border-top pt-10">
-            <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backCancel()">
-            </app-button>
-            <app-add-button class="btn" (handle)="saveDocument()" [value]="'button.confirm' | translate"
-              [disabled]=" !title || !fileType || !editorValue">
-            </app-add-button>
+      <div class="d-flex flex-row table-responsive">
+        <div class="document-editor">
+          <div class="document-editor__toolbar"></div>
+            <ck-editor #editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en"
+              [config]="{height: 1134, width: 774}" [editor]="Editor" [fullPage]="true" debounce="300"
+              style="height: 1200px;" (blur)="ckEditorFocusCursor($event)">
+            </ck-editor>
+          </div>
+          <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white border key-map overflow-auto">
+            <a class="d-flex align-items-center flex-shrink-0 p-3  text-decoration-none border"
+              style="background-color: #f8f8f8; text-align: center; justify-content: center;">
+              <svg class="bi me-2" width="30" height="24"></svg>
+              <div class="contacts">
+                <h3>{{'documents-templates.key-list' | translate}}</h3>
+              </div>
+            </a>
+            <div class="btn btn-light-success d-inline-flex align-items-center btn-sm btn-block mt-2"
+              *ngFor="let item of firebase_Data " style="justify-content: right;"
+              (click)="addWordButtonToCkEditor(item.keyName)">
+              <div class="d-flex flex-column text-right pr-3">
+                <span class="text-dark-75 font-weight-bold font-size-sm">{{ 'documentKeys.' + keysEnum[item.translateId] | translate}}</span>
+                <span class="font-weight-bolder font-size-sm">{{ item.keyName }}</span>
+              </div>
+              <span class="svg-icon svg-icon-primary svg-icon-2x">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                  height="24px" viewBox="0 0 24 24" version="1.1">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24" />
+                    <path
+                      d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z"
+                      fill="#000000" fill-rule="nonzero"
+                      transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) " />
+                    <path
+                      d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z"
+                      fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                  </g>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white border key-map overflow-auto">
-        <a class="d-flex align-items-center flex-shrink-0 p-3  text-decoration-none border"
-          style="background-color: #f8f8f8; text-align: center; justify-content: center;">
-          <svg class="bi me-2" width="30" height="24"></svg>
-          <div class="contacts">
-            <h3>{{'documents-templates.key-list' | translate}}</h3>
-          </div>
-        </a>
-        <div class="btn btn-light-success d-inline-flex align-items-center btn-sm btn-block mt-2"
-          *ngFor="let item of firebase_Data " style="justify-content: right;"
-          (click)="addWordButtonToCkEditor(item.keyName)">
-          <div class="d-flex flex-column text-right pr-3">
-            <span class="text-dark-75 font-weight-bold font-size-sm">{{ 'documentKeys.' + keysEnum[item.translateId] | translate}}</span>
-            <span class="font-weight-bolder font-size-sm">{{ item.keyName }}</span>
-          </div>
-          <span class="svg-icon svg-icon-primary svg-icon-2x">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-              height="24px" viewBox="0 0 24 24" version="1.1">
-              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <rect x="0" y="0" width="24" height="24" />
-                <path
-                  d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z"
-                  fill="#000000" fill-rule="nonzero"
-                  transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) " />
-                <path
-                  d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z"
-                  fill="#000000" fill-rule="nonzero" opacity="0.3" />
-              </g>
-            </svg>
-          </span>
-        </div>
+    <div id="document-container">
+      <div class="text-right border-top py-5">
+        <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backCancel()">
+        </app-button>
+        <app-add-button class="btn" (handle)="saveDocument()" [value]="'button.confirm' | translate"
+          [disabled]=" !title || !fileType || !editorValue">
+        </app-add-button>
       </div>
     </div>
-    </div>
+  </div>
 </erp-shared-content>
       

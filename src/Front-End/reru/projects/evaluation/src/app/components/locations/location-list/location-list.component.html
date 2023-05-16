@@ -2,18 +2,24 @@
 </app-page-title>
 
 <erp-shared-content>
-	<div class="row">
+	<div class="d-flex flex-row">
 		<div class="col">
 			<div class="card card-custom gutter-b erp-shared-desktop-wide">
 				<div class="card-header flex-wrap border-0 py-5">
 					<div class="card-title">
 						<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
 					</div>
-					<div class="card-toolbar">
+					<div class="card-toolbar d-md-flex d-none">
 						<erp-shared-export-button class="mr-3" (click)="locationsTable.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
 						<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
+					</div>
+					<div class="card-toolbar d-md-none d-flex flex-column w-100">
+						<erp-shared-export-button class="w-100" (click)="locationsTable.getHeaders(getTitle())">
+							{{'button.export' | translate}}
+						</erp-shared-export-button>
+						<app-add-button class="btn my-auto pt-2 w-100" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
 					</div>
 				</div>
 				<div class="card-header border-0">

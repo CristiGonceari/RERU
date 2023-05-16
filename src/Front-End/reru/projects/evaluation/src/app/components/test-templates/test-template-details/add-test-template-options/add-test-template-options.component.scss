@@ -9,3 +9,15 @@
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+div label {
+    @media screen and (max-width: 767px) and (min-width: 660px) {
+        white-space: nowrap; 
+        display: inline-flex;
+    }
+
+    @media screen and (min-width: 1366px) {
+        white-space: nowrap; 
+        display: inline-flex;
+    }
+}

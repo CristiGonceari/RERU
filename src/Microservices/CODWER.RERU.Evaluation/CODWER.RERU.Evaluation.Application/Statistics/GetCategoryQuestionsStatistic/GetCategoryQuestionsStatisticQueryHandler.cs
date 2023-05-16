@@ -60,9 +60,9 @@ namespace CODWER.RERU.Evaluation.Application.Statistics.GetCategoryQuestionsStat
                 {
                     var questionsArray = questionsInTests.Where(x => x.QuestionUnitId == questionToAnalize.Id).ToList();
                     var total = questionsArray.Count();
-                    var correct = questionsArray.Where(x => x.IsCorrect == true).Count();
-                    var notCorrect = questionsArray.Where(x => x.IsCorrect == false && x.AnswerStatus == AnswerStatusEnum.Answered).Count();
-                    var skipped = questionsArray.Where(x => x.AnswerStatus == AnswerStatusEnum.Skipped).Count();
+                    var correct = questionsArray.Count(x => x.IsCorrect == true);
+                    var notCorrect = questionsArray.Count(x => x.IsCorrect == false && x.AnswerStatus == AnswerStatusEnum.Answered);
+                    var skipped = questionsArray.Count(x => x.AnswerStatus == AnswerStatusEnum.Skipped);
 
                     answer.Add(new TestQuestionStatisticDto()
                     {

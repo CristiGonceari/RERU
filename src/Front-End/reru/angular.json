@@ -181,7 +181,8 @@
               "projects/erp-shared/src/lib/styles/style.bundle.css", 
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
               "projects/evaluation/src/styles.scss",
-              "projects/evaluation/src/assets/styles/picker.scss"
+              "projects/evaluation/src/assets/styles/picker.scss",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
               "node_modules/apexcharts/dist/apexcharts.min.js"
@@ -257,7 +258,8 @@
               "projects/erp-shared/src/lib/styles/style.bundle.css",
               "projects/erp-shared/src/lib/styles/plugins.bundle.css",
               "projects/evaluation/src/styles.scss",
-              "projects/evaluation/src/assets/styles/picker.scss"
+              "projects/evaluation/src/assets/styles/picker.scss",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": []
           }

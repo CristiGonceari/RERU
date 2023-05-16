@@ -2,14 +2,14 @@
 </app-page-title>
 
 <erp-shared-content>
-	<div class="row">
+	<div class="d-flex flex-row">
 		<div class="col">
 			<div class="card card-custom gutter-b erp-shared-desktop-wide">
 				<div class="card-header flex-wrap border-0 py-5">
 					<div class="card-title">
 						<h3 class="card-label" id="title">{{ 'questions.questions' | translate }}</h3>
 					</div>
-					<div class="card-toolbar">
+					<div class="card-toolbar d-md-flex d-none">
 						<erp-shared-export-button class="mr-3" (click)="questionsTable.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
@@ -36,40 +36,81 @@
 							</div>
 						</div>
 					</div>
+					<div class="card-toolbar d-md-none d-flex flex-column w-100">
+						<erp-shared-export-button class="w-100" width="100%" (click)="questionsTable.getHeaders(getTitle())">
+							{{'button.export' | translate}}
+						</erp-shared-export-button>
+						<div class="dropdown dropdown-inline my-auto w-100" ngbDropdown container="body">
+							<app-add-button class="btn my-auto pt-2 w-100" width="100%" id="action1" ngbDropdownToggle
+								[value]="'questions.add-question' | translate">
+							</app-add-button>
+							<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+								<div ngbDropdownMenu aria-labelledby="action1">
+									<button class="navi-link align-items-center px-6" ngbDropdownItem
+										(click)="add()">
+										<i class="la la-plus mr-2"></i>
+										{{'questions.add-question' | translate}}
+									</button>
+									<button (click)="bulkImport()" class="navi-link align-items-baseline px-6"
+										ngbDropdownItem>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload mr-2" viewBox="0 0 16 16">
+											<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+											<path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+										  </svg>
+										{{'questions.bulk-import' | translate}}
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="card-header border-0 mt-5 pr-5">
 					<div class="row w-100">
-						<div class="col">
+						<div class="col-lg col-md-6 col-12">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('questionName', $event)"
 								[placeholder]="'button.search-name' | translate" #question>
 							</erp-shared-search-input>
 						</div>
-						<div class="col">
+						<div class="col-lg col-md-6 col-12  pt-md-0 pt-2">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('categoryName', $event)"
 								[placeholder]="'questions.search-category' | translate" #category>
 							</erp-shared-search-input>
 						</div>
-						<div class="col">
+						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('questionTags', $event)"
 								[placeholder]="'questions.tags' | translate" #questionTags>
 							</erp-shared-search-input>
 						</div>
 					</div>
-					<div class="row w-100 mt-4">
-						<div class="col">
+					<div class="row w-100 mt-lg-3 mt-0">
+						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
 							<app-search-by-question-status (filter)="questionsTable.setFilter('status', $event)"
 								#status></app-search-by-question-status>
 						</div>
-						<div class="col">
+						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
 							<app-search-by-question-type (filter)="questionsTable.setFilter('type', $event)"
 								#type></app-search-by-question-type>
 						</div>
-						<div class="col">
-							<div class="w-100 text-right">
+						<div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
+							<div class="text-right">
 								<app-button 
+								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+								[value]="'button.reset' | translate"></app-button>
+							</div>
+						</div>
+						<div class="col-lg offset-lg-0 offset-md-6 col-md-6 d-lg-none d-md-block d-none pt-lg-0 pt-2">
+							<div class="text-right">
+								<app-button 
+								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+								[value]="'button.reset' | translate"></app-button>
+							</div>
+						</div>
+						<div class="col-12 d-md-none d-block pt-lg-0 pt-2">
+							<div class="d-flex flex-column">
+								<app-button width="100%" 
 								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
 								[value]="'button.reset' | translate"></app-button>
 							</div>

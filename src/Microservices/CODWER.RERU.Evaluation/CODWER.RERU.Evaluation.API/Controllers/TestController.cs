@@ -59,6 +59,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluatedTests;
+using CODWER.RERU.Evaluation.Application.Services;
+using CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -68,11 +70,13 @@ namespace CODWER.RERU.Evaluation.API.Controllers
     {
         private readonly IGetTestDocumentReplacedKeys _getTestDocumentReplacedKeys;
         private readonly IImportProcessService _importProcessService;
+        private readonly IPdfService _pdfService;
 
-        public TestController(IGetTestDocumentReplacedKeys getTestDocumentReplacedKeys, IImportProcessService importProcessService)
+        public TestController(IGetTestDocumentReplacedKeys getTestDocumentReplacedKeys, IImportProcessService importProcessService, IPdfService pdfService)
         {
             _getTestDocumentReplacedKeys = getTestDocumentReplacedKeys;
             _importProcessService = importProcessService;
+            _pdfService = pdfService;
         }
 
         [HttpGet("{id}")]
@@ -462,6 +466,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPost("add-test-result-file/{id}")]
+        public async Task<int> SetTestResultFile([FromRoute] int id)
+        {
+            return await Mediator.Send(new GenerateTestResultFileCommand { TestId = id });
         }
     }
 }

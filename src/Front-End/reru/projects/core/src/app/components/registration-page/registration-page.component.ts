@@ -19,6 +19,7 @@ import { VerifyEmailCodeModalComponent } from '../../utils/modals/verify-email-c
 import { saveAs } from 'file-saver';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { GuideService } from '../../utils/services/guide.service';
 
 @Component({
   selector: 'app-registration-page',
@@ -80,7 +81,8 @@ export class RegistrationPageComponent implements OnInit {
     private modalService: NgbModal,
     private applicationUserService: ApplicationUserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private guideService: GuideService
   ) { }
 
   ngOnInit(): void {
@@ -126,15 +128,17 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   initForm(): void {
+    var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+
     this.userForm = this.fb.group({
-      firstName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$'),]),
-      lastName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$'),]),
-      fatherName: this.fb.control(""),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      lastName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      fatherName: this.fb.control("", [Validators.pattern(matchesPattern)]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.pattern("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@((?!mail.ru|yandex.ru).)([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])")]),
       emailNotification: this.fb.control(false, [Validators.required]),
       birthday: this.fb.control(null, [Validators.required]),
-      phoneNumber: this.fb.control(null, [Validators.required])
+      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern('^((\\+373-?)|0)?[0-9]{8}$')])
     });
   }
 
@@ -255,6 +259,22 @@ export class RegistrationPageComponent implements OnInit {
       saveAs(file);
       this.isLoadingButton = false;
     });
+  }
+
+  downloadGhid(): void {
+    this.isLoadingButton = true;
+    this.guideService.getGhidCandidate().subscribe((response : any) => {
+      let fileName = response.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+      
+      if (response.body.type === 'application/pdf') {
+        fileName = fileName.replace(/(\")|(\.pdf)|(\')/g, '');
+      }
+
+      const blob = new Blob([response.body], { type: response.body.type });
+      const file = new File([blob], fileName, { type: response.body.type });
+      saveAs(file);
+      this.isLoadingButton = false;
+		});
   }
 
   checkFile(event) {

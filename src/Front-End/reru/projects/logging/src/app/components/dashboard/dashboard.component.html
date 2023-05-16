@@ -2,45 +2,54 @@
 </app-page-title>
 
 <erp-shared-content>
-  <div class="row">
+  <div class="d-flex flex-row">
     <div class="col">
       <div class="card card-custom gutter-b">
         <div class="card-header border-0 mt-5 pr-5" style="min-height: 100%;" *ngIf="showFilters">
           <div class="card-title py-3">
             <h3 class="card-label" id="title">{{'dashboard.title' | translate}}</h3>
           </div>
-          <div class="card-toolbar py-3 mr-8" (click)="getHeaders(getTitle())">
-            <erp-shared-export-button lass="mr-3">
-              {{'button.export' | translate}}
-            </erp-shared-export-button>
+          <div class="card-toolbar d-md-flex d-none">
+            <div class="card-toolbar py-3 mr-8" (click)="getHeaders(getTitle())">
+              <erp-shared-export-button lass="mr-3">
+                {{'button.export' | translate}}
+              </erp-shared-export-button>
+            </div>
+          </div>
+          <div class="card-toolbar d-md-none d-flex flex-column w-90">
+            <div class="my-auto w-100 pt-2" (click)="getHeaders(getTitle())">
+              <erp-shared-export-button lass="w-100">
+                {{'button.export' | translate}}
+              </erp-shared-export-button>
+            </div>
           </div>
           <div class="row w-100">
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
               <app-search-module (filter)="setFilter('projectName', $event)">
               </app-search-module>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <erp-shared-search-input (handleSearch)="setFilter('eventName', $event)"
                 [placeholder]="'dashboard.event' | translate">
               </erp-shared-search-input>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <erp-shared-search-input (handleSearch)="setFilter('userName', $event)"
                 [placeholder]="'dashboard.user-name' | translate">
               </erp-shared-search-input>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <erp-shared-search-input (handleSearch)="setFilter('eventMessage', $event)"
                 [placeholder]="'dashboard.event-message' | translate">
               </erp-shared-search-input>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 d-lg-block d-md-none d-none">
               <button type="button" class="btn btn-danger" style="width: 100%;" (click)="openDeleteModal()">{{
                 'dashboard.delete-logs' | translate }}</button>
             </div>
           </div>
-          <div class="row w-100" style="margin-top: 1%;">
-            <div class="col">
+          <div class="row w-100 mt-lg-3 mt-0">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input id="from" [owlDateTime]="fromDate" [placeholder]="'dashboard.from' | translate"
                   class="shadow-input" name="date" [(ngModel)]="dateTimeFrom"
@@ -52,7 +61,7 @@
                 <owl-date-time #fromDate></owl-date-time>
               </div>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input id="from" [owlDateTime]="toDate" [placeholder]="'dashboard.to' | translate" class="shadow-input"
                   name="date" [(ngModel)]="dateTimeTo" (ngModelChange)="getLoggingValues({toDate: $event})"
@@ -64,24 +73,50 @@
                 <owl-date-time #toDate></owl-date-time>
               </div>
             </div>
-            <div class="co">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <erp-shared-search-input (handleSearch)="setFilter('userIdentifier', $event)"
                 [placeholder]="'dashboard.user-identifier' | translate">
               </erp-shared-search-input>
             </div>
-            <div class="col">
+            <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <erp-shared-search-input (handleSearch)="setFilter('jsonMessage', $event)"
                 [placeholder]="'dashboard.json-message' | translate">
               </erp-shared-search-input>
             </div>
-            <div class="col-1">
-              <button class="btn btn-secondary reset" (click)="resetFilters()">
-                {{'button.reset' | translate }}
-              </button>
+          <!-- </div>
+          <div class="row w-100 mt-lg-3 mt-0"> -->
+            <div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
+              <div class="text-right">
+                <button class="btn btn-secondary reset" (click)="resetFilters()">
+                  {{'button.reset' | translate }}
+                </button>
+              </div>
             </div>
-            <div class="col">
-              <app-confirm-button [value]="'button.search' | translate" (click)="getLoggingValues()">
-              </app-confirm-button>
+            <div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
+              <div class="text-right">
+                <app-confirm-button [value]="'button.search' | translate" (click)="getLoggingValues()">
+                </app-confirm-button>
+              </div>
+            </div>
+            <div class="col-12 d-lg-none d-md-block d-none pt-lg-0 pt-2">
+                <button class="btn btn-secondary reset w-100 mb-2" (click)="resetFilters()">
+                  {{'button.reset' | translate }}
+                </button>
+                <app-confirm-button class="w-100" [value]="'button.search' | translate" (click)="getLoggingValues()">
+                </app-confirm-button>
+                <button type="button" class="btn btn-danger mt-2 w-100" (click)="openDeleteModal()">{{
+                  'dashboard.delete-logs' | translate }}</button>
+            </div>
+            <div class="col-12 d-md-none d-block pt-lg-0 pt-2">
+              <div class="d-flex flex-column">
+                <app-confirm-button class="w-100" [value]="'button.search' | translate" (click)="getLoggingValues()">
+                </app-confirm-button>
+                <button class="btn btn-secondary reset mt-2 w-100" (click)="resetFilters()">
+                  {{'button.reset' | translate }}
+                </button>
+                <button type="button" class="btn btn-danger mt-2 w-100" (click)="openDeleteModal()">{{
+                  'dashboard.delete-logs' | translate }}</button>
+            </div>
             </div>
           </div>
         </div>
@@ -91,7 +126,7 @@
             [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
           <h4 class="text-center text-primary" *ngIf="downloadFile"> {{'print.print-table' | translate}} </h4>
           <div *ngIf="!isLoading && !downloadFile"
-            class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+            class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
             id="kt_datatable">
             <table class="datatable table font-size-lg" style="overflow: visible">
               <thead class="text-uppercase text-muted">

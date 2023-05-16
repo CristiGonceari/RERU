@@ -192,6 +192,7 @@
     "AppraiserFatherNameKey": "Patronym of the evaluated person",
     "AppraiserIdnpKey": "IDNP from the bulletin of evaluated",
     "AppraiserEmailKey": "Email of evaluated person",
+    "AppraiserDepartmentRoleFunction": "Department/Role/Function",
     "EvaluatorNameKey": "The name of the evaluator",
     "EvaluatorLastNameKey": "First name of the evaluator",
     "EvaluatorFatherNameKey": "The evaluator's patronymic",
@@ -209,16 +210,18 @@
     "SettingsFormulaFoeOneAnswerKey": "Formula for questions with one answer",
     "SettingsFormulaForMultipleAnswerKey": "Formula for multiple choice questions",
     "StatusKey": "Test template status",
-    "ModeKey": "Test template mode",
+    "ModeKey": "Test template type",
     "CategoriesSequenceKey": "The order of the questions in the test",
     "TodayDateKey2": "Date for today",
-    "AccumulatedPercentageKey": "Accumulated score",
+    "AccumulatedPercentageKey": "Accumulated score/min. score",
     "MaxErrorsKey": "Maximum possible errors",
     "TestPassStatusKey": "Test status",
     "ResultStatusKey": "The test result",
     "EvaluatorIdnpKey": "IDNP from the evaluator's bulletin",
     "EvaluatorEmailKey": "Evaluator's email",
-    "TestNameKey":"Test Name"
+    "TestNameKey":"Test Name",
+    "BasicTestTemplate": "The basic template",
+    "QualifyingType": "The test template qualification type"
   },
   "button": {
     "add": "Add",
@@ -857,7 +860,8 @@
     "succes-detach-evaluator-msg": "Evaluator was successfully detached",
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name",
-    "from-event": "From event"
+    "from-event": "From event",
+    "expired-event": "This event is no longer active"
   },
   "test-template": {
     "test-template": "Test template",
@@ -886,6 +890,7 @@
     "succes-remove-msg": "Plan was successfully deleted",
     "plan-name": "Plan name",
     "attach-event": "Attach event",
+    "select-event":"Select the event",
     "attach-event-to-plan": "Attach event to plan",
     "remove-event-msg": "Are you sure you want to remove this event from this plan?",
     "succes-remove-event-msg": "Event was successfully deleted",
@@ -1164,5 +1169,19 @@
   "graph-tests-and-evaluations": {
     "name": "Tests and Evaluations",
     "note": "Notes: Tests and Evaluations taken over a year sorted by month"
+  },
+  "documents":{
+    "files": "Files",
+    "file": "File",
+    "options": "Options",
+    "signed-by": "Signed by",
+    "sign": "Sign",
+    "signed": "Signed",
+    "download": "Download",
+    "empty-siged-users": "Has not been signed by any user.",
+    "generate-test-result": "Generate file for the test result",
+    "empty-files": "No documents to sign",
+    "sign-file": "Sign file",
+    "sign-file-description": "Are you sure you want to sign the file:"
   }
 }

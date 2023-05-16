@@ -101,13 +101,16 @@ export class AddComponent implements OnInit {
   }
 
   initForm(): void {
+    var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+
     this.userForm = this.fb.group({
-      firstName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$'),]),
-      lastName: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$'),]),
-      fatherName: this.fb.control(""),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      lastName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
+      fatherName: this.fb.control("", [Validators.pattern(matchesPattern)]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
       phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern("^((\\+373-?)|0)?[0-9]{8}$"), Validators.maxLength(12), Validators.minLength(12)]),
+      birthDate: this.fb.control(null, [Validators.required]),
       departmentColaboratorId: this.fb.control(null, [Validators.required]),
       roleColaboratorId: this.fb.control(null, [Validators.required]),
       functionColaboratorId: this.fb.control(null, [Validators.required]),
@@ -120,15 +123,7 @@ export class AddComponent implements OnInit {
     return ValidatorUtil.isIdnpLengthValidator(this.userForm, field);
   }
 
-  setBirthDate(): void {
-		if (this.birthDate) {
-			const date = new Date(this.birthDate);
-			this.date = new Date(date.getTime() - (new Date(this.birthDate).getTimezoneOffset() * 60000)).toISOString();
-		}
-	}
-
   addUser(): void {
-    this.setBirthDate();
     let data = {
       firstName: this.userForm.value.firstName,
       lastName: this.userForm.value.lastName,
@@ -139,7 +134,7 @@ export class AddComponent implements OnInit {
       roleColaboratorId: this.userForm.value.roleColaboratorId,
       functionColaboratorId: this.userForm.value.functionColaboratorId,
       emailNotification: this.userForm.value.emailNotification,
-      birthDate: this.date || null,
+      birthDate: this.userForm.value.birthDate,
       phoneNumber: this.userForm.value.phoneNumber,
       accessModeEnum: this.userForm.value.accessModeEnum
     }

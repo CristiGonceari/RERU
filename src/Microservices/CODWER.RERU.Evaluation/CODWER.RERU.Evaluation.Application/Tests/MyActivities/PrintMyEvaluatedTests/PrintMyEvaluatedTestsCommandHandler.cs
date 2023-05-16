@@ -37,15 +37,22 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluated
                 .Include(t => t.UserProfile)
                 .Include(t => t.Event)
                 .Where(t => (t.EvaluatorId == currentUserId ||
-                             _appDbContext.EventEvaluators.Any(x =>
-                                 x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                                _appDbContext.EventEvaluators.Any(x => x.EventId == t.EventId && x.EvaluatorId == currentUserId)) && 
+                                t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
-            if (request.StartTime != null && request.EndTime != null)
+            if (request.Date != null)
             {
-                myTests = myTests.Where(p => p.StartTime >= request.StartTime && p.EndTime <= request.EndTime ||
-                                             (request.StartTime <= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime >= request.EndTime) ||
-                                             (request.StartTime >= p.StartTime && p.StartTime <= request.EndTime) && (request.StartTime <= p.EndTime && p.EndTime <= request.EndTime));
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date >= request.Date && t.EndTime.Value.Date <= request.Date
+                                : t.ProgrammedTime.Date == request.Date));
+            }
+            else if (request.StartTime != null && request.EndTime != null)
+            {
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndTime.Value.Date <= request.EndTime
+                                : t.ProgrammedTime.Date >= request.StartTime && t.ProgrammedTime.Date <= request.EndTime));
             }
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Test>

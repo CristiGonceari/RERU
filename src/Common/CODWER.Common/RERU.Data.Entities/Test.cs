@@ -11,6 +11,7 @@ namespace RERU.Data.Entities
         {
             TestQuestions = new HashSet<TestQuestion>();
             EmailTestNotifications = new HashSet<EmailTestNotification>();
+            DocumentsForSign = new HashSet<DocumentsForSign>();
         }
 
         public int? AccumulatedPercentage { get; set; }
@@ -25,7 +26,8 @@ namespace RERU.Data.Entities
         public string HashGroupKey { get; set; }
 
         public string ResultStatusValue => ResultStatus == TestResultStatusEnum.Recommended
-            ? $"{ResultStatus}:({RecommendedForValue}/{NotRecommendedForValue})" : ResultStatus.ToString();
+            ? $"{EnumMessages.Translate(ResultStatus)}:({RecommendedForValue}/{NotRecommendedForValue})" 
+            : EnumMessages.Translate(ResultStatus).ToString();
 
         public string RecommendedFor { get; set; }
         public string RecommendedForValue => string.IsNullOrEmpty(RecommendedFor) ? "x" : RecommendedFor;
@@ -55,5 +57,6 @@ namespace RERU.Data.Entities
 
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual ICollection<EmailTestNotification> EmailTestNotifications { get; set; }
+        public virtual ICollection<DocumentsForSign> DocumentsForSign { get; set; }
     }
 }

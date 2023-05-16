@@ -6,7 +6,7 @@
   },
   "right-sidebar": {
     "header": "Profil utilizator",
-    "my-profile": "Profilul meu",
+    "my-profile": "Profilul personal",
     "change-password": "Schimbare parolă",
     "logout": "Ieșire",
     "registration": "Înregistrare Core",
@@ -153,7 +153,7 @@
   },
   "sidebar": {
     "home": "Acasă",
-    "profile": "Profilul meu",
+    "profile": "Profilul personal",
     "administration": "Administrare",
     "modules": "Module",
     "users": "Utilizatori",
@@ -319,7 +319,7 @@
     "change-personal-details": "Schimbare datelor profilului personal:",
     "logout": "Ieșire",
     "logout-msg": "Sunteți sigur(-ă) că doriți să ieșiți din sistem?",
-    "empty-name": "Câmpul trebuie sa conțină doar litere latine",
+    "empty-name": "Câmpul este obligatoriu",
     "wrong-name": "Câmpul trebuie sa conțină doar litere latine",
     "empty-phone": "Câmpul este obligatoriu",
     "wrong-phone": "Vă rugăm să furnizați un format valid +373 xxxxxxxx",
@@ -435,7 +435,7 @@
       "send-email": "Notificare prin email"
     },
     "user-details": {
-      "title": "Profil utilizator",
+      "title": "Profilul personal",
       "overview": "Vizualizare profil",
       "details": "Vizualizare generală a detaliilor profilului utilizatorului",
       "module-access": "Acces la module",
@@ -568,9 +568,10 @@
     "01000115": "Telefon nevalid",
     "01000501": "Rol nevalid",
     "01000602": "Departament nevalid",
-    "01000107": "Email dublicat în sistem",
+    "01000107": "Email duplicat în sistem",
     "01000909": "Interval de timp nevalid",
     "01000116": "Parolă veche incorectă",
+    "01000117": "Parola nouă și parola veche sunt aceleași",
     "01000105": "Utilizator inexistent"
   },
   "print": {
@@ -591,7 +592,8 @@
     "phone-number": "Nr. telefon" 
   },
   "guide": {
-    "title": "Ghid Utilizator"
+    "title": "Ghid Utilizator",
+    "candidate": "Ghidul candidatului"
   },
   "faq": {
     "overview": "Prezentare generală",
@@ -669,8 +671,8 @@
     "emited-by":"Emis de",
     "relase-day":"Data eliberării",
     "adresses":"Adresa",
-    "birth-place":"Locul nasterii",
-    "residence-address":"Adresa de reşedința",
+    "birth-place":"Locul nașterii",
+    "residence-address":"Adresa de reşedință",
     "parents-residence-address":"Adresa de reședință a părinților",
     "abbreviations":{
       "city":"or. ",
@@ -711,6 +713,7 @@
     "profile": "Profilul",
     "study-form" : "Forma de învățământ",
     "study-title": "Titlul(licențiat în...)",
+    "master-title": "Titlul(master în...)",
     "doctor-title": "Titlul(doctor în...)",
     "study-coureses-type": "Tipuri de cursuri",
     "study-credit-number": "Nr. de ore/credite",
@@ -718,7 +721,7 @@
     "study-period-start-date": "Data de început",
     "study-period-end-date": "Data de încheiere",
     "not-selected-study-type": "Nici un tip de studii selectat.",
-    "add-study": "Adăugați un alt tip de studiu",
+    "add-study": "Adăugați un alt tip de studii",
     "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul"
   },
   "study-profiles":{
@@ -824,14 +827,15 @@
     "6": "Medii incomplete(8/9 clase)",
     "7": "Medii generale(10/11 clase)",
     "8": "Bacalaureat(12 clase)",
-    "9": "Medii de specializare(colegiu, centrul de excelentă)",
-    "10": "Superioare scurte/de scurta durata(colegiu)",
-    "11": "Superioare universitare(fara licentă)",
-    "12": "Superioare de licentă",
+    "9": "Medii de specializare(colegiu, centrul de excelență)",
+    "10": "Superioare scurte/de scurtă durată(colegiu)",
+    "11": "Superioare universitare(fără licență)",
+    "12": "Superioare de licență",
     "13": "Superioare de master",
+    "13": "Masterat",
     "14": "Superioare de doctorat",
     "15": "Postdoctorat",
-    "16": "Cursuri de formare perofesională"
+    "16": "Cursuri de formare profesională"
 
   },
   "studyFrequency":{

@@ -12,3 +12,8 @@
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
+
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
