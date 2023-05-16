@@ -10,7 +10,7 @@ namespace CODWER.RERU.Core.Application.UserGuide.GetCandidateGuide
     {
         public async Task<FileDataDto> Handle(GetCandidateGuidePdfQuery request, CancellationToken cancellationToken)
         {
-            var path = new FileInfo("UserGuide/Ghidul candidatului.pdf").FullName;
+            var path = new FileInfo("UserGuide/GhidulCandidatului.pdf").FullName;
             var bytes = await File.ReadAllBytesAsync(path);
 
             return FileDataDto.GetPdf("Ghidul candidatului.pdf", bytes);
