@@ -19,7 +19,10 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
+                                                {{'tests.mode' | translate}}
+                                            </label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
                                                 {{'tests.mode' | translate}}
                                             </label>
                                             <div class="col-lg-9 col-xl-9">
@@ -40,8 +43,10 @@
                                             </div>
                                         </div> -->
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
                                                 {{'tests.name'| translate}}</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
+                                                    {{'tests.name'| translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <input class="form-control form-control-solid" name="name"
                                                     type="text" formControlName="name"
@@ -50,7 +55,11 @@
                                         </div>
                                         <div class="form-group row">
                                             <label
-                                                class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
+                                                {{'categories.total-questions'| translate}}
+                                            </label>
+                                            <label
+                                                class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
                                                 {{'categories.total-questions'| translate}}
                                             </label>
                                             <div class="col-lg-9 col-xl-9">
@@ -60,7 +69,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
+                                                {{'faq.module-roles' | translate}}
+                                            </label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
                                                 {{'faq.module-roles' | translate}}
                                             </label>
                                             <div class="col-lg-9 col-xl-9">
@@ -80,7 +92,10 @@
                                         </div>
                                         <div *ngIf="modeId == 0 || modeId == null" class="form-group row">
                                             <label
-                                                class="col-xl-3 col-lg-3 col-form-label text-right">{{'tests.total-time'
+                                                class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'tests.total-time'
+                                                | translate}} ({{'tests.minutes' | translate}})</label>
+                                            <label
+                                                class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'tests.total-time'
                                                 | translate}} ({{'tests.minutes' | translate}})</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <input class="form-control form-control-solid" name="duration"
@@ -90,7 +105,10 @@
                                         </div>
                                         <div *ngIf="modeId == 0 || modeId == null" class="form-group row">
                                             <label
-                                                class="col-xl-3 col-lg-3 col-form-label text-right">{{'tests.min-percentage'
+                                                class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'tests.min-percentage'
+                                                | translate}}</label>
+                                            <label
+                                                class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'tests.min-percentage'
                                                 | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <input class="form-control form-control-solid" name="minPercent"
@@ -99,7 +117,8 @@
                                             </div>
                                         </div>
                                         <div *ngIf="modeId == 2" class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'test-template.qualifying-type' | translate}}</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'test-template.qualifying-type' | translate}}</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'test-template.qualifying-type' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                               <select [formControl]="testForm.controls['qualifyingType']" name="qualifyingType" class="form-control form-control-solid">
                                                 <option *ngFor="let item of qualifyingTypesWithout15" [value]="item.value">{{'statuses.' + item.label | translate}}</option>
@@ -107,7 +126,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'tests.basic-template-dropdown.title' | translate}}</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'tests.basic-template-dropdown.title' | translate}}</label>
+                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'tests.basic-template-dropdown.title' | translate}}</label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <select class="form-control form-control-solid" formControlName="basicTestTemplate">
                                                     <option [value]="null">{{ 'tests.basic-template-dropdown.0' | translate }}</option>
@@ -121,8 +141,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-right border-top pt-10">
+                            <div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
                                 <app-button class="btn mr-2" [value]="'button.cancel' | translate"
+                                    (handle)="backClicked()"></app-button>
+                                <app-add-button class="btn" *ngIf="!testId" [disabled]="testForm.invalid"
+                                    (handle)="onSave()" [value]="'button.confirm' | translate"></app-add-button>
+                                <app-confirm-button class="btn" *ngIf="testId" [disabled]="testForm.invalid"
+                                    (handle)="onSave()" [value]="'button.update' | translate">
+                                </app-confirm-button>
+                            </div>
+                            <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
+                                <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate"
                                     (handle)="backClicked()"></app-button>
                                 <app-add-button class="btn" *ngIf="!testId" [disabled]="testForm.invalid"
                                     (handle)="onSave()" [value]="'button.confirm' | translate"></app-add-button>

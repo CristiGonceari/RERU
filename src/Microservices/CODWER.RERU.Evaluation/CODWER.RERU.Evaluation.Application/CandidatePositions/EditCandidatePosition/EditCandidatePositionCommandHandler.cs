@@ -35,7 +35,6 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.EditCandidatePos
         public async Task<Unit> Handle(EditCandidatePositionCommand request, CancellationToken cancellationToken)
         {
             var positionToEdit = await _appDbContext.CandidatePositions.FirstAsync(x => x.Id == request.Data.Id);
-            request.Data.IsActive = positionToEdit.IsActive;
 
             _mapper.Map(request.Data, positionToEdit);
             await _appDbContext.SaveChangesAsync();

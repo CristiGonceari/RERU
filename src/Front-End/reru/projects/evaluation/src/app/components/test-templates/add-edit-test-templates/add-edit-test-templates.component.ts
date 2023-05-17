@@ -37,6 +37,7 @@ export class AddEditTestTemplateComponent implements OnInit {
 	tags: any[] = [];
 	placeHolder = '+ Rol';
 	items = [];
+	mobileButtonLength: string = "100%";
 
 	constructor(private location: Location,
 		private testTemplateService: TestTemplateService,

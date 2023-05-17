@@ -73,16 +73,31 @@
                             <div class="row required" *ngIf="enablePeriodField(obligation.value)">
                                 <div class="col">
                                     <p class="font-weight-bolder">{{'military-obligation.period' | translate}}</p>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
-                                            [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
-                                        </div>
-                                        <div class="col-6">
-                                            <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
-                                            [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                    <div class="d-none d-md-none d-lg-block">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                            <div class="col-6">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                                [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="d-block d-md-block d-lg-none">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                                [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
@@ -253,14 +268,28 @@
                         <tr *ngIf="enablePeriodField(obligation.value)">
                             <th>{{'military-obligation.period' | translate}}</th>
                             <td>
-                                <div class="row">
-                                    <div class="col">
-                                        <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
-                                        [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                <div class="d-none d-md-none d-lg-block">
+                                    <div class="row">
+                                        <div class="col">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                            [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                        </div>
+                                        <div class="col">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                        [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
-                                    [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                </div>
+                                <div class="d-block d-md-block d-lg-none">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                            [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                        </div>
+                                        <div class="col-9 mt-2">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                        [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -482,7 +511,7 @@
             <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
             <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="militaryObligationData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint-down>
             <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
-            <button class="d-md-block d-none btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData != null"
+            <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData != null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
             <button class="btn btn-success h-35px d-md-block d-none" matStepperNext *ngIf="militaryObligationData == null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |translate}}</button>
