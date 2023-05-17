@@ -38,23 +38,7 @@
                     
                 </div>
                 <div class="card-header border-0 mt-5">
-                    <div class="card-toolbar d-md-block d-none">
-                        <div class="d-flex flex-row">
-                            <div class="col-md-5 col-12">
-                              <erp-shared-search-input (handleSearch)="table.setFilter('name', $event)" [placeholder]="'button.search-name' | translate" #documentName></erp-shared-search-input>
-                            </div>
-                            <div class="col-md-5 col-12 pt-md-0 pt-2">
-                              <app-search-by-type (filter)="table.setFilter('fileType', $event)" #status></app-search-by-type>
-                            </div>
-                            <div class="col-12 pt-md-0 pt-2">
-                                <app-button class="btn mr-3" (handle)="clearFields(); table.resetFilters()" [value]="'button.reset' | translate">
-                                </app-button>
-                                <app-confirm-button class="w-100" (handle)="table.setFilter('fileType', $event)" [value]="'button.search' | translate">
-                                </app-confirm-button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-toolbar d-md-none d-block">
+                    <div class="card-toolbar">
                         <div class="row">
                             <div class="col-md-5 col-12">
                               <erp-shared-search-input (handleSearch)="table.setFilter('name', $event)" [placeholder]="'button.search-name' | translate" #documentName></erp-shared-search-input>
@@ -62,13 +46,11 @@
                             <div class="col-md-5 col-12 pt-md-0 pt-2">
                               <app-search-by-type (filter)="table.setFilter('fileType', $event)" #status></app-search-by-type>
                             </div>
-                            <div class="col-12 pt-md-0 pt-2">
-                                <app-button class="mb-4 w-100" width="100%" (handle)="clearFields(); table.resetFilters()" [value]="'button.reset' | translate">
-                                </app-button>
+                            <div class="col-md col col-auto pt-md-0 pt-2 d-md-block d-none">
+                                <app-button class="w-100" (handle)="clearFields(); table.resetFilters()" [value]="'button.reset' | translate"></app-button>
                             </div>
-                            <div class="col-12 pt-md-0 pt-2">
-                                <app-confirm-button class="w-100" (handle)="table.setFilter('fileType', $event)" [value]="'button.search' | translate">
-                                </app-confirm-button>
+                            <div class="col-12 pt-md-0 pt-2 d-md-none d-block">
+                                <app-button class="w-100" width="100%" (handle)="clearFields(); table.resetFilters()" [value]="'button.reset' | translate"></app-button>
                             </div>
                         </div>
                     </div>

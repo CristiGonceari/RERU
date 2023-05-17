@@ -155,17 +155,13 @@ export class AttachUserModalComponent implements OnInit {
     // else this.attachedItems[0] = +event.target.value;
   }
 
-  onItemChange(event: Event): void {
-    if ((<HTMLInputElement>event.target).checked == true) {
-      if (this.inputType !== 'checkbox') this.attachedItems.splice(0, 1);
-      this.attachedItems.push(+(<HTMLInputElement>event.target).value);
+  onItemChange(event): void {
+    if (event.target.checked == true) {
+      this.attachedItems.push(+event.target.value);
+    } else if (event.target.checked == false) {
+      let indexToDelete = this.attachedItems.findIndex(x => x == event.target.value);
+      this.attachedItems.splice(indexToDelete, 1);
     }
-
-    if ((<HTMLInputElement>event.target).checked == false) {
-      this.attachedItems.splice(this.attachedItems.indexOf(+(<HTMLInputElement>event.target).value), 1);
-    }
-
-    this.paginatedAttachedIds = this.users.length === this.attachedItems.length ? true : false;
   }
 
   setFilter(field: string, value): void {

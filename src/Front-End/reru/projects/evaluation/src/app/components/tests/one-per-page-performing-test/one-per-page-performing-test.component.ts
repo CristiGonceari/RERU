@@ -456,7 +456,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.testQuestionSummary = res.data;
             this.pageColor(res.data);
 
-            if (this.testQuestionSummary.every(x => x.isClosed === true) || this.questionIndex == this.count) {
+            if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.submitTest();
             } 
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
@@ -464,12 +464,10 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               const isNotClosedAnswers = this.testQuestionSummary.filter(x => x.isClosed === false);
 
               this.questionIndex = isNotClosedAnswers.some(x => x.index > this.questionIndex) ?
-                isNotClosedAnswers.filter(x => x.index > this.questionIndex)[0]?.index :
-                isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0]?.index;
-              if (this.questionIndex) {
-                this.getTestQuestions(this.questionIndex);
-              }
-            }  
+                isNotClosedAnswers.filter(x => x.index > this.questionIndex)[0].index :
+                isNotClosedAnswers.filter(x => x.index < this.questionIndex)[0].index;
+              this.getTestQuestions(this.questionIndex);
+            } 
             else {
               this.disableBtn = false;
               if (this.questionIndex < this.count) {

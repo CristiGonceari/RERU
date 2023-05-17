@@ -12,8 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
         public CandidatePositionMappingProfile()
         {
             CreateMap<AddEditCandidatePositionDto, CandidatePosition>()
-                .ForMember(x => x.Id, opts => opts.Ignore())
-                .ForMember(x => x.IsActive, opts => opts.MapFrom(c => c.From <= DateTime.Now && c.To >= DateTime.Now));
+                .ForMember(x => x.Id, opts => opts.Ignore());
 
             CreateMap<CandidatePosition, AddEditCandidatePositionDto>();
 

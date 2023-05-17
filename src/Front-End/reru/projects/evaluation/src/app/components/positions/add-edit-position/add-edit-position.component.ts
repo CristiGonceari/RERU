@@ -51,7 +51,6 @@ export class AddEditPositionComponent implements OnInit {
 	eventsTagsList = [];
 	eventsListForDescription = [];
 	medicalColumsList: SelectItem[] = [{ label: '', value: '' }];
-	mobileButtonLength: string = "100%";
 
 	public Editor = DecoupledEditor;
 	public onReady(editor) {

@@ -14,16 +14,14 @@
             <h3 class="mb-10 font-weight-bold text-dark">{{'events.event-details' | translate}}</h3>
             <div class="col-xl-12">
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.name' | translate}}</label>
-                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.name' | translate}}</label>
+                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.name' | translate}}</label>
                 <div class="col-lg-9 col-xl-9">
                   <input class="form-control form-control-lg form-control-solid" name="name" type="text"
                     [(ngModel)]="name" autocomplete="off" placeholder="{{'events.name' | translate}}"/>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.start-date' | translate}}</label>
-                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.start-date' | translate}}</label>
+                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.start-date' | translate}}</label>
                 <div class="col-lg-9 col-xl-9">
                   <input id="from" [owlDateTime]="fromDate" placeholder="{{'events.start-date' | translate}}"
                     class="shadow-input" name="date" [(ngModel)]="startDate" autocomplete="off" />
@@ -33,8 +31,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.end-date' | translate}}</label>
-                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.end-date' | translate}}</label>
+                <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'events.end-date' | translate}}</label>
                 <div class="col-lg-9 col-xl-9">
                   <input id="tillDate" [owlDateTime]="tillDate" placeholder="{{'events.end-date' | translate}}"
                     class="shadow-input" name="date" [(ngModel)]="endDate" autocomplete="off" />
@@ -45,9 +42,7 @@
               </div>
               <div class="form-group row mb-10">
                 <label
-                  class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.description' | translate}}</label>
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.description' | translate}}</label>
+                  class="col-xl-3 col-lg-3 col-form-label text-right">{{'locations.description' | translate}}</label>
                 <div class="col-lg-9 col-xl-9">
                     <textarea type="text" class="form-control form-control-lg form-control-solid" name="description"
                         placeholder="{{'locations.description' | translate}}" value="" [(ngModel)]="description">
@@ -55,16 +50,8 @@
                 </div>
               </div>
             </div>
-            <div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
+            <div class="text-right border-top pt-10">
               <app-button class="btn mr-2" (handle)="backClicked()"
-                [value]="'button.cancel' | translate"></app-button>
-              <app-add-button class="btn" *ngIf="!eventId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.confirm' | translate"></app-add-button>
-              <app-confirm-button class="btn" *ngIf="eventId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.update' | translate"></app-confirm-button>
-            </div>
-            <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
-              <app-button class="btn w-100" [width]="mobileButtonLength" (handle)="backClicked()"
                 [value]="'button.cancel' | translate"></app-button>
               <app-add-button class="btn" *ngIf="!eventId" (handle)="onSave()" [disabled]="cantAdd()"
                 [value]="'button.confirm' | translate"></app-add-button>

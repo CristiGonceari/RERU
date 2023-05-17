@@ -522,7 +522,6 @@
     "bulk-import": "Import (.xlsx)",
     "search-question": "Search by question",
     "search-category": "Search by category",
-    "search-category-mobile": "Search by category",
     "search-question-type": "Search by type",
     "step1": "Setup question type and its category",
     "step2": "Add question and its answer",

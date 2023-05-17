@@ -30,7 +30,6 @@ export class ApproveSolicitedTestComponent implements OnInit {
   messageText = "";
 
   userFiles: any[] = [];
-  mobileButtonLength: string = "100%";
 
   constructor(
     private solicitedTestService: SolicitedTestService,

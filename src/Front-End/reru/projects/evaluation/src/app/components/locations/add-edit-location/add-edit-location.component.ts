@@ -24,7 +24,6 @@ export class AddEditLocationComponent implements OnInit {
 	isLoading: boolean = true;
 	title: string;
 	description: string;
-	mobileButtonLength: string = "100%";
 
   	constructor(
    		private formBuilder: FormBuilder,

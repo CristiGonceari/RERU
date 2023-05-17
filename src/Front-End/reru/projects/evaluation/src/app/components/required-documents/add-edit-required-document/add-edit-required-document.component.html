@@ -16,9 +16,7 @@
               <div class="col-xl-12">
                   <div class="form-group row">
                       <label
-                        class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'require-documents.name' | translate}}</label>
-                      <label
-                        class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'require-documents.name' | translate}}</label>
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'require-documents.name' | translate}}</label>
                       <div class="col-lg-9 col-xl-9">
                         <input type="string" class="form-control form-control-lg form-control-solid"
                           name="name" value=" " formControlName="name"
@@ -27,9 +25,7 @@
                   </div>
                   <div class="form-group row">
                       <label
-                        class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'require-documents.must-be-on-candidate' | translate}}</label>
-                      <label
-                        class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'require-documents.must-be-on-candidate' | translate}}</label>
+                        class="col-xl-3 col-lg-3 col-form-label text-right">{{'require-documents.must-be-on-candidate' | translate}}</label>
                       <div class="col-lg-9 col-xl-9">
                           <input class="form-control form-control-lg form-control-solid" style="width: 25px;"
                           name="isActive" type="checkbox" formControlName="mandatory" />
@@ -38,16 +34,8 @@
               </div>
              
             </div>
-            <div class="text-right w-100 border-top pt-10 d-none d-md-block d-lg-block">
+            <div class="text-right w-100 border-top pt-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
-              </app-button>
-
-              <app-add-button class="btn" (handle)="onSave()" [disabled]="documentForm.invalid || disableBtn"
-                [value]="'button.confirm' | translate">
-              </app-add-button>
-            </div>
-            <div class="text-right w-100 border-top pt-10 d-block d-md-none d-lg-none">
-              <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
               </app-button>
 
               <app-add-button class="btn" (handle)="onSave()" [disabled]="documentForm.invalid || disableBtn"

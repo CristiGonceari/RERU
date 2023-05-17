@@ -35,7 +35,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
-                    .ThenInclude(tt => tt.Settings)
+                .ThenInclude(tt => tt.Settings)
                 .Include(t => t.TestQuestions)
                 .Include(t => t.UserProfile)
                 .Include(t => t.Location)
@@ -47,20 +47,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests
 
             if (request.Date != null)
             {
-                myTests = myTests.Where(t => (t.EventId != null && t.EndTime == null
-                                ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
-                                : t.ProgrammedTime.Date == request.Date) ||
-                                (t.EventId != null && t.EndTime == request.Date
-                                ? t.ProgrammedTime.Date <= request.Date && t.EndProgrammedTime.Value.Date >= request.Date
+                myTests = myTests.Where(t => (t.EventId != null
+                                ? t.ProgrammedTime.Date <= request.Date && t.EndTime.Value.Date >= request.Date
                                 : t.ProgrammedTime.Date == request.Date));
             }
             else if (request.StartTime != null && request.EndTime != null)
             {
                 myTests = myTests.Where(t => (t.EventId != null
-                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndProgrammedTime.Value.Date <= request.EndTime
-                                : t.ProgrammedTime.Date >= request.StartTime && t.ProgrammedTime.Date <= request.EndTime) ||
-                                (t.EventId != null && t.EndTime == request.Date
-                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndProgrammedTime.Value.Date <= request.EndTime
+                                ? t.ProgrammedTime.Date >= request.StartTime && t.EndTime.Value.Date <= request.EndTime
                                 : t.ProgrammedTime.Date >= request.StartTime && t.ProgrammedTime.Date <= request.EndTime));
             }
 

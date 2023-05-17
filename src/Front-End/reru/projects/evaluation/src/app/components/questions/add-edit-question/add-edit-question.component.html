@@ -15,9 +15,7 @@
             <div class="row w-100">
               <div class="col-xl-12">
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.type' |
-                    translate}}</label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.type' |
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.type' |
                     translate}}</label>
                   <div class="col-lg-9 col-xl-9">
                     <select name="questionType" class="form-control form-control-lg form-control-solid"
@@ -34,9 +32,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.question' |
-                    translate}}</label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.question' |
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.question' |
                     translate}}</label>
                   <div class="col-lg-9 col-xl-9">
                     <textarea type="text" #myTextArea class="form-control form-control-lg form-control-solid"
@@ -62,9 +58,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.category' |
-                    translate}}</label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.category' |
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.category' |
                     translate}}</label>
                   <div class="col-lg-9 col-xl-9">
                     <select class="form-control form-control-lg form-control-solid" name="questionCategoryId"
@@ -80,8 +74,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.points' |translate}}</label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.points' |translate}}</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'questions.points' |translate}}</label>
                   <div class="col-lg-9 col-xl-9">
                     <input type="number" class="form-control form-control-lg form-control-solid"
                       name="questionPoints" value="1" formControlName="questionPoints"
@@ -95,10 +88,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
-                    {{'questions.tags' | translate}}
-                  </label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">
                     {{'questions.tags' | translate}}
                   </label>
                   <div class="col-lg-9 col-xl-9">
@@ -113,8 +103,7 @@
                   </div>
                 </div>
                 <div class="form-group row mb-10">
-                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'faq.media' | translate}}</label>
-                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'faq.media' | translate}}</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right">{{'faq.media' | translate}}</label>
                   <div class="col-lg-9 col-xl-9">
                     <div *ngIf="fileId">
                       <app-add-edit-media-file [fileId]="fileId" (handleFile)="checkFile($event)"
@@ -129,15 +118,8 @@
                 </div>
               </div>
             </div>
-            <div class="text-right w-100 border-top pt-10 d-md-block d-lg-block d-none">
+            <div class="text-right w-100 border-top pt-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
-              </app-button>
-              <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid || disableBtn"
-                [value]="'button.confirm' | translate">
-              </app-add-button>
-            </div>
-            <div class="text-right w-100 border-top pt-10 d-md-none d-lg-none d-block">
-              <app-button class="btn mr-2 w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
               </app-button>
               <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid || disableBtn"
                 [value]="'button.confirm' | translate">

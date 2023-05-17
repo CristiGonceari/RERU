@@ -49,7 +49,6 @@ export class AddEditQuestionComponent implements OnInit {
   filenames: any;
   fileName: string;
   fileStatus = { requestType: '', percent: 1 }
-  mobileButtonLength: string = "100%";
 
   constructor(
     private questionService: QuestionService,
