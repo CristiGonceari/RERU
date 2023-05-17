@@ -80,13 +80,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="text-right border-top pt-10 d-md-block d-lg-block d-none">
+							<div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
 								<app-button class="btn mr-2" [value]="'button.back' | translate"
 									(handle)="backClicked()"></app-button>
 								<app-add-button class="btn" [value]="'button.confirm' | translate"
 									(handle)="saveArticle()" [disabled]="isButtonPressed || checkConfirmButton(editorData, articleForm)"></app-add-button>
 							</div>
-							<div class="text-right border-top pt-10 d-md-none d-lg-none d-block">
+							<div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
 								<app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.back' | translate"
 									(handle)="backClicked()"></app-button>
 								<app-add-button class="btn" [value]="'button.confirm' | translate"
