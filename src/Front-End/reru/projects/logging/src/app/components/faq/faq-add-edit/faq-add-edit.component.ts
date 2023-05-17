@@ -31,6 +31,7 @@ export class FaqAddEditComponent implements OnInit {
   description: string;
   no: string;
   yes: string;
+  mobileButtonLength: string = "100%";
 
   constructor(
     private articleService: ArticlesService,
