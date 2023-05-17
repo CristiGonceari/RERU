@@ -99,6 +99,9 @@
 	<None Update="UserGuide\GhidCore.pdf">
 	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
+	<None Update="UserGuide\GhidulCandidatului.pdf">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
