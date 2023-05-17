@@ -25,6 +25,7 @@ export class AddEditRequiredDocumentComponent implements OnInit {
 
   title: string;
   description: string;
+  mobileButtonLength: string = "100%";
 
   constructor(private requiredDocumentService: RequiredDocumentService,
     private formBuilder: FormBuilder,
