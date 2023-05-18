@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
@@ -13,7 +14,6 @@ using CVU.ERP.Notifications.Services;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
-using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
@@ -45,7 +45,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
-
+        private readonly HttpClient _httpClient;
         private IConfiguration Configuration { get; }
 
         public ExternalController(
@@ -59,7 +59,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IConfiguration configuration,
             AppDbContext appDbContext,
             IMapper mapper,
-            INotificationService notificationService
+            INotificationService notificationService,
+            HttpClient httpClient
             )
         {
             _userManager = userManager;
@@ -73,6 +74,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
+            _httpClient = httpClient;
         }
 
         /// <summary>
@@ -315,20 +317,12 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         [HttpGet]
         public async Task<IActionResult> MPassLogout()
         {
-            var idToken = await HttpContext.GetTokenAsync("id_token");
 
-            var id_Token = HttpContext.Session.GetString("id_token");
-            //string url = Url.Action("Logout", new { logoutId = idToken });
-            //return SignOut(new AuthenticationProperties { RedirectUri = url }, "Cookies", "oidc");
-            if (!string.IsNullOrEmpty(idToken))
-            {
-                // Do something with the id_token
-                return RedirectToAction("endsession", "connect", new { id_token_hint = id_Token });
-            }
+            var endpointUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "ms/reru-core/api/GetTokenId";
 
-            return NotFound();
+            var id_token = await _httpClient.GetAsync(endpointUrl);
 
-
+            return RedirectToAction("Logout", "Account", new { logoutId = id_token });
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>

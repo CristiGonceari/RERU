@@ -416,7 +416,8 @@ data:
       "Certificate": {
         "Path": "Files/Certificates/RERU-Codwer-DEV.pfx",
         "Password": "11111111"
-      }
+      },
+      "AllowedCorsOrigins": "http://reru.codwer.com"
     }
 
   reru_core.appsettings.json: |
