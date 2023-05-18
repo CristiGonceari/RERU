@@ -27,6 +27,7 @@ using CVU.ERP.Module.Application.ImportProcessServices;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
@@ -37,14 +38,18 @@ namespace CODWER.RERU.Core.API.Controllers
     public class UserController : BaseController
     {
         private readonly IImportProcessService _importProcessService;
+        private IConfiguration Configuration { get; }
 
-        public UserController(IMediator mediator,  IImportProcessService importProcessService) : base(mediator)
+        public UserController(IMediator mediator,  
+            IImportProcessService importProcessService,
+            IConfiguration configuration) : base(mediator)
         {
             _importProcessService = importProcessService;
+            Configuration = configuration;
         }
 
-        [HttpGet("token")]
-        public string GetTokenId()
+        [HttpGet("logout")]
+        public async Task<IActionResult> SamlLogout()
         {
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var token_id = string.Empty;
@@ -54,8 +59,9 @@ namespace CODWER.RERU.Core.API.Controllers
                 var jwtToken = jwtHandler.ReadJwtToken(token);
                 token_id = jwtToken.Id;
             }
+            var redirectUrl = Configuration.GetValue<string>("PlatformConfig:BaseUrl") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + token_id;
 
-            return token_id;
+            return Redirect(redirectUrl);
         }
 
         [HttpGet ("{id:int}")]

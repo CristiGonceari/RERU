@@ -210,21 +210,6 @@ namespace CODWER.RERU.Core.API
                     var msignRedirectUrl = msignClient.BuildRedirectAddress(msignRequestId, "MSignService/MSignCallback/" + msignRequestId) + $"?redirectUrl={returnUrl}"; ;
                     return Results.Redirect(msignRedirectUrl);
                 });
-
-                routes.MapGet("api/GetTokenId", async context =>
-                {
-                    var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
-                    var token_id = string.Empty;
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        var jwtHandler = new JwtSecurityTokenHandler();
-                        var jwtToken = jwtHandler.ReadJwtToken(token);
-                        token_id = jwtToken.Id;
-                    }
-
-                    await context.Response.WriteAsync(token_id);
-                });
-
             });
 
             //app.UseOpenApi();
