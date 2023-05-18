@@ -318,11 +318,13 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         public async Task<IActionResult> MPassLogout()
         {
 
-            var endpointUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "ms/reru-core/api/GetTokenId";
+            var endpointUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-core/api/GetTokenId";
 
             var id_token = await _httpClient.GetAsync(endpointUrl);
 
-            return RedirectToAction("Logout", "Account", new { logoutId = id_token });
+            var redirectUrl = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl") + "/Account/Logout?logoutId=" + id_token;
+
+            return Redirect(redirectUrl);
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>
