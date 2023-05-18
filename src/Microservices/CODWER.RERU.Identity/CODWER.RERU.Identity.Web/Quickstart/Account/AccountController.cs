@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Identity.Models;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -185,6 +186,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             {
                 // delete local authentication cookie
                 await _signInManager.SignOutAsync();
+
+                await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
 
                 // raise the logout event
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
