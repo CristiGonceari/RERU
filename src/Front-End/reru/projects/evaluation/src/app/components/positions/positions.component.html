@@ -135,10 +135,10 @@
                   </td>
                   <td class="text-center">
                     <svg-icon *ngIf="position.isActive === false" key="error" [width]="24" [height]="24"
-                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive">
+                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Inactive" [useToolTip]="false">
                     </svg-icon>
                     <svg-icon *ngIf="position.isActive === true" key="success" [width]="24" [height]="24"
-                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active">
+                      data-toggle="tooltip" data-placement="right" placement="right" ngbTooltip="Active" [useToolTip]="false">
                     </svg-icon>
                   </td>
                   <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
