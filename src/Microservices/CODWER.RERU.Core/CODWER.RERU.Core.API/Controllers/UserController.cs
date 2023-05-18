@@ -27,6 +27,7 @@ using CVU.ERP.Module.Application.ImportProcessServices;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -40,6 +41,21 @@ namespace CODWER.RERU.Core.API.Controllers
         public UserController(IMediator mediator,  IImportProcessService importProcessService) : base(mediator)
         {
             _importProcessService = importProcessService;
+        }
+
+        [HttpGet("token")]
+        public string GetTokenId()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var token_id = string.Empty;
+            if (!string.IsNullOrEmpty(token))
+            {
+                var jwtHandler = new JwtSecurityTokenHandler();
+                var jwtToken = jwtHandler.ReadJwtToken(token);
+                token_id = jwtToken.Id;
+            }
+
+            return token_id;
         }
 
         [HttpGet ("{id:int}")]
