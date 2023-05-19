@@ -11,6 +11,7 @@ import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18
 import { PrintModalComponent } from '@erp/shared';
 import { saveAs } from 'file-saver';
 import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
+import { EventCalendarComponent } from '../../../../utils/components/event-calendar/event-calendar.component';
 
 @Component({
 	selector: 'app-events-list-table',
@@ -18,7 +19,7 @@ import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
 	styleUrls: ['./events-list-table.component.scss']
 })
 export class EventsListTableComponent implements OnInit {
-	@ViewChild('name') name: any;
+	@ViewChild(EventCalendarComponent) currentMonth: boolean;
 	events: Event;
 	pagination: PaginationModel = new PaginationModel();
 	isLoading: boolean = true;
@@ -44,6 +45,7 @@ export class EventsListTableComponent implements OnInit {
 	dateTimeTo: string;
 	searchFrom: string;
 	searchTo: string;
+	name: string;
 	filters: any = {};
 
 	selectedDay;
@@ -74,17 +76,17 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getFilteredEvents(data: any = {}): void {
-		this.selectedDay = null;
 		this.setTimeToSearch();
 
 		let params = {
+			name: this.name,
 			fromDate: this.searchFrom,
 			tillDate: this.searchTo,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
-			...this.filters
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10, ...this.filters
 		}
-		if (this.searchFrom != null || this.searchTo != null) {
+		if(this.searchFrom != null || this.searchTo != null || this.name != null || params.fromDate != null || 
+			params.tillDate != null || params.name != null) {
 			this.eventService.getEvents(params).subscribe(res => {
 				if (res && res.data) {
 					this.fromDate = res.data.fromDate;
@@ -105,15 +107,15 @@ export class EventsListTableComponent implements OnInit {
 	clearFields() {
 		this.filters = {};
 		this.clearDateFields();
-		this.name.value = '';
 		this.getListByDate();
 	}
 
-	clearDateFields() {
-		this.dateTimeFrom = '';
-		this.dateTimeTo = '';
-		this.searchFrom = '';
-		this.searchTo = '';
+	clearDateFields(){
+		this.dateTimeFrom = null;
+		this.dateTimeTo = null;
+		this.searchFrom = null;
+		this.searchTo = null;
+		this.name = null;
 	}
 
 	list(data: any = {}) {
