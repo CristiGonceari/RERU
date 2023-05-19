@@ -42,7 +42,9 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
             string userName = user?.FindFirst(ClaimTypes.Name)?.Value;
 
-            var identityContext = await _identityDbContext.UserTokens.FirstOrDefaultAsync(ut => ut.UserId == userId);
+            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+            var identityContext = await _identityDbContext.UserTokens.FirstOrDefaultAsync(ut => ut.UserId == identityUser.Id);
 
             var claimsList = new
             {
@@ -50,9 +52,10 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 userEmail = userEmail,
                 userName = userName,
                 userId = userId,
+                identityUser = identityUser,
                 name = identityContext?.Name,
                 value = identityContext?.Value,
-                loginProvider = identityContext?.LoginProvider
+                loginProvider = identityContext?.LoginProvider,
             };
 
             return claimsList.ToString();
