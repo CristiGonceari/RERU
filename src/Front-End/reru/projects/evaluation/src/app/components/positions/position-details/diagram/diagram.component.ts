@@ -43,9 +43,6 @@ export class DiagramComponent implements OnInit {
 	no: string;
 	yes: string;
 
-	isDisabled: boolean;
-	tooltip: string;
-
 	isOpenAddTest: boolean = false;
 	isOpenAddEvaluation: boolean = false;
 
@@ -87,13 +84,13 @@ export class DiagramComponent implements OnInit {
 				this.eventsDiagram.forEach(event => {
 					event.testTemplates.forEach(element => {
 						this.testTemplates.push(element);
-						this.isDisabled = !this.eventsDiagram.find(event => event.eventId === element.eventId).isActive;
+						element.isDisabled = !this.eventsDiagram.find(event => event.eventId === element.eventId).isActive;
 
 						forkJoin([
 							this.translate.get('tests.program-test'),
 							this.translate.get('events.expired-event'),
 						]).subscribe(([tooltip1, tooltip2]) => {
-							this.isDisabled ? this.tooltip = tooltip2 :  this.tooltip = tooltip1;
+							element.tooltip = element.isDisabled ? tooltip2 : tooltip1;
 						});
 					});
 				});
