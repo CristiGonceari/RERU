@@ -48,22 +48,6 @@ namespace CODWER.RERU.Core.API.Controllers
             Configuration = configuration;
         }
 
-        [HttpGet("logout")]
-        public async Task<IActionResult> SamlLogout()
-        {
-            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
-            var token_id = string.Empty;
-            if (!string.IsNullOrEmpty(token))
-            {
-                var jwtHandler = new JwtSecurityTokenHandler();
-                var jwtToken = jwtHandler.ReadJwtToken(token);
-                token_id = jwtToken.Id;
-            }
-            var redirectUrl = Configuration.GetValue<string>("PlatformConfig:BaseUrl") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + token_id;
-
-            return Redirect(redirectUrl);
-        }
-
         [HttpGet ("{id:int}")]
         public Task<UserDetailsOverviewDto> GetUserDetails ([FromRoute] int id) 
         {

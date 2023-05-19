@@ -45,7 +45,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
-        private readonly HttpClient _httpClient;
+
         private IConfiguration Configuration { get; }
 
         public ExternalController(
@@ -59,8 +59,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IConfiguration configuration,
             AppDbContext appDbContext,
             IMapper mapper,
-            INotificationService notificationService,
-            HttpClient httpClient
+            INotificationService notificationService
             )
         {
             _userManager = userManager;
@@ -74,7 +73,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _appDbContext = appDbContext;
             _mapper = mapper;
             _notificationService = notificationService;
-            _httpClient = httpClient;
         }
 
         /// <summary>
@@ -315,13 +313,28 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         }
 
         [HttpGet]
-        public async Task<IActionResult> MPassLogout()
+        public async Task<string> MPassLogout()
         {
-            var endpointLocal = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-core/api/User/logout";
+            ClaimsPrincipal user = User;
 
-            //var id_token = await _httpClient.GetAsync(endpointLocal);
+            string userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
+            string userName = user?.FindFirst(ClaimTypes.Name)?.Value;
 
-            return Redirect(endpointLocal);
+            var identityContext = _identityDbContext.UserTokens.FirstOrDefaultAsync(ut => ut.UserId == userId);
+
+            var claimsList = new 
+            { 
+                user = user,
+                userEmail = userEmail,
+                userName = userName,
+                userId = userId, 
+                name = identityContext.Result?.Name, 
+                value = identityContext.Result?.Value, 
+                loginProvider = identityContext.Result?.LoginProvider 
+            };
+
+            return claimsList.ToString();
         }
 
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>
