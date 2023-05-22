@@ -22,11 +22,17 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly ISigningCredentialStore _signingCredentialStore;
 
-        public TestController(IHttpContextAccessor httpContextAccessor, IdentityDbContext identityDbContext, IIdentityServerInteractionService interactionService)
+        public TestController(
+            IHttpContextAccessor httpContextAccessor, 
+            IdentityDbContext identityDbContext, 
+            IIdentityServerInteractionService interactionService,
+            ISigningCredentialStore signingCredentialStore
+            )
         {
             _httpContextAccessor = httpContextAccessor;
             _identityDbContext = identityDbContext;
             _interactionService = interactionService;
+            _signingCredentialStore = signingCredentialStore;
         }
 
         [HttpGet]
@@ -44,17 +50,16 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         {
             ClaimsPrincipal user = User;
 
-            var httpUser = HttpContext?.Session?.Keys?.ToList();
-
-            var session = HttpContext?.Session;
+            var httpContext = HttpContext.User?.Claims;
 
             string userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
-            string userName = user?.FindFirst(ClaimTypes.Name)?.Value;
+            string userName = user?.FindFirst("firstName")?.Value;
             string Authentication = user?.FindFirst(ClaimTypes.Authentication)?.Value;
             string NameIdentifier = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             string acces_token = user?.FindFirst("access_token")?.Value;
             string id_token = user?.FindFirst("id_token")?.Value;
+            string authorization = user?.FindFirst("Authorization")?.Value;
 
             var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
 
@@ -78,9 +83,11 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 loginProvider = identityContext?.LoginProvider,
                 token = token,
                 identityTokens = identityTokens,
-                signingCredentials = signingCredentials,
-                httpUser = httpUser,
-                session = session
+                signingCredentials = signingCredentials?.Key,
+                httpContext = httpContext,
+                acces_token = acces_token,
+                id_token = id_token,
+                authorization = authorization
             };
 
             return claimsList.ToString();
