@@ -46,6 +46,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             var httpUser = HttpContext?.Session?.Keys?.ToList();
 
+            var session = HttpContext?.Session;
+
             string userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
             string userName = user?.FindFirst(ClaimTypes.Name)?.Value;
@@ -77,7 +79,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 token = token,
                 identityTokens = identityTokens,
                 signingCredentials = signingCredentials,
-                httpUser = httpUser
+                httpUser = httpUser,
+                session = session
             };
 
             return claimsList.ToString();
