@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using CODWER.RERU.Core.Application.Me.GetMe;
 using CODWER.RERU.Core.DataTransferObjects.Me;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CODWER.RERU.Core.API.Controllers 
