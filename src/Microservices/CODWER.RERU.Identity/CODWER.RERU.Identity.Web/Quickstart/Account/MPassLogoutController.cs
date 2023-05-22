@@ -34,5 +34,19 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             return Redirect(redirectUrl);
         }
+
+        [HttpGet("info")]
+        public async Task<string> GetInfoAsync()
+        {
+            ClaimsPrincipal user = User;
+
+            string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
+
+            var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Email == userEmail);
+
+            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/connect/endsession?id_token_hint=" + userProfile.Token;
+
+            return new { userEmail = userEmail, userProfile = userProfile.Token, redirectUrl = redirectUrl }.ToString();
+        }
     }
 }
