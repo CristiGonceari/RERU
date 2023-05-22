@@ -312,31 +312,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return Redirect(redirectURl);
         }
 
-        [HttpGet]
-        public async Task<string> MPassLogout()
-        {
-            ClaimsPrincipal user = User;
-
-            string userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
-            string userName = user?.FindFirst(ClaimTypes.Name)?.Value;
-
-            var identityContext = await _identityDbContext.UserTokens.FirstOrDefaultAsync(ut => ut.UserId == userId);
-
-            var claimsList = new 
-            { 
-                user = user,
-                userEmail = userEmail,
-                userName = userName,
-                userId = userId, 
-                name = identityContext?.Name, 
-                value = identityContext?.Value, 
-                loginProvider = identityContext?.LoginProvider 
-            };
-
-            return claimsList.ToString();
-        }
-
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>
             FindUserFromExternalProviderAsync(AuthenticateResult result)
         {

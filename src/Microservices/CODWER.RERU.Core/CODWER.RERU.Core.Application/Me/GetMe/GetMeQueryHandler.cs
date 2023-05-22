@@ -35,9 +35,11 @@ namespace CODWER.RERU.Core.Application.Me.GetMe {
             var currentUser = await _currentUserProvider.Get ();
             me.User = Mapper.Map<ApplicationUserDto> (currentUser);
             me.Tenant = _tenantDto;
-            me.Authorization = request.Authorization;
 
             var userProfile = AppDbContext.UserProfiles.FirstOrDefault(up => up.Id == int.Parse(currentUser.Id));
+
+            userProfile.Token = request.Authorization;
+            await AppDbContext.SaveChangesAsync();
 
             if (userProfile.DepartmentColaboratorId == null &&
                 userProfile.RoleColaboratorId == null && 

@@ -195,7 +195,7 @@ namespace CODWER.RERU.Identity.Web
 
                     endpoints.MapGet("/mpass-slo", () =>
                     {
-                        return Results.Redirect("/External/MPassLogout");
+                        return Results.Redirect("api/MPassLogout");
                     });
 
                 });
