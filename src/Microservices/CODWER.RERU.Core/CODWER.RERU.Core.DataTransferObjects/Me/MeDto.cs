@@ -7,5 +7,6 @@ namespace CODWER.RERU.Core.DataTransferObjects.Me {
         public ApplicationUserDto User { set; get; }
         public TenantDto Tenant { get; set; }
         public bool IsCandidateStatus { get; set; }
+        public string Authorization { get; set; }
     }
 } 
