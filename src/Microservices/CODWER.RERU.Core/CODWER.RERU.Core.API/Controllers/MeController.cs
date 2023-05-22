@@ -14,7 +14,10 @@ namespace CODWER.RERU.Core.API.Controllers
 
         [HttpGet]
         public async Task<MeDto> GetMe () {
-            return await Mediator.Send (new GetMeQuery ());
+
+            string authorization = Request.Headers["Authorization"];
+
+            return await Mediator.Send (new GetMeQuery { Authorization = authorization });
         }
     }
 }
