@@ -89,7 +89,9 @@ export class AddEditTestTemplateComponent implements OnInit {
 	getTestTemplate() {
 		this.testTemplateService.getTestTemplate(this.testId).subscribe(res => {
 			if (res && res.data) {
-				if (res.data.mode == 1)
+				if (res.data.mode == 0)
+					this.addTestSettings(this.testId);
+				else if (res.data.mode == 1)
 					this.addPollSetting(this.testId);
 				else if (res.data.mode == 2)
 					this.addEvaluationSetting(this.testId);
@@ -324,6 +326,29 @@ export class AddEditTestTemplateComponent implements OnInit {
 			formulaForOneAnswer: null,
 			negativeScoreForOneAnswer: null,
 			formulaForMultipleAnswers: null,
+			negativeScoreForMultipleAnswers: null
+		}
+
+		this.testTemplateService.addEditTestTemplateSettings({ data: data }).subscribe();
+	}
+
+	addTestSettings(testTemplateId) {
+		let data = {
+			testTemplateId: testTemplateId,
+			startWithoutConfirmation: true,
+			startBeforeProgrammation: true,
+			startAfterProgrammation: true,
+			possibleGetToSkipped: true,
+			possibleChangeAnswer: true,
+			canViewResultWithoutVerification: true,
+			canViewPollProgress: false,
+			hidePagination: false,
+			showManyQuestionPerPage: false,
+			questionsCountPerPage: null,
+			maxErrors: null,
+			formulaForOneAnswer: 0,
+			negativeScoreForOneAnswer: null,
+			formulaForMultipleAnswers: 0,
 			negativeScoreForMultipleAnswers: null
 		}
 
