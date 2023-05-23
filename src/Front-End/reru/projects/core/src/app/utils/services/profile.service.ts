@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 //import { AbstractService } from './abstract.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MyProfile } from '../models/user-profile.model';
 import { Response, AppSettingsService, AbstractService } from '@erp/shared';
 import { UserModuleAccessModel } from '../models/user-module-access.model';
@@ -11,6 +11,7 @@ import { UserModuleAccessModel } from '../models/user-module-access.model';
 })
 export class ProfileService extends AbstractService {
 	private readonly routeUrl: string = 'profile';
+	public isUserUpdated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(protected configService: AppSettingsService, private http: HttpClient) {
 		super(configService);
