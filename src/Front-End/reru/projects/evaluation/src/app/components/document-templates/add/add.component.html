@@ -23,11 +23,11 @@
             <div class="col-lg-6 col-xl-6">
               <select class="form-control" [(ngModel)]="forEditFileType" required
               (change)="getListOfKeys(forEditFileType)">
-              <option class="default-option text-muted" value="" disabled>{{ 'documents-templates.select-document' | translate }}
+              <option class="default-option text-muted" selected="true" value="">{{ 'documents-templates.select-document' | translate }}
               </option>
-              <option *ngFor="let item of fileType" [ngValue]="item.value" [selected]="item.value == forEditFileType">
+              <option *ngFor="let item of fileType" [value]="item.value">
                 {{ 'document-test-modal.' + item.value | translate }}
-                </option>
+              </option>
               </select>              
             </div>
           </div>

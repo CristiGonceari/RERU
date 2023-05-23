@@ -45,12 +45,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.Internal.GetTestIdForFastStar
                 .Include(x => x.TestTemplate)
                 .Include(x => x.Event)
                 .Where(test => test.UserProfileId == int.Parse(currentUser.Id) &&
-                               (test.Event == null ?
-                                        test.ProgrammedTime <= _timeRangeBeforeStart && test.ProgrammedTime >= _timeRangeAfterStart :
-                                        test.Event.FromDate <= _dateTime.Now && test.Event.TillDate >= _dateTime.Now) &&
+                            (test.Event != null && test.Event.FromDate <= _dateTime.Now && 
+                            test.Event.TillDate >= _dateTime.Now || test.Event == null) &&
                             test.TestTemplate.Mode == TestTemplateModeEnum.Test &&
-                                                        (test.TestStatus == TestStatusEnum.Programmed || 
-                                                         test.TestStatus == TestStatusEnum.AlowedToStart))
+                                                        (test.TestStatus == TestStatusEnum.Programmed ||
+                                                        test.TestStatus == TestStatusEnum.AlowedToStart))
                 .OrderByDescending(x => x.CreateDate)
                 .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
                 .Select(u => _mapper.Map<GetTestForFastStartDto>(u))
