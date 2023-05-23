@@ -63,7 +63,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests
 
             if (!string.IsNullOrWhiteSpace(request.EventName))
             {
-                myTests = myTests.Where(x => x.Event.Name.ToLower().Contains(request.EventName.ToLower()));
+                myTests = myTests.Where(x => x.EventId != null && x.Event.Name.ToLower().Contains(request.EventName.ToLower()));
             }
 
             return await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(myTests, request);
