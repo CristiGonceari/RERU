@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +48,7 @@ export class PlansListComponent implements OnInit {
 	dateTimeTo: string;
 	searchFrom: string;
 	searchTo: string;
-  name: string = '';
+  name: string;
 
   title: string;
   description: string;
@@ -84,18 +84,18 @@ export class PlansListComponent implements OnInit {
 	}
 
   getFilteredEvents(data: any = {}) :void {
-    this.selectedDay = null;
     this.setTimeToSearch();
 
     let params = {
-      name: this.name || '',
+      name: this.name,
       fromDate: this.searchFrom,
       tillDate: this.searchTo,
       page: data.page || this.pagination.currentPage,
-      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
-      ...this.filters
+      itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10, ...this.filters
     }
-    if(this.searchFrom != null || this.searchTo != null) {
+
+    if(this.searchFrom != null || this.searchTo != null || this.name != null || params.fromDate != null || 
+        params.tillDate != null || params.name != null) {
       this.planService.list(params).subscribe(res => {
         if(res && res.data) {
           this.fromDate = res.data.fromDate;
@@ -140,16 +140,16 @@ export class PlansListComponent implements OnInit {
 
   clearFields(){
     this.filters = {};
-		this.clearDateFields();
-		this.name = '';
-		this.getListByDate();
+    this.clearDateFields();
+    this.getListByDate();
 	}
 
   clearDateFields(){
-    this.dateTimeFrom = '';
-		this.dateTimeTo = '';
-		this.searchFrom = '';
-		this.searchTo = '';
+    this.dateTimeFrom = null;
+		this.dateTimeTo = null;
+		this.searchFrom = null;
+		this.searchTo = null;
+    this.name = null;
   }
 
   list(data: any = {}): void {
@@ -217,7 +217,6 @@ export class PlansListComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
-      name: this.name || '',
       fromDate: this.searchFrom || null,
       tillDate: this.searchTo || null,
       ...this.filters
