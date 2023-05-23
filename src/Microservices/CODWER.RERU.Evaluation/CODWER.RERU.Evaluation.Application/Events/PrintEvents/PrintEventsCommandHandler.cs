@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
+using System.Linq;
 
 namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
 {
@@ -23,6 +24,19 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
         public async Task<FileDataDto> Handle(PrintEventsCommand request, CancellationToken cancellationToken)
         {
             var events = GetAndFilterEvents.Filter(_appDbContext, request.Name, request.LocationKeyword, request.FromDate, request.TillDate);
+            
+            if (request.Date != null)
+            {
+                events = events.Where(p => p.FromDate.Date <= request.Date && p.TillDate.Date >= request.Date);
+            }
+            else if (request.StartTime != null && request.EndTime != null)
+            {
+                events = events.Where(x => 
+                                (x.FromDate >= request.StartTime && x.FromDate <= request.EndTime) || 
+                                (x.FromDate <= request.StartTime && x.TillDate >= request.StartTime) || 
+                                (x.FromDate <= request.EndTime && x.TillDate >= request.EndTime) 
+                );
+            }
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Event>
             {
