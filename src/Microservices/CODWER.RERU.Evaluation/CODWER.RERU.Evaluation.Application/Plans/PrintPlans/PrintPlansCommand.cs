@@ -12,6 +12,9 @@ namespace CODWER.RERU.Evaluation.Application.Plans.PrintPlans
     public class PrintPlansCommand : TableParameter, IRequest<FileDataDto>
     {
         public string Name { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? TillDate { get; set; }
     }

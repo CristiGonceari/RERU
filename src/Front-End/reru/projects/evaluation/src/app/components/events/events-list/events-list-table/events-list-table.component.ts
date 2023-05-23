@@ -48,6 +48,8 @@ export class EventsListTableComponent implements OnInit {
 	name: string;
 	filters: any = {};
 
+	startTime;
+    endTime;
 	selectedDay;
 	countedPlans;
 
@@ -205,6 +207,8 @@ export class EventsListTableComponent implements OnInit {
 			fromDate: this.parseDates(data.fromDate),
 			tillDate: this.parseDates(data.tillDate)
 		}
+		this.startTime = request.fromDate;
+		this.endTime = request.tillDate;
 		this.service.getEventCount(request).subscribe(response => {
 			if (response.success) {
 				this.countedPlans = response.data;
@@ -279,6 +283,9 @@ export class EventsListTableComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
+			date: this.selectedDay,
+			startTime: this.startTime,
+			endTime: this.endTime,
 			fromDate: this.searchFrom || null,
 			tillDate: this.searchTo || null,
 			...this.filters

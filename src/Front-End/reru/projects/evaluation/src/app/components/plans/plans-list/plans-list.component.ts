@@ -24,6 +24,8 @@ export class PlansListComponent implements OnInit {
 
   public calendar: CalendarDay[] = [];
 
+  startTime;
+  endTime;
   selectedDay;
   date: Date;
 
@@ -217,8 +219,11 @@ export class PlansListComponent implements OnInit {
 			tableName: name,
 			fields: this.headersToPrint,
 			orientation: 2,
+      date: this.selectedDay,
+			startTime: this.startTime,
+			endTime: this.endTime,
       fromDate: this.searchFrom || null,
-      tillDate: this.searchTo || null,
+			tillDate: this.searchTo || null,
       ...this.filters
 		};
 		const modalRef: any = this.modalService.open(PrintModalComponent, { centered: true, size: 'xl' });
@@ -306,7 +311,9 @@ export class PlansListComponent implements OnInit {
       fromDate: this.parseDates(data.fromDate),
       tillDate: this.parseDates(data.tillDate)
     }
-
+    
+    this.startTime = request.fromDate;
+		this.endTime = request.tillDate;
     this.planService.getPlanCount(request).subscribe(response => {
       if (response.success) {
         this.countedPlans = response.data;
