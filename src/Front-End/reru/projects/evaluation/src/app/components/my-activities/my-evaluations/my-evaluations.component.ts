@@ -88,6 +88,9 @@ export class MyEvaluationsComponent implements OnInit {
 
 	setFilter(field: string, value): void {
 		this.filters[field] = value;
+	}
+
+	getTests(){
 		this.pagedSummary.currentPage = 1;
 		this.getUserTests();
 	}
