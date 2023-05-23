@@ -76,3 +76,12 @@
     float: right;
 }
 
+.text-responsive{
+  font-size: 1.25rem;
+}
+
+@media screen and (min-width: 993px) and (max-width: 1035px) {
+  .text-responsive {
+    font-size: 1.05rem;
+  }
+}

@@ -21,15 +21,17 @@
   </div>
   <div class="row m-0">
     <div class="col">
-      <div class="d-flex row justify-content-end my-3">
-        <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="isChecked && allowToFinish" [description]="'stepper.button-end' | translate"></app-stepper-arrow-hint>
-        <div  class="d-md-none d-block  w-100 d-flex justify-content-center">
-          <app-stepper-arrow-hint-down *ngIf="isChecked && allowToFinish" [description]="'stepper.button-end' | translate"></app-stepper-arrow-hint-down>
-        </div>
-        <button class="btn btn-success h-35px"
-        [disabled]="isChecked == false || !allowToFinish" 
-        (click)="addRegistrationFluxStep()"
-            >{{'stepper.button-end' | translate}}</button>
+      <div class="row pc-container-menu my-3">
+        <app-stepper-arrow-hint *ngIf="isChecked && allowToFinish" [description]="'stepper.button-end' | translate"></app-stepper-arrow-hint>
+        <button class="btn btn-success h-35px" [disabled]="isChecked == false || !allowToFinish" 
+          (click)="addRegistrationFluxStep()">{{'stepper.button-end' | translate}}
+        </button>
+      </div>
+      <div class="row mobile-container-menu my-3">
+        <app-stepper-arrow-hint-down *ngIf="isChecked && allowToFinish" [description]="'stepper.button-end' | translate"></app-stepper-arrow-hint-down>
+        <button class="btn btn-success h-35px" [disabled]="isChecked == false || !allowToFinish" 
+          (click)="addRegistrationFluxStep()">{{'stepper.button-end' | translate}}
+        </button>
       </div>
     </div>
 </div>
