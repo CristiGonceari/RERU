@@ -26,6 +26,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private readonly IMediator _mediator;
         private readonly AppDbContext _appDbContext;
         private readonly Color _color = Color.FromArgb(255, 0, 0);
+        private readonly Color _colorReset = Color.FromArgb(255, 255, 255);
    
         public BulkImportUsersCommandHandler(AppDbContext appDbContext, 
             IStorageFileService storageFileService, 
@@ -150,7 +151,6 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             catch (Exception e)
             {
                 workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
-                Console.WriteLine(e);
             }
         }
 
@@ -169,7 +169,6 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             catch (Exception e)
             {
                 workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
-                Console.WriteLine(e);
             }
         }
 
@@ -202,7 +201,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private CreateUserCommand GetCreateUserCommand(ExcelWorksheet workSheet, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
+            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Substring(0, 10).Split(delimiters, StringSplitOptions.None);
 
             return new CreateUserCommand
             {
@@ -224,7 +223,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private EditUserFromColaboratorCommand GetEditUserCommand(ExcelWorksheet workSheet, UserProfile user, int i)
         {
             String[] delimiters = { ".", "/" };
-            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
+            var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Substring(0, 10).Split(delimiters, StringSplitOptions.None);
 
             return new EditUserFromColaboratorCommand()
             {
@@ -253,14 +252,21 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
         private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
         {
+            bool isValid = true;
             var requiredColumns = new string[] { "Nume", "Prenume", "Patronimic", "Idnp", "Email", "Id Departament", "Id Rol", "Id Funcție", "Data nașterii", "Nr. telefon" };
             var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).ToArray();
-            var missingColumns = requiredColumns.Except(headers, StringComparer.OrdinalIgnoreCase).ToArray();
 
-            if (missingColumns.Any())
+            if (!headers.SequenceEqual(requiredColumns, StringComparer.OrdinalIgnoreCase))
             {
-                workSheet.Cells[1, 12].Value += $"Adaugă coloana: {string.Join(", ", missingColumns)}";
-                return false;
+                isValid = false;
+                for (int i = 0; i < requiredColumns.Length; i++)
+                {
+                    if (headers[i] != requiredColumns[i])
+                    {
+                        workSheet.Cells[1, 12].Value = "Respectați ordinea coloanelor Nume, Prenume, Patronimic, Idnp, Email, Id Departament, Id Rol, Id Funcție, Data nașterii, Nr. telefon";
+                        workSheet.Cells[1, i + 1].Style.Fill.SetBackground(_color);
+                    }
+                }
             }
 
             if (!ValidateExcelWorksheet(workSheet)) return false;
@@ -268,16 +274,25 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
             var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
 
-            return isIdnpValid && isEmailValid;
+            return isIdnpValid && isEmailValid && isValid;
         }
 
         private bool ValidateExcelWorksheet(ExcelWorksheet workSheet)
         {
+            for (int row = 1; row <= workSheet.Dimension.Rows; row++)
+            {
+                workSheet.Cells[row, 12].Value = "";
+                for (int col = 1; col <= 10; col++)
+                {
+                    workSheet.Cells[row, col].Style.Fill.SetBackground(_colorReset);
+                }
+            }
+
             bool isValid = true;
             for (int i = 2; i <= workSheet.Dimension.Rows; i++)
             {
                 String[] delimiters = { ".", "/" };
-                var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Split(delimiters, StringSplitOptions.None);
+                var dateStrings = workSheet.Cells[i, 9]?.Value?.ToString().Substring(0, 10).Split(delimiters, StringSplitOptions.None);
                 var FirstName = workSheet.Cells[i, 1]?.Value?.ToString();
                 var LastName = workSheet.Cells[i, 2]?.Value?.ToString();
                 var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
@@ -289,7 +304,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
                 DateTime BirthDate;
 
-                if (dateStrings != null && dateStrings.Length >= 3)
+                if (dateStrings != null)
                 {
                     BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0]));
 
@@ -299,6 +314,12 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                         workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
                         isValid = false;
                     }
+                }
+                else if (dateStrings == null || !Regex.IsMatch(dateStrings.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+                {
+                    workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este \"{workSheet.Cells[i, 9]?.Value?.ToString()}\" \n";
+                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+                    isValid = false;
                 }
                
                 if (string.IsNullOrWhiteSpace(FirstName) || !Regex.IsMatch(FirstName, @"^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$"))
@@ -372,13 +393,6 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 {
                     workSheet.Cells[i, 12].Value += "ID Funcție nu există în baza de date\n";
                     workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(workSheet.Cells[i, 9]?.Value.ToString()) || !Regex.IsMatch(workSheet.Cells[i, 9]?.Value?.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
-                {
-                    workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este {workSheet.Cells[i, 9]?.Value?.ToString()} \n";
-                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
