@@ -533,7 +533,8 @@
     "applay": "Aplică filtru",
     "update":"Actualizează",
     "actions": "Acțiuni",
-    "export": "Exportă"
+    "export": "Exportă",
+    "details": "Detalii"
   },
   "entity": {
     "colaborator-id": "Cod colaborator",

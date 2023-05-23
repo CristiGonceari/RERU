@@ -532,7 +532,8 @@
     "applay": "Apply filter",
     "update":"Update",
     "actions": "Actions",
-    "export": "Export"
+    "export": "Export",
+    "details": "Details"
   },
   "entity": {
     "colaborator-id": "Colaborator code",

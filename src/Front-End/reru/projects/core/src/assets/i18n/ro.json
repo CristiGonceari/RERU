@@ -204,7 +204,8 @@
     "loading": "Se încarcă",
     "next": "Următorul",
     "finish": "Finalizează",
-    "export": "Exportă"
+    "export": "Exportă",
+    "details": "Datalii"
   },
   "bulk-import-users": {
     "succes-msg" : "Utilizatorii au fost importați cu succes",
