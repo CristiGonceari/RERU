@@ -15,14 +15,12 @@ export class HeaderMobileComponent implements OnInit {
   isOpenUserIcon: boolean;
   isOpenModules: boolean;
   isOpenUser: boolean;
-  showButton: boolean = true;
   sidebarView = SidebarView;
   constructor(private sidebarService: SidebarService,
     private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.subscribeForSidebarChanges();
-    if(this.isEnclosed) this.showButton = false;
   }
 
   subscribeForSidebarChanges(): void {
