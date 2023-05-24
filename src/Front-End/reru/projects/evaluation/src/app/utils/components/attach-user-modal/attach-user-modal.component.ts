@@ -19,7 +19,6 @@ export class AttachUserModalComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
-  showUserName: boolean = true;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
   @ViewChild('fatherName') fatherName: any;
@@ -129,8 +128,7 @@ export class AttachUserModalComponent implements OnInit {
 
   confirm(): void {
     let data = {
-      attachedItems: this.attachedItems,
-      // showUserName: this.showUserName
+      attachedItems: this.attachedItems
     }
     this.activeModal.close(data);
   }
@@ -189,8 +187,4 @@ export class AttachUserModalComponent implements OnInit {
     this.filters = {};
     this.getUsers();
 	}
-  
-  checkEvent(event): void {
-    this.showUserName = event.target.uchecked;
-  }
 }

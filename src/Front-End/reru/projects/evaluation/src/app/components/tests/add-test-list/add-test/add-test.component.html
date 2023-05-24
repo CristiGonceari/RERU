@@ -153,16 +153,6 @@
               </span> -->
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-xl-3 col-lg-4 col-auto col-form-label text-lg-right text-left">{{'events.show-candidate' | translate}}:</label>
-            <div class="col my-auto">
-              <label class="checkbox checkbox-lg checkbox-inline mr-5">
-                <input type="checkbox" name="isSelected" (change)="onItemChange($event)" [value]="showName"
-                  [checked]="showName">
-                <span></span>
-              </label>
-            </div>
-          </div>
           <div class="form-group row mb-10" *ngIf="!testEvent">
             <label class="col-xl-3 col-lg-4 col-form-label text-lg-right text-left">{{'verify-test.programmed-time' |
               translate}}</label>

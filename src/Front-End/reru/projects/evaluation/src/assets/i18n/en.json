@@ -843,7 +843,6 @@
     "attach-evaluator": "Attach evaluator",
     "detach-evaluator": "Remove evaluator",
     "detach-evaluator-msg": "Are you sure you want to remove this evaluator from this event?",
-    "show-candidate": "Show candidate name",
     "succes-remove-event-msg": "Event was successfully deleted",
     "succes-remove-person-msg": "Responsible person was successfully detached",
     "succes-remove-location-msg": "Location was successfully detached",

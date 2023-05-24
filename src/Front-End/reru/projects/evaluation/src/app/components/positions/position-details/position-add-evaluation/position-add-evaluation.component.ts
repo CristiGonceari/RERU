@@ -54,7 +54,6 @@ export class PositionAddEvaluationComponent implements OnInit {
   myControl = new FormControl();
 
   showEventCard: boolean = false;
-  showName: boolean = false;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
@@ -186,8 +185,7 @@ export class PositionAddEvaluationComponent implements OnInit {
       testStatus: TestStatusEnum.Programmed,
       testTemplateId: +this.selectedActiveTestsWithEvent.testTemplateId || 0,
       processId: this.processId || null,
-      locationId: this.locationSelect.value == "0" ? null : this.locationSelect.value,
-      showUserName: true
+      locationId: this.locationSelect.value == "0" ? null : this.locationSelect.value
     }
   }
 

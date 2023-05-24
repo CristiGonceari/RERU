@@ -1298,9 +1298,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("ShowUserName")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("UpdateById")
                         .HasColumnType("text");
 
@@ -4828,9 +4825,6 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
 
                     b.Property<int>("ResultStatus")
                         .HasColumnType("integer");
-
-                    b.Property<bool?>("ShowUserName")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("SolicitedTime")
                         .HasColumnType("timestamp without time zone");
