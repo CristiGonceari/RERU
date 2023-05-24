@@ -491,8 +491,17 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="d-flex justify-content-end mb-3 mt-lg-0 mt-3">
+                <div class="row pc-container-menu mb-3 mt-lg-0 mt-3 mx-1">
                     <app-stepper-arrow-hint *ngIf="militaryObligationData == null && !militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)" [description]="'military-obligation.military-obligation-add-button-hint' | translate"></app-stepper-arrow-hint>
+                    <button class="btn btn-success h-35px" *ngIf="addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)"
+                        (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
+                    <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)"
+                        (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
+                </div>
+                <div class="row mobile-container-menu mb-3 mx-0 mt-lg-0 mt-3">
+                    <app-stepper-arrow-hint-down *ngIf="militaryObligationData == null && !militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)" [description]="'military-obligation.military-obligation-add-button-hint' | translate"></app-stepper-arrow-hint-down>
                     <button class="btn btn-success h-35px" *ngIf="addOrEditMilitaryObligationButton"
                         [disabled]="militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)"
                         (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
@@ -506,18 +515,21 @@
 </form>
 <div class="row m-0">
     <div class="col">
-        <div class="d-flex row justify-content-end my-3 mx-0">
-            <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="militaryObligationData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint>
-            <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
-            <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="militaryObligationData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint-down>
-            <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
+        <div class="row pc-container-menu my-3 mx-0">
+            <app-stepper-arrow-hint *ngIf="militaryObligationData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint>
+            <app-stepper-arrow-hint *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
             <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData != null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
-            <button class="btn btn-success h-35px d-md-block d-none" matStepperNext *ngIf="militaryObligationData == null"
+            <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData == null"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |translate}}</button>
-            <button class="btn btn-success h-45px d-md-none d-block" matStepperNext *ngIf="militaryObligationData == null" style="font-size:10px;"
+        </div>
+        <div class="row mobile-container-menu my-3 mx-0">
+            <app-stepper-arrow-hint-down *ngIf="militaryObligationData == null" [description]="'stepper.button-save-and-next-withoud-datas' | translate"></app-stepper-arrow-hint-down>
+            <app-stepper-arrow-hint-down *ngIf="militaryObligationData != null" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
+            <button class="btn btn-success h-35px" matStepperNext *ngIf="militaryObligationData != null"
+                (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
+            <button class="btn btn-success h-45px" matStepperNext *ngIf="militaryObligationData == null" style="font-size:10px;"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-save-and-next-withoud-datas' |translate}}</button>
-            
         </div>
     </div>
 </div>
