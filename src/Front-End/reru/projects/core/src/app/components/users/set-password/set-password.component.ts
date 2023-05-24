@@ -25,6 +25,7 @@ export class SetPasswordComponent implements OnInit {
 	description: string;
 	no: string;
 	yes: string;
+  mobileButtonLength: string = "100%";
 
   constructor(
     private activatedRoute: ActivatedRoute,

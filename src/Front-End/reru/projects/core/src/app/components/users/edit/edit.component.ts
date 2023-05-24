@@ -37,6 +37,7 @@ export class EditComponent implements OnInit {
 	birthDate: Date;
 	date: string;
 	startDate;
+	mobileButtonLength: string = "100%";
 
 	constructor(
 		private activatedRoute: ActivatedRoute,

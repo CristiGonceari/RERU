@@ -24,6 +24,7 @@ export class AddEditModuleComponent implements OnInit {
 	id: number;
 	title: string;
 	description: string;
+	mobileButtonLength: string = "100%";
 
 	constructor(
 		private fb: FormBuilder,
