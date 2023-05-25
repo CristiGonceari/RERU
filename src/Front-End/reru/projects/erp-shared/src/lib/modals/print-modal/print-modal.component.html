@@ -55,5 +55,5 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="dismiss()">{{translateData[3]}}</button>
-  <button *ngIf="selectedFormat != 0" type="button" class="btn btn-primary" (click)="setOrientation(1)">Print</button>
+  <button *ngIf="selectedFormat != 0" type="button" class="btn btn-primary" (click)="setOrientation(1)">{{'button.print' | translate}}</button>
 </div>
