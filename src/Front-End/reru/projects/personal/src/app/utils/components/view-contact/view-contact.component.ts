@@ -7,6 +7,8 @@ import { Contractor } from '../../models/contractor.model';
 import { ContactService } from '../../services/contact.service';
 import { I18nService } from '../../services/i18n.service';
 import { NotificationUtil } from '../../util/notification.util';
+import { EditContactModalComponent } from '../../modals/edit-contact-modal/edit-contact-modal.component';
+import { ConfirmationContactDeleteModalComponent } from '../../modals/confirmation-contact-delete-modal/confirmation-contact-delete-modal.component';
 
 @Component({
   selector: 'app-view-contact',
@@ -37,18 +39,18 @@ export class ViewContactComponent implements OnInit{
     this.subscribeForLanguageChange();
   }
 
-  // openContactEditModal(): void {
-  //   const modalRef = this.modalService.open(EditContactModalComponent, { centered: true, size: 'lg' });
-  //   modalRef.componentInstance.id = this.contact.id;
-  //   modalRef.result.then(() => this.update.emit(), () => { });
-  // }
+  openContactEditModal(): void {
+    const modalRef = this.modalService.open(EditContactModalComponent, { centered: true, size: 'lg' });
+    modalRef.componentInstance.id = this.contact.id;
+    modalRef.result.then(() => this.update.emit(), () => { });
+  }
 
-  // openConfirmationDeleteModal(): void {
-  //   const modalRef = this.modalService.open(ConfirmationContactDeleteModalComponent, { centered: true, size: 'lg' });
-  //   modalRef.componentInstance.contact = this.contact;
-  //   modalRef.componentInstance.contractor = this.contractor;
-  //   modalRef.result.then(() => this.delete(), () => { });
-  // }
+  openConfirmationDeleteModal(): void {
+    const modalRef = this.modalService.open(ConfirmationContactDeleteModalComponent, { centered: true, size: 'lg' });
+    modalRef.componentInstance.contact = this.contact;
+    modalRef.componentInstance.contractor = this.contractor;
+    modalRef.result.then(() => this.delete(), () => { });
+  }
 
   translateData(): void {
 		forkJoin([
