@@ -271,7 +271,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                         }).ToArray(),
 
                         CreateById = t.CreateById,
-                        ShowUserName = t.ShowUserName,
 
                         ResultStatus = t.ResultStatus,
                         FinalStatusResult = t.FinalStatusResult,

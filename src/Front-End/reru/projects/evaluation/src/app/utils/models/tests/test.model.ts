@@ -21,7 +21,6 @@ export class Test {
     testTemplateName: string;
     rules: string;
     verificationProgress: string;
-    showUserName: boolean;
     isEvaluator: boolean;
     testStatus: TestStatusEnum;
     modeStatus: TestTemplateModeEnum;
@@ -42,7 +41,6 @@ export class CreateTestModel {
     testStatus: number;
     programmedTime: string;
     evaluatorId?: number;
-    showUserName?: string;
 
     constructor(testModel?: CreateTestModel) {
         if (testModel) {
@@ -53,7 +51,6 @@ export class CreateTestModel {
             this.testStatus = testModel.testStatus;
             this.testTemplateId = testModel.testTemplateId;
             this.evaluatorId = testModel.evaluatorId;
-            this.showUserName = testModel.showUserName;
         } else {
             this.id = null;
             this.userProfileId = null;
@@ -62,7 +59,6 @@ export class CreateTestModel {
             this.testTemplateId = null;
             this.eventId = null;
             this.evaluatorId = null;
-            this.showUserName = null;
         }
     }
 }

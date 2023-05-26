@@ -4,8 +4,6 @@ namespace RERU.Data.Entities
 {
     public class EventEvaluator : SoftDeleteBaseEntity
     {
-        public bool ShowUserName { get; set; }
-
         public int EventId { get; set; }
         public Event Event { get; set; }
 

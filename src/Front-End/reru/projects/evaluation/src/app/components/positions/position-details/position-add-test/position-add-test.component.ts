@@ -49,7 +49,6 @@ export class PositionAddTestComponent implements OnInit {
   myControl = new FormControl();
 
   showEventCard: boolean = false;
-  showName: boolean = true;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
@@ -185,8 +184,7 @@ export class PositionAddTestComponent implements OnInit {
       evaluatorIds: this.evaluatorList || [],
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
-      testTemplateId: this.testTemplateId || 0,
-      showUserName: this.showName
+      testTemplateId: this.testTemplateId || 0
     })
   }
 
@@ -255,10 +253,6 @@ export class PositionAddTestComponent implements OnInit {
 
   backClicked() {
     this.newItemEvent.emit(false);
-  }
-
-  onItemChange(event) {
-    this.showName = event.target.checked;
   }
 
   performingTestPdf(testsIds) {

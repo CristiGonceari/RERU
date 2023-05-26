@@ -839,7 +839,6 @@
     "attach-evaluator": "Atașați evaluator",
     "detach-evaluator": "Eliminați evaluator",
     "detach-evaluator-msg": "Sigur doriți să eliminați acest evaluator din acest eveniment?",
-    "show-candidate": "Afișați numele candidatului",
     "succes-remove-event-msg": "Evenimentul a fost șters cu succes",
     "succes-remove-person-msg": "Persoana responsabilă a fost eliminată cu succes",
     "succes-remove-location-msg": "Locația a fost eliminată cu succes",

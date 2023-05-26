@@ -45,13 +45,12 @@
                         </span>
                     </td>
                     <td>
-                        <p *ngIf="item.showUserName" class="font-size-lg cursor-pointer text-hover-primary mb-0"
+                        <p class="font-size-lg cursor-pointer text-hover-primary mb-0"
                             [routerLink]="['../user-profile', item.userId]">
                             {{ item.userName }}
                             <br>
                             <span class="text-dark-50 font-size-lg font-weight-light">{{ item.idnp }}</span>
                         </p>
-                        <span *ngIf="!item.showUserName" class="font-size-lg">-</span>
                     </td>
                     <td>
                         <div *ngIf="hasTestHashGroup(item.hashGroupKey, item.id) > 1">

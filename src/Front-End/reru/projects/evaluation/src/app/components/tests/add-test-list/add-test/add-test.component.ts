@@ -51,7 +51,6 @@ export class AddTestComponent implements OnInit {
   myControl = new FormControl();
 
   showEventCard: boolean = false;
-  showName: boolean = false;
   isTestTemplateOneAnswer: boolean = false;
   printTest: boolean = true;
   hasEventEvaluator: boolean = false;
@@ -85,7 +84,6 @@ export class AddTestComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.isTestEvent) {
-      this.showName = true;
       this.getEvents();
     }
     this.getActiveTestTemplateWithoutEvent();
@@ -241,8 +239,7 @@ export class AddTestComponent implements OnInit {
       evaluatorIds: this.evaluatorList || null,
       testStatus: TestStatusEnum.Programmed,
       processId: this.processId || null,
-      testTemplateId: +this.testTemplate.value || 0,
-      showUserName: this.showName
+      testTemplateId: +this.testTemplate.value || 0
     })
   }
 
@@ -311,10 +308,6 @@ export class AddTestComponent implements OnInit {
 
   backClicked() {
     this.location.back();
-  }
-
-  onItemChange(event) {
-    this.showName = event.target.checked;
   }
 
   performingTestPdf(testsIds) {

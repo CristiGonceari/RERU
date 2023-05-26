@@ -57,8 +57,7 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
                     var newEventEvaluator = new AddEventEvaluatorDto()
                     {
                         EvaluatorId = evaluatorId,
-                        EventId = request.EventId,
-                        //ShowUserName = request.ShowUserName
+                        EventId = request.EventId
                     };
 
                     var result = _mapper.Map<EventEvaluator>(newEventEvaluator);

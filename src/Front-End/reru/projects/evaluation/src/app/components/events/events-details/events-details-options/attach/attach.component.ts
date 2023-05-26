@@ -33,7 +33,6 @@ export class AttachComponent implements OnInit {
 
   url;
   attempts;
-  showName = false;
 
   title: string;
 	description: string;
@@ -111,8 +110,7 @@ export class AttachComponent implements OnInit {
       return {
         data: {
           evaluatorId: this.id,
-          eventId: +this.eventId,
-          showUserName: this.showName
+          eventId: +this.eventId
         }
       };
     }
@@ -201,9 +199,5 @@ export class AttachComponent implements OnInit {
 
   backClicked() {
     this.location.back();
-  }
-
-  onItemChange(event) {
-    this.showName = event.target.checked;
   }
 }
