@@ -8,7 +8,7 @@
 <erp-shared-content *ngIf="!isLoading" [isContainerFluid]="true">
   <div class="card card-custom gutter-b erp-shared-desktop-wide">
     <div class="card-body p-0 justify-content-center">
-      <div class="row justify-content-center my-7 px-8 my-lg-10">
+      <div class="flex-row justify-content-center my-7 px-8 my-lg-10">
         <div class="col-xl-12">
           <form class="form" id="kt_contact_add_form" [formGroup]="userForm">
             <h3 class="mb-10 font-weight-bold text-dark">{{ 'pages.users.details' | translate }}:</h3>
@@ -170,11 +170,19 @@
               </div>
             </div>
 
-            <div class="text-right border-top pt-10">
+            <div class="pc-container-menu border-top pt-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
               </app-button>
               <app-add-button class="btn" [value]="'button.update' | translate" (handle)="editUser()">
               </app-add-button>
+            </div>
+            <div class="mobile-container-menu border-top pt-10">
+              <div class="d-flex m-0 w-100">
+                <app-button class="btn w-100 mr-1" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                </app-button>
+                <app-add-button class="btn w-100 ml-1" [value]="'button.update' | translate" (handle)="editUser()">
+                </app-add-button>
+              </div>
             </div>
           </form>
         </div>

@@ -8,7 +8,7 @@
 <erp-shared-content *ngIf="!isLoading">
   <div class="card card-custom gutter-b erp-shared-desktop-wide">
     <div class="card-body px-0">
-      <div class="row justify-content-center px-8 px-lg-10">
+      <div class="flex-row justify-content-center px-8 px-lg-10">
         <div class="col-xl-12 col-xxl-7">
           <form [formGroup]="moduleForm" class="form">
             <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -94,11 +94,19 @@
                 </div>
               </div>
             </div>
-            <div class="text-right border-top pt-10">
+            <div class="pc-container-menu border-top pt-10">
               <app-button class="btn mr-2" [value]="'button.back' | translate" (click)="back()"></app-button>
               <app-add-button class="btn" [value]="'button.confirm' | translate" [disabled]="moduleForm.invalid"
                 (handle)="submit()">
               </app-add-button>
+            </div>
+            <div class="mobile-container-menu border-top pt-10">
+              <div class="d-flex m-0 w-100">
+                <app-button class="btn w-100 mr-1" [width]="mobileButtonLength" [value]="'button.back' | translate" (click)="back()"></app-button>
+                <app-add-button class="btn w-100 ml-1" [value]="'button.confirm' | translate" [disabled]="moduleForm.invalid"
+                  (handle)="submit()">
+                </app-add-button>
+              </div>
             </div>
           </form>
         </div>

@@ -11,6 +11,7 @@ export * from './lib/components/sidenav/sidenav.component';
 export * from './lib/components/page-title/page-title.component';
 export * from './lib/components/layout/layout.component';
 export * from './lib/components/buttons/add-button/add-button.component';
+export * from './lib/components/buttons/mobile-add-button/mobile-add-button.component';
 export * from './lib/components/buttons/confirm-button/confirm-button.component';
 export * from './lib/components/buttons/export-button/export-button.component';
 export * from './lib/components/buttons/import-button/import-button.component';

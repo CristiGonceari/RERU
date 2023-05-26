@@ -1,0 +1,29 @@
+@import "../responsive-buttons";
+
+:host {
+  padding: 0;
+
+  a.btn:not(.btn-icon),
+  button.btn {
+    color: #FFF;
+    background: #1BC5BD;
+
+    &:disabled {
+      color: #FFF;
+      background: #C9F7F5;
+    }
+
+    &:hover:not(:disabled) {
+      color: #FFF;
+      background: #0BB7AF;
+    }
+
+    &:focus {
+      color: #FFF;
+      background: #1BC5BD;
+    }
+    @include responsive-container;
+  }
+
+  @include responsive-container;
+}
