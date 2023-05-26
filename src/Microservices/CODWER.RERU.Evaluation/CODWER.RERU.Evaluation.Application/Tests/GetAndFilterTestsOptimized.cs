@@ -205,7 +205,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                             FirstName = t.Evaluator.FirstName,
                             LastName = t.Evaluator.LastName,
                             FatherName = t.Evaluator.FatherName,
-                            Idnp = t.Evaluator.Idnp
+                            Idnp = t.Evaluator.Idnp,
+                            Email = t.UserProfile.Email
                         },
 
                         TestTemplateId = t.TestTemplateId,
