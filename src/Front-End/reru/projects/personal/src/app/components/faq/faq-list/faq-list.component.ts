@@ -11,6 +11,7 @@ export class FaqListComponent {
   title: string;
   isLoadingButton: boolean;
   isLoading: boolean = true;
+  mobileButtonLength: string = "100%";
 
   constructor(private guideService: GuideService) { }
 

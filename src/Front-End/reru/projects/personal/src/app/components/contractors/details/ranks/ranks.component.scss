@@ -20,3 +20,16 @@
     color: #FFF;
 }
 
+.mobile-container-menu {
+    display: none !important;
+    @media screen and (max-width: 439px) {
+        display: block !important;
+    }
+}
+
+.pc-container-menu {
+    display: none !important;
+    @media screen and (min-width: 440px) {
+        display: block !important;
+    }
+}

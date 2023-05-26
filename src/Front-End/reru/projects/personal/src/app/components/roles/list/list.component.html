@@ -5,11 +5,20 @@
             <div class="card-title">
                 <h3 class="card-label font-weight-bolder" id="title">{{ 'roles.title-description-list' | translate }}</h3>
             </div>
-            <div class="card-toolbar">
+            <div class="card-toolbar  pc-container-menu">
                 <erp-shared-import-button [disabled]="roleTable?.isLoading" (click)="roleTable.openImportModal()" type="button" class="mr-2">
                     {{'button.import' | translate}}
                 </erp-shared-import-button>
                 <erp-shared-export-button class="mr-3" (click)="roleTable.getHeaders(getTitle())">
+                    {{'button.export' | translate}}
+                </erp-shared-export-button>
+                <!-- <button [disabled]="roleTable?.isLoading"  [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'roles.add-role' | translate}}</button> -->
+            </div>
+            <div class="row mobile-container-menu w-100 mx-0 mr-2">
+                <erp-shared-import-button [disabled]="roleTable?.isLoading" [width]="mobileButtonLength" (click)="roleTable.openImportModal()" type="button" class="mr-2 pr-2 w-100">
+                    {{'button.import' | translate}}
+                </erp-shared-import-button>
+                <erp-shared-export-button class="btn my-2 pr-2 border-0 w-100" [width]="mobileButtonLength"  (click)="roleTable.getHeaders(getTitle())">
                     {{'button.export' | translate}}
                 </erp-shared-export-button>
                 <!-- <button [disabled]="roleTable?.isLoading"  [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'roles.add-role' | translate}}</button> -->
