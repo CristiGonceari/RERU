@@ -160,12 +160,14 @@
     </div>
     <div class="row m-0">
       <div class="col">
-        <div class="row d-flex justify-content-md-end">
-          <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="userForm && userForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
-          <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="userForm && userForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
-          <button class="d-md-block d-none btn btn-success h-35px" matStepperNext [disabled]="userForm && userForm.invalid"
+        <div class="row pc-container-menu">
+          <app-stepper-arrow-hint *ngIf="userForm && userForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
+          <button class="btn btn-success h-35px" matStepperNext [disabled]="userForm && userForm.invalid"
             (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
-          <button class="d-md-none btn btn-success h-45px" matStepperNext [disabled]="userForm && userForm.invalid"
+        </div>
+        <div class="row mobile-container-menu">
+          <app-stepper-arrow-hint-down *ngIf="userForm && userForm.valid" [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
+          <button class="btn btn-success h-45px" matStepperNext [disabled]="userForm && userForm.invalid"
             (click)="updateUserProfileGeneralData()">{{'stepper.button-update-and-next' | translate}}</button>
         </div>
       </div>

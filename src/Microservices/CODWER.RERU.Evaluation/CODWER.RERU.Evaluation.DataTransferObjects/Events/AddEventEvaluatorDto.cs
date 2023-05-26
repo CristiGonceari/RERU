@@ -4,6 +4,5 @@
     {
         public int EventId { get; set; }
         public int EvaluatorId { get; set; }
-        public bool ShowUserName { get; set; }
     }
 }

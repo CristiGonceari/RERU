@@ -9,7 +9,7 @@
 					<div class="card-title">
 						<h3 class="card-label" id="title">{{'faq.subtitle' | translate}}</h3>
 					</div>
-					<div class="card-toolbar d-sm-flex d-none">
+					<div class="card-toolbar pc-container-menu">
 						<erp-shared-export-button class="mr-3" (click)="table.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
@@ -23,19 +23,22 @@
 						<app-add-button class="btn" [routerLink]="['add-article']"
 							[value]="'faq.new-article' | translate"></app-add-button>
 					</div>
-					<div class="card-toolbar d-sm-none d-flex w-100">
-						<erp-shared-export-button width="100%" class="mb-3" (click)="table.getHeaders(getTitle())">
-							{{'button.export' | translate}}
-						</erp-shared-export-button>
+					<div class="row mobile-container-menu">
+						<div class="d-flex m-0 w-100">
+							<erp-shared-export-button class="mr-1" (click)="table.getHeaders(getTitle())">
+								{{'button.export' | translate}}
+							</erp-shared-export-button>
+							<app-mobile-add-button class="ml-1" [routerLink]="['add-article']"
+								[value]="'faq.new-article' | translate"></app-mobile-add-button>
+						</div>
 						<button [disabled]="isLoadingButton" type="button" (click)="downloadFile()"
-							class="btn btn-success py-0 w-100 mb-3">
-							<i class="far fa-file-pdf" *ngIf="!isLoadingButton"></i>
+							class="btn custom-button py-0 w-100 mt-3">
+							<i class="far fa-file-pdf" style="color: #ffffff;" *ngIf="!isLoadingButton"></i>
 							<span class="text-white ml-2 font-weight-normal" *ngIf="!isLoadingButton">{{'guide.title' | translate}}</span>
 							<span class="text-white mr-2 font-weight-normal" *ngIf="isLoadingButton">{{'button.loading' | translate}}</span>
 							<div *ngIf="isLoadingButton" class="spinner-border spinner-border-sm text-white" role="status"></div>
 						</button>
-						<app-add-button class="btn" [routerLink]="['add-article']" width="100%"
-							[value]="'faq.new-article' | translate"></app-add-button>
+						
 					</div>
 				</div>
 				<div class="card-header border-0 py-0 mt-3" style="min-height: 100%;">

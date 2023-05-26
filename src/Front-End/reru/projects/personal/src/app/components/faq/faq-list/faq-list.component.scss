@@ -1,0 +1,28 @@
+.mobile-container-menu {
+    display: none !important;
+    @media screen and (max-width: 576px) {
+        display: block !important;
+    }
+}
+
+.pc-container-menu {
+    display: none !important;
+    @media screen and (min-width: 577px) {
+        display: block !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header.flex-wrap {
+      flex-wrap: wrap;
+    }
+    .card-title {
+      width: 100%;
+    }
+    .pc-container-menu {
+      display: none;
+    }
+    .mobile-container-menu {
+      display: flex;
+    }
+  }

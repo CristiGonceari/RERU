@@ -22,6 +22,7 @@ role: string;
 userData: any;
 title: string;
 description: string;
+mobileButtonLength: string = "100%";
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -36,6 +36,7 @@ using Wkhtmltopdf.NetCore;
 using ServicesSetup = CODWER.RERU.Core.API.Config.ServicesSetup;
 using Age.Integrations.MSign.Soap;
 using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CODWER.RERU.Core.API
 {

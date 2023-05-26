@@ -29,8 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.PrintTestReportList
                 .Select(x => new Test()
                 {
                     ProgrammedTime = x.ProgrammedTime,
-                    TestStatus = x.TestStatus,
-                    ShowUserName = x.ShowUserName
+                    TestStatus = x.TestStatus
                 })
                 .AsQueryable();
 
@@ -47,7 +46,6 @@ namespace CODWER.RERU.Evaluation.Application.PrintTestReportList
                           <tr>
                             <td>{item.ProgrammedTime:dd/MM/yyyy}</td>
                             <td>{item.TestStatus}</td>
-                            <td>{item.ShowUserName}</td>
                           </tr>";
             }
 

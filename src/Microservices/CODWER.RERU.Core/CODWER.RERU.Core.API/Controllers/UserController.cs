@@ -27,6 +27,8 @@ using CVU.ERP.Module.Application.ImportProcessServices;
 using CVU.ERP.Module.Application.ImportProcessServices.ImportProcessModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -36,10 +38,14 @@ namespace CODWER.RERU.Core.API.Controllers
     public class UserController : BaseController
     {
         private readonly IImportProcessService _importProcessService;
+        private IConfiguration Configuration { get; }
 
-        public UserController(IMediator mediator,  IImportProcessService importProcessService) : base(mediator)
+        public UserController(IMediator mediator,  
+            IImportProcessService importProcessService,
+            IConfiguration configuration) : base(mediator)
         {
             _importProcessService = importProcessService;
+            Configuration = configuration;
         }
 
         [HttpGet ("{id:int}")]

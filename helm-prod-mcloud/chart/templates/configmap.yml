@@ -355,7 +355,8 @@ data:
       "Certificate": {
         "Path": "Files/Certificates/926_reru.mai.pki.gov.md _eSystems-Trust.pfx",
         "Password": "926"
-      }
+      },
+      "AllowedCorsOrigins": "https://reru.mai.gov.md"
     }
 
   reru_core.appsettings.json: |

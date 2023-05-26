@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CODWER.RERU.Identity.Web.Quickstart.Models;
 using CVU.ERP.Identity.Models;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Identity.Web.Quickstart.Account
 {
@@ -188,6 +190,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 // delete local authentication cookie
                 await _signInManager.SignOutAsync();
 
+                await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
+
                 // raise the logout event
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
             }
@@ -253,6 +257,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 .Select(x => new ExternalProvider
                 {
                     DisplayName = x.DisplayName ?? x.Name,
+                    //DisplayName = "2013003001875",
                     AuthenticationScheme = x.Name
                 }).ToList();
 

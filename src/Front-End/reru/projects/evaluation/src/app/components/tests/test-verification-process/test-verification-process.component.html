@@ -53,29 +53,115 @@
             [(ngModel)]="comment">{{comment}}</textarea>
         </div>
         <div class="container-fluid" *ngIf="questionType == enum.MultipleAnswers || questionType == enum.OneAnswer">
-          <span class="h4">{{'tests.options' | translate}}:</span>
-          <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
-            [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
-            [class.bg-successTransparent]="item.isSelected && item.isCorrect"
-            [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
-            [class.bg-light-warning]="!item.isSelected && item.isCorrect">
-            <label class="col-3 px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
-              <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
-              <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
-            </label>
-            <div class="col-10">
-              <div class="form-group row align-items-center">
-                {{item.answer}}
-              </div>
-              <div class="form-group row align-items-center">
-                <div class="col-lg-6 col-xl-3 w-100 d-flex">
-                  <div *ngIf="item.optionMediaFileId">
-                    <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+          <div class="d-none d-md-none d-lg-none d-xl-block">
+            <span class="h4">{{'tests.options' | translate}}:</span>
+            <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
+              [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
+              [class.bg-successTransparent]="item.isSelected && item.isCorrect"
+              [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
+              [class.bg-light-warning]="!item.isSelected && item.isCorrect">
+              <label class="col justify-content-center px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
+                <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+              </label>
+              <div class="col-11">
+                <div class="form-group row align-items-center">
+                  {{item.answer}}
+                </div>
+                <div class="form-group row align-items-center">
+                  <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                    <div *ngIf="item.optionMediaFileId">
+                      <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                    </div>
                   </div>
                 </div>
+                <div class="form-group row align-items-center">
+                  <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+                </div>
               </div>
-              <div class="form-group row align-items-center">
-                <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+            </div>
+          </div>
+          <div class="d-none d-md-none d-lg-block d-xl-none">
+            <span class="h4">{{'tests.options' | translate}}:</span>
+            <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
+              [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
+              [class.bg-successTransparent]="item.isSelected && item.isCorrect"
+              [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
+              [class.bg-light-warning]="!item.isSelected && item.isCorrect">
+              <label class="col-1 justify-content-center px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
+                <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+              </label>
+              <div class="col-11">
+                <div class="form-group row align-items-center">
+                  {{item.answer}}
+                </div>
+                <div class="form-group row align-items-center">
+                  <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                    <div *ngIf="item.optionMediaFileId">
+                      <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row align-items-center">
+                  <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-none d-md-block d-lg-none d-xl-none">
+            <span class="h4">{{'tests.options' | translate}}:</span>
+            <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
+              [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
+              [class.bg-successTransparent]="item.isSelected && item.isCorrect"
+              [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
+              [class.bg-light-warning]="!item.isSelected && item.isCorrect">
+              <label class="col-2 justify-content-center px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
+                <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+              </label>
+              <div class="col-9">
+                <div class="form-group row align-items-center">
+                  {{item.answer}}
+                </div>
+                <div class="form-group row align-items-center">
+                  <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                    <div *ngIf="item.optionMediaFileId">
+                      <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row align-items-center">
+                  <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-block d-md-none d-lg-none d-xl-none">
+            <span class="h4">{{'tests.options' | translate}}:</span>
+            <div *ngFor="let item of options" class="d-flex border border-secondary rounded w-100 py-3 my-5"
+              [ngClass]=" item.optionMediaFileId ? 'media' : 'height: auto'"
+              [class.bg-successTransparent]="item.isSelected && item.isCorrect"
+              [class.bg-dangerTransparent]="item.isSelected && !item.isCorrect"
+              [class.bg-light-warning]="!item.isSelected && item.isCorrect">
+              <label class="col-3 justify-content-center px-4 checkbox checkbox-lg checkbox-inline" style="pointer-events: none;">
+                <input type="checkbox" value="{{ item.id }}" name="option" [checked]="item.isSelected" />
+                <span [class.bg-success]="item.isSelected && item.isCorrect"></span>
+              </label>
+              <div class="col-9">
+                <div class="form-group row align-items-center">
+                  {{item.answer}}
+                </div>
+                <div class="form-group row align-items-center">
+                  <div class="col-lg-6 col-xl-3 w-100 d-flex">
+                    <div *ngIf="item.optionMediaFileId">
+                      <app-get-media-file [fileId]="item.optionMediaFileId"></app-get-media-file>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row align-items-center">
+                  <p class="mb-0 font-size-lg option-label mx-auto">{{item.points}}p. ({{item.percentages}}%)</p>
+                </div>
               </div>
             </div>
           </div>

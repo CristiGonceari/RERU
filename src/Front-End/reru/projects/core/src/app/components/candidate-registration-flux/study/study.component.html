@@ -25,10 +25,10 @@
                             *ngFor="let study of studyForm.controls.studies.controls;let i = index">
                             <div [formGroupName]="i">
                                 <div class="row justify-content-center">
-                                    <app-stepper-arrow-hint class="d-md-block d-none"
+                                    <app-stepper-arrow-hint class="select-pc-container-menu"
                                         *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'"
                                         [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint>
-                                    <app-stepper-arrow-hint-down class="d-md-none d-block"
+                                    <app-stepper-arrow-hint-down class="select-mobile-container-menu"
                                         *ngIf="study.value.studyTypeId == null || study.value.studyTypeId == 'null'"
                                         [description]="'stepper.select-value' | translate"></app-stepper-arrow-hint-down>
                                     <div class="col-xl-6 col-12">
@@ -68,7 +68,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row required">
+                                                <div class="form-group row">
                                                     <label
                                                         class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
@@ -355,7 +355,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row required">
+                                                <div class="form-group row">
                                                     <label
                                                         class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
@@ -567,7 +567,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 col-12">
-                                                <div class="form-group row required">
+                                                <div class="form-group row">
                                                     <label
                                                         class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
                                                     <div class="col-lg-9 col-xl-9">
@@ -614,25 +614,52 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xl-6 col-12">
-                                                <div class="form-group row required">
-                                                    <div class="col-xl-3 col-lg-3">
-                                                        <label class="col-form-label">{{'study.study-period-date' | translate}}</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-xl-9">
-                                                        <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
-                                                        [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
+                                        <div class="d-none d-md-none d-lg-block">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-12">
+                                                    <div class="form-group row required">
+                                                        <div class="col-xl-3 col-lg-3">
+                                                            <label class="col-form-label">{{'study.study-start-date' | translate}}</label>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
+                                                            [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-6 col-12">
-                                                <div class="col-lg-9 col-xl-9">
-                                                    <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
-                                                    [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
+                                                <div class="col-xl-6 col-12">
+                                                    <div class="form-group row required">
+                                                        <div class="col-xl-3 col-lg-3 text-right">
+                                                            <label class="col-form-label">{{'study.study-end-date' | translate}}</label>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xl-9">
+                                                            <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
+                                                            [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="d-block d-md-block d-lg-none">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-12">
+                                                    <div class="form-group row required">
+                                                        <div class="col-xl-3 col-lg-3">
+                                                            <label class="col-form-label">{{'study.study-period-date' | translate}}</label>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xl-9 mt-1">
+                                                            <app-stepper-date-time [parent]="study" [date]="'startStudyPeriod'"
+                                                            [placeholder]="'study.study-period-start-date' | translate"></app-stepper-date-time>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xl-9 mt-1">
+                                                            <app-stepper-date-time [parent]="study" [date]="'endStudyPeriod'"
+                                                            [placeholder]="'study.study-period-end-date' | translate"></app-stepper-date-time>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="row mt-5">
                                             <div class="col">
                                                 <div class="form-group row required">
@@ -696,9 +723,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-flex d-md-none row justify-content-end my-3 mx-0">
+                    <div class="row m-0">
+                        <div class="col-xl-6 col-12">
+                            <div class="mobile-container-menu row my-3 mx-0">
                                 <app-stepper-arrow-hint-down
                                     *ngIf="userStudies == null && !studyButtonValidator(studyForm.controls.studies.controls)"
                                     [description]="'study.study-add-button-hint' | translate"></app-stepper-arrow-hint-down>
@@ -709,7 +736,7 @@
                                     [disabled]="studyButtonValidator(studyForm.controls.studies.controls)"
                                     (click)="createStudies()">{{'stepper.button-add' | translate}}</button>
                             </div>
-                            <div class="d-none d-md-flex justify-content-end my-3 ">
+                            <div class="pc-container-menu my-3 ">
                                 <app-stepper-arrow-hint
                                     *ngIf="userStudies == null && !studyButtonValidator(studyForm.controls.studies.controls)"
                                     [description]="'study.study-add-button-hint' | translate"></app-stepper-arrow-hint>
@@ -1073,10 +1100,14 @@
     </mat-accordion>
     <div class="row m-0">
         <div class="col">
-            <div class="row d-flex justify-content-end">
-                <app-stepper-arrow-hint class="d-md-block d-none" *ngIf="userStudies != null"
+            <div class="row pc-container-menu">
+                <app-stepper-arrow-hint *ngIf="userStudies != null"
                     [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint>
-                <app-stepper-arrow-hint-down class="d-md-none d-block" *ngIf="userStudies != null"
+                <button class="btn btn-success h-35px" matStepperNext [disabled]="(userStudies == null)"
+                    (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
+            </div>
+            <div class="row mobile-container-menu">
+                <app-stepper-arrow-hint-down *ngIf="userStudies != null"
                     [description]="'stepper.button-next-hint' | translate"></app-stepper-arrow-hint-down>
                 <button class="btn btn-success h-35px" matStepperNext [disabled]="(userStudies == null)"
                     (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>

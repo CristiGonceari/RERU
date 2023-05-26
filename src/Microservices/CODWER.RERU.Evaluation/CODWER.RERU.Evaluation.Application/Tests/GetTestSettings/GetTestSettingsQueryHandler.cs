@@ -38,15 +38,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTestSettings
 
             var eventEvaluator = _appDbContext.EventEvaluators.FirstOrDefault(x => x.EvaluatorId == currentUserId && x.EventId == testDto.EventId);
 
-            if (eventEvaluator != null)
-            {
-                testDto.ShowUserName = eventEvaluator.ShowUserName;
-            }
-            else
-            {
-                testDto.ShowUserName = true;
-            }
-
             if (!string.IsNullOrEmpty(testDto.Rules))
             {
                 var base64EncodedBytes = Convert.FromBase64String(testDto.Rules);

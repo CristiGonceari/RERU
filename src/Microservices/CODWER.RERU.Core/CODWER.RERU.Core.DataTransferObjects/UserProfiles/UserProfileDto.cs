@@ -14,7 +14,7 @@ namespace CODWER.RERU.Core.DataTransferObjects.UserProfiles
         public string Email { get; set; }
         public string Idnp { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? Birthday { get; set; }
+        public string Birthday { get; set; }
         public string? MediaFileId { get; set; }
         public int? CandidatePositionId { set; get; }
         public int? DepartmentColaboratorId { get; set; }

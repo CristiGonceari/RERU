@@ -19,3 +19,17 @@
     font-size: 25px;
     color: #FFF;
 }
+
+.table-responsive, .card-body{
+    text-overflow: ellipsis !important;
+    overflow-x: scroll !important;
+    &::-webkit-scrollbar {
+      height: 5px !important;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgb(192,192,192);
+    }
+}

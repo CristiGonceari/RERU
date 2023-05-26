@@ -7,6 +7,7 @@ import { UserService } from '../../../utils/services/user.service';
 import { NotificationUtil } from '../../../utils/util/notification.util';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n.service';
+import { ProfileService } from '../../../utils/services/profile.service';
 
 @Component({
 	selector: 'app-change-personal-data',
@@ -27,6 +28,7 @@ export class ChangePersonalDataComponent implements OnInit {
 		public translate: I18nService,
 		private fb: FormBuilder,
 		private userService: UserService,
+		private profileService: ProfileService,
 		private notificationService: NotificationsService
 	) { }
 
@@ -120,6 +122,7 @@ export class ChangePersonalDataComponent implements OnInit {
 				this.isLoading = false;
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 				this.subsribeForParams();
+				this.profileService.isUserUpdated.next(true);
 			},
 			(err) => {
 				let lol: string = err.error.messages[0].messageText;

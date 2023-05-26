@@ -80,10 +80,17 @@
                 </tbody>
               </table>
             </div>
-            <div class="text-right border-top py-10">
+            <div class="pc-container-menu border-top py-10">
               <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
               <app-delete-button class="btn" [value]="'button.confirm' | translate" (handle)="removeUser()">
               </app-delete-button>
+            </div>
+            <div class="mobile-container-menu border-top py-10">
+              <div class="d-flex m-0 w-100">
+                <app-button class="btn w-100 mr-1" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="back()"></app-button>
+                <app-delete-button class="btn w-100 ml-1" [value]="'button.confirm' | translate" (handle)="removeUser()">
+                </app-delete-button>
+              </div>
             </div>
           </div>
         </div>

@@ -286,6 +286,9 @@ export class TestsTableComponent implements OnInit {
 
   setFilter(field: string, value): void {
     this.filters[field] = value;
+  }
+
+  getTests(): void {
     this.pagedSummary.currentPage = 1;
     this.getListByDate();
   }

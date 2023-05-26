@@ -4,7 +4,6 @@ export class AddEditTest {
     id?: number;
     userProfileIds: number[];
     evaluatorIds?: number[];
-    showUserName?: boolean;
     testTemplateId: any;
     eventId?: number;
     locationId?: number;
@@ -21,7 +20,6 @@ export class AddEditTest {
             this.testStatus = testModel.testStatus;
             this.testTemplateId = testModel.testTemplateId;
             this.evaluatorIds = testModel.evaluatorIds;
-            this.showUserName = testModel.showUserName;
             this.processId = testModel.processId;
         } else {
             this.id = null;
@@ -31,7 +29,6 @@ export class AddEditTest {
             this.testTemplateId = null;
             this.eventId = null;
             this.evaluatorIds = null;
-            this.showUserName = null;
         }
     }
 }

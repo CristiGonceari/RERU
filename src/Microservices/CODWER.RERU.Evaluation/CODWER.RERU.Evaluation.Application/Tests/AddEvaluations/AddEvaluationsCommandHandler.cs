@@ -56,7 +56,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddEvaluations
                         {
                             UserProfileId = userProfileId,
                             EvaluatorId = evaluatorId,
-                            ShowUserName = request.ShowUserName,
                             TestTemplateId = request.TestTemplateId,
                             EventId = request.EventId,
                             TestStatus = request.TestStatus,

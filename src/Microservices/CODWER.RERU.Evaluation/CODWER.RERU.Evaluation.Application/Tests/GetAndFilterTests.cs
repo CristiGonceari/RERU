@@ -56,7 +56,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     HashGroupKey = t.HashGroupKey,
                     FinalStatusResult = t.FinalStatusResult,
                     FinalAccumulatedPercentage = t.FinalAccumulatedPercentage,
-                    ShowUserName = t.ShowUserName,
                     CreateById = t.CreateById,
                     DocumentsForSign = t.DocumentsForSign
                 }

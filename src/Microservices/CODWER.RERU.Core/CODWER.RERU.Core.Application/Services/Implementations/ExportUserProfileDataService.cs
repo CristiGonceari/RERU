@@ -220,7 +220,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             DefaultSingleHeadColumn(3, "Telefon de serviciu:", workSheet);
             DefaultMultipleColumnValue(4, 5, string.IsNullOrEmpty(userProfile.Contractor?.WorkPhone) ? " - - - - -" : userProfile.Contractor.WorkPhone, workSheet);
 
-            DefaultSingleHeadColumn(6, "E-mail:", workSheet);
+            DefaultSingleHeadColumn(6, "Email:", workSheet);
             DefaultMultipleColumnValue(7, 8, string.IsNullOrEmpty(userProfile.Email) ? " - - - - -" : userProfile.Email, workSheet);
             _row++;
 

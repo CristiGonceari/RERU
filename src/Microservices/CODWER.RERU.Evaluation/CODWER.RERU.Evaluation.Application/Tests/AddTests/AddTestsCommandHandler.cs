@@ -167,7 +167,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 {
                     UserProfileId = request.UserProfileIds[userProfileIndex],
                     EvaluatorId = evaluatorIndex != null ? request.EvaluatorIds[(int)evaluatorIndex] : null,
-                    ShowUserName = request.ShowUserName,
                     TestTemplateId = request.TestTemplateId,
                     HashGroupKey = myHashGroupKey,
                     EventId = request.EventId,

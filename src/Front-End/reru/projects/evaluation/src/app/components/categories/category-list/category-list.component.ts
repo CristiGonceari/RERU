@@ -14,5 +14,4 @@ export class CategoryListComponent {
 		this.title = document.getElementById('title').innerHTML;
 		return this.title
 	}
-
 }

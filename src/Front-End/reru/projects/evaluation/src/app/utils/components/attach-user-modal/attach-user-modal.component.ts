@@ -19,7 +19,6 @@ export class AttachUserModalComponent implements OnInit {
   pagination: PaginationModel = new PaginationModel();
   isLoading = true;
   filters = {};
-  showUserName: boolean = true;
   @ViewChild('firstName') firstName: any;
   @ViewChild('lastName') lastName: any;
   @ViewChild('fatherName') fatherName: any;
@@ -129,8 +128,7 @@ export class AttachUserModalComponent implements OnInit {
 
   confirm(): void {
     let data = {
-      attachedItems: this.attachedItems,
-      // showUserName: this.showUserName
+      attachedItems: this.attachedItems
     }
     this.activeModal.close(data);
   }
@@ -155,13 +153,17 @@ export class AttachUserModalComponent implements OnInit {
     // else this.attachedItems[0] = +event.target.value;
   }
 
-  onItemChange(event): void {
-    if (event.target.checked == true) {
-      this.attachedItems.push(+event.target.value);
-    } else if (event.target.checked == false) {
-      let indexToDelete = this.attachedItems.findIndex(x => x == event.target.value);
-      this.attachedItems.splice(indexToDelete, 1);
+  onItemChange(event: Event): void {
+    if ((<HTMLInputElement>event.target).checked == true) {
+      if (this.inputType !== 'checkbox') this.attachedItems.splice(0, 1);
+      this.attachedItems.push(+(<HTMLInputElement>event.target).value);
     }
+
+    if ((<HTMLInputElement>event.target).checked == false) {
+      this.attachedItems.splice(this.attachedItems.indexOf(+(<HTMLInputElement>event.target).value), 1);
+    }
+
+    this.paginatedAttachedIds = this.users.length === this.attachedItems.length ? true : false;
   }
 
   setFilter(field: string, value): void {
@@ -185,8 +187,4 @@ export class AttachUserModalComponent implements OnInit {
     this.filters = {};
     this.getUsers();
 	}
-  
-  checkEvent(event): void {
-    this.showUserName = event.target.uchecked;
-  }
 }
