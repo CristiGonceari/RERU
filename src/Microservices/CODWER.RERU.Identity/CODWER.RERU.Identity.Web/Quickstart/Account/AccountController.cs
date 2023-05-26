@@ -114,8 +114,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
-                    //await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-                    await _events.RaiseAsync(new UserLoginSuccessEvent("2013003001875", user.Id, "2013003001875", clientId: context?.Client.ClientId));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
 
                     if (context != null)
                     {
@@ -235,8 +234,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 {
                     EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
-                    //Username = context?.LoginHint,
-                    Username = "2013003001875",
+                    Username = context?.LoginHint,
                     RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
                     ResetPassPageUrl= _platformConfig.ResetPassPageUrl,
                     PositionsPageUrl = _platformConfig.PositionsPageUrl
@@ -281,8 +279,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                //Username = context?.LoginHint,
-                Username = "2013003001875",
+                Username = context?.LoginHint,
                 ExternalProviders = providers.ToArray(),
                 RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
                 ResetPassPageUrl = _platformConfig.ResetPassPageUrl,
@@ -293,8 +290,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            //vm.Username = model.Username;
-            vm.Username = "2013003001875";
+            vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }
@@ -332,8 +328,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             {
                 AutomaticRedirectAfterSignOut = AccountOptions.AutomaticRedirectAfterSignOut,
                 PostLogoutRedirectUri = logout?.PostLogoutRedirectUri,
-                //ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
-                ClientName = "2013003001875",
+                ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
                 SignOutIframeUrl = logout?.SignOutIFrameUrl,
                 LogoutId = logoutId
             };
