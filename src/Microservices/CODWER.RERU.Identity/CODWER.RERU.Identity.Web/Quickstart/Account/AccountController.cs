@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Identity.Web.Quickstart.Account
 {
@@ -33,6 +34,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly PlatformConfig _platformConfig;
+        private readonly AppDbContext _appDbContext;
 
         public AccountController(
             UserManager<ERPIdentityUser> userManager,
@@ -41,7 +43,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IOptions<PlatformConfig> options)
+            IOptions<PlatformConfig> options, AppDbContext appDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -49,6 +51,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _appDbContext = appDbContext;
             _platformConfig = options.Value;
         }
 
@@ -189,8 +192,12 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
                 await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
 
+                var userEmail = User.GetDisplayName();
+                var user = _appDbContext.UserProfiles.First(x => x.Email == userEmail);
+                var userIdnp = user.Idnp;
+
                 // raise the logout event
-                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), userIdnp));
             }
 
             // check if we need to trigger sign-out at an upstream identity provider
