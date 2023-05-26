@@ -34,7 +34,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly PlatformConfig _platformConfig;
-        private readonly AppDbContext _appDbContext;
 
         public AccountController(
             UserManager<ERPIdentityUser> userManager,
@@ -43,7 +42,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IOptions<PlatformConfig> options, AppDbContext appDbContext)
+            IOptions<PlatformConfig> options)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -51,7 +50,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
-            _appDbContext = appDbContext;
             _platformConfig = options.Value;
         }
 
@@ -116,7 +114,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                    //await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent("2013003001875", user.Id, "2013003001875", clientId: context?.Client.ClientId));
 
                     if (context != null)
                     {
@@ -192,12 +191,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
                 await HttpContext.SignOutAsync(IdentityServerConstants.DefaultCookieAuthenticationScheme);
 
-                var userEmail = User.GetDisplayName();
-                var user = _appDbContext.UserProfiles.First(x => x.Email == userEmail);
-                var userIdnp = user.Idnp;
-
                 // raise the logout event
-                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), userIdnp));
+                await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
             }
 
             // check if we need to trigger sign-out at an upstream identity provider
@@ -240,7 +235,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 {
                     EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
-                    Username = context?.LoginHint,
+                    //Username = context?.LoginHint,
+                    Username = "2013003001875",
                     RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
                     ResetPassPageUrl= _platformConfig.ResetPassPageUrl,
                     PositionsPageUrl = _platformConfig.PositionsPageUrl
@@ -261,6 +257,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 .Select(x => new ExternalProvider
                 {
                     DisplayName = x.DisplayName ?? x.Name,
+                    //DisplayName = "2013003001875",
                     AuthenticationScheme = x.Name
                 }).ToList();
 
@@ -284,7 +281,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                Username = context?.LoginHint,
+                //Username = context?.LoginHint,
+                Username = "2013003001875",
                 ExternalProviders = providers.ToArray(),
                 RegistrationPageUrl = _platformConfig.RegistrationPageUrl,
                 ResetPassPageUrl = _platformConfig.ResetPassPageUrl,
@@ -295,7 +293,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            vm.Username = model.Username;
+            //vm.Username = model.Username;
+            vm.Username = "2013003001875";
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }
@@ -333,7 +332,8 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             {
                 AutomaticRedirectAfterSignOut = AccountOptions.AutomaticRedirectAfterSignOut,
                 PostLogoutRedirectUri = logout?.PostLogoutRedirectUri,
-                ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
+                //ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
+                ClientName = "2013003001875",
                 SignOutIframeUrl = logout?.SignOutIFrameUrl,
                 LogoutId = logoutId
             };

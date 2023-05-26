@@ -352,6 +352,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             //var user = await _userManager.FindByNameAsync(claims.Find(x => x.Type == MPassClaimTypes.UserName).Value);
             var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
 
+            var nameId = _appDbContext.UserProfiles.First(x => x.Email == emailAdress).Idnp;
+            if (string.IsNullOrEmpty(nameId))
+            {
+                throw new Exception("Null IDNP");
+            }
+
+            identityUser.UserName = nameId;
+
             return (identityUser, provider, claims, emailAdress);
         }
 
