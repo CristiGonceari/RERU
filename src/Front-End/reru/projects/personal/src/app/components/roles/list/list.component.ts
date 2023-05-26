@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ListComponent { 
 	title: string;
+  mobileButtonLength: string = "100%";
 
   getTitle(): string {
 		this.title = document.getElementById('title').innerHTML;

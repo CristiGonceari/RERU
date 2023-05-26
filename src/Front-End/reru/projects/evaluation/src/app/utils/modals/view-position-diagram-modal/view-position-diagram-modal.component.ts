@@ -35,7 +35,6 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   no: string;
   yes: string;
   status = TestStatusEnum;
-  isActive: boolean;
   tooltip: string;
 
   stylesToApply: string = '.modal-dialog{ min-width: 97%; height: 95% }'
@@ -58,13 +57,13 @@ export class ViewPositionDiagramModalComponent implements OnInit {
 			if (res && res.data) {
 				this.eventsDiagram.forEach(event => {
 					event.testTemplates.forEach(element => {
-						this.isActive = this.eventsDiagram.find(event => event.eventId === element.eventId)?.isActive;
+						element.isDisabled = !this.eventsDiagram.find(event => event.eventId === element.eventId).isActive;
 
             forkJoin([
               this.translate.get('tests.program-test'),
               this.translate.get('events.expired-event'),
             ]).subscribe(([tooltip1, tooltip2]) => {
-              this.isActive ? this.tooltip = tooltip1 :  this.tooltip = tooltip2;
+              element.tooltip = element.isDisabled ? tooltip2 : tooltip1;
             });
 					});
 				});

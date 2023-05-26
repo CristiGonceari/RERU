@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
@@ -13,7 +14,6 @@ using CVU.ERP.Notifications.Services;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
-using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
@@ -312,25 +312,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return Redirect(redirectURl);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MPassLogout()
-        {
-            var idToken = await HttpContext.GetTokenAsync("id_token");
-
-            var id_Token = HttpContext.Session.GetString("id_token");
-            //string url = Url.Action("Logout", new { logoutId = idToken });
-            //return SignOut(new AuthenticationProperties { RedirectUri = url }, "Cookies", "oidc");
-            if (!string.IsNullOrEmpty(idToken))
-            {
-                // Do something with the id_token
-                return RedirectToAction("endsession", "connect", new { id_token_hint = id_Token });
-            }
-
-            return NotFound();
-
-
-        }
-
         private async Task<(ERPIdentityUser user, string provider, string providerUserId, IEnumerable<Claim> claims)>
             FindUserFromExternalProviderAsync(AuthenticateResult result)
         {
@@ -370,6 +351,14 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // find external user
             //var user = await _userManager.FindByNameAsync(claims.Find(x => x.Type == MPassClaimTypes.UserName).Value);
             var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
+
+            var nameId = _appDbContext.UserProfiles.First(x => x.Email == emailAdress).Idnp;
+            if (string.IsNullOrEmpty(nameId))
+            {
+                throw new Exception("Null IDNP");
+            }
+
+            identityUser.UserName = nameId;
 
             return (identityUser, provider, claims, emailAdress);
         }

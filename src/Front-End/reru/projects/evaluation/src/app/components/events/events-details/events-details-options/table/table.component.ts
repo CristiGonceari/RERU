@@ -295,8 +295,7 @@ export class TableComponent implements OnInit {
   attachEvaluators(data): void {
     let params = {
       eventId: +this.importedId,
-      evaluatorId: data.attachedItems || this.fields,
-      // showUserName: data.showUserName
+      evaluatorId: data.attachedItems || this.fields
     }
     this.isLoading = true;
     this.eventService.attachEvaluator(params).subscribe((res) => {

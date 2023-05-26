@@ -9,11 +9,19 @@
             <!-- <div class="card-toolbar">
                 <a [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'departments.add-department' | translate}}</a>
             </div> -->
-            <div class="card-toolbar">
+            <div class="card-toolbar pc-container-menu">
                 <erp-shared-import-button (click)="departmentTable.openImportDepartmentsModal()" class="mr-2">
                     {{'button.import' | translate}}
                 </erp-shared-import-button>
                 <erp-shared-export-button class="btn mr-3" (click)="departmentTable.getHeaders(getTitle())">
+                    {{'button.export' | translate}}
+                </erp-shared-export-button>
+            </div>
+            <div class="col mobile-container-menu w-100">
+                <erp-shared-import-button [width]="mobileButtonLength" (click)="departmentTable.openImportDepartmentsModal()" >
+                    {{'button.import' | translate}}
+                </erp-shared-import-button>
+                <erp-shared-export-button [width]="mobileButtonLength" class="btn mt-2 border-0" (click)="departmentTable.getHeaders(getTitle())">
                     {{'button.export' | translate}}
                 </erp-shared-export-button>
             </div>

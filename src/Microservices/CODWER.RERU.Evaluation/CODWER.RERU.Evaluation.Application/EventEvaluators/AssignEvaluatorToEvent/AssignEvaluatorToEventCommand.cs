@@ -11,6 +11,5 @@ namespace CODWER.RERU.Evaluation.Application.EventEvaluators.AssignEvaluatorToEv
     {
         public int EventId { get; set; }
         public List<int> EvaluatorId { get; set; }
-        //public bool ShowUserName { get; set; }
     }
 }

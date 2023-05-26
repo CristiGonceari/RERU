@@ -16,7 +16,6 @@ namespace RERU.Data.Entities
 
         public int? AccumulatedPercentage { get; set; }
         public int? FinalAccumulatedPercentage { get; set; }
-        public bool? ShowUserName { get; set; }
         public int? MaxErrors { get; set; }
 
         public TestPassStatusEnum? TestPassStatus { get; set; }

@@ -19,3 +19,19 @@ button {
     content: "—";
     font-weight: bold;
 }
+
+.mobile-container-menu {
+    display: none;
+    @media screen and (max-width: 992px) {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.pc-container-menu {
+    display: none;
+    @media screen and (min-width: 993px) {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

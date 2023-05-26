@@ -27,7 +27,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetRolesValue
                 .OrderBy(x=>x.Name)
                 .AsQueryable();
 
-            return await roles.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
+            return _mapper.Map<List<SelectItem>>(roles);
         }
     }
 }

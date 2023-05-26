@@ -25,3 +25,22 @@ tbody {
 .no-actions {
 	pointer-events: none;
 }
+
+.mobile-container-menu {
+    display: none !important;
+    @media screen and (max-width: 487px) {
+        display: block !important;
+    }
+}
+
+.pc-container-menu {
+    display: none !important;
+    @media screen and (min-width: 488px) {
+        display: block !important;
+    }
+}
+
+.mobile-table-dropdown-view {
+	width: auto !important;
+	transform: translate(-30px, -24px) !important;
+}

@@ -67,6 +67,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TreeComponent } from './components/tree/tree.component';
 import { WarningAlertModalComponent } from './modals/warning-alert-modal/warning-alert-modal.component';
 import { AttachUserTableComponent } from './components/attach-user-table/attach-user-table.component';
+import { MobileAddButtonComponent } from './components/buttons/mobile-add-button/mobile-add-button.component';
 
 export const translateModule = TranslateModule.forChild();
 
@@ -101,7 +102,8 @@ const commonExports = [
 	Exception500Component,
 	ExportButtonComponent,
 	ImportButtonComponent,
-	AttachUserModalComponent
+	AttachUserModalComponent,
+	MobileAddButtonComponent
 ];
 @NgModule({
 	declarations: [

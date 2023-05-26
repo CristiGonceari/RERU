@@ -12,6 +12,9 @@ namespace CODWER.RERU.Evaluation.Application.Events.PrintEvents
     {
         public string Name { get; set; }
         public string LocationKeyword { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? TillDate { get; set; }
     }

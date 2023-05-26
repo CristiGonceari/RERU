@@ -42,6 +42,7 @@ export class FaqAddEditComponent implements OnInit {
   tags: any[] = [];
   placeHolder = '+ Rol';
   items = [];
+  mobileButtonLength: string = "100%";
 
   constructor(
     private fb: FormBuilder,

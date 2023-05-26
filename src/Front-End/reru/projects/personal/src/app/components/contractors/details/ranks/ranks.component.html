@@ -113,57 +113,112 @@
                       <tr>
                           <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
                           <td>
-                              <div class="row">
-                                  <div class="col-2 text-center p-3">
-                                      {{'military-obligation.series' | translate}}
-                                  </div>
-                                  <div class="col-10">
-                                      <input formControlName="militaryBookletSeries" autocomplete="off"
-                                          class="form-control form-control-solid" type="text"
-                                          [placeholder]="'military-obligation.series' | translate" />
-                                  </div>
-                              </div>
+                            <div class="pc-container-menu">
+                                <div class="row">
+                                    <div class="col-4 text-center p-3">
+                                        {{'military-obligation.series' | translate}}
+                                    </div>
+                                    <div class="col-8">
+                                        <input formControlName="militaryBookletSeries" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.series' | translate" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-container-menu">
+                                <div class="col px-0">
+                                    <div class="w-100 text-left p-3">
+                                        {{'military-obligation.series' | translate}}
+                                    </div>
+                                    <div class="w-100">
+                                        <input formControlName="militaryBookletSeries" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.series' | translate" />
+                                    </div>
+                                </div>
+                            </div>
                           </td>
                       </tr>
                       <tr>
                           <td>
-                              <div class="row">
-                                  <div class="col-2 text-center p-3">
-                                      {{'military-obligation.number' | translate}}
-                                  </div>
-                                  <div class="col-10">
-                                      <input formControlName="militaryBookletNumber" autocomplete="off"
-                                          class="form-control form-control-solid" type="number"
-                                          [placeholder]="'military-obligation.number' | translate" />
-                                  </div>
-                              </div>
+                            <div class="pc-container-menu">
+                                <div class="row">
+                                    <div class="col-4 text-center p-3">
+                                        {{'military-obligation.number' | translate}}
+                                    </div>
+                                    <div class="col-8">
+                                        <input formControlName="militaryBookletNumber" autocomplete="off"
+                                            class="form-control form-control-solid" type="number"
+                                            [placeholder]="'military-obligation.number' | translate" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-container-menu">
+                                <div class="col px-0">
+                                    <div class="w-100 text-left p-3">
+                                        {{'military-obligation.number' | translate}}
+                                    </div>
+                                    <div class="w-100">
+                                        <input formControlName="militaryBookletNumber" autocomplete="off"
+                                            class="form-control form-control-solid" type="number"
+                                            [placeholder]="'military-obligation.number' | translate" />
+                                    </div>
+                                </div>
+                            </div>
                           </td>
                       </tr>
                       <tr>
                           <td>
-                              <div class="row">
-                                  <div class="col-2 text-center p-3">
-                                      {{'military-obligation.relase-day' | translate}}
-                                  </div>
-                                  <div class="col-10">
-                                          <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                              [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                            <div class="pc-container-menu">
+                                <div class="row">
+                                    <div class="col-4 text-center p-3">
+                                        {{'military-obligation.relase-day' | translate}}
+                                    </div>
+                                    <div class="col-8">
+                                            <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                                [placeholder]="'military-obligation.relase-day' | translate"></app-date>
+                                    </div>
+                              </div>
+                            </div>
+                            <div class="mobile-container-menu">
+                                <div class="col px-0">
+                                    <div class="w-100 text-left p-3">
+                                        {{'military-obligation.relase-day' | translate}}
+                                    </div>
+                                    <div class="w-100">
+                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
                                   </div>
                               </div>
+                            </div>
                           </td>
                       </tr>
                       <tr>
                           <td>
-                              <div class="row">
-                                  <div class="col-2 text-center p-3">
-                                      {{'military-obligation.eminent-authority' | translate}}
-                                  </div>
-                                  <div class="col-10">
-                                      <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
-                                          class="form-control form-control-solid" type="text"
-                                          [placeholder]="'military-obligation.eminent-authority' | translate" />
-                                  </div>
-                              </div>
+                            <div class="pc-container-menu">
+                                <div class="row">
+                                    <div class="col-4 text-center p-3">
+                                        {{'military-obligation.eminent-authority' | translate}}
+                                    </div>
+                                    <div class="col-8">
+                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-container-menu">
+                                <div class="col px-0">
+                                    <div class="w-100 text-left p-3">
+                                        {{'military-obligation.eminent-authority' | translate}}
+                                    </div>
+                                    <div class="w-100">
+                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
+                                    </div>
+                                </div>
+                            </div>
                           </td>
                       </tr>
                       <tr>

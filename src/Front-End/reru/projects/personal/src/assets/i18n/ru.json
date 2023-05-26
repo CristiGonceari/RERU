@@ -491,7 +491,7 @@
     "yes": "Да",
     "no": "Нет",
     "create": "Создать",
-    "edit": "Редактировать",
+    "edit": "Изменить",
     "select": "Выбрать",
     "activate": "Активировать",
     "confirm": "Потвердить",
@@ -530,7 +530,8 @@
     "applay": "Применить",
     "update":"Обновить",
     "actions": "Действия",
-    "export": "Экспорт"
+    "export": "Экспорт",
+    "details": "Подробности"
   },
   "entity": {
     "colaborator-id": "Код colaborator",

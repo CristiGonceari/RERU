@@ -34,6 +34,7 @@ export class AddComponent implements OnInit {
   isAdded: boolean = false;
   public firebase_Data : Observable<DocumentTemplateKeys>;
   keysEnum = DocumentKeyEnum;
+  mobileButtonLength: string = "100%";
 
   constructor(
     private documentTemplateService: DocumentTemplateService,

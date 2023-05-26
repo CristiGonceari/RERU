@@ -53,7 +53,6 @@ export class CategoryListTableComponent implements OnInit {
 
   	list(data: any = {}) {		
 		this.isLoading = true;
-		this.keyword = data.keyword;
 		let params = ObjectUtil.preParseObject({
 			name: this.keyword || '',
 			page: data.page || this.pagedSummary.currentPage,
@@ -174,5 +173,18 @@ export class CategoryListTableComponent implements OnInit {
 		modalRef.componentInstance.buttonNo = this.no;
 		modalRef.componentInstance.buttonYes = this.yes;
 		modalRef.result.then(() => this.deleteCategory(id), () => { });
+	}
+
+	setKeyword(keyword: string): void {
+		this.keyword = keyword;
+	}
+
+	resetFilters(){
+		this.keyword = '';
+		this.list();
+	}
+  
+	getTests(){
+	  	this.list({page: 1});
 	}
 }

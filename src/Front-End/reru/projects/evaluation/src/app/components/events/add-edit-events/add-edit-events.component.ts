@@ -25,6 +25,7 @@ export class AddEditEventsComponent implements OnInit {
 	isLoading: boolean = true;
 	title: string;
 	description1: string;
+	mobileButtonLength: string = "100%";
 
 	constructor(
 		private eventService: EventService,

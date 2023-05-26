@@ -29,6 +29,7 @@ export class UserListComponent {
 
   interval: any;
   processesData: any;
+  mobileButtonLength: string = "100%";
 
   ngOnInit(): void {
   }

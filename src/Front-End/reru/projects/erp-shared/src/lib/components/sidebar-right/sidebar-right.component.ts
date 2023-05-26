@@ -59,7 +59,7 @@ export class SidebarRightComponent implements OnInit {
 		this.subscribeForUserChanges();
 		this.setAuthUserModel();
 		if (!this.menuItems || !this.menuItems.length) {
-			this.sidebarService.toggle(SidebarView.MODULES, null);
+			this.sidebarService.toggle(null);
 		}
 		let height = window.innerWidth-360
 		this.sidebarHeight = `${height}px`;

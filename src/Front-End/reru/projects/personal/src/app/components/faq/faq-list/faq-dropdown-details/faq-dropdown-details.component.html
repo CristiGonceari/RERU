@@ -16,17 +16,14 @@
         <ul class="navi flex-column navi-hover py-2">
             <li class="navi-item"> 
                 <a [routerLink]="viewLink" class="navi-link">
-                    <span class="navi-icon"><i class="la la-eye text-dark-65"></i></span>
-                    <span class="navi-text text-dark-65">{{'button.view' | translate}}</span>
+                    <span class="navi-text text-dark-65">{{'button.details' | translate}}</span>
                 </a> 
             </li>
             <li class="navi-item"> <a [routerLink]="editLink" class="navi-link">
-                    <span class="navi-icon"><i class="la la-edit text-dark-65"></i></span>
                     <span class="navi-text text-dark-65">{{'button.edit' | translate}}</span>
                 </a> 
             </li>
             <li class="navi-item"> <a href="javascript:;" (click)="delete.emit()" class="navi-link">
-                    <span class="navi-icon"><i class="la la-remove text-dark-65"></i></span>
                     <span class="navi-text text-dark-65">{{'button.delete' | translate}}</span>
                 </a> 
             </li>

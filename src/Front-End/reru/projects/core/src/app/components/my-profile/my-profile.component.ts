@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../../utils/services/profile.service';
 import { MyProfile } from '../../utils/models/user-profile.model';
 import { I18nService } from '../../utils/services/i18n.service';
-import { forkJoin } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { AuthenticationService, ConfirmModalComponent } from '@erp/shared';
 
 @Component({
@@ -11,7 +11,7 @@ import { AuthenticationService, ConfirmModalComponent } from '@erp/shared';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss']
 })
-export class MyProfileComponent implements OnInit {
+export class MyProfileComponent implements OnInit, OnDestroy{
   userProfile: MyProfile;
 	userProfileItems: any[];
 	acronym: string;
@@ -27,6 +27,8 @@ export class MyProfileComponent implements OnInit {
     buttonYes: string;
 	fileId: string;
 
+	userUpdate$: Subscription;
+
 	@Input() user: any;
 	@Input() isCustomHeader: boolean;
 	@Output() logOut = new EventEmitter();
@@ -36,7 +38,14 @@ export class MyProfileComponent implements OnInit {
 		private authService: AuthenticationService,
 		private profileService: ProfileService,
 		public translate: I18nService
-	) {}
+	) {
+		this.userUpdate$ = this.profileService.isUserUpdated.subscribe(() => {
+			this.getAvatar();
+		});
+	}
+	ngOnDestroy(): void {
+		this.userUpdate$.unsubscribe();
+	}
 
 	ngOnInit(): void {
 		this.getAvatar();

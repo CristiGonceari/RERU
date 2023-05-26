@@ -6,6 +6,7 @@ using AutoMapper;
 using CVU.ERP.Common.DataTransferObjects.SelectValues;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Evaluation.Application.References.GetDepartmentsValue
@@ -27,7 +28,7 @@ namespace CODWER.RERU.Evaluation.Application.References.GetDepartmentsValue
                 .OrderBy(x=>x.Name)
                 .AsQueryable();
 
-            return await departments.Select(u => _mapper.Map<SelectItem>(u)).ToListAsync();
+            return _mapper.Map<List<SelectItem>>(departments);
         }
     }
 }

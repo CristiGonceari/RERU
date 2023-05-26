@@ -7,104 +7,210 @@
                 [colorClass]="'text-primary'">
         </app-loading-spinner>
         <div class="card-body" *ngIf="!isLoading">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{ 'position.name' | translate }}:</label>
-                        <div class="col-lg-8 col-xl-8 col-form-label">{{position.name}}
+            <div class="d-none d-md-none d-lg-block">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-right font-weight-bold text-muted">{{ 'position.name' | translate }}:</label>
+                            <div class="col-lg-6 col-xl-6 col-form-label">{{position.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-right font-weight-bold text-muted">{{ 'position.medical-column' | translate }}:</label>
+                            <div class="col-lg-6 col-xl-6 col-form-label">{{ 'statuses.' + medicalColumn[position.medicalColumn] | translate }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{ 'position.medical-column' | translate }}:</label>
-                        <div class="col-lg-8 col-xl-8 col-form-label">{{ 'statuses.' + medicalColumn[position.medicalColumn] | translate }}
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-right font-weight-bold text-muted">{{'position.active-from' | translate}}:</label>
+                            <div class="col-xl-6 col-lg-6 col-form-label">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-right font-weight-bold text-muted">{{'position.active-to' | translate}}:</label>
+                            <div class="col-xl-6 col-lg-6 col-form-label">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'require-documents.required-documents' | translate}}:</label>
+                            <div class="col-lg-8 col-xl-8 col-form-label" >
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let documnet of documnets" class="attachedItem">
+                                        {{ documnet }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'events.events' | translate}} ({{ countOfEvents }}):</label>
+                            <div class="col-lg-8 col-xl-8 col-form-label">
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let event of events" class="attachedItem">
+                                        {{ event }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row" *ngIf="eventsListForDescription.length">
+                    <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">
+                      {{'events.event-template-details' | translate}}:</label>
+                    <div class="card col-lg-8 col-xl-8 col-form-label">
+                      <div class="card-body" *ngIf="!isLoading">
+                        <div class="bordered form-group row mb-2">
+                          <label *ngFor="let event of eventsListForDescription"
+                            class="table-responsive col-xl-6 col-lg-6 col-form-label align-items-center font-weight-bold text-right text-muted">
+                            <p class="text-muted mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
+                            <p *ngIf="!event.testTemplates.length">-</p>
+                            <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-right">
+                              {{testTemplate.testTemplateName}}
+                            </p>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'evaluations.attach-notified-users' | translate}} ({{ countOfUsers }}):</label>
+                            <div class="col-lg-8 col-xl-8 col-form-label">
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let user of attachedUsers" class="attachedItem">
+                                        {{ user }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'locations.description' | translate}}:</label>
+                            <div class="col-lg-8 col-xl-8 col-form-label rounded border">
+                                <ckeditor [editor]="Editor" [(ngModel)]="position.description" class="disabled-area"></ckeditor>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'position.active-from' | translate}}:</label>
-                        <div class="col-lg-8 col-xl-8 col-form-label">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
+            <div class="d-block d-md-block d-lg-none">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-left font-weight-bold text-muted">{{ 'position.name' | translate }}:</label>
+                            <div class="col-lg-6 col-xl-6 col-form-label">{{position.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-left font-weight-bold text-muted">{{ 'position.medical-column' | translate }}:</label>
+                            <div class="col-lg-6 col-xl-6 col-form-label">{{ 'statuses.' + medicalColumn[position.medicalColumn] | translate }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-4 col-lg-4 col-form-label text-right font-weight-bold text-muted">{{'position.active-to' | translate}}:</label>
-                        <div class="col-lg-8 col-xl-8 col-form-label">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-left font-weight-bold text-muted">{{'position.active-from' | translate}}:</label>
+                            <div class="col-xl-6 col-lg-6 col-form-label">{{ position.from | date: 'dd/MM/yyyy, HH:mm'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-6 col-lg-6 col-form-label text-left font-weight-bold text-muted">{{'position.active-to' | translate}}:</label>
+                            <div class="col-xl-6 col-lg-6 col-form-label">{{ position.to | date: 'dd/MM/yyyy, HH:mm' }}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'require-documents.required-documents' | translate}}:</label>
-                        <div class="col-lg-10 col-xl-10 col-form-label" >
-                            <ul class="listAttachedItems">
-                                <li *ngFor="let documnet of documnets" class="attachedItem">
-                                    {{ documnet }}
-                                </li>
-                            </ul>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-lg-4 col-form-label text-left font-weight-bold text-muted">{{'require-documents.required-documents' | translate}}:</label>
+                            <div class="col-lg-8 col-xl-8 col-form-label" >
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let documnet of documnets" class="attachedItem">
+                                        {{ documnet }}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'events.events' | translate}} ({{ countOfEvents }}):</label>
-                        <div class="col-lg-10 col-xl-10 col-form-label">
-                            <ul class="listAttachedItems">
-                                <li *ngFor="let event of events" class="attachedItem">
-                                    {{ event }}
-                                </li>
-                            </ul>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-lg-2 col-form-label text-left font-weight-bold text-muted">{{'events.events' | translate}} ({{ countOfEvents }}):</label>
+                            <div class="col-lg-10 col-xl-10 col-form-label">
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let event of events" class="attachedItem">
+                                        {{ event }}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row" *ngIf="eventsListForDescription.length">
-                <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">
-                  {{'events.event-template-details' | translate}}:</label>
-                <div class="card col-lg-10 col-xl-10 col-form-label">
-                  <div class="card-body" *ngIf="!isLoading">
-                    <div class="bordered form-group row mb-2">
-                      <label *ngFor="let event of eventsListForDescription"
-                        class="col-xl-3 col-lg-3 col-form-label align-items-center font-weight-bold text-left text-muted">
-                        <p class="text-muted mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
-                        <p *ngIf="!event.testTemplates.length">-</p>
-                        <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-left">
-                          {{testTemplate.testTemplateName}}
-                        </p>
-                      </label>
+                <div class="form-group row" *ngIf="eventsListForDescription.length">
+                    <label class="col-xl-2 col-lg-2 col-form-label text-left font-weight-bold text-muted">
+                      {{'events.event-template-details' | translate}}:</label>
+                    <div class="card col-lg-10 col-xl-10 col-form-label">
+                      <div class="card-body" *ngIf="!isLoading">
+                        <div class="bordered form-group row mb-2">
+                          <label *ngFor="let event of eventsListForDescription"
+                            class="table-responsive col-xl-3 col-lg-3 col-form-label align-items-center font-weight-bold text-left text-muted">
+                            <p class="text-muted mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
+                            <p *ngIf="!event.testTemplates.length">-</p>
+                            <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-left">
+                              {{testTemplate.testTemplateName}}
+                            </p>
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'evaluations.attach-notified-users' | translate}} ({{ countOfUsers }}):</label>
-                        <div class="col-lg-10 col-xl-10 col-form-label">
-                            <ul class="listAttachedItems">
-                                <li *ngFor="let user of attachedUsers" class="attachedItem">
-                                    {{ user }}
-                                </li>
-                            </ul>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-lg-2 col-form-label text-left font-weight-bold text-muted">{{'evaluations.attach-notified-users' | translate}} ({{ countOfUsers }}):</label>
+                            <div class="col-lg-10 col-xl-10 col-form-label">
+                                <ul class="listAttachedItems">
+                                    <li *ngFor="let user of attachedUsers" class="attachedItem">
+                                        {{ user }}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-form-label text-right font-weight-bold text-muted">{{'locations.description' | translate}}:</label>
-                        <div class="col-lg-10 col-xl-10 col-form-label rounded border">
-                            <ckeditor [editor]="Editor" [(ngModel)]="position.description" class="disabled-area"></ckeditor>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-lg-2 col-form-label text-left font-weight-bold text-muted">{{'locations.description' | translate}}:</label>
+                            <div class="col-lg-10 col-xl-10 col-form-label rounded border">
+                                <ckeditor [editor]="Editor" [(ngModel)]="position.description" class="disabled-area"></ckeditor>
+                            </div>
                         </div>
                     </div>
                 </div>

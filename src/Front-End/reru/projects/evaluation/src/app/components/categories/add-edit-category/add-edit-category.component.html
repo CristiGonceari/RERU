@@ -19,7 +19,10 @@
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group row">
-                          <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                          <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">
+                            {{'categories.category-name' | translate}}
+                          </label>
+                          <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">
                             {{'categories.category-name' | translate}}
                           </label>
                           <div class="col-lg-9 col-xl-9">
@@ -30,8 +33,14 @@
                       </div>
                     </div>
                   </div>
-                  <div class="text-right border-top pt-10">
+                  <div class="text-right border-top pt-10 d-md-block d-lg-block d-none">
                     <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                    </app-button>
+                    <app-add-button class="btn" (handle)="onSave()" [value]="'button.confirm' | translate">
+                    </app-add-button>
+                  </div>
+                  <div class="text-left border-top pt-10 d-md-none d-lg-none d-block">
+                    <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
                     </app-button>
                     <app-add-button class="btn" (handle)="onSave()" [value]="'button.confirm' | translate">
                     </app-add-button>

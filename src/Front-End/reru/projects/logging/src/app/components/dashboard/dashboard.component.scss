@@ -131,3 +131,17 @@ tbody {
   height: 0px;
   border: none;
 }
+
+.mobile-container-menu {
+  display: none !important;
+  @media screen and (max-width: 499px) {
+      display: block !important;
+  }
+}
+
+.pc-container-menu {
+  display: none !important;
+  @media screen and (min-width: 500px) and (max-width: 991px) {
+      display: block !important;
+  }
+}

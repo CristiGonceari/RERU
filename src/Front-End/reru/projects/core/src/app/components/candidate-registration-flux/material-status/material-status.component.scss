@@ -44,3 +44,35 @@ button {
       width: 100%;
   }
 }
+
+.select-mobile-container-menu {
+  display: none;
+  @media screen and (max-width: 1199px) {
+      display: flex;
+      justify-content: center;
+  }
+}
+
+.select-pc-container-menu {
+  display: none;
+  @media screen and (min-width: 1200px) {
+      display: flex;
+      justify-content: flex-end;
+  }
+}
+
+.mobile-container-menu {
+  display: none;
+  @media screen and (max-width: 992px) {
+      display: flex;
+      justify-content: center;
+  }
+}
+
+.pc-container-menu {
+  display: none;
+  @media screen and (min-width: 993px) {
+      display: flex;
+      justify-content: flex-end;
+  }
+}
