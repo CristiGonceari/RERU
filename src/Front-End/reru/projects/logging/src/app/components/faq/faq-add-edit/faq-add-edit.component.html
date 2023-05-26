@@ -21,11 +21,20 @@
 			<div class="mb-10">
 				<ckeditor [editor]="Editor" [(ngModel)]="editorData" (ready)="onReady($event)"></ckeditor>
 			</div>
-			<div class="text-right border-top pt-10">
+			<div class="border-top pt-10 pc-container-menu">
 				<app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
 				</app-button>
 				<app-add-button class="btn" (handle)="saveArticle()" [disabled]="isButtonPressed || checkConfirmButton(editorData, title)" [value]="'button.confirm' | translate">
 				</app-add-button>
+			</div>
+			<div class="row border-top pt-10 mobile-container-menu">
+				<div class="d-flex m-0 w-100">
+					<app-button class="btn  w-100 mr-1" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
+					</app-button>
+					<app-add-button class="btnn w-100 ml-1" [value]="'button.confirm' | translate" (handle)="saveArticle()" 
+					[disabled]="isButtonPressed || checkConfirmButton(editorData, title)">
+					</app-add-button>
+				</div>
 			</div>
 		</div>
 	</div>
