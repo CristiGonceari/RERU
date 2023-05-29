@@ -9,21 +9,41 @@
 					<div class="card-title">
 						<h3 class="card-label" id="title">{{'locations.locations' | translate}}</h3>
 					</div>
-					<div class="card-toolbar d-md-flex d-none">
+					<div class="card-toolbar d-sm-flex d-none">
 						<erp-shared-export-button class="mr-3" (click)="locationsTable.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
-						<app-add-button class="btn" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
+						<app-add-button class="btn" [value]="'locations.add-location' | translate" 
+							[routerLink]="['add-location']">
+						</app-add-button>
 					</div>
-					<div class="card-toolbar d-md-none d-flex flex-column w-100">
-						<erp-shared-export-button class="w-100" (click)="locationsTable.getHeaders(getTitle())">
+					<div class="card-toolbar d-sm-none d-flex flex-column w-100">
+						<erp-shared-export-button class="mb-2" width="100%" (click)="locationsTable.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
-						<app-add-button class="btn my-auto pt-2 w-100" [value]="'locations.add-location' | translate" [routerLink]="['add-location']"></app-add-button>
+						<app-add-button class="btn" width="100%" [value]="'locations.add-location' | translate" 
+							[routerLink]="['add-location']">
+						</app-add-button>
 					</div>
 				</div>
-				<div class="card-header border-0">
-					<app-search-location style="width: 100%;" (handleSearch)="locationsTable.list({keyword: $event, page: 1})"></app-search-location>
+				<div class="card-header border-0 pt-0 pb-0 mt-3 row">
+					<div class="col-sm col-12 pt-sm-0 pt-2">
+						<erp-shared-search-input 
+							(handleSearch)="locationsTable.setKeyword($event)" 
+							[placeholder]="'button.search-name' | translate" #locationInput
+							[showIcon]="false" [useDebounce]="false">
+						</erp-shared-search-input>
+					</div>
+					<div class="col-sm-auto col-12 pt-sm-0 pt-2 d-flex flex-column-reverse flex-sm-row">
+						<div class="mr-sm-5">
+						  <app-button width="100%" (handle)="locationsTable.resetFilters(); locationInput.clearSearch()" [value]="'button.reset' | translate">
+						  </app-button>
+						</div>
+						<div class="mb-sm-0 mb-2">
+						  <app-confirm-button width="100%" (handle)="locationsTable.getLocations()" [value]="'button.search' | translate">
+						  </app-confirm-button>
+						</div>
+					</div>
 				</div>
 				<div class="card-body">
 					<app-location-list-table #locationsTable></app-location-list-table>
