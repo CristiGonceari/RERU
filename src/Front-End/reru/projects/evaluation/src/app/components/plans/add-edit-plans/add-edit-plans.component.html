@@ -3,76 +3,78 @@
 <app-loading-spinner *ngIf="isLoading" [contentHeight]="'80vh'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
-    <div class="card card-custom gutter-b">
-        <div class="card-body p-0">
-            <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first" data-wizard-clickable="true">
-                <div class="d-flex flex-row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
-                    <div class="col-xl-12 col-xxl-7">
-                        <form class="form" id="kt_contact_add_form" [formGroup]="planForm" autocomplete="off">
-                            <div class="pb-5">
-                                <h3 class="mb-10 font-weight-bolder text-dark">
-                                    {{'plans.plan-details' | translate}}
-                                </h3>
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.name' | translate}}</label>
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.name' | translate}}</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <input class="form-control form-control-solid" type="text" formControlName="name" [placeholder]="'plans.plan-name' | translate" autocomplete="off">
+    <div class="col">
+        <div class="card card-custom gutter-b">
+            <div class="card-body p-0">
+                <div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                    <div class="d-flex flex-row justify-content-center my-5 px-8 my-lg-7 px-lg-10">
+                        <div class="col-xl-12 col-xxl-7">
+                            <form class="form" id="kt_contact_add_form" [formGroup]="planForm" autocomplete="off">
+                                <div class="pb-5">
+                                    <h3 class="mb-10 font-weight-bolder text-dark">
+                                        {{'plans.plan-details' | translate}}
+                                    </h3>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.name' | translate}}</label>
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.name' | translate}}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input class="form-control form-control-solid" type="text" formControlName="name" [placeholder]="'plans.plan-name' | translate" autocomplete="off">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.start-date' | translate}}</label>
-                                            <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.start-date' | translate}}</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <input id="from" [owlDateTime]="fromDate" placeholder="{{'events.start-date' | translate}}"
-                                                    class="shadow-input" name="date" formControlName="fromDate" [(ngModel)]="fromData" />
-                                                <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="{{'events.start-date' | translate}}"
-                                                    class="form-control form-control-lg form-control-solid" [value]="fromData | dateFilter:'dd/MM/yy HH:mm'"/>
-                                                <owl-date-time #fromDate></owl-date-time>
+                                            <div class="form-group row">
+                                                <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.start-date' | translate}}</label>
+                                                <label for="fromDate" class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.start-date' | translate}}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input id="from" [owlDateTime]="fromDate" placeholder="{{'events.start-date' | translate}}"
+                                                        class="shadow-input" name="date" formControlName="fromDate" [(ngModel)]="fromData" />
+                                                    <input id="from" [owlDateTimeTrigger]="fromDate" placeholder="{{'events.start-date' | translate}}"
+                                                        class="form-control form-control-lg form-control-solid" [value]="fromData | dateFilter:'dd/MM/yy HH:mm'"/>
+                                                    <owl-date-time #fromDate></owl-date-time>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.end-date' | translate}}</label>
-                                            <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.end-date' | translate}}</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <input id="tillDate" [owlDateTime]="tillDate" placeholder="{{'events.end-date' | translate}}"
-                                                    class="shadow-input" name="date" formControlName="tillDate" [(ngModel)]="toData" />
-                                                <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="{{'events.end-date' | translate}}"
-                                                    class="form-control form-control-lg form-control-solid" [value]="toData | dateFilter:'dd/MM/yy HH:mm'"/>
-                                                <owl-date-time #tillDate></owl-date-time>
+                                            <div class="form-group row">
+                                                <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'events.end-date' | translate}}</label>
+                                                <label for="tillDate" class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'events.end-date' | translate}}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <input id="tillDate" [owlDateTime]="tillDate" placeholder="{{'events.end-date' | translate}}"
+                                                        class="shadow-input" name="date" formControlName="tillDate" [(ngModel)]="toData" />
+                                                    <input id="tillDate" [owlDateTimeTrigger]="tillDate" placeholder="{{'events.end-date' | translate}}"
+                                                        class="form-control form-control-lg form-control-solid" [value]="toData | dateFilter:'dd/MM/yy HH:mm'"/>
+                                                    <owl-date-time #tillDate></owl-date-time>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group row mb-10">
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.description' | translate}}</label>
-                                            <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.description' | translate}}</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                              <textarea type="text" class="form-control form-control-solid" name="description"
-                                                placeholder="{{'locations.description' | translate}}" value="" formControlName="description">
-                                              </textarea>
+                                            <div class="form-group row mb-10">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.description' | translate}}</label>
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.description' | translate}}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                <textarea type="text" class="form-control form-control-solid" name="description"
+                                                    placeholder="{{'locations.description' | translate}}" value="" formControlName="description">
+                                                </textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
-                                <button type="button" (click)="back()" class="btn btn-secondary font-weight-bold mr-2">
-                                    {{'button.cancel' | translate}}
-                                </button>
-                                <app-add-button class="btn" (click)="onSave()" [disabled]="!planForm.valid">
-                                    {{'button.confirm' | translate}}
-                                </app-add-button>
-                            </div>
-                            <div class="text-right border-top pt-10 pt-10 d-block d-md-none d-lg-none">
-                                <button type="button" (click)="back()" class="btn btn-secondary font-weight-bold w-100">
-                                    {{'button.cancel' | translate}}
-                                </button>
-                                <app-add-button class="btn" (click)="onSave()" [disabled]="!planForm.valid">
-                                    {{'button.confirm' | translate}}
-                                </app-add-button>
-                            </div>
-                        </form>
+                                <div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
+                                    <button type="button" (click)="back()" class="btn btn-secondary font-weight-bold mr-2">
+                                        {{'button.cancel' | translate}}
+                                    </button>
+                                    <app-add-button class="btn" (click)="onSave()" [disabled]="!planForm.valid">
+                                        {{'button.confirm' | translate}}
+                                    </app-add-button>
+                                </div>
+                                <div class="text-right border-top pt-10 pt-10 d-block d-md-none d-lg-none">
+                                    <button type="button" (click)="back()" class="btn btn-secondary font-weight-bold w-100">
+                                        {{'button.cancel' | translate}}
+                                    </button>
+                                    <app-add-button class="btn" (click)="onSave()" [disabled]="!planForm.valid">
+                                        {{'button.confirm' | translate}}
+                                    </app-add-button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
