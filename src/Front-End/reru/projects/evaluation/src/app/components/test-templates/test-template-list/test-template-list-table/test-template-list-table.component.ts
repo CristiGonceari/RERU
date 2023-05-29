@@ -150,6 +150,11 @@ export class TestTemplateListTableComponent implements OnInit {
 		});
 	}
 
+	getTestTemplates():void {
+		this.pagination.currentPage = 1;
+		this.list();
+	}
+
 	resetFilters(): void {
 		this.filters = {};
 		this.status = '';
@@ -157,11 +162,13 @@ export class TestTemplateListTableComponent implements OnInit {
 		this.list();
 	}
 
-	setFilter(field: string, value): void {
+	setFilter(field: string, value: any, startSeatch: boolean = false): void {
 		this.filters[field] = value;
 		this.status = this.filters.status;
-		this.pagination.currentPage = 1;
-		this.list();
+		if(startSeatch) {
+			this.pagination.currentPage = 1;
+			this.list();
+		}
 	}
 
 	changeStatus(id, status) {
