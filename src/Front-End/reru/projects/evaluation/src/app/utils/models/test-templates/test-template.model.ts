@@ -9,6 +9,7 @@ export class TestTemplate {
     questionCount?: number;
     minPercent: number;
     duration: number;
+    isGridTest?: boolean;
     categoriesCount?: number;
     categoriesSequence: SequenceTypeEnum;
     status: TestTemplateStatusEnum;

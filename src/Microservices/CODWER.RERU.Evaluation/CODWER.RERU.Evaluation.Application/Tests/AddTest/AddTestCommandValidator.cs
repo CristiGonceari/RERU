@@ -63,7 +63,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                 When(r => !r.Data.EvaluatorId.HasValue && !r.Data.EventId.HasValue, () =>
                 {
                     RuleFor(x => x.Data)
-                        .MustAsync((x, cancellation) => IsOnlyOneAnswerTest(x))
+                        .Must((x, cancellation) => _appDbContext.TestTemplates.Any(t => t.IsGridTest == true))
                         .WithErrorCode(ValidationCodes.MUST_ADD_EVENT_OR_EVALUATOR);
                 });
 
@@ -85,15 +85,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
                         .WithErrorCode(ValidationCodes.EVALUATOR_AND_CANDIDATE_CANT_BE_THE_SAME);
                 });
             });
-        }
-
-        private async Task<bool> IsOnlyOneAnswerTest(AddEditTestDto data)
-        {
-            var dataList = await _mediator.Send(new GetTestTemplateByStatusQuery { TestTemplateStatus = TestTemplateStatusEnum.Active });
-
-            var result = dataList.FirstOrDefault(x => x.TestTemplateId == data.TestTemplateId);
-
-            return result.IsOnlyOneAnswer;
         }
      }
 }
