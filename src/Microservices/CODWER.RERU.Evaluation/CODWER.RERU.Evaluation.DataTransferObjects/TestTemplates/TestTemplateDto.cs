@@ -11,6 +11,7 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates
         public int? QuestionCount { get; set; }
         public int MinPercent { get; set; }
         public int Duration { get; set; }
+        public bool? IsGridTest { get; set; }
         public int? CategoriesCount { get; set; }
         public SequenceEnum CategoriesSequence { get; set; }
         public TestTemplateStatusEnum Status { get; set; }

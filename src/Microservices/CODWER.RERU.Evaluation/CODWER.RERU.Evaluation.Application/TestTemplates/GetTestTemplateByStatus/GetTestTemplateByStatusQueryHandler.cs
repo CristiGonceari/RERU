@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
+using RERU.Data.Entities;
 
 namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStatus
 {
@@ -38,7 +39,6 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                     .Include(x => x.EventTestTemplates)
                     .Include(x => x.Settings)
                     .Where(x => x.Status == request.TestTemplateStatus)
-                    .Include(tt => tt.TestTemplateQuestionCategories)
                     .AsQueryable();
 
             if (request.Mode != null)
@@ -55,26 +55,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
 
             foreach (var testTemplateDto in selectTestTemplateValueDto)
             {
-                var testTemplate = testTemplates.FirstOrDefault(tt => tt.Id == testTemplateDto.TestTemplateId);
-
-                var testTemplateCategories = testTemplate.TestTemplateQuestionCategories
-                    .Where(tt => tt.TestTemplateId == testTemplate.Id)
-                    .ToList();
-
                 var questionsList = new List<QuestionUnitDto>();
 
-                foreach (var testTemplateCategory in testTemplateCategories)
-                {
-                    var testCategoryQuestionData = await _mediator.Send(new TestCategoryQuestionsQuery { TestTemplateQuestionCategoryId = testTemplateCategory.Id });
-
-                    questionsList.AddRange(testCategoryQuestionData.Questions);
-                    testTemplateDto.IsOnlyOneAnswer = questionsList.All(x => x.QuestionType == QuestionTypeEnum.OneAnswer || x.QuestionType == QuestionTypeEnum.MultipleAnswers);
-                }
-
-                if (testTemplateCategories.All(tt => tt.QuestionType == QuestionTypeEnum.OneAnswer || tt.QuestionType == QuestionTypeEnum.MultipleAnswers))
-                {
-                    testTemplateDto.IsOnlyOneAnswer = true;
-                }
+                _mapper.Map<SelectTestTemplateValueDto>(testTemplateDto);
 
                 testTemplateDto.PrintTest = await CanPrintTest(questionsList);
             }

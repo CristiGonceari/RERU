@@ -254,27 +254,25 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         {
             bool isValid = true;
             var requiredColumns = new string[] { "Nume", "Prenume", "Patronimic", "Idnp", "Email", "Id Departament", "Id Rol", "Id Funcție", "Data nașterii", "Nr. telefon" };
-            var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).ToArray();
+            var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).Take(10).ToArray();
 
             if (!headers.SequenceEqual(requiredColumns, StringComparer.OrdinalIgnoreCase))
             {
                 isValid = false;
                 for (int i = 0; i < requiredColumns.Length; i++)
                 {
-                    if (headers[i] != requiredColumns[i])
-                    {
+					if (!headers.Any(header => string.Equals(header, requiredColumns[i], StringComparison.OrdinalIgnoreCase)))
+					{
                         workSheet.Cells[1, 12].Value = "Respectați ordinea coloanelor Nume, Prenume, Patronimic, Idnp, Email, Id Departament, Id Rol, Id Funcție, Data nașterii, Nr. telefon";
                         workSheet.Cells[1, i + 1].Style.Fill.SetBackground(_color);
                     }
                 }
             }
-
-            if (!ValidateExcelWorksheet(workSheet)) return false;
             
             var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
             var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
 
-            return isIdnpValid && isEmailValid && isValid;
+            return isIdnpValid && isEmailValid && isValid && ValidateExcelWorksheet(workSheet);
         }
 
         private bool ValidateExcelWorksheet(ExcelWorksheet workSheet)

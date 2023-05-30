@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { TestTemplateModeEnum } from '../../../utils/enums/test-template-mode.enum';
 import { TestTemplateStatusEnum } from '../../../utils/enums/test-template-status.enum';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { TestTemplate } from '../../../utils/models/test-templates/test-template.model';
@@ -56,7 +55,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 			qualifyingType: new FormControl(),
 			minPercent: new FormControl(),
 			status: new FormControl(),
-			basicTestTemplate: new FormControl(null)
+			basicTestTemplate: new FormControl(null),
+			isGridTest: new FormControl()
 		});
 		this.onTextChange();
 		this.getMode();
@@ -127,7 +127,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
-					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate)
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate),
+					isGridTest: this.formBuilder.control(test?.isGridTest)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -142,7 +143,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control((test && !isNaN(test.qualifyingType) ? test.qualifyingType : null), [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items,
-					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate)
+					basicTestTemplate: this.formBuilder.control(test?.basicTestTemplate),
+					isGridTest: this.formBuilder.control(test?.isGridTest)
 				});
 
 				this.modeId = this.testForm.value.mode;
@@ -159,7 +161,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null)
+					basicTestTemplate: this.formBuilder.control(null),
+					isGridTest: this.formBuilder.control(true)
 				});
 			} else if (this.modeId == 1) {
 				this.testForm = this.formBuilder.group({
@@ -168,7 +171,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 					mode: this.formBuilder.control(this.modeId, [Validators.required],),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null)
+					basicTestTemplate: this.formBuilder.control(null),
+					isGridTest: this.formBuilder.control(true)
 				});
 			} else {
 				this.testForm = this.formBuilder.group({
@@ -178,7 +182,8 @@ export class AddEditTestTemplateComponent implements OnInit {
 					qualifyingType: this.formBuilder.control(2, [Validators.required]),
 					status: this.statusEnum.Draft,
 					moduleRoles: this.items || [],
-					basicTestTemplate: this.formBuilder.control(null)
+					basicTestTemplate: this.formBuilder.control(null),
+					isGridTest: this.formBuilder.control(true)
 				});
 			}
 		}
