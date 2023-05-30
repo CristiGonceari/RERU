@@ -3,6 +3,7 @@
 </app-page-title>
 
 <erp-shared-content>
+<<<<<<< Updated upstream
   <div class="card card-custom gutter-b erp-shared-desktop-wide">
     <div class="card-header border-0 py-0">
       <div class="card-title">
@@ -27,6 +28,32 @@
       <div class="row mobile-container-menu w-100">
         <div class="d-flex m-0 w-100 mb-3">
           <button class="btn btn-light-primary font-weight-bold" [disabled]
+=======
+  <div class="col">
+    <div class="card card-custom gutter-b erp-shared-desktop-wide">
+      <div class="card-header border-0 py-0">
+        <div class="card-title">
+          <h3 class="card-label" id="title">
+            {{'pages.users.user-list' | translate}}
+          </h3>
+        </div>
+        <div class="card-toolbar d-md-flex d-none">
+          <button class="btn btn-light-warning font-weight-bold mr-2" (click)="openHistoryModal()">
+            <i class="far fa-file-excel"></i>
+            {{ 'processes.history' | translate }}
+          </button>
+          <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="mr-2">
+            {{'button.import' | translate}}
+          </erp-shared-import-button>
+          <erp-shared-export-button class="mr-2" (click)="userTable.getHeaders(getTitle())">
+            {{'button.export' | translate}}
+          </erp-shared-export-button>
+          <app-add-button class="btn mr-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
+          </app-add-button>
+        </div>
+        <div class="card-toolbar d-md-none d-flex w-100">
+          <button class="btn btn-light-primary font-weight-bold mr-3" [disabled]
+>>>>>>> Stashed changes
             ngbTooltip="{{item.done}} \ {{item.total}}" *ngFor="let item of processesData; let i = index"
             style="width: 125px;">
             <div class="container">
@@ -40,6 +67,7 @@
               </div>
             </div>
           </button>
+<<<<<<< Updated upstream
           <button class="btn btn-light-warning font-weight-bold w-100 mr-1" (click)="openHistoryModal()">
             <i class="far fa-file-excel"></i>
             {{ 'processes.history' | translate }}
@@ -63,46 +91,69 @@
           <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
             (handleSearch)="userTable.setFilter('keyword', $event)">
           </erp-shared-search-input>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
-            (handleSearch)="userTable.setFilter('email', $event)">
-          </erp-shared-search-input>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
-            (handleSearch)="userTable.setFilter('idnp', $event)">
-          </erp-shared-search-input>
-        </div>
-      </div>
-      <div class="row w-100 mt-3 pt-lg-0 pt-2">
-        <div class="col-lg col-12">
-          <app-search-department (filter)="userTable.setFilter('departmentId',  $event)" #departmentId>
-          </app-search-department>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <app-search-role (filter)="userTable.setFilter('roleId',  $event)" #roleId></app-search-role>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <app-search-employee-function (filter)="userTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
-          </app-search-status>
-        </div>
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <app-filter-user-state (filter)="userTable.setFilter('status', $event)" #userState
-            (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
-        </div>
-        <div class="col-lg-auto col-12 pt-lg-0 pt-2">
-          <app-button (click)="clearFilters(); userTable.resetFilter()" width="100%"
-            [value]="'button.reset' | translate">
-          </app-button>
+=======
+          <button class="btn btn-light-warning font-weight-bold w-100 mb-3" (click)="openHistoryModal()">
+            <i class="far fa-file-excel"></i>
+            {{ 'processes.history' | translate }}
+          </button>
+          <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="w-100 mb-3">
+            {{'button.import' | translate}}
+          </erp-shared-import-button>
+          <erp-shared-export-button class="w-100 mb-3" width="100%" (click)="userTable.getHeaders(getTitle())">
+            {{'button.export' | translate}}
+          </erp-shared-export-button>
+          <app-add-button class="btn w-100 mb-3" width="100%" routerLink="../new" *permission="'P00000013'"
+            [value]="'button.add-user' | translate"></app-add-button>
         </div>
       </div>
-    </div>
-    <div class="card-body">
-      <app-user-list-table #userTable></app-user-list-table>
+      <div class="card-header border-0 pt-0 pb-0 pr-5">
+        <div class="row w-100">
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
+              (handleSearch)="userTable.setFilter('keyword', $event)">
+            </erp-shared-search-input>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
+              (handleSearch)="userTable.setFilter('email', $event)">
+            </erp-shared-search-input>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
+              (handleSearch)="userTable.setFilter('idnp', $event)">
+            </erp-shared-search-input>
+          </div>
+>>>>>>> Stashed changes
+        </div>
+        <div class="row w-100 mt-3 pt-lg-0 pt-2">
+          <div class="col-lg col-12">
+            <app-search-department (filter)="userTable.setFilter('departmentId',  $event)" #departmentId>
+            </app-search-department>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <app-search-role (filter)="userTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <app-search-employee-function (filter)="userTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
+            </app-search-status>
+          </div>
+          <div class="col-lg col-12 pt-lg-0 pt-2">
+            <app-filter-user-state (filter)="userTable.setFilter('status', $event)" #userState
+              (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
+          </div>
+          <div class="col-lg-auto col-12 pt-lg-0 pt-2">
+            <app-button (click)="clearFilters(); userTable.resetFilter()" width="100%"
+              [value]="'button.reset' | translate">
+            </app-button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <app-user-list-table #userTable></app-user-list-table>
+      </div>
     </div>
   </div>
 </erp-shared-content>
