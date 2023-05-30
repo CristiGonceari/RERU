@@ -1032,6 +1032,7 @@
     "03001805": "Numărul de întrebări stabilit trebuie să fie egal cu numărul de întrebări selectate",
     "03001806": "Alegeți tipul întrebării. Sondajele acceptă doar întrebări cu un singur răspuns",
     "03001807": "Testul grilă acceptă întrebări cu un singur răspuns sau cu răspunsuri multiple",
+    "03001808": "Evaluatorul evenimentului nu poate aplica la poziția vacantă care conține acel eveniment",
     "03001901": "Rezultatul nu poate fi calculat",
     "03001902": "Numai testul terminat poate fi setat ca verificat",
     "03001903": "Nu toate răspunsurile sunt verificate",
