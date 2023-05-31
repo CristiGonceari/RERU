@@ -3,32 +3,6 @@
 </app-page-title>
 
 <erp-shared-content>
-<<<<<<< Updated upstream
-  <div class="card card-custom gutter-b erp-shared-desktop-wide">
-    <div class="card-header border-0 py-0">
-      <div class="card-title">
-        <h3 class="card-label" id="title">
-          {{'pages.users.user-list' | translate}}
-        </h3>
-      </div>
-      <div class="card-toolbar pc-container-menu">
-        <button class="btn btn-light-warning font-weight-bold mr-2" (click)="openHistoryModal()">
-          <i class="far fa-file-excel"></i>
-          {{ 'processes.history' | translate }}
-        </button>
-        <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="mr-2">
-          {{'button.import' | translate}}
-        </erp-shared-import-button>
-        <erp-shared-export-button class="mr-2" (click)="userTable.getHeaders(getTitle())">
-          {{'button.export' | translate}}
-        </erp-shared-export-button>
-        <app-add-button class="btn mr-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
-        </app-add-button>
-      </div>
-      <div class="row mobile-container-menu w-100">
-        <div class="d-flex m-0 w-100 mb-3">
-          <button class="btn btn-light-primary font-weight-bold" [disabled]
-=======
   <div class="col">
     <div class="card card-custom gutter-b erp-shared-desktop-wide">
       <div class="card-header border-0 py-0">
@@ -53,7 +27,6 @@
         </div>
         <div class="card-toolbar d-md-none d-flex w-100">
           <button class="btn btn-light-primary font-weight-bold mr-3" [disabled]
->>>>>>> Stashed changes
             ngbTooltip="{{item.done}} \ {{item.total}}" *ngFor="let item of processesData; let i = index"
             style="width: 125px;">
             <div class="container">
@@ -67,31 +40,6 @@
               </div>
             </div>
           </button>
-<<<<<<< Updated upstream
-          <button class="btn btn-light-warning font-weight-bold w-100 mr-1" (click)="openHistoryModal()">
-            <i class="far fa-file-excel"></i>
-            {{ 'processes.history' | translate }}
-          </button>
-          <erp-shared-export-button class="w-100 ml-1" width="100%" (click)="userTable.getHeaders(getTitle())">
-            {{'button.export' | translate}}
-          </erp-shared-export-button>
-        </div>
-        <div class="d-flex m-0 w-100">
-          <erp-shared-import-button (click)="userTable.openImportModal()" [width]="mobileButtonLength" type="button" class="w-100 mr-1">
-            {{'button.import' | translate}}
-          </erp-shared-import-button>
-          <app-mobile-add-button class="btn w-100 ml-1" width="100%" routerLink="../new" *permission="'P00000013'"
-            [value]="'button.add-user' | translate"></app-mobile-add-button>
-        </div>
-      </div>
-    </div>
-    <div class="card-header border-0 pt-0 pb-0 pr-5">
-      <div class="row w-100">
-        <div class="col-lg col-12 pt-lg-0 pt-2">
-          <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
-            (handleSearch)="userTable.setFilter('keyword', $event)">
-          </erp-shared-search-input>
-=======
           <button class="btn btn-light-warning font-weight-bold w-100 mb-3" (click)="openHistoryModal()">
             <i class="far fa-file-excel"></i>
             {{ 'processes.history' | translate }}
@@ -123,7 +71,6 @@
               (handleSearch)="userTable.setFilter('idnp', $event)">
             </erp-shared-search-input>
           </div>
->>>>>>> Stashed changes
         </div>
         <div class="row w-100 mt-3 pt-lg-0 pt-2">
           <div class="col-lg col-12">
