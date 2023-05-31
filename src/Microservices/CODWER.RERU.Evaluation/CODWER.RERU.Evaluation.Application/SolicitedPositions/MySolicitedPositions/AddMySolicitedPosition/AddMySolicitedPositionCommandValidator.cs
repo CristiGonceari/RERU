@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Validation;
+using CODWER.RERU.Evaluation.DataTransferObjects.SolicitedPositions;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
 
@@ -12,39 +14,36 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
 {
     public class AddMySolicitedPositionCommandValidator : AbstractValidator<AddMySolicitedPositionCommand>
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IUserProfileService _userProfileService;
 
         public AddMySolicitedPositionCommandValidator(AppDbContext appDbContext, IUserProfileService userProfileService)
         {
-            _appDbContext = appDbContext;
             _userProfileService = userProfileService;
 
             RuleFor(x => x.Data.CandidatePositionId)
                 .SetValidator(x => new ItemMustExistValidator<CandidatePosition>(appDbContext, ValidationCodes.INVALID_POSITION,
                     ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.Data.CandidatePositionId)
-                .MustAsync(async (id, cancellationToken) => await IsCandidate(id))
+            RuleFor(x => x.Data)
+                .MustAsync(async (solicitedPosition, cancellationToken) => await IsCandidate(solicitedPosition, appDbContext, userProfileService))
                 .WithErrorCode(ValidationCodes.CAN_APPLY_POSITION_IF_YOU_ARE_EVALUATOR_EVENT);
         }
 
-        private async Task<bool> IsCandidate(int candidatePositionId)
+        private async Task<bool> IsCandidate(AddEditSolicitedPositionDto solicitedPosition, 
+                                            AppDbContext appDbContext, 
+                                            IUserProfileService userProfileService)
         {
-            var myUserProfile = await _userProfileService.GetCurrentUserProfileDto();
+            var myUserProfile = await userProfileService.GetCurrentUserProfileDto();
 
-            var eventId = _appDbContext.EventVacantPositions
-                                .FirstOrDefault(x => x.CandidatePositionId == candidatePositionId)?.EventId;
+            var eventIds = await appDbContext.EventVacantPositions
+                .Where(ev => ev.CandidatePositionId == solicitedPosition.CandidatePositionId)
+                .Select(ev => ev.EventId)
+                .ToListAsync();
 
-            if (eventId.HasValue)
-            {
-                bool isEvaluator = _appDbContext.EventEvaluators
-                                .Any(ee => ee.EvaluatorId == myUserProfile.Id && ee.EventId == eventId.Value);
+            bool isEvaluator = await appDbContext.EventEvaluators
+                .AnyAsync(ee => ee.EvaluatorId == myUserProfile.Id && eventIds.Contains(ee.EventId));
 
-                return !isEvaluator;
-            }
-
-            return true;
+            return !isEvaluator;
         }
     }
 }
