@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RERU.Data.Persistence.Context;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Email == userEmail);
 
-            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/connect/endsession?id_token_hint=" + userProfile.Token;
+            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + userProfile.Token;
 
             return Redirect(redirectUrl);
         }
@@ -42,11 +43,16 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             string userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
 
-            var userProfile = await _appDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Email == userEmail);
+            var userProfileToken = "";
 
-            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/connect/endsession?id_token_hint=" + userProfile.Token;
+            if (!string.IsNullOrEmpty(userEmail))
+            {
+                userProfileToken = _appDbContext.UserProfiles.FirstOrDefault(up => up.Email == userEmail).Token;   
+            }
 
-            return new { userEmail = userEmail, userProfile = userProfile.Token, redirectUrl = redirectUrl }.ToString();
+            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + userProfile.Token;
+
+            return new { userEmail = userEmail, userProfileToken = userProfileToken, redirectUrl = redirectUrl }.ToString();
         }
     }
 }
