@@ -241,7 +241,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
         private async Task<FileDataDto> GetExcelFile(ExcelPackage package)
         {
-            const string fileName = "AddTestResult.xlsx";
+            const string fileName = "AdaugareaTestului.xlsx";
             var streamBytesArray = package.GetAsByteArray();
 
             return FileDataDto.GetExcel(fileName, streamBytesArray);
