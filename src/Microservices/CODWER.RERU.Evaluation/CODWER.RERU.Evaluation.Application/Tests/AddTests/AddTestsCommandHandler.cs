@@ -218,6 +218,20 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                 .Include(x => x.UserProfile)
                 .Include(x => x.Evaluator)
                 .Include(x => x.TestTemplate)
+                .Select(x => new Test{
+                    Id = x.Id,
+                    ProgrammedTime = x.ProgrammedTime,
+                    UserProfile = new UserProfile{
+                        Id = x.UserProfileId,
+                        FirstName = x.UserProfile.FirstName,
+                        LastName = x.UserProfile.LastName,
+                        FatherName = x.UserProfile.FatherName
+                    },
+                    TestTemplate = new TestTemplate{
+                        Id = x.TestTemplateId,
+                        Name = x.TestTemplate.Name
+                    }
+                })
                 .FirstOrDefaultAsync(x => x.Id == testId);
 
             await _loggerService.Log(LogData.AsEvaluation($@"Utilizatorul ""{test.UserProfile.FullName}"" a fost atașat/ă la testul ""{test.TestTemplate.Name}"", data: ""{test.ProgrammedTime:dd/MM/yyyy HH:mm}"""));
@@ -254,7 +268,15 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             if (evaluatorId == null) return;
 
             await using var db = _appDbContext.NewInstance();
-            var user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Id == evaluatorId);
+            var user = await db.UserProfiles
+                                .Select(x => new UserProfile{
+                                    Id = x.Id,
+                                    Email = x.Email,
+                                    FirstName = x.FirstName,
+                                    LastName = x.LastName,
+                                    FatherName = x.FatherName
+                                })
+                                .FirstOrDefaultAsync(x => x.Id == evaluatorId);
 
             await _internalNotificationService.AddNotification((int)evaluatorId, NotificationMessages.YouWereInvitedToTestAsEvaluator);
 
@@ -265,7 +287,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         {
             await using var db = _appDbContext.NewInstance();
 
-            var testTemplate = await db.TestTemplates.FirstAsync(x => x.Id == testTemplateId);
+            var testTemplate = await db.TestTemplates
+                                            .Select(x => new TestTemplate{
+                                                Id = x.Id,
+                                                Name = x.Name
+                                            })
+                                            .FirstAsync(x => x.Id == testTemplateId);
 
             return $@"<p style=""font-size: 22px; font-weight: 300;"">sunteți invitat/ă la testul ""{testTemplate.Name}"" în rol de evaluator.</p>";
         }
@@ -276,10 +303,26 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
         {
             await using var db = _appDbContext.NewInstance();
             var test = await db.Tests
-                .Include(x => x.TestTemplate)
-                .FirstOrDefaultAsync(x => x.Id == testId);
+                                .Include(x => x.TestTemplate)
+                                .Select(x => new Test{
+                                    Id = x.Id,
+                                    UserProfileId = x.UserProfileId,
+                                    TestTemplate = new TestTemplate{
+                                        Id = x.TestTemplateId,
+                                        Name = x.TestTemplate.Name
+                                    }
+                                })
+                                .FirstOrDefaultAsync(x => x.Id == testId);
 
-            var user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Id == test.UserProfileId);
+            var user = await db.UserProfiles
+                                .Select(x => new UserProfile{
+                                    Id = x.Id,
+                                    Email = x.Email,
+                                    FirstName = x.FirstName,
+                                    LastName = x.LastName,
+                                    FatherName = x.FatherName
+                                })
+                                .FirstOrDefaultAsync(x => x.Id == test.UserProfileId);
 
             await _internalNotificationService.AddNotification(test.UserProfileId, NotificationMessages.YouHaveNewProgrammedTest);
 

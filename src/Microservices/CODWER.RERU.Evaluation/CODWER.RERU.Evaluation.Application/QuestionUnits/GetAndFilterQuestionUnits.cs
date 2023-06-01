@@ -12,11 +12,31 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
         {
             var questions = appDbContext.QuestionUnits
                 .Include(x => x.QuestionCategory)
-                .Include(x => x.Options)
                 .Include(x => x.TestQuestions)
                 .Include(x => x.QuestionUnitTags)
-                .ThenInclude(x => x.Tag)
+                    .ThenInclude(x => x.Tag)
                 .OrderByDescending(x => x.Id)
+                .Select(x => new QuestionUnit
+                {
+                    Id = x.Id,
+                    QuestionType = x.QuestionType,
+                    Status = x.Status,
+                    Question = x.Question,
+                    MediaFileId = x.MediaFileId,
+                    QuestionCategory = new QuestionCategory
+                    {
+                        Id = x.QuestionCategoryId,
+                        Name = x.QuestionCategory.Name,
+                    },
+                    QuestionUnitTags = x.QuestionUnitTags.Select(qut => new QuestionUnitTag
+                    {
+                        Tag = new Tag
+                        {
+                            Id = qut.TagId,
+                            Name = qut.Tag.Name
+                        }
+                    }).ToList()
+                })
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterData.QuestionName))

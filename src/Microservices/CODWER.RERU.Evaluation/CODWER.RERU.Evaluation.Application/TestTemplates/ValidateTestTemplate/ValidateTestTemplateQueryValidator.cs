@@ -129,16 +129,16 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
             if (testTemplate.IsGridTest == true)
             {
                 var questionCategories = testTemplate.TestTemplateQuestionCategories
-                    .Where(x => x.QuestionType == QuestionTypeEnum.FileAnswer || x.QuestionType == QuestionTypeEnum.FreeText || x.QuestionType == QuestionTypeEnum.HashedAnswer)
+                    .Where(x => x.TestTemplateId == testTemplateId)
+                    .Select(x => x.QuestionCategoryId)
                     .ToList();
-
-                var categoryId = questionCategories.FirstOrDefault()?.Id;
 
                 var questions = appDbContext.QuestionUnits
-                    .Where(q => q.QuestionCategoryId == categoryId)
-                    .ToList();
+                    .Any(q => (q.QuestionType == QuestionTypeEnum.FileAnswer || q.QuestionType == QuestionTypeEnum.FreeText 
+                                || q.QuestionType == QuestionTypeEnum.HashedAnswer)
+                                    && questionCategories.Contains(q.QuestionCategoryId));
 
-                return questions == null ? true : false;
+                return !questions;
             }
 
             return true;

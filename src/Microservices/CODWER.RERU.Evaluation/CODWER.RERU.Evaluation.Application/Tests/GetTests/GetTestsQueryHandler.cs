@@ -75,6 +75,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 .Include(x => x.EventUserCandidatePositions)
                 .ThenInclude(x => x.CandidatePosition)
                 .Where(x => itemsEvents.Contains(x.EventId) && itemsUsers.Contains(x.UserProfileId))
+                .Select(x => new EventUser{
+                    EventId = x.EventId,
+                    UserProfileId = x.UserProfileId
+                })
                 .ToList();
 
             //foreach (var item in paginatedModel.Items)
@@ -143,6 +147,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var eventEvaluators = _appDbContext.EventEvaluators // evitam 10 requesturi la DB
                 .Where(x => testEventIds.Contains(x.EventId))
+                .Select(x => new EventEvaluator{
+                    EventId = x.EventId,
+                    EvaluatorId = x.EvaluatorId
+                })
                 .ToList();
 
             //foreach (var testDto in paginatedModel.Items)
