@@ -3,6 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionUnitTypeEnum } from '../../../utils/enums/question-unit-type.enum';
 import { QuestionService } from '../../../utils/services/question/question.service';
 import { saveAs } from 'file-saver';
+import { forkJoin } from 'rxjs';
+import { I18nService } from '../../../utils/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-bulk-import-questions',
@@ -18,7 +20,8 @@ export class BulkImportQuestionsComponent implements OnInit {
 
 	constructor(
 		public activeModal: NgbActiveModal,
-		private questionService: QuestionService
+		private questionService: QuestionService,
+		public translate: I18nService
 	) { }
 
 	ngOnInit(): void {
@@ -32,7 +35,28 @@ export class BulkImportQuestionsComponent implements OnInit {
 	}
 
 	downloadTemplate(selectedType) {
-		const fileName = 'AddQuestionsTemplate.xlsx';
+		var fileName; 
+		
+		forkJoin([
+			this.translate.get('questions.add-one-answer'),
+			this.translate.get('questions.add-multiple-answers'),
+			this.translate.get('questions.add-file-answer'),
+			this.translate.get('questions.add-free-text'),
+			this.translate.get('questions.add-hashed-answer'),
+		  ]).subscribe(([oneAnswer, multipleAnswer, fileAnswer, freeText, hashedAnswer]) => {
+			switch(selectedType) {
+				case 1: fileName = freeText;
+					break;
+				case 2: fileName = multipleAnswer;
+					break;
+				case 3: fileName = oneAnswer;
+					break;
+				case 4: fileName = hashedAnswer;
+					break;
+				case 5: fileName = fileAnswer;
+					break;
+			}
+		  });
 		const fileType = 'application/vnd.ms.excel';
 		this.questionService.getTemplate(selectedType).subscribe(
 			res => {

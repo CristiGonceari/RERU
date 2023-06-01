@@ -557,7 +557,12 @@
     "add-tags": "Adaugă tag-uri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile",
     "questions-left": "Întrebări rămase",
-    "answer-text": "Scrie aici..."
+    "answer-text": "Scrie aici...",
+    "add-one-answer": "AdaugăȘablonUnRăspuns.xlsx",
+    "add-multiple-answers": "AdaugăȘablonRăspunsuriMultiple.xlsx",
+    "add-file-answer": "AdaugăȘablonFișier.xlsx",
+    "add-free-text": "AdaugăȘablonRăspunsFormăLiberă.xlsx",
+    "add-hashed-answer": "AdaugăȘablonCompletareText.xlsx"
   },
   "require-documents":{
     "documents":"Documente",

@@ -557,7 +557,12 @@
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options",
     "questions-left": "Questions left",
-    "answer-text": "Write here..."
+    "answer-text": "Write here...",
+    "add-one-answer": "AddOneAnswer.xlsx",
+    "add-multiple-answers": "AddMultipleAnswers.xlsx",
+    "add-file-answer": "AddFileAnswer.xlsx",
+    "add-free-text": "AddFreeText.xlsx",
+    "add-hashed-answer": "AddHashedAnswerTemplate.xlsx"
   },
   "require-documents":{
     "documents":"Documents",
