@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-search-by-mandatory',
@@ -9,4 +9,9 @@ export class SearchByMandatoryComponent{
 
   @Output() filter: EventEmitter<void> = new EventEmitter<void>();
 
+  @ViewChild('myselect') myselect;
+
+  clear():void {
+    this.myselect.nativeElement.selectedIndex = 0;
+  }
 }
