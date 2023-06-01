@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations
                 FunctionId = request.FunctionId
             };
 
-            var tests = GetAndFilterTests.Filter(_appDbContext, filterData, curUser);
+            var tests = GetAndFilterTestsOptimized.Filter(_appDbContext, filterData, curUser);
 
             tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Evaluation);
 

@@ -93,6 +93,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
                 .Include(x => x.EventUserCandidatePositions)
                 .ThenInclude(x => x.CandidatePosition)
                 .Where(x => itemsEvents.Contains(x.EventId) && itemsUsers.Contains(x.UserProfileId))
+                .Select(x => new EventUser{
+                    EventId = x.EventId,
+                    UserProfileId = x.UserProfileId
+                })
                 .ToList();
 
             foreach (var item in paginatedModel.Items)

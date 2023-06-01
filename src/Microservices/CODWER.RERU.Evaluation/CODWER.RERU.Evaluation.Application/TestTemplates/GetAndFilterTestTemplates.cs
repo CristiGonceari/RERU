@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
@@ -14,12 +13,28 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
         {
             var testTemplates = appDbContext.TestTemplates
                 .Include(x => x.TestTemplateQuestionCategories)
-                .ThenInclude(x => x.QuestionCategory)
+                    .ThenInclude(x => x.QuestionCategory)
                 .Include(x => x.EventTestTemplates)
-                .ThenInclude(x => x.Event)
+                    .ThenInclude(x => x.Event)
                 .Include(x => x.TestTemplateModuleRoles)
-                .Include(x => x.DocumentsForSign)
                 .OrderByDescending(x => x.Id)
+                .Select(t => new TestTemplate
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    QuestionCount = t.QuestionCount,
+                    Duration = t.Duration,
+                    MinPercent = t.MinPercent,
+                    IsGridTest = t.IsGridTest == null ? null : t.IsGridTest,
+                    Status = t.Status,
+                    Mode = t.Mode,
+                    QualifyingType = t.QualifyingType,
+                    BasicTestTemplate = t.BasicTestTemplate == null ? null : t.BasicTestTemplate,
+
+                    TestTemplateQuestionCategories = t.TestTemplateQuestionCategories,
+                    EventTestTemplates = t.EventTestTemplates,
+                    TestTemplateModuleRoles = t.TestTemplateModuleRoles
+                })
                 .AsQueryable();
 
             var currentModuleId = appDbContext.GetModuleIdByPrefix(ModulePrefix.Evaluation);

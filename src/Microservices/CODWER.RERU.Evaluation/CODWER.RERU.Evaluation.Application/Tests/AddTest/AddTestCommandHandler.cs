@@ -30,7 +30,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
         {
             var newTest = _mapper.Map<Test>(request.Data);
 
-            var eventData = _appDbContext.Events.FirstOrDefault(e => e.Id == newTest.EventId);
+            var eventData = _appDbContext.Events
+                                .Select(e => new Event{
+                                    Id = e.Id,
+                                    FromDate = e.FromDate,
+                                    TillDate = e.TillDate
+                                })
+                                .FirstOrDefault(e => e.Id == newTest.EventId);
 
             if (eventData != null)
             {
@@ -42,7 +48,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTest
 
             if (request.Data.EventId.HasValue)
             {
-                var eventTestTemplate = await _appDbContext.EventTestTemplates.FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
+                var eventTestTemplate = await _appDbContext.EventTestTemplates
+                .Select(x => new EventTestTemplate{
+                    Id = x.Id,
+                    EventId = x.EventId,
+                    TestTemplateId = x.TestTemplateId,
+                    MaxAttempts = x.MaxAttempts
+                })
+                .FirstOrDefaultAsync(x => x.EventId == request.Data.EventId.Value && x.TestTemplateId == request.Data.TestTemplateId);
 
                 if (eventTestTemplate?.MaxAttempts != null)
                 {
