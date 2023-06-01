@@ -9,6 +9,7 @@ using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using Role = RERU.Data.Entities.PersonalEntities.Role;
+using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -316,6 +317,16 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             return appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
                 .ThenInclude(x => x.ModuleRole)
+                .Select(x => new UserProfile
+                {
+                    Id = x.Id,
+                    ModuleRoles = x.ModuleRoles.AsQueryable()
+                        .Select( mr => new UserProfileModuleRole
+                        {
+                            ModuleRoleId = mr.ModuleRoleId,
+                            ModuleRole = new ModuleRole { Id = mr.ModuleRole.Id , ModuleId = mr.ModuleRole.ModuleId }
+                        }).ToList()
+                })
                 .FirstOrDefault(x => x.Id == currentUserId);
         }
     }
