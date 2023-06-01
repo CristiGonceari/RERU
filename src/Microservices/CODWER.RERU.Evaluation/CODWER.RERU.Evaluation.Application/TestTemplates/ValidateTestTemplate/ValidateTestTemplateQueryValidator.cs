@@ -29,6 +29,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
                 .Must(x => IsQuestionCountEqual(x) == true)
                 .WithErrorCode(ValidationCodes.QUESTION_COUNT_MUST_BE_EQUAL_TO_SELECTED_COUNT);
 
+            RuleFor(x => x.TestTemplateId)
+                .Must(x => IsGridTest(x, appDbContext))
+                .WithErrorCode(ValidationCodes.CAN_ACTIVATE_TEST_TEMPLATE_GRID_NEVALID);
+
             When(x => appDbContext.TestTemplates.First(t => t.Id == x.TestTemplateId).Mode == TestTemplateModeEnum.Test, () =>
             {
                 RuleFor(x => x.TestTemplateId)
@@ -116,6 +120,28 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.ValidateTestTemplate
             }
 
             return usedCategories.Sum(x => x.QuestionCount) == testTemplate.QuestionCount;
+        }
+
+        private bool IsGridTest(int testTemplateId, AppDbContext appDbContext)
+        {
+            var testTemplate = appDbContext.TestTemplates.FirstOrDefault(x => x.Id == testTemplateId);
+
+            if (testTemplate.IsGridTest == true)
+            {
+                var questionCategories = testTemplate.TestTemplateQuestionCategories
+                    .Where(x => x.QuestionType == QuestionTypeEnum.FileAnswer || x.QuestionType == QuestionTypeEnum.FreeText || x.QuestionType == QuestionTypeEnum.HashedAnswer)
+                    .ToList();
+
+                var categoryId = questionCategories.FirstOrDefault()?.Id;
+
+                var questions = appDbContext.QuestionUnits
+                    .Where(q => q.QuestionCategoryId == categoryId)
+                    .ToList();
+
+                return questions == null ? true : false;
+            }
+
+            return true;
         }
     }
 }

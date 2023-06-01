@@ -1040,6 +1040,8 @@
     "03001805": "Established question coun must be equal to selected question count",
     "03001806": "Please, select question type. Polls accept only 'one answer' questions",
     "03001807": "Test grid accept 'one answer' or 'multiple answers' questions",
+    "03001808": "The evaluator cannot apply to the vacant position that contains that event",
+    "03001809": "The grid template cannot be activated, if it contains questions that require verification",
     "03001901": "Can not calculate the result",
     "03001902": "Only terminated test can be set as verified",
     "03001903": "Not all answers are verified",
