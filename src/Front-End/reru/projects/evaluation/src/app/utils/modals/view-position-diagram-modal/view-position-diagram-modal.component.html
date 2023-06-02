@@ -35,7 +35,7 @@
                                             </div>
                                             <div class="d-inline-block text-center" style="max-width: 150px;" *ngIf="template.testTemplateId > 0">
                                                 <button class="btn btn btn-warning" data-toggle="tooltip" 
-                                                data-placement="top"  (click)="openAddTest(template)" [disabled]="template.isDisabled" 
+                                                data-placement="top"  (click)="openAddTest(template)" [disabled]="template.isDisabled || isExpired" 
                                                 [title]="template.tooltip" >
                                                 {{ 'tests.program-test' | translate }}
                                             </button>

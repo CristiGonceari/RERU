@@ -18,12 +18,12 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions
             CreateMap<CandidatePosition, AddEditCandidatePositionDto>();
 
             CreateMap<CandidatePosition, CandidatePositionDto>()
-                .ForMember(x => x.IsActive, opts => opts.MapFrom(c => c.IsActive && c.From <= DateTime.Now && c.To >= DateTime.Now));
+                .ForMember(x => x.IsActive, opts => opts.MapFrom(c => c.From <= DateTime.Now && c.To >= DateTime.Now));
 
             CreateMap<EventVacantPosition, EventDiagramDto>()
                 .ForMember(x => x.EventId, opts => opts.MapFrom(e => e.EventId))
                 .ForMember(x => x.EventName, opts => opts.MapFrom(e => e.Event.Name))
-                .ForMember(x => x.IsActive, opts => opts.MapFrom(e => e.Event.TillDate > DateTime.Now));
+                .ForMember(x => x.IsActive, opts => opts.MapFrom(e => e.Event.FromDate < DateTime.Now && e.Event.TillDate > DateTime.Now));
 
             CreateMap<EventTestTemplate, TestTemplateDiagramDto>()
                 .ForMember(x => x.Name, opts => opts.MapFrom(t => t.TestTemplate.Name))
