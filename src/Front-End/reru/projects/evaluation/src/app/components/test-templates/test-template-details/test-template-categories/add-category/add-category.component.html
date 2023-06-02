@@ -9,11 +9,10 @@
           <i class="bi bi-exclamation-triangle-fill"></i>
           {{ 'tests.warn-for-grid-test' | translate }}
         </div>
-        <div class="card-header border-0 mt-5 mb-10 pr-5">
-          <div class="d-flex w-100">
-            <div class="flex-column col-10">
-              <div class="row col-12 w-100">
-                <div class="col-lg-7 col-6">
+        <div class="card-header border-0 w-100">
+            <div class="flex-column col-15">
+              <div class="row col-15 w-100 mx-0">
+                <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 px-0 mr-md-2">
                   <div class="d-flex flex-column">
                     <label class="col-form-label pb-0 text-dark-50">{{'questions.category' | translate}}</label>
                     <select class="form-control h-35px" name="selectedStatus" id="selectedStatus"
@@ -26,7 +25,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-5 col-6">
+                <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 px-0 mr-md-2">
                   <div class="d-flex flex-column">
                     <label class="col-form-label pb-0 text-dark-50">{{'questions.type' | translate}}</label>
                     <select class="form-control h-35px" name="questionType" [(ngModel)]="questionType"
@@ -40,14 +39,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-2 col-6 mt-9">
-              <div class="w-100">
+            <div class="flex-column col-9 col-lg-3 mt-3 px-0">
+              <div class="w-100 mt-8">
                 <app-confirm-button (handle)="questionsTable.initData(tableData)" [value]="'button.search' | translate"
                   [width]="'100%'" [disabled]="isButtonDisabled">
                 </app-confirm-button>
               </div>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <app-category-questions-table [setLimit]="setLimit" [timeLimit]="timeLimit" #questionsTable></app-category-questions-table>
