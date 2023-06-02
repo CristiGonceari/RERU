@@ -203,7 +203,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
             _excelWorksheet.Cells[i + 2, 3].Value = userProfile?.Email;
             _excelWorksheet.Column(3).Width = 45;
 
-            _excelWorksheet.Cells[i + 2, 4].Value = result ? "Adaugat" : "Nereusit";
+            _excelWorksheet.Cells[i + 2, 4].Value = result ? "Adăugat" : "Nereușit";
             _excelWorksheet.Column(4).Width = 25;
 
             _excelWorksheet.Cells[i + 2, 5].Value = error;
@@ -216,7 +216,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
 
             var test = await db.Tests
                 .Include(x => x.UserProfile)
-                .Include(x => x.Evaluator)
                 .Include(x => x.TestTemplate)
                 .Select(x => new Test{
                     Id = x.Id,
@@ -310,7 +309,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddTests
                                     TestTemplate = new TestTemplate{
                                         Id = x.TestTemplateId,
                                         Name = x.TestTemplate.Name
-                                    }
+                                    },
+                                    ProgrammedTime = x.ProgrammedTime,
+                                    EndProgrammedTime = x.EndProgrammedTime
                                 })
                                 .FirstOrDefaultAsync(x => x.Id == testId);
 

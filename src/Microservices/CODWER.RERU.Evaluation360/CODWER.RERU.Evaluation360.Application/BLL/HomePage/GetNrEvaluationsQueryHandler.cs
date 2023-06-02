@@ -21,7 +21,12 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.HomePage
         
         public async Task<List<int>> Handle(GetNrEvaluationsQuery request, CancellationToken cancellationToken)
         {
-            var evaluations = _appDbContext.Evaluations.AsQueryable();
+            var evaluations = _appDbContext.Evaluations
+                                                .Select(e => new Evaluation{
+                                                    Id = e.Id,
+                                                    CreateDate = e.CreateDate
+                                                })
+                                                .AsQueryable();
 
             var evaluationsPerMonth = CalculateEvaluationsPerMonth(evaluations);
 

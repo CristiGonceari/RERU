@@ -15,11 +15,5 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         {
             return await Mediator.Send(query);
         }
-
-        [HttpGet("evaluations-count")]
-        public async Task<List<int>> GetNrEvaluations([FromQuery] GetNrEvaluationsQuery query)
-        {
-            return await Mediator.Send(query);
-        }
     }
 }
