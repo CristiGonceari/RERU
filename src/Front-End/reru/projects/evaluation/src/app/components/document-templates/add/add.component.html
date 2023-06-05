@@ -8,7 +8,7 @@
 <erp-shared-content *ngIf="!isLoading">
   <div class="col">
     <div class="card card-custom gutter-b w-100 px-10">
-      <div class="card-header flex-wrap border-0 py-5">
+      <div class="card-header flex-wrap border-0 py-5 px-0 d-sm-flex d-none">
         <div class="row card-title w-75">
           <div class="col-xl-12">
             <div class="form-group row">
@@ -57,7 +57,38 @@
           </div>
         </div> -->
       </div>
-      <div class="card-body">
+      <div class="card-header flex-wrap border-0 py-5 px-0 d-sm-none d-block w-100">
+        <div class="row card-title w-100">
+          <div class="col-xl-12">
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'documents-templates.article-title' | translate}}</label>
+              <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'documents-templates.article-title' | translate}}</label>
+                <div class="col-lg-6 col-xl-6 px-0">
+                  <input type="text" class="form-control" [(ngModel)]="title"  placeholder="{{'documents-templates.article-title' | translate}}" required >
+                </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'documents-templates.document-fileType' | translate}}</label>
+              <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'documents-templates.document-fileType' | translate}}</label>
+              <div class="col-lg-6 col-xl-6 px-0">
+                <select class="form-control" [(ngModel)]="forEditFileType" required
+                (change)="getListOfKeys(forEditFileType)">
+                <option class="default-option text-muted" selected="true" value="">{{ 'documents-templates.select-document' | translate }}
+                </option>
+                <option *ngFor="let item of fileType" [value]="item.value">
+                  {{ 'document-test-modal.' + item.value | translate }}
+                </option>
+                </select>              
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-success" (click)="ckEditorContentToPdf()">
+          <i class="flaticon2-pie-chart"></i>
+          {{'documents-templates.test-convert'| translate}}
+        </button>
+      </div>
+      <div class="card-body px-0">
         <div class="d-flex flex-row table-responsive">
           <div class="document-editor">
             <div class="document-editor__toolbar"></div>
@@ -111,9 +142,9 @@
         <div class="text-right border-top py-5 pt-10 d-block d-md-none d-lg-none">
           <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backCancel()">
           </app-button>
-          <app-add-button class="btn" (handle)="saveDocument()" [value]="'button.confirm' | translate"
+          <app-button class="btn w-100 mt-2" [width]="mobileButtonLength" (handle)="saveDocument()" [value]="'button.confirm' | translate"
             [disabled]=" !title || !fileType || !editorValue">
-          </app-add-button>
+          </app-button>
         </div>
       </div>
     </div>

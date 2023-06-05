@@ -8,11 +8,68 @@
     <div class="card-title">
         <h3 class="card-label text-capitalize ml-10">{{ questionCategoryName }}</h3>
     </div>
-    <div class="d-flex p-0 justify-content-between pr-5">
-        <div class="d-flex w-100">
-            <div class="flex-column col-10">
-                <div class="row col-12 w-100 m-0">
-                    <div class="col-6" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-7]="selectQuestions == 0">
+    <div class="d-lg-block d-none">
+        <div class="d-flex p-0 justify-content-between pr-5">
+            <div class="d-flex w-100">
+                <div class="flex-column col-10">
+                    <div class="row col-12 w-100 m-0">
+                        <div class="col-6" [class.col-lg-4]="selectQuestions == 1" [class.col-lg-7]="selectQuestions == 0">
+                            <div class="d-flex flex-column">
+                                <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
+                                    translate}}</label>
+                                <select class="form-control h-35px" name="selectQuestions" [(ngModel)]="selectQuestions"
+                                    (ngModelChange)="onChangeSelection($event)">
+                                    <option selected value='0' class="default-option"> {{ 'button.all' | translate }}
+                                    </option>
+                                    <option value='1'> {{ 'questions.select' | translate }} </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1"
+                            [class.col-lg-5]="selectQuestions == 0">
+                            <div class="d-flex flex-column">
+                                <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
+                                    translate}}</label>
+                                <select class="form-control h-35px" name="orderQuestions" [(ngModel)]="orderQuestions"
+                                    (ngModelChange)="onChangeSequence($event)">
+                                    <option selected value='0' class="default-option"> {{'button.random' | translate}}
+                                    </option>
+                                    <option value='1'> {{'button.ordered' | translate}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6 pr-0" [class.col-lg-4]="selectQuestions == 1"
+                            [class.col-lg-5]="selectQuestions == 0">
+                            <div class="d-flex flex-column">
+                                <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control form-control-lg h-35px"
+                                        placeholder="{{'questions.count' | translate}}" [(ngModel)]="questionCount"
+                                        [disabled]="selectQuestions == 1">
+                                    <div class="input-group-append h-35px">
+                                        <span class="input-group-text text-dark">{{maxQuestionCount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6 mt-auto ml-9">
+                    <div class="w-100">
+                        <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount"
+                            [value]="'button.preview' | translate" [width]="'100%'">
+                        </app-confirm-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-lg-none d-block">
+        <div class="card-header border-0 w-100 px-0">
+            <div class="flex-column col-15">
+                <div class="row col-15 w-100 mx-0">
+                    <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 px-0 mr-md-2">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.select-questions' |
                                 translate}}</label>
@@ -24,8 +81,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6 pr-0" *ngIf="selectQuestions == 1" [class.col-lg-4]="selectQuestions == 1"
-                        [class.col-lg-5]="selectQuestions == 0">
+                    <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 px-0 mr-md-2" *ngIf="selectQuestions == 1">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'questions.order-questions' |
                                 translate}}</label>
@@ -38,8 +94,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6 pr-0" [class.col-lg-4]="selectQuestions == 1"
-                        [class.col-lg-5]="selectQuestions == 0">
+                    <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2 px-0 mr-md-2">
                         <div class="d-flex flex-column">
                             <label class="col-form-label pb-0 text-dark-50">{{'tests.questions' | translate}}</label>
                             <div class="input-group">
@@ -53,12 +108,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-6 mt-auto ml-9">
-                <div class="w-100">
-                    <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount"
-                        [value]="'button.preview' | translate" [width]="'100%'">
-                    </app-confirm-button>
+                <div class="flex-column col-9 col-lg-3 mt-3 px-0">
+                    <div class="w-100 mt-8">
+                        <app-confirm-button (handle)="previewQuestions()" [disabled]="!questionCount"
+                            [value]="'button.preview' | translate" [width]="'144px'">
+                        </app-confirm-button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,7 +121,7 @@
     <app-loading-spinner *ngIf="isLoading" [contentHeight]="'10vh'" [height]="'3rem'" [width]="'3rem'"
         [colorClass]="'text-primary'">
     </app-loading-spinner>
-    <div *ngIf="!isLoading" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
+    <div *ngIf="!isLoading" class="table-responsive pb-3 custom-scrollbar-visible datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded"
         id="kt_datatable">
         <table class="datatable table font-size-lg" style="overflow: visible">
             <thead class="text-uppercase text-muted">
