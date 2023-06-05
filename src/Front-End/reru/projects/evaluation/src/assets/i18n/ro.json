@@ -129,6 +129,7 @@
     "is-active": "Activ",
     "apply-for-position": "Poziție candidată",
     "position-diagram": "Borderoul poziției",
+    "position-isExpired": "Poziția vacantă a expirat",
     "vacant-position": "Poziția vacantă",
     "medical-column": "Coloana medicală",
     "column": "Coloana",
@@ -864,7 +865,7 @@
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
     "show-user-name": "Afișează numele utilizatorului",
     "from-event": "Din eveniment",
-    "expired-event": "Acest eveniment nu mai este activ"
+    "expired-event": "Acest eveniment nu este activ"
   },
   "test-template":{
     "test-template": "Șablon de teste",

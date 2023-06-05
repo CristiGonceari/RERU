@@ -12,6 +12,7 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
         {
             var questions = appDbContext.QuestionUnits
                 .Include(x => x.QuestionCategory)
+                .Include(x => x.Options)
                 .Include(x => x.TestQuestions)
                 .Include(x => x.QuestionUnitTags)
                     .ThenInclude(x => x.Tag)
@@ -23,6 +24,8 @@ namespace CODWER.RERU.Evaluation.Application.QuestionUnits
                     Status = x.Status,
                     Question = x.Question,
                     MediaFileId = x.MediaFileId,
+                    Options = x.Options,
+                    QuestionCategoryId = x.QuestionCategoryId,
                     QuestionCategory = new QuestionCategory
                     {
                         Id = x.QuestionCategoryId,

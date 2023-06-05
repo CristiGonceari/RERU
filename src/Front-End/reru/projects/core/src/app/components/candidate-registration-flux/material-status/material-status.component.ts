@@ -116,7 +116,7 @@ export class MaterialStatusComponent implements OnInit {
 
       this.kinshipRelationCriminalDataForm = this.fb.group({
         id: this.fb.control(null, []),
-        text: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+        text: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
         contractorId: this.fb.control(null, [])
       });
 
@@ -154,7 +154,7 @@ export class MaterialStatusComponent implements OnInit {
 
       this.kinshipRelationCriminalDataForm = this.fb.group({
         id: this.fb.control((data && data.id) || null, []),
-        text: this.fb.control((data && data.text) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+        text: this.fb.control((data && data.text) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
         contractorId: this.fb.control(data.contractorId || null, [])
       });
     }
@@ -293,8 +293,8 @@ export class MaterialStatusComponent implements OnInit {
 
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
-      name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required]),
       subdivision: this.fb.control((kinship && kinship.subdivision) || null, [Validators.required]),
       kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, [Validators.required]),
@@ -307,8 +307,8 @@ export class MaterialStatusComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((kinship && kinship.id) || null, []),
       kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, []),
-      name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
       birthDate: this.fb.control((kinship && kinship.birthDate) || null, [Validators.required]),
       birthLocation: this.fb.control((kinship && kinship.birthLocation) || null, [Validators.required]),
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required]),

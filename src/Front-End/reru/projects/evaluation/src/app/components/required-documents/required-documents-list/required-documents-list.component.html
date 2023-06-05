@@ -24,14 +24,45 @@
 						</app-add-button>
 					</div>
 				</div>
-				<div class="card-header border-0 mt-5 pr-5">
-					<div class="row w-100">
-						<div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
-							<erp-shared-search-input (handleSearch)="table.setFilter('name', $event)" [placeholder]="'button.search-name' | translate"></erp-shared-search-input>
+				<div class="card-header border-0 mt-5">
+					<div class="row w-100 m-0">
+						<div class="col-lg col-md-6 col-12 pt-md-0 pt-2 pr-md-3 px-0">
+							<erp-shared-search-input 
+								(handleSearch)="table.setFilter('name', $event)" 
+								[placeholder]="'button.search-name' | translate"
+								[showIcon]="false" [useDebounce]="false" #searchName>
+							</erp-shared-search-input>
 						</div>
-					  	<div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
-							<app-search-by-mandatory (filter)="table.setFilter('mandatory', $event)"></app-search-by-mandatory>
+					  	<div class="col-lg col-md-6 col-12 pt-md-0 pt-2 pl-md-3 px-0">
+							<app-search-by-mandatory 
+								(filter)="table.setFilter('mandatory', $event, true)"
+								#mandatory>
+							</app-search-by-mandatory>
 					  	</div>
+						<div class="col-lg col-12 d-lg-flex d-none justify-content-end pt-lg-0 pr-lg-0 pt-2">
+                            <div class="mr-lg-5">
+								<app-button 
+									width="100%" 
+									(handle)="table.resetFilters(); searchName.clearSearch(); mandatory.clear()"	
+									[value]="'button.reset' | translate">
+								</app-button>
+							</div>
+							<div class="mb-lg-0 mb-2">
+								<app-confirm-button width="100%" (handle)="table.getDocuments()" [value]="'button.search' | translate">
+								</app-confirm-button>
+							</div>
+                        </div>
+						<div class="col-lg col-md-6 col-12 d-lg-none d-flex flex-column pt-lg-0 pr-md-3 pt-2 px-0">
+							<app-confirm-button width="100%" (handle)="table.getDocuments()" [value]="'button.search' | translate">
+							</app-confirm-button>
+                        </div>
+						<div class="col-lg col-md-6 col-12 d-lg-none d-flex flex-column pt-lg-0 pl-md-3 pt-2 px-0">
+							<app-button 
+								width="100%" 
+								(handle)="table.resetFilters(); searchName.clearSearch(); mandatory.clear()" 
+								[value]="'button.reset' | translate">
+							</app-button>
+                        </div>
 					</div>
 				</div>
 				<div class="card-body">

@@ -1,10 +1,16 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 py-5">
-            <div class="card-title font-weight-bolder" id="title">{{'evaluations.my-evaluations' | translate}}</div>
-            <erp-shared-export-button class="mr-3 p-1" (click)="getHeaders(getTitle())">
-                {{'button.export' | translate}}
-            </erp-shared-export-button>
+        <div class="card-header flex-wrap border-0 py-5 justify-content-around">
+            <div class="row w-100">
+                <div class="card-title font-weight-bolder col-xl col-12 px-0" id="title">
+                    {{'evaluations.my-evaluations' | translate}}
+                </div>
+                <div class="card-toolbar col-xl-2 col-12 d-flex d-xl-flex flex-column flex-xl-row align-self-end px-0">
+                    <erp-shared-export-button width="100%" class="w-100" (click)="getHeaders(getTitle())">
+                        {{'button.export' | translate}}
+                    </erp-shared-export-button>
+                </div>
+            </div>
         </div>
       
         <div class="card-body pt-0">
@@ -12,56 +18,70 @@
                 [width]="'5rem'" [colorClass]="'text-primary'">
             </app-loading-spinner>
             <div class="row mb-5 mt-0">
-                <div class="col-xl-2 col-12" *ngIf="showFilter">
-                    <erp-shared-search-input (handleSearch)="setFilter('evaluationName', $event)"
-                        [placeholder]="'verify-test.search-test-name' | translate" #evaluationName
-                        [showIcon]="false" [useDebounce]="false">
-                    </erp-shared-search-input>
-                </div>
-                <div class="col-xl-2 col-12" *ngIf="showFilter">
-                    <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
-                        [placeholder]="'verify-test.search-student' | translate" #evaluatedName
-                        [showIcon]="false" [useDebounce]="false">
-                    </erp-shared-search-input>
-                </div>
-                <div class="col-xl-2 col-12 pt-xl-0 pt-2">
-                    <div class="input-group input-group-sm input-group-solid">
-                        <input type="text" [owlDateTimeTrigger]="dtFrom"
-                          class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
-                          [value]="fromDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
-                          [readonly]="true" (ngModelChange)="setFilter('dtFrom', $event)">
-                        <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                          name="date_time" [(ngModel)]="fromDate" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
-                          (ngModelChange)="setFilter('dtFrom', $event)"
-                          [readonly]="true">
-                          <i class="fas fa-calendar-alt mr-2"></i>
-                        <owl-date-time #dtFrom></owl-date-time>
+                <div class="col-xxl-4 col-xl-12 col-12 p-0">
+                    <div class="row w-100 m-0">
+                        <div class="col-xl-6 col-12 pt-xl-0 pt-2" *ngIf="showFilter">
+                            <erp-shared-search-input (handleSearch)="setFilter('evaluationName', $event)"
+                                [placeholder]="'verify-test.search-test-name' | translate" #evaluationName
+                                [showIcon]="false" [useDebounce]="false">
+                            </erp-shared-search-input>
+                        </div>
+                        <div class="col-xl-6 col-12 pt-xl-0 pt-2" *ngIf="showFilter">
+                            <erp-shared-search-input (handleSearch)="setFilter('evaluatedName', $event)"
+                                [placeholder]="'verify-test.search-student' | translate" #evaluatedName
+                                [showIcon]="false" [useDebounce]="false">
+                            </erp-shared-search-input>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xl-2 col-12 pt-xl-0 pt-2">
-                    <div class="input-group input-group-sm input-group-solid">
-                        <input type="text" [owlDateTimeTrigger]="toDate"
-                          class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
-                          [value]="tillDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
-                          [readonly]="true" (ngModelChange)="setFilter('toDate', $event)">
-                        <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
-                          name="date_time" [(ngModel)]="tillDate" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
-                          (ngModelChange)="setFilter('toDate', $event)"
-                          [readonly]="true">
-                          <i class="fas fa-calendar-alt mr-2"></i>
-                        <owl-date-time #toDate></owl-date-time>
+                <div class="col-xxl-4 col-xl-12 col-12 pt-xxl-0 pt-xl-2 p-0">
+                    <div class="row w-100 m-0">
+                        <div class="col-xl-6 col-12 pt-xl-0 pt-2">
+                            <div class="input-group input-group-sm input-group-solid">
+                                <input type="text" [owlDateTimeTrigger]="dtFrom"
+                                  class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-from' | translate"
+                                  [value]="fromDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
+                                  [readonly]="true" (ngModelChange)="setFilter('dtFrom', $event)">
+                                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                                  name="date_time" [(ngModel)]="fromDate" [owlDateTime]="dtFrom" [placeholder]="'events.search-from' | translate"
+                                  (ngModelChange)="setFilter('dtFrom', $event)"
+                                  [readonly]="true">
+                                  <i class="fas fa-calendar-alt mr-2"></i>
+                                <owl-date-time #dtFrom></owl-date-time>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12 pt-xl-0 pt-2">
+                            <div class="input-group input-group-sm input-group-solid">
+                                <input type="text" [owlDateTimeTrigger]="toDate"
+                                  class="form-control form-control-lg form-control-solid" [placeholder]="'events.search-to' | translate"
+                                  [value]="tillDate | dateFilter:'dd/MM/yyyy, HH:mm'" 
+                                  [readonly]="true" (ngModelChange)="setFilter('toDate', $event)">
+                                <input style="position: absolute; width: 0; height: 0; border: 0;" class="shadow-input"
+                                  name="date_time" [(ngModel)]="tillDate" [owlDateTime]="toDate" [placeholder]="'events.search-to' | translate"
+                                  (ngModelChange)="setFilter('toDate', $event)"
+                                  [readonly]="true">
+                                  <i class="fas fa-calendar-alt mr-2"></i>
+                                <owl-date-time #toDate></owl-date-time>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-12 pt-xl-0 pt-2 d-flex flex-column-reverse flex-xl-row">
-                    <div class="mr-xl-5">
-                      <app-button width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate">
-                      </app-button>
+                <div class="col-xxl-4 col-xl-12 col-12 pt-xxl-0 pt-xl-2 p-0">
+                    <div class="row w-100 m-0">
+                        <div class="col-xl-12 col-12 pt-xl-0 pt-2">
+                            <div class="d-flex flex-column-reverse flex-xl-row justify-content-end">
+                                <div class="mr-xl-5">
+                                    <app-button width="100%" (handle)="resetFilters()" [value]="'button.reset' | translate">
+                                    </app-button>
+                                </div>
+                                <div class="mb-xl-0 mb-2">
+                                    <app-confirm-button width="100%" (handle)="getTests()" [value]="'button.search' | translate">
+                                    </app-confirm-button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-xl-0 mb-2">
-                      <app-confirm-button width="100%" (handle)="getTests()" [value]="'button.search' | translate">
-                      </app-confirm-button>
-                    </div>
-                  </div>
+                </div>
             </div>
             <div class="table-responsive datatable datatable-bordered datatable-default datatable-loaded" id="kt_datatable">
                 <table for="kt_datatable" class="datatable table" style="overflow: visible" id="evaluatedTestTable"
