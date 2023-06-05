@@ -50,7 +50,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 userProfileToken = _appDbContext.UserProfiles.FirstOrDefault(up => up.Email == userEmail).Token;   
             }
 
-            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + userProfile.Token;
+            var redirectUrl = Configuration.GetValue<string>("AllowedCorsOrigins") + "/ms/reru-identity-new/connect/endsession?id_token_hint=" + userProfileToken;
 
             return new { userEmail = userEmail, userProfileToken = userProfileToken, redirectUrl = redirectUrl }.ToString();
         }
