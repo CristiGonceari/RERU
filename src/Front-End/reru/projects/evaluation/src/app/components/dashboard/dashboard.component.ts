@@ -143,19 +143,20 @@ export class DashboardComponent implements OnInit {
   countTestsAndEvaluations() {
     this.subscribeForLanguageChange();
     return forkJoin([
-      this.testService.getNrTests(),
       this.testService.getNrEvaluations()
-    ]).pipe(map(([tests, evaluations]) => [
-      {
-        name: this.dashboard.tests,
-        data: tests.data
-      },
-      {
-        name: this.dashboard.evaluations,
-        data: evaluations.data
-      }
-    ]));
-  }
+    ]).pipe(map(([tests]) => {
+      return [
+        {
+          name: this.dashboard.tests,
+          data: tests.data.slice(0, 12)
+        },
+        {
+          name: this.dashboard.evaluations,
+          data: tests.data.slice(12, 24)
+        }
+      ];
+    }));
+  }  
 
   retrieveProfile(): void {
     this.userService.getCurrentUser().subscribe(response => {

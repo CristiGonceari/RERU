@@ -32,47 +32,55 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile
 
         public async Task<int> Handle(GenerateTestResultFileCommand request, CancellationToken cancellationToken)
         {
-            var test = await _appDbContext.Tests
-                .Include(t => t.TestTemplate)
-                .Include(t => t.UserProfile)
-                .Include(t  => t.DocumentsForSign)
-                .ThenInclude(dfs => dfs.SignedDocuments)
-                .Select(t => new Test 
-                {
-                    Id = t.Id,
-                    TestTemplate =  new TestTemplate { Name = t.TestTemplate.Name },
-                    UserProfile = new UserProfile { Idnp = t.UserProfile.Idnp },
-                    DocumentsForSign = t.DocumentsForSign,
-                    TestStatus = t.TestStatus
-                })
-                .FirstOrDefaultAsync(t => t.Id == request.TestId);
-
-            var testResultPdf = await _pdfService.PrintTestResultPdf(request.TestId);
-            testResultPdf.Name = testResultPdf.Name.Replace("Test_Result", (test.TestTemplate.Name.Replace(".", "/") + " (" + test.UserProfile.Idnp.Replace("\n", "") + ")").ToString());
-
-            if (test.DocumentsForSign.Count() == 0 && test.TestStatus == TestStatusEnum.Verified)
+            try
             {
-                var file = new AddFileDto
+                var test = await _appDbContext.Tests
+                    .Include(t => t.TestTemplate)
+                    .Include(t => t.UserProfile)
+                    .Include(t => t.DocumentsForSign)
+                    .ThenInclude(dfs => dfs.SignedDocuments)
+                    .Select(t => new Test
+                    {
+                        Id = t.Id,
+                        TestTemplate = new TestTemplate { Name = t.TestTemplate.Name },
+                        UserProfile = new UserProfile { Idnp = t.UserProfile.Idnp },
+                        DocumentsForSign = t.DocumentsForSign,
+                        TestStatus = t.TestStatus
+                    })
+                    .FirstOrDefaultAsync(t => t.Id == request.TestId);
+                
+
+                if (test.DocumentsForSign.Count() == 0 && test.TestStatus == TestStatusEnum.Verified)
                 {
-                    File = ConvertToIFormFile(testResultPdf),
-                    Type = FileTypeEnum.documents
-                };
+                    var testResultPdf = await _pdfService.PrintTestResultPdf(request.TestId);
+                    testResultPdf.Name = testResultPdf.Name.Replace("Test_Result", (test.TestTemplate.Name.Replace(".", "/") + " (" + test.UserProfile.Idnp.Replace("\n", "") + ")").ToString());
 
-                var storageFileId = await _storageFileService.AddFile(file);
+                    var file = new AddFileDto
+                    {
+                        File = ConvertToIFormFile(testResultPdf),
+                        Type = FileTypeEnum.documents
+                    };
 
-                var document = new DocumentsForSign()
-                {
-                    FileName = testResultPdf.Name,
-                    FileType = testResultPdf.ContentType,
-                    MediaFileId = storageFileId,
-                    TestId = request.TestId
-                };
+                    var storageFileId = await _storageFileService.AddFile(file);
 
-                await _appDbContext.DocumentsForSign.AddAsync(document);
-                await _appDbContext.SaveChangesAsync();
+                    var document = new DocumentsForSign()
+                    {
+                        FileName = testResultPdf.Name,
+                        FileType = testResultPdf.ContentType,
+                        MediaFileId = storageFileId,
+                        TestId = request.TestId
+                    };
 
-                return document.Id;
+                    await _appDbContext.DocumentsForSign.AddAsync(document);
+                    await _appDbContext.SaveChangesAsync();
+
+                    return document.Id;
+                }
             }
+            catch
+            {
+                return 0;
+            };
 
             return 0;
         }

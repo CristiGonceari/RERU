@@ -7,102 +7,104 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
-  <div class="card card-custom gutter-b">
-    <div class="card-body p-0">
-      <div class="d-flex flex-row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-        <div class="col-xl-12 col-xxl-7">
-          <div class="form" id="kt_contact_add_form" [formGroup]="locationForm">
-            <h3 class="mb-10 font-weight-bold text-dark">{{'locations.location-details' | translate}}</h3>
-            <div class="col-xl-12">
-              <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.name' | translate}}</label>
-                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.name' | translate}}</label>
-                <div class="col-lg-9 col-xl-9">
-                  <input class="form-control form-control-lg form-control-solid" name="name" type="text"
-                    formControlName="name" placeholder="{{'locations.name' | translate}}" />
-                  <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
-                    <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
-                      class="fv-help-block">
-                      {{ 'categories.empty-name' | translate }}</div>
+  <div class="col">
+    <div class="card card-custom gutter-b">
+      <div class="card-body p-0">
+        <div class="d-flex flex-row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+          <div class="col-xl-12 col-xxl-7">
+            <div class="form" id="kt_contact_add_form" [formGroup]="locationForm">
+              <h3 class="mb-10 font-weight-bold text-dark">{{'locations.location-details' | translate}}</h3>
+              <div class="col-xl-12">
+                <div class="form-group row">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.name' | translate}}</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.name' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" name="name" type="text"
+                      formControlName="name" placeholder="{{'locations.name' | translate}}" />
+                    <div *ngIf="hasErrors('name')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('name', 'required')" data-field="name" data-validator="notEmpty"
+                        class="fv-help-block">
+                        {{ 'categories.empty-name' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.address' | translate}}</label>
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.address' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" name="address" type="text"
+                      formControlName="address" placeholder="{{'locations.address' | translate}}"/>
+                    <div *ngIf="hasErrors('address')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('address', 'required')" data-field="address" data-validator="notEmpty"
+                        class="fv-help-block">
+                        {{ 'categories.empty-name' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.type' | translate}}</label>
+                  <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.type' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <select class="form-control form-control-lg form-control-solid" name="type"
+                      [formControl]="locationForm.controls['type']">
+                      <option *ngFor="let item of types" [value]="item.value">
+                        {{'locations.' + item.label | translate}}
+                      </option>
+                    </select>
+                    <div *ngIf="hasErrors('type')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('type', 'required')" data-field="type" data-validator="notEmpty" 
+                        class="fv-help-block">
+                        {{ 'locations.empty-name' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.places' | translate}}</label>
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.places' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <input class="form-control form-control-lg form-control-solid" name="places" type="number" placeholder="0"
+                      formControlName="places" min="1" />
+                    <div *ngIf="hasErrors('places')" class="fv-plugins-message-container">
+                      <div *ngIf="hasError('places', 'required')" data-field="places" data-validator="notEmpty"
+                        class="fv-help-block">
+                        {{ 'categories.empty-name' | translate }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row mb-10">
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.description' | translate}}</label>
+                  <label
+                    class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.description' | translate}}</label>
+                  <div class="col-lg-9 col-xl-9">
+                    <textarea type="text" class="form-control form-control-lg form-control-solid" name="description"
+                      placeholder="{{'locations.description' | translate}}" value="" formControlName="description">
+                    </textarea>
                   </div>
                 </div>
               </div>
-              <div class="form-group row">
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.address' | translate}}</label>
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.address' | translate}}</label>
-                <div class="col-lg-9 col-xl-9">
-                  <input class="form-control form-control-lg form-control-solid" name="address" type="text"
-                    formControlName="address" placeholder="{{'locations.address' | translate}}"/>
-                  <div *ngIf="hasErrors('address')" class="fv-plugins-message-container">
-                    <div *ngIf="hasError('address', 'required')" data-field="address" data-validator="notEmpty"
-                      class="fv-help-block">
-                      {{ 'categories.empty-name' | translate }}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'questions.type' | translate}}</label>
-                <label class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'questions.type' | translate}}</label>
-                <div class="col-lg-9 col-xl-9">
-                  <select class="form-control form-control-lg form-control-solid" name="type"
-                    [formControl]="locationForm.controls['type']">
-                    <option *ngFor="let item of types" [value]="item.value">
-                      {{'locations.' + item.label | translate}}
-                    </option>
-                  </select>
-                  <div *ngIf="hasErrors('type')" class="fv-plugins-message-container">
-                    <div *ngIf="hasError('type', 'required')" data-field="type" data-validator="notEmpty" 
-                      class="fv-help-block">
-                      {{ 'locations.empty-name' | translate }}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.places' | translate}}</label>
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.places' | translate}}</label>
-                <div class="col-lg-9 col-xl-9">
-                  <input class="form-control form-control-lg form-control-solid" name="places" type="number" placeholder="0"
-                    formControlName="places" min="1" />
-                  <div *ngIf="hasErrors('places')" class="fv-plugins-message-container">
-                    <div *ngIf="hasError('places', 'required')" data-field="places" data-validator="notEmpty"
-                      class="fv-help-block">
-                      {{ 'categories.empty-name' | translate }}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group row mb-10">
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-right d-lg-block d-md-none d-none">{{'locations.description' | translate}}</label>
-                <label
-                  class="col-xl-3 col-lg-3 col-form-label text-left d-lg-none d-md-block d-block">{{'locations.description' | translate}}</label>
-                <div class="col-lg-9 col-xl-9">
-                  <textarea type="text" class="form-control form-control-lg form-control-solid" name="description"
-                    placeholder="{{'locations.description' | translate}}" value="" formControlName="description">
-                  </textarea>
-                </div>
-              </div>
-            </div>
-            <div class="text-right border-top pt-10  d-none d-md-block d-lg-block">
-              <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
-              </app-button>
+              <div class="text-right border-top pt-10  d-none d-md-block d-lg-block">
+                <app-button class="btn mr-2" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                </app-button>
 
-              <app-add-button class="btn" *ngIf="!locationId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.confirm' | translate"></app-add-button>
-              <app-confirm-button class="btn" *ngIf="locationId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.update' | translate"></app-confirm-button>
-            </div>
-            <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
-              <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
-              </app-button>
+                <app-add-button class="btn" *ngIf="!locationId" (handle)="onSave()" [disabled]="cantAdd()"
+                  [value]="'button.confirm' | translate"></app-add-button>
+                <app-confirm-button class="btn" *ngIf="locationId" (handle)="onSave()" [disabled]="cantAdd()"
+                  [value]="'button.update' | translate"></app-confirm-button>
+              </div>
+              <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
+                <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
+                </app-button>
 
-              <app-add-button class="btn" *ngIf="!locationId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.confirm' | translate"></app-add-button>
-              <app-confirm-button class="btn" *ngIf="locationId" (handle)="onSave()" [disabled]="cantAdd()"
-                [value]="'button.update' | translate"></app-confirm-button>
+                <app-add-button class="btn" *ngIf="!locationId" (handle)="onSave()" [disabled]="cantAdd()"
+                  [value]="'button.confirm' | translate"></app-add-button>
+                <app-confirm-button class="btn" *ngIf="locationId" (handle)="onSave()" [disabled]="cantAdd()"
+                  [value]="'button.update' | translate"></app-confirm-button>
+              </div>
             </div>
           </div>
         </div>

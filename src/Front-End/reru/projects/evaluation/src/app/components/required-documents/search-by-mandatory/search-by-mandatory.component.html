@@ -1,4 +1,4 @@
-<select class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
+<select #myselect class="form-control h-35px" name="selectedStatus" id="selectedStatus" (change)="filter.emit($event.target.value)">
     <option class="default-option text-muted" selected [value]=""> {{ 'require-documents.check-mandatory-application' | translate }}</option>
     <option [value]="true"> {{ 'modal.yes' | translate }} </option>
     <option [value]="false"> {{ 'modal.no' | translate }} </option>

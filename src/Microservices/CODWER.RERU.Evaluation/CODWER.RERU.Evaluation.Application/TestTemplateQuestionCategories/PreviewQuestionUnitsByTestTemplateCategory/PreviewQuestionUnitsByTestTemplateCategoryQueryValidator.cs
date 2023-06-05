@@ -41,6 +41,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                     .Must(x => IsPoll(x))
                     .WithErrorCode(ValidationCodes.POLLS_ACCEPTS_ONLY_ONE_ANSWER_QUESTIONS);
 
+                RuleFor(r => r.Data)
+                    .Must(x => IsGridTest(x))
+                    .WithErrorCode(ValidationCodes.CAN_ADD_QUESTIONS_ONE_ANSWER_QUESTIONS_OR_MULTIPLE_ANSWERS);
+
                 RuleFor(r => r.Data.SelectionType)
                     .NotNull()
                     .IsInEnum()
@@ -141,6 +145,28 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                     .All(q => q.QuestionType == QuestionTypeEnum.OneAnswer);
 
                 return selectedQuestions || questions || data.QuestionType == QuestionTypeEnum.OneAnswer;
+            }
+
+            return true;
+        }
+
+        private bool IsGridTest(QuestionCategoryPreviewDto data)
+        {
+            var testTemplate = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTemplateId);
+
+            if (testTemplate.IsGridTest == true)
+            {
+                var questionCategories = testTemplate.TestTemplateQuestionCategories
+                    .Where(x => x.TestTemplateId == data.TestTemplateId)
+                    .Select(x => x.QuestionCategoryId)
+                    .ToList();
+
+                var questions = _appDbContext.QuestionUnits
+                    .Any(q => (q.QuestionType == QuestionTypeEnum.FileAnswer || q.QuestionType == QuestionTypeEnum.FreeText 
+                                || q.QuestionType == QuestionTypeEnum.HashedAnswer)
+                                    && questionCategories.Contains(q.QuestionCategoryId));
+
+                return !questions;
             }
 
             return true;

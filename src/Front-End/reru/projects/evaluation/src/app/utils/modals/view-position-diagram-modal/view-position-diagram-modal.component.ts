@@ -36,6 +36,7 @@ export class ViewPositionDiagramModalComponent implements OnInit {
   yes: string;
   status = TestStatusEnum;
   tooltip: string;
+  isExpired: boolean;
 
   stylesToApply: string = '.modal-dialog{ min-width: 97%; height: 95% }'
 
@@ -52,6 +53,7 @@ export class ViewPositionDiagramModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.styleNodesService.addStyle('modal-dialog', this.stylesToApply);
+    this.positionService.get(this.positionId).subscribe(res => {this.isExpired = !res.data.isActive});
 
     this.positionService.getDiagram({ positionId: this.positionId }).subscribe(res => {
 			if (res && res.data) {
@@ -61,9 +63,11 @@ export class ViewPositionDiagramModalComponent implements OnInit {
 
             forkJoin([
               this.translate.get('tests.program-test'),
-              this.translate.get('events.expired-event'),
-            ]).subscribe(([tooltip1, tooltip2]) => {
-              element.tooltip = element.isDisabled ? tooltip2 : tooltip1;
+							this.translate.get('events.expired-event'),
+							this.translate.get('position.position-isExpired')
+						]).subscribe(([tooltip1, tooltip2, tooltip3]) => {
+							element.tooltip = element.isDisabled ? tooltip2 : tooltip1;
+							if (this.isExpired) element.tooltip = tooltip3;
             });
 					});
 				});

@@ -113,8 +113,20 @@ export class RequiredDocumentsTableComponent implements OnInit {
 		);
 	}
 
-	setFilter(field: string, value): void {
+	setFilter(field: string, value, startSearch: boolean = false): void {
 		this.filters[field] = value;
+		if (startSearch) {
+			this.getDocuments()
+		}
+	}
+
+	getDocuments(): void {
+		this.pagedSummary.currentPage = 1;
+		this.list();
+	}
+
+	resetFilters(): void {
+		this.filters = {};
 		this.pagedSummary.currentPage = 1;
 		this.list();
 	}

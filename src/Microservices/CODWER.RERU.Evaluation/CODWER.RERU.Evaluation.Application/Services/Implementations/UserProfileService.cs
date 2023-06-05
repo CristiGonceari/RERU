@@ -35,6 +35,27 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     .Include(x => x.Department)
                     .Include(x => x.Role)
                     .Include(x => x.Contractor)
+                    .Select(x => new UserProfile
+                    {
+                        Id = x.Id,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        FatherName = x.FatherName,
+                        Idnp = x.Idnp,
+                        Email = x.Email,
+                        MediaFileId = x.MediaFileId,
+                        RequiresDataEntry = x.RequiresDataEntry,
+                        PhoneNumber = x.PhoneNumber,
+                        BirthDate = x.BirthDate,
+                        Token = x.Token,
+                        IsActive = x.IsActive,
+                        TokenLifetime = x.TokenLifetime,
+                        AccessModeEnum = x.AccessModeEnum,
+                        Password = x.Password,
+                        RoleColaboratorId = x.RoleColaboratorId,
+                        DepartmentColaboratorId = x.DepartmentColaboratorId,
+                        FunctionColaboratorId = x.FunctionColaboratorId
+                    })
                     .FirstOrDefault(x => x.Id == int.Parse(coreUser.Id));
 
 

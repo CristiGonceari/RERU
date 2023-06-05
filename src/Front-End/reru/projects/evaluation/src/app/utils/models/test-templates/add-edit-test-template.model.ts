@@ -6,5 +6,6 @@ export class AddEditTestTemplate {
     questionCount: number;
     minPercent?: number;
     duration?: number;
+    isGridTest?: boolean;
     mode: TestTemplateModeEnum;
 }

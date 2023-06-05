@@ -21,6 +21,7 @@ namespace RERU.Data.Entities
         public int QuestionCount { get; set; }
         public int MinPercent { get; set; }
         public int Duration { get; set; }
+        public bool? IsGridTest { get; set; }
         public TestTemplateSettings Settings { get; set; }
                 
         public TestTemplateStatusEnum Status { get; set; }

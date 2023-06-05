@@ -5095,6 +5095,9 @@ namespace CODWER.RERU.IdentityMigrator.Console.Migrations.AppDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<bool?>("IsGridTest")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("MinPercent")
                         .HasColumnType("integer");
 

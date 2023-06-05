@@ -129,6 +129,7 @@
     "is-active": "Activ",
     "apply-for-position": "Poziție candidată",
     "position-diagram": "Borderoul poziției",
+    "position-isExpired": "Poziția vacantă a expirat",
     "vacant-position": "Poziția vacantă",
     "medical-column": "Coloana medicală",
     "column": "Coloana",
@@ -412,6 +413,8 @@
     "test-template-delete-modal": "șablonul de test",
     "start-test": "Testul va începe în câteva minute",
     "verified-by-system": "Verificat de sistem",
+    "is-grid-test": "Test grilă",
+    "warn-for-grid-test": "Puteți adăuga doar întrebări cu un răspuns sau cu răspunsuri multiple!",
     "basic-template-dropdown": {
       "title": "Șablon de bază",
       "0": "Nu are",
@@ -555,7 +558,12 @@
     "add-tags": "Adaugă tag-uri",
     "bulk-import-options-msg": "Vă rugăm să descărcați și să utilizați formularul nostru special pentru a importa opțiunile",
     "questions-left": "Întrebări rămase",
-    "answer-text": "Scrie aici..."
+    "answer-text": "Scrie aici...",
+    "add-one-answer": "AdaugăȘablonUnRăspuns.xlsx",
+    "add-multiple-answers": "AdaugăȘablonRăspunsuriMultiple.xlsx",
+    "add-file-answer": "AdaugăȘablonFișier.xlsx",
+    "add-free-text": "AdaugăȘablonRăspunsFormăLiberă.xlsx",
+    "add-hashed-answer": "AdaugăȘablonCompletareText.xlsx"
   },
   "require-documents":{
     "documents":"Documente",
@@ -857,7 +865,7 @@
     "succes-attach-detach-evaluator-msg": "Evaluatorii au fost atașați/eliminați cu succes",
     "show-user-name": "Afișează numele utilizatorului",
     "from-event": "Din eveniment",
-    "expired-event": "Acest eveniment nu mai este activ"
+    "expired-event": "Acest eveniment nu este activ"
   },
   "test-template":{
     "test-template": "Șablon de teste",
@@ -1029,6 +1037,9 @@
     "03001804": "Tip de secvență nevalid",
     "03001805": "Numărul de întrebări stabilit trebuie să fie egal cu numărul de întrebări selectate",
     "03001806": "Alegeți tipul întrebării. Sondajele acceptă doar întrebări cu un singur răspuns",
+    "03001807": "Testul grilă acceptă întrebări cu un singur răspuns sau cu răspunsuri multiple",
+    "03001808": "Evaluatorul evenimentului nu poate aplica la poziția vacantă care conține acel eveniment",
+    "03001809": "Nu poate fi activat șablonul de tip grilă, dacă conține întrebări care necesită verificare",
     "03001901": "Rezultatul nu poate fi calculat",
     "03001902": "Numai testul terminat poate fi setat ca verificat",
     "03001903": "Nu toate răspunsurile sunt verificate",

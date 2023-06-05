@@ -1,10 +1,8 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <div class="card card-custom mb-7" style="margin-left: 16px;">
+    <div class="card card-custom mb-7">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title"><b>{{'tests.rules' | translate}}</b></div>
-          </div>
-            <div class="card-body">
-               <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
                <div *ngIf="!isLoading" class="card-toolbar">
                    <div *ngIf="!disable">
                        <app-add-button class="btn" [value]="'tests.step4' | translate" *ngIf="add"
@@ -13,7 +11,7 @@
                            [routerLink]="['../../../rules', testTemplateId, 'add']"></app-confirm-button>
                    </div>
                </div>
-            </div>
+          </div>
         <div *ngIf="!isLoading" class="card-body disabled-area">
             <ckeditor *ngIf="editorData" [data]="editorData" [disabled]="true" [editor]="Editor"></ckeditor>
             <div *ngIf="editorData == null" colspan="4" class="text-center">

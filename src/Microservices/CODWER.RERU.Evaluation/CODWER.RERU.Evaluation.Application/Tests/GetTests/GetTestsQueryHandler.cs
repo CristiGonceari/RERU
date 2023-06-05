@@ -75,20 +75,40 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 .Include(x => x.EventUserCandidatePositions)
                 .ThenInclude(x => x.CandidatePosition)
                 .Where(x => itemsEvents.Contains(x.EventId) && itemsUsers.Contains(x.UserProfileId))
+                .Select(x => new EventUser{
+                    EventId = x.EventId,
+                    UserProfileId = x.UserProfileId
+                })
                 .ToList();
 
-            foreach (var item in paginatedModel.Items)
+            //foreach (var item in paginatedModel.Items)
+            //{
+            //    var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId); // nu mai facem call la DB dar la lista
+
+            //    if (eventUser is null  // check eventUser && eventUser.PositionId 
+            //        || eventUser.PositionId is null
+            //        || eventUser.PositionId == 0) continue;
+
+            //    item.CandidatePositionNames = eventUser.EventUserCandidatePositions //nu mai faci call la DB dar iai itemi din lista
+            //            .Select(x => x.CandidatePosition.Name)
+            //            .ToList();
+            //}
+
+            paginatedModel.Items = paginatedModel.Items.Select(item =>
             {
-                var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId); // nu mai facem call la DB dar la lista
+                var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
 
-                if (eventUser is null  // check eventUser && eventUser.PositionId 
-                    || eventUser.PositionId is null
-                    || eventUser.PositionId == 0) continue;
+                if (eventUser == null ||
+                    eventUser.PositionId == null ||
+                    eventUser.PositionId == 0
+                    ) return item;
 
-                item.CandidatePositionNames = eventUser.EventUserCandidatePositions //nu mai faci call la DB dar iai itemi din lista
-                        .Select(x => x.CandidatePosition.Name)
-                        .ToList();
-            }
+                item.CandidatePositionNames = eventUser.EventUserCandidatePositions
+                    .Select(x => x.CandidatePosition.Name)
+                    .ToList();
+
+                return item;
+            }).ToList();
 
             return paginatedModel;
         }
@@ -127,19 +147,37 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var eventEvaluators = _appDbContext.EventEvaluators // evitam 10 requesturi la DB
                 .Where(x => testEventIds.Contains(x.EventId))
+                .Select(x => new EventEvaluator{
+                    EventId = x.EventId,
+                    EvaluatorId = x.EvaluatorId
+                })
                 .ToList();
 
-            foreach (var testDto in paginatedModel.Items)
+            //foreach (var testDto in paginatedModel.Items)
+            //{
+            //    var testEventEvaluators = eventEvaluators.Where(x => x.EventId == testDto.EventId);
+
+            //    testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
+
+            //    if (testDto.EvaluatorId == null && testEventEvaluators.Any())
+            //    {
+            //        testDto.IsEvaluator = testEventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
+            //    }
+            //}
+
+            paginatedModel.Items = paginatedModel.Items.Select(item =>
             {
-                var testEventEvaluators = eventEvaluators.Where(x => x.EventId == testDto.EventId);
+                var testEventEvaluators = eventEvaluators.Where(x => x.EventId == item.EventId);
 
-                testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
+                item.IsEvaluator = item.CreateById == currentUser.Id.ToString() || item.EvaluatorId == currentUser.Id;
 
-                if (testDto.EvaluatorId == null && testEventEvaluators.Any())
+                if (item.EvaluatorId == null && testEventEvaluators.Any())
                 {
-                    testDto.IsEvaluator = testEventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
+                    item.IsEvaluator = testEventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || item.CreateById == currentUser.Id.ToString();
                 }
-            }
+
+                return item;
+            }).ToList();
 
             return paginatedModel;
         }

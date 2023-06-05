@@ -8,7 +8,7 @@ using CVU.ERP.Common.Pagination;
 using CVU.ERP.ServiceProvider;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using RERU.Data.Entities.Enums;
+using RERU.Data.Entities;
 using RERU.Data.Entities.Evaluation360;
 using RERU.Data.Persistence.Context;
 
@@ -33,7 +33,7 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
         {
             var currentUser = await _currentUserProvider.Get();
             var currentUserId = int.Parse(currentUser.Id);
-
+            
             var evaluations = _dbContext.Evaluations
                                     .Include(e=> e.EvaluatedUserProfile)
                                     .Include(e=> e.EvaluatorUserProfile)
@@ -42,6 +42,31 @@ namespace CODWER.RERU.Evaluation360.Application.BLL.Evaluations.GetEvaluationRow
                                                 e.EvaluatorUserProfileId == currentUserId ||  
                                                 e.CounterSignerUserProfileId == currentUserId)
                                     .OrderByDescending(e => e.CreateDate)
+                                    .Select(e => new Evaluation{
+                                        Id = e.Id,
+                                        EvaluatedUserProfileId = e.EvaluatedUserProfileId,
+                                        EvaluatorUserProfileId = e.EvaluatorUserProfileId,
+                                        CounterSignerUserProfileId = e.CounterSignerUserProfileId,
+                                        
+                                        EvaluatedUserProfile = new UserProfile{
+                                            FirstName = e.EvaluatedUserProfile.FirstName,
+                                            LastName = e.EvaluatedUserProfile.LastName,
+                                            FatherName = e.EvaluatedUserProfile.FatherName
+                                        },
+                                        EvaluatorUserProfile = new UserProfile{
+                                            FirstName = e.EvaluatorUserProfile.FirstName,
+                                            LastName = e.EvaluatorUserProfile.LastName,
+                                            FatherName = e.EvaluatorUserProfile.FatherName
+                                        },
+                                        CounterSignerUserProfile = e.CounterSignerUserProfileId == null ? null : new UserProfile{
+                                            FirstName = e.CounterSignerUserProfile.FirstName,
+                                            LastName = e.CounterSignerUserProfile.LastName,
+                                            FatherName = e.CounterSignerUserProfile.FatherName
+                                        },
+                                        Type = e.Type,
+                                        Status = e.Status,
+                                        Points = e.Points
+                                    })
                                     .AsQueryable();
 
             CalculatePoints(evaluations);

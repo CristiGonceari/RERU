@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReviewSolicitedVacandPositionModalComponent } from 'projects/evaluation/src/app/utils/modals/review-solicited-vacand-position-modal/review-solicited-vacand-position-modal.component';
 import { SolicitedVacantPositionEmailMessageService } from 'projects/evaluation/src/app/utils/services/solicited-vacant-position-email-message/solicited-vacant-position-email-message.service';
+import { OwlDateTimeFormats } from 'ng-pick-datetime';
 
 @Component({
   selector: 'app-approve-solicited-test',
@@ -116,3 +117,13 @@ export class ApproveSolicitedTestComponent implements OnInit {
     this.location.back();
   }
 }
+
+export const MY_CUSTOM_FORMATS: OwlDateTimeFormats = { 
+  parseInput: 'DD/MM/YYYY', 
+  fullPickerInput: 'DD/MM/YYYY', 
+  datePickerInput: 'DD/MM/YYYY', 
+  timePickerInput: 'HH:mm', 
+  monthYearLabel: 'MMM YYYY', 
+  dateA11yLabel: 'LL', 
+  monthYearA11yLabel: 'MMMM YYYY' 
+};

@@ -146,8 +146,17 @@ export class QuestionListTableComponent implements OnInit {
 		return fileName;
 	}
 
-	setFilter(field: string, value): void {
+	setFilter(field: string, value: any, startSearch: boolean = false): void {
 		this.filters[field] = value;
+		
+		if (startSearch){
+			this.pagedSummary.currentPage = 1;
+			this.list();
+		}
+	}
+
+	getQuestions(): void
+	{
 		this.pagedSummary.currentPage = 1;
 		this.list();
 	}
