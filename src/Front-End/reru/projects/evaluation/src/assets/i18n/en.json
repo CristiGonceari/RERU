@@ -129,6 +129,7 @@
     "is-active": "Is active",
     "apply-for-position": "Candided position",
     "position-diagram": "Position diagram",
+    "position-isExpired": "The vacant position has expired",
     "vacant-position": "Vacant position",
     "medical-column": "Medical column",
     "column": "Column",
@@ -868,7 +869,7 @@
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name",
     "from-event": "From event",
-    "expired-event": "This event is no longer active"
+    "expired-event": "This event is inactive"
   },
   "test-template": {
     "test-template": "Test template",

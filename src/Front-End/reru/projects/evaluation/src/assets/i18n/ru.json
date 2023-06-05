@@ -129,6 +129,7 @@
     "is-active": "Активна",
     "apply-for-position": "Кандидатская позиция",
     "position-diagram": "Таблица вакансий",
+    "position-isExpired": "Срок действия вакансии истек",
     "vacant-position": "Вакантная должность",
     "medical-column": "Медицинский столбец",
     "column": "Столбец",
@@ -866,7 +867,7 @@
     "succes-attach-detach-evaluator-msg": "Проверяющиe были успешно прикреплёны/удалены",
     "show-user-name": "Отображать имя пользователя",
     "from-event": "С события",
-    "expired-event": "Это событие больше не активно"
+    "expired-event": "Это событие не активно"
   },
   "test-template":{
     "test-template": "Шаблон тестов",

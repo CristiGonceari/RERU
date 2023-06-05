@@ -36,7 +36,7 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEventCount
 
             for (var dt = request.FromDate.Date; dt <= request.TillDate.Date; dt = dt.AddDays(1))
             {
-                var count = events.Where(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date).Count();
+                var count = events.Where(p => p.FromDate.Date <= dt.Date && dt.Date <= p.TillDate.Date).Select(x => x.Id).Count();
 
                 var eventCount = new EventCount()
                 {

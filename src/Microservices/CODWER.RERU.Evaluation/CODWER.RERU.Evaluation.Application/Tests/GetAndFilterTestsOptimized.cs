@@ -9,7 +9,6 @@ using System.Linq;
 using CODWER.RERU.Evaluation.DataTransferObjects.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using Role = RERU.Data.Entities.PersonalEntities.Role;
-using System.Collections.Generic;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
@@ -57,9 +56,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     tests = tests.Where(p =>
                         p.UserProfile.FirstName.ToLower().Contains(s.ToLower())
                         || p.UserProfile.LastName.ToLower().Contains(s.ToLower())
-                        || p.UserProfile.FatherName.ToLower().Contains(s.ToLower())
-                        || p.UserProfile.Idnp.ToLower().Contains(s.ToLower())
-                        || p.UserProfile.Email.ToLower().Contains(s.ToLower()));
+                        || p.UserProfile.FatherName.ToLower().Contains(s.ToLower()));
                 }
             }
 
@@ -72,9 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                     tests = tests.Where(p =>
                         p.Evaluator.FirstName.ToLower().Contains(s.ToLower())
                         || p.Evaluator.LastName.ToLower().Contains(s.ToLower())
-                        || p.Evaluator.FatherName.ToLower().Contains(s.ToLower())
-                        || p.Evaluator.Idnp.ToLower().Contains(s.ToLower())
-                        || p.Evaluator.Email.ToLower().Contains(s.ToLower()));
+                        || p.Evaluator.FatherName.ToLower().Contains(s.ToLower()));
                 }
             }
 
@@ -144,7 +139,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         private static IQueryable<Test> GetTestQueryable(AppDbContext appDbContext)
         {
             return appDbContext.Tests
-                    .Include(t => t.TestTemplate)
                     .Include(t => t.TestQuestions)
                         .ThenInclude(tt => tt.QuestionUnit)
                     .Include(t => t.UserProfile)
@@ -316,7 +310,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         {
             return appDbContext.UserProfiles
                 .Include(x => x.ModuleRoles)
-                .ThenInclude(x => x.ModuleRole)
+                    .ThenInclude(x => x.ModuleRole)
                 .Select(x => new UserProfile
                 {
                     Id = x.Id,
