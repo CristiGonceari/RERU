@@ -136,6 +136,11 @@ export class DocumentTemplatesTableComponent implements OnInit {
 		});
 	}
 
+	getDocumentTemplates(): void {
+		this.pagination.currentPage = 1;
+		this.getList();
+	}
+
 	resetFilters(): void {
 		this.filters = {};
 		this.fileType = '';
@@ -143,11 +148,12 @@ export class DocumentTemplatesTableComponent implements OnInit {
 		this.getList();
 	}
 
-	setFilter(field: string, value): void {
+	setFilter(field: string, value, startSearch: boolean = false): void {
 		this.filters[field] = value;
 		this.fileType = this.filters.fileType;
-		this.pagination.currentPage = 1;
-		this.getList();
+		if (startSearch) {
+			this.getDocumentTemplates();
+		}
 	}
 
 	deleteDocument(id: number): void {
