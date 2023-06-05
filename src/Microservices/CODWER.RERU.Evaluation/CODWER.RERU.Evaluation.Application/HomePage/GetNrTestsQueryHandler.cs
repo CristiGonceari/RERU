@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Entities;
@@ -24,14 +23,56 @@ namespace CODWER.RERU.Evaluation.Application.HomePage
         
         public async Task<List<int>> Handle(GetNrTestsQuery request, CancellationToken cancellationToken)
         {
+            var evaluations = _appDbContext.Tests
+                .Include(t => t.TestTemplate)
+                .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Evaluation)
+                .Select(t => new Test{
+                    Id = t.Id,
+                    TestTemplate = new TestTemplate{
+                        Id = t.TestTemplate.Id,
+                        Mode = t.TestTemplate.Mode
+                    },
+                    CreateDate = t.CreateDate
+                })
+                .AsQueryable();
+
+            var evaluationsPerMonth = CalculateEvaluationsPerMonth(evaluations);
+
             var tests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
                 .Where(t => t.TestTemplate.Mode == TestTemplateModeEnum.Test)
+                .Select(t => new Test{
+                    Id = t.Id,
+                    TestTemplate = new TestTemplate{
+                        Id = t.TestTemplate.Id,
+                        Mode = t.TestTemplate.Mode
+                    },
+                    CreateDate = t.CreateDate
+                })
                 .AsQueryable();
 
             var testsPerMonth = CalculateTestsPerMonth(tests);
 
-            return testsPerMonth;
+            var combinedData = new List<int>();
+            combinedData.AddRange(testsPerMonth);
+            combinedData.AddRange(evaluationsPerMonth);
+
+            return combinedData;
+        }
+
+        private List<int> CalculateEvaluationsPerMonth(IQueryable<Test> evaluations)
+        {
+            var nrEvaluations = new List<int>();
+
+            for (int i = 11; i >= 0; i--)
+            {
+                var date = DateTime.Now.AddMonths(-i);
+                var count = evaluations.Count(test => test.CreateDate.Month == date.Month && test.CreateDate.Year == date.Year);
+
+                nrEvaluations.Add(count);
+            }
+
+            return nrEvaluations;
         }
 
         private List<int> CalculateTestsPerMonth(IQueryable<Test> tests)
