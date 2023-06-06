@@ -25,6 +25,13 @@ namespace CODWER.RERU.Evaluation.Application.Events.GetEventsByDate
             var events = _appDbContext.Events
                 .Where(p => p.FromDate.Date <= request.Date && p.TillDate.Date >= request.Date)
                 .OrderByDescending(x => x.CreateDate)
+                .Select(x => new Event{
+                    Id = x.Id,
+                    Name = x.Name,
+                    CreateDate = x.CreateDate,
+                    FromDate = x.FromDate,
+                    TillDate = x.TillDate
+                })
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.Name))

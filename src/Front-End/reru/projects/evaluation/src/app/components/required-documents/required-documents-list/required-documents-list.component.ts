@@ -11,6 +11,7 @@ export class RequiredDocumentsListComponent implements OnInit {
 	title: string;
 
   pagedSummary: PaginationModel = new PaginationModel();
+  mobileButtonLength: string = "100%";
   
   constructor(private router: Router) { }
 

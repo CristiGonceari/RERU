@@ -64,61 +64,99 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-header border-0 mt-5 pr-5">
+				<div class="card-header border-0 pr-1">
 					<div class="row w-100">
 						<div class="col-lg col-md-6 col-12">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('questionName', $event)"
-								[placeholder]="'button.search-name' | translate" #question>
+								[placeholder]="'button.search-name' | translate" 
+								[showIcon]="false" [useDebounce]="false" #question>
 							</erp-shared-search-input>
 						</div>
 						<div class="col-lg col-md-6 col-12  pt-md-0 pt-2 d-none d-md-none d-lg-none d-xl-block">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('categoryName', $event)"
-								[placeholder]="'questions.search-category' | translate" #category>
+								[placeholder]="'questions.search-category' | translate" 
+								[showIcon]="false" [useDebounce]="false" #category>
 							</erp-shared-search-input>
 						</div>
 						<div class="col-lg col-md-6 col-12  pt-md-0 pt-2 d-block d-md-block d-lg-block d-xl-none">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('categoryName', $event)"
-								[placeholder]="'questions.search-category-mobile' | translate" #category>
+								[placeholder]="'questions.search-category-mobile' | translate" 
+								[showIcon]="false" [useDebounce]="false" #category>
 							</erp-shared-search-input>
 						</div>
 						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
 							<erp-shared-search-input
 								(handleSearch)="questionsTable.setFilter('questionTags', $event)"
-								[placeholder]="'questions.tags' | translate" #questionTags>
+								[placeholder]="'questions.tags' | translate" 
+								[showIcon]="false" [useDebounce]="false" #questionTags>
 							</erp-shared-search-input>
 						</div>
 					</div>
 					<div class="row w-100 mt-lg-3 mt-0">
 						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
-							<app-search-by-question-status (filter)="questionsTable.setFilter('status', $event)"
-								#status></app-search-by-question-status>
+							<app-search-by-question-status 
+								(filter)="questionsTable.setFilter('status', $event, true)"
+								#status>
+							</app-search-by-question-status>
 						</div>
 						<div class="col-lg col-md-6 col-12  pt-lg-0 pt-2">
-							<app-search-by-question-type (filter)="questionsTable.setFilter('type', $event)"
-								#type></app-search-by-question-type>
+							<app-search-by-question-type 
+								(filter)="questionsTable.setFilter('type', $event, true)"
+								#type>
+							</app-search-by-question-type>
 						</div>
-						<div class="col-auto d-lg-block d-none pt-lg-0 pt-2">
+						<div class="col-auto d-lg-flex flex-lg-row d-none pt-lg-0 pt-2">
 							<div class="text-right">
 								<app-button 
-								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
-								[value]="'button.reset' | translate"></app-button>
+									(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+									[value]="'button.reset' | translate">
+								</app-button>
+							</div>
+							<div class="ml-2">
+								<app-confirm-button 
+									width="100%" 
+									(handle)="questionsTable.getQuestions()" 
+									[value]="'button.search' | translate">
+								</app-confirm-button>
 							</div>
 						</div>
-						<div class="col-lg offset-lg-0 offset-md-6 col-md-6 d-lg-none d-md-block d-none pt-lg-0 pt-2">
-							<div class="text-right">
+						<div class="col-lg col-md-6 col-12 d-lg-none d-md-block d-none pt-lg-0 pt-2">
+							<div class="text-right d-flex flex-column">
+								<app-confirm-button 
+									width="100%" 
+									(handle)="questionsTable.getQuestions()" 
+									[value]="'button.search' | translate">
+								</app-confirm-button>
+							</div>
+						</div>
+						<div class="col-lg col-md-6 d-lg-none d-md-block d-none pt-lg-0 pt-2">
+							<div class="text-right d-flex flex-column">
 								<app-button 
-								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
-								[value]="'button.reset' | translate"></app-button>
+									width="100%"
+									(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+									[value]="'button.reset' | translate">
+								</app-button>
 							</div>
 						</div>
 						<div class="col-12 d-md-none d-block pt-lg-0 pt-2">
 							<div class="d-flex flex-column">
-								<app-button width="100%" 
-								(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
-								[value]="'button.reset' | translate"></app-button>
+								<app-button 
+									width="100%"
+									(handle)="clearFields(); questionsTable.resetFilters(); question.clearSearch(); category.clearSearch(); questionTags.clearSearch()"
+									[value]="'button.reset' | translate">
+								</app-button>
+							</div>
+						</div>
+						<div class="col-12 d-md-none d-block pt-lg-0 pt-2">
+							<div class="d-flex flex-column">
+								<app-confirm-button 
+									width="100%" 
+									(handle)="questionsTable.getQuestions()" 
+									[value]="'button.search' | translate">
+								</app-confirm-button>
 							</div>
 						</div>
 					</div>

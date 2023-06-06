@@ -13,6 +13,20 @@ namespace CODWER.RERU.Evaluation.Application.Events
             var events = appDbContext.Events
                 .Include(x => x.EventLocations)
                 .OrderByDescending(x => x.CreateDate)
+                .Select(x => new Event{
+                    Id = x.Id,
+                    Name = x.Name,
+                    FromDate = x.FromDate,
+                    TillDate = x.TillDate,
+                    EventLocations = x.EventLocations.Select(el => new EventLocation{ 
+                        Location = new Location
+                        {
+                            Id = el.LocationId,
+                            Name = el.Location.Name,
+                            Address = el.Location.Address
+                        }
+                    }).ToArray()
+                })
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))

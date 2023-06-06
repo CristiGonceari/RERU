@@ -6,6 +6,7 @@ using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RERU.Data.Entities;
 using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Persistence.Extensions;
@@ -29,13 +30,14 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount
 
             var myTests = _appDbContext.Tests
                 .Include(t => t.TestTemplate)
-                .ThenInclude(tt => tt.Settings)
-                .Include(t => t.TestQuestions)
-                .Include(t => t.UserProfile)
-                .Include(t => t.Location)
-                .Include(t => t.Event)
                 .Where(p => p.UserProfileId == currentUserId && p.TestTemplate.Mode == TestTemplateModeEnum.Test)
                 .DistinctBy2(x => x.HashGroupKey != null ? x.HashGroupKey : x.Id.ToString())
+                .Select(t => new Test{
+                    Id = t.Id,
+                    EventId = t.EventId,
+                    ProgrammedTime = t.ProgrammedTime,
+                    EndProgrammedTime = t.EndProgrammedTime
+                })
                 .AsQueryable();
 
             var dates = new List<TestCount>();

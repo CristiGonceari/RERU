@@ -24,33 +24,59 @@
             <erp-shared-export-button width="100%" class="w-100" (click)="testTable.getHeaders(getTitle())">
               {{'button.export' | translate}}
             </erp-shared-export-button>
-            <app-add-button width="100%" class="btn w-100" [routerLink]="['add-test-type']" [value]="'tests.add-test-template' | translate"></app-add-button>
+            <app-add-button width="100%" class="btn w-100 mt-2" [routerLink]="['add-test-type']" [value]="'tests.add-test-template' | translate"></app-add-button>
           </div>
         </div>
-        <div class="card-header border-0 mt-5 pr-5">
+        <div class="card-header border-0 pr-1">
           <div class="row w-100">
             <div class="col-lg col-md-6 col-12">
-              <erp-shared-search-input (handleSearch)="testTable.setFilter('name', $event)" [placeholder]="'button.search-name' | translate" #templateName></erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="testTable.setFilter('name', $event)" 
+                [placeholder]="'button.search-name' | translate" #templateName
+                [showIcon]="false" [useDebounce]="false">
+              </erp-shared-search-input>
             </div>
             <div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
-              <erp-shared-search-input (handleSearch)="testTable.setFilter('eventName', $event)" [placeholder]="'events.search-event' | translate" #eventName></erp-shared-search-input>
+              <erp-shared-search-input 
+                (handleSearch)="testTable.setFilter('eventName', $event)" 
+                [placeholder]="'events.search-event' | translate" #eventName
+                [showIcon]="false" [useDebounce]="false">
+              </erp-shared-search-input>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-              <app-search-test-mode (filter)="testTable.setFilter('mode', $event)" #mode></app-search-test-mode>
+              <app-search-test-mode (filter)="testTable.setFilter('mode', $event, true)" #mode></app-search-test-mode>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-              <app-search-qualifying-type (filter)="testTable.setFilter('qualifyingType', $event)" #qualifyingType></app-search-qualifying-type>
+              <app-search-qualifying-type (filter)="testTable.setFilter('qualifyingType', $event, true)" #qualifyingType></app-search-qualifying-type>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
-              <app-test-template-search (filter)="testTable.setFilter('status', $event)" #status></app-test-template-search>
+              <app-test-template-search (filter)="testTable.setFilter('status', $event, true)" #status></app-test-template-search>
             </div>
-            <div class="col-lg-auto col-12 d-lg-block d-none text-center">
-              <app-button (handle)="clearFields(); testTable.resetFilters()" [value]="'button.reset' | translate"></app-button>
+            <div class="col-lg-auto col-12 d-lg-flex flex-lg-row d-none text-center">
+              <app-button 
+                (handle)="clearFields(); testTable.resetFilters(); templateName.clearSearch(); eventName.clearSearch()" 
+                [value]="'button.reset' | translate">
+              </app-button>
+              <div class="ml-2">
+								<app-confirm-button 
+									width="100%" 
+									(handle)="testTable.getTestTemplates()" 
+									[value]="'button.search' | translate">
+								</app-confirm-button>
+							</div>
             </div>
             <div class="col-lg-auto col-12 pt-lg-0 pt-2 d-lg-none d-block">
               <app-button width="100%"
-              (handle)="clearFields(); testTable.resetFilters(); templateName.clearSearch(); eventName.clearSearch()" 
-              [value]="'button.reset' | translate"></app-button>
+                (handle)="clearFields(); testTable.resetFilters(); templateName.clearSearch(); eventName.clearSearch()" 
+                [value]="'button.reset' | translate">
+              </app-button>
+            </div>
+            <div class="col-lg-auto col-12 pt-lg-0 pt-2 d-lg-none d-block">
+              <app-confirm-button 
+                width="100%" 
+                (handle)="testTable.getTestTemplates()" 
+                [value]="'button.search' | translate">
+              </app-confirm-button>
             </div>
           </div>
         </div>

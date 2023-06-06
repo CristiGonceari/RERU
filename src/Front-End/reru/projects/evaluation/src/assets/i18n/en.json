@@ -129,6 +129,7 @@
     "is-active": "Is active",
     "apply-for-position": "Candided position",
     "position-diagram": "Position diagram",
+    "position-isExpired": "The vacant position has expired",
     "vacant-position": "Vacant position",
     "medical-column": "Medical column",
     "column": "Column",
@@ -412,6 +413,8 @@
     "start-test": "Test is going to start in few minutes",
     "verified-by-system": "Verified by the system",
     "test-template-delete-modal": "test template",
+    "is-grid-test": "Multiple choice test",
+    "warn-for-grid-test": "You can add questions with one answer or multiple answers!",
     "basic-template-dropdown": {
       "title": "Basic template",
       "0": "Does not have",
@@ -555,7 +558,12 @@
     "add-tags": "Add tags",
     "bulk-import-options-msg": "Please, download and use our special form for import options",
     "questions-left": "Questions left",
-    "answer-text": "Write here..."
+    "answer-text": "Write here...",
+    "add-one-answer": "AddOneAnswer.xlsx",
+    "add-multiple-answers": "AddMultipleAnswers.xlsx",
+    "add-file-answer": "AddFileAnswer.xlsx",
+    "add-free-text": "AddFreeText.xlsx",
+    "add-hashed-answer": "AddHashedAnswerTemplate.xlsx"
   },
   "require-documents":{
     "documents":"Documents",
@@ -861,7 +869,7 @@
     "succes-attach-detach-evaluator-msg": "Evaluators was successfully attached/detached",
     "show-user-name": "Show user name",
     "from-event": "From event",
-    "expired-event": "This event is no longer active"
+    "expired-event": "This event is inactive"
   },
   "test-template": {
     "test-template": "Test template",
@@ -1032,6 +1040,9 @@
     "03001804": "Invalid sequence type",
     "03001805": "Established question coun must be equal to selected question count",
     "03001806": "Please, select question type. Polls accept only 'one answer' questions",
+    "03001807": "Test grid accept 'one answer' or 'multiple answers' questions",
+    "03001808": "The evaluator cannot apply to the vacant position that contains that event",
+    "03001809": "The grid template cannot be activated, if it contains questions that require verification",
     "03001901": "Can not calculate the result",
     "03001902": "Only terminated test can be set as verified",
     "03001903": "Not all answers are verified",

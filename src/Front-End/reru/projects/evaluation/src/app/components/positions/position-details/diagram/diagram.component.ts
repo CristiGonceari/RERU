@@ -23,6 +23,7 @@ import { NotificationsService } from 'angular2-notifications';
 
 export class DiagramComponent implements OnInit {
 	isLoading = true;
+	isExpired: boolean;
 	eventsDiagram = [];
 	usersDiagram = [];
 	testTemplates = [];
@@ -75,6 +76,12 @@ export class DiagramComponent implements OnInit {
 
 	getDiagram(): void {
 		this.isLoading = true;
+		this.positionService.get(this.positionId).subscribe(res => {
+			if (res && res.data) {
+				this.isExpired = !res.data.isActive;
+				this.isLoading = false;
+			}
+		});
 
 		this.positionService.getDiagram({ positionId: this.positionId }).subscribe(res => {
 			if (res && res.data) {
@@ -89,8 +96,10 @@ export class DiagramComponent implements OnInit {
 						forkJoin([
 							this.translate.get('tests.program-test'),
 							this.translate.get('events.expired-event'),
-						]).subscribe(([tooltip1, tooltip2]) => {
+							this.translate.get('position.position-isExpired')
+						]).subscribe(([tooltip1, tooltip2, tooltip3]) => {
 							element.tooltip = element.isDisabled ? tooltip2 : tooltip1;
+							if (this.isExpired) element.tooltip = tooltip3;
 						});
 					});
 				});

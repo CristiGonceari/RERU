@@ -6,14 +6,25 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
+	<div class="col">
 	<div class="card card-custom gutter-b w-100 px-10">
 		<div class="card-header flex-wrap border-0 py-5">
 			<div class="card-title w-100 align-items-baseline">
-				<h3 class="font-weight-light" style="white-space: nowrap;">
-					{{'faq.article-title' | translate}}:
-				</h3>
-				<div class="d-flex flex-column w-100 ml-5">
-					<input type="text" placeholder="{{'faq.emptyName' | translate}}" class="form-control" [(ngModel)]="title" required>
+				<div class="d-none d-md-flex flex-row">
+					<h3 class="font-weight-light align-self-center m-0" style="white-space: nowrap;">
+						{{'faq.article-title' | translate}}:
+					</h3>
+					<div class="d-flex flex-column w-100 ml-5">
+						<input type="text" placeholder="{{'faq.emptyName' | translate}}" class="form-control" [(ngModel)]="title" required>
+					</div>
+				</div>
+				<div class="d-block d-md-none">
+					<h3 class="font-weight-light" style="white-space: nowrap;">
+						{{'faq.article-title' | translate}}:
+					</h3>
+					<div class="d-flex flex-column w-100">
+						<input type="text" placeholder="{{'faq.emptyName' | translate}}" class="form-control" [(ngModel)]="title" required>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -38,4 +49,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </erp-shared-content>

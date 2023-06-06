@@ -6,86 +6,88 @@
 </app-loading-spinner>
 
 <erp-shared-content *ngIf="!isLoading">
-	<div class="card card-custom gutter-b erp-shared-desktop-wide">
-		<div class="card-body p-0">
-			<div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
-				data-wizard-clickable="true">
-				<div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
-					<div class="col-xl-12 col-xxl-7">
-						<form class="form" id="kt_contact_add_form" [formGroup]="articleForm">
-							<div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-								<h3 class="mb-10 font-weight-bold text-dark">
-									{{ 'faq.article-details' | translate }}
-								</h3>
-								<div class="row">
-									<div class="col-xl-12">
-										<div class="form-group row">
-											<label class="col-xl-3 col-lg-3 col-form-label">{{
-												'faq.article-title' | translate }}</label>
-											<div class="col-lg-9 col-xl-9">
-												<input class="form-control form-control-lg form-control-solid"
-													name="name" type="text" formControlName="name"/>
-											</div>
-											<label class="col-xl-3 col-lg-3"></label>
-											<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
-										</div>
-										<div class="form-group row mb-3">
-											<label class="col-xl-3 col-lg-3 col-form-label">
-												{{'faq.module-roles' | translate}}
-											</label>
-											<div class="col-lg-9 col-xl-9">
-												<tag-input
-													class="py-0 form-control form-control-lg form-control-solid h-100"
-													[ngModelOptions]="{standalone: true}" [(ngModel)]="tags"
-													[placeholder]="placeHolder"
-													[secondaryPlaceholder]="placeHolder">
-													<tag-input-dropdown [autocompleteItems]="items"
-														[showDropdownIfEmpty]="true" [keepOpen]="true"
-														[dynamicUpdate]="true">
-													</tag-input-dropdown>
-												</tag-input>
-											</div>
-											<label class="col-xl-3 col-lg-3"></label>
-											<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.info-tag' | translate }}</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-xl-3 col-lg-3 col-form-label">{{ 'faq.media' | translate}}</label>
-											<div class="col-lg-9 col-xl-9">
-												<div *ngIf="fileId">
-													<app-add-edit-media-file [fileId]="fileId"
-														(handleFile)="checkFile($event)"
-														(disableBtn)="disableBtn"></app-add-edit-media-file>
-													<p>{{ 'faq.media-type' | translate}}</p>
+	<div class="col">
+		<div class="card card-custom gutter-b erp-shared-desktop-wide">
+			<div class="card-body p-0">
+				<div class="wizard wizard-1" id="kt_contact_add" data-wizard-state="step-first"
+					data-wizard-clickable="true">
+					<div class="flex-row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+						<div class="col-xl-12 col-xxl-7">
+							<form class="form" id="kt_contact_add_form" [formGroup]="articleForm">
+								<div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+									<h3 class="mb-10 font-weight-bold text-dark">
+										{{ 'faq.article-details' | translate }}
+									</h3>
+									<div class="row">
+										<div class="col-xl-12">
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">{{
+													'faq.article-title' | translate }}</label>
+												<div class="col-lg-9 col-xl-9">
+													<input class="form-control form-control-lg form-control-solid"
+														name="name" type="text" formControlName="name"/>
 												</div>
-												<div *ngIf="!fileId">
-													<app-add-edit-media-file (handleFile)="checkFile($event)"
-														(disableBtn)="disableBtn"></app-add-edit-media-file>
-													<p>{{ 'faq.media-type' | translate}}</p>
+												<label class="col-xl-3 col-lg-3"></label>
+												<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
+											</div>
+											<div class="form-group row mb-3">
+												<label class="col-xl-3 col-lg-3 col-form-label">
+													{{'faq.module-roles' | translate}}
+												</label>
+												<div class="col-lg-9 col-xl-9">
+													<tag-input
+														class="py-0 form-control form-control-lg form-control-solid h-100"
+														[ngModelOptions]="{standalone: true}" [(ngModel)]="tags"
+														[placeholder]="placeHolder"
+														[secondaryPlaceholder]="placeHolder">
+														<tag-input-dropdown [autocompleteItems]="items"
+															[showDropdownIfEmpty]="true" [keepOpen]="true"
+															[dynamicUpdate]="true">
+														</tag-input-dropdown>
+													</tag-input>
+												</div>
+												<label class="col-xl-3 col-lg-3"></label>
+												<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.info-tag' | translate }}</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">{{ 'faq.media' | translate}}</label>
+												<div class="col-lg-9 col-xl-9">
+													<div *ngIf="fileId">
+														<app-add-edit-media-file [fileId]="fileId"
+															(handleFile)="checkFile($event)"
+															(disableBtn)="disableBtn"></app-add-edit-media-file>
+														<p>{{ 'faq.media-type' | translate}}</p>
+													</div>
+													<div *ngIf="!fileId">
+														<app-add-edit-media-file (handleFile)="checkFile($event)"
+															(disableBtn)="disableBtn"></app-add-edit-media-file>
+														<p>{{ 'faq.media-type' | translate}}</p>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-xl-3 col-lg-3 col-form-label">
-												{{ 'locations.description' | translate }}
-											</label>
-											<div class="col-lg-9 col-xl-9">
-												<ckeditor [editor]="Editor" [(ngModel)]="editorData"
-													(ready)="onReady($event)"
-													[ngModelOptions]="{standalone: true}"></ckeditor>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">
+													{{ 'locations.description' | translate }}
+												</label>
+												<div class="col-lg-9 col-xl-9">
+													<ckeditor [editor]="Editor" [(ngModel)]="editorData"
+														(ready)="onReady($event)"
+														[ngModelOptions]="{standalone: true}"></ckeditor>
+												</div>
+												<label class="col-xl-3 col-lg-3"></label>
+												<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
 											</div>
-											<label class="col-xl-3 col-lg-3"></label>
-											<div class="col-lg-9 col-xl-9 text-muted">{{ 'faq.empty' | translate }}</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="text-right border-top pt-10">
-								<app-button class="btn mr-2" [value]="'button.back' | translate"
-									(handle)="backClicked()"></app-button>
-								<app-add-button class="btn" [value]="'button.confirm' | translate"
-									(handle)="saveArticle()" [disabled]="isButtonPressed || checkConfirmButton(editorData, articleForm) || disableBtn"></app-add-button>
-							</div>
-						</form>
+								<div class="text-right border-top pt-10">
+									<app-button class="btn mr-2" [value]="'button.back' | translate"
+										(handle)="backClicked()"></app-button>
+									<app-add-button class="btn" [value]="'button.confirm' | translate"
+										(handle)="saveArticle()" [disabled]="isButtonPressed || checkConfirmButton(editorData, articleForm) || disableBtn"></app-add-button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

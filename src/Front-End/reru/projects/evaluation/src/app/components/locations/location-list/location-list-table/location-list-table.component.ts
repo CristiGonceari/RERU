@@ -98,7 +98,6 @@ export class LocationListTableComponent implements OnInit {
 	}
 
   	list(data: any = {}) {
-		this.keyword = data.keyword;
 		let params = {
 			name: this.keyword || '',
 			page: data.page || this.pagination.currentPage,
@@ -111,6 +110,19 @@ export class LocationListTableComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	setKeyword(keyword: string): void {
+		this.keyword = keyword;
+	}
+
+	resetFilters(): void {
+		this.keyword = '';
+		this.list();
+	}
+
+	getLocations(): void {
+		this.list({page: 1});
 	}
 
 	navigate(id: number) {
