@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
@@ -21,6 +22,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -153,21 +155,26 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             }
 
+            var userClaims = await GetUserClaims(result);
+            var provider = await GetProvider(result);
+            var userEmail = await GetEmail(result);
+            var identityUser = await GetIdentityUser(userClaims);
+
             // lookup our user and external provider info
-            var (identityUser, provider, claims, emailAdress) = await FindUserFromMPassProviderAsync(result);
+            //var (identityUser, provider, claims, emailAdress) = await FindUserFromMPassProviderAsync(result);
             if (identityUser == null)
             {
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                identityUser = await AutoProvisionMPassUserAsync(provider, claims);
+                identityUser = await AutoProvisionMPassUserAsync(provider, userClaims);
             }
             else
             {
                 // find userProfile
                 var userProfile = await _appDbContext.UserProfiles
                         .Include(up => up.Identities.Where(i => i.Type == MPassSamlDefaults.AuthenticationScheme))
-                        .FirstOrDefaultAsync(up => up.Email == emailAdress);
+                        .FirstOrDefaultAsync(up => up.Email == userEmail);
 
                 if (userProfile.Identities.Count() == 0)
                 {
@@ -339,29 +346,53 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return (user, provider, providerUserId, claims);
         }
 
-        private async Task<(ERPIdentityUser identityUser, string provider, IEnumerable<Claim> claims, string emailAdress)> FindUserFromMPassProviderAsync(AuthenticateResult result)
+        private async Task<ERPIdentityUser> GetIdentityUser(List<Claim> claims)
         {
-            var externalUser = result.Principal;
+            var userEmail = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
 
-            var claims = externalUser.Claims.ToList();
+            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == userEmail);
 
-            var provider = externalUser.Identity.AuthenticationType;
-            var emailAdress = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
+            identityUser.UserName = claims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
 
-            // find external user
-            //var user = await _userManager.FindByNameAsync(claims.Find(x => x.Type == MPassClaimTypes.UserName).Value);
-            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
+            Console.WriteLine($"---Auth-User {identityUser.Name}, {identityUser.LastName} idnp:{identityUser.UserName} email:{identityUser.Email}, {identityUser.PhoneNumber}");
 
-            var nameId = _appDbContext.UserProfiles.First(x => x.Email == emailAdress).Idnp;
-            if (string.IsNullOrEmpty(nameId))
-            {
-                throw new Exception("Null IDNP");
-            }
-
-            identityUser.UserName = nameId;
-
-            return (identityUser, provider, claims, emailAdress);
+            return identityUser;
         }
+
+        private async Task<string> GetProvider(AuthenticateResult result)
+        {
+            return result.Principal.Identity.AuthenticationType;
+        }
+
+        private async Task<List<Claim>> GetUserClaims(AuthenticateResult result)
+        {
+            return result.Principal.Claims.ToList();
+        }
+
+        private async Task<string> GetEmail(AuthenticateResult result)
+        {
+            return result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
+        }
+
+        //TO DO nahui sa existe asa cod? 
+        //private async Task<(ERPIdentityUser identityUser, string provider, IEnumerable<Claim> claims, string emailAdress)> FindUserFromMPassProviderAsync(AuthenticateResult result)
+        //{
+        //    var externalUser = result.Principal;
+
+        //    var claims = externalUser.Claims.ToList();
+
+        //    var provider = externalUser.Identity.AuthenticationType;
+        //    var emailAdress = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
+
+        //    var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
+
+        //    identityUser.UserName = claims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
+
+        //    Console.WriteLine($"User {identityUser.Name}, {identityUser.LastName} idnp:{identityUser.UserName} email:{identityUser.Email}, {identityUser.PhoneNumber}");
+
+        //    return (identityUser, provider, claims, emailAdress);
+        //}
+
 
         private async Task<ERPIdentityUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
