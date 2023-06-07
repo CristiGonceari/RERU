@@ -84,7 +84,7 @@
                 [colorClass]="'text-primary'">
             </app-loading-spinner>
             <div *ngIf="!events.length" class="text-center">{{'position.no-events' | translate}}</div>
-            <div class="table-responsive">
+            <div class="table-responsive custom-scrollbar-visible">
                 <table *ngIf="!isLoading && events.length" class="table table-bordered font-size-lg">
                     <thead class="text-uppercase text-muted">
                         <tr>
