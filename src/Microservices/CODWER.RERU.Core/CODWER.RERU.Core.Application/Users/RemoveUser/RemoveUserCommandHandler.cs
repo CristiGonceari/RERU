@@ -53,11 +53,15 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
-            foreach (var identity in userProfile.Identities)
-            {
-                var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
-                service.Remove(identity.Identificator);
-            }
+            var identity = userProfile.Identities.FirstOrDefault();
+            var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
+            service.Remove(identity.Identificator);
+
+            //foreach (var identity in userProfile.Identities)
+            //{
+            //    var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
+            //    service.Remove(identity.Identificator);
+            //}
 
             foreach (var file in userProfile.UserFiles)
             {
