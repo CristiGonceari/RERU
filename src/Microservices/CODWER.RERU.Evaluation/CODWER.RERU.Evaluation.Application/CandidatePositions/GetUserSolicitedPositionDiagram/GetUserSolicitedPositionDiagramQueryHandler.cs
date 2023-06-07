@@ -115,6 +115,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetUserSolicited
                             x.EventId == eventId &&
                             x.TestTemplateId == testTemplateId)
                 .OrderBy(x => x.EventId)
+                .AsEnumerable()
+                .GroupBy(x => x.HashGroupKey)
+                .Select(g => g.First())
                 .ToList();
 
             foreach (var test in tests)
