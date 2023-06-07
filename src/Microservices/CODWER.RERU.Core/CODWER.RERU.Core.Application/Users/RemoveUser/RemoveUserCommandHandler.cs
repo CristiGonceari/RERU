@@ -34,59 +34,59 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
         {
             var userProfile = await AppDbContext.UserProfiles
                 .Include(x => x.Identities)
-
-                .Include(x => x.Tests)
-                .Include(x => x.TestsWithEvaluator)
-                .Include(x => x.LocationResponsiblePersons)
-                .Include(x => x.EventResponsiblePersons)
-                .Include(x => x.PlanResponsiblePersons)
-                .Include(x => x.EventUsers)
-                .Include(x => x.Notifications)
-                .Include(x => x.EmailTestNotifications)
-                .Include(x => x.UserFiles)
-                .Include(x => x.ModuleRoles)
-                .Include(x => x.SolicitedVacantPositions)
-                .Include(x => x.SolicitedVacantPositionUserFiles)
-                .Include(x => x.CandidatePositionNotifications)
-
                 .Include(x => x.Contractor)
-
                 .FirstOrDefaultAsync(u => u.Id == request.Id);
 
-            foreach (var identity in userProfile.Identities)
-            {
-                var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
-                service.Remove(identity.Identificator);
-            }
+            var identity = userProfile.Identities.FirstOrDefault();
+            var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
+            service?.Remove(identity.Identificator);
 
-            foreach (var file in userProfile.UserFiles)
-            {
-                _storageFileService.RemoveFile(file.FileId);
-            }
-
-            foreach (var file in userProfile.SolicitedVacantPositionUserFiles)
-            {
-                _storageFileService.RemoveFile(file.FileId);
-            }
-
-            AppDbContext.Tests.RemoveRange(userProfile.Tests);
-            AppDbContext.Tests.RemoveRange(userProfile.TestsWithEvaluator);
-            AppDbContext.LocationResponsiblePersons.RemoveRange(userProfile.LocationResponsiblePersons);
-            AppDbContext.EventResponsiblePersons.RemoveRange(userProfile.EventResponsiblePersons);
-            AppDbContext.PlanResponsiblePersons.RemoveRange(userProfile.PlanResponsiblePersons);
-            AppDbContext.EventUsers.RemoveRange(userProfile.EventUsers);
-            AppDbContext.Notifications.RemoveRange(userProfile.Notifications);
-            AppDbContext.EmailTestNotifications.RemoveRange(userProfile.EmailTestNotifications);
-            AppDbContext.SolicitedVacantPositions.RemoveRange(userProfile.SolicitedVacantPositions);
-            AppDbContext.CandidatePositionNotifications.RemoveRange(userProfile.CandidatePositionNotifications);
-
-            AppDbContext.UserProfiles.Remove(userProfile);
-
-            await AppDbContext.SaveChangesAsync();
+            await RemoveUserData(userProfile);
 
             await LogAction(userProfile);
 
             return Unit.Value;
+        }
+
+        private async Task RemoveUserData(UserProfile userProfile)
+        {
+            var userFiles = AppDbContext.UserFiles.Where(x => x.UserProfileId == userProfile.Id);
+            var userVacantFiles = AppDbContext.SolicitedVacantPositionUserFiles.Where(x => x.UserProfileId == userProfile.Id);
+            var userTests = AppDbContext.Tests.Where(x => x.UserProfileId == userProfile.Id);
+            var userEvaluatedTests = AppDbContext.Tests.Where(x => x.EvaluatorId == userProfile.Id);
+            var userLocations = AppDbContext.LocationResponsiblePersons.Where(x => x.UserProfileId == userProfile.Id);
+            var userEvents = AppDbContext.EventResponsiblePersons.Where(x => x.UserProfileId == userProfile.Id);
+            var userPlans = AppDbContext.PlanResponsiblePersons.Where(x => x.UserProfileId == userProfile.Id);
+            var userEventUsers = AppDbContext.EventUsers.Where(x => x.UserProfileId == userProfile.Id);
+            var userNotifications = AppDbContext.Notifications.Where(x => x.UserProfileId == userProfile.Id);
+            var userEmailTests = AppDbContext.EmailTestNotifications.Where(x => x.UserProfileId == userProfile.Id);
+            var userSolicitedVacantPositions = AppDbContext.SolicitedVacantPositions.Where(x => x.UserProfileId == userProfile.Id);
+            var userCandidatePositions = AppDbContext.CandidatePositionNotifications.Where(x => x.UserProfileId == userProfile.Id);
+
+            foreach (var file in userFiles)
+            {
+                _storageFileService.RemoveFile(file.FileId);
+            }
+
+            foreach (var file in userVacantFiles)
+            {
+                _storageFileService.RemoveFile(file.FileId);
+            }
+
+            AppDbContext.Tests.RemoveRange(userTests);
+            AppDbContext.Tests.RemoveRange(userEvaluatedTests);
+            AppDbContext.LocationResponsiblePersons.RemoveRange(userLocations);
+            AppDbContext.EventResponsiblePersons.RemoveRange(userEvents);
+            AppDbContext.PlanResponsiblePersons.RemoveRange(userPlans);
+            AppDbContext.EventUsers.RemoveRange(userEventUsers);
+            AppDbContext.Notifications.RemoveRange(userNotifications);
+            AppDbContext.EmailTestNotifications.RemoveRange(userEmailTests);
+            AppDbContext.SolicitedVacantPositions.RemoveRange(userSolicitedVacantPositions);
+            AppDbContext.CandidatePositionNotifications.RemoveRange(userCandidatePositions);
+
+            AppDbContext.UserProfiles.Remove(userProfile);
+
+            await AppDbContext.SaveChangesAsync();
         }
 
         private async Task LogAction(UserProfile userProfile)

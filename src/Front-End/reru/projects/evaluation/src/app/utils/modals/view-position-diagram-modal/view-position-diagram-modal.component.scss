@@ -9,16 +9,55 @@
    margin: auto;
 }
 
-.child-body {
+.child-body-pc {
    height: 85%;
    overflow-y: auto;
    overflow-x: auto;
 }
 
-.child-footer {
+.child-body-mobile {
+   height: 73%;
+   overflow-y: auto;
+   overflow-x: auto;
+}
+
+.child-footer-pc {
    height: 7%;
 }
 
+.child-footer-mobile {
+   height: 19%;
+}
+
+
 .child-header {
    height: 8%;
+}
+
+.custom-scrollbar-visible{
+	overflow-x: scroll !important;
+	&::-webkit-scrollbar {
+		height: 3px !important;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: rgb(192,192,192);
+	}
+}
+
+.mobile-container-menu {
+   display: none !important;
+   @media screen and (max-width: 487px) {
+      display: flex !important;
+   }
+}
+
+.pc-container-menu {
+   display: none !important;
+   @media screen and (min-width: 488px) {
+      display: flex !important;
+      justify-content: flex-end;
+   }
 }

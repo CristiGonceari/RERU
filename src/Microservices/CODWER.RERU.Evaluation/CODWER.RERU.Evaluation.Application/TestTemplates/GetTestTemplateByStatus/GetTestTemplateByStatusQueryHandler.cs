@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CODWER.RERU.Evaluation.Application.TestCategoryQuestions.GetTestCategoryQuestions;
 using CODWER.RERU.Evaluation.DataTransferObjects.QuestionUnits;
 using CODWER.RERU.Evaluation.DataTransferObjects.TestTemplates;
 using CVU.ERP.StorageService.Context;
@@ -9,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RERU.Data.Entities.Enums;
 using RERU.Data.Persistence.Context;
 using RERU.Data.Entities;
 
@@ -20,16 +18,13 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
         private readonly AppDbContext _appDbContext;
         private readonly StorageDbContext _storageDbContext;
         private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
 
         public GetTestTemplateByStatusQueryHandler(AppDbContext appDbContext,
             IMapper mapper,
-            IMediator mediator,
             StorageDbContext storageDbContext)
         {
             _appDbContext = appDbContext.NewInstance();
             _mapper = mapper;
-            _mediator = mediator;
             _storageDbContext = storageDbContext.NewInstance();
         }
 
@@ -43,8 +38,11 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.GetTestTemplateByStat
                         Id = t.Id,
                         Name = t.Name,
                         Mode = t.Mode,
-                        IsGridTest = t.IsGridTest == null ? null : false,
-                        EventTestTemplates = t.EventTestTemplates
+                        IsGridTest = t.IsGridTest == null ? null : t.IsGridTest,
+                        EventTestTemplates = t.EventTestTemplates.Select(et => new EventTestTemplate
+                        {
+                            EventId = et.EventId
+                        }).ToList()
                     })
                     .AsQueryable();
 
