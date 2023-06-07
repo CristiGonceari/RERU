@@ -55,7 +55,7 @@ namespace CODWER.RERU.Core.Application.Users.RemoveUser
 
             var identity = userProfile.Identities.FirstOrDefault();
             var service = _identityServices.FirstOrDefault(s => s.Type == identity.Type);
-            service.Remove(identity.Identificator);
+            service?.Remove(identity.Identificator);
 
             //foreach (var identity in userProfile.Identities)
             //{
