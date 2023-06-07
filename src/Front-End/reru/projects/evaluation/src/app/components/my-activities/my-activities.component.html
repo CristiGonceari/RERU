@@ -59,7 +59,7 @@
 										</span>
 									</a>
 								</div>
-								<div class="navi-item mb-2">
+								<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 									<a [routerLink]="['my-evaluations']" routerLinkActive="active" class="navi-link py-4">
 										<i class="far fa-question-circle icon-md mr-3"></i>
 										<span class="navi-text font-size-lg">
@@ -75,7 +75,7 @@
 										</span>
 									</a>
 								</div>
-								<div class="navi-item mb-2">
+								<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 									<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active"
 										class="navi-link py-4">
 										<i class="bi bi-file-earmark-check icon-md mr-3"></i>
