@@ -438,7 +438,7 @@ data:
       "MSign": {
         "ApiAddress": "https://msign.gov.md:8443/MSign.svc",
         "FrontendAddress": "https://msign.gov.md",
-        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-core"
+        "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-core"
       }
     }
 
@@ -519,7 +519,7 @@ data:
         "MSign": {
           "ApiAddress": "https://msign.gov.md:8443/MSign.svc",
           "FrontendAddress": "https://msign.gov.md",
-          "ServiceRootUrl": "http://reru.codwer.com/ms/reru-evaluation"
+          "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-evaluation"
         }
     }
 
@@ -600,7 +600,7 @@ data:
         "MSign": {
           "ApiAddress": "https://msign.gov.md:8443/MSign.svc",
           "FrontendAddress": "https://msign.gov.md",
-          "ServiceRootUrl": "http://reru.codwer.com/ms/reru-evaluation360"
+          "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-evaluation360"
         }
     }
 
@@ -644,7 +644,7 @@ data:
         "MSign": {
           "ApiAddress": "https://msign.gov.md:8443/MSign.svc",
           "FrontendAddress": "https://msign.gov.md",
-          "ServiceRootUrl": "http://reru.codwer.com/ms/reru-logging"
+          "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-logging"
         }
     }
 
@@ -733,7 +733,7 @@ data:
       "MSign": {
         "ApiAddress": "https://msign.gov.md:8443/MSign.svc",
         "FrontendAddress": "https://msign.gov.md",
-        "ServiceRootUrl": "http://reru.codwer.com/ms/reru-personal"
+        "ServiceRootUrl": "https://reru.mai.gov.md/ms/reru-personal"
       }
     }
 
