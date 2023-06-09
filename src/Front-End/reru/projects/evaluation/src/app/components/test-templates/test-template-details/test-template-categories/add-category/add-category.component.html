@@ -91,6 +91,7 @@
             </div>
           </div>
         </div>
+        <div *ngIf="questionsTable.questions.length === 0" class="text-center">{{ 'message.no-record' | translate }}</div>
         <div class="card-body">
           <app-category-questions-table [setLimit]="setLimit" [timeLimit]="timeLimit" #questionsTable></app-category-questions-table>
         </div>
