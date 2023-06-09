@@ -33,6 +33,9 @@
     <None Update="Files\Certificates\926_reru.mai.pki.gov.md _eSystems-Trust.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Files\Certificates\mpass-prod.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
 	  <None Update="Files\Certificates\mpass.staging.egov.md.cer">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
