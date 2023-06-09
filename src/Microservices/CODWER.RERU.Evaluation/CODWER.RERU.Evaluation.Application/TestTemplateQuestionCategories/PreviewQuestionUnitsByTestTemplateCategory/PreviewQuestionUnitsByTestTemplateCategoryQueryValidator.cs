@@ -169,7 +169,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                 
                 var questions = _appDbContext.QuestionUnits
                     .Where(q => q.QuestionCategoryId == data.CategoryId)
-                    .All(q => q.QuestionType == QuestionTypeEnum.OneAnswer || q.QuestionType == QuestionTypeEnum.MultipleAnswers);
+                    .All(q => (q.QuestionType == QuestionTypeEnum.OneAnswer || q.QuestionType == QuestionTypeEnum.MultipleAnswers) 
+                                && q.Status == QuestionUnitStatusEnum.Active);
 
                 return selectedQuestions || questions || data.QuestionType == QuestionTypeEnum.OneAnswer || data.QuestionType == QuestionTypeEnum.MultipleAnswers;
             }
