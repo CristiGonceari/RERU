@@ -20,6 +20,7 @@ export class TestTemplateOverviewComponent implements OnInit {
   testEnum = TestTemplateModeEnum;
   isLoading: boolean = false;
   roles: any;
+  isGridTest: boolean;
 
   constructor(
     private service: TestTemplateService,
@@ -44,6 +45,7 @@ export class TestTemplateOverviewComponent implements OnInit {
           this.status = TestTemplateStatusEnum[res.data.status];
           this.qualifyingType = QualifyingTypeEnum[res.data.qualifyingType];
           this.roles = this.testTemplate.roles;
+          this.isGridTest = this.testTemplate.isGridTest;
         }
     })
   }
