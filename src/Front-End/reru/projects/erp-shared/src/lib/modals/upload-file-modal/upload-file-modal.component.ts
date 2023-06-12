@@ -44,17 +44,17 @@ export class UploadFileModalComponent implements OnInit {
   }
 
   onSelect(event) {
-    event.addedFiles.forEach((element) => {
+    event.addedFiles.forEach((element, index) => {
       const regexImage = new RegExp(/(.*?).(jpg|png|jpeg|svg|gif)$/gmi);
       const regexDocument = new RegExp(/(.*?).(pdf|doc|docx|ppt|pptx|xlsx|mkv|txt|xls|avi|mov|flv|odp|key|tiff)$/gmi);
 
       if (regexImage.test(element.name)) {
-        this.files.push(...event.addedFiles);
+        this.files.push(event.addedFiles[index]);
         this.readFile(this.files[0]).then(fileContents => {
           this.imageUrl = fileContents;
         });
       } else if (regexDocument.test(element.name)) {
-        this.files.push(...event.addedFiles);
+        this.files.push(event.addedFiles[index]);
         this.readFile(this.files[0]).then(fileContents => {
           this.docUrl = fileContents;
           this.docUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.docUrl);
