@@ -22,14 +22,23 @@
                 class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                 {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
               </a>
-              <div class="mb-2 pointer" (click)="openChangeCurrentPositionModal()">
-                <app-last-organization-role-label [item]="contractor"></app-last-organization-role-label>
+              <div class="mb-2">
+                <span>
+                  <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
+                  {{contractor.organizationRoleName || '-'}}
+                </span>
               </div>
-              <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
-                <app-last-department-label [item]="contractor"></app-last-department-label>
+              <div class="text-muted">
+                <span>
+                  <span class="font-weight-bolder">{{'personal.last-department' | translate}}:</span><br>
+                  {{contractor.departmentName || '-'}}
+                </span>
               </div>
-              <div class="text-muted pointer" >
-                <app-last-employee-function-label [item]="contractor"></app-last-employee-function-label>
+              <div class="text-muted">
+                <span>
+                  <span class="font-weight-bolder">{{'entity.employee-functions.last-function' | translate}}:</span><br>
+                  {{contractor.functionName || '-'}}
+                </span>
               </div>
             </div>
           </div>
@@ -44,11 +53,17 @@
                 class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary my-2">
                 {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
               </a>
-              <div class="mb-2 pointer" (click)="openChangeCurrentPositionModal()">
-                <app-last-organization-role-label [item]="contractor"></app-last-organization-role-label>
+              <div class="mb-2">
+                <span>
+                  <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
+                  {{contractor.organizationRoleName || '-'}}
+                </span>
               </div>
-              <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
-                <app-last-department-label [item]="contractor"></app-last-department-label>
+              <div class="text-muted">
+                <span>
+                  <span class="font-weight-bolder">{{'personal.last-department' | translate}}:</span><br>
+                  {{contractor.departmentName || '-'}}
+                </span>
               </div>
             </div>
           </div>
@@ -392,14 +407,23 @@
                     class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
                     {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
                   </a>
-                  <div class="mb-2 pointer" (click)="openChangeCurrentPositionModal()">
-                    <app-last-organization-role-label [item]="contractor"></app-last-organization-role-label>
+                  <div class="mb-2">
+                    <span>
+                      <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
+                      {{contractor.organizationRoleName || '-'}}
+                    </span>
                   </div>
-                  <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
-                    <app-last-department-label [item]="contractor"></app-last-department-label>
+                  <div class="text-muted">
+                    <span>
+                      <span class="font-weight-bolder">{{'personal.last-department' | translate}}:</span><br>
+                      {{contractor.departmentName || '-'}}
+                    </span>
                   </div>
-                  <div class="text-muted pointer" >
-                    <app-last-employee-function-label [item]="contractor"></app-last-employee-function-label>
+                  <div class="text-muted">
+                    <span>
+                      <span class="font-weight-bolder">{{'entity.employee-functions.last-function' | translate}}:</span><br>
+                      {{contractor.functionName || '-'}}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -410,11 +434,17 @@
                     class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary my-2">
                     {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
                   </a>
-                  <div class="mb-2 pointer" (click)="openChangeCurrentPositionModal()">
-                    <app-last-organization-role-label [item]="contractor"></app-last-organization-role-label>
+                  <div class="mb-2">
+                    <span>
+                      <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
+                      {{contractor.organizationRoleName || '-'}}
+                    </span>
                   </div>
-                  <div class="text-muted pointer" (click)="openChangeCurrentPositionModal()">
-                    <app-last-department-label [item]="contractor"></app-last-department-label>
+                  <div class="text-muted">
+                    <span>
+                      <span class="font-weight-bolder">{{'personal.last-department' | translate}}:</span><br>
+                      {{contractor.departmentName || '-'}}
+                    </span>
                   </div>
                 </div>
               </div>
