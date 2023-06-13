@@ -46,7 +46,30 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             foreach(var option in options)
             {
-                question.Question = question.Question.Replace($"[{option.Id}]", $"{_openingInputHtmlTag}{option.Id}{_closingInputHtmlTag}");
+                if (question.Question.IndexOf("<input", StringComparison.OrdinalIgnoreCase) != -1)
+                {
+                    var inputTagIndex = question.Question.IndexOf("<input", StringComparison.OrdinalIgnoreCase);
+                    var closingTagIndex = question.Question.IndexOf(">", inputTagIndex, StringComparison.OrdinalIgnoreCase);
+                    var inputTag = question.Question.Substring(inputTagIndex, closingTagIndex - inputTagIndex + 1);
+
+                    var valueAttrIndex = inputTag.IndexOf("value=", StringComparison.OrdinalIgnoreCase);
+                    if (valueAttrIndex != -1)
+                    {
+                        var valueStartIndex = valueAttrIndex + "value=".Length;
+                        var valueEndIndex = inputTag.IndexOf("\"", valueStartIndex);
+
+                        if (valueEndIndex != -1)
+                        {
+                            var value = inputTag.Substring(valueStartIndex, valueEndIndex - valueStartIndex);
+                            var modifiedQuestion = question.Question.Replace(inputTag, $"{_openingInputHtmlTag}{option.Id}{_closingInputHtmlTag}");
+                            question.Question = modifiedQuestion;
+                        }
+                    }
+                }
+
+                else {
+                    question.Question = question.Question.Replace($"[{option.Id}]", $"{_openingInputHtmlTag}{option.Id}{_closingInputHtmlTag}");
+                }
             }
             return question;
         }
