@@ -41,7 +41,6 @@ export class FaqListTableComponent implements OnInit {
 	}
 
 	list(data: any = {}) {
-		this.keyword = data.keyword;
 		let params = {
 			name: this.keyword || '',
 			page: data.page || this.pagedSummary.currentPage,
@@ -55,6 +54,17 @@ export class FaqListTableComponent implements OnInit {
 				this.isLoading = false;
 			}
 		});
+	}
+
+	setFilter(value): void {
+		this.pagedSummary.currentPage = 1;
+		this.keyword = value;
+	}
+
+	resetFilters(): void {
+		this.pagedSummary.currentPage = 1;
+		this.keyword = '';
+		this.list();
 	}
 
 	getHeaders(name: string): void {
