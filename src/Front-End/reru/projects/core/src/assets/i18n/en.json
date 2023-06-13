@@ -571,7 +571,7 @@
     "01000909": "Invalid time range",
     "01000116": "Wrong old password",
     "01000117": "New password and old password are the same",
-    "01000105": "Invalid User"
+    "01000105": "Invalid email"
   },
   "print": {
     "print-table": "Print table",

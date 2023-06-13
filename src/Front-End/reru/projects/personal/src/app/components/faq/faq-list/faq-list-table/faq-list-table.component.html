@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="datatable-body" *ngIf="articles">
-            <tr *ngFor="let item of articles" (dblclick)="navigate(item.id)">
+            <tr *ngFor="let item of articles" (click)="navigate(item.id)">
                 <td [ngStyle]="{'width.%' : 80}" style="cursor: pointer;">{{ item.name }}</td>
                 <td style="cursor: pointer; text-align:center;">
                     <i *ngIf="item.containsMedia" class="fa la-plus"></i>
