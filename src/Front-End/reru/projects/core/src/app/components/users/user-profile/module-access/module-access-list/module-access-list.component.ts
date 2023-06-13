@@ -13,16 +13,6 @@ export class ModuleAccessListComponent implements OnInit {
 	isLoading = false;
 	userId: number;
 	modulesAccess: UserModuleAccessModel[];
-	isResponsive: boolean;
-
-	checkScreenWidth(): void {
-		const screenWidth = window.innerWidth;
-		this.isResponsive = screenWidth <= 375;
-	}
-	  
-	ngOnDestroy(): void {
-		window.removeEventListener('resize', this.checkScreenWidth.bind(this));
-	}
 
 	constructor(
 		private profileService: UserProfileService,
@@ -32,8 +22,6 @@ export class ModuleAccessListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.subsribeForParams();
-		this.checkScreenWidth();
-		window.addEventListener('resize', this.checkScreenWidth.bind(this));
 	}
 
 	subsribeForParams() {

@@ -1,13 +1,13 @@
 .mobile-container-menu {
     display: none !important;
-    @media screen and (max-width: 776px) {
+    @media screen and (max-width: 793px) {
         display: flex !important;
     }
 }
 
 .pc-container-menu {
     display: none !important;
-    @media screen and (min-width: 777px) {
+    @media screen and (min-width: 794px) {
         display: flex !important;
     }
 }
