@@ -8,59 +8,114 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="datatable table font-size-lg w-100"
-            [ngClass]="{'table-responsive' : isResponsive}">
-        <thead class="text-uppercase text-muted">
-          <tr>
-            <th scope="col" style="width: 48px"></th>
-            <th scope="col">{{'module-access.module' | translate}}</th>
-            <th scope="col">{{'module-access.role' | translate}}</th>
-            <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
-          </tr>
-        </thead>
-        <tbody class="text-dark-75">
-          <tr *ngFor="let item of modulesAccess">
-            <td>
-              <svg-icon [key]="item.icon" [width]="32" [height]="32"></svg-icon>
-            </td>
-            <td>{{item.name}}</td>
-            <td>{{item.roleName}}</td>
-            <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
-              <div>
-                <div ngbDropdown class="dropdown dropdown-inline" container="body">
-                  <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
-                    <span class="svg-icon svg-icon-md" [id]="'action'+i" ngbDropdownToggle>
-                      <svg-icon key="actions" [width]="24" [height]="24"></svg-icon>
-                    </span>
-                  </div>
-                  <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                    <div ngbDropdownMenu [aria-labelledby]="'action'+i" class="p-0 mobile-table-dropdown-view">
-                      <span *permission="'P00000022'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
-                          [routerLink]="[item.id, 'give']" *ngIf="!item.roleName">
-                          {{'pages.user-details.give-module-access' | translate}}
-                        </button>
+      <div class="mobile-container-menu">
+        <table class="table-responsive datatable table font-size-lg w-100">
+          <thead class="text-uppercase text-muted">
+            <tr>
+              <th scope="col" style="width: 48px"></th>
+              <th scope="col">{{'module-access.module' | translate}}</th>
+              <th scope="col">{{'module-access.role' | translate}}</th>
+              <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark-75">
+            <tr *ngFor="let item of modulesAccess">
+              <td>
+                <svg-icon [key]="item.icon" [width]="32" [height]="32"></svg-icon>
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.roleName}}</td>
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div>
+                  <div ngbDropdown class="dropdown dropdown-inline" container="body">
+                    <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                      <span class="svg-icon svg-icon-md" [id]="'action'+i" ngbDropdownToggle>
+                        <svg-icon key="actions" [width]="24" [height]="24"></svg-icon>
                       </span>
-                      <span *permission="'P00000024'">
-                        <button class="navi-link align-items-baseline py-2 px-6 my-2 font-size-lg" ngbDropdownItem
-                          [routerLink]="[item.id, 'update']" *ngIf="item.roleName?.length">
-                          {{'pages.user-details.update-module-access' | translate}}
-                        </button>
-                      </span>
-                      <span *permission="'P00000023'">
-                        <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
-                          [routerLink]="[item.id, 'remove']" *ngIf="item.roleName?.length">
-                          {{'pages.user-details.remove-module-access' | translate}}
-                        </button>
-                      </span>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                      <div ngbDropdownMenu [aria-labelledby]="'action'+i" class="p-0 mobile-table-dropdown-view">
+                        <span *permission="'P00000022'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'give']" *ngIf="!item.roleName">
+                            {{'pages.user-details.give-module-access' | translate}}
+                          </button>
+                        </span>
+                        <span *permission="'P00000024'">
+                          <button class="navi-link align-items-baseline py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'update']" *ngIf="item.roleName?.length">
+                            {{'pages.user-details.update-module-access' | translate}}
+                          </button>
+                        </span>
+                        <span *permission="'P00000023'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'remove']" *ngIf="item.roleName?.length">
+                            {{'pages.user-details.remove-module-access' | translate}}
+                          </button>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pc-container-menu">
+        <table class="datatable table font-size-lg w-100">
+          <thead class="text-uppercase text-muted">
+            <tr>
+              <th scope="col" style="width: 48px"></th>
+              <th scope="col">{{'module-access.module' | translate}}</th>
+              <th scope="col">{{'module-access.role' | translate}}</th>
+              <th scope="col" class="w-100px">{{ 'table.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark-75">
+            <tr *ngFor="let item of modulesAccess">
+              <td>
+                <svg-icon [key]="item.icon" [width]="32" [height]="32"></svg-icon>
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.roleName}}</td>
+              <td data-field="Actions" data-autohide-disabled="false" class="datatable-cell datatable-cell-sort p-3 text-center">
+                <div>
+                  <div ngbDropdown class="dropdown dropdown-inline" container="body">
+                    <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
+                      <span class="svg-icon svg-icon-md" [id]="'action'+i" ngbDropdownToggle>
+                        <svg-icon key="actions" [width]="24" [height]="24"></svg-icon>
+                      </span>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
+                      <div ngbDropdownMenu [aria-labelledby]="'action'+i" class="p-0 mobile-table-dropdown-view">
+                        <span *permission="'P00000022'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'give']" *ngIf="!item.roleName">
+                            {{'pages.user-details.give-module-access' | translate}}
+                          </button>
+                        </span>
+                        <span *permission="'P00000024'">
+                          <button class="navi-link align-items-baseline py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'update']" *ngIf="item.roleName?.length">
+                            {{'pages.user-details.update-module-access' | translate}}
+                          </button>
+                        </span>
+                        <span *permission="'P00000023'">
+                          <button class="navi-link align-items-center py-2 px-6 my-2 font-size-lg" ngbDropdownItem
+                            [routerLink]="[item.id, 'remove']" *ngIf="item.roleName?.length">
+                            {{'pages.user-details.remove-module-access' | translate}}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

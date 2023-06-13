@@ -11,3 +11,17 @@
         display: block !important;
     }
 }
+
+.mobile-container-responsive {
+    display: none !important;
+    @media screen and (max-width: 991px) {
+        display: block !important;
+    }
+}
+
+.pc-container-responsive {
+    display: none !important;
+    @media screen and (min-width: 992px) {
+        display: block !important;
+    }
+}
