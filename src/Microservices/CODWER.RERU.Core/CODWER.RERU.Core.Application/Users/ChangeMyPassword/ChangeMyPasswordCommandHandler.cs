@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using CVU.ERP.Notifications.Email;
 using CVU.ERP.ServiceProvider;
+using CVU.ERP.Notifications.Services;
 
 namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
 {
@@ -16,12 +18,15 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
     {
         private readonly UserManager<ERPIdentityUser> _userManager;
         private readonly ICurrentApplicationUserProvider _userProvider;
+        private readonly INotificationService _notificationService;
 
         public ChangeMyPasswordCommandHandler(
-            ICommonServiceProvider commonServicepProvider, ICurrentApplicationUserProvider userProvider,
-            UserManager<ERPIdentityUser> userManager) : base(commonServicepProvider)
+            ICommonServiceProvider commonServiceProvider, ICurrentApplicationUserProvider userProvider,
+            UserManager<ERPIdentityUser> userManager,
+            INotificationService notificationService) : base(commonServiceProvider)
         {
             _userManager = userManager;
+            _notificationService = notificationService;
             _userProvider = userProvider;
         }
 
@@ -33,38 +38,48 @@ namespace CODWER.RERU.Core.Application.Users.ChangeMyPassword
 
             if (await _userManager.CheckPasswordAsync(user, request.oldPassword))
             {
-                if(request.newPassword == request.repeatPassword)
-                {
-                    List<string> passwordErrors = new List<string>();
-
-                    var validators = _userManager.PasswordValidators;
-
-                    foreach(var validator in validators)
-                    {
-                        var result = await validator.ValidateAsync(_userManager, null, request.newPassword);
-
-                        if (!result.Succeeded)
-                        {
-                            foreach (var error in result.Errors)
-                            {
-                                passwordErrors.Add(error.Description);
-                                throw new Exception("Validation Error");
-                            }
-                        } 
-                        else
-                        {
-                            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.newPassword);
-                            await _userManager.UpdateAsync(user);
-
-                            userProfile.Password = request.newPassword;
-                            await AppDbContext.SaveChangesAsync();
-                        }                       
-                    }
-                }
-                else
+                if (request.newPassword != request.repeatPassword)
                 {
                     throw new Exception("New password and Repeat password aren't the same");
                 }
+
+                List<string> passwordErrors = new List<string>();
+
+                var validators = _userManager.PasswordValidators;
+
+                foreach (var validator in validators)
+                {
+                    var result = await validator.ValidateAsync(_userManager, null, request.newPassword);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            passwordErrors.Add(error.Description);
+                            throw new Exception("Validation Error");
+                        }
+                    }
+                    else
+                    {
+                        user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.newPassword);
+                        await _userManager.UpdateAsync(user);
+
+                        userProfile.Password = request.newPassword;
+                        await AppDbContext.SaveChangesAsync();
+                    }
+                }
+
+                await _notificationService.PutEmailInQueue(new QueuedEmailData
+                {
+                    Subject = "Parolă nouă a fost schimbată cu succes!",
+                    To = user.Email,
+                    HtmlTemplateAddress = "Templates/SetPassword.html",
+                    ReplacedValues = new Dictionary<string, string>()
+                    {
+                        { "{FirstName}", user.UserName },
+                        { "{Password}", request.newPassword }
+                    }
+                });
             }
             else
             {
