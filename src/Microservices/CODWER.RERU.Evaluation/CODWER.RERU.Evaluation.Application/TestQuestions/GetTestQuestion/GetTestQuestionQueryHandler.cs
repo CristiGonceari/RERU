@@ -88,11 +88,9 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                                 option.Answer = savedAnswer.AnswerValue;
                             }
                         }
-                        else
-                        {
-                            answer.Question = answer.Question.Replace($"optionId='{savedAnswer.OptionId}'>", $"optionId='{savedAnswer.OptionId}'>{savedAnswer.AnswerValue}");
-                            answer.HashedOptions.FirstOrDefault(x => x.Id == savedAnswer.OptionId).Answer = savedAnswer.AnswerValue;
-                        }
+                        
+                        answer.Question = answer.Question.Replace($"optionId='{savedAnswer.OptionId}'>", $"optionId='{savedAnswer.OptionId}'>{savedAnswer.AnswerValue}");
+                        answer.HashedOptions.FirstOrDefault(x => x.Id == savedAnswer.OptionId).Answer = savedAnswer.AnswerValue;
                     }
                 }
             }
