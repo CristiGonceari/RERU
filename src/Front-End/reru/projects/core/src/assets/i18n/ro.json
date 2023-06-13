@@ -573,7 +573,7 @@
     "01000909": "Interval de timp nevalid",
     "01000116": "Parolă veche incorectă",
     "01000117": "Parola nouă și parola veche sunt aceleași",
-    "01000105": "Utilizator inexistent"
+    "01000105": "Email invalid"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -832,7 +832,6 @@
     "10": "Superioare scurte/de scurtă durată(colegiu)",
     "11": "Superioare universitare(fără licență)",
     "12": "Superioare de licență",
-    "13": "Superioare de master",
     "13": "Masterat",
     "14": "Superioare de doctorat",
     "15": "Postdoctorat",
