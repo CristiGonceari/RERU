@@ -727,7 +727,9 @@
     "study-period-end-date": "End date",
     "not-selected-study-type": "No one type of studies selected.",
     "add-study": "Add another study type",
-    "study-add-button-hint": "Press the button to add the study"
+    "study-add-button-hint": "Press the button to add the study",
+    "study-start-date": "Study start date",
+    "study-end-date": "Study end date"
   },
   "study-profiles":{
     "1": "Real",
