@@ -387,7 +387,7 @@
     "finalize-poll": "Завершить опрос",
     "seconds-to-complete": "секунд на завершение",
     "finished-test": "Законченный тест",
-    "finished-success": "Тест успешно завершен",
+    "finished-success": "Тест завершен",
     "min-percentage": "Мин. процентное содержание баллов",
     "accumulated-percent": "Собранные проценты",
     "test-type-autoverify": "Выбранный шаблон теста будет проверен системой",
