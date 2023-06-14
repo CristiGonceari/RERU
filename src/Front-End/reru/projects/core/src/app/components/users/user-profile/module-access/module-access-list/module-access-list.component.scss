@@ -14,3 +14,17 @@ tbody {
 	width: auto !important;
 	transform: translate(-30px, -24px) !important;
 }
+
+.mobile-container-menu {
+    display: none !important;
+    @media screen and (max-width: 375px) {
+        display: block !important;
+    }
+}
+
+.pc-container-menu {
+    display: none !important;
+    @media screen and (min-width: 376px) {
+        display: block !important;
+    }
+}

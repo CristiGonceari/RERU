@@ -11,21 +11,21 @@
             {{'pages.users.user-list' | translate}}
           </h3>
         </div>
-        <div class="card-toolbar d-md-flex d-none">
-          <button class="btn btn-light-warning font-weight-bold mr-2" (click)="openHistoryModal()">
+        <div class="card-toolbar pc-container-menu">
+          <button class="btn btn-light-warning font-weight-bold mr-2 mt-2" (click)="openHistoryModal()">
             <i class="far fa-file-excel"></i>
             {{ 'processes.history' | translate }}
           </button>
-          <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="mr-2">
+          <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="mr-2 mt-2">
             {{'button.import' | translate}}
           </erp-shared-import-button>
-          <erp-shared-export-button class="mr-2" (click)="userTable.getHeaders(getTitle())">
+          <erp-shared-export-button class="mr-2 mt-2" (click)="userTable.getHeaders(getTitle())">
             {{'button.export' | translate}}
           </erp-shared-export-button>
-          <app-add-button class="btn mr-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
+          <app-add-button class="btn mt-2" routerLink="../new" *permission="'P00000013'" [value]="'button.add-user' | translate">
           </app-add-button>
         </div>
-        <div class="card-toolbar d-md-none d-flex w-100">
+        <div class="card-toolbar mobile-container-menu w-100">
           <button class="btn btn-light-primary font-weight-bold mr-3" [disabled]
             ngbTooltip="{{item.done}} \ {{item.total}}" *ngFor="let item of processesData; let i = index"
             style="width: 125px;">
@@ -44,7 +44,7 @@
             <i class="far fa-file-excel"></i>
             {{ 'processes.history' | translate }}
           </button>
-          <erp-shared-import-button (click)="userTable.openImportModal()" type="button" class="w-100 mb-3">
+          <erp-shared-import-button [width]="'100%'" (click)="userTable.openImportModal()" type="button" class="w-100 mb-3">
             {{'button.import' | translate}}
           </erp-shared-import-button>
           <erp-shared-export-button class="w-100 mb-3" width="100%" (click)="userTable.getHeaders(getTitle())">
@@ -58,44 +58,64 @@
         <div class="row w-100">
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
-              (handleSearch)="userTable.setFilter('keyword', $event)">
+              (handleSearch)="userTable.setFilter('keyword', $event)"
+              [showIcon]="false" [useDebounce]="false">
             </erp-shared-search-input>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
-              (handleSearch)="userTable.setFilter('email', $event)">
+              (handleSearch)="userTable.setFilter('email', $event)"
+              [showIcon]="false" [useDebounce]="false">
             </erp-shared-search-input>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
-              (handleSearch)="userTable.setFilter('idnp', $event)">
+              (handleSearch)="userTable.setFilter('idnp', $event)"
+              [showIcon]="false" [useDebounce]="false">
             </erp-shared-search-input>
           </div>
         </div>
         <div class="row w-100 mt-3 pt-lg-0 pt-2">
           <div class="col-lg col-12">
-            <app-search-department (filter)="userTable.setFilter('departmentId',  $event)" #departmentId>
+            <app-search-department (filter)="userTable.setFilter('departmentId',  $event, true)" #departmentId>
             </app-search-department>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
-            <app-search-role (filter)="userTable.setFilter('roleId',  $event)" #roleId></app-search-role>
+            <app-search-role (filter)="userTable.setFilter('roleId',  $event, true)" #roleId></app-search-role>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
-            <app-search-employee-function (filter)="userTable.setFilter('functionId',  $event)" #functionId></app-search-employee-function>
+            <app-search-employee-function (filter)="userTable.setFilter('functionId',  $event, true)" #functionId></app-search-employee-function>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
-            <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event)" #userStatusEnum>
+            <app-search-status (filter)="userTable.setFilter('userStatusEnum',  $event, true)" #userStatusEnum>
             </app-search-status>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
-            <app-filter-user-state (filter)="userTable.setFilter('status', $event)" #userState
+            <app-filter-user-state (filter)="userTable.setFilter('status', $event, true)" #userState
               (handleSearch)="userTable.searchValue = $event.target.value"></app-filter-user-state>
           </div>
           <div class="col-lg-auto col-12 pt-lg-0 pt-2">
-            <app-button (click)="clearFilters(); userTable.resetFilter()" width="100%"
-              [value]="'button.reset' | translate">
-            </app-button>
-          </div>
+						<div class="text-right d-lg-block d-none">
+							<app-button class="mr-lg-5"
+                (click)="clearFilters(); userTable.resetFilter()"
+								[value]="'button.reset' | translate" >
+							</app-button>
+							<app-confirm-button 
+								(handle)="userTable.list({page: 1})" 
+								[value]="'button.search' | translate">
+							</app-confirm-button>
+						</div>
+						<div class="d-lg-none d-flex flex-column">
+							<app-confirm-button class="w-100" width="100%" 
+								(handle)="userTable.list({page: 1})" 
+								[value]="'button.search' | translate">
+							</app-confirm-button>
+							<app-button class="w-100 pt-2" width="100%" 
+                (click)="clearFilters(); userTable.resetFilter()"
+								[value]="'button.reset' | translate">
+							</app-button>
+						</div>
+					</div>
         </div>
       </div>
       <div class="card-body">
