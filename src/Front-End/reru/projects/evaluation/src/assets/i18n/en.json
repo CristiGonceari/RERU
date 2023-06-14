@@ -388,7 +388,7 @@
     "finalize-poll": "Finalize poll",
     "seconds-to-complete": "seconds to complete",
     "finished-test": "Finished test",
-    "finished-success": "The test was successfully completed",
+    "finished-success": "The test was completed",
     "min-percentage": "Min. percentage of points(%)",
     "accumulated-percent": "Collected percentages",
     "test-type-autoverify": "Selected test template will be veified by system",

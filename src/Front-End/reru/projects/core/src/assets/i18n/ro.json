@@ -723,7 +723,9 @@
     "study-period-end-date": "Data de încheiere",
     "not-selected-study-type": "Nici un tip de studii selectat.",
     "add-study": "Adăugați un alt tip de studii",
-    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul"
+    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul",
+    "study-start-date": "Data de început",
+    "study-end-date": "Data de încheiere"
   },
   "study-profiles":{
     "1": "Real",

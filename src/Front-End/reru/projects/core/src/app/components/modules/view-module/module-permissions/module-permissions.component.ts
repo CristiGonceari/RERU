@@ -27,6 +27,8 @@ export class ModulePermissionsComponent implements OnInit {
 	printTranslates: any[];
 	downloadFile: boolean;
 
+	filters: any = {};
+
 	@ViewChild('code') searchCode: any;
 	@ViewChild('description') searchDescription: any;
 
@@ -52,14 +54,10 @@ export class ModulePermissionsComponent implements OnInit {
 	}
 	
 	getPermissions(data: any = {}): void {
-		this.code = data.code;
-		this.description = data.description;
-		
 		data = {
-			code: this.code,
-			description: this.description,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize,
+			...this.filters,
 		};
 
 		this.list(data);
@@ -67,7 +65,7 @@ export class ModulePermissionsComponent implements OnInit {
 
 	list(data): void {
 		this.permissionServise.get(this.moduleId, ObjectUtil.preParseObject(data)).subscribe(res => {
-			if (res && res.data.items.length) {
+			if (res && res.data.items) {
 				this.isLoading = false;
 				this.permissions = res.data.items;
 				this.pagination = res.data.pagedSummary;
@@ -78,9 +76,16 @@ export class ModulePermissionsComponent implements OnInit {
 		this.isLoading = true;
 	}
 
+	setFilter(field: string, value): void {
+		this.filters[field] = value;
+		this.pagination.currentPage = 1;
+	}
+
 	clearFields() {
 		this.searchCode.clearSearch();
 		this.searchDescription.clearSearch();
+		this.filters = {};
+		this.getPermissions();
 	}
 
 	getTitle(): string {
