@@ -419,7 +419,7 @@ data:
 
         "CoreSettings": {
           "Tenant": {
-            "Name": "Evaluare MAI [MCloud Stagging ENV]"
+            "Name": "Evaluare MAI"
           },
           "ActiveTime": {
             "TokenLifetime": "0.00:05:00"
