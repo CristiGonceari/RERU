@@ -376,26 +376,6 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
         }
 
-        //TO DO nahui sa existe asa cod? 
-        //private async Task<(ERPIdentityUser identityUser, string provider, IEnumerable<Claim> claims, string emailAdress)> FindUserFromMPassProviderAsync(AuthenticateResult result)
-        //{
-        //    var externalUser = result.Principal;
-
-        //    var claims = externalUser.Claims.ToList();
-
-        //    var provider = externalUser.Identity.AuthenticationType;
-        //    var emailAdress = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
-
-        //    var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
-
-        //    identityUser.UserName = claims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
-
-        //    Console.WriteLine($"User {identityUser.Name}, {identityUser.LastName} idnp:{identityUser.UserName} email:{identityUser.Email}, {identityUser.PhoneNumber}");
-
-        //    return (identityUser, provider, claims, emailAdress);
-        //}
-
-
         private async Task<ERPIdentityUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
             // create a list of claims that we want to transfer into our store
@@ -404,6 +384,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // user's display name
             var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
                 claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
             if (name != null)
             {
                 filtered.Add(new Claim(JwtClaimTypes.Name, name));
@@ -431,6 +412,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // email
             var email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
                claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
             if (email != null)
             {
                 filtered.Add(new Claim(JwtClaimTypes.Email, email));
@@ -451,7 +433,11 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             }
 
             identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
-            if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+
+            if (!identityResult.Succeeded)
+            {
+                throw new Exception(identityResult.Errors.First().Description);
+            }
 
             return user;
         }
@@ -473,6 +459,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             userProfile.Contractor = new Contractor() { UserProfile = userProfile };
 
             var defaultRoles = _appDbContext.Modules
+                .Where(x => x.Roles.Any(r => r.IsAssignByDefault))
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
 
@@ -498,6 +485,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             };
 
             var identityResult = await _userManager.CreateAsync(identityUser, password);
+
             if (!identityResult.Succeeded)
             {
                 throw new Exception(identityResult.Errors.First().Description);

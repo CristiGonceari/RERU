@@ -55,6 +55,8 @@ export class AddEditSolicitedTestComponent implements OnInit {
   fileName: string;
   fileStatus = { requestType: '', percent: 1 }
 
+  fileUploadQueue = [];
+
   constructor(
     private solicitedTestService: SolicitedTestService,
     public translate: I18nService,
@@ -255,32 +257,34 @@ export class AddEditSolicitedTestComponent implements OnInit {
   uploadFiles(res) {
     this.isLoading = false;
     let finishedRequests: number = 1;
+    this.fileUploadQueue = [];
 
-    for (const el of this.files) {
-      if (this.files[this.files.length - 1] === el) {
+    for (const { index, value } of this.files.map((value, index) => ({ index, value }))) {
+      this.fileUploadQueue.push({ fileIndex : index + 1 , percent:  0}) 
+
+      if (this.files[this.files.length - 1] === value) {
         let request = new FormData();
-        request = this.parseFiles(request, res, el);
+        request = this.parseFiles(request, res, value);
 
-        if (el.file.file != null) {
+        if (value.file.file != null) {
             this.solicitedVacantPositionUserFileService.create(request).subscribe(async res => {
               
-            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
+            finishedRequests += (this.reportProggress(res, finishedRequests, index + 1) ?? 0);
           });
         }
       } else {
         let request = new FormData();
-        request = this.parseFiles(request, res, el);
-        request = this.parseFiles(request, res, el);
+        request = this.parseFiles(request, res, value);
+        request = this.parseFiles(request, res, value);
 
-        if (el.file.file != null) {
+        if (value.file.file != null) {
           this.solicitedVacantPositionUserFileService.create(request).subscribe(res => {
 
-            finishedRequests = finishedRequests + (this.reportProggress(res, finishedRequests) ?? 0);
+            finishedRequests += (this.reportProggress(res, finishedRequests, index + 1) ?? 0);
           });
         }
       }
     }
-
   }
 
   parseFiles(request: FormData, res, el) {
@@ -309,7 +313,7 @@ export class AddEditSolicitedTestComponent implements OnInit {
     this.location.back();
   }
 
-  private reportProggress(httpEvent: HttpEvent<string[] | Blob>, finishedRequests?: number): number {
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>, finishedRequests?: number, index?: number): number {
     this.isLoadingMedia = true;
 
     switch (httpEvent.type) {
@@ -317,25 +321,38 @@ export class AddEditSolicitedTestComponent implements OnInit {
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...', index)
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...', index)
         break;
 
       case HttpEventType.Response:
         if (this.files.length == finishedRequests) {
           this.fileStatus.requestType = "Done";
-          this.isLoadingMedia = false;
-          this.backClicked();
-          this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+          this.fileStatus.percent = 100;
+
+          setTimeout(() => {
+            this.isLoadingMedia = false;
+            this.backClicked();
+            this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+          }, 1000);
         }
         return 1;
     }
   }
 
-  updateStatus(loaded: number, total: number | undefined, requestType: string) {
+  updateStatus(loaded: number, total: number | undefined, requestType: string, index?: number) {
     this.fileStatus.requestType = requestType;
-    this.fileStatus.percent = Math.round(100 * loaded / total);
+
+    const foundIndex = this.fileUploadQueue.findIndex(x => x.fileIndex == index);
+    this.fileUploadQueue[foundIndex].percent =  this.fileUploadQueue[foundIndex].percent + ((Math.round(90 * loaded / total) / this.files.length) - this.fileUploadQueue[foundIndex].percent );
+    
+    let totalValue: number = 0;
+    for(const value of this.fileUploadQueue){
+      totalValue += value.percent;
+    }
+
+    this.fileStatus.percent = Math.round((this.fileStatus.percent + (totalValue - this.fileStatus.percent)));
   }  
 }
