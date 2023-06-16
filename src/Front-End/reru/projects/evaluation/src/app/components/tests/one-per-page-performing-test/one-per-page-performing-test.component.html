@@ -182,7 +182,7 @@
                             <div class="d-flex justify-content-between align-items-center flex-wrap mb-7">
                                 <div class="d-flex flex-wrap">
                                     <button class="btn btn-icon btn-light page-link"
-                                        (click)="getTestQuestions(questionIndex - 1)"
+                                        (click)="checkSaveAnswer(questionIndex - 1)"
                                         [disabled]="questionIndex === 1 || disableNext">
                                         <span class="svg-icon svg-icon-primary svg-icon-1x">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -200,14 +200,14 @@
                                     </button>
     
                                     <button class="btn btn-icon page-link" *ngFor="let page of pager"
-                                        (click)="getTestQuestions(page)" [disabled]="disableNext"
+                                        (click)="checkSaveAnswer(page)" [disabled]="disableNext"
                                         [class.active-page]="page === questionIndex"
                                         [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page)}">
                                         {{page}}
                                     </button>
     
                                     <button class="btn btn-icon btn-light page-link"
-                                        (click)="getTestQuestions(questionIndex + 1)"
+                                        (click)="checkSaveAnswer(questionIndex + 1)"
                                         [disabled]="questionIndex === testDto.questionCount || disableNext">
                                         <span class="svg-icon svg-icon-primary svg-icon-1x">
                                             <svg xmlns="http://www.w3.org/2000/svg"

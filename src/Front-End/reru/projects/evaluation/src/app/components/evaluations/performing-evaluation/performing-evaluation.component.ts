@@ -282,7 +282,7 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
     }
     
 
-    if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer){
+    if(this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined){
       let request = new FormData();
 
       request = this.parseFiles(request);
@@ -292,7 +292,8 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
      }, (error => {
         this.isLoadingMedia = false;
      }));
-    }else{
+    }
+    else{
       this.postAnswer(+this.answerStatusEnum.Answered);
     }
   }
@@ -351,8 +352,6 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   postAnswer(status) {
     this.testQuestionService.postTestQuestions(this.parse(status)).subscribe(
       res => {
-        this.testAnswersInput = [];
-
         this.testQuestionService.summary(this.testId).subscribe(
           res => {
             this.testQuestionSummary = res.data;
@@ -376,6 +375,36 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   skipQuestion() {
     this.isLoading = true;
     this.postAnswer(+this.answerStatusEnum.Skipped);
+  }
+
+  checkSaveAnswer(index) {
+    let isCkecked: boolean = false;
+
+    if (this.testTemplateSettings.possibleGetToSkipped) {
+      if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
+      {
+        this.parseTextAnswer();
+        if (this.questionUnit.answerText != null) isCkecked = true;
+      }
+      else if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
+      {
+        this.subscribeForHashedAnswers();
+        isCkecked = true;
+      }
+      else if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
+        isCkecked = true;
+      } 
+      else {
+        isCkecked = this.testOptionsList.some((x) => x.isSelected == true);
+      }
+
+      if (isCkecked) {
+        this.saveAnswers();
+      } 
+      else {
+        this.getTestQuestions(index)
+      }
+    }
   }
 
   getTestQuestions(questionIndex?: number) {
