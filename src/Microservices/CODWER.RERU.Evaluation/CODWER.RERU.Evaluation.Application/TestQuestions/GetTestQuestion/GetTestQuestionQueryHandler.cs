@@ -90,7 +90,6 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.GetTestQuestion
                         }
                         
                         answer.Question = answer.Question.Replace($"optionId='{savedAnswer.OptionId}'>", $"optionId='{savedAnswer.OptionId}'>{savedAnswer.AnswerValue}");
-                        answer.HashedOptions.FirstOrDefault(x => x.Id == savedAnswer.OptionId).Answer = savedAnswer.AnswerValue;
                     }
                 }
             }
