@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
@@ -37,9 +36,19 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                 testQuestion = testQuestions.First(x => x.QuestionUnitId == request.Data.QuestionUnitId && x.TestId == request.Data.TestId);
             }
             
-            if ((request.Data.Answers == null || request.Data.Answers.Count == 0) && request.Data.Status != AnswerStatusEnum.Viewed && testQuestion.QuestionUnit.QuestionType != QuestionTypeEnum.FileAnswer)
+            if ((request.Data.Answers == null || request.Data.Answers.Count == 0 || request.Data.Answers[0].AnswerValue == null) && 
+                request.Data.Status != AnswerStatusEnum.Viewed)
             {
-                request.Data.Status = AnswerStatusEnum.Skipped;
+                var item = _appDbContext.FileTestAnswers.OrderBy(x => x.CreateDate).LastOrDefault(x => x.TestQuestionId == testQuestion.Id);
+
+                if (testQuestion.QuestionUnit.QuestionType == QuestionTypeEnum.FileAnswer && item != null && item.FileId != null)
+                {
+                    request.Data.Status = AnswerStatusEnum.Answered;
+                }
+                else
+                {
+                    request.Data.Status = AnswerStatusEnum.Skipped;
+                }
             }
 
             if (testQuestion.AnswerStatus == AnswerStatusEnum.Answered)

@@ -348,7 +348,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   }
 
   saveAnswers() {
-    this.disableBtn = true;
     this.isLoading = true;
     this.testAnswersInput = [];
 
@@ -373,7 +372,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
         this.reportProggress(res);
       }, (error) => {
         this.isLoadingMedia = false;
-        this.disableBtn = false;
         this.isLoading = false;
       });
     } 
@@ -485,7 +483,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.testQuestionSummary = res.data;
             this.pageColor(res.data);
 
-            if (this.testQuestionSummary.every(x => x.isClosed === true) || this.questionIndex == this.count) {
+            if (this.testQuestionSummary.every(x => x.isClosed === true) || this.testQuestionSummary.every(x => x.answerStatus === AnswerStatusEnum.Answered)) {
               this.submitTest();
             } 
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
@@ -503,12 +501,9 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
               this.disableBtn = false;
               if (this.questionIndex < this.count) {
                 this.getTestQuestions(this.questionIndex + 1);
-              } else {
-                if (this.testQuestionSummary.every(x => x.answerStatus === AnswerStatusEnum.Answered)) {
-                  this.submitTest();
-                } else {
-                  this.getTestQuestions(1);
-                }
+              } 
+              else {
+                this.getTestQuestions(1);
               }
             }
           });
