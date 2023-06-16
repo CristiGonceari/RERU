@@ -37,7 +37,7 @@ namespace CODWER.RERU.Evaluation.Application.TestQuestions.SaveTestQuestion
                 testQuestion = testQuestions.First(x => x.QuestionUnitId == request.Data.QuestionUnitId && x.TestId == request.Data.TestId);
             }
             
-            if ((request.Data.Answers == null || request.Data.Answers.Count == 0) && request.Data.Status != AnswerStatusEnum.Viewed)
+            if ((request.Data.Answers == null || request.Data.Answers.Count == 0) && request.Data.Status != AnswerStatusEnum.Viewed && testQuestion.QuestionUnit.QuestionType != QuestionTypeEnum.FileAnswer)
             {
                 request.Data.Status = AnswerStatusEnum.Skipped;
             }

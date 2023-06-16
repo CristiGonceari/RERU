@@ -171,6 +171,36 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.answered = data.filter(st => st.answerStatus === 3).map(id => id.index);
   }
 
+  checkSaveAnswer(index) {
+    let isCkecked: boolean = false;
+
+    if (this.testTemplateSettings.possibleGetToSkipped) {
+      if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
+      {
+        this.parseTextAnswer();
+        if (this.questionUnit.answerText != null) isCkecked = true;
+      }
+      else if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
+      {
+        this.subscribeForHashedAnswers();
+        isCkecked = true;
+      }
+      else if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
+        isCkecked = true;
+      } 
+      else {
+        isCkecked = this.testOptionsList.some((x) => x.isSelected == true);
+      }
+
+      if (isCkecked) {
+        this.saveAnswers();
+      } 
+      else {
+        this.getTestQuestions(index)
+      }
+    }
+  }
+
   getTestQuestions(questionIndex?: number) {
     this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
@@ -334,7 +364,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer) {
+    if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined){
       let request = new FormData();
 
       request = this.parseFiles(request);
@@ -346,7 +376,8 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
         this.disableBtn = false;
         this.isLoading = false;
       });
-    } else {
+    } 
+    else {
       this.postAnswer(+this.answerStatusEnum.Answered);
     }
   }
@@ -449,8 +480,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   postAnswer(status) {
     this.testQuestionService.postTestQuestions(this.parse(status)).subscribe(
       res => {
-        this.testAnswersInput = [];
-
         this.testQuestionService.summary(this.testId).subscribe(
           res => {
             this.testQuestionSummary = res.data;
