@@ -11,7 +11,7 @@
     <div class="card card-custom bg-light-primary p-7">
       <div class="d-flex align-items-center">
         <div class="d-flex flex-column w-100">
-          <div class="d-flex">
+          <div class="d-flex" *ngIf="!isLoadingMedia">
             <div class="w-25">
               <span class="svg-icon svg-icon-primary svg-icon-3x">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -33,7 +33,22 @@
             <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
               [value]="'button.download' | translate"></app-confirm-button>
           </div>
-          <p class="text-danger text-center mb-0">{{'message.bulk-downloadMsg' | translate}}.</p>
+          <p class="text-danger text-center mb-0" *ngIf="!isLoadingMedia">{{'message.bulk-downloadMsg' | translate}}.</p>
+          <div class="flex-row-fluid" *ngIf="isLoadingMedia">
+            <div class="content d-flex flex-column flex-column-fluid ng-star-inserted">
+                <div class="card">
+                    <div class="justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                        <div class="progress mt-2 h-25px">
+                            <div [style.width.%]="fileStatus.percent"
+                                class="progress-bar progress-bar-animated btn-light-warning font-size-h6" role="progressbar"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
           <div class="fv-plugins-message-container"></div>
         </div>
       </div>
