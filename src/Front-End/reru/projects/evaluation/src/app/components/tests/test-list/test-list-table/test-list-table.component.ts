@@ -591,4 +591,15 @@ export class TestListTableComponent implements OnInit {
       }
     });
   }
+
+  getDocumentsForSign(id)
+  {
+    this.testService.getDocumentsForSign(id).subscribe(res => {
+      if (res && res.data) {
+        let findIndex = this.testTemplate.findIndex(x => x.id == id);
+        this.testTemplate[findIndex].isOpenAccordeon = true;
+        this.testTemplate[findIndex].documentForSign = res.data;
+      }
+    });
+  }
 }
