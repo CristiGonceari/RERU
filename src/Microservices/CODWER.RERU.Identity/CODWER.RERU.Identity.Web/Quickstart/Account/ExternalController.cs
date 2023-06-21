@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
 using AutoMapper;
+using CODWER.RERU.Identity.Web.Quickstart.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
@@ -148,6 +149,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
                 var vm = new MPassErrorRedirectViewModel() 
                 { 
+                    LoggingErrorTypeEnum = LoggingErrorTypeEnum.MissingDataError,
                     RedirectLoginUri = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl"),
                     RedirectMPassUri = Configuration.GetValue<string>("MPassSaml:SamlLoginDestination")
                 };
@@ -167,7 +169,31 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                identityUser = await AutoProvisionMPassUserAsync(provider, userClaims);
+
+                var userIdnp = userClaims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
+
+                var userProfile = _appDbContext.UserProfiles
+                    .Select(up => new UserProfile
+                    { 
+                        Id = up.Id,
+                        FirstName = up.FirstName,
+                        LastName = up.LastName,
+                        Idnp = up.Idnp
+                    })
+                    .FirstOrDefault(up => up.Idnp == userIdnp);
+
+                if (userProfile == null)
+                {
+                    identityUser = await AutoProvisionMPassUserAsync(provider, userClaims);
+                }
+                else 
+                {
+                    var vm = new MPassErrorRedirectViewModel()
+                    {
+                        LoggingErrorTypeEnum = LoggingErrorTypeEnum.EmailError,
+                    };
+                    return View(vm);
+                }
             }
             else
             {
