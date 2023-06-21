@@ -70,6 +70,7 @@ export class BulkImportQuestionsComponent implements OnInit {
 		this.questionService.getTemplate(selectedType).subscribe(
 			res => {
 				this.isLoadingMedia = true;
+				this.fileStatus.percent = 1;
 				const blob = new Blob([res.body], { type: fileType });
 				const file = new File([blob], fileName, { type: fileType });
 				saveAs(file);
@@ -130,7 +131,7 @@ export class BulkImportQuestionsComponent implements OnInit {
 		this.activeModal.close();
 	}
 
-	private reportProggress(httpEvent: HttpEvent<string[] | Blob>): number {	
+	private reportProggress(httpEvent: HttpEvent<string[] | Blob>) {	
 		switch (httpEvent.type) {
 		  case HttpEventType.Sent:
 			this.fileStatus.percent = 1;
@@ -141,20 +142,12 @@ export class BulkImportQuestionsComponent implements OnInit {
 		  case HttpEventType.DownloadProgress:
 			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
 			break;
-	
 		  case HttpEventType.Response:
-			this.fileStatus.percent = 1;
 			this.fileStatus.requestType = "Done";
 			this.fileStatus.percent = 100;	
-	
-			setTimeout(() => {
-				this.dismiss();
-			}, 1000);
-			
-			return 1;
+			setTimeout(() => { this.isLoadingMedia = false; }, 1000);
+			break;
 		}
-
-		this.isLoadingMedia = false;
 	}
 
 	updateStatus(loaded: number, total: number | undefined, requestType: string, index?: number) {
