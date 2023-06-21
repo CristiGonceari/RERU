@@ -183,17 +183,18 @@ export class TestListTableComponent implements OnInit {
         this.isCollpasedRow.length = res.data.items.length;
         this.isLoading = false;
 
-        for (let i = 0; i < this.testTemplate.length; i++) {
-          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
-        }
-
-        for (let i = 1; i <= this.pagination.totalCount; i++) {
-          this.pager.push(i);
-        }
-
+        this.testTemplate.forEach(item => {
+          item.isOpenAccordeon = false;
+          item.isLoadingAccordeon = false;
+        });
+  
+        this.pager = Array.from({ length: this.pagination.totalCount }, (_, i) => i + 1);
+  
         if (this.signResponseTest) {
-          let findIndex = this.testTemplate.findIndex(x => x.id == this.signResponseTest);
-          this.testTemplate[findIndex].isOpenAccordeon = true;
+          const findIndex = this.testTemplate.findIndex(x => x.id == this.signResponseTest);
+          if (findIndex !== -1) {
+            this.testTemplate[findIndex].isOpenAccordeon = true;
+          }
         }
       }
     });

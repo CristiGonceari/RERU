@@ -1,4 +1,5 @@
-﻿@model CODWER.RERU.Identity.Web.Quickstart.Account.MPassErrorRedirectViewModel
+﻿@using CODWER.RERU.Identity.Web.Quickstart.Enums
+@model CODWER.RERU.Identity.Web.Quickstart.Account.MPassErrorRedirectViewModel
 
 <body>
  <nav class="topbar navbar navbar-expand-lg navbar-dark bg-dark p-0">
@@ -22,12 +23,24 @@
                         Eroare la logare cu MPass
                     </h1>
                 </div>
-                <div class="card-body text-center bg-white pt-5">
-                    <p class="card-text">Profilul MPass nu conține un e-mail sau un număr de telefon pentru a vă conecta în sistem.</p>
-                    <p class="card-text mb-10">Pentru autentificare in SI RERU, emailul setat in MPass este obligatoriu.</p>
-                    <a class="btn btn-primary" href="@Model.RedirectLoginUri">Returneaza la pagina de logare</a>
-                    <a class="btn btn-secondary" href="@Model.RedirectMPassUri">Seteaza email si telefon in MPass</a>
-                </div>
+                @if (Model.LoggingErrorTypeEnum == LoggingErrorTypeEnum.MissingDataError)
+                {
+                    <div class="card-body text-center bg-white pt-5" >
+                        <p class="card-text">Profilul MPass nu conține un e-mail sau un număr de telefon pentru a vă conecta în sistem.</p>
+                        <p class="card-text mb-10">Pentru autentificare in SI RERU, emailul setat in MPass este obligatoriu.</p>
+                        <a class="btn btn-primary" href="@Model.RedirectLoginUri">Returneaza la pagina de logare</a>
+                        <a class="btn btn-secondary" href="@Model.RedirectMPassUri">Seteaza email si telefon in MPass</a>
+                    </div>
+                }
+
+                @if (Model.LoggingErrorTypeEnum == LoggingErrorTypeEnum.EmailError)
+                {
+                    <div class="card-body text-center bg-white pt-5">
+                        <p class="card-text">Acesat IDNP există deja în sistem, cu alt email.</p>
+                        <p class="card-text">Pentru autentificare prin MPass, email-ul din contul MPass trebuie să fie identif cu email-ul din contul SI RERU.</p>
+                        <p class="card-text mb-10">Pentru editarea email-ului din SI RERU adresați-vă la administrator.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>
