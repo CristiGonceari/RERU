@@ -31,7 +31,7 @@
         <erp-shared-select [items]="functions" (filter)="setFilter('functionId',  $event)" [placeholder]="'attach-user-modal.search-function' | translate"></erp-shared-select>
     </div>
     <div class="col-lg col-12 pt-lg-0 pt-2">
-        <erp-shared-select [items]="userStatuses" (filter)="setFilter('roleId',  $event)" [placeholder]="'attach-user-modal.search-user-status' | translate"></erp-shared-select>
+        <erp-shared-select [items]="userStatuses" (filter)="setFilter('userStatusesId',  $event)" [placeholder]="'attach-user-modal.search-user-status' | translate"></erp-shared-select>
     </div>
     <div class="d-lg-block d-none col-lg-auto col-12 pt-lg-0 pt-2">
         <app-button (click)="resetFilters()">{{'button.reset-filters' | translate}}</app-button>

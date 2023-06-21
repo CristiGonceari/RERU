@@ -84,11 +84,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 
         private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
         {
-            //pregatim datele
             var itemsEvents = paginatedModel.Items.Select(i => i.EventId);
             var itemsUsers = paginatedModel.Items.Select(i => i.UserId);
 
-            //trimitem un singur request la DB optimizat
             var eventUsers = _appDbContext.EventUsers
                 .Include(x => x.EventUserCandidatePositions)
                 .ThenInclude(x => x.CandidatePosition)
@@ -101,13 +99,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetEvaluations
 
             foreach (var item in paginatedModel.Items)
             {
-                var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId); // nu mai facem call la DB dar la lista
+                var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
 
-                if (eventUser is null  // check eventUser && eventUser.PositionId 
+                if (eventUser is null 
                     || eventUser.PositionId is null
                     || eventUser.PositionId == 0) continue;
 
-                item.CandidatePositionNames = eventUser.EventUserCandidatePositions //nu mai faci call la DB dar iai itemi din lista
+                item.CandidatePositionNames = eventUser.EventUserCandidatePositions
                         .Select(x => x.CandidatePosition.Name)
                         .ToList();
             }
