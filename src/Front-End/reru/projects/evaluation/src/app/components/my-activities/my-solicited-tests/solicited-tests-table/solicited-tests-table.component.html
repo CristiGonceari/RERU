@@ -42,6 +42,11 @@
                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" >
                                 <div ngbDropdownMenu aria-labelledby="action1" >
                                     <button class="navi-link align-items-baseline px-6" ngbDropdownItem
+                                        [routerLink]="['../details', item.id]"
+                                        *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
+                                        {{ 'categories.view-details' | translate }}
+                                    </button>
+                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem
                                         [routerLink]="['../edit-solicited-position', item.id]"
                                         *ngIf="item.solicitedTestStatus == enum.New || item.solicitedTestStatus == enum.Wait">
                                         {{ 'button.edit' | translate }}
