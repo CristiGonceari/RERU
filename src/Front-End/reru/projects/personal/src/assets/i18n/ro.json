@@ -1258,17 +1258,30 @@
     "2": "Universitare",
     "3": "PostUniversitare",
     "4": "Cursuri de Perfecționare",
-    "5": "Cursuri de Specializare"
+    "5": "Cursuri de Specializare",
+    "6": "Medii incomplete(8/9 clase)",
+    "7": "Medii generale(10/11 clase)",
+    "8": "Bacalaureat(12 clase)",
+    "9": "Medii de specializare(colegiu, centrul de excelență)",
+    "10": "Superioare scurte/de scurtă durată(colegiu)",
+    "11": "Superioare universitare(fără licență)",
+    "12": "Superioare de licență",
+    "13": "Masterat",
+    "14": "Superioare de doctorat",
+    "15": "Postdoctorat",
+    "16": "Cursuri de formare profesională"
   },
   "studyFrequency":{
     "Daily":"Frecvență la zi",
-    "LowFrequency": "Frecvență redusa"
+    "LowFrequency": "Frecvență redusa",
+    "Remote": "La distanță"
   },
   "materialStatusType": {
     "1": "Celibatar",
     "2": "Căsătorit",
     "3": "Recăsătorit",
-    "4": "Văduv"
+    "4": "Văduv",
+    "5": "Divorțat/ă"
   },
   "kinshipDegree":{
     "Brother" : "Frate",
@@ -1288,7 +1301,9 @@
     "AlternativeService" : "Serviciu de alternativă",
     "PerformedMilitaryService" : "Serviciul militar îndeplinit",
     "Recruit" : "Recrut",
-    "Reservist" : "Rezervist"
+    "Reservist" : "Rezervist",
+    "Disobedient" : "Nesupus/ă",
+    "MilitaryChair" : "Catedra militară"
   },
   "stepper":{
     "button-update-and-next":"Actualizează și treci la pasul următor",
