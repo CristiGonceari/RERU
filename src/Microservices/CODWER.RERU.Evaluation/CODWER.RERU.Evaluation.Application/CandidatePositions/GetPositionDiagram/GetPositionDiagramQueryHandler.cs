@@ -174,6 +174,13 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
 
                 user.TestsByTestTemplate = user.TestsByTestTemplate.OrderBy(x => x.EventId).ThenBy(x => x.TestTemplateId).ToList();
             }
+
+            eventDiagram.UsersDiagram = eventDiagram.UsersDiagram
+                    .OrderByDescending(user => user.TestsByTestTemplate
+                        .SelectMany(testTemplate => testTemplate.Tests)
+                        .Max(test => test.PassDate))
+                    .ToList();
+
         }
     }
 }
