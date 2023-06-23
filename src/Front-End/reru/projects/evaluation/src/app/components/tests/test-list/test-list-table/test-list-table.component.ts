@@ -1,6 +1,4 @@
 import { DatePipe, PlatformLocation } from '@angular/common';
-import { Location } from '@angular/common';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,17 +12,17 @@ import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
 import { PrintModalComponent } from '@erp/shared';
 import { NotificationUtil } from '../../../../utils/util/notification.util';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from 'projects/evaluation/src/app/utils/enums/file-type.enum';
 import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
-import { error } from '@angular/compiler/src/util';
 import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 import { SignatureService } from 'projects/evaluation/src/app/utils/services/signature/signature.service';
 import { UserProfileService } from 'projects/evaluation/src/app/utils/services/user-profile/user-profile.service';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -95,7 +93,6 @@ export class TestListTableComponent implements OnInit {
     public translate: I18nService,
     public router: Router,
     private referenceService: ReferenceService,
-    private datePipe: DatePipe,
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private enumStringTranslatorService: EnumStringTranslatorService,
@@ -533,6 +530,7 @@ export class TestListTableComponent implements OnInit {
       this.isLoadingSignButton = false;
     })
     this.isLoadingSignButton = false;
+    this.getDocumentsForSign(value.id);
   }
 
   redirect(url) {
@@ -586,8 +584,7 @@ export class TestListTableComponent implements OnInit {
           this.pager.push(i);
         }
 
-        let findIndex = this.testTemplate.findIndex(x => x.id == item.id);
-        this.testTemplate[findIndex].isOpenAccordeon = true;
+        this.getDocumentsForSign(item.id);
       }
     });
   }
