@@ -18,11 +18,11 @@
                         <app-confirm-button width="100%" (handle)="table.getQuestions(send())" [value]="'button.search' | translate"></app-confirm-button>
 					</div>
 					<div class="card-toolbar d-sm-none d-flex w-100">
-						<erp-shared-export-button (click)="table.getHeaders(getTitle())" 
+						<erp-shared-export-button (click)="table.getHeaders(getTitle())" width="100%" class="m-1"
                             [disabled]="filterEnum < 0 || (testTemplateId || categoryId) == null || itemsPerPage == null">
                             {{'button.export' | translate}}
                         </erp-shared-export-button>
-                        <app-confirm-button width="100%" (handle)="table.getQuestions(send())" [value]="'button.search' | translate"></app-confirm-button>
+                        <app-confirm-button width="100%" class="m-1" (handle)="table.getQuestions(send())" [value]="'button.search' | translate"></app-confirm-button>
 					</div>
                 </div>               
                 <div class="card-header border-0">

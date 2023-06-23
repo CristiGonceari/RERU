@@ -90,7 +90,7 @@
 								<div class="text-right border-top pt-10 d-md-none d-lg-none d-block">
 									<app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.back' | translate"
 										(handle)="backClicked()"></app-button>
-									<app-add-button class="btn" [value]="'button.confirm' | translate"
+									<app-add-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.confirm' | translate"
 										(handle)="saveArticle()" [disabled]="isButtonPressed || checkConfirmButton(editorData, articleForm)"></app-add-button>
 								</div>
 							</form>

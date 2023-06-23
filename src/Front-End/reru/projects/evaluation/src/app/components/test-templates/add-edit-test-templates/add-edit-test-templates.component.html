@@ -164,7 +164,7 @@
                                 <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
                                     <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate"
                                         (handle)="backClicked()"></app-button>
-                                    <app-add-button class="btn" *ngIf="!testId" [disabled]="testForm.invalid"
+                                    <app-add-button class="btn w-100" [width]="mobileButtonLength" *ngIf="!testId" [disabled]="testForm.invalid"
                                         (handle)="onSave()" [value]="'button.confirm' | translate"></app-add-button>
                                     <app-confirm-button class="btn" *ngIf="testId" [disabled]="testForm.invalid"
                                         (handle)="onSave()" [value]="'button.update' | translate">
