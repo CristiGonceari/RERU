@@ -51,7 +51,7 @@
                 <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
                 </app-button>
 
-                <app-add-button class="btn" (handle)="onSave()" [disabled]="documentForm.invalid || disableBtn"
+                <app-add-button class="btn w-100" [width]="mobileButtonLength" (handle)="onSave()" [disabled]="documentForm.invalid || disableBtn"
                   [value]="'button.confirm' | translate">
                 </app-add-button>
               </div>
