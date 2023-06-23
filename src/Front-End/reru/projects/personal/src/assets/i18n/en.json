@@ -1133,13 +1133,14 @@
     "max-print-rows": "Maximum 3000 rows can be printed"
   },
   "general-datas":{
+    "patronymic": "Patronymic(optional)",
     "general-data":"General Data",
     "nationality": "Nationality",
     "citizenship":"Citizenship",
     "state-language-level":"Level of knowledge of the state language",
     "sex":"Gender",
-    "home-phone":"Home Phone",
-    "work-phone":"Work phone",
+    "home-phone":"Home Phone(optional)",
+    "work-phone":"Work phone(optional)",
     "phone": "Personal phone"
   },
   "bulletin":{
