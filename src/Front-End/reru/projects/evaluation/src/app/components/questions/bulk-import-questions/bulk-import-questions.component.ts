@@ -90,6 +90,10 @@ export class BulkImportQuestionsComponent implements OnInit {
 		this.files.splice(this.files.indexOf(event), 1);
 	}
 
+	cantAdd() {
+		return this.files.length === 0;
+	}
+
 	onConfirm(): void {
 		this.isLoading = true;
 		const formData = new FormData();
