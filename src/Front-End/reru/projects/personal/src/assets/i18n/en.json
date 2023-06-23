@@ -1256,17 +1256,30 @@
     "2": "University",
     "3": "Postgraduate",
     "4": "Improvement courses",
-    "5": "Training courses"
+    "5": "Training courses",
+    "6": "Incomplete grades (8th/9th grade)",
+    "7": "General education (10/11 grades)",
+    "8": "Baccalaureate (12 classes)",
+    "9": "Specialization environments (college, center of excellence)",
+    "10": "Short/short-term higher education (college)",
+    "11": "Higher university degrees (without a bachelor's degree)",
+    "12": "Bachelor's degree",
+    "13": "Master",
+    "14": "Higher doctorate",
+    "15": "Postdoctoral",
+    "16": "Vocational training courses"
   },
   "studyFrequency":{
     "Daily":"Daily",
-    "LowFrequency": "Low Frequency"
+    "LowFrequency": "Low Frequency",
+    "Remote": "Remote"
   },
   "materialStatusType": {
     "1": "Bachelor",
     "2": "Married",
     "3": "Remarried",
-    "4": "Widower"
+    "4": "Widower",
+    "5": "Divorced"
   },
   "kinshipDegree":{
     "Brother" : "Brother",
@@ -1286,7 +1299,9 @@
     "AlternativeService" : "Alternative service",
     "PerformedMilitaryService" : "Performed military service",
     "Recruit" : "Recruit",
-    "Reservist" : "Reservist"
+    "Reservist" : "Reservist",
+    "Disobedient" : "Absence",
+    "MilitaryChair" : "Military Chair"
   },
   "stepper":{
     "button-update-and-next":"Update and Next",
