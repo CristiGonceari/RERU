@@ -114,7 +114,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             {
                 var testEventEvaluators = eventEvaluators.Where(x => x.EventId == item.EventId);
 
-                item.IsEvaluator = item.CreateById == currentUser.Id.ToString() || item.EvaluatorId == currentUser.Id;
+                item.IsEvaluator = item.EvaluatorId == currentUser.Id;
 
                 if (item.EvaluatorId == null && testEventEvaluators.Any())
                 {
