@@ -1,4 +1,4 @@
-import { DatePipe, PlatformLocation } from '@angular/common';
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -183,6 +183,11 @@ export class TestListTableComponent implements OnInit {
         this.testTemplate.forEach(item => {
           item.isOpenAccordeon = false;
           item.isLoadingAccordeon = false;
+          this.testService.getDocumentsForSign(item.id).subscribe(res => {
+            if (res && res.data) {
+              item.documentForSign = res.data;
+            }
+          });
         });
   
         this.pager = Array.from({ length: this.pagination.totalCount }, (_, i) => i + 1);
@@ -505,6 +510,12 @@ export class TestListTableComponent implements OnInit {
 
       let redirectUrl: string = defaultUrl.replace(firstSymbol, "@").replace(secondSymbols, "$");
       value.isLoadingAccordeon = true;
+      this.testService.getDocumentsForSign(value.id).subscribe(res => {
+        if (res && res.data) {
+          value.isOpenAccordeon = true;
+          value.documentForSign = res.data;
+        }
+      });
       let redirect = this.signatureService.redirectMSign(res.data, redirectUrl);
 
       forkJoin([
@@ -530,7 +541,7 @@ export class TestListTableComponent implements OnInit {
       this.isLoadingSignButton = false;
     })
     this.isLoadingSignButton = false;
-    this.getDocumentsForSign(value.id);
+    
   }
 
   redirect(url) {
@@ -580,11 +591,11 @@ export class TestListTableComponent implements OnInit {
           this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
         }
 
+        this.getDocumentsForSign(item.id);
+
         for (let i = 1; i <= this.pagination.totalCount; i++) {
           this.pager.push(i);
         }
-
-        this.getDocumentsForSign(item.id);
       }
     });
   }

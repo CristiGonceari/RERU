@@ -1033,7 +1033,37 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
         private async Task<string> GetHashedAnswerQuestion(TestQuestion testQuestion, string content)
         {
+
+            const string _openingInputHtmlTag = "<app-hash-option-input optionId='";
+            const string _closingInputHtmlTag = "'></app-hash-option-input>";
+
             var question = await _questionUnitService.GetUnHashedQuestionUnit(testQuestion.QuestionUnitId);
+
+            foreach(var option in question.Options)
+            {
+                if (question.Question.IndexOf("<input", StringComparison.OrdinalIgnoreCase) != -1)
+                {
+                    var inputTagIndex = question.Question.IndexOf("<input", StringComparison.OrdinalIgnoreCase);
+                    var closingTagIndex = question.Question.IndexOf(">", inputTagIndex, StringComparison.OrdinalIgnoreCase);
+                    var inputTag = question.Question.Substring(inputTagIndex, closingTagIndex - inputTagIndex + 1);
+                    var valueAttrIndex = inputTag.IndexOf("value=", StringComparison.OrdinalIgnoreCase);
+                    if (valueAttrIndex != -1)
+                    {
+                        var valueStartIndex = valueAttrIndex + "value=".Length;
+                        var valueEndIndex = inputTag.IndexOf("\"", valueStartIndex);
+                        if (valueEndIndex != -1)
+                        {
+                            var value = inputTag.Substring(valueStartIndex, valueEndIndex - valueStartIndex);
+                            var modifiedQuestion = question.Question.Replace(inputTag, $"{_openingInputHtmlTag}{option.Id}{_closingInputHtmlTag}");
+                            question.Question = modifiedQuestion;
+                        }
+                    }
+                }
+                else {
+                    question.Question = question.Question.Replace($"[{option.Id}]", $"{_openingInputHtmlTag}{option.Id}{_closingInputHtmlTag}");
+                }
+            }
+
             var testAnswers = testQuestion.TestQuestionsTestAnswers.Select(x => x.TestAnswer).ToList();
             var answerText = testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test ? "Răspunsul evaluatului" : "Răspunsul evaluatorului";
 
@@ -1073,14 +1103,14 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                         </th>
                     </tr>";
 
-            if (question.Options != null)
+            /*if (question.Options != null)
             {
                 foreach (var option in testQuestion.QuestionUnit.Options)
                 {
                     var testAnswer = testAnswers.FirstOrDefault(x => x.OptionId == option.Id);
                     testQuestion.QuestionUnit.Question = question.Question.Replace($"{testAnswer.AnswerValue}", $"{option.Answer}");
                 }
-            }
+            }*/
 
             if (testQuestion.Test.TestTemplate.Mode == TestTemplateModeEnum.Test)
             {
