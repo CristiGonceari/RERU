@@ -27,9 +27,9 @@ namespace CODWER.RERU.Personal.Application.Contractors
                 .WithMessage(ValidationMessages.InvalidInput)
                 .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
-            RuleFor(x => x.FatherName).NotEmpty()
-                .WithMessage(ValidationMessages.InvalidInput)
-                .WithErrorCode(ValidationCodes.INVALID_INPUT);
+            //RuleFor(x => x.FatherName).NotEmpty()
+            //    .WithMessage(ValidationMessages.InvalidInput)
+            //    .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
             RuleFor(x => x.BirthDate)
                 .Must(x => x > dateTime.Now.AddYears(-100))
@@ -50,13 +50,13 @@ namespace CODWER.RERU.Personal.Application.Contractors
                .SetValidator(x => new ItemMustExistValidator<CandidateNationality>(appDbContext, ValidationCodes.INVALID_ID,
                    ValidationMessages.InvalidReference));
 
-            RuleFor(x => x.WorkPhone).NotEmpty()
+            RuleFor(x => x.PhoneNumber).NotEmpty()
                .WithMessage(ValidationMessages.InvalidInput)
                .WithErrorCode(ValidationCodes.INVALID_INPUT);
 
-            RuleFor(x => x.HomePhone).NotEmpty()
-               .WithMessage(ValidationMessages.InvalidInput)
-               .WithErrorCode(ValidationCodes.INVALID_INPUT);
+            //RuleFor(x => x.HomePhone).NotEmpty()
+            //   .WithMessage(ValidationMessages.InvalidInput)
+            //   .WithErrorCode(ValidationCodes.INVALID_INPUT);
         }
     }
 }
