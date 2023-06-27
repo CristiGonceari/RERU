@@ -105,7 +105,6 @@ export class BulkImportQuestionsComponent implements OnInit {
 			this.title = title;
 			this.description = description;
 		});
-		this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		this.questionService.bulkUpload(formData).subscribe(
 			(res) => {
 				const blob = new Blob([res.body], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -117,7 +116,10 @@ export class BulkImportQuestionsComponent implements OnInit {
 					alert("Somethig wrong! Please check your .xlsx file.");
 					this.files = [];
 				}
-				else this.activeModal.close();
+				else {
+					this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+					this.activeModal.close();
+				}
 			}, (error) => {
 				forkJoin([
 					this.translate.get('notification.title.error'),
