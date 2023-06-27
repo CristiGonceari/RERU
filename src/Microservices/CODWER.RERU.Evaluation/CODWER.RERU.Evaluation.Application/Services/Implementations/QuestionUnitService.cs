@@ -118,7 +118,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             {
                 _appDbContext.QuestionUnits.Remove(question);
                 await _appDbContext.SaveChangesAsync();
-                throw;
+                throw new Exception(e.Message);
             }
 
             question.Question = hashedQuestion;
@@ -129,11 +129,21 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         {
             counter++;
             var answer = input;
+            var key = "";
+            var keyWithTags = "";
 
-            var key = GetKeyFromString(answer);
+            try
+            {
+                key = GetKeyFromString(answer);
 
-            var tempKey = answer.Substring(answer.IndexOf(_openingHashTag));
-            var keyWithTags = tempKey.Substring(0, tempKey.IndexOf(_closingHashTag) + _closingHashTag.Length);
+                var tempKey = answer.Substring(answer.IndexOf(_openingHashTag));
+
+                keyWithTags = tempKey.Substring(0, tempKey.IndexOf(_closingHashTag) + _closingHashTag.Length);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Eroare la căutarea tagului {_openingHashTag} sau {_closingHashTag}");
+            }
 
             if (!string.IsNullOrWhiteSpace(key))
             {
@@ -237,20 +247,22 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Cells["C1"].Value = "Întrebare cu răspuns";
             ws.Cells["D1"].Value = "Puncte (mai multe de 0)";
             ws.Cells["E1"].Value = "Taguri (separate prin virgulă)";
-            ws.Cells["F1"].Value = "Notă: Vă rugăm să amplasați răspunsul corect între etichetele [answer][/answer], fără spații la început și la sfârșit";
+            ws.Cells["F1"].Value = "Notă: Vă rugăm să amplasați răspunsul corect \nîntre etichetele [answer][/answer],\nfără spații la început și la sfârșit";
 
             ws.Column(1).AutoFit();
             ws.Column(2).AutoFit();
             ws.Column(3).Width = 100;
             ws.Column(4).AutoFit();
             ws.Column(5).AutoFit();
-            ws.Column(6).Width = 40;
+            ws.Column(6).Width = 50;
+            ws.Column(6).Style.WrapText = true;
 
             ws.Cells["F1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells["F1"].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightYellow);   
             ws.Cells["F1"].Style.WrapText = true;
 
-            ws.Cells["A1:F1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
             return await p.GetAsByteArrayAsync();
         }
 
@@ -268,8 +280,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Column(2).AutoFit();
             ws.Column(3).Width = 75;
             ws.Column(4).AutoFit();
-            ws.Column(5).Width = 50;
+            ws.Column(5).AutoFit();
             ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Column(7).Width = 50;
+            ws.Column(7).Style.WrapText = true;
 
             return await p.GetAsByteArrayAsync();
         }
@@ -285,7 +300,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Cells["E1"].Value = "Este corect? (Da-1, Nu-0)";
             ws.Cells["F1"].Value = "Puncte (mai multe de 0)";
             ws.Cells["G1"].Value = "Taguri (separate prin virgulă)";
-            ws.Cells["H1"].Value = "Notă: Un răspuns per rand. Întrebarea nouă trebuie să fie într-o linie cu primul răspuns. În coloana D utilizați doar 0 sau 1";
+            ws.Cells["H1"].Value = "Notă: Un răspuns per rand. Întrebarea nouă trebuie să fie într-o linie cu primul răspuns. În coloana E utilizați doar 0 sau 1";
 
             ws.Column(1).AutoFit();
             ws.Column(2).AutoFit();
@@ -301,6 +316,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             ws.Cells["A1:H1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Cells["A1:H1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Column(10).Width = 50;
+            ws.Column(10).Style.WrapText = true;
 
             return await p.GetAsByteArrayAsync();
         }
@@ -352,6 +370,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 ws.Cells[error.Key].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 ws.Cells[error.Key].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Yellow);
             }
+
             await p.SaveAsync();
 
             var backCounter = 0;
@@ -473,7 +492,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             if (string.IsNullOrWhiteSpace(categoryText))
             {
-                errors = "Categoria lipsește ";
+                errors = "- Categoria lipsește. ";
             }
 
             var category = _appDbContext.QuestionCategories.FirstOrDefault(x => x.Name.ToLower() == categoryText.Trim().ToLower());
@@ -481,18 +500,34 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             if (category == null)
             {
                 if (string.IsNullOrWhiteSpace(errors))
-                   errors = $"Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date ";
+                   errors = $"- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
                 else
-                   errors += $"\nCategoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date ";
+                   errors += $"\n- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
             }
 
             var questionText = (ws.Cells[row, 3].Value ?? string.Empty).ToString();;
             if (string.IsNullOrWhiteSpace(questionText))
             {
                 if (string.IsNullOrWhiteSpace(errors))
-                    errors = "Întrebarea lipsește ";
+                    errors = "- Întrebarea lipsește. ";
                 else
-                    errors += "\nÎntrebarea lipsește ";
+                    errors += "\n- Întrebarea lipsește. ";
+            }
+
+            if (questionType == QuestionTypeEnum.HashedAnswer && !questionText.Contains(_openingHashTag))
+            {
+                if (string.IsNullOrWhiteSpace(errors))
+                    errors = $"Lipsește sau este scris greșit tag-ul {_openingHashTag}";
+                else
+                    errors += $"\nLipsește sau este scris greșit tag-ul {_openingHashTag}";
+            }
+
+            if (questionType == QuestionTypeEnum.HashedAnswer && !questionText.Contains(_closingHashTag))
+            {
+                if (string.IsNullOrWhiteSpace(errors))
+                    errors = $"Lipsește sau este scris greșit tag-ul {_closingHashTag}";
+                else
+                    errors += $"\nLipsește sau este scris greșit tag-ul {_closingHashTag}";
             }
 
             string pointsColumn = GetPointsColumn(questionType);
@@ -504,17 +539,17 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 if (questionPoints < 1)
                 {
                     if (string.IsNullOrWhiteSpace(errors))
-                        errors = "Punctele trebuie să fie mai mari decât 0 ";
+                        errors = "- Punctele trebuie să fie mai mari decât 0. ";
                     else
-                        errors += "\nPunctele trebuie să fie mai mari decât 0 ";
+                        errors += "\n- Punctele trebuie să fie mai mari decât 0. ";
                 }
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(errors))
-                    errors = "Introduceți o valoarea numerică pentru puncte ";
+                    errors = "- Introduceți o valoarea numerică pentru puncte. ";
                 else
-                    errors += "\nIntroduceți o valoarea numerică pentru puncte ";
+                    errors += "\n- Introduceți o valoarea numerică pentru puncte. ";
             }
 
             if (!string.IsNullOrWhiteSpace(errors))
@@ -551,7 +586,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
             if (string.IsNullOrWhiteSpace(answer))
             {
-                _errors.Add($"{column}{row}", "Răspuns greșit sau gol ");
+                _errors.Add($"{column}{row}", "- Răspuns greșit sau gol. ");
                 return new AddOptionExcelDto { Error = true };
             }
 
@@ -568,13 +603,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                         isCorrect = false;
                         break;
                     default:
-                        _errors.Add($"{column}{row}", "Nu se poate analiza dacă Răspunsul este corect sau greșit. Este permis doar '1' și '0'! ");
+                        _errors.Add($"{column}{row}", "- Nu se poate analiza dacă Răspunsul este corect sau greșit. Este permis doar '1' și '0'!. ");
                         return new AddOptionExcelDto { Error = true };
                 }
             }
             catch
             {
-                _errors.Add($"{column}{row}", "Nu se poate analiza dacă Răspunsul este corect sau greșit. Este permis doar '1' și '0'! ");
+                _errors.Add($"{column}{row}", "- Nu se poate analiza dacă Răspunsul este corect sau greșit. Este permis doar '1' și '0'!. ");
                 return new AddOptionExcelDto { Error = true };
             }
 
@@ -637,13 +672,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 if (questionToAdd.QuestionType == QuestionTypeEnum.OneAnswer && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) != 1)
                 {
-                    _errors.Add($"{column}{questionToAdd.Row}", "Întrebarea de tipul 'UnRăspuns' permit doar un singur răspuns! ");
+                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'UnRăspuns' permit doar un singur răspuns!. ");
                     return null;
                 }
 
                 if (questionToAdd.QuestionType == QuestionTypeEnum.MultipleAnswers && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) < 1)
                 {
-                    _errors.Add($"{column}{questionToAdd.Row}", "Întrebarea de tipul 'RăspunsuriMultiple' ar trebui să aibă mai mult de un răspuns corect! ");
+                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'RăspunsuriMultiple' ar trebui să aibă mai mult de un răspuns corect!. ");
                     return null;
                 }
 
@@ -664,7 +699,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 }
                 catch (Exception ex)
                 {
-                    _errors.Add($"{column}{questionToAdd.Row}", $"Eroare la adăugarea întrebării: {ex.Message} ");
+                    _errors.Add($"{column}{questionToAdd.Row}", $"- Eroare la adăugarea întrebării: {ex.Message}. ");
                     return null;
                 }
             }
@@ -691,7 +726,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 catch (Exception ex)
                 {
                     option.Error = true;
-                    _errors.Add($"{column}{option.Row}", $"Eroare la adăugarea opțiunii: {ex.Message} ");
+                    _errors.Add($"{column}{option.Row}", $"- Eroare la adăugarea opțiunii: {ex.Message}. ");
                 }
             }
             return options;
