@@ -313,8 +313,15 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 using (var package = new ExcelPackage(stream))
                 {
                     ExcelWorksheet ws = package.Workbook.Worksheets[0];
-                    var questionType = (QuestionTypeEnum)Int32.Parse(ws.Cells["A1"].Value.ToString()?.Replace("TipÎntrebare=", ""));
-                    
+                    var questionTypeCell = ws.Cells["A1"].Value?.ToString()?.Replace("TipÎntrebare=", "");
+            
+                    if (!int.TryParse(questionTypeCell, out int questionTypeValue))
+                    {
+                        _errors.Add("A1", "Fișierul este nevalid");
+                    }
+
+                    var questionType = (QuestionTypeEnum)questionTypeValue;
+
                     switch (questionType)
                     {
                         case QuestionTypeEnum.FreeText:
