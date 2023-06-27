@@ -40,31 +40,36 @@
             <div class="col-lg col-md-6 col-12">
                 <div class="input-group input-group-sm input-group-solid">
                   <input class="form-control"  type="text" name="testName" [(ngModel)]="testsTable.testName" 
-                  [placeholder]="'button.search-name' | translate"/>
+                    (keydown.enter)="testsTable.getTests({ page: 1 })"
+                    [placeholder]="'button.search-name' | translate"/>
                 </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="userName" [(ngModel)]="testsTable.userName" 
-                [placeholder]="'verify-test.search-student' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'verify-test.search-student' | translate"/>
               </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="userEmail" [(ngModel)]="testsTable.userEmail" 
-                [placeholder]="'verify-test.search-email' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'verify-test.search-email' | translate"/>
               </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="idnp" [(ngModel)]="testsTable.idnp" 
-                [placeholder]="'verify-test.search-student-idnp' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'verify-test.search-student-idnp' | translate"/>
               </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="evaluatorName" [(ngModel)]="testsTable.evaluatorName" 
-                [placeholder]="'evaluations.search-evaluator' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'evaluations.search-evaluator' | translate"/>
               </div>
             </div>
           </div>
@@ -72,13 +77,15 @@
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="testEvent" [(ngModel)]="testsTable.testEvent" 
-                [placeholder]="'events.search-event' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'events.search-event' | translate"/>
               </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="testLocation" [(ngModel)]="testsTable.testLocation" 
-                [placeholder]="'events.search-location' | translate"/>
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
+                  [placeholder]="'events.search-location' | translate"/>
               </div>
             </div>
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
@@ -87,6 +94,7 @@
                   class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeFrom" autocomplete="off" />
                 <input id="from" [owlDateTimeTrigger]="dtFrom" [placeholder]="'events.search-from' | translate"
                   autocomplete="off" class="form-control form-control-lg form-control-solid"
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
                   [value]="testsTable.dateTimeFrom | dateFilter:'dd/MM/yy HH:mm'" />
                   <i class="fas fa-calendar-alt mr-2"></i>
                 <owl-date-time #dtFrom></owl-date-time>
@@ -98,6 +106,7 @@
                   class="shadow-input" name="date" [(ngModel)]="testsTable.dateTimeTo" autocomplete="off" />
                 <input id="from" [owlDateTimeTrigger]="toDate" [placeholder]="'events.search-to' | translate"
                   autocomplete="off" class="form-control form-control-lg form-control-solid"
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
                   [value]="testsTable.dateTimeTo | dateFilter:'dd/MM/yy HH:mm'" />
                   <i class="fas fa-calendar-alt mr-2"></i>
                 <owl-date-time #toDate></owl-date-time>
@@ -106,6 +115,7 @@
             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
               <div class="input-group input-group-sm input-group-solid">
                 <input class="form-control"  type="text" name="colaboratorId" [(ngModel)]="testsTable.colaboratorId" 
+                  (keydown.enter)="testsTable.getTests({ page: 1 })"
                   [placeholder]="'events.search-colaborator-id' | translate"/>
               </div>
             </div>
