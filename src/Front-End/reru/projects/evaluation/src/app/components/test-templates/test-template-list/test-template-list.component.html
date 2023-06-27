@@ -32,6 +32,7 @@
             <div class="col-lg col-md-6 col-12">
               <erp-shared-search-input 
                 (handleSearch)="testTable.setFilter('name', $event)" 
+                (keydown.enter)="testTable.getTestTemplates()"
                 [placeholder]="'button.search-name' | translate" #templateName
                 [showIcon]="false" [useDebounce]="false">
               </erp-shared-search-input>
@@ -39,6 +40,7 @@
             <div class="col-lg col-md-6 col-12 pt-md-0 pt-2">
               <erp-shared-search-input 
                 (handleSearch)="testTable.setFilter('eventName', $event)" 
+                (keydown.enter)="testTable.getTestTemplates()"
                 [placeholder]="'events.search-event' | translate" #eventName
                 [showIcon]="false" [useDebounce]="false">
               </erp-shared-search-input>
