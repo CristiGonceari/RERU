@@ -78,9 +78,10 @@ import { ConvertPdfDocumentModalComponent } from './modals/convert-pdf-document-
 import { CkEditorConfigComponent } from './components/ck-editor-config/ck-editor-config.component'
 import { CKEditorModule } from 'ngx-ckeditor';
 import { MaterialModule } from '../material.module';
-import { SharedModule } from '@erp/shared';
 import { ImportDepartmentsModalComponent } from './modals/import-departments-modal/import-departments-modal.component';
 import { DateFilterPipe } from '../utils/pipes/date-filter.pipe';
+import { StepperDateTimeComponent } from './components/stepper-date-time/stepper-date-time.component';
+import { SharedModule } from '@erp/shared';
 
 
 const commonComponents = [
@@ -154,7 +155,8 @@ const commonComponents = [
   CkEditorConfigComponent,
   ImportDepartmentsModalComponent,
   ImportEmployeeFunctionModalComponent,
-  DateFilterPipe
+  DateFilterPipe,
+  StepperDateTimeComponent
 ];
 
 @NgModule({

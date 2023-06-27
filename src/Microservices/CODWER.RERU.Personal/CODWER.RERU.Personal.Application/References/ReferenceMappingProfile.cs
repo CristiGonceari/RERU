@@ -22,7 +22,8 @@ namespace CODWER.RERU.Personal.Application.References
             CreateMap<StudyType, SelectValue>()
                .ForMember(x => x.Value, opts => opts.MapFrom(sv => sv.Id))
                .ForMember(x => x.Label, opts => opts.MapFrom(sv => sv.Name))
-               .ForMember(x => x.TranslateId, opts => opts.MapFrom(sv => sv.TranslateId));
+               .ForMember(x => x.TranslateId, opts => opts.MapFrom(sv => sv.TranslateId))
+               .ForMember(x => x.ValidationId, opts => opts.MapFrom(sv => sv.ValidationId));
 
             CreateMap<ModernLanguage, SelectValue>()
                .ForMember(x => x.Value, opts => opts.MapFrom(sv => sv.Id))

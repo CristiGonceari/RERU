@@ -9,10 +9,6 @@ namespace CODWER.RERU.Personal.Application.Studies.AddStudy
         public CreateStudyCommandValidator(AppDbContext appDbContext)
         {
             RuleFor(x => x.Data).SetValidator(new StudyValidator(appDbContext));
-
-            RuleFor(x => x.Data)
-              .Must(x => x.YearOfAdmission < x.GraduationYear)
-               .WithErrorCode(ValidationCodes.INVALID_TIME_RANGE);
         }
     }
 }

@@ -121,4 +121,12 @@ export class ReferenceService extends AbstractService {
   getEmployeeFunctions(): Observable<any> {
     return this.http.get(`${this.baseUrl}/${this.urlRoute}/employee-functions/select-values`);
   }
+
+  getStudyCoursesEnum(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/study-courses/select-values`);
+  }
+
+  getStudyProfilesEnum(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${this.urlRoute}/study-profiles/select-values`);
+  }
 }

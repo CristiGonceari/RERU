@@ -887,7 +887,8 @@
     "only-letters-numbers-and-symbols": "Должен содержать только буквы, цифры и - , . ",
     "only-letters-numbers-and-some-symbols": "Должен содержать только буквы, цифры и - , . \" \" ",
     "valid-email": "Необходимо ввести валидный еmail. Пример: codwer@mail.com",
-    "validations-service-error": "Ошибка службы проверки!"
+    "validations-service-error": "Ошибка службы проверки!",
+    "only-year": "Укажите допустимый формат AAAA"
   },
   "notification": {
     "title": {
@@ -1174,7 +1175,41 @@
     "qualification": "Квалификация",
     "institution-address": "Адрес учреждения",
     "year-of-admision": "Год поступления",
-    "graduation-year" : "Год выпуска"
+    "graduation-year" : "Год выпуска",
+    "study-act-name": "Аттестат об окончании школы (серия, номер, дата выдачи)",
+    "study-act-series": "Серия",
+    "study-act-number": "Hомер",
+    "diploma-act-name": "Диплом доктора наук (серия, номер, дата выдачи)",
+    "certificate-act-name": "Сертификаты (серия, номер, дата выдачи)",
+    "study-act-emitted-date": "День выпуска",
+    "profile": "Профили",
+    "study-form" : "Форма обучения",
+    "study-title": "Название(лицензия в...)",
+    "master-title": "Название(магистратура в...)",
+    "doctor-title": "Название(докторантура в...)",
+    "study-coureses-type": "Типы курсов",
+    "study-credit-number": "Количество часов/кредитов",
+    "study-period-date": "Период обучения (начало, конец)",
+    "study-period-start-date": "Даты начала",
+    "study-period-end-date": "Даты окончания",
+    "not-selected-study-type": "Не выбран ни один тип образования.",
+    "add-study": "Добавить другой тип образования",
+    "study-add-button-hint": "Нажмите на кнопку, чтобы добавить оразование",
+    "study-start-date": "Дата начала обучения",
+    "study-end-date": "дата окончания обучения"
+  },
+  "study-profiles":{
+    "1": "реальный",
+    "2": "гуманист",
+    "3": "художественный",
+    "4": "спортивный",
+    "5": "и т. д."
+  },
+  "study-courses":{
+    "1": "Начальные",
+    "2": "Cовершенствования",
+    "3": "Переподготовки",
+    "4": "Cпециализации"
   },
   "language":{
     "modern-language-level": "Уровень владения современным языком",
@@ -1226,7 +1261,15 @@
     "series":"Серия",
     "number": "Число билетa",
     "relase-day":"День выпуска",
-    "eminent-authority" : "Орган, выдавший билет"
+    "eminent-authority" : "Орган, выдавший билет",
+    "institution-name": "Название (учреждения/организации/компании)",
+    "institution-adress": "Адрес (учреждения/организации/компании)",
+    "period": "Период",
+    "start-obligation-period": "Даты начала",
+    "end-obligation-period": "Даты окончания",
+    "recruitment-booklet": "Cвидетельство о призыве",
+    "military-obligation-add-button-hint": "Нажмите кнопку, чтобы добавить военное обязательство",
+    "add-military-obligation": "Добавить еще одно обязательство"
   },
   "autobiography":{
     "title":"Автобиография пишется лично кандидатом в прочитанном, заказанном виде, без исправлений и сокращений, с обязательным указанием следующих сведений:",
@@ -1238,6 +1281,37 @@
     "paragraf-6": "- Наличие ученых, научно-педагогических, почетных и спортивных степеней/званий, дата их присвоения и полномочия на выдачу;",
     "paragraf-7": "- Hаличие официального и неофициального трудового стажа (период, должность (должность), учреждение, организация, предприятие);",
     "paragraf-8": "- Место жительства и домашняя виза (оба указываются, если они не совпадают)."
+  },
+  "candidate-registration-flux":{
+    "step-success": "Шаг пройден успешно!",
+    "step-error": "Шаг не пройден!",
+    "step-in-progress": "Шаг будет завершен позже",
+    "update-general-data-success": "Добавлены данные пользователя!",
+    "update-general-data-error": "Данные пользователя не добавлены!",
+    "add-bulletin-success": "Бюллетень добавлен!",
+    "add-bulletin-error": "Бюллетень не добавлен!",
+    "edit-bulletin-success": "Бюллетень обновлен!",
+    "edit-bulletin-error": "Бюллетень не обновилcя!",
+    "create-study-success": "Учебное образование былo добавленo!",
+    "create-study-error": "Учебное образование не добавленo!",
+    "create-modern-language-success": "Добавлен yровень владения современным языком!",
+    "create-modern-language-error": "Hе добавлен yровень владения современным языком!",
+    "create-study-recommendation-success": "Рекомендация для образования добавлена!",
+    "create-study-recommendation-error": "Рекомендация для образования не добавлена!",
+    "create-material-status-success": "Cемейный статус добавлен!",
+    "create-material-status-error": "Cемейный статус не добавлен!",
+    "create-kinship-success": "Добавлено родство!",
+    "create-kinship-error": "Pодство не добавленo!",
+    "update-material-status-success": "Cемейный статус обновлялся!",
+    "update-material-status-error": "Семейный статус не обновлялся!",
+    "update-kinship-relation-criminal-data-success": "Родство обновлено!",
+    "update-kinship-relation-criminal-data-error": "Родство не обновлялось!",
+    "create-military-obligation-success": "Военная обязанность былo добавленo!",
+    "create-military-obligation-error": "Военная обязанностьне не былo добавлено!",
+    "create-autobiography-success": "Добавлена ​​автобиография!",
+    "create-autobiography-error": "Автобиография не добавлена!",
+    "update-autobiography-success": "Автобиография обновлена!",
+    "update-autobiography-error": "Автобиография не обновлялась!"
   },
   "declaration":{
     "paragraf": "Я заявляю под свою ответственность, что данные, введенные в эту форму, соответствуют действительности. Я согласен с тем, что компетентные органы проверят данные в файле и документы, представленные мне"

@@ -10,6 +10,7 @@ import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ReferenceService } from '../../../utils/services/reference.service';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { ValidatorUtil } from '../../../utils/util/validator.util';
 
 @Component({
   selector: 'app-profile-studies',
@@ -82,17 +83,26 @@ export class ProfileStudiesComponent implements OnInit {
 
   generateStudy(study: StudyModel): FormGroup {
     return this.fb.group({
-      id: this.fb.control(study.id),
-      institution: this.fb.control({ value: study.institution, disabled: true }, [Validators.required]),
-      studyFrequency: this.fb.control({ value: study.studyFrequency, disabled: true }, [Validators.required]),
-      studyTypeId: this.fb.control({ value: study.studyTypeId, disabled: true }, [Validators.required]),
-      faculty: this.fb.control({ value: study.faculty, disabled: true }, [Validators.required]),
-      qualification: this.fb.control({ value: study.qualification, disabled: true }, [Validators.required]),
-      specialty: this.fb.control({ value: study.specialty, disabled: true }, [Validators.required]),
-      diplomaNumber: this.fb.control({ value: study.diplomaNumber, disabled: true }, [Validators.required]),
-      diplomaReleaseDay: this.fb.control({ value: study.diplomaReleaseDay, disabled: true }, [Validators.required]),
-      isActiveStudy: this.fb.control({ value: study.isActiveStudy, disabled: true }, [Validators.required]),
-      contractorId: this.fb.control({ value: study.contractorId, disabled: true }, [])
+      id: this.fb.control((study && study.id) || null, []),
+      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null),
+      studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\- ]+$/)]),
+      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
+      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
+      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
+      studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
+      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required]),
+      contractorId: this.fb.control(study.contractorId || null, [])
     });
   }
 
