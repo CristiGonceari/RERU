@@ -32,7 +32,7 @@
                     <select class="form-control h-35px" name="questionType" [(ngModel)]="questionType"
                       (click)="onSelect()">
                       <option [value]="null" selected class="default-option">{{ 'questions.question-type' | translate }}</option>
-                      <option *ngFor="let question of questionTypeEnumList" [ngValue]="question.value">
+                      <option *ngFor="let question of questionTypeEnumList.reverse()" [ngValue]="question.value">
                         {{'statuses.' + question.label | translate}}
                       </option>
                     </select>
