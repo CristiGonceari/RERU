@@ -887,7 +887,8 @@
     "only-letters-numbers-and-symbols": "Should contain only letters, numbers and - , . ",
     "only-letters-numbers-and-some-symbols": "Should contain only letters, numbers and - , . \" \" ",
     "valid-email": "Email needs to be valid. For example: codwer@mail.com",
-    "validations-service-error": "Validation service error!"
+    "validations-service-error": "Validation service error!",
+    "only-year": "Please provide a valid format AAAA"
   },
   "notification": {
     "title": {
@@ -1174,7 +1175,41 @@
     "qualification": "Qualification",
     "institution-address": "Institution Address",
     "year-of-admision": "Year of admission",
-    "graduation-year" : "Graduation Year"
+    "graduation-year" : "Graduation Year",
+    "study-act-name": "Certificate of graduation (series, number, date of issue)",
+    "study-act-series": "Series",
+    "study-act-number": "Number",
+    "diploma-act-name": "Doctor's degree diploma (series, number, date of issue)",
+    "certificate-act-name": "Certificate (series, number, date of issue)",
+    "study-act-emitted-date": "Release day",
+    "profile": "Profile",
+    "study-form" : "Form of education",
+    "study-title": "Title(licensed in...)",
+    "master-title": "Title(master in...)",
+    "doctor-title": "Title(doctor in...)",
+    "study-coureses-type": "Courses type",
+    "study-credit-number": "No. of hours/credits",
+    "study-period-date": "Study period (beginning, end)",
+    "study-period-start-date": "Start date",
+    "study-period-end-date": "End date",
+    "not-selected-study-type": "No one type of studies selected.",
+    "add-study": "Add another study type",
+    "study-add-button-hint": "Press the button to add the study",
+    "study-start-date": "Study start date",
+    "study-end-date": "Study end date"
+  },
+  "study-profiles":{
+    "1": "Real",
+    "2": "Humanist",
+    "3": "Arts",
+    "4": "Sport",
+    "5": "Etc"
+  },
+  "study-courses":{
+    "1": "Initial",
+    "2": "Perfecting",
+    "3": "Retraining",
+    "4": "Specialization"
   },
   "language":{
     "modern-language-level": "The level of knowledge of the modern language",
@@ -1225,7 +1260,15 @@
     "series":"Series",
     "number": "Number",
     "relase-day":"Release day",
-    "eminent-authority" : "Eminent Authority"
+    "eminent-authority" : "Eminent Authority",
+    "institution-name": "Name (of the institution/organisation/company)",
+    "institution-adress": "Address (of the institution/organization/company)",
+    "period": "Period",
+    "start-obligation-period": "Start date",
+    "end-obligation-period": "End date",
+    "recruitment-booklet": "Recruitment certificate",
+    "military-obligation-add-button-hint": "Press the button to add military obligation",
+    "add-military-obligation": "Add another obligation"
   },
   "autobiography":{
     "title":"The autobiography is written personally by the candidate read, ordered, without corrections and abbreviations, with the obligatory indication of the following information:",
@@ -1237,6 +1280,37 @@
     "paragraf-6": "- Possession of scientific, scientific-didactic, honorary and sports degrees / titles, date of their granting and issuing authority;",
     "paragraf-7": "- Existence of official and unofficial work experience (period, position (position), institution, organization, enterprise);",
     "paragraf-8": "- Place of residence and home visa (both indicated if they do not coincide)."
+  },
+  "candidate-registration-flux":{
+    "step-success": "Step was added!",
+    "step-error": "Step was not added!",
+    "step-in-progress": "Step will be completed later!",
+    "update-general-data-success": "Contractor details added!",
+    "update-general-data-error": "Contractor details was not added!",
+    "add-bulletin-success": "Bulletin was added!",
+    "add-bulletin-error": "Bulletin was not added!",
+    "edit-bulletin-success": "Bulletin was updated!",
+    "edit-bulletin-error": "Bulletin was not updated!",
+    "create-study-success": "Studies was added!",
+    "create-study-error": "Studies was not added!",
+    "create-modern-language-success": "Modern language was added!",
+    "create-modern-language-error": "Modern language was not added!",
+    "create-study-recommendation-success": "Recommendation was added!",
+    "create-study-recommendation-error": "Recommendation was not added!",
+    "create-material-status-success": "Material status was added!",
+    "create-material-status-error": "Material status was not added!",
+    "create-kinship-success": "Kinship relation was added!",
+    "create-kinship-error": "Kinship relation was not added!",
+    "update-material-status-success": "Material status was updated!",
+    "update-material-status-error": "Material status was not updated!",
+    "update-kinship-relation-criminal-data-success": "Kinship relation status was updated!",
+    "update-kinship-relation-criminal-data-error": "Kinship relation status was not updated!",
+    "create-military-obligation-success": "Military obligation relation added!",
+    "create-military-obligation-error": "Military obligation relationwas not added!",
+    "create-autobiography-success": "Autobiography was added!",
+    "create-autobiography-error": "Autobiography was not added!",
+    "update-autobiography-success": "Autobiography was updated!",
+    "update-autobiography-error": "Autobiography was not updated!"
   },
   "declaration":{
     "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me"

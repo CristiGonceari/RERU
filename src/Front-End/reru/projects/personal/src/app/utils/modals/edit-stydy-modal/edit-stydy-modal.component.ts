@@ -8,6 +8,7 @@ import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { ReferenceService } from 'projects/personal/src/app/utils/services/reference.service';
+import { ValidatorUtil } from '../../util/validator.util';
 
 
 @Component({
@@ -42,22 +43,31 @@ export class EditStydyModalComponent extends EnterSubmitListener implements OnIn
     });
   }
 
-  initForm(data: StudyModel = <StudyModel>{}): void {
+  initForm(study: StudyModel = <StudyModel>{}): void {
     this.studyForm = this.fb.group({
-      id: this.fb.control(data.id),
-      institution: this.fb.control(data.institution, [Validators.required]),
-      studyFrequency: this.fb.control(data.studyFrequency, [Validators.required]),
-      studyTypeId: this.fb.control(data.studyTypeId, [Validators.required]),
-      faculty: this.fb.control(data.faculty, [Validators.required]),
-      qualification: this.fb.control(data.qualification, [Validators.required]),
-      specialty: this.fb.control(data.specialty, [Validators.required]),
-      diplomaNumber: this.fb.control(data.diplomaNumber, [Validators.required]),
-      diplomaReleaseDay: this.fb.control(data.diplomaReleaseDay, [Validators.required]),
-      isActiveStudy: this.fb.control(!!data.isActiveStudy, [Validators.required]),
-      contractorId: this.fb.control(data.contractorId, [])
+      id: this.fb.control((study && study.id) || null, []),
+      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null),
+      studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\- ]+$/)]),
+      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
+      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
+      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
+      studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
+      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required]),
+      contractorId: this.fb.control(study.contractorId || null, [])
     });
 
-    this.selectedItem2 = this.studyTypes2 && this.studyTypes2.find(el => +el.value === data.studyTypeId);
+    this.selectedItem2 = this.studyTypes2 && this.studyTypes2.find(el => +el.value === study.studyTypeId);
 
   }
 
