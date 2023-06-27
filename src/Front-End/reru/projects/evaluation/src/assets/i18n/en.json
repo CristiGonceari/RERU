@@ -942,7 +942,7 @@
     "03000001": "Invalid data entry",
     "03000002": "The field is not valid or has not been filled",
     "03000003": "This record already exists",
-    "03000004": "The name is empty, fill it",
+    "03000004": "The field is required",
     "03000005": "Invalid id",
     "03000006": "Record is invalid",
     "03000007": "Invalid time range",
