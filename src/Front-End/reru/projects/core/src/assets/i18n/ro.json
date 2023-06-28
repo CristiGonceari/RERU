@@ -573,7 +573,7 @@
     "01000909": "Interval de timp nevalid",
     "01000116": "Parolă veche incorectă",
     "01000117": "Parola nouă și parola veche sunt aceleași",
-    "01000105": "Utilizator inexistent"
+    "01000105": "Email invalid"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -723,7 +723,9 @@
     "study-period-end-date": "Data de încheiere",
     "not-selected-study-type": "Nici un tip de studii selectat.",
     "add-study": "Adăugați un alt tip de studii",
-    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul"
+    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul",
+    "study-start-date": "Data de început",
+    "study-end-date": "Data de încheiere"
   },
   "study-profiles":{
     "1": "Real",
@@ -832,7 +834,6 @@
     "10": "Superioare scurte/de scurtă durată(colegiu)",
     "11": "Superioare universitare(fără licență)",
     "12": "Superioare de licență",
-    "13": "Superioare de master",
     "13": "Masterat",
     "14": "Superioare de doctorat",
     "15": "Postdoctorat",

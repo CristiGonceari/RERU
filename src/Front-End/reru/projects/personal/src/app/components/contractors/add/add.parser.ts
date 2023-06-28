@@ -55,17 +55,26 @@ export class ContractorParser {
 
     public static parseStudy(data: StudyModel, contractorId): StudyModel {
         return ObjectUtil.preParseObject({
-            id: data.id,
-            institution: data.institution,
-            studyTypeId: data.studyTypeId,
-            studyFrequency: data.studyFrequency? +data.studyFrequency : null,
-            faculty: data.faculty,
-            qualification: data.qualification,
-            specialty: data.specialty,
-            diplomaNumber: data.diplomaNumber,
-            diplomaReleaseDay: data.diplomaReleaseDay,
-            isActiveStudy: data.isActiveStudy,
-            contractorId
+          id: data.id,
+          institution: data.institution,
+          studyFrequency: data.studyFrequency,
+          studyTypeId: data.studyTypeId,
+          institutionAddress: data.institutionAddress,
+          faculty: data.faculty,
+          specialty: data.specialty,
+          yearOfAdmission: data.yearOfAdmission,
+          graduationYear: data.graduationYear,
+          contractorId: contractorId,
+          studyCourse: data.studyCourse,
+          startStudyPeriod: data.startStudyPeriod,
+          endStudyPeriod: data.endStudyPeriod,
+          title: data.title,
+          studyProfile: data.studyProfile,
+          qualification: data.qualification,
+          creditCount: data.creditCount,
+          studyActSeries: data.studyActSeries,
+          studyActNumber: data.studyActNumber,
+          studyActRelaseDay: data.studyActRelaseDay
         })
     }
 

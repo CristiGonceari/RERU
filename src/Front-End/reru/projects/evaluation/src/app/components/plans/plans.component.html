@@ -16,10 +16,10 @@
 						<app-add-button class="btn" [value]="'plans.add-plan' | translate" [routerLink]="['add']" ></app-add-button>
 					</div>
 					<div class="card-toolbar d-md-none d-flex flex-column w-100">
-						<erp-shared-export-button class="w-100" (click)="plansTable.getHeaders(getTitle())">
+						<erp-shared-export-button class="w-100" width="100%" (click)="plansTable.getHeaders(getTitle())">
 							{{'button.export' | translate}}
 						</erp-shared-export-button>
-						<app-add-button class="btn my-auto pt-2 w-100" [value]="'plans.add-plan' | translate" [routerLink]="['add']" ></app-add-button>
+						<app-add-button class="btn my-auto pt-2 w-100" width="100%" [value]="'plans.add-plan' | translate" [routerLink]="['add']" ></app-add-button>
 					</div>
 				</div>
 				<div class="card-body">

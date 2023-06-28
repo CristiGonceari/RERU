@@ -79,7 +79,7 @@ export class TestVerificationProcessComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getTestId();
-		this.getSummary(this.testId, this.index - 1);
+		this.getSummary(this.testId, this.index);
 		this.ngDoBoostrap();
 		this.pagination();
 		this.testQuestionService.setData(true);
@@ -91,9 +91,9 @@ export class TestVerificationProcessComponent implements OnInit {
 		customElements.get('app-hash-option-input') || customElements.define('app-hash-option-input', el);
 	}
 
-	checkIfHadFile() {
+	checkIfHadFile(index) {
 		let params = {
-			questionIndex: this.index,
+			questionIndex: index,
 			testId: this.testId
 		};
 
@@ -156,7 +156,7 @@ export class TestVerificationProcessComponent implements OnInit {
 				this.verifiedStatus = res.data.testQuestions.map(el => el.verificationStatus);
 				this.autoverified = res.data.testQuestions.filter(st => st.verificationStatus === 0).map(id => id.index);
 				this.verified = res.data.testQuestions.filter(st => st.verificationStatus === 1).map(id => id.index);
-				this.processTestQuestion(this.getNextIndex());
+				this.processTestQuestion(index);
 			},
 		);
 	}
@@ -178,7 +178,7 @@ export class TestVerificationProcessComponent implements OnInit {
 			toEvaluate: true
 		};
 
-		this.checkIfHadFile();
+		this.checkIfHadFile(index);
 
 		this.verifyService.getTest(testData).subscribe(
 			(res) => {

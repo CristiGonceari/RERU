@@ -72,5 +72,7 @@ export class AddCategoryComponent implements OnInit {
     if (this.questionCategoryId && this.questionType) {
       this.isButtonDisabled = false;
     }
+    
+    if (!this.isGridTest) this.isButtonDisabled = false;
   }
 }

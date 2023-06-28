@@ -32,7 +32,7 @@
                     <select class="form-control h-35px" name="questionType" [(ngModel)]="questionType"
                       (click)="onSelect()">
                       <option [value]="null" selected class="default-option">{{ 'questions.question-type' | translate }}</option>
-                      <option *ngFor="let question of questionTypeEnumList" [ngValue]="question.value">
+                      <option *ngFor="let question of questionTypeEnumList.reverse()" [ngValue]="question.value">
                         {{'statuses.' + question.label | translate}}
                       </option>
                     </select>
@@ -91,6 +91,7 @@
             </div>
           </div>
         </div>
+        <div *ngIf="questionsTable.questions.length === 0" class="text-center">{{ 'message.no-record' | translate }}</div>
         <div class="card-body">
           <app-category-questions-table [setLimit]="setLimit" [timeLimit]="timeLimit" #questionsTable></app-category-questions-table>
         </div>

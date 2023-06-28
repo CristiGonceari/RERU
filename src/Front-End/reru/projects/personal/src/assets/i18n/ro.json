@@ -126,7 +126,7 @@
     "create-access": "Adaugă acces",
     "are-you-sure-you-want-to-reset-password": "Ești sigur că vrei să resetezi parola?",
     "reset-password": "Resetează parola",
-    "last-organization-role": "Ultima poziție",
+    "last-organization-role": "Ultimul rol",
     "last-department": "Ultimul departament",
     "documents-held": "Documente deținute",
     "list-documents-held": "Lista documentelor deținute",
@@ -509,6 +509,7 @@
     "try-again": "Încearcă din nou",
     "search": "Caută",
     "search-name": "Căutați după denumire",
+    "search-role": "Căutați după rol",
     "continue": "Continuă",
     "loading": "Se încarcă",
     "transmit": "Transmite",
@@ -888,7 +889,8 @@
     "only-letters-numbers-and-symbols": "Trebuie să conţină doar litere, cifre şi - , . ",
     "only-letters-numbers-and-some-symbols": "Trebuie să conţină doar litere, cifre şi - , . \" \" ",
     "valid-email": "Email trebuie să fie valid. De exemplu: codwer@mail.com",
-    "validations-service-error": "Eroare de serviciu de validare!"
+    "validations-service-error": "Eroare de serviciu de validare!",
+    "only-year": "Vă rugăm să furnizați un format valid AAAA"
   },
   "notification": {
     "title": {
@@ -1134,12 +1136,13 @@
     "max-print-rows": "Se pot imprima maxim 3000 de rânduri"
   },
   "general-datas":{
+    "patronymic": "Patronimic(opțional)",
     "nationality": "Naţionalitatea",
     "citizenship":"Cetățenia",
     "state-language-level":"Nivelul de cunoaștere a limbii de stat",
     "sex":"Sex",
-    "home-phone":"Telefon fix",
-    "work-phone":"Telefon de serviciu",
+    "home-phone":"Telefon fix(opțional)",
+    "work-phone":"Telefon de serviciu(opțional)",
     "phone":"Telefon personal"
   },
   "bulletin":{
@@ -1172,7 +1175,41 @@
     "qualification": "Calificarea",
     "institution-address": "Adresa instituţiei",
     "year-of-admision": "Anul admiterii",
-    "graduation-year" : "Anul absolvirii"
+    "graduation-year" : "Anul absolvirii",
+    "study-act-name": "Actul de studii(seria, nr, data eliberării)",
+    "study-act-series": "Seria",
+    "study-act-number": "Numărul",
+    "diploma-act-name": "Diploma de doctor (seria, nr, data eliberării)",
+    "certificate-act-name": "Certificatul(seria, nr, data eliberării)",
+    "study-act-emitted-date": "Data eliberării",
+    "profile": "Profilul",
+    "study-form" : "Forma de învățământ",
+    "study-title": "Titlul(licențiat în...)",
+    "master-title": "Titlul(master în...)",
+    "doctor-title": "Titlul(doctor în...)",
+    "study-coureses-type": "Tipuri de cursuri",
+    "study-credit-number": "Nr. de ore/credite",
+    "study-period-date": "Perioada de studii(început, sfârșit)",
+    "study-period-start-date": "Data de început",
+    "study-period-end-date": "Data de încheiere",
+    "not-selected-study-type": "Nici un tip de studii selectat.",
+    "add-study": "Adăugați un alt tip de studii",
+    "study-add-button-hint": "Apăsați butonul pentru a adăuga studiul",
+    "study-start-date": "Data de început",
+    "study-end-date": "Data de încheiere"
+  },
+  "study-profiles":{
+    "1": "Real",
+    "2": "Umanist",
+    "3": "Arte",
+    "4": "Sportiv",
+    "5": "Etc"
+  },
+  "study-courses":{
+    "1": "Inițiale",
+    "2": "Perfecționare",
+    "3": "Specializare",
+    "4": "Recalificare"
   },
   "language":{
     "modern-language-level": "Nivelul de cunoaștere a limbii moderne",
@@ -1218,14 +1255,21 @@
     "year-of-mobilization" : "Anul mobilizării",
     "year-of-withdrawal" : "Anul retragerii",
     "efectiv": "Efectiv",
-
     "military-specialty": "Specialitate militară",
     "degree": "Gradul",
     "military-booklet": "Livret militar",
     "series":"Seria",
     "number": "Numărul",
     "relase-day":"Data eliberării",
-    "eminent-authority" : "Autoritatea Eminentă"
+    "eminent-authority" : "Autoritatea Eminentă",
+    "institution-name": "Denumirea (instituției/organizației/întreprinderii)",
+    "institution-adress": "Adresa (instituției/organizației/întreprinderii)",
+    "period": "Perioada",
+    "start-obligation-period": "Data de început",
+    "end-obligation-period": "Data de încheiere",
+    "recruitment-booklet": "Adeverinţă de recrutare",
+    "military-obligation-add-button-hint": "Apăsați butonul pentru a adăuga obligația militară",
+    "add-military-obligation": "Adăugați o altă obligație"
   },
   "autobiography":{
     "title":"Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:",
@@ -1237,6 +1281,37 @@
     "paragraf-6": "– Posesia gradelor/titlurilor științifice, științifico-didactice, onorifice și sportive, data acordării lor și autoritatea emitentă;",
     "paragraf-7": "– Existența stagiului de muncă oficial și neoficial (perioada, funcția (postul), instituția, organizația, întreprinderea);",
     "paragraf-8": "– Locul de trai și viza de domiciliu (se indică ambele dacă nu coincid)."
+  },
+  "candidate-registration-flux":{
+    "step-success": "Pasul a fost trecut cu succes!",
+    "step-error": "Pasul nu a fost trecut cu succes!",
+    "step-in-progress": "Pasul va fi finalizat mai târziu!",
+    "update-general-data-success": "Detaliile utilizatorului au fost adăugate!",
+    "update-general-data-error": "Detaliile utilizatorului nu au fost adăugate!",
+    "add-bulletin-success": "Buletinul a fost adăugat!",
+    "add-bulletin-error": "Buletinul nu a fost adăugat!",
+    "edit-bulletin-success": "Buletinul a fost actualizat!",
+    "edit-bulletin-error": "Buletinul nu a fost actualizat!",
+    "create-study-success": "Studiile au fost adăugate!",
+    "create-study-error": "Studiile nu au fost adăugate!",
+    "create-modern-language-success": "Limba modernă a fost adăugată!",
+    "create-modern-language-error": "Limba modernă nu a fost adăugată!",
+    "create-study-recommendation-success": "Recomandarea a fost adăugată!",
+    "create-study-recommendation-error": "Recomandarea nu a fost adăugată!",
+    "create-material-status-success": "Starea civilă a fost adăugată!",
+    "create-material-status-error": "Starea civilă nu a fost adăugată!",
+    "create-kinship-success": "Relația de rudenie a fost adăugată!",
+    "create-kinship-error": "Relația de rudenie nu a fost adăugată!",
+    "update-material-status-success": "Starea civilă a fost actualizată!",
+    "update-material-status-error": "Starea civilă nu a fost actualizată!",
+    "update-kinship-relation-criminal-data-success": "Relația de rudenie a fost actualizată!",
+    "update-kinship-relation-criminal-data-error": "Relația de rudenie nu a fost actualizată!",
+    "create-military-obligation-success": "Obligația militară a fost adăugată!",
+    "create-military-obligation-error": "Obligația militară nu a fost adăugată!",
+    "create-autobiography-success": "Autobiografia a fost adăugată!",
+    "create-autobiography-error": "Autobiografia nu a fost adăugată!",
+    "update-autobiography-success": "Autobiografia a fost actualizată!",
+    "update-autobiography-error": "Autobiografia nu a fost actualizată!"
   },
   "declaration":{
     "paragraf": "Declar, pe propria răspundere, că datele înscrise în această fișă sunt veridice. Sunt de acord ca autoritățile competente să-mi verifice datele din fișă și din actele prezentate"
@@ -1257,17 +1332,30 @@
     "2": "Universitare",
     "3": "PostUniversitare",
     "4": "Cursuri de Perfecționare",
-    "5": "Cursuri de Specializare"
+    "5": "Cursuri de Specializare",
+    "6": "Medii incomplete(8/9 clase)",
+    "7": "Medii generale(10/11 clase)",
+    "8": "Bacalaureat(12 clase)",
+    "9": "Medii de specializare(colegiu, centrul de excelență)",
+    "10": "Superioare scurte/de scurtă durată(colegiu)",
+    "11": "Superioare universitare(fără licență)",
+    "12": "Superioare de licență",
+    "13": "Masterat",
+    "14": "Superioare de doctorat",
+    "15": "Postdoctorat",
+    "16": "Cursuri de formare profesională"
   },
   "studyFrequency":{
     "Daily":"Frecvență la zi",
-    "LowFrequency": "Frecvență redusa"
+    "LowFrequency": "Frecvență redusa",
+    "Remote": "La distanță"
   },
   "materialStatusType": {
     "1": "Celibatar",
     "2": "Căsătorit",
     "3": "Recăsătorit",
-    "4": "Văduv"
+    "4": "Văduv",
+    "5": "Divorțat/ă"
   },
   "kinshipDegree":{
     "Brother" : "Frate",
@@ -1287,7 +1375,9 @@
     "AlternativeService" : "Serviciu de alternativă",
     "PerformedMilitaryService" : "Serviciul militar îndeplinit",
     "Recruit" : "Recrut",
-    "Reservist" : "Rezervist"
+    "Reservist" : "Rezervist",
+    "Disobedient" : "Nesupus/ă",
+    "MilitaryChair" : "Catedra militară"
   },
   "stepper":{
     "button-update-and-next":"Actualizează și treci la pasul următor",

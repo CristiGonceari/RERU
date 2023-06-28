@@ -11,6 +11,7 @@
     <div class="col-xl-3">
       <div class="input-group input-group-sm input-group-solid">
         <input class="form-control" type="text" name="name" [(ngModel)]="name"
+          (keydown.enter)="getFilteredEvents({page: 1, itemsPerPage: pagination.pageSize})"
           [placeholder]="'button.search-name' | translate" />
       </div>
     </div>

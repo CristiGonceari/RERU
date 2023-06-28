@@ -11,7 +11,7 @@
     <div class="card card-custom bg-light-primary p-7">
       <div class="d-flex align-items-center">
         <div class="d-flex flex-column w-100">
-          <div class="d-flex">
+          <div class="d-flex" *ngIf="!isLoadingMedia">
             <div class="w-25">
               <span class="svg-icon svg-icon-primary svg-icon-3x">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -33,7 +33,18 @@
             <app-confirm-button class="btn" (handle)="downloadTemplate(selectedTypeId)"
               [value]="'button.download' | translate"></app-confirm-button>
           </div>
-          <p class="text-danger text-center mb-0">{{'message.bulk-downloadMsg' | translate}}.</p>
+          <p class="text-danger text-center mb-0" *ngIf="!isLoadingMedia">{{'message.bulk-downloadMsg' | translate}}.</p>
+          <div class="d-flex" *ngIf="isLoadingMedia">
+            <div class="w-100">
+              <div class="progress" style="height: 30px;">
+                <div [style.width.%]="fileStatus.percent"
+                  class="progress-bar progress-bar-animated bg-white text-dark btn-light-warning font-size-h6" role="progressbar"
+                  aria-valuenow="100" aria-valuemin="0" aria-valuemax="200" aria-valuetext="100">
+                  {{ fileStatus.requestType }} {{ fileStatus.percent }}%
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="fv-plugins-message-container"></div>
         </div>
       </div>
@@ -56,6 +67,6 @@
   </div>
   <div class="modal-footer">
       <app-button class="btn mr-2" (handle)="dismiss()" [value]="'button.cancel' | translate"></app-button>
-    <app-add-button class="btn" (handle)="onConfirm()" [value]="'button.confirm' | translate"></app-add-button>
+    <app-add-button class="btn" (handle)="onConfirm()" [disabled]="cantAdd()" [value]="'button.confirm' | translate"></app-add-button>
   </div>
   

@@ -29,6 +29,7 @@
 						<div class="col-lg col-md-6 col-12 pt-md-0 pt-2 pr-md-3 px-0">
 							<erp-shared-search-input 
 								(handleSearch)="table.setFilter('name', $event)" 
+								(keydown.enter)="table.getDocuments()"
 								[placeholder]="'button.search-name' | translate"
 								[showIcon]="false" [useDebounce]="false" #searchName>
 							</erp-shared-search-input>

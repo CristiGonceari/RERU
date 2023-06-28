@@ -10,14 +10,28 @@
                     <div class="card-title">
                         <h3 class="card-label" id="title">{{'statistics.statistics' | translate}} </h3>
                     </div>
-                </div>
+                    <div class="card-toolbar d-sm-flex d-none">
+						<erp-shared-export-button class="btn mr-3" (click)="table.getHeaders(getTitle())" 
+                            [disabled]="filterEnum < 0 || (testTemplateId || categoryId) == null || itemsPerPage == null">
+                            {{'button.export' | translate}}
+                        </erp-shared-export-button>
+                        <app-confirm-button width="100%" (handle)="table.getQuestions(send())" [value]="'button.search' | translate"></app-confirm-button>
+					</div>
+					<div class="card-toolbar d-sm-none d-flex w-100">
+						<erp-shared-export-button (click)="table.getHeaders(getTitle())" width="100%" class="m-1"
+                            [disabled]="filterEnum < 0 || (testTemplateId || categoryId) == null || itemsPerPage == null">
+                            {{'button.export' | translate}}
+                        </erp-shared-export-button>
+                        <app-confirm-button width="100%" class="m-1" (handle)="table.getQuestions(send())" [value]="'button.search' | translate"></app-confirm-button>
+					</div>
+                </div>               
                 <div class="card-header border-0">
                     <div class="flex-column col-10">
                         <div class="row col-15 w-100">
                             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
                                 <div class="d-flex flex-column">
                                     <label class="col-form-label pb-0 text-dark-50">{{'events.test-type-name' | translate}}</label>
-                                    <select class="form-control h-35px" name="testTemplateId" [(ngModel)]="testTemplateId" (ngModelChange)="table.getQuestions(send())" [disabled]="categoryId">
+                                    <select class="form-control h-35px" name="testTemplateId" [(ngModel)]="testTemplateId" [disabled]="categoryId">
                                         <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                         <option *ngFor="let item of testTemplates" [ngValue]="item.value">
                                             {{ item.label }}
@@ -28,7 +42,7 @@
                             <div class="col-lg col-md-6 col-12 pt-lg-0 pt-2">
                                 <div class="d-flex flex-column">
                                     <label class="col-form-label pb-0 text-dark-50">{{'questions.category' | translate}}</label>
-                                    <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" (ngModelChange)="table.getQuestions(send())" [disabled]="testTemplateId">
+                                    <select class="form-control h-35px" name="categoryId" [(ngModel)]="categoryId" [disabled]="testTemplateId">
                                         <option class="default-option" selected [ngValue]="null">{{'questions.select' | translate }}</option>
                                         <option *ngFor="let item of categories" [ngValue]="item.value">
                                             {{ item.label }}
@@ -42,7 +56,7 @@
                                 <div class="d-flex flex-column">
                                     <label class="col-form-label pb-0 text-dark-50">{{'statistics.filter-criteria' | translate}}</label>
                                     <select class="form-control h-35px" name="filterEnum"
-                                        [(ngModel)]="filterEnum" (ngModelChange)="table.getQuestions(send())">
+                                        [(ngModel)]="filterEnum">
                                         <option class="default-option" selected [value]="-1">{{'questions.select' | translate }}</option>
                                         <option *ngFor="let item of statisticEnum" [value]="item.value">
                                             {{'statuses.' + item.label | translate}}
@@ -54,20 +68,9 @@
                                 <div class="d-flex flex-column">
                                   <label class="col-form-label pb-0 text-dark-50">{{'statistics.items-per-page' | translate}}</label>
                                   <input type="number" class="form-control form-control-lg  h-35px" [(ngModel)]="itemsPerPage"
-                                    name="itemsPerPage" placeholder="{{'statistics.items-per-page' | translate}}" (ngModelChange)="table.getQuestions(send())">
+                                    name="itemsPerPage" placeholder="{{'statistics.items-per-page' | translate}}">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="flex-column col-9 col-lg-3 mt-3">
-                        <div class="w-100 mt-8">
-                            <button type="button" 
-                                class="btn btn-confirm"
-                                (click)="table.getHeaders(getTitle())" 
-                                [disabled]="filterEnum < 0 || (testTemplateId || categoryId) == null || itemsPerPage == null">
-                                <i class="far fa-file-pdf text-white"></i>
-                                {{'button.print' | translate}}
-                            </button>
                         </div>
                     </div>
                 </div>

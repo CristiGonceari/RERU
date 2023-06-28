@@ -65,6 +65,17 @@ export class RolesTableComponent implements OnInit {
     });
   }
 
+  startSearch(): void {
+    this.pagedSummary.currentPage = 1;
+    this.list({searchWord: this.searchWord, page: 1});
+  }
+  
+  resetFilters(): void {
+		this.pagedSummary.currentPage = 1;
+		this.searchWord = '';
+		this.list();
+  }
+
   // openConfirmationDeleteModal(id: number): void {
   //   const modalRef: any = this.modalService.open(ConfirmModalComponent, { centered: true });
   //   modalRef.componentInstance.title = 'Delete';

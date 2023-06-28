@@ -52,7 +52,7 @@
                             </app-loading-spinner>
                             <div class="d-flex align-items-center">
                                 <div class="d-flex flex-column mx-auto mt-5" *ngIf="!isLoading">
-                                    <a class="font-weight-bolder font-size-h5 text-dark-75">
+                                    <a class="font-weight-bolder font-size-h5 text-dark-75 text-center">
                                         {{positionName}}
                                         <svg-icon *ngIf="isActive === false" key="error" [width]="24" [height]="24"
                                             data-toggle="tooltip" data-placement="right" placement="right"
@@ -132,15 +132,15 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
-                          <div class="d-flex flex-column mx-auto">
+                          <div class="d-flex flex-column mx-auto text-center">
                             <a class="font-weight-bolder font-size-h5 text-dark-75">
                                 {{positionName}}
                                 <svg-icon *ngIf="isActive === false" key="error" [width]="24" [height]="24"
-                                    data-toggle="tooltip" data-placement="right" placement="right"
+                                    data-toggle="tooltip" data-placement="center" placement="center"
                                     ngbTooltip="Inactive">
                                 </svg-icon>
                                 <svg-icon *ngIf="isActive === true" key="success" [width]="24" [height]="24"
-                                    data-toggle="tooltip" data-placement="right" placement="right"
+                                    data-toggle="tooltip" data-placement="center" placement="center"
                                     ngbTooltip="Active">
                                 </svg-icon>
                             </a>

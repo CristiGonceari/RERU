@@ -18,6 +18,7 @@ import { StartEvaluationPageComponent } from '../evaluations/start-evaluation-pa
 import { PerformingEvaluationComponent } from '../evaluations/performing-evaluation/performing-evaluation.component';
 import { ViewEvaluationResultComponent } from '../evaluations/view-evaluation-result/view-evaluation-result.component';
 import { MyPositionDiagramComponent } from './my-solicited-tests/my-position-diagram/my-position-diagram.component';
+import { MyPositionDetailsComponent } from './my-solicited-tests/my-position-details/my-position-details.component';
 
 const routes: Routes = [
   {path: '', component: MyActivitiesComponent,
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'finish-page/:id', component: FinishPageComponent },
   { path: 'add-solicited-position', component: AddEditSolicitedTestComponent },
   { path: 'edit-solicited-position/:id', component: AddEditSolicitedTestComponent },
+  { path: 'details/:id', component: MyPositionDetailsComponent}
 ];
 
 @NgModule({

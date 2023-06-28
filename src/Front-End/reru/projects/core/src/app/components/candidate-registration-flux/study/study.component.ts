@@ -376,20 +376,20 @@ export class StudyComponent implements OnInit {
   generateStudies(study?, contractorId?): FormGroup {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
-      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
       institutionAddress: this.fb.control((study && study.institutionAddress) || null),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\- ]+$/)]),
+      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
       yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
       graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
       startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
       endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
-      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
       creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
       studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
@@ -505,7 +505,6 @@ export class StudyComponent implements OnInit {
         if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
             (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
@@ -518,7 +517,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
@@ -532,7 +530,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 6) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
@@ -548,7 +545,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
@@ -563,7 +559,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
@@ -578,7 +573,6 @@ export class StudyComponent implements OnInit {
           results.push(!(
             (study[i].value.studyCourse && !ValidatorUtil.isInvalidPattern(study[i], "studyCourse")) &&
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.creditCount && !ValidatorUtil.isInvalidPattern(study[i], "creditCount")) &&
             (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&

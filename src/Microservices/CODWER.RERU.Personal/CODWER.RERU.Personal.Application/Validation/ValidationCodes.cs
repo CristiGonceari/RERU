@@ -227,6 +227,7 @@
         public static string EMPTY_MILITARY_BOOKLET_NUMBER = "02023001";
         public static string EMPTY_MILITARY_BOOKLET_AUTHORITY = "02023001";
         public static string MILITARY_OBLIGATION_NOT_FOUND = "02023001";
+        public static string EMPTY_MILITARY_OBLIGATION_TYPE = "01006008";
 
         //Organigram
         public static string HEAD_OF_ORGANIGRAM_CANNOT_BE_DELETED = "03030001";

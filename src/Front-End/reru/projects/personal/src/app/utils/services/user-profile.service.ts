@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractService, AppSettingsService } from '@erp/shared';
+import { AppSettingsService, AbstractService } from '@erp/shared';
 
 @Injectable({
 	providedIn: 'root',

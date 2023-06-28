@@ -66,11 +66,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
         {
-            //pregatim datele
             var itemsEvents = paginatedModel.Items.Select(i => i.EventId);
             var itemsUsers = paginatedModel.Items.Select(i => i.UserId);
 
-            //trimitem un singur request la DB optimizat
             var eventUsers = _appDbContext.EventUsers
                 .Include(x => x.EventUserCandidatePositions)
                 .ThenInclude(x => x.CandidatePosition)
@@ -80,19 +78,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                     UserProfileId = x.UserProfileId
                 })
                 .ToList();
-
-            //foreach (var item in paginatedModel.Items)
-            //{
-            //    var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId); // nu mai facem call la DB dar la lista
-
-            //    if (eventUser is null  // check eventUser && eventUser.PositionId 
-            //        || eventUser.PositionId is null
-            //        || eventUser.PositionId == 0) continue;
-
-            //    item.CandidatePositionNames = eventUser.EventUserCandidatePositions //nu mai faci call la DB dar iai itemi din lista
-            //            .Select(x => x.CandidatePosition.Name)
-            //            .ToList();
-            //}
 
             paginatedModel.Items = paginatedModel.Items.Select(item =>
             {
@@ -113,39 +98,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             return paginatedModel;
         }
 
-        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition2(PaginatedModel<TestDto> paginatedModel)
-        {
-            //daca avem 10 itemi, in foreach se face pentru fiecare 1 request la DB adica in total o sa avem 30 requesturi la DB 
-            foreach (var item in paginatedModel.Items)
-            {
-                var eventUser = _appDbContext.EventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
-
-                if (eventUser == null) continue;
-
-                var eventUserCandidatePositions =
-                    _appDbContext.EventUserCandidatePositions.Where(x => x.EventUserId == eventUser.Id) //dc .where() nu este din rand nou ?  
-                        .Select(x => x.CandidatePositionId)
-                        .ToList();
-
-                if (!(eventUser?.PositionId > 0)) continue; //wtf ? se putea de scris position == 0
-                {
-                    var candidatePositionNames =
-                        _appDbContext.CandidatePositions.Where(p => !eventUserCandidatePositions.All(p2 => p2 != p.Id))// wtf? se putea de scris simplu, de ce sa faci atatea negatii care incurca la citire cod?
-                            .Select(x => x.Name)                                                                        // eventUserCandidatePositions.Any(p2 => p2 == p.Id) sau daje
-                            .ToList();                                                                                  // eventUserCandidatePositions.Contains(p.Id) si era mai clar
-
-                    item.CandidatePositionNames = candidatePositionNames;
-                }
-            }
-
-            return paginatedModel;
-        }
-
         private async Task<PaginatedModel<TestDto>> CheckTestEvaluator(PaginatedModel<TestDto> paginatedModel, UserProfileDto currentUser)
         {
-            var testEventIds = paginatedModel.Items.Select(x => x.EventId).ToList(); //pregatim datele
+            var testEventIds = paginatedModel.Items.Select(x => x.EventId).ToList();
 
-            var eventEvaluators = _appDbContext.EventEvaluators // evitam 10 requesturi la DB
+            var eventEvaluators = _appDbContext.EventEvaluators
                 .Where(x => testEventIds.Contains(x.EventId))
                 .Select(x => new EventEvaluator{
                     EventId = x.EventId,
@@ -153,23 +110,11 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 })
                 .ToList();
 
-            //foreach (var testDto in paginatedModel.Items)
-            //{
-            //    var testEventEvaluators = eventEvaluators.Where(x => x.EventId == testDto.EventId);
-
-            //    testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
-
-            //    if (testDto.EvaluatorId == null && testEventEvaluators.Any())
-            //    {
-            //        testDto.IsEvaluator = testEventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
-            //    }
-            //}
-
             paginatedModel.Items = paginatedModel.Items.Select(item =>
             {
                 var testEventEvaluators = eventEvaluators.Where(x => x.EventId == item.EventId);
 
-                item.IsEvaluator = item.CreateById == currentUser.Id.ToString() || item.EvaluatorId == currentUser.Id;
+                item.IsEvaluator = item.EvaluatorId == currentUser.Id;
 
                 if (item.EvaluatorId == null && testEventEvaluators.Any())
                 {
@@ -178,24 +123,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
                 return item;
             }).ToList();
-
-            return paginatedModel;
-        }
-
-        private async Task<PaginatedModel<TestDto>> CheckTestEvaluator2(PaginatedModel<TestDto> paginatedModel, UserProfileDto currentUser)
-        {
-            // 10 requesturi la DB
-            foreach (var testDto in paginatedModel.Items)
-            {
-                var eventEvaluators = _appDbContext.EventEvaluators.Where(x => x.EventId == testDto.EventId);
-
-                testDto.IsEvaluator = testDto.CreateById == currentUser.Id.ToString() || testDto.EvaluatorId == currentUser.Id;
-
-                if (testDto.EvaluatorId == null && eventEvaluators.Any())
-                {
-                    testDto.IsEvaluator = eventEvaluators.Any(e => e.EvaluatorId == currentUser.Id) || testDto.CreateById == currentUser.Id.ToString();
-                }
-            }
 
             return paginatedModel;
         }

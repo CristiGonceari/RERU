@@ -45,7 +45,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .ForMember(x => x.FinalResult, opts => opts.MapFrom(src => src.FinalStatusResult))
                 .ForMember(x => x.HashGroupKey, opts => opts.MapFrom(src => src.HashGroupKey))
                 .ForMember(x => x.IsVerificatedAutomat, opts => opts.MapFrom(src => CheckIfTestIsCalculatedBySystem(src)))
-                .ForMember(x => x.DocumentForSign, opts => opts.MapFrom(src => src.DocumentsForSign))
                 .ForMember(x => x.CreateById, opts => opts.MapFrom(src => src.CreateById));
 
             CreateMap<AddEditTestDto, Test>()

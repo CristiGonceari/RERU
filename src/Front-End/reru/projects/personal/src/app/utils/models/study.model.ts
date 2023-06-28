@@ -1,17 +1,24 @@
-import { StudyFrequencyEnum } from "./study-frequency.enum";
-
 export interface StudyModel {
     id?: number;
     institution: string;
-    studyFrequency: StudyFrequencyEnum;
+    studyFrequency: number;
+    institutionAddress: string;
     faculty: string;
-    qualification: string;
     specialty: string;
-    diplomaNumber: string;
-    diplomaReleaseDay: string;
-    isActiveStudy: boolean;
-    contractorId?: number;
+    yearOfAdmission: string;
+    graduationYear: string;
     studyTypeId: number;
+    contractorId: number
+    studyProfile: number,
+    studyCourse: number,
+    startStudyPeriod: string,
+    endStudyPeriod: string,
+    title: string,
+    qualification: string,
+    creditCount: number,
+    studyActSeries: string,
+    studyActNumber: number,
+    studyActRelaseDay: string
 }
 
 export interface ContractorStudyModel {

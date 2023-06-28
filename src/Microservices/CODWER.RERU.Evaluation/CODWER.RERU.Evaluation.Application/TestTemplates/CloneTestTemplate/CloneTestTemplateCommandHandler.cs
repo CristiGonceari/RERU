@@ -35,7 +35,10 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.CloneTestTemplate
                 Duration = oldtestTemplate.Duration,
                 Status = TestTemplateStatusEnum.Draft,
                 Mode = oldtestTemplate.Mode,
-                CategoriesSequence = oldtestTemplate.CategoriesSequence
+                IsGridTest = oldtestTemplate.IsGridTest,
+                QualifyingType = oldtestTemplate.QualifyingType,
+                CategoriesSequence = oldtestTemplate.CategoriesSequence,
+                BasicTestTemplate = oldtestTemplate.BasicTestTemplate
             };
 
             await _appDbContext.TestTemplates.AddAsync(newtestTemplate);

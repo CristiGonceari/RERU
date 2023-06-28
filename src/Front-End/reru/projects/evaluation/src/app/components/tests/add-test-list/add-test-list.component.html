@@ -4,7 +4,7 @@
 <erp-shared-content>
     <mat-accordion *ngIf="event == false">
         <mat-expansion-panel (opened)="testEvent = true" (closed)="testEvent = false">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="py-4 h-100">
                 <mat-panel-title>
                     {{'tests.add-test-event' | translate}}
                 </mat-panel-title>
@@ -17,7 +17,7 @@
     </mat-accordion>
     <mat-accordion *ngIf="testEvent == false">
         <mat-expansion-panel (opened)="event = true" (closed)="event = false">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="py-4 h-100">
                 <mat-panel-title>
                     {{'tests.add-test' | translate}}
                 </mat-panel-title>

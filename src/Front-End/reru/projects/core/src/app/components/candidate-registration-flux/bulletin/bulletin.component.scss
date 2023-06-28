@@ -35,3 +35,10 @@ button {
         justify-content: flex-end;
     }
 }
+
+::ng-deep ngb-datepicker.dropdown-menu.show {
+    @media screen and (max-width: 600px) {
+        width: 174px;
+        top:0;
+    }
+}

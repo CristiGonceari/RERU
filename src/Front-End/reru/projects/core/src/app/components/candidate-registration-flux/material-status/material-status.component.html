@@ -54,7 +54,7 @@
                                     [disabled]="materialStatusForm.value.materialStatusTypeId == null || (materialStatusForm.value.materialStatusTypeId == 'null')"
                                     (click)="createMaterialStatus()">{{'stepper.button-add' | translate}}</button>
                             </div>
-                            <div class="row mobile-container-menu mb-3">
+                            <div class="row mobile-container-menu mb-3 px-4">
                                     <app-stepper-arrow-hint-down
                                     *ngIf="materialStatusForm.value.materialStatusTypeId != null && userMaterialStatus == null"
                                     [description]="'material-status.add-button-hint' | translate"></app-stepper-arrow-hint-down>
@@ -73,7 +73,7 @@
     </mat-accordion>
     <mat-accordion class="gutter-b">
         <mat-expansion-panel>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="py-4 h-100">
                 <mat-panel-title>
                     <h4 class="d-sm-block d-none">{{'material-status.kinship-relation' | translate}}</h4>
                     <h4 class="d-sm-none d-block font-size-small">{{'material-status.kinship-relation' | translate}}
@@ -303,7 +303,7 @@
     </mat-accordion>
     <mat-accordion class="gutter-b">
         <mat-expansion-panel>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="py-4 h-100">
                 <mat-panel-title>
                     <div class="row">
                         <div class="col">
@@ -589,7 +589,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-4">
                         <div class="col">
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-icon w-auto" (click)="addKinshipRelation()"><span
@@ -615,13 +615,13 @@
     </mat-accordion>
     <mat-accordion class="gutter-b">
         <mat-expansion-panel>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="py-4 h-100">
                 <mat-panel-title>
                     <div class="row">
                         <div class="col">
                             <h4 class="d-sm-block d-none">{{'material-status.kinship-criminal-data-name' | translate}}
                             </h4>
-                            <h4 class="d-sm-none d-block font-size-smaller">
+                            <h4 class="d-sm-none d-block font-size-small">
                                 {{'material-status.kinship-criminal-data-name' | translate}}</h4>
                         </div>
                     </div>

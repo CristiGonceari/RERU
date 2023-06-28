@@ -7,8 +7,11 @@
                     {{ 'organigram.title-description-list' | translate }}
                 </h3>
             </div>
-            <div class="card-toolbar">
+            <div class="card-toolbar pc-container-menu">
                 <a [routerLink]="['new']" class="btn btn-success font-weight-bolder">{{ 'organigram.add-organigram' | translate}}</a>
+            </div>
+            <div class="card-toolbar mobile-container-menu w-100 mx-0">
+                <a [routerLink]="['new']" class="btn btn-success font-weight-bolder w-100">{{ 'organigram.add-organigram' | translate}}</a>
             </div>
         </div>
 

@@ -30,9 +30,6 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 .Include(t => t.Event).ThenInclude(l => l.EventLocations).ThenInclude(l => l.Location)
                 .OrderByDescending(x => x.CreateDate)
                 .ThenBy(x => x.HashGroupKey)
-                .Include(x => x.DocumentsForSign)
-                .ThenInclude(x => x.SignedDocuments.Where(sd => sd.Status == SignRequestStatusEnum.Success))
-                .ThenInclude(x => x.UserProfile)
                 .Select(t => new Test
                 {
                     Id = t.Id,

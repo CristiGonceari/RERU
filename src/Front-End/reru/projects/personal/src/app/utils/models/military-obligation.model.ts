@@ -6,9 +6,13 @@ export class MilitaryObligationModel {
     efectiv : string;
     militarySpecialty : string;
     degree : string;
+    institutionName: string;
+    institutionAdress: string;
     militaryBookletSeries : string;
     militaryBookletNumber : number;
     militaryBookletReleaseDay : Date;
     militaryBookletEminentAuthority : string;
+    startObligationPeriod : Date;
+    endObligationPeriod : Date;
     contractorId: number;
 }

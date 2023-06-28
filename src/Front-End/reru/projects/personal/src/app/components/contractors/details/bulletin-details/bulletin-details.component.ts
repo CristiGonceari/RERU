@@ -31,7 +31,7 @@ export class BulletinDetailsComponent implements OnInit {
   bulletinForm: FormGroup;
 
   isLoading: boolean = true;
-  toAddOrUpdateButton: boolean;
+  hasBulletin: boolean;
  
   existentBulletin;
   bulletinId;
@@ -51,6 +51,9 @@ export class BulletinDetailsComponent implements OnInit {
     apartment: 'ap.',
     postCode: 'Post Code'
   }
+
+  title: string;
+  description: string;
 
   constructor(private bulletinService: BulletinService,
               private fb: FormBuilder,
@@ -97,7 +100,7 @@ export class BulletinDetailsComponent implements OnInit {
     if (contractor.hasBulletin){
       this.getExistentBulletin(contractor.id);
     }else{
-      this.toAddOrUpdateButton = false;
+      this.hasBulletin = false;
       this.isLoading = false;
     }
   }
@@ -123,7 +126,7 @@ export class BulletinDetailsComponent implements OnInit {
       let residenceAddress = this.existentBulletin.residenceAddress;
 
       this.initExistentForm(this.contractor.id, this.bulletinId, this.existentBulletin, birthPlace, residenceAddress, parentsResidenceAddress);
-      this.toAddOrUpdateButton = true;
+      this.hasBulletin = true;
     })
   }
 
@@ -131,8 +134,7 @@ export class BulletinDetailsComponent implements OnInit {
   {
     return address.country && 
     address.region && 
-    address.city && 
-    address.postCode 
+    address.city 
        ? 'is-valid' : 'is-invalid';
   }
 
@@ -152,8 +154,8 @@ export class BulletinDetailsComponent implements OnInit {
   initForm(contractorId? : number): void {
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control(null, [Validators.required]),
-      series: this.fb.control(null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      emittedBy: this.fb.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
+      series: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      emittedBy: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       birthPlace: this.buildAddress(),
       parentsResidenceAddress: this.buildAddress(),
@@ -164,8 +166,8 @@ export class BulletinDetailsComponent implements OnInit {
   initExistentForm(contractorId? : number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress? , parentsResidenceAddress?): void {
     this.bulletinForm = this.fb.group({
       releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required]),
-      series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9-. ]+$/)]),
+      series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      emittedBy: this.fb.control( (existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
       id: this.fb.control(bulletinId, []),
       birthPlace: this.buildExistentAddress(this.parseAddress(birthPlace)),
@@ -186,13 +188,12 @@ export class BulletinDetailsComponent implements OnInit {
   buildAddress(data: AddressModel = <AddressModel>{}): FormGroup {
     return this.fb.group({
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
-      region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
-
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      // street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
     });
   }
 
@@ -200,20 +201,20 @@ export class BulletinDetailsComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control(data.id, []),
       country: this.fb.control(data.country || 'Moldova', [Validators.required]),
-      region: this.fb.control(data.region, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      city: this.fb.control(data.city,[Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
-      postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
+      region: this.fb.control(data.region, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      city: this.fb.control(data.city, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
+      // street: this.fb.control(data.street, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // building: this.fb.control(data.building, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // apartment: this.fb.control(data.apartment, [Validators.pattern(/^[0-9a-zA-Z-. ]+$/)]),
+      // postCode: this.fb.control(data.postCode, [Validators.required, Validators.pattern(/^[0-9a-zA-Z-. ]+$/)])
 
     });
   }
 
   openBulletinAddressModal(field: string): void {
     const modalRef = this.modalService.open(BulletinAddressModalComponent);
-    modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
-    modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
+    //modalRef.componentInstance.addressForm = this.buildAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
+    //modalRef.result.then((address: AddressModel) => this.updateAddress(address, field), () => {});
     if (this.existentBulletin != null){
       modalRef.componentInstance.addressForm = this.buildExistentAddress((<FormGroup>this.bulletinForm.get(field)).getRawValue());
       modalRef.result.then((address: AddressModel) => this.updateExistentAddress(address, field), () => {});
@@ -263,7 +264,7 @@ export class BulletinDetailsComponent implements OnInit {
     if (data.region) {
       return `${data.country || ''}, ${data.region ? data.region + ',' : ''} ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''} ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '');
     }
-
+    
     return `${data.country || ''}, ${data.city ? this.abreviation.city + data.city + ',' : ''} ${data.street ? this.abreviation.street + data.street + ',' : ''} ${data.building ? this.abreviation.boulevard + data.building + ',' : ''} ${data.apartment ? this.abreviation.apartment + data.apartment + ',' : ''}  ${data.postCode ? this.abreviation.postCode + data.postCode : ''}`.trim().replace(/(^\,)|(\,$)/g, '')
   }
 
@@ -333,20 +334,49 @@ export class BulletinDetailsComponent implements OnInit {
 
   updateBulletin(){
     this.bulletinService.update(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
-      this.notificationService.success('Success', 'Bulletin was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.edit-bulletin-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractor.id);
 
-      },error => {
-      this.notificationService.error('Error', 'Bulletin was not updated!', NotificationUtil.getDefaultMidConfig());
-      })
+    },error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.edit-bulletin-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
+    });
   }
 
   createBulletin(){
     this.bulletinService.addContractor(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
-      this.notificationService.success('Success', 'Bulletin was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.add-bulletin-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractor.id);
      },error => {
-      this.notificationService.error('Success', 'Bulletin was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.add-bulletin-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
      })
   }
@@ -373,9 +403,9 @@ export class BulletinDetailsComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -388,9 +418,9 @@ export class BulletinDetailsComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
     })
   }
 

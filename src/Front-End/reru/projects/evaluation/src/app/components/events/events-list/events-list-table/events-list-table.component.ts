@@ -78,6 +78,7 @@ export class EventsListTableComponent implements OnInit {
 	}
 
 	getFilteredEvents(data: any = {}): void {
+		this.selectedDay = null;
 		this.setTimeToSearch();
 
 		let params = {
@@ -85,7 +86,8 @@ export class EventsListTableComponent implements OnInit {
 			fromDate: this.searchFrom,
 			tillDate: this.searchTo,
 			page: data.page || this.pagination.currentPage,
-			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10, ...this.filters
+			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10, 
+			...this.filters
 		}
 		if(this.searchFrom != null || this.searchTo != null || this.name != null || params.fromDate != null || 
 			params.tillDate != null || params.name != null) {
@@ -108,16 +110,15 @@ export class EventsListTableComponent implements OnInit {
 
 	clearFields() {
 		this.filters = {};
-		this.clearDateFields();
-		this.getListByDate();
-	}
-
-	clearDateFields(){
 		this.dateTimeFrom = null;
 		this.dateTimeTo = null;
 		this.searchFrom = null;
 		this.searchTo = null;
 		this.name = null;
+		this.pagination.currentPage = 1;
+		const parts = this.displayDate.split('/');
+		this.selectedDay = `${parts[2]}-${parts[1]}-${parts[0]}`;
+		this.getListByDate();
 	}
 
 	list(data: any = {}) {
@@ -136,6 +137,7 @@ export class EventsListTableComponent implements OnInit {
 		const params = ObjectUtil.preParseObject({
 			page: data.page || this.pagination.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagination.pageSize || 10,
+			name: this.name,
 			fromDate: this.parseDates(data.fromDate),
 			tillDate: this.parseDates(data.tillDate),
 			...this.filters
@@ -148,7 +150,6 @@ export class EventsListTableComponent implements OnInit {
 					this.pagination = res.data.pagedSummary;
 
 					this.isLoading = false;
-					this.selectedDay = null;
 				}
 			}
 		)
@@ -158,7 +159,6 @@ export class EventsListTableComponent implements OnInit {
 		this.isLoading = true;
 
 		if (data.date != null) {
-			this.clearDateFields();
 			this.selectedDay = this.parseDates(data.date);
 			this.displayDate = this.parseDatesForTable(data.date)
 		}
@@ -263,8 +263,8 @@ export class EventsListTableComponent implements OnInit {
 				this.description = description;
 			});
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-			this.list();
-		})
+			this.clearFields();
+		});
 	}
 
 	navigate(id) {

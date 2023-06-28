@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Age.Integrations.MPass.Saml;
 using AutoMapper;
+using CODWER.RERU.Identity.Web.Quickstart.Enums;
 using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.Identity.Context;
 using CVU.ERP.Identity.Models;
@@ -21,6 +23,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -146,6 +149,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
                 var vm = new MPassErrorRedirectViewModel() 
                 { 
+                    LoggingErrorTypeEnum = LoggingErrorTypeEnum.MissingDataError,
                     RedirectLoginUri = Configuration.GetValue<string>("MPassSaml:ServiceRootUrl"),
                     RedirectMPassUri = Configuration.GetValue<string>("MPassSaml:SamlLoginDestination")
                 };
@@ -153,21 +157,50 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
 
             }
 
+            var userClaims = await GetUserClaims(result);
+            var provider = await GetProvider(result);
+            var userEmail = await GetEmail(result);
+            var identityUser = await GetIdentityUser(userClaims);
+
             // lookup our user and external provider info
-            var (identityUser, provider, claims, emailAdress) = await FindUserFromMPassProviderAsync(result);
+            //var (identityUser, provider, claims, emailAdress) = await FindUserFromMPassProviderAsync(result);
             if (identityUser == null)
             {
                 // this might be where you might initiate a custom workflow for user registration
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
-                identityUser = await AutoProvisionMPassUserAsync(provider, claims);
+
+                var userIdnp = userClaims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
+
+                var userProfile = _appDbContext.UserProfiles
+                    .Select(up => new UserProfile
+                    { 
+                        Id = up.Id,
+                        FirstName = up.FirstName,
+                        LastName = up.LastName,
+                        Idnp = up.Idnp
+                    })
+                    .FirstOrDefault(up => up.Idnp == userIdnp);
+
+                if (userProfile == null)
+                {
+                    identityUser = await AutoProvisionMPassUserAsync(provider, userClaims);
+                }
+                else 
+                {
+                    var vm = new MPassErrorRedirectViewModel()
+                    {
+                        LoggingErrorTypeEnum = LoggingErrorTypeEnum.EmailError,
+                    };
+                    return View(vm);
+                }
             }
             else
             {
                 // find userProfile
                 var userProfile = await _appDbContext.UserProfiles
                         .Include(up => up.Identities.Where(i => i.Type == MPassSamlDefaults.AuthenticationScheme))
-                        .FirstOrDefaultAsync(up => up.Email == emailAdress);
+                        .FirstOrDefaultAsync(up => up.Email == userEmail);
 
                 if (userProfile.Identities.Count() == 0)
                 {
@@ -339,28 +372,34 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             return (user, provider, providerUserId, claims);
         }
 
-        private async Task<(ERPIdentityUser identityUser, string provider, IEnumerable<Claim> claims, string emailAdress)> FindUserFromMPassProviderAsync(AuthenticateResult result)
+        private async Task<ERPIdentityUser> GetIdentityUser(List<Claim> claims)
         {
-            var externalUser = result.Principal;
+            var userEmail = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
 
-            var claims = externalUser.Claims.ToList();
+            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == userEmail);
+            
+            if (identityUser == null) return null;
+            
+            identityUser.UserName = claims.Find(x => x.Type == MPassClaimTypes.UserName).Value;
 
-            var provider = externalUser.Identity.AuthenticationType;
-            var emailAdress = claims.Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
+            Console.WriteLine($"---Auth-User {identityUser.Name}, {identityUser.LastName} idnp:{identityUser.UserName} email:{identityUser.Email}, {identityUser.PhoneNumber}");
 
-            // find external user
-            //var user = await _userManager.FindByNameAsync(claims.Find(x => x.Type == MPassClaimTypes.UserName).Value);
-            var identityUser = await _identityDbContext.Users.FirstOrDefaultAsync(u => u.UserName == emailAdress);
+            return identityUser;
+        }
 
-            var nameId = _appDbContext.UserProfiles.First(x => x.Email == emailAdress).Idnp;
-            if (string.IsNullOrEmpty(nameId))
-            {
-                throw new Exception("Null IDNP");
-            }
+        private async Task<string> GetProvider(AuthenticateResult result)
+        {
+            return result.Principal.Identity.AuthenticationType;
+        }
 
-            identityUser.UserName = nameId;
+        private async Task<List<Claim>> GetUserClaims(AuthenticateResult result)
+        {
+            return result.Principal.Claims.ToList();
+        }
 
-            return (identityUser, provider, claims, emailAdress);
+        private async Task<string> GetEmail(AuthenticateResult result)
+        {
+            return result.Principal.Claims.ToList().Find(x => x.Type == MPassClaimTypes.EmailAdress).Value;
         }
 
         private async Task<ERPIdentityUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
@@ -371,6 +410,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // user's display name
             var name = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name)?.Value ??
                 claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
             if (name != null)
             {
                 filtered.Add(new Claim(JwtClaimTypes.Name, name));
@@ -398,6 +438,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             // email
             var email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ??
                claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
             if (email != null)
             {
                 filtered.Add(new Claim(JwtClaimTypes.Email, email));
@@ -418,7 +459,11 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             }
 
             identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
-            if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+
+            if (!identityResult.Succeeded)
+            {
+                throw new Exception(identityResult.Errors.First().Description);
+            }
 
             return user;
         }
@@ -440,6 +485,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             userProfile.Contractor = new Contractor() { UserProfile = userProfile };
 
             var defaultRoles = _appDbContext.Modules
+                .Where(x => x.Roles.Any(r => r.IsAssignByDefault))
                 .SelectMany(m => m.Roles.Where(r => r.IsAssignByDefault).Take(1))
                 .ToList();
 
@@ -465,6 +511,7 @@ namespace CODWER.RERU.Identity.Web.Quickstart.Account
             };
 
             var identityResult = await _userManager.CreateAsync(identityUser, password);
+
             if (!identityResult.Succeeded)
             {
                 throw new Exception(identityResult.Errors.First().Description);

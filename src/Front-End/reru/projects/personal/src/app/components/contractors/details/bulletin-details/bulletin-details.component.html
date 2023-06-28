@@ -6,9 +6,9 @@
     </div>
     <div class="card-toolbar">
       <button class="btn btn-success mr-2" [disabled]="bulletinForm && bulletinForm.invalid"
-        *ngIf="toAddOrUpdateButton" (click)="updateBulletin()">{{'button.update' | translate}}</button>
+        *ngIf="hasBulletin" (click)="updateBulletin()">{{'button.update' | translate}}</button>
       <button class="btn btn-success mr-2" [disabled]="bulletinForm && bulletinForm.invalid"
-        *ngIf="!toAddOrUpdateButton" (click)="createBulletin()">{{'button.save' | translate | translate}}</button>
+        *ngIf="!hasBulletin" (click)="createBulletin()">{{'button.save' | translate | translate}}</button>
       <!-- <button type="button" [disabled]="isLoading " (click)="submit()" class="btn btn-success mr-2">{{'button.save' | translate}}</button> -->
       <button type="button" [disabled]="isLoading" (click)="resetBulletin()" class="btn btn-secondary">{{'button.cancel' | translate}}</button>
     </div>
@@ -265,7 +265,7 @@
           <label class="col-xl-3 col-lg-3 col-form-label">{{'bulletin.birth-place' | translate}}</label>
           <div class="col-lg-9 col-xl-9">
             <input readonly autocomplete="off" [value]="renderBirthPlace()"
-            [ngClass]="addressValidation(bulletinForm.value.birthPlace)"
+              [ngClass]="addressValidation(bulletinForm.value.birthPlace)"
               (click)="openBulletinAddressModal('birthPlace')" class="form-control form-control-solid pointer"
               type="text" [placeholder]="'personal.insert-birth-place' | translate" />
           </div>

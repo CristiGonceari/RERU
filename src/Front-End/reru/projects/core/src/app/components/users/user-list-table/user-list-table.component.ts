@@ -71,10 +71,13 @@ export class UserListTableComponent implements OnInit {
 		this.checkPermission();
 	}
 
-	setFilter(field: string, value): void {
+	setFilter(field: string, value, startSearch: boolean = false): void {
 		this.filters[field] = value;
 		this.pagination.currentPage = 1;
-		this.list();
+
+		if (startSearch) {
+			this.list();
+		}
 	}
 
 	resetFilter(): void {

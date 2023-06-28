@@ -153,20 +153,26 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
         private bool IsGridTest(QuestionCategoryPreviewDto data)
         {
             var testTemplate = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTemplateId);
+            var selectedQuestions = false;
 
             if (testTemplate.IsGridTest == true)
             {
-                var questionCategories = testTemplate.TestTemplateQuestionCategories
-                    .Where(x => x.TestTemplateId == data.TestTemplateId)
-                    .Select(x => x.QuestionCategoryId)
-                    .ToList();
-
+                if (data.SelectedQuestions != null)
+                {
+                    selectedQuestions = data.SelectedQuestions
+                        .All(x =>
+                            {
+                                var questionUnit = _appDbContext.QuestionUnits.FirstOrDefault(q => q.Id == x.Id);
+                                return questionUnit.QuestionType == QuestionTypeEnum.OneAnswer || questionUnit.QuestionType == QuestionTypeEnum.MultipleAnswers;
+                            });
+                }
+                
                 var questions = _appDbContext.QuestionUnits
-                    .Any(q => (q.QuestionType == QuestionTypeEnum.FileAnswer || q.QuestionType == QuestionTypeEnum.FreeText 
-                                || q.QuestionType == QuestionTypeEnum.HashedAnswer)
-                                    && questionCategories.Contains(q.QuestionCategoryId));
+                    .Where(q => q.QuestionCategoryId == data.CategoryId)
+                    .All(q => (q.QuestionType == QuestionTypeEnum.OneAnswer || q.QuestionType == QuestionTypeEnum.MultipleAnswers) 
+                                && q.Status == QuestionUnitStatusEnum.Active);
 
-                return !questions;
+                return selectedQuestions || questions || data.QuestionType == QuestionTypeEnum.OneAnswer || data.QuestionType == QuestionTypeEnum.MultipleAnswers;
             }
 
             return true;

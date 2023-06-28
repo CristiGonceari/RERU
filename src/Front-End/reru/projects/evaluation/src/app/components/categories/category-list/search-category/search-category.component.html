@@ -1,6 +1,9 @@
 <div class="input-group input-group-sm input-group-solid">
-    <input type="text" class="form-control" id="kt_subheader_search_form" [placeholder]="'button.search-name' | translate"
-    [(ngModel)]="value" (ngModelChange)="searchCategoryUpdate.next($event)">
+    <input type="text" class="form-control" id="kt_subheader_search_form" 
+    [placeholder]="'button.search-name' | translate"
+    [(ngModel)]="value" 
+    (keydown.enter)="search(value)"
+    (ngModelChange)="clearSearch($event)">
     <div class="input-group-append" [ngClass]="{'px-3': isLoading }" *ngIf="showIcon">
         <app-loading-spinner *ngIf="isLoading" [borderWidth]="'0.2rem'" [width]="'1.5rem'" [height]="'1.5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
         <span class="input-group-text cursor-pointer" *ngIf="!value && !isLoading">

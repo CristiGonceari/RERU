@@ -51,6 +51,10 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/${id}`);
 	}
 
+	getDocumentsForSign(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.urlRoute}/get-documents-for-sign?TestId=${id}`);
+	}
+
 	getTestSettings(id: number): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/setting/${id}`);
 	}
