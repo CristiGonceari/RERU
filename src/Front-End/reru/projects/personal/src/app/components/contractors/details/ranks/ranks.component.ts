@@ -14,6 +14,8 @@ import { ReferenceService } from 'projects/personal/src/app/utils/services/refer
 import { MilitaryObligationTypeEnum } from '../../../../utils/models/military-obligation-type.enum';
 import { I18nService } from '../../../../utils/services/i18n.service';
 import { ValidatorUtil } from 'projects/personal/src/app/utils/util/validator.util';
+import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
+import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
 
 @Component({
   selector: 'app-ranks',
@@ -53,13 +55,15 @@ export class RanksComponent implements OnInit {
     private registrationFluxService: RegistrationFluxStepService,
     private ds: DataService,
     public translate: I18nService,
+    private contractorService: ContractorService
   ) { }
 
   ngOnInit(): void {
-    this.userId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
+    this.contractorId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
     this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
+    this.subscribeForParams();
     this.retrieveDropdowns();
   }
 
@@ -80,9 +84,29 @@ export class RanksComponent implements OnInit {
     }
   }
 
+  subscribeForParams(): void {
+    this.getUser(this.contractorId);
+    this.getExistentStep(this.stepId, this.contractor.id);
+  }
+
   retrieveDropdowns(): void {
     this.referenceService.getMilitaryObligationTypeEnum().subscribe(res => {
       this.militaryObligationTypeEnum = res.data;
+    });
+  }
+
+  getUser(id: number): void {
+    this.contractorService.get(id).subscribe((res: ApiResponse<Contractor>) => {
+      const userData = res.data;
+
+      if (userData.hasMilitaryObligations) {
+        this.getMilitaryObligations(this.contractorId);
+      }
+      else {
+        this.addOrEditMilitaryObligationButton = false;
+        this.isLoadingMilitaryObligation = false;
+        this.militaryObligationData = null;
+      }
     });
   }
 
@@ -403,34 +427,31 @@ export class RanksComponent implements OnInit {
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
     else {
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId, true);
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId, inProgress?) {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
     const datas = {
       isDone: success,
-      stepId: this.stepId,
-      inProgress: inProgress
+      stepId: this.stepId
     }
     if (stepData.length == 0) {
-      this.addCandidateRegistationStep(success, stepId, contractorId, inProgress);
+      this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
     } else {
-      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId, inProgress);
+      this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId, inProgress?) {
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
       step: step,
-      contractorId: contractorId,
-      inProgress: inProgress
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      if (!inProgress) {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('candidate-registration-flux.step-success'),
@@ -439,16 +460,6 @@ export class RanksComponent implements OnInit {
           this.description = description;
         });
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      } else {
-        forkJoin([
-          this.translate.get('step-status.in-progress'),
-          this.translate.get('candidate-registration-flux.step-in-progress'),
-        ]).subscribe(([title, description]) => {
-          this.title = title;
-          this.description = description;
-        });
-        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      }
     }, error => {
       forkJoin([
         this.translate.get('modal.error'),
@@ -461,17 +472,15 @@ export class RanksComponent implements OnInit {
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId, inProgress?) {
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
       step: step,
-      contractorId: contractorId,
-      inProgress: inProgress
+      contractorId: contractorId
     }
 
     this.registrationFluxService.update(request).subscribe(res => {
-      if (!inProgress) {
         forkJoin([
           this.translate.get('modal.success'),
           this.translate.get('candidate-registration-flux.step-success'),
@@ -480,16 +489,6 @@ export class RanksComponent implements OnInit {
           this.description = description;
         });
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      } else {
-        forkJoin([
-          this.translate.get('step-status.in-progress'),
-          this.translate.get('candidate-registration-flux.step-in-progress'),
-        ]).subscribe(([title, description]) => {
-          this.title = title;
-          this.description = description;
-        });
-        this.notificationService.warn(this.title, this.description, NotificationUtil.getDefaultMidConfig());
-      }
     }, error => {
       forkJoin([
         this.translate.get('modal.error'),
