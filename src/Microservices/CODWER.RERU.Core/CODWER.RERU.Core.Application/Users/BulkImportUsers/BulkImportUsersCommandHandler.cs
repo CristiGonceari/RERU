@@ -304,7 +304,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
                 DateTime BirthDate;
 
-                if (dateStrings == null || !Regex.IsMatch(dateStrings.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+                if (dateString == null || !Regex.IsMatch(dateString.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
                 {
                     workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este \"{workSheet.Cells[i, 9]?.Value?.ToString()}\" \n";
                     workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
