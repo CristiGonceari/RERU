@@ -315,7 +315,7 @@ export class StudyDetailsComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
       institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) || null),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null, [Validators.required]),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
@@ -929,8 +929,7 @@ export class StudyDetailsComponent implements OnInit {
   }
 
   inputValidator(form, field) {
-    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid
-      ? 'is-valid' : 'is-invalid';
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid ? 'is-valid' : 'is-invalid';
   }
 
   // retrieveDropdowns(): void {

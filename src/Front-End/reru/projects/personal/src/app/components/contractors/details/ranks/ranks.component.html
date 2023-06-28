@@ -5,10 +5,8 @@
         <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
     </div>
     <div class="card-toolbar">
-        <button class="btn btn-success" matStepperNext
-            [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
-            (click)="addRegistrationFluxStep()"
-            >{{'stepper.button-next' | translate}}</button>
+        <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData != null"
+            (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
     </div>
 </div>
     <form *ngIf="militaryObligationForm" class="col" [formGroup]="militaryObligationForm">

@@ -9,7 +9,7 @@
             </span>
         </div>
         <div class="card-toolbar">
-            <button class="btn btn-success" [disabled]="(studyForm && studyForm.invalid || userStudies == null)"
+            <button class="btn btn-success" [disabled]="(userStudies == null)"
                 (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
         </div>
     </div>
@@ -250,9 +250,9 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-12">
-                                            <div class="form-group row">
+                                            <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="institutionAddress" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -286,7 +286,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year' | translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year' | translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="graduationYear" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -370,9 +370,9 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-12">
-                                            <div class="form-group row">
+                                            <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'|translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'|translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="institutionAddress" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -421,7 +421,7 @@
                                             <div class="form-group row required"
                                                 *ngIf="disableSecondStudyTypeField(study.value)">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.qualification' | translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.qualification' | translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="qualification" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -435,7 +435,7 @@
                                             <div class="form-group row required"
                                                 *ngIf="!disableSecondStudyTypeField(study.value)">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.doctor-title' | translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.doctor-title' | translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="title" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -468,7 +468,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year'|translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year'|translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="graduationYear" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -537,9 +537,9 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-12">
-                                            <div class="form-group row">
+                                            <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="institutionAddress" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -571,7 +571,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.faculty'| translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.faculty'| translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="faculty" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -631,7 +631,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.specialty' | translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.specialty' | translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="specialty" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -664,7 +664,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.graduation-year'|translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.graduation-year'|translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="graduationYear" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -749,9 +749,9 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-12">
-                                            <div class="form-group row">
+                                            <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.institution-address'| translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.institution-address'| translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="institutionAddress" autocomplete="off"
                                                         class="form-control form-control-solid" type="text"
@@ -783,7 +783,7 @@
                                         <div class="col-xl-6 col-12">
                                             <div class="form-group row required">
                                                 <label
-                                                    class="col-xl-3 col-lg-3 col-form-label text-right">{{'study.study-credit-number' | translate}}</label>
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{'study.study-credit-number' | translate}}</label>
                                                 <div class="col-lg-9 col-xl-9">
                                                     <input formControlName="creditCount" autocomplete="off"
                                                         class="form-control form-control-solid" type="number"
@@ -811,7 +811,7 @@
                                             </div>
                                             <div class="col-xl-6 col-12">
                                                 <div class="form-group row required">
-                                                    <div class="col-xl-3 col-lg-3 text-right">
+                                                    <div class="col-xl-3 col-lg-3">
                                                         <label class="col-form-label">{{'study.study-end-date' | translate}}</label>
                                                     </div>
                                                     <div class="col-lg-9 col-xl-9">
