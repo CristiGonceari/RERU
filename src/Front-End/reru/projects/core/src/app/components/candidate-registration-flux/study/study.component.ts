@@ -505,7 +505,6 @@ export class StudyComponent implements OnInit {
         if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
             (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
@@ -518,7 +517,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
@@ -532,7 +530,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 6) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
@@ -548,7 +545,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
@@ -563,7 +559,6 @@ export class StudyComponent implements OnInit {
         } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
@@ -578,7 +573,6 @@ export class StudyComponent implements OnInit {
           results.push(!(
             (study[i].value.studyCourse && !ValidatorUtil.isInvalidPattern(study[i], "studyCourse")) &&
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
-            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.creditCount && !ValidatorUtil.isInvalidPattern(study[i], "creditCount")) &&
             (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&

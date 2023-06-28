@@ -37,20 +37,21 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile
                 var test = await _appDbContext.Tests
                     .Include(t => t.TestTemplate)
                     .Include(t => t.UserProfile)
-                    .Include(t => t.DocumentsForSign)
-                    .ThenInclude(dfs => dfs.SignedDocuments)
                     .Select(t => new Test
                     {
                         Id = t.Id,
                         TestTemplate = new TestTemplate { Name = t.TestTemplate.Name },
                         UserProfile = new UserProfile { Idnp = t.UserProfile.Idnp },
-                        DocumentsForSign = t.DocumentsForSign,
                         TestStatus = t.TestStatus
                     })
                     .FirstOrDefaultAsync(t => t.Id == request.TestId);
-                
 
-                if (test.DocumentsForSign.Count() == 0 && test.TestStatus == TestStatusEnum.Verified)
+                var documentsForSign = await _appDbContext.DocumentsForSign
+                    .Where(x => x.TestId == request.TestId)
+                    .Select(dfs => dfs.Id)
+                    .ToListAsync();
+
+                if (documentsForSign.Count() == 0 && test.TestStatus == TestStatusEnum.Verified)
                 {
                     var testResultPdf = await _pdfService.PrintTestResultPdf(request.TestId);
                     testResultPdf.Name = testResultPdf.Name.Replace("Test_Result", (test.TestTemplate.Name.Replace(".", "/") + " (" + test.UserProfile.Idnp.Replace("\n", "") + ")").ToString());

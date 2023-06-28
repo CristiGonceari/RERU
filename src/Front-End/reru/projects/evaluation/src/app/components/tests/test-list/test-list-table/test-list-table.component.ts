@@ -1,6 +1,4 @@
-import { DatePipe, PlatformLocation } from '@angular/common';
-import { Location } from '@angular/common';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { PlatformLocation } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,17 +12,17 @@ import { saveAs } from 'file-saver';
 import { ConfirmModalComponent } from '@erp/shared';
 import { PrintModalComponent } from '@erp/shared';
 import { NotificationUtil } from '../../../../utils/util/notification.util';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { NotificationsService } from 'angular2-notifications';
 import { I18nService } from 'projects/evaluation/src/app/utils/services/i18n/i18n.service';
 import { GenerateDocumentModalComponent } from 'projects/evaluation/src/app/utils/modals/generate-document-modal/generate-document-modal.component';
 import { FileTypeEnum } from 'projects/evaluation/src/app/utils/enums/file-type.enum';
 import { EnumStringTranslatorService } from 'projects/evaluation/src/app/utils/services/enum-string-translator.service';
 import { ObjectUtil } from 'projects/evaluation/src/app/utils/util/object.util';
-import { error } from '@angular/compiler/src/util';
 import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 import { SignatureService } from 'projects/evaluation/src/app/utils/services/signature/signature.service';
 import { UserProfileService } from 'projects/evaluation/src/app/utils/services/user-profile/user-profile.service';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -95,7 +93,6 @@ export class TestListTableComponent implements OnInit {
     public translate: I18nService,
     public router: Router,
     private referenceService: ReferenceService,
-    private datePipe: DatePipe,
     private notificationService: NotificationsService,
     private printService: PrintTemplateService,
     private enumStringTranslatorService: EnumStringTranslatorService,
@@ -183,17 +180,23 @@ export class TestListTableComponent implements OnInit {
         this.isCollpasedRow.length = res.data.items.length;
         this.isLoading = false;
 
-        for (let i = 0; i < this.testTemplate.length; i++) {
-          this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
-        }
-
-        for (let i = 1; i <= this.pagination.totalCount; i++) {
-          this.pager.push(i);
-        }
-
+        this.testTemplate.forEach(item => {
+          item.isOpenAccordeon = false;
+          item.isLoadingAccordeon = false;
+          this.testService.getDocumentsForSign(item.id).subscribe(res => {
+            if (res && res.data) {
+              item.documentForSign = res.data;
+            }
+          });
+        });
+  
+        this.pager = Array.from({ length: this.pagination.totalCount }, (_, i) => i + 1);
+  
         if (this.signResponseTest) {
-          let findIndex = this.testTemplate.findIndex(x => x.id == this.signResponseTest);
-          this.testTemplate[findIndex].isOpenAccordeon = true;
+          const findIndex = this.testTemplate.findIndex(x => x.id == this.signResponseTest);
+          if (findIndex !== -1) {
+            this.testTemplate[findIndex].isOpenAccordeon = true;
+          }
         }
       }
     });
@@ -507,6 +510,12 @@ export class TestListTableComponent implements OnInit {
 
       let redirectUrl: string = defaultUrl.replace(firstSymbol, "@").replace(secondSymbols, "$");
       value.isLoadingAccordeon = true;
+      this.testService.getDocumentsForSign(value.id).subscribe(res => {
+        if (res && res.data) {
+          value.isOpenAccordeon = true;
+          value.documentForSign = res.data;
+        }
+      });
       let redirect = this.signatureService.redirectMSign(res.data, redirectUrl);
 
       forkJoin([
@@ -532,6 +541,7 @@ export class TestListTableComponent implements OnInit {
       this.isLoadingSignButton = false;
     })
     this.isLoadingSignButton = false;
+    
   }
 
   redirect(url) {
@@ -581,12 +591,22 @@ export class TestListTableComponent implements OnInit {
           this.testTemplate[i] = Object.assign({}, this.testTemplate[i], { isOpenAccordeon: false, isLoadingAccordeon: false });
         }
 
+        this.getDocumentsForSign(item.id);
+
         for (let i = 1; i <= this.pagination.totalCount; i++) {
           this.pager.push(i);
         }
+      }
+    });
+  }
 
-        let findIndex = this.testTemplate.findIndex(x => x.id == item.id);
+  getDocumentsForSign(id)
+  {
+    this.testService.getDocumentsForSign(id).subscribe(res => {
+      if (res && res.data) {
+        let findIndex = this.testTemplate.findIndex(x => x.id == id);
         this.testTemplate[findIndex].isOpenAccordeon = true;
+        this.testTemplate[findIndex].documentForSign = res.data;
       }
     });
   }

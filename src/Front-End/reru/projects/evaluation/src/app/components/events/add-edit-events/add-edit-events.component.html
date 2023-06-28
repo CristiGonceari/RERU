@@ -66,9 +66,9 @@
             <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
               <app-button class="btn w-100" [width]="mobileButtonLength" (handle)="backClicked()"
                 [value]="'button.cancel' | translate"></app-button>
-              <app-add-button class="btn" *ngIf="!eventId" (handle)="onSave()" [disabled]="cantAdd()"
+              <app-add-button class="btn w-100" [width]="mobileButtonLength" *ngIf="!eventId" (handle)="onSave()" [disabled]="cantAdd()"
                 [value]="'button.confirm' | translate"></app-add-button>
-              <app-confirm-button class="btn" *ngIf="eventId" (handle)="onSave()" [disabled]="cantAdd()"
+              <app-confirm-button class="btn w-100" [width]="mobileButtonLength" *ngIf="eventId" (handle)="onSave()" [disabled]="cantAdd()"
                 [value]="'button.update' | translate"></app-confirm-button>
             </div>
           </div>

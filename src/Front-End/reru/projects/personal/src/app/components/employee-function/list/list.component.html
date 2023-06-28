@@ -15,10 +15,10 @@
                 <!-- <button [disabled]="roleTable?.isLoading"  [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'roles.add-role' | translate}}</button> -->
             </div>
             <div class="row mobile-container-menu w-100 mx-0">
-                <erp-shared-import-button [disabled]="functionsTable?.isLoading" (click)="functionsTable.openImportModal()" type="button" class="mr-2 w-100 mb-2">
+                <erp-shared-import-button [disabled]="functionsTable?.isLoading" width="'100%'" (click)="functionsTable.openImportModal()" type="button" class="mr-2 w-100 mb-2">
                     {{'button.import' | translate}}
                 </erp-shared-import-button>
-                <erp-shared-export-button class="w-100" (click)="functionsTable.getHeaders(getTitle())">
+                <erp-shared-export-button width="'100%'" class="w-100" (click)="functionsTable.getHeaders(getTitle())">
                     {{'button.export' | translate}}
                 </erp-shared-export-button>
                 <!-- <button [disabled]="roleTable?.isLoading"  [routerLink]="['../new']" class="btn btn-success font-weight-bolder">{{ 'roles.add-role' | translate}}</button> -->

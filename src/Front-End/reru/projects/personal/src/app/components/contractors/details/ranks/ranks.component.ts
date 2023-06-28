@@ -7,10 +7,13 @@ import { RegistrationFluxStepService } from 'projects/personal/src/app/utils/ser
 import { NotificationUtil } from 'projects/personal/src/app/utils/util/notification.util';
 import { ObjectUtil } from 'projects/personal/src/app/utils/util/object.util';
 import { MilitaryObligationService } from 'projects/personal/src/app/utils/services/military-obligation.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin } from 'rxjs';
 import { DataService } from '../data.service';
 import { MilitaryObligationModel } from 'projects/personal/src/app/utils/models/military-obligation.model';
 import { ReferenceService } from 'projects/personal/src/app/utils/services/reference.service';
+import { MilitaryObligationTypeEnum } from '../../../../utils/models/military-obligation-type.enum';
+import { I18nService } from '../../../../utils/services/i18n.service';
+import { ValidatorUtil } from 'projects/personal/src/app/utils/util/validator.util';
 import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
 import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
 
@@ -21,100 +24,154 @@ import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response
 })
 export class RanksComponent implements OnInit {
   @Input() contractor: Contractor;
-  
-  isLoading: boolean = true;
-   // ranks: RankModel[];
-  // pagedSummary: PagedSummary = new PagedSummary();
-  // contractorId: number;
-
   militaryObligationForm: FormGroup;
+  userGeneralData;
+  userId;
   stepId;
-
-  addOrEditMilitaryObligationButton: boolean;
-  isLoadingMilitaryObligation: boolean = true;
-  militaryObligationData;
-  registrationFluxStep;
   contractorId;
 
-  militaryObligationTypeEnum;
+  addOrEditMilitaryObligationButton: boolean;
+  isLoadingMilitaryObligation: boolean = false;
+  militaryObligationData;
+  registrationFluxStep;
+
+  militaryObligationTypeEnum: MilitaryObligationTypeEnum;
 
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
 
-  isDone:boolean;
+  isDone: boolean;
 
-  constructor(
-    private notificationService: NotificationsService,
-    private ds: DataService,
-    private fb: FormBuilder,
-    private militaryObligationService: MilitaryObligationService,
+  title: string;
+  description: string;
+
+  isLoadingMilitaryObligationContent:boolean = false;
+
+  constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
-    private registrationFluxService: RegistrationFluxStepService,
+    private militaryObligationService: MilitaryObligationService,
     private referenceService: ReferenceService,
-    private contractorService: ContractorService,
-    ) { }
+    private notificationService: NotificationsService,
+    private registrationFluxService: RegistrationFluxStepService,
+    private ds: DataService,
+    public translate: I18nService,
+    private contractorService: ContractorService
+  ) { }
 
   ngOnInit(): void {
     this.contractorId = parseInt(this.route['_routerState'].snapshot.url.split("/")[2]);
-
-    this.stepId =parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
+    this.stepId = parseInt(this.route['_routerState'].snapshot.url.split("/").pop());
 
     this.initForm();
-    this.retrieveDropdowns();
     this.subscribeForParams();
+    this.retrieveDropdowns();
   }
 
-  ngOnDestroy(){
-    // clear message
+  ngOnDestroy() {
     this.ds.clearData();
   }
 
-  subscribeForParams(): void {
-    this.getUser(this.contractorId);
-
-    this.getExistentStep(this.stepId, this.contractor.id);
-    // this.subscribeForData();
-    this.isLoading = false;
-  }
-
-getUser(id: number): void {
-  this.contractorService.get(id).subscribe((response: ApiResponse<Contractor>) => {
-    this.contractor = response.data;
-    this.subscribeForData(response.data)
-  });
-}
-
   initForm(data?): void {
-    if(data == null){
+    if (data == null) {
       this.militaryObligationForm = this.fb.group({
         obligations: this.fb.array([this.generateMilitaryObligations()])
       });
     }
     else {
       this.militaryObligationForm = this.fb.group({
-        obligations: this.fb.array([this.generateMilitaryObligations(data, this.contractor.id)])
+        obligations: this.fb.array([this.generateMilitaryObligations(data, this.contractorId)])
       });
     }
-    
   }
-  
+
+  subscribeForParams(): void {
+    this.getUser(this.contractorId);
+    this.getExistentStep(this.stepId, this.contractor.id);
+  }
+
   retrieveDropdowns(): void {
     this.referenceService.getMilitaryObligationTypeEnum().subscribe(res => {
       this.militaryObligationTypeEnum = res.data;
     });
   }
 
-  subscribeForData(contractor) {
+  getUser(id: number): void {
+    this.contractorService.get(id).subscribe((res: ApiResponse<Contractor>) => {
+      const userData = res.data;
 
-      if (contractor.hasMilitaryObligations) {
-
-        this.getMilitaryObligations(contractor.id);
+      if (userData.hasMilitaryObligations) {
+        this.getMilitaryObligations(this.contractorId);
       }
       else {
         this.addOrEditMilitaryObligationButton = false;
         this.isLoadingMilitaryObligation = false;
         this.militaryObligationData = null;
       }
+    });
+  }
+
+  enableNameAndAdressField(value) {
+    if (value.militaryObligationType) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.AlternativeService || value.militaryObligationType == MilitaryObligationTypeEnum.MilitaryChair) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableDegreeAndMilitarySpecialtyAndEfectiveField(value) {
+    if (value.militaryObligationType) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.PerformedMilitaryService || value.militaryObligationType == MilitaryObligationTypeEnum.MilitaryChair) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enablePeriodField(value) {
+    if (value.militaryObligationType) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.AlternativeService || value.militaryObligationType == MilitaryObligationTypeEnum.MilitaryChair) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableYearsField(value) {
+    if (value.militaryObligationType) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.PerformedMilitaryService) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableMilitaryBookletField(value) {
+    if (parseInt(value.militaryObligationType)) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.Disobedient) {
+        return false
+      }
+    }else{
+      return false;
+    }
+    return true;
+  }
+
+  enableMilitaryBookletNameField(value) {
+    if (parseInt(value.militaryObligationType)) {
+      if (value.militaryObligationType == MilitaryObligationTypeEnum.Recruit) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  inputValidator(form, field) {
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid ? 'is-valid' : 'is-invalid';
+  }
+
+  isInvalidPattern(form, field: string): boolean {
+    return ValidatorUtil.isInvalidPattern(form, field);
   }
 
   getMilitaryObligations(contractorId) {
@@ -133,16 +190,11 @@ getUser(id: number): void {
   }
 
   initMilitaryObligationForm(obligation) {
-    
     if (obligation != null) {
-
       for (let i = 0; i < obligation.length; i++) {
-
         if (i > 0) {
-
           this.addMilitaryObligation(obligation[i]);
-          
-        }else{
+        } else {
           this.initForm(obligation[i])
         }
       }
@@ -150,34 +202,164 @@ getUser(id: number): void {
   }
 
   generateMilitaryObligations(militaryObligation?, contractorId?) {
-    
     return this.fb.group({
       id: this.fb.control((militaryObligation && militaryObligation.id) || null, []),
       militaryObligationType: this.fb.control((militaryObligation && militaryObligation.militaryObligationType) || null, [Validators.required]),
+      institutionName: this.fb.control((militaryObligation && militaryObligation.institutionName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      institutionAdress: this.fb.control((militaryObligation && militaryObligation.institutionAdress) || null, [Validators.required]),
       mobilizationYear: this.fb.control((militaryObligation && militaryObligation.mobilizationYear) || null, [Validators.required]),
       withdrawalYear: this.fb.control((militaryObligation && militaryObligation.withdrawalYear) || null, [Validators.required]),
-      efectiv: this.fb.control((militaryObligation && militaryObligation.efectiv) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      efectiv: this.fb.control((militaryObligation && militaryObligation.efectiv) || null, [Validators.required]),
       militarySpecialty: this.fb.control((militaryObligation && militaryObligation.militarySpecialty) || null, [Validators.required]),
       degree: this.fb.control((militaryObligation && militaryObligation.degree) || null, [Validators.required]),
       militaryBookletSeries: this.fb.control((militaryObligation && militaryObligation.militaryBookletSeries) || null, [Validators.required]),
-      militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, []),
+      militaryBookletNumber: this.fb.control((militaryObligation && militaryObligation.militaryBookletNumber) || null, [Validators.required, , Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
       militaryBookletReleaseDay: this.fb.control((militaryObligation && militaryObligation.militaryBookletReleaseDay) || null, [Validators.required]),
-      militaryBookletEminentAuthority: this.fb.control((militaryObligation && militaryObligation.militaryBookletEminentAuthority) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      startObligationPeriod: this.fb.control((militaryObligation && militaryObligation.startObligationPeriod) || null, [Validators.required]),
+      endObligationPeriod: this.fb.control((militaryObligation && militaryObligation.endObligationPeriod) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
   }
 
-  createMilitaryObligations(){
+  studyTypeFieldsValidator(index) {
+    this.isLoadingMilitaryObligationContent =true;
+    const obligations = this.militaryObligationForm.controls.obligations as FormArray;
+    let obligation = obligations.controls[index];
+    const obligationType = parseInt(obligation.get("militaryObligationType").value);
+
+
+    if (obligationType) {
+      if (obligationType == MilitaryObligationTypeEnum.Recruit) {
+        obligation.get("degree").setValue(null);
+        obligation.get("efectiv").setValue(null);
+        obligation.get("endObligationPeriod").setValue(null);
+        obligation.get("institutionAdress").setValue(null);
+        obligation.get("institutionName").setValue(null);
+        obligation.get("militarySpecialty").setValue(null);
+        obligation.get("mobilizationYear").setValue(null);
+        obligation.get("startObligationPeriod").setValue(null);
+        obligation.get("withdrawalYear").setValue(null);
+      } else if (obligationType == MilitaryObligationTypeEnum.Disobedient){
+        obligation.get("degree").setValue(null);
+        obligation.get("efectiv").setValue(null);
+        obligation.get("endObligationPeriod").setValue(null);
+        obligation.get("institutionAdress").setValue(null);
+        obligation.get("institutionName").setValue(null);
+        obligation.get("militaryBookletNumber").setValue(null);
+        obligation.get("militaryBookletReleaseDay").setValue(null);
+        obligation.get("militaryBookletSeries").setValue(null);
+        obligation.get("militarySpecialty").setValue(null);
+        obligation.get("mobilizationYear").setValue(null);
+        obligation.get("startObligationPeriod").setValue(null);
+        obligation.get("withdrawalYear").setValue(null);
+      } else if (obligationType == MilitaryObligationTypeEnum.PerformedMilitaryService){
+        obligation.get("endObligationPeriod").setValue(null);
+        obligation.get("institutionAdress").setValue(null);
+        obligation.get("institutionName").setValue(null);
+        obligation.get("startObligationPeriod").setValue(null);
+      } else if (obligationType == MilitaryObligationTypeEnum.AlternativeService){
+        obligation.get("degree").setValue(null);
+        obligation.get("efectiv").setValue(null);
+        obligation.get("militarySpecialty").setValue(null);
+        obligation.get("mobilizationYear").setValue(null);
+        obligation.get("withdrawalYear").setValue(null);
+      } else if (obligationType == MilitaryObligationTypeEnum.MilitaryChair){
+        obligation.get("degree").setValue(null);
+        obligation.get("efectiv").setValue(null);
+        obligation.get("mobilizationYear").setValue(null);
+        obligation.get("withdrawalYear").setValue(null);
+      }
+    }
+
+    setTimeout(() => {
+    this.isLoadingMilitaryObligationContent =false;
+    }, 100)
+  }
+
+  militaryObligationsButtonValidator(military) {
+    let results: boolean[] = [];
+    
+    for (let i = 0; i < military.length; i++) {
+      if (parseInt(military[i].value.militaryObligationType)) {
+        if (military[i].value.militaryObligationType == MilitaryObligationTypeEnum.Recruit) {
+          results.push(
+            !(military[i].value.militaryObligationType &&
+              military[i].value.militaryBookletSeries &&
+              military[i].value.militaryBookletNumber &&
+              military[i].value.militaryBookletReleaseDay))
+        } else if(military[i].value.militaryObligationType == MilitaryObligationTypeEnum.Disobedient){
+          results.push(
+            !(military[i].value.militaryObligationType))
+        } else if(military[i].value.militaryObligationType == MilitaryObligationTypeEnum.PerformedMilitaryService){
+          results.push(
+            !(military[i].value.militaryObligationType && 
+              military[i].value.mobilizationYear &&
+              military[i].value.withdrawalYear &&
+              military[i].value.efectiv &&
+              military[i].value.militarySpecialty &&
+              military[i].value.degree &&
+              military[i].value.militaryBookletSeries &&
+              military[i].value.militaryBookletNumber &&
+              military[i].value.militaryBookletReleaseDay 
+              ))
+        } else if(military[i].value.militaryObligationType == MilitaryObligationTypeEnum.AlternativeService){
+          results.push(
+            !(military[i].value.militaryObligationType && 
+              military[i].value.institutionName &&
+              military[i].value.institutionAdress &&
+              military[i].value.startObligationPeriod &&
+              military[i].value.endObligationPeriod &&
+              military[i].value.militaryBookletSeries &&
+              military[i].value.militaryBookletNumber &&
+              military[i].value.militaryBookletReleaseDay 
+              ))
+        }else if(military[i].value.militaryObligationType == MilitaryObligationTypeEnum.MilitaryChair){
+          results.push(
+            !(military[i].value.militaryObligationType && 
+              military[i].value.institutionName &&
+              military[i].value.institutionAdress &&
+              military[i].value.startObligationPeriod &&
+              military[i].value.endObligationPeriod &&
+              military[i].value.efectiv &&
+              military[i].value.militarySpecialty &&
+              military[i].value.degree &&
+              military[i].value.militaryBookletSeries &&
+              military[i].value.militaryBookletNumber &&
+              military[i].value.militaryBookletReleaseDay 
+              ))
+        }
+      }else{
+        results.push(true)
+      }
+    }
+    return results.some((x) => x == true) ? true : false;
+  }
+
+  createMilitaryObligations() {
     this.buildMilitaryObligationForm().subscribe(response => {
-      this.notificationService.success('Success', 'Military obligation relation added!', NotificationUtil.getDefaultMidConfig());
-      this.getMilitaryObligations(this.contractor.id);
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-military-obligation-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.getMilitaryObligations(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Military obligation relation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-military-obligation-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   buildMilitaryObligationForm(): Observable<any> {
-    const request = this.parseMilitaryObligations(this.militaryObligationForm.getRawValue().obligations, this.contractor.id);
+    const request = this.parseMilitaryObligations(this.militaryObligationForm.getRawValue().obligations, this.contractorId);
     return this.militaryObligationService.addMultiple(request);
   }
 
@@ -191,13 +373,17 @@ getUser(id: number): void {
       militaryObligationType: parseInt(data.militaryObligationType),
       mobilizationYear: data.mobilizationYear,
       withdrawalYear: data.withdrawalYear,
-      efectiv : data.efectiv,
-      militarySpecialty : data.militarySpecialty,
-      degree : data.degree,
-      militaryBookletSeries : data.militaryBookletSeries,
-      militaryBookletNumber : data.militaryBookletNumber,
-      militaryBookletReleaseDay : data.militaryBookletReleaseDay,
-      militaryBookletEminentAuthority : data.militaryBookletEminentAuthority,
+      startObligationPeriod: data.startObligationPeriod,
+      endObligationPeriod: data.endObligationPeriod,
+      efectiv: data.efectiv,
+      militarySpecialty: data.militarySpecialty,
+      degree: data.degree,
+      militaryBookletSeries: data.militaryBookletSeries,
+      militaryBookletNumber: data.militaryBookletNumber,
+      militaryBookletReleaseDay: data.militaryBookletReleaseDay,
+      militaryBookletEminentAuthority: data.militaryBookletEminentAuthority,
+      institutionName: data.institutionName,
+      institutionAdress: data.institutionAdress,
       contractorId: contractorId
     })
   }
@@ -212,7 +398,7 @@ getUser(id: number): void {
       (<FormArray>this.militaryObligationForm.controls.obligations).controls.push(
         this.generateMilitaryObligations(
           obligation,
-          this.contractor.id
+          this.contractorId
         )
       );
     }
@@ -225,9 +411,9 @@ getUser(id: number): void {
     (<FormArray>this.militaryObligationForm.controls.obligations).controls.splice(index, 1);
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -236,120 +422,82 @@ getUser(id: number): void {
     })
   }
 
-  addRegistrationFluxStep(){
-    if(this.militaryObligationData != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractor.id);
+  addRegistrationFluxStep() {
+    if (this.militaryObligationData != null) {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
     }
-    else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractor.id);
+    else {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+        forkJoin([
+          this.translate.get('modal.success'),
+          this.translate.get('candidate-registration-flux.step-success'),
+        ]).subscribe(([title, description]) => {
+          this.title = title;
+          this.description = description;
+        });
+        this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
-  // subscribeForParams(): void {
-  //   this.route.parent.params.subscribe(response => {
-  //     this.contractorId = response.id;
-  //     this.retriveRanks({contractorId: response.id});
-  //   });
-  // }
-
-  // retriveRanks(data: any = {}): void {
-  //   const request = {
-  //     contractorId: this.contractorId,
-  //     page: data.page || this.pagedSummary.currentPage,
-  //     itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize 
-  //   }
-
-  //   this.rankService.list(request).subscribe((response: any) => {
-  //     this.isLoading = false;
-  //     this.ranks = response.data.items;
-  //   });
-  // }
-
-  // openAddRankModal(): void {
-  //   const modalRef = this.modalService.open(AddRankModalComponent);
-  //   modalRef.componentInstance.contractorId = this.contractorId;
-  //   modalRef.result.then((response: RankModel) => this.addRank(response), () => {})
-  // }
-
-  // addRank(data: RankModel): void {
-  //   this.isLoading = true;
-  //   this.rankService.create(data).subscribe(response => {
-  //     this.retriveRanks();
-  //     this.notificationService.success('Success', 'Rank added!', NotificationUtil.getDefaultConfig());
-  //   }, () => {
-  //     this.isLoading = false;
-  //   });
-  // }
-
-  // openEditRankModal(rank: RankModel): void {
-  //   const modalRef = this.modalService.open(EditRankModalComponent);
-  //   modalRef.componentInstance.contractorId = this.contractorId;
-  //   modalRef.componentInstance.rank = {...rank};
-  //   modalRef.result.then((response: RankModel) => this.editRank(response), () => {})
-  // }
-
-  // editRank(data: RankModel): void {
-  //   this.rankService.update(data).subscribe(response => {
-  //     this.retriveRanks();
-  //     this.notificationService.success('Success', 'Rank edited!', NotificationUtil.getDefaultConfig());
-  //   }, () => {
-  //     this.isLoading = false;
-  //   });
-  // }
-
-  // openDeleteRankModal(rank: RankModel): void {
-  //   const modalRef = this.modalService.open(DeleteRankModalComponent);
-  //   modalRef.componentInstance.name = rank.rankRecordName;
-  //   modalRef.result.then(() => this.deleteRank(rank.id), () => {})
-  // }
-
-  // deleteRank(id: number): void {
-  //   this.rankService.delete(id).subscribe(response => {
-  //     this.retriveRanks();
-  //     this.notificationService.success('Success', 'Rank deleted!', NotificationUtil.getDefaultConfig());
-  //   }, () => {
-  //     this.isLoading = false;
-  //   });
-  // }
 }

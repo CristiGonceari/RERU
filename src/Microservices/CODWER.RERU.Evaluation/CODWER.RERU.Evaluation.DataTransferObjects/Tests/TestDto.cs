@@ -46,6 +46,5 @@ namespace CODWER.RERU.Evaluation.DataTransferObjects.Tests
         public string DepartmentName { get; set; }
         public string RoleName { get; set; }
         public string FunctionName { get; set; }
-        public List<DocumentForSignDto> DocumentForSign { get; set; }
     }
 }

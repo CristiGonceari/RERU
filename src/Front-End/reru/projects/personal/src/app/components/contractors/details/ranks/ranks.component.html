@@ -1,251 +1,457 @@
 <div class="card card-custom">
     <div class="card-header py-3">
-      <div class="card-title align-items-start flex-column">
+        <div class="card-title align-items-start flex-column">
         <h3 class="card-label font-weight-bolder text-dark">{{'personal.ranks' | translate}}</h3>
         <span class="text-muted font-weight-bold font-size-sm mt-1">{{'personal.change-your-account-details' | translate}}</span>
-      </div>
-      <div class="card-toolbar">
-          <button class="btn btn-success" matStepperNext
-              [disabled]="(militaryObligationForm && militaryObligationForm.invalid || militaryObligationData == null)"
-              (click)="addRegistrationFluxStep()"
-              >{{'stepper.button-next' | translate}}</button>
-      </div>
     </div>
-    <div *ngIf="isLoading"  class="card-body">
-      <app-loading-spinner [contentHeight]="'20rem'" [height]="'5rem'" [width]="'5rem'" [colorClass]="'text-primary'"></app-loading-spinner>
+    <div class="card-toolbar">
+        <button class="btn btn-success" matStepperNext *ngIf="militaryObligationData != null"
+            (click)="addRegistrationFluxStep()">{{'stepper.button-next' | translate}}</button>
     </div>
-    <!-- <div *ngIf="!isLoading" class="card-body">
-        <app-rank-card *ngFor="let rank of ranks"
-                        (edit)="openEditRankModal(rank)"
-                        (delete)="openDeleteRankModal(rank)"
-                        [rank]="rank">
-        </app-rank-card>
-    <div class="row" *ngIf="!ranks?.length">
-        <div class="col text-center">
-            {{'word.there-are-no-records-at-the-moment' | translate}}
-            <div class="text-center">
-              <span class="svg-icon svg-icon-primary svg-icon-10x">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24"/>
-                      <path d="M11.1669899,4.49941818 L2.82535718,19.5143571 C2.557144,19.9971408 2.7310878,20.6059441 3.21387153,20.8741573 C3.36242953,20.9566895 3.52957021,21 3.69951446,21 L21.2169432,21 C21.7692279,21 22.2169432,20.5522847 22.2169432,20 C22.2169432,19.8159952 22.1661743,19.6355579 22.070225,19.47855 L12.894429,4.4636111 C12.6064401,3.99235656 11.9909517,3.84379039 11.5196972,4.13177928 C11.3723594,4.22181902 11.2508468,4.34847583 11.1669899,4.49941818 Z" fill="#000000" opacity="0.3"/>
-                      <rect fill="#000000" x="11" y="9" width="2" height="7" rx="1"/>
-                      <rect fill="#000000" x="11" y="17" width="2" height="2" rx="1"/>
-                  </g>
-              </svg>
-              </span>
-          </div>
-        </div>
-    </div>
-    <div class="row" *ngIf="ranks?.length">
-        <div class="col datatable datatable-default">
-            <div pagination [page]="pagedSummary.currentPage" [total]="pagedSummary.totalPages" [size]="pagedSummary.pageSize" (sizeChange)="retriveRanks({ page: pagedSummary.currentPage, itemsPerPage: $event })"
-                class="datatable-pager datatable-paging-loaded" (pageChange)="retriveRanks({ page: $event })">
+</div>
+    <form *ngIf="militaryObligationForm" class="col" [formGroup]="militaryObligationForm">
+        <app-loading-spinner *ngIf="isLoadingMilitaryObligation" contentHeight="20rem" height="5rem" width="5rem"
+            colorClass="text-primary"></app-loading-spinner>
+        <div *ngIf="!isLoadingMilitaryObligation">
+            <div formArrayName="obligations">
+                <div class="d-sm-none d-flex flex-column gap-4">
+                    <div class="row" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
+                        (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
+                        *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
+                        [formGroupName]="i">
+                            <div class="col d-flex flex-column gap-4">
+                                <div class="row">
+                                    <div class="col"><p class="font-weight-bolder">{{'table.number' | translate}}</p></div>
+                                    <div class="col"><p class="font-weight-bolder text-center">{{i + 1}}</p></div>
+                                </div>
+                                <div class="row required">
+                                    <div class="col"><p class="font-weight-bolder">{{ 'military-obligation.name' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <select class="form-control" 
+                                            formControlName="militaryObligationType"
+                                            [ngClass]="inputValidator(obligation, 'militaryObligationType')"
+                                            (change)="studyTypeFieldsValidator(i)">
+                                            <option value="null">{{'module-access.select' | translate}}</option>
+                                            <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
+                                                {{ 'militaryObligationType.' + item.label | translate }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableNameAndAdressField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.institution-name'  | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="institutionName" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.institution-name' | translate"
+                                            [ngClass]="inputValidator(obligation, 'institutionName')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'institutionName')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableNameAndAdressField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.institution-adress'  | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="institutionAdress" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.institution-adress' | translate"
+                                            [ngClass]="inputValidator(obligation, 'institutionAdress')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'institutionAdress')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableYearsField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-mobilization' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <app-stepper-date-time [parent]="obligation" [date]="'mobilizationYear'"
+                                        [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-stepper-date-time>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableYearsField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.year-of-withdrawal' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <app-stepper-date-time [parent]="obligation" [date]="'withdrawalYear'"
+                                        [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-stepper-date-time>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enablePeriodField(obligation.value)">
+                                    <div class="col">
+                                        <p class="font-weight-bolder">{{'military-obligation.period' | translate}}</p>
+                                        <div class="d-none d-md-none d-lg-block">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                    [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                                </div>
+                                                <div class="col-6">
+                                                    <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                                    [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-block d-md-block d-lg-none">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                    [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                                </div>
+                                                <div class="col-12 mt-2">
+                                                    <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                                    [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.efectiv' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="efectiv" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.efectiv' | translate"
+                                            [ngClass]="inputValidator(obligation, 'efectiv')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'efectiv')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.military-specialty' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="militarySpecialty" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.military-specialty' | translate"
+                                            [ngClass]="inputValidator(obligation, 'militarySpecialty')"  />
+                                        <div *ngIf="isInvalidPattern(obligation, 'militarySpecialty')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                    <div class="col"><p class="font-weight-bolder">{{'military-obligation.degree' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="degree" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.degree' | translate"
+                                        [ngClass]="inputValidator(obligation, 'degree')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'degree')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                    <div class="col">
+                                        <p class="font-weight-bolder" *ngIf="!enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.military-booklet' | translate}}</p>
+                                        <p class="font-weight-bolder" *ngIf="enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.recruitment-booklet' | translate}}</p>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                    <div class="col"><p>{{'military-obligation.series' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="militaryBookletSeries" autocomplete="off"
+                                            class="form-control form-control-solid" type="text"
+                                            [placeholder]="'military-obligation.series' | translate"
+                                            [ngClass]="inputValidator(obligation, 'militaryBookletSeries')"/>
+                                            <div *ngIf="isInvalidPattern(obligation, 'militaryBookletSeries')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                    <div class="col"><p>{{'military-obligation.number' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <input formControlName="militaryBookletNumber" autocomplete="off"
+                                            class="form-control form-control-solid" type="number"
+                                            [placeholder]="'military-obligation.number' | translate"
+                                            [ngClass]="inputValidator(obligation, 'militaryBookletNumber')" />
+                                            <div *ngIf="isInvalidPattern(obligation, 'militaryBookletNumber')"
+                                                class="invalid-feedback d-block">
+                                                {{'validations.only-numbers' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="row required" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                    <div class="col"><p>{{'military-obligation.relase-day' | translate}}</p></div>
+                                    <div class="col-12">
+                                        <app-stepper-date-time [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                            [placeholder]="'military-obligation.relase-day' | translate"></app-stepper-date-time>
+                                    </div>
+                                </div>
+                                <div class="row pt-4" *ngIf="i > 0">
+                                    <div class="col">
+                                        <button class="btn btn-icon float-right" (click)="removeMilitaryObligation(i)">
+                                            <span class="font-size-h2">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="militaryObligationForm.controls.obligations.controls.length > 1" class="separator separator-dashed"></div>
+                            </div>
+                    </div>
+                </div>
+                <div class="table-responsive d-sm-block d-none">
+                    <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
+                        (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
+                        *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
+                        [formGroupName]="i">
+                        <tbody>
+                            <tr>
+                                <th>{{ 'table.number' | translate}}</th>
+                                <td>
+                                    {{i + 1}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'military-obligation.name' | translate}}</th>
+                                <td>
+                                    <select class="form-control" 
+                                        formControlName="militaryObligationType" 
+                                        [ngClass]="inputValidator(obligation, 'militaryObligationType')"
+                                        (change)="studyTypeFieldsValidator(i)">
+                                        <option value="null">{{'module-access.select' | translate}}</option>
+                                        <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
+                                            {{ 'militaryObligationType.' + item.label | translate }}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableNameAndAdressField(obligation.value)">
+                                <th>{{'military-obligation.institution-name' | translate}}</th>
+                                <td>
+                                    <input formControlName="institutionName" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.institution-name' | translate"
+                                        [ngClass]="inputValidator(obligation, 'institutionName')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'institutionName')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-and-dash' | translate}}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableNameAndAdressField(obligation.value)">
+                                <th>{{'military-obligation.institution-adress' | translate}}</th>
+                                <td>
+                                    <input formControlName="institutionAdress" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.institution-adress' | translate"
+                                        [ngClass]="inputValidator(obligation, 'institutionAdress')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'institutionAdress')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableYearsField(obligation.value)">
+                                <th>{{'military-obligation.year-of-mobilization' | translate}}</th>
+                                <td>
+                                    <app-stepper-date-time [parent]="obligation" [date]="'mobilizationYear'"
+                                        [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-stepper-date-time>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableYearsField(obligation.value)">
+                                <th>{{'military-obligation.year-of-withdrawal' | translate}}</th>
+                                <td>
+                                    <app-stepper-date-time [parent]="obligation" [date]="'withdrawalYear'"
+                                        [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-stepper-date-time>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enablePeriodField(obligation.value)">
+                                <th>{{'military-obligation.period' | translate}}</th>
+                                <td>
+                                    <div class="d-none d-md-none d-lg-block">
+                                        <div class="row">
+                                            <div class="col">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                            <div class="col">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                            [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-block d-md-block d-lg-none">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'startObligationPeriod'"
+                                                [placeholder]="'military-obligation.start-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                            <div class="col-9 mt-2">
+                                                <app-stepper-date-time [parent]="obligation" [date]="'endObligationPeriod'"
+                                            [placeholder]="'military-obligation.end-obligation-period' | translate"></app-stepper-date-time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                <th>{{'military-obligation.efectiv' | translate}}</th>
+                                <td>
+                                    <input formControlName="efectiv" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.efectiv' | translate"
+                                        [ngClass]="inputValidator(obligation, 'efectiv')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'efectiv')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                <th>{{'military-obligation.military-specialty' | translate}}</th>
+                                <td>
+                                    <input formControlName="militarySpecialty" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.military-specialty' | translate"
+                                        [ngClass]="inputValidator(obligation, 'militarySpecialty')"  />
+                                        <div *ngIf="isInvalidPattern(obligation, 'militarySpecialty')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="enableDegreeAndMilitarySpecialtyAndEfectiveField(obligation.value)">
+                                <th>{{'military-obligation.degree' | translate}}</th>
+                                <td>
+                                    <input formControlName="degree" autocomplete="off"
+                                        class="form-control form-control-solid" type="text"
+                                        [placeholder]="'military-obligation.degree' | translate"
+                                        [ngClass]="inputValidator(obligation, 'degree')" />
+                                        <div *ngIf="isInvalidPattern(obligation, 'degree')"
+                                            class="invalid-feedback d-block">
+                                            {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-table-row d-none" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <th rowspan="4" *ngIf="!enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.military-booklet' | translate}}</th>
+                                <th rowspan="4" *ngIf="enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.recruitment-booklet' | translate}}</th>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2 text-center p-3">
+                                            {{'military-obligation.series' | translate}}
+                                        </div>
+                                        <div class="col-10">
+                                            <input formControlName="militaryBookletSeries" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'military-obligation.series' | translate"
+                                                [ngClass]="inputValidator(obligation, 'militaryBookletSeries')"/>
+                                                <div *ngIf="isInvalidPattern(obligation, 'militaryBookletSeries')"
+                                                        class="invalid-feedback d-block">
+                                                        {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-none d-table-row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <th colspan="2" *ngIf="!enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.military-booklet' | translate}}</th>
+                                <th colspan="2" *ngIf="enableMilitaryBookletNameField(obligation.value)">{{'military-obligation.recruitment-booklet' | translate}}</th>
+                            </tr>
+                            <tr class="d-lg-none d-table-row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <td colspan="2">
+                                    <div class="row">
+                                        <div class="col-sm col-12 text-center p-3">
+                                            {{'military-obligation.series' | translate}}
+                                        </div>
+                                        <div class="col-sm col-12">
+                                            <input formControlName="militaryBookletSeries" autocomplete="off"
+                                                class="form-control form-control-solid" type="text"
+                                                [placeholder]="'military-obligation.series' | translate"
+                                                [ngClass]="inputValidator(obligation, 'militaryBookletSeries')" />
+                                                <div *ngIf="isInvalidPattern(obligation, 'militaryBookletSeries')"
+                                                        class="invalid-feedback d-block">
+                                                        {{'validations.only-letters-numbers-and-dash' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-table-row d-none" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2 text-center p-3">
+                                            {{'military-obligation.number' | translate}}
+                                        </div>
+                                        <div class="col-10">
+                                            <input formControlName="militaryBookletNumber" autocomplete="off"
+                                                class="form-control form-control-solid" type="number"
+                                                [placeholder]="'military-obligation.number' | translate"
+                                                [ngClass]="inputValidator(obligation, 'militaryBookletNumber')" />
+                                                <div *ngIf="isInvalidPattern(obligation, 'militaryBookletNumber')"
+                                                        class="invalid-feedback d-block">
+                                                        {{'validations.only-numbers' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-none d-table-row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <td colspan="2">
+                                    <div class="row">
+                                        <div class="col-sm col-12 text-center p-3">
+                                            {{'military-obligation.number' | translate}}
+                                        </div>
+                                        <div class="col-sm col-12">
+                                            <input formControlName="militaryBookletNumber" autocomplete="off"
+                                                class="form-control form-control-solid" type="number"
+                                                [placeholder]="'military-obligation.number' | translate"
+                                                [ngClass]="inputValidator(obligation, 'militaryBookletNumber')"  />
+                                                <div *ngIf="isInvalidPattern(obligation, 'militaryBookletNumber')"
+                                                        class="invalid-feedback d-block">
+                                                        {{'validations.only-numbers' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-table-row d-none" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2 text-center p-3">
+                                            {{'military-obligation.relase-day' | translate}}
+                                        </div>
+                                        <div class="col-10">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                                [placeholder]="'military-obligation.relase-day' | translate"></app-stepper-date-time>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="d-lg-none d-table-row" *ngIf="enableMilitaryBookletField(obligation.value)">
+                                <td colspan="2">
+                                    <div class="row">
+                                        <div class="col-sm col-12 text-center p-3">
+                                            {{'military-obligation.relase-day' | translate}}
+                                        </div>
+                                        <div class="col-sm col-12">
+                                            <app-stepper-date-time [parent]="obligation" [date]="'militaryBookletReleaseDay'"
+                                                [placeholder]="'military-obligation.relase-day' | translate"></app-stepper-date-time>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="i > 0">
+                                <td>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-icon" (click)="removeMilitaryObligation(i)">
+                                            <span class="font-size-h2">&times;</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-between ml-10">
+                    <button class="btn btn-icon" (click)="addMilitaryObligation()"><span
+                            class="font-size-18px">+</span></button>
+                </div>
+                <div class="row justify-content-end m-7">
+                    <app-stepper-arrow-hint *ngIf="militaryObligationData == null && 
+                        !militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)" 
+                        [description]="'military-obligation.military-obligation-add-button-hint' | translate">
+                    </app-stepper-arrow-hint>
+                    <button class="btn btn-success h-35px" *ngIf="addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)"
+                        (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}
+                    </button>
+                    <button class="btn btn-outline-success h-35px" *ngIf="!addOrEditMilitaryObligationButton"
+                        [disabled]="militaryObligationsButtonValidator(militaryObligationForm.controls.obligations.controls)"
+                        (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}
+                    </button>
+                </div>
             </div>
         </div>
-        </div>
-    </div> -->
-    <form *ngIf="militaryObligationForm" class="col border" [formGroup]="militaryObligationForm">
-      <app-loading-spinner *ngIf="isLoadingMilitaryObligation" contentHeight="20rem" height="5rem" width="5rem"
-          colorClass="text-primary"></app-loading-spinner>
-      <div *ngIf="!isLoadingMilitaryObligation">
-          <div formArrayName="obligations">
-              <table class="table table-bordered border-dark mb-10" [ngClass]="{'more': militaryObligationForm.controls.obligations.controls.length > 1  &&
-                  (militaryObligationForm.controls.obligations.controls.length - 1) !== i}"
-                  *ngFor="let obligation of militaryObligationForm.controls.obligations.controls; let i = index"
-                  [formGroupName]="i">
-                  <tbody>
-                      <tr>
-                          <th>{{ 'table.number' | translate}}</th>
-                          <td>
-                              {{i + 1}}
-                          </td>
-                      </tr>
-                      <tr>
-                          <th>{{ 'military-obligation.name' | translate}}</th>
-                          <td>
-                              <select class="form-control" formControlName="militaryObligationType">
-                                  <option value="null">{{'module-access.select' | translate}}</option>
-                                  <option *ngFor="let item of militaryObligationTypeEnum" [value]="item.value">
-                                      {{ 'militaryObligationType.' + item.label | translate }}
-                                  </option>
-                              </select>
-                          </td>
-                      </tr>
-                      <tr>
-                          <th>{{'military-obligation.year-of-mobilization' | translate}}</th>
-                          <td>
-                              <app-date [parent]="obligation" [date]="'mobilizationYear'"
-                                  [placeholder]="'military-obligation.year-of-mobilization' | translate"></app-date>
-                          </td>
-                      </tr>
-                      <tr>
-                      <tr>
-                          <th>{{'military-obligation.year-of-withdrawal' | translate}}</th>
-                          <td>
-                              <app-date [parent]="obligation" [date]="'withdrawalYear'"
-                                  [placeholder]="'military-obligation.year-of-withdrawal' | translate"></app-date>
-                          </td>
-                      </tr>
-                      <tr>
-                          <th>{{'military-obligation.efectiv' | translate}}</th>
-                          <td>
-                              <input formControlName="efectiv" autocomplete="off" class="form-control form-control-solid"
-                                  type="text" [placeholder]="'military-obligation.efectiv' | translate" />
-                          </td>
-                      </tr>
-                      <tr>
-                          <th>{{'military-obligation.military-specialty' | translate}}</th>
-                          <td>
-                              <input formControlName="militarySpecialty" autocomplete="off"
-                                  class="form-control form-control-solid" type="text"
-                                  [placeholder]="'military-obligation.military-specialty' | translate" />
-                          </td>
-                      </tr>
-                      <tr>
-                          <th>{{'military-obligation.degree' | translate}}</th>
-                          <td>
-                              <input formControlName="degree" autocomplete="off" class="form-control form-control-solid"
-                                  type="text" [placeholder]="'military-obligation.degree' | translate" />
-                          </td>
-                      </tr>
-  
-                      <tr>
-                          <th rowspan="4">{{'military-obligation.military-booklet' | translate}}</th>
-                          <td>
-                            <div class="pc-container-menu">
-                                <div class="row">
-                                    <div class="col-4 text-center p-3">
-                                        {{'military-obligation.series' | translate}}
-                                    </div>
-                                    <div class="col-8">
-                                        <input formControlName="militaryBookletSeries" autocomplete="off"
-                                            class="form-control form-control-solid" type="text"
-                                            [placeholder]="'military-obligation.series' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mobile-container-menu">
-                                <div class="col px-0">
-                                    <div class="w-100 text-left p-3">
-                                        {{'military-obligation.series' | translate}}
-                                    </div>
-                                    <div class="w-100">
-                                        <input formControlName="militaryBookletSeries" autocomplete="off"
-                                            class="form-control form-control-solid" type="text"
-                                            [placeholder]="'military-obligation.series' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>
-                            <div class="pc-container-menu">
-                                <div class="row">
-                                    <div class="col-4 text-center p-3">
-                                        {{'military-obligation.number' | translate}}
-                                    </div>
-                                    <div class="col-8">
-                                        <input formControlName="militaryBookletNumber" autocomplete="off"
-                                            class="form-control form-control-solid" type="number"
-                                            [placeholder]="'military-obligation.number' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mobile-container-menu">
-                                <div class="col px-0">
-                                    <div class="w-100 text-left p-3">
-                                        {{'military-obligation.number' | translate}}
-                                    </div>
-                                    <div class="w-100">
-                                        <input formControlName="militaryBookletNumber" autocomplete="off"
-                                            class="form-control form-control-solid" type="number"
-                                            [placeholder]="'military-obligation.number' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>
-                            <div class="pc-container-menu">
-                                <div class="row">
-                                    <div class="col-4 text-center p-3">
-                                        {{'military-obligation.relase-day' | translate}}
-                                    </div>
-                                    <div class="col-8">
-                                            <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                                [placeholder]="'military-obligation.relase-day' | translate"></app-date>
-                                    </div>
-                              </div>
-                            </div>
-                            <div class="mobile-container-menu">
-                                <div class="col px-0">
-                                    <div class="w-100 text-left p-3">
-                                        {{'military-obligation.relase-day' | translate}}
-                                    </div>
-                                    <div class="w-100">
-                                        <app-date [parent]="obligation" [date]="'militaryBookletReleaseDay'"
-                                            [placeholder]="'military-obligation.relase-day' | translate"></app-date>
-                                  </div>
-                              </div>
-                            </div>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>
-                            <div class="pc-container-menu">
-                                <div class="row">
-                                    <div class="col-4 text-center p-3">
-                                        {{'military-obligation.eminent-authority' | translate}}
-                                    </div>
-                                    <div class="col-8">
-                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
-                                            class="form-control form-control-solid" type="text"
-                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mobile-container-menu">
-                                <div class="col px-0">
-                                    <div class="w-100 text-left p-3">
-                                        {{'military-obligation.eminent-authority' | translate}}
-                                    </div>
-                                    <div class="w-100">
-                                        <input formControlName="militaryBookletEminentAuthority" autocomplete="off"
-                                            class="form-control form-control-solid" type="text"
-                                            [placeholder]="'military-obligation.eminent-authority' | translate" />
-                                    </div>
-                                </div>
-                            </div>
-                          </td>
-                      </tr>
-                      <tr>
-                          <th></th>
-                          <td>
-                              <div  class="d-flex justify-content-end">
-                                  <button class="btn btn-icon"*ngIf="i > 0" (click)="removeMilitaryObligation(i)">
-                                      <span class="font-size-18px">&times;</span>
-                                  </button>
-                              </div>
-                          </td>
-                        </tr>
-                  </tbody>
-              </table>
-          </div>
-          <div class="row justify-content-between ml-10">
-              <button class="btn btn-icon" (click)="addMilitaryObligation()"><span
-                      class="font-size-18px">+</span></button>
-          </div>
-          <div class="row justify-content-end m-7">
-              <button class="btn btn-success" *ngIf="addOrEditMilitaryObligationButton"
-                  [disabled]="militaryObligationForm && militaryObligationForm.invalid "
-                  (click)="createMilitaryObligations()">{{'stepper.button-update' | translate}}</button>
-              <button class="btn btn-success" *ngIf="!addOrEditMilitaryObligationButton"
-                  [disabled]="militaryObligationForm && militaryObligationForm.invalid"
-                  (click)="createMilitaryObligations()">{{'stepper.button-add' | translate}}</button>
-          </div>
-      </div>
-  </form>
-  </div>
+    </form>

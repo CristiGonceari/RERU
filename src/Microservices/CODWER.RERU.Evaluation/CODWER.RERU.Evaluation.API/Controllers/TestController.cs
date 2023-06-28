@@ -61,6 +61,9 @@ using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.Application.Tests.GenerateTestResultFile;
+using CODWER.RERU.Evaluation.Application.Tests.GetDocumentsForSign;
+using RERU.Data.Entities;
+using CODWER.RERU.Evaluation.DataTransferObjects.DocumentForSign;
 
 namespace CODWER.RERU.Evaluation.API.Controllers
 {
@@ -95,6 +98,12 @@ namespace CODWER.RERU.Evaluation.API.Controllers
 
         [HttpGet]
         public async Task<PaginatedModel<TestDto>> GetTests([FromQuery] GetTestsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
+        [HttpGet("get-documents-for-sign")]
+        public async Task<List<DocumentForSignDto>> GetDocumentsForSign([FromQuery] GetDocumentsForSignQuery query)
         {
             return await Mediator.Send(query);
         }

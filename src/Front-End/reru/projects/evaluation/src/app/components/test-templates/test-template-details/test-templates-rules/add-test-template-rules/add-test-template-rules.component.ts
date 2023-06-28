@@ -66,6 +66,7 @@ export class AddTestTemplateRulesComponent implements OnInit{
   }
 
   save() {
+    this.isLoading = false;
     this.service.addRules(this.parse()).subscribe(() => {
       forkJoin([
 				this.translate.get('modal.success'),
@@ -77,6 +78,7 @@ export class AddTestTemplateRulesComponent implements OnInit{
       this.backClicked();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
+    this.isLoading = true;
   }
 
   backClicked() {

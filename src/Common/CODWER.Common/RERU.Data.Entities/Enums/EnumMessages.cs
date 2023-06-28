@@ -22,6 +22,7 @@ namespace RERU.Data.Entities.Enums
         public const string MultipleAnswers = "Răspunsuri multiple";
         public const string OneAnswer = "Un răspuns";
         public const string HashedAnswer = "Completează textul";
+        public const string FileAnswer = "Încărcare fișier";
         public const string Draft = "Maculator";
         public const string Active = "Activ";
         public const string Inactive = "Inactiv";
@@ -181,6 +182,7 @@ namespace RERU.Data.Entities.Enums
                 QuestionTypeEnum.OneAnswer => OneAnswer,
                 QuestionTypeEnum.MultipleAnswers => MultipleAnswers,
                 QuestionTypeEnum.HashedAnswer => HashedAnswer,
+                QuestionTypeEnum.FileAnswer => FileAnswer,
                 _ => "-"
             };
         }

@@ -31,6 +31,7 @@
                     <div class="col-lg col-md-6 col-12">
                         <erp-shared-search-input 
                             (handleSearch)="table.setFilter('name', $event)" 
+                            (keydown.enter)="table.getDocumentTemplates()" 
                             [placeholder]="'button.search-name' | translate" 
                             [showIcon]="false" [useDebounce]="false" #documentName>
                         </erp-shared-search-input>

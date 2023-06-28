@@ -5,6 +5,9 @@ import { QuestionService } from '../../../utils/services/question/question.servi
 import { saveAs } from 'file-saver';
 import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationUtil } from '../../../utils/util/notification.util';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-bulk-import-questions',
@@ -16,12 +19,18 @@ export class BulkImportQuestionsComponent implements OnInit {
 	selectedTypeId = 1;
 	questionTypes: string[];
 	files: File[] = [];
+	fileStatus = { requestType: '', percent: 1 }
+	fileUploadQueue = [];
 	isLoading: boolean = false;
+	isLoadingMedia: boolean = false;
+	title: string;
+  	description: string;
 
 	constructor(
 		public activeModal: NgbActiveModal,
 		private questionService: QuestionService,
-		public translate: I18nService
+		public translate: I18nService,
+		private notificationService: NotificationsService
 	) { }
 
 	ngOnInit(): void {
@@ -60,9 +69,12 @@ export class BulkImportQuestionsComponent implements OnInit {
 		const fileType = 'application/vnd.ms.excel';
 		this.questionService.getTemplate(selectedType).subscribe(
 			res => {
+				this.isLoadingMedia = true;
+				this.fileStatus.percent = 1;
 				const blob = new Blob([res.body], { type: fileType });
 				const file = new File([blob], fileName, { type: fileType });
 				saveAs(file);
+				this.reportProggress(res);
 			},
 			() => {
 				console.error('error in getting template');
@@ -78,10 +90,21 @@ export class BulkImportQuestionsComponent implements OnInit {
 		this.files.splice(this.files.indexOf(event), 1);
 	}
 
+	cantAdd() {
+		return this.files.length === 0;
+	}
+
 	onConfirm(): void {
 		this.isLoading = true;
 		const formData = new FormData();
 		formData.append('file', this.files[0]);
+		forkJoin([
+			this.translate.get('modal.success'),
+			this.translate.get('questions.succes-add-msg'),
+		]).subscribe(([title, description]) => {
+			this.title = title;
+			this.description = description;
+		});
 		this.questionService.bulkUpload(formData).subscribe(
 			(res) => {
 				const blob = new Blob([res.body], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -93,12 +116,57 @@ export class BulkImportQuestionsComponent implements OnInit {
 					alert("Somethig wrong! Please check your .xlsx file.");
 					this.files = [];
 				}
-				else this.activeModal.close();
+				else {
+					this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+					this.activeModal.close();
+				}
+			}, (error) => {
+				forkJoin([
+					this.translate.get('notification.title.error'),
+					this.translate.get('notification.body.error'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+				});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			}
 		);
 	}
 
 	dismiss(){
 		this.activeModal.close();
+	}
+
+	private reportProggress(httpEvent: HttpEvent<string[] | Blob>) {	
+		switch (httpEvent.type) {
+		  case HttpEventType.Sent:
+			this.fileStatus.percent = 1;
+			break;
+		  case HttpEventType.UploadProgress:
+			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+			break;
+		  case HttpEventType.DownloadProgress:
+			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+			break;
+		  case HttpEventType.Response:
+			this.fileStatus.requestType = "Done";
+			this.fileStatus.percent = 100;	
+			setTimeout(() => { this.isLoadingMedia = false; }, 1000);
+			break;
+		}
+	}
+
+	updateStatus(loaded: number, total: number | undefined, requestType: string, index?: number) {
+		this.fileStatus.requestType = requestType;
+	
+		const foundIndex = this.fileUploadQueue.findIndex(x => x.fileIndex == index);
+		this.fileUploadQueue[foundIndex].percent =  this.fileUploadQueue[foundIndex].percent + ((Math.round(90 * loaded / total) / this.files.length) - this.fileUploadQueue[foundIndex].percent );
+		
+		let totalValue: number = 0;
+		for(const value of this.fileUploadQueue){
+		  totalValue += value.percent;
+		}
+	
+		this.fileStatus.percent = Math.round((this.fileStatus.percent + (totalValue - this.fileStatus.percent)));
 	}
 }

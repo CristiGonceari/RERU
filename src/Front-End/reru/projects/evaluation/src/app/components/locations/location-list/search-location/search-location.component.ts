@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-location',
@@ -6,19 +6,26 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./search-location.component.scss']
 })
 export class SearchLocationComponent {
-
-  key: string;
+  public value: string;
+  
   @Output() handleSearch: EventEmitter<string> = new EventEmitter<string>();
+  @Output() handleRewrite: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  @Input() useDebounce: boolean = true;
+  @Input() showIcon: boolean = true;
+
+  constructor() {}
 
   search(value: string): void {
-    this.handleSearch.emit(value);
+    this.value = value.trim();
+    this.handleSearch.emit(value.trim());
   }
 
-  clearSearch(): void {
-    this.key = '';
-    this.handleSearch.emit('');
+  clearSearch(value: string): void {
+    if (!value) {
+      this.handleSearch.emit('');
+    }
+    this.value = value.trim();
+    this.handleRewrite.emit(value.trim());
   }
-
 }

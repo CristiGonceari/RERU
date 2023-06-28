@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,6 +83,9 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                 .Where(x => x.EventUser.EventId == eventId && x.CandidatePositionId == positionId)
                 .Select(x => x.EventUser.UserProfile)
                 .OrderByFullName()
+                .OrderByDescending(x => x.SolicitedVacantPositions
+                    .Any() ? x.SolicitedVacantPositions
+                    .Min(y => y.UpdateDate) : DateTime.MaxValue)
                 .ToList();
 
             var mappedUsers = _mapper.Map<List<UserDiagramDto>>(users);

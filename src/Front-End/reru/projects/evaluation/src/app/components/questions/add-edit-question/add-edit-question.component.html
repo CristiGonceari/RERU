@@ -140,7 +140,7 @@
               <div class="text-right w-100 border-top pt-10 d-md-none d-lg-none d-block">
                 <app-button class="btn mr-2 w-100" [width]="mobileButtonLength" [value]="'button.cancel' | translate" (handle)="backClicked()">
                 </app-button>
-                <app-add-button class="btn" (handle)="onSave()" [disabled]="questionForm.invalid || disableBtn"
+                <app-add-button class="btn w-100" [width]="mobileButtonLength" (handle)="onSave()" [disabled]="questionForm.invalid || disableBtn"
                   [value]="'button.confirm' | translate">
                 </app-add-button>
               </div>

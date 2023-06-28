@@ -7,12 +7,12 @@ import { EditStydyModalComponent } from 'projects/personal/src/app/utils/modals/
 import { ApiResponse } from 'projects/personal/src/app/utils/models/api-response.model';
 import { Contractor } from 'projects/personal/src/app/utils/models/contractor.model';
 import { PagedSummary } from 'projects/personal/src/app/utils/models/paged-summary.model';
-import { ContractorStudyModel, StudyModel } from 'projects/personal/src/app/utils/models/study.model';
+import { StudyModel } from 'projects/personal/src/app/utils/models/study.model';
 import { ReferenceService } from 'projects/personal/src/app/utils/services/reference.service';
 import { StudyService } from 'projects/personal/src/app/utils/services/study.service';
 import { NotificationUtil } from 'projects/personal/src/app/utils/util/notification.util';
 import { ContractorParser } from '../../add/add.parser';
-import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
+import { forkJoin, Observable, OperatorFunction, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { SelectItem } from 'projects/personal/src/app/utils/models/select-item.model';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -27,6 +27,7 @@ import { RecommendationForStudyService } from 'projects/personal/src/app/utils/s
 import { ModernLanguageLevelService } from 'projects/personal/src/app/utils/services/modern-language-level.service';
 import { RegistrationFluxStepService } from 'projects/personal/src/app/utils/services/registration-flux-step.service';
 import { ContractorService } from 'projects/personal/src/app/utils/services/contractor.service';
+import { I18nService } from '../../../../utils/services/i18n.service';
 
 
 @Component({
@@ -37,47 +38,45 @@ import { ContractorService } from 'projects/personal/src/app/utils/services/cont
 export class StudyDetailsComponent implements OnInit {
   @ViewChild('instance', {static: true}) instance: NgbTypeahead;
   @Input() contractor: Contractor;
-  // isLoading: boolean = true;
-  // studyForm: FormGroup;
-  // studies: StudyModel[];
-  // studyTypes: SelectItem[];
-
-  // focus$: Subject<string>[] = [new Subject<string>()];
-  // click$: Subject<string>[] = [new Subject<string>()];
-  // selectedItems: SelectItem[] = [{label:"", value:""}];
 
   isLoading: boolean = true;
   isLoadingStudies: boolean = true;
+  isLoadingStudiesContent: boolean = false;
   isLoadingLanguages: boolean = true;
   isLoadingRecommandations: boolean = true;
 
   studyForm: FormGroup;
   languageForm: FormGroup;
   recommendationForm: FormGroup;
+  panelOpenState: boolean = true;
 
-  studyTypes: SelectItem[];
+  studyTypes;
   focus$: Subject<string>[] = [new Subject<string>()];
   click$: Subject<string>[] = [new Subject<string>()];
   selectedItems: SelectItem[] = [{ label: '', value: '' }];
 
   studyFrequences;
-  userId;
   stepId;
   contractorId;
   userGeneralData;
   registrationFluxStep;
 
-  userStudies: ContractorStudyModel[];
+  userStudies: StudyModel[];
   userModernLanguages: ModernLanguageLevelModel[];
   recommendationForStudy: RecommendationForStudyModel[];
 
   modernLanguages;
   knowledgeQuelifiersEnum;
+  studyProfilesEnum;
+  studyCoursesEnum;
 
   addOrEditStudyButton: boolean;
   addOrEditLanguagesButton: boolean;
   addOrEditRecommendationsButton: boolean;
   isDone: boolean;
+
+  title: string;
+  description: string;
 
   pagedSummary: PagedSummary = new PagedSummary();
 
@@ -92,6 +91,7 @@ export class StudyDetailsComponent implements OnInit {
               private modernLanguageLevelService: ModernLanguageLevelService,
               private registrationFluxService: RegistrationFluxStepService,
               private contractorService: ContractorService,
+              public translate: I18nService
     ) { }
 
   ngOnInit(): void {
@@ -125,13 +125,13 @@ export class StudyDetailsComponent implements OnInit {
   }
 
   initForm(data?, studyType?: StudyEnum): void {
-    
-    if(data == null){
+
+    if (data == null) {
 
       this.studyForm = this.fb.group({
         studies: this.fb.array([this.generateStudies()]),
       });
-  
+
       this.languageForm = this.fb.group({
         modernLanguages: this.fb.array([this.generateModernLanguage()])
       });
@@ -141,24 +141,25 @@ export class StudyDetailsComponent implements OnInit {
       });
 
     }
-    else if (studyType == StudyEnum.Studies ){
+    else if (studyType == StudyEnum.Studies) {
 
       this.studyForm = this.fb.group({
-        studies: this.fb.array([this.generateStudies(data, this.contractor.id)]),
+        studies: this.fb.array([this.generateStudies(data, this.contractorId)]),
       });
 
     }
-    else if (studyType == StudyEnum.ModernLanguageLevels){
+    else if (studyType == StudyEnum.ModernLanguageLevels) {
+
       this.languageForm = this.fb.group({
-        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguageId,  this.contractor.id)])
+        modernLanguages: this.fb.array([this.generateModernLanguage(data, data.modernLanguageId, this.contractorId)])
       });
     }
-    else if(studyType == StudyEnum.Recommandations){
+    else if (studyType == StudyEnum.Recommandations) {
 
       this.recommendationForm = this.fb.group({
-        recommendation: this.fb.array([this.generateRecommendation(data, this.contractor.id)])
+        recommendation: this.fb.array([this.generateRecommendation(data, this.contractorId)])
       });
-    } 
+    }
   }
 
   retrieveDropdowns(): void {
@@ -168,7 +169,7 @@ export class StudyDetailsComponent implements OnInit {
 
     this.referenceService.getStudyTypes().subscribe(res => {
       let types = res.data;
-      this.studyTypes = types.sort(function(a, b){return a.translateId - b.translateId});
+      this.studyTypes = types.sort(function (a, b) { return a.translateId - b.translateId });
     });
 
     this.referenceService.getModernLanguages().subscribe(res => {
@@ -177,6 +178,14 @@ export class StudyDetailsComponent implements OnInit {
 
     this.referenceService.getKnowledgeQuelifiersEnum().subscribe(res => {
       this.knowledgeQuelifiersEnum = res.data
+    });
+
+    this.referenceService.getStudyCoursesEnum().subscribe(res => {
+      this.studyCoursesEnum = res.data
+    });
+
+    this.referenceService.getStudyProfilesEnum().subscribe(res => {
+      this.studyProfilesEnum = res.data
     });
   }
 
@@ -303,33 +312,40 @@ export class StudyDetailsComponent implements OnInit {
   }
 
   generateStudies(study?, contractorId?): FormGroup {
-
     return this.fb.group({
       id: this.fb.control((study && study.id) || null, []),
-      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      institutionAddress: this.fb.control((study && study.institutionAddress) ||  null, [Validators.required]),
+      institution: this.fb.control((study && study.institution) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      institutionAddress: this.fb.control((study && study.institutionAddress) || null, [Validators.required]),
       studyTypeId: this.fb.control((study && study.studyTypeId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       studyFrequency: this.fb.control((study && study.studyFrequency) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
-      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
-      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required]),
-      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required]),
+      studyProfile: this.fb.control((study && study.studyProfile) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\- ]+$/)]),
+      specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
+      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
+      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
+      title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ăâîșțĂÂÎȘȚ\-,. ]+$/)]),
+      creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
+      studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
+      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, [])
     });
   }
 
   generateModernLanguage(language?, modernLanguageId?, contractorId?) {
-    
     return this.fb.group({
       id: this.fb.control((language && language.id) || null, []),
-      knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers)  || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
+      knowledgeQuelifiers: this.fb.control((language && language.knowledgeQuelifiers) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       contractorId: this.fb.control(contractorId || null, []),
-      modernLanguageId: this.fb.control(modernLanguageId || null, []),
+      modernLanguageId: this.fb.control(modernLanguageId || null, [Validators.required]),
     });
   }
 
   generateRecommendation(recommendation?, contractorId?) {
-    
     return this.fb.group({
       id: this.fb.control((recommendation && recommendation.id) || null, []),
       name: this.fb.control((recommendation && recommendation.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
@@ -367,47 +383,89 @@ export class StudyDetailsComponent implements OnInit {
 
   createStudies(): void {
     this.buildStudiesForm().subscribe(response => {
-      this.notificationService.success('Success', 'Studies added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserStudies(this.contractor.id)
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-study-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.getUserStudies(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Studies was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-study-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  creteModernLanguage(){
+  createModernLanguage() {
     this.buildModernLanguageForm().subscribe(response => {
-      this.notificationService.success('Success', 'Modern Language added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserModernLanguages(this.contractor.id);
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-modern-language-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.getUserModernLanguages(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Modern Language was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-modern-language-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
-  creteRecommendationForStudy(){
+  createRecommendationForStudy() {
     this.buildReommendationForStudyForm().subscribe(response => {
-      this.notificationService.success('Success', 'Recommendation added!', NotificationUtil.getDefaultMidConfig());
-      this.getUserRecommendation(this.contractor.id);
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.create-study-recommendation-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.getUserRecommendation(this.contractorId);
     }, error => {
-      this.notificationService.error('Failure', 'Recommendation was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.create-study-recommendation-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     });
   }
 
   buildStudiesForm(): Observable<any> {
-    const request = this.parseStudies(this.studyForm.getRawValue().studies, this.contractor.id);
+    const request = this.parseStudies(this.studyForm.getRawValue().studies, this.contractorId);
     return this.studyService.addMultiple(request);
   }
 
   buildModernLanguageForm(): Observable<any> {
-    const request = this.parseModernLanguages(this.languageForm.getRawValue().modernLanguages, this.contractor.id);
+    const request = this.parseModernLanguages(this.languageForm.getRawValue().modernLanguages, this.contractorId);
     return this.modernLanguageLevelService.addMultiple(request);
   }
 
   buildReommendationForStudyForm(): Observable<any> {
-    const request = this.parseRecommendationsForStudy(this.recommendationForm.getRawValue().recommendation, this.contractor.id);
+    const request = this.parseRecommendationsForStudy(this.recommendationForm.getRawValue().recommendation, this.contractorId);
     return this.recommendationForStudyService.addMultiple(request);
   }
 
-  parseStudies(data: ContractorStudyModel[], contractorId: number): ContractorStudyModel[] {
+  parseStudies(data: StudyModel[], contractorId: number): StudyModel[] {
     return data.map(el => this.parseStudy(el, contractorId));
   }
 
@@ -419,7 +477,7 @@ export class StudyDetailsComponent implements OnInit {
     return data.map(el => this.parseRecomendationForStudy(el, contractorId));
   }
 
-  parseStudy(data: ContractorStudyModel, contractorId): ContractorStudyModel {
+  parseStudy(data: StudyModel, contractorId): StudyModel {
     return ObjectUtil.preParseObject({
       id: data.id,
       institution: data.institution,
@@ -430,7 +488,17 @@ export class StudyDetailsComponent implements OnInit {
       specialty: data.specialty,
       yearOfAdmission: data.yearOfAdmission,
       graduationYear: data.graduationYear,
-      contractorId: contractorId
+      contractorId: contractorId,
+      studyCourse: data.studyCourse,
+      startStudyPeriod: data.startStudyPeriod,
+      endStudyPeriod: data.endStudyPeriod,
+      title: data.title,
+      studyProfile: data.studyProfile,
+      qualification: data.qualification,
+      creditCount: data.creditCount,
+      studyActSeries: data.studyActSeries,
+      studyActNumber: data.studyActNumber,
+      studyActRelaseDay: data.studyActRelaseDay
     })
   }
 
@@ -464,7 +532,7 @@ export class StudyDetailsComponent implements OnInit {
       (<FormArray>this.studyForm.controls.studies).controls.push(
         this.generateStudies(
           study,
-          this.contractor.id
+          this.contractorId
         )
       );
     }
@@ -481,7 +549,7 @@ export class StudyDetailsComponent implements OnInit {
         this.generateModernLanguage(
           language,
           language.modernLanguage,
-          this.contractor.id
+          this.contractorId
         )
       );
     }
@@ -497,15 +565,15 @@ export class StudyDetailsComponent implements OnInit {
       (<FormArray>this.recommendationForm.controls.recommendation).controls.push(
         this.generateRecommendation(
           recommendation,
-          this.contractor.id
+          this.contractorId
         )
       );
     }
   }
 
-  getExistentStep(step, contractorId){
+  getExistentStep(step, contractorId) {
     const request = {
-      contractorId : contractorId,
+      contractorId: contractorId,
       step: step
     };
 
@@ -514,57 +582,354 @@ export class StudyDetailsComponent implements OnInit {
     })
   }
 
-  addRegistrationFluxStep(){
-    if(this.userStudies != null || this.userModernLanguages != null || this.recommendationForStudy != null){
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractor.id);
-    
+  addRegistrationFluxStep() {
+    if (this.userStudies != null || this.userModernLanguages != null || this.recommendationForStudy != null) {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, true, this.contractorId);
+
     }
-    else{
-      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractor.id);
+    else {
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId, false, this.contractorId);
     }
   }
 
-  checkRegistrationStep(stepData, stepId, success, contractorId){
-    const datas= {
+  checkRegistrationStep(stepData, stepId, success, contractorId) {
+    const datas = {
       isDone: success,
       stepId: this.stepId
     }
 
-    if(stepData.length == 0){
+    if (stepData.length == 0) {
       this.addCandidateRegistationStep(success, stepId, contractorId);
       this.ds.sendData(datas);
-    }else{
+    } else {
       this.updateCandidateRegistationStep(stepData[0].id, success, stepId, contractorId);
       this.ds.sendData(datas);
     }
   }
 
-  addCandidateRegistationStep(isDone, step, contractorId ){
+  addCandidateRegistationStep(isDone, step, contractorId) {
     const request = {
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-error'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
   }
 
-  updateCandidateRegistationStep(id, isDone, step, contractorId ){
+  updateCandidateRegistationStep(id, isDone, step, contractorId) {
     const request = {
       id: id,
       isDone: isDone,
-      step : step,
-      contractorId: contractorId 
+      step: step,
+      contractorId: contractorId
     }
-    
+
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.success'),
+        this.translate.get('candidate-registration-flux.step-success'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+        this.translate.get('modal.error'),
+        this.translate.get('candidate-registration-flux.step-erorr'),
+      ]).subscribe(([title, description]) => {
+        this.title = title;
+        this.description = description;
+      });
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     })
+  }
+
+  studyTypeFieldsValidator(index) {
+    this.isLoadingStudiesContent =true;
+    const studies = this.studyForm.controls.studies as FormArray;
+    let study = studies.controls[index];
+
+    let studyType = this.studyTypes?.filter(el => el.value == study.value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+        study.get("title").setValue(null);
+        study.get("studyFrequency").setValue(null);
+        study.get("studyCourse").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("specialty").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 6) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+        study.get("creditCount").setValue(null);
+      } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+        study.get("creditCount").setValue(null);
+        study.get("endStudyPeriod").setValue(null);
+        study.get("faculty").setValue(null);
+        study.get("qualification").setValue(null);
+        study.get("startStudyPeriod").setValue(null);
+        study.get("studyCourse").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+      } else if (studyType[0].validationId == 11) {
+        study.get("faculty").setValue(null);
+        study.get("graduationYear").setValue(null);
+        study.get("specialty").setValue(null);
+        study.get("studyFrequency").setValue(null);
+        study.get("studyProfile").setValue(null);
+        study.get("title").setValue(null);
+        study.get("yearOfAdmission").setValue(null);
+        study.get("studyActRelaseDay").setValue(null);
+      }
+    }
+    setTimeout(() => {
+    this.isLoadingStudiesContent =false;
+    }, 100)
+  }
+
+  studyButtonValidator(study) {
+    let results: boolean[] = [];
+    
+    for (let i = 0; i < study.length; i++) {
+
+      let studyType = this.studyTypes?.filter(el => el.value == study[i].value.studyTypeId);
+      if (studyType?.length > 0) {
+        if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+            
+        } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 6) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+            
+        } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
+            (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+          results.push(!(
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
+            (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
+            (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        } else if (studyType[0].validationId == 11) {
+          results.push(!(
+            (study[i].value.studyCourse && !ValidatorUtil.isInvalidPattern(study[i], "studyCourse")) &&
+            (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
+            (study[i].value.institutionAddress && !ValidatorUtil.isInvalidPattern(study[i], "institutionAddress")) &&
+            (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
+            (study[i].value.creditCount && !ValidatorUtil.isInvalidPattern(study[i], "creditCount")) &&
+            (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
+            (study[i].value.startStudyPeriod && !ValidatorUtil.isInvalidPattern(study[i], "startStudyPeriod")) &&
+            (study[i].value.endStudyPeriod && !ValidatorUtil.isInvalidPattern(study[i], "endStudyPeriod")) &&
+            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+          ))
+        }
+      }else{
+        results.push(true);
+      }
+    }
+    return results.some((x) => x == true) ? true : false;
+  }
+
+  enableFirstStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 1 || studyType[0].validationId == 2 || studyType[0].validationId == 3) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableSecondStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 4 || studyType[0].validationId == 5 || studyType[0].validationId == 9 || studyType[0].validationId == 10) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableThirdStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 6 || studyType[0].validationId == 7 || studyType[0].validationId == 8) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  enableFourthStudyTypeForm(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 11) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  disableThirdStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 6) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  disableMasterStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 7) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  disableSecondStudyTypeField(value) {
+    let studyType = this.studyTypes?.filter(el => el.value == value.studyTypeId);
+
+    if (studyType?.length > 0) {
+      if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  validateCreateStudyButton() {
+    let result: boolean;
+
+    for (let i = 0; i < this.studyForm.value.studies.length; i++) {
+      result = (this.studyForm.value.studies[i].institution &&
+        this.studyForm.value.studies[i].studyTypeId &&
+        this.studyForm.value.studies[i].studyFrequency &&
+        this.studyForm.value.studies[i].faculty &&
+        this.studyForm.value.studies[i].specialty) == null
+    }
+
+    return result;
+  }
+
+  isLengthValidator(form, field: string): boolean {
+    return ValidatorUtil.isIdnpLengthValidator(form, field);
+  }
+
+  inputValidator(form, field) {
+    return !ValidatorUtil.isInvalidPattern(form, field) && form.get(field).valid ? 'is-valid' : 'is-invalid';
   }
 
   // retrieveDropdowns(): void {

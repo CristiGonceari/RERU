@@ -190,6 +190,7 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 	}
 
 	updateOptions() {
+		this.isLoading = false;
 		this.selectScoreFormulaOneAnswer(this.settingsForm.value.formulaForOneAnswer);
 		this.selectScoreFormulaMultipleAnswers(this.settingsForm.value.formulaForMultipleAnswers);
 
@@ -204,5 +205,6 @@ export class AddTestTemplateOptionsComponent implements OnInit {
 			this.getTestTemplateSettings();
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 		});
+		this.isLoading = true;
 	}
 }

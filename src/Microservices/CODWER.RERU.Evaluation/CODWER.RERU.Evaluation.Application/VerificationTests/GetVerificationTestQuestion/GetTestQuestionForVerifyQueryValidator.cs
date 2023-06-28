@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.VerificationTests.GetVerificationTe
 
             if (test != null)
             {
-                isEvaluator = test.CreateById == currentUserId.ToString() || test.EvaluatorId == currentUserId;
+                isEvaluator = test.EvaluatorId == currentUserId;
 
                 if (test.EventId != null && eventEvaluators.Any())
                 {
