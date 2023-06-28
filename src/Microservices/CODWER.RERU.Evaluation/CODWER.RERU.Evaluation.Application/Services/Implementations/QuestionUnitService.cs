@@ -245,7 +245,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Cells["A1"].Value = $"TipÎntrebare={(int)QuestionTypeEnum.HashedAnswer}";
             ws.Cells["B1"].Value = "Categorie";
             ws.Cells["C1"].Value = "Întrebare cu răspuns";
-            ws.Cells["D1"].Value = "Puncte (mai multe de 0)";
+            ws.Cells["D1"].Value = "Puncte (mai mult de 0)";
             ws.Cells["E1"].Value = "Taguri (separate prin virgulă)";
             ws.Cells["F1"].Value = "Notă: Vă rugăm să amplasați răspunsul corect \nîntre etichetele [answer][/answer],\nfără spații la început și la sfârșit";
 
@@ -273,7 +273,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Cells["A1"].Value = $"TipÎntrebare={(int)QuestionTypeEnum.FreeText}";
             ws.Cells["B1"].Value = "Categorie";
             ws.Cells["C1"].Value = "Întrebare";
-            ws.Cells["D1"].Value = "Puncte (mai multe de 0)";
+            ws.Cells["D1"].Value = "Puncte (mai mult de 0)";
             ws.Cells["E1"].Value = "Taguri (separate prin virgulă)";
 
             ws.Column(1).AutoFit();
@@ -298,7 +298,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Cells["C1"].Value = "Întrebare";
             ws.Cells["D1"].Value = "Răspuns";
             ws.Cells["E1"].Value = "Este corect? (Da-1, Nu-0)";
-            ws.Cells["F1"].Value = "Puncte (mai multe de 0)";
+            ws.Cells["F1"].Value = "Puncte (mai mult de 0)";
             ws.Cells["G1"].Value = "Taguri (separate prin virgulă)";
             ws.Cells["H1"].Value = "Notă: Un răspuns per rand. Întrebarea nouă trebuie să fie într-o linie cu primul răspuns. În coloana E utilizați doar 0 sau 1";
 
