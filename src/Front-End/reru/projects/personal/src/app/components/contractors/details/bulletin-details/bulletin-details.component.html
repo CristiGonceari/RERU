@@ -6,9 +6,9 @@
     </div>
     <div class="card-toolbar">
       <button class="btn btn-success mr-2" [disabled]="bulletinForm && bulletinForm.invalid"
-        *ngIf="toAddOrUpdateButton" (click)="updateBulletin()">{{'button.update' | translate}}</button>
+        *ngIf="hasBulletin" (click)="updateBulletin()">{{'button.update' | translate}}</button>
       <button class="btn btn-success mr-2" [disabled]="bulletinForm && bulletinForm.invalid"
-        *ngIf="!toAddOrUpdateButton" (click)="createBulletin()">{{'button.save' | translate | translate}}</button>
+        *ngIf="!hasBulletin" (click)="createBulletin()">{{'button.save' | translate | translate}}</button>
       <!-- <button type="button" [disabled]="isLoading " (click)="submit()" class="btn btn-success mr-2">{{'button.save' | translate}}</button> -->
       <button type="button" [disabled]="isLoading" (click)="resetBulletin()" class="btn btn-secondary">{{'button.cancel' | translate}}</button>
     </div>

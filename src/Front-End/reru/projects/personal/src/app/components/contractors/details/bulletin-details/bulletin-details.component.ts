@@ -31,7 +31,7 @@ export class BulletinDetailsComponent implements OnInit {
   bulletinForm: FormGroup;
 
   isLoading: boolean = true;
-  toAddOrUpdateButton: boolean;
+  hasBulletin: boolean;
  
   existentBulletin;
   bulletinId;
@@ -51,6 +51,9 @@ export class BulletinDetailsComponent implements OnInit {
     apartment: 'ap.',
     postCode: 'Post Code'
   }
+
+  title: string;
+  description: string;
 
   constructor(private bulletinService: BulletinService,
               private fb: FormBuilder,
@@ -97,7 +100,7 @@ export class BulletinDetailsComponent implements OnInit {
     if (contractor.hasBulletin){
       this.getExistentBulletin(contractor.id);
     }else{
-      this.toAddOrUpdateButton = false;
+      this.hasBulletin = false;
       this.isLoading = false;
     }
   }
@@ -123,7 +126,7 @@ export class BulletinDetailsComponent implements OnInit {
       let residenceAddress = this.existentBulletin.residenceAddress;
 
       this.initExistentForm(this.contractor.id, this.bulletinId, this.existentBulletin, birthPlace, residenceAddress, parentsResidenceAddress);
-      this.toAddOrUpdateButton = true;
+      this.hasBulletin = true;
     })
   }
 
@@ -331,20 +334,49 @@ export class BulletinDetailsComponent implements OnInit {
 
   updateBulletin(){
     this.bulletinService.update(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
-      this.notificationService.success('Success', 'Bulletin was updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.edit-bulletin-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractor.id);
 
-      },error => {
-      this.notificationService.error('Error', 'Bulletin was not updated!', NotificationUtil.getDefaultMidConfig());
-      })
+    },error => {
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.edit-bulletin-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+      this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
+    });
   }
 
   createBulletin(){
     this.bulletinService.addContractor(this.parseBulletin(this.bulletinForm.value)).subscribe(res => {
-      this.notificationService.success('Success', 'Bulletin was added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.add-bulletin-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , res.success, this.contractor.id);
      },error => {
-      this.notificationService.error('Success', 'Bulletin was not added!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.add-bulletin-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
      })
   }
@@ -371,9 +403,9 @@ export class BulletinDetailsComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -386,9 +418,9 @@ export class BulletinDetailsComponent implements OnInit {
     }
     
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
