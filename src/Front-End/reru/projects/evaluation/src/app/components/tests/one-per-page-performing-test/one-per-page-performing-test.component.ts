@@ -23,6 +23,7 @@ import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/fi
 import { saveAs } from 'file-saver';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
+import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 
 @Component({
   selector: 'app-one-per-page-performing-test',
@@ -104,6 +105,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     private router: Router,
     private testTemplateService: TestTemplateService,
     private fileTestAnswerService: FileTestAnswerService,
+    private cloudFileService: CloudFileService,
     private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {
@@ -562,6 +564,10 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.finalizeTest();
     clearInterval(this.interval);
     clearInterval(this.timerInterval);
+  }
+
+  printTestDocument(mediaFileId: string) {
+    this.cloudFileService.download(mediaFileId);
   }
 
   ngOnDestroy() {

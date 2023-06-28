@@ -52,7 +52,11 @@
           class="col-xl-3 col-lg-3 col-form-label font-weight-bold text-left text-lg-right text-muted">Media:</label>
         <div class="col-lg-9 col-xl-6">
           <div *ngIf="fileId">
-            <app-get-media-file [fileId]="fileId"></app-get-media-file>
+            <button (click)="printTestDocument(fileId)" class="btn btn-light-success font-weight-bold mr-3 h-40px">
+              <div class="position-relative" style="right: 6px; top: -5px;">
+                <app-get-media-file [fileId]="fileId"></app-get-media-file>
+              </div>
+            </button>
           </div>
         </div>
       </div>

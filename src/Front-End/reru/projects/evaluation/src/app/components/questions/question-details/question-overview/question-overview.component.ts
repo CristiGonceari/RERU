@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionUnitStatusEnum } from '../../../../utils/enums/question-unit-status.enum';
 import { QuestionUnitTypeEnum } from '../../../../utils/enums/question-unit-type.enum';
 import { QuestionService } from '../../../../utils/services/question/question.service';
+import { CloudFileService } from 'projects/evaluation/src/app/utils/services/cloud-file/cloud-file.service';
 
 @Component({
   selector: 'app-question-overview',
@@ -25,6 +26,7 @@ export class QuestionOverviewComponent implements OnInit {
   constructor(
 		private questionService: QuestionService,
 		private activatedRoute: ActivatedRoute,
+    private cloudFileService: CloudFileService,
     public router: Router
   ) {  }
   
@@ -57,4 +59,8 @@ export class QuestionOverviewComponent implements OnInit {
         this.get();
     }});
 	}
+
+  printTestDocument(mediaFileId: string) {
+    this.cloudFileService.download(mediaFileId);
+  }
 }
