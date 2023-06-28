@@ -16,9 +16,10 @@ import { RegistrationFluxStepService } from 'projects/personal/src/app/utils/ser
 import { UserProfileService } from 'projects/personal/src/app/utils/services/user-profile.service';
 import { NotificationUtil } from 'projects/personal/src/app/utils/util/notification.util';
 import { ValidatorUtil } from 'projects/personal/src/app/utils/util/validator.util';
-import { merge, Observable, OperatorFunction, Subject } from 'rxjs';
+import { forkJoin, merge, Observable, OperatorFunction, Subject } from 'rxjs';
 import { ContractorParser } from '../../add/add.parser';
 import { DataService } from '../data.service';
+import { I18nService } from 'projects/personal/src/app/utils/services/i18n.service';
 
 @Component({
   selector: 'app-general',
@@ -56,6 +57,9 @@ export class GeneralComponent implements OnInit {
   nationalities;
   citizenships;
 
+  title: string;
+  description: string;
+
   constructor(private fb: FormBuilder,
     private contractorService: ContractorService,
     private notificationService: NotificationsService,
@@ -66,6 +70,7 @@ export class GeneralComponent implements OnInit {
     private route: ActivatedRoute,
     private ds: DataService,
     private registrationFluxService: RegistrationFluxStepService,
+    private translate: I18nService
     ) { }
 
   ngOnInit(): void {
@@ -194,10 +199,24 @@ export class GeneralComponent implements OnInit {
       this.isLoading = false;
       this.contractorService.fetchContractor.next();
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , response.success, this.contractor.id);
-      this.notificationService.success('Success', 'Contractor details updated!', NotificationUtil.getDefaultConfig());
+      forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('candidate-registration-flux.update-general-data-success'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
     }, error => {
       this.isLoading = false;
-      this.notificationService.error('Failure', 'Contractor details was not updated!', NotificationUtil.getDefaultMidConfig());
+      forkJoin([
+				this.translate.get('modal.error'),
+				this.translate.get('candidate-registration-flux.update-general-data-error'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+				});
+      this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
       this.checkRegistrationStep(this.registrationFluxStep, this.stepId , error.success, this.contractor.id);
     });
   }
@@ -234,9 +253,9 @@ export class GeneralComponent implements OnInit {
       contractorId: contractorId 
     }
     this.registrationFluxService.add(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was added!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not added!', NotificationUtil.getDefaultMidConfig());
     })
   }
 
@@ -247,13 +266,13 @@ export class GeneralComponent implements OnInit {
       step : step,
       contractorId: contractorId 
     }
-    
     this.registrationFluxService.update(request).subscribe(res => {
-      this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.success('Success', 'Step was updated!', NotificationUtil.getDefaultMidConfig());
     }, error => {
-      this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
+      //this.notificationService.error('Error', 'Step was not updated!', NotificationUtil.getDefaultMidConfig());
     })
   }
+  
   // openAccessModal(): void {
   //   this.getUser(this.contractor.id);
   //   const modalRef = this.modalService.open(AddAccessModalComponent, { centered: true, backdrop: 'static' });

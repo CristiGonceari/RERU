@@ -68,6 +68,7 @@ namespace CODWER.RERU.Personal.Application.Contractors.GetContractor
                     FirstName = c.FirstName,
                     LastName = c.LastName,
                     FatherName = c.FatherName,
+                    Idnp = c.UserProfile.Idnp,
                     BirthDate = c.BirthDate,
                     Sex = c.Sex,
                     PhoneNumber = c.PhoneNumber,
