@@ -485,7 +485,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             this.testQuestionSummary = res.data;
             this.pageColor(res.data);
 
-            if (this.testQuestionSummary.every(x => x.isClosed === true) || this.testQuestionSummary.every(x => x.answerStatus === AnswerStatusEnum.Answered)) {
+            if (this.testQuestionSummary.every(x => x.isClosed === true)) {
               this.submitTest();
             } 
             else if (!this.testTemplateSettings.possibleChangeAnswer || !this.testTemplateSettings.possibleGetToSkipped) {
