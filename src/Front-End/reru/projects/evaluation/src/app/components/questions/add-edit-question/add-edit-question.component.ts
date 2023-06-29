@@ -114,6 +114,7 @@ export class AddEditQuestionComponent implements OnInit {
         questionType: this.formBuilder.control((data && !isNaN(data.questionType) ? data.questionType : null), [Validators.required]),
         status: QuestionUnitStatusEnum.Draft
       });
+      this.updateValidationForQuestion();
     } else {
       if (this.value) this.questionByCategory.selected.subscribe(x => this.category = x);
 
