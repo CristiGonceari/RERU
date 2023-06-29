@@ -75,10 +75,10 @@
                       <div class="card-body" *ngIf="!isLoading">
                         <div class="bordered form-group row mb-2">
                           <label *ngFor="let event of eventsListForDescription"
-                            class="table-responsive col-xl-6 col-lg-6 col-form-label align-items-center font-weight-bold text-right text-muted">
-                            <p class="text-muted mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
+                            class="table-responsive col-xl-6 col-lg-6 col-form-label align-items-center font-weight-bold text-left text-muted">
+                            <p class="text-muted text-left mb-2">{{event.eventName}}: ({{event.testTemplates.length}} {{ 'verify-test.title' | translate }})</p>
                             <p *ngIf="!event.testTemplates.length">-</p>
-                            <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-right">
+                            <p *ngFor="let testTemplate of event.testTemplates" class="font-weight-bold text-left">
                               {{testTemplate.testTemplateName}}
                             </p>
                           </label>
