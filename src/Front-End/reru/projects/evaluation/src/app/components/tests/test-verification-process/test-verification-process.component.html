@@ -32,7 +32,11 @@
           <p class="font-size-h2" [innerHTML]="question | safeHtml">
           </p>
           <div *ngIf="fileId">
-            <app-get-media-file [fileId]="fileId"></app-get-media-file>
+            <button (click)="printTestDocument(fileId)" class="btn btn-light-success font-weight-bold mr-3 h-40px">
+              <div class="position-relative" style="right: 6px; top: -5px;">
+                <app-get-media-file [fileId]="fileId"></app-get-media-file>
+              </div>
+            </button>
           </div>
         </div>
         <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>
@@ -174,7 +178,7 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid text-center" *ngIf="questionType == 5 && hadFile == true">
+      <div class="container-fluid text-center mb-3" *ngIf="questionType == 5 && hadFile == true">
         <button (click)="getFile()" class="btn btn-light-success font-weight-bold mr-3"
             ngbTooltip="{{fileName}}">
             <i class="flaticon-profile"></i>

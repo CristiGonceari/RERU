@@ -15,6 +15,7 @@ import { forkJoin } from 'rxjs';
 import { I18nService } from '../../../utils/services/i18n/i18n.service';
 import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/file-test-answer.service';
 import { saveAs } from 'file-saver';
+import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class TestVerificationProcessComponent implements OnInit {
 		private testQuestionService: TestQuestionService,
 		public translate: I18nService,
 		private router: Router,
+		private cloudFileService: CloudFileService,
 		private fileTestAnswerService: FileTestAnswerService
 	) { }
 
@@ -304,6 +306,10 @@ export class TestVerificationProcessComponent implements OnInit {
 			this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 			this.router.navigate(['../../../tests'], { relativeTo: this.activatedRoute })
 		})
+	}
+
+	printTestDocument(mediaFileId: string) {
+		this.cloudFileService.download(mediaFileId);
 	}
 
 	finalizeVerificationModal(): void {
