@@ -371,10 +371,6 @@
                                                 </div>
                                             </div>
                                         </button>
-                                        <button class="navi-link align-items-baseline px-6" ngbDropdownItem  *ngIf="currentUser.userStatusEnum == 1"
-                                            (click)="removeTest(item.id)">
-                                            {{ 'button.delete' | translate }}
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -582,10 +578,6 @@
                                     <button (click)="openGenerateDocumentModal(item.id, item.testTemplateName)"
                                         class="navi-link align-items-baseline px-6" ngbDropdownItem>
                                         {{'documents-templates.generate-document'| translate}}
-                                    </button>
-                                    <button class="navi-link align-items-baseline px-6" ngbDropdownItem  *ngIf="currentUser.userStatusEnum == 1"
-                                        (click)="removeTest(item.id)">
-                                        {{ 'button.delete' | translate }}
                                     </button>
                                 </div>
                             </div>
