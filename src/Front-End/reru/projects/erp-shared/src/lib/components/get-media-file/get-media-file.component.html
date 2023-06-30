@@ -23,11 +23,11 @@
     <audio *ngIf="audioUrl" controls class="w-100 max-w-100 d-md-none d-inline-block">
         <source [src]="audioUrl" type="audio/mpeg">
     </audio>
-    <doc *ngIf="docUrl" controls>
+    <doc *ngIf="docUrl" data-toggle="tooltip" data-placement="top" title="Descarcă" (click)="printTestDocument(fileId)" controls>
         <p class="mb-0 ml-5 mt-2 font-weght-lighter">{{fileName}}</p>
         <source [src]="docUrl" type="file">
     </doc>
-    <div *ngIf="!imageUrl && !videoUrl && !audioUrl && !docUrl">
+    <div *ngIf="!imageUrl && !videoUrl && !audioUrl && !docUrl"  data-toggle="tooltip" data-placement="top" title="Descarcă" (click)="printTestDocument(fileId)">
         <p class="mb-0 ml-5 mt-2 font-weght-lighter">{{fileName}}</p>
     </div>
 </div>

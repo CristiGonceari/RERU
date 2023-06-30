@@ -566,10 +566,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     clearInterval(this.timerInterval);
   }
 
-  printTestDocument(mediaFileId: string) {
-    this.cloudFileService.download(mediaFileId);
-  }
-
   ngOnDestroy() {
     this.styleNodesService.removeStyle('breadcrumb');
   }
