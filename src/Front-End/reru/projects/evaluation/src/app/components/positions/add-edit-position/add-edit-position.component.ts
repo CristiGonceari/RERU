@@ -155,12 +155,12 @@ export class AddEditPositionComponent implements OnInit {
 		this.getAttachedUsers();
 		if (data) {
 			this.positionForm = this.fb.group({
-				name: this.fb.control(data?.name || null, [Validators.required]),
+				name: this.fb.control(data?.name || '', [Validators.required]),
 				medicalColumn: this.fb.control((data && !isNaN(data.medicalColumn) ? data.medicalColumn : null), [Validators.required])
 			});
 		} else {
 			this.positionForm = this.fb.group({
-				name: this.fb.control(null, [Validators.required]),
+				name: this.fb.control('', [Validators.required]),
 				medicalColumn: this.fb.control(null, [Validators.required]),
 			});
 		}

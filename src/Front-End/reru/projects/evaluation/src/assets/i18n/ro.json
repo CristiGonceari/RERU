@@ -1058,7 +1058,7 @@
     "03030208": "Testul dvs. solicitat a fost refuzat",
     "03002201": "Nu puteți șterge poziția la care cineva a aplicat",
     "03002106": "Poziție nevalidă",
-    "03002107": "Numele poziției este gol",
+    "03002107": "Câmpul Denumirea poziției este obligatoriu",
     "03002109": "Coloana medicală este necompletată",
     "03001506": "Nu ați asignat nici un evaluat",
     "03002105": "Șablon de document inexistent"
