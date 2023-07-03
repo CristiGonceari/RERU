@@ -382,7 +382,7 @@
                         <app-loading-spinner *ngIf="item.isLoadingAccordeon" [contentHeight]="'10vh'" [height]="'5rem'"
                             [width]="'5rem'" [colorClass]="'text-primary'">
                         </app-loading-spinner>
-                        <div *ngIf="item.documentForSign.length > 0 && !item.isLoadingAccordeon">
+                        <div *ngIf="item && item.documentForSign && item.documentForSign.length > 0 && !item.isLoadingAccordeon">
                             <div>
                                 <table class="w-100" style="border: 1px solid grey !important">
                                     <thead>
@@ -446,7 +446,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div *ngIf="item.documentForSign.length == 0 && !item.isLoadingAccordeon">
+                        <div *ngIf="item && item.documentForSign && item.documentForSign.length == 0 && !item.isLoadingAccordeon">
                             <div *ngIf="item.testStatus == 4">
                                 <button (click)="generateTestResult(item)" class="btn btn-primary d-block d-xl-none float-right">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
