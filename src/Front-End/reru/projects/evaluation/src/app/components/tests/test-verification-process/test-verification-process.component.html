@@ -32,11 +32,7 @@
           <p class="font-size-h2" [innerHTML]="question | safeHtml">
           </p>
           <div *ngIf="fileId">
-            <button (click)="printTestDocument(fileId)" class="btn btn-light-success font-weight-bold mr-3 h-40px">
-              <div class="position-relative" style="right: 6px; top: -5px;">
-                <app-get-media-file [fileId]="fileId"></app-get-media-file>
-              </div>
-            </button>
+            <app-get-media-file [fileId]="fileId"></app-get-media-file>
           </div>
         </div>
         <span *ngIf="correctQuestion" class="font-size-lg">{{'verify-test.correct-question' | translate}}:</span>

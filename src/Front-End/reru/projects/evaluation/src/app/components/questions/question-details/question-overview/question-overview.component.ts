@@ -59,8 +59,4 @@ export class QuestionOverviewComponent implements OnInit {
         this.get();
     }});
 	}
-
-  printTestDocument(mediaFileId: string) {
-    this.cloudFileService.download(mediaFileId);
-  }
 }

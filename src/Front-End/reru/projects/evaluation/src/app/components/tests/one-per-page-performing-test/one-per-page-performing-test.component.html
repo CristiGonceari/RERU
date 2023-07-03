@@ -80,11 +80,7 @@
                     <!-- <p class="question-container font-size-h2" [innerHTML]="questionUnit.question | safeHtml"></p> -->
                     <span class="text-muted position-absolute right-0 bottom-0 pb-2 pr-2">{{ 'questions.questions-left' | translate }}: {{count - questionIndex}}</span>
                     <div *ngIf="fileId">
-                        <button (click)="printTestDocument(fileId)" class="btn btn-light-success font-weight-bold mr-3 h-40px">
-                            <div class="position-relative" style="right: 6px; top: -5px;">
-                              <app-get-media-file [fileId]="fileId"></app-get-media-file>
-                            </div>
-                        </button>
+                        <app-get-media-file [fileId]="fileId"></app-get-media-file>
                     </div>
                 </div>
                 <div *ngFor="let option of testOptionsList">

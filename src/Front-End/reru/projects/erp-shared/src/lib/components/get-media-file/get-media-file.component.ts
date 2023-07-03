@@ -108,6 +108,10 @@ export class GetMediaFileComponent implements OnChanges {
     });
   }
 
+  printTestDocument(mediaFileId: string) {
+    this.fileService.download(mediaFileId);
+  }
+
   showImage(url): void {
     const modalRef = this.modalService.open(ShowImageModalComponent, { centered: true, size: 'xl' });
     modalRef.componentInstance.imageUrl = url;

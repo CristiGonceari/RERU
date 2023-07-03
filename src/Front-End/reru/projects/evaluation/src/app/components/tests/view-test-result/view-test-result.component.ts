@@ -222,10 +222,6 @@ export class ViewTestResultComponent implements OnInit, OnDestroy {
     else this.processTestQuestion(1)
   }
 
-  printTestDocument(mediaFileId: string) {
-    this.cloudFileService.download(mediaFileId);
-  }
-
   logout(): void {
     localStorage.removeItem('idnp');
     this.router.navigate(['public']);

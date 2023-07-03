@@ -308,10 +308,6 @@ export class TestVerificationProcessComponent implements OnInit {
 		})
 	}
 
-	printTestDocument(mediaFileId: string) {
-		this.cloudFileService.download(mediaFileId);
-	}
-
 	finalizeVerificationModal(): void {
 		forkJoin([
 			this.translate.get('modal.finish-verification'),
