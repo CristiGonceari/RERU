@@ -199,7 +199,7 @@ export class TestVerificationProcessComponent implements OnInit {
 					this.maxPoints = res.data.questionMaxPoints;
 					this.accumulatedPoints = res.data.evaluatorPoints;
 					this.questionUnitId = res.data.questionUnitId;
-					this.points = (res.data.evaluatorPoints === 0) ? '' : res.data.evaluatorPoints;
+					this.points = (res.data.verified == 1) ? res.data.evaluatorPoints : '';
 					this.fileId = res.data.questionUnitMediaFileId;
 				}
 			},
@@ -246,9 +246,9 @@ export class TestVerificationProcessComponent implements OnInit {
 	next() {
 		if (this.isNotVerified()) {
 			this.index = Math.min.apply({}, this.getNotVerified());
-			this.getSummary(this.testId, this.index);
+			this.getSummary(this.testId, this.index + 1);
 			if (this.index === this.verifiedStatus.length) {
-				this.finalizeVerificationModal();
+		  		this.finalizeVerificationModal();
 			}
 			return;
 		}
@@ -264,7 +264,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	}
 
 	getNotVerified(): any[] {
-		return this.verifiedStatus.map((el, i) => { if (el === 2) return i + 1 }).filter(el => !isNaN(el));
+		return this.verifiedStatus.map((el, i) => { if (el === 2) return i }).filter(el => !isNaN(el));
 	}
 
 	getNextIndex(): number {

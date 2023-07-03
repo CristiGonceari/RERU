@@ -291,8 +291,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             {
                 String[] delimiters = { ".", "/" };
                 var dateString = workSheet.Cells[i, 9]?.Value?.ToString();
-                var substr = dateString?.Length >= 10 ? dateString.Substring(0, 10) : dateString;
-                var dateStrings = substr?.Split(delimiters, StringSplitOptions.None);
+                var dateArray = dateString.ToString().Trim()?.Split(delimiters, StringSplitOptions.None);
                 var FirstName = workSheet.Cells[i, 1]?.Value?.ToString();
                 var LastName = workSheet.Cells[i, 2]?.Value?.ToString();
                 var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
@@ -304,15 +303,15 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
                 DateTime BirthDate;
 
-                if (dateString == null || !Regex.IsMatch(dateString.ToString(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+                if (dateString == null || !Regex.IsMatch(dateString.ToString().Trim(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
                 {
                     workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este \"{workSheet.Cells[i, 9]?.Value?.ToString()}\" \n";
                     workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
-                else if (dateStrings != null)
+                else if (dateArray != null)
                 {
-                    BirthDate = new DateTime(int.Parse(dateStrings[2]), int.Parse(dateStrings[1]), int.Parse(dateStrings[0]));
+                    BirthDate = new DateTime(int.Parse(dateArray[2]), int.Parse(dateArray[1]), int.Parse(dateArray[0]));
 
                     if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
                     {
@@ -322,42 +321,42 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     }
                 }
                
-                if (!Regex.IsMatch(FirstName, @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!Regex.IsMatch(FirstName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nume trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
                 
-                if (!Regex.IsMatch(LastName, @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!Regex.IsMatch(LastName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenume trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
-                if (!Regex.IsMatch(FatherName, @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!Regex.IsMatch(FatherName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Patronimic trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 3].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(Idnp) || Idnp.Length != 13 || !Regex.IsMatch(Idnp, @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(Idnp.Trim()) || Idnp.Trim().Length != 13 || !Regex.IsMatch(Idnp.Trim(), @"^\d+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
                     workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$"))
+                if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email.Trim(), @"(?x)^[^\s@]+@[^\s@]+\.[^\s@]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
                     workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString().Trim(), @"^\d+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Departament trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
@@ -370,7 +369,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(RoleColaboratorId) || !Regex.IsMatch(RoleColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(RoleColaboratorId) || !Regex.IsMatch(RoleColaboratorId.ToString().Trim(), @"^\d+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Rol trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
@@ -383,7 +382,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(FunctionColaboratorId) || !Regex.IsMatch(FunctionColaboratorId.ToString(), @"^[0-9]+$"))
+                if (string.IsNullOrWhiteSpace(FunctionColaboratorId) || !Regex.IsMatch(FunctionColaboratorId.ToString().Trim(), @"^\d+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Funcție trebuie să conțină doar cifre \n";
                     workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
@@ -396,7 +395,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber, @"^\+373") || PhoneNumber.Length != 12)
+                if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber.Trim(), @"(?x)^\s*\+373[0-9]{8}\s*$") || PhoneNumber.Trim().Length != 12)
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
                     workSheet.Cells[i, 10].Style.Fill.SetBackground(_color);
