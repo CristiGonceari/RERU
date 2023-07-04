@@ -74,16 +74,21 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
 
             var myDictionary = new Dictionary<string, string>();
             Location location;
-
-            if (test.EventId != null)
+            try
             {
-
                 location = _appDbContext.EventLocations
                                                     .Include(x => x.Location)
                                                     .Where(x => x.EventId == test.EventId)
                                                     .Select(x => x.Location)
                                                     .First();
+            }catch(Exception e)
+            {
+                location = null;
+            }
+            
 
+            if (test.EventId != null && location != null)
+            {
                 foreach (var item in keys)
                 {
                     switch (item)
@@ -305,7 +310,6 @@ namespace CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysSer
             }
             else
             {
-                location = null;
                 foreach (var item in keys)
                 {
                     switch (item)
