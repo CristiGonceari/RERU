@@ -211,7 +211,7 @@
           </span>
         </div>
         <div class="d-block d-md-none w-100 mt-3">
-          <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
+          <app-confirm-button class="btn" (handle)="next(false)" [value]="'verify-test.next-question' | translate">
           </app-confirm-button>
         </div>
         <div class="d-none d-md-block">
@@ -226,7 +226,7 @@
           </span>
         </div>
         <div class="d-none d-md-block">
-          <app-confirm-button class="btn" (handle)="next()" [value]="'verify-test.next-question' | translate">
+          <app-confirm-button class="btn" (handle)="next(false)" [value]="'verify-test.next-question' | translate">
           </app-confirm-button>
         </div>
       </div>
