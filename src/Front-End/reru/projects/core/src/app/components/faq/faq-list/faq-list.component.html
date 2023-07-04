@@ -52,6 +52,7 @@
 					<div class="col">
 						<erp-shared-search-input 
 							(handleSearch)="table.setFilter($event)" 
+							(keydown.enter)="table.list({page: 1})"
 							[placeholder]="'button.search-name' | translate" 
 							[showIcon]="false" [useDebounce]="false" #user>
 						</erp-shared-search-input>

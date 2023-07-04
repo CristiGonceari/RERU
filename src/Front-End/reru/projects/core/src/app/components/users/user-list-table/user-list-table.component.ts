@@ -74,10 +74,7 @@ export class UserListTableComponent implements OnInit {
 	setFilter(field: string, value, startSearch: boolean = false): void {
 		this.filters[field] = value;
 		this.pagination.currentPage = 1;
-
-		if (startSearch) {
-			this.list();
-		}
+		this.list();
 	}
 
 	resetFilter(): void {

@@ -59,19 +59,19 @@
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-name' | translate" #keyword
               (handleSearch)="userTable.setFilter('keyword', $event)"
-              [showIcon]="false" [useDebounce]="false">
+              [showIcon]="false">
             </erp-shared-search-input>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-email' | translate" #email
               (handleSearch)="userTable.setFilter('email', $event)"
-              [showIcon]="false" [useDebounce]="false">
+              [showIcon]="false">
             </erp-shared-search-input>
           </div>
           <div class="col-lg col-12 pt-lg-0 pt-2">
             <erp-shared-search-input [placeholder]="'pages.user-details.search-idnp' | translate" #idnp
               (handleSearch)="userTable.setFilter('idnp', $event)"
-              [showIcon]="false" [useDebounce]="false">
+              [showIcon]="false">
             </erp-shared-search-input>
           </div>
         </div>
