@@ -14,6 +14,7 @@ import { FileTestAnswerService } from '../../../utils/services/FileTestAnswer/fi
 import { saveAs } from 'file-saver';
 import { EnumStringTranslatorService } from '../../../utils/services/enum-string-translator.service';
 import { StyleNodesService } from '../../../utils/services/style-nodes/style-nodes.service';
+import { CloudFileService } from '../../../utils/services/cloud-file/cloud-file.service';
 
 @Component({
   selector: 'app-view-test-result',
@@ -70,6 +71,7 @@ export class ViewTestResultComponent implements OnInit, OnDestroy {
     private location: Location,
     private fileTestAnswerService: FileTestAnswerService,
     private enumStringTranslatorService: EnumStringTranslatorService,
+    private cloudFileService: CloudFileService,
     private styleNodesService: StyleNodesService
   ) {
     this.activatedRoute.params.subscribe(params => {

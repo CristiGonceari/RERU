@@ -179,12 +179,12 @@
               </div>
               <div class="text-right border-top pt-10 d-none d-md-block d-lg-block">
                 <app-button class="btn mr-2" [value]="'button.back' | translate" (click)="back()"></app-button>
-                <app-add-button class="btn" [value]="'button.confirm' | translate" (handle)="submit()">
+                <app-add-button class="btn" [disabled]="positionForm.invalid" [value]="'button.confirm' | translate" (handle)="submit()">
                 </app-add-button>
               </div>
               <div class="text-right border-top pt-10 d-block d-md-none d-lg-none">
                 <app-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.back' | translate" (click)="back()"></app-button>
-                <app-add-button class="btn w-100" [width]="mobileButtonLength" [value]="'button.confirm' | translate" (handle)="submit()">
+                <app-add-button class="btn w-100" [disabled]="positionForm.invalid" [width]="mobileButtonLength" [value]="'button.confirm' | translate" (handle)="submit()">
                 </app-add-button>
               </div>
             </form>
