@@ -82,6 +82,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	ngOnInit(): void {
 		this.getTestId();
 		this.getSummary(this.testId, this.index);
+		this.processTestQuestion(this.index);
 		this.ngDoBoostrap();
 		this.pagination();
 		this.testQuestionService.setData(true);
@@ -158,7 +159,6 @@ export class TestVerificationProcessComponent implements OnInit {
 				this.verifiedStatus = res.data.testQuestions.map(el => el.verificationStatus);
 				this.autoverified = res.data.testQuestions.filter(st => st.verificationStatus === 0).map(id => id.index);
 				this.verified = res.data.testQuestions.filter(st => st.verificationStatus === 1).map(id => id.index);
-				this.processTestQuestion(index);
 			},
 		);
 	}
@@ -239,20 +239,20 @@ export class TestVerificationProcessComponent implements OnInit {
 				evaluatorPoints: +this.points,
 				questionUnitId: this.questionUnitId
 			};
-			this.verifyService.verify(verifyData).subscribe(() => this.next());
+			this.verifyService.verify(verifyData).subscribe(() => this.next(true));
 		}
 	}
 
-	next() {
+	next(toEvaluate: boolean) {
 		if (this.isNotVerified()) {
 			this.index = Math.min.apply({}, this.getNotVerified());
-			this.getSummary(this.testId, this.index + 1);
-			if (this.index === this.verifiedStatus.length) {
-		  		this.finalizeVerificationModal();
-			}
-			return;
+			this.getSummary(this.testId, this.index);
+			if (toEvaluate && this.index < this.verifiedStatus.length) this.index++;
+			this.processTestQuestion(this.index);
 		}
-		this.finalizeVerificationModal();
+		if (this.index === this.verifiedStatus.length) {
+			this.finalizeVerificationModal();
+	  	}
 	}
 
 	isNotVerified(): boolean {
@@ -264,7 +264,7 @@ export class TestVerificationProcessComponent implements OnInit {
 	}
 
 	getNotVerified(): any[] {
-		return this.verifiedStatus.map((el, i) => { if (el === 2) return i }).filter(el => !isNaN(el));
+		return this.verifiedStatus.map((el, i) => { if (el === 2) return i + 1 }).filter(el => !isNaN(el));
 	}
 
 	getNextIndex(): number {
