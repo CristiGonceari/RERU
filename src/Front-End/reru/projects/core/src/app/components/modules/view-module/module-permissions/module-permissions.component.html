@@ -10,6 +10,7 @@
       <div class="col-lg col-12">
         <erp-shared-search-input 
           (handleSearch)="setFilter('description', $event)" 
+          (keydown.enter)="getPermissions()"
           [placeholder]="'pages.modules-details.search-by-description' | translate" 
           [showIcon]="false" [useDebounce]="false" #description>
         </erp-shared-search-input>
@@ -17,6 +18,7 @@
       <div class="col-lg col-12 pt-lg-0 pt-2">
         <erp-shared-search-input 
           (handleSearch)="setFilter('code', $event)" 
+          (keydown.enter)="getPermissions()"
           [placeholder]="'pages.modules-details.search-by-code' | translate" 
           [showIcon]="false" [useDebounce]="false" #code>
         </erp-shared-search-input>
