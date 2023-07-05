@@ -380,7 +380,7 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   checkSaveAnswer(index) {
     let isCkecked: boolean = false;
 
-    if (this.testTemplateSettings.possibleGetToSkipped) {
+    if (this.testTemplateSettings.possibleGetToSkipped && this.testTemplateSettings.possibleChangeAnswer) {
       if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
       {
         this.parseTextAnswer();
@@ -400,6 +400,7 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
 
       if (isCkecked) {
         this.saveAnswers();
+        this.getTestQuestions(index - 1)
       } 
       else {
         this.getTestQuestions(index)

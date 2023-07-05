@@ -1,0 +1,15 @@
+::ng-deep {
+    .owl-dt-inline-container .owl-dt-calendar, .owl-dt-popup-container .owl-dt-calendar {
+        @media screen and (max-width: 1200px) {
+            height: auto;
+        }
+        @media screen and (min-width: 2000px) {
+            height: auto;
+            .owl-dt-calendar-view span{
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+  
