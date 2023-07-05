@@ -245,15 +245,24 @@ export class TestVerificationProcessComponent implements OnInit {
 
 	next(toEvaluate: boolean) {
 		if (this.isNotVerified()) {
-			this.index = Math.min.apply({}, this.getNotVerified());
+			const notVerified = this.getNotVerified();
+			if (toEvaluate) {
+				const nextIndex = notVerified.findIndex(index => index > this.index);
+				if (nextIndex !== -1) {
+					this.index = notVerified[nextIndex];
+				} else {
+					this.finalizeVerificationModal();
+					return;
+				}
+		  	} else {
+				this.index = notVerified[0];
+		  	}
 			this.getSummary(this.testId, this.index);
-			if (toEvaluate && this.index < this.verifiedStatus.length) this.index++;
-			this.processTestQuestion(this.index);
-		}
-		if (this.index === this.verifiedStatus.length) {
+		  	this.processTestQuestion(this.index);
+		} else {
 			this.finalizeVerificationModal();
-	  	}
-	}
+		}
+	}		
 
 	isNotVerified(): boolean {
 		if (!this.verifiedStatus.length) {
