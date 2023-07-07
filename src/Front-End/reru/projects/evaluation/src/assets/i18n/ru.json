@@ -587,7 +587,9 @@
     "endTime": "Время окончания",
     "file": "Файл",
     "history": "История",
-    "validDuring": "Действует в течение"
+    "validDuring": "Действует в течение",
+    "done": "Выполнено",
+    "in-progress": "В процессе..."
   },
   "answers": {
     "option-settings": "Настройка Опции",

@@ -271,19 +271,24 @@ export class AddEditQuestionComponent implements OnInit {
   }
 
   private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    let status = '';
     switch (httpEvent.type) {
       case HttpEventType.Sent:
         this.isLoadingMedia = true;
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-      break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.translate.get('position.in-progress').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status)
         break;
       case HttpEventType.Response:
-        this.fileStatus.requestType = "Done";
+        this.translate.get('processes.done').subscribe((res: string) => {
+          status = res;
+        });
+        this.fileStatus.requestType = status;
         this.backClicked();
         this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
         this.isLoadingMedia = false;
