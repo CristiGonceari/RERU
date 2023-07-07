@@ -57,7 +57,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	}
 
 	initForm(oldPersonalData: PersonalData): void {
-		var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+		var matchesPattern = '^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*$';
 		
 		this.personalDataForm = this.fb.group({
 			firstName: this.fb.control(oldPersonalData.firstName, [
