@@ -120,7 +120,7 @@ export class EditComponent implements OnInit {
 			phoneNumber: this.fb.control((user && user.phoneNumber) || "", [
 				Validators.required,
 				Validators.pattern(
-					"^((\\+373-?)|0)?[0-9]{8}$"
+					"^(\\+373-?)[0-9]{8}$"
 				),
 				Validators.maxLength(12), 
 				Validators.minLength(12)

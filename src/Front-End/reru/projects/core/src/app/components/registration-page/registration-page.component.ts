@@ -130,7 +130,7 @@ export class RegistrationPageComponent implements OnInit {
   initForm(): void {
     var nameValidator = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
     var emailValidator = "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@((?!mail.ru|yandex.ru).)([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])";
-    var phoneValidator = '^((\\+373-?)|0)?[0-9]{8}$';
+    var phoneValidator = '^(\\+373-?)[0-9]{8}$';
     this.userForm = this.fb.group({
       firstName: this.fb.control(null, [Validators.required, Validators.pattern(nameValidator)]),
       lastName: this.fb.control(null, [Validators.required, Validators.pattern(nameValidator)]),
