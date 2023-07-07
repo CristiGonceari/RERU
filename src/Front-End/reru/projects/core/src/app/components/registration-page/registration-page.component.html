@@ -176,9 +176,9 @@
                   <div *ngIf="hasError('phoneNumber', 'required')" data-field="phoneNumber" data-validator="notEmpty"
                     class="fv-help-block">
                     {{ 'login.phone-is-required' | translate }}</div>
-                  <div *ngIf="hasError('phoneNumber', 'phoneNumber')" data-field="phoneNumber" data-validator="notEmpty"
+                  <div *ngIf="hasError('phoneNumber', 'pattern')" data-field="phoneNumber" data-validator="notEmpty"
                     class="fv-help-block">
-                    {{ 'login.phone-is-required' | translate }}</div>
+                    {{ 'user-profile.wrong-phone' | translate }}</div>
                 </div>
               </div>
               <div class="form-group col-md-6">

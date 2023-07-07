@@ -128,17 +128,18 @@ export class RegistrationPageComponent implements OnInit {
   }
 
   initForm(): void {
-    var matchesPattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
-
+    var nameValidator = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+    var emailValidator = "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@((?!mail.ru|yandex.ru).)([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])";
+    var phoneValidator = '^((\\+373-?)|0)?[0-9]{8}$';
     this.userForm = this.fb.group({
-      firstName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
-      lastName: this.fb.control(null, [Validators.required, Validators.pattern(matchesPattern)]),
-      fatherName: this.fb.control("", [Validators.pattern(matchesPattern)]),
+      firstName: this.fb.control(null, [Validators.required, Validators.pattern(nameValidator)]),
+      lastName: this.fb.control(null, [Validators.required, Validators.pattern(nameValidator)]),
+      fatherName: this.fb.control("", [Validators.pattern(nameValidator)]),
       idnp: this.fb.control(null, [Validators.required, Validators.maxLength(13), Validators.minLength(13)]),
-      email: this.fb.control(null, [Validators.required, Validators.pattern("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@((?!mail.ru|yandex.ru).)([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])")]),
+      email: this.fb.control(null, [Validators.required, Validators.pattern(emailValidator)]),
       emailNotification: this.fb.control(false, [Validators.required]),
       birthday: this.fb.control(null, [Validators.required]),
-      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern('^((\\+373-?)|0)?[0-9]{8}$')])
+      phoneNumber: this.fb.control(null, [Validators.required, Validators.pattern(phoneValidator), Validators.maxLength(12), Validators.minLength(12)])
     });
   }
 
