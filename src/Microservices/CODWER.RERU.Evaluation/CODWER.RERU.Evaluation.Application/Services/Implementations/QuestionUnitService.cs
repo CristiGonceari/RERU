@@ -142,7 +142,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             }
             catch (Exception e)
             {
-                throw new Exception($"Eroare la căutarea tagului {_openingHashTag} sau {_closingHashTag}");
+                throw new Exception($"- Eroare la căutarea tagului {_openingHashTag} sau {_closingHashTag}");
             }
 
             if (!string.IsNullOrWhiteSpace(key))
@@ -175,7 +175,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             }
             else
             {
-                throw new Exception(ValidationCodes.TAGS_WRITTEN_WITH_MISTAKE_OR_MISSING_ANSWER_OPTION);
+                throw new Exception("lipșeste răspunsul între tag-urile [answer]?[/answer]");
             }
 
             return answer;
@@ -283,8 +283,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             ws.Column(5).AutoFit();
             ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            ws.Column(7).Width = 50;
-            ws.Column(7).Style.WrapText = true;
+            ws.Column(6).Width = 50;
+            ws.Column(6).Style.WrapText = true;
 
             return await p.GetAsByteArrayAsync();
         }
@@ -497,19 +497,23 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             var categoryText = (ws.Cells[row, 2].Value ?? string.Empty).ToString();
             var column = GetColumnFromType(questionType);
 
+            QuestionCategory category = null;
+
             if (string.IsNullOrWhiteSpace(categoryText))
             {
                 errors = "- Categoria lipsește. ";
             }
-
-            var category = _appDbContext.QuestionCategories.FirstOrDefault(x => x.Name.ToLower() == categoryText.Trim().ToLower());
-
-            if (category == null)
+            else
             {
-                if (string.IsNullOrWhiteSpace(errors))
-                   errors = $"- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
-                else
-                   errors += $"\n- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
+                category = _appDbContext.QuestionCategories.FirstOrDefault(x => x.Name.ToLower() == categoryText.Trim().ToLower());
+
+                if (category == null)
+                {
+                    if (string.IsNullOrWhiteSpace(errors))
+                        errors = $"- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
+                    else
+                        errors += $"\n- Categoria: '{ws.Cells[row, 2].Value}' nu a fost găsită în baza de date. ";
+                }
             }
 
             var questionText = (ws.Cells[row, 3].Value ?? string.Empty).ToString();;
@@ -679,13 +683,13 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                 if (questionToAdd.QuestionType == QuestionTypeEnum.OneAnswer && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) != 1)
                 {
-                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'UnRăspuns' permit doar un singur răspuns!. ");
+                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'un răspuns' permit doar un singur răspuns!. ");
                     return null;
                 }
 
                 if (questionToAdd.QuestionType == QuestionTypeEnum.MultipleAnswers && questionToAdd.AddOptions.Count(x => x.OptionDto.IsCorrect) < 1)
                 {
-                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'RăspunsuriMultiple' ar trebui să aibă mai mult de un răspuns corect!. ");
+                    _errors.Add($"{column}{questionToAdd.Row}", "- Întrebarea de tipul 'răspunsuri multiple' ar trebui să aibă mai mult de un răspuns corect!. ");
                     return null;
                 }
 
