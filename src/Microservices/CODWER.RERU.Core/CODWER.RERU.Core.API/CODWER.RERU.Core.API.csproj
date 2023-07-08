@@ -51,6 +51,9 @@
     <None Update="Templates\DeactivateUser.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\Dosar.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\EmailVerification.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

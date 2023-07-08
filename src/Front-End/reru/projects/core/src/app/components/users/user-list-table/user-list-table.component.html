@@ -143,10 +143,15 @@
                     class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                     {{ 'button.view-user' | translate }}
                   </button>
-                  <button (click)="getUserDataSheet(user.id)"
-                    class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                  <span *permission="'P00000020'" class="py-2 px-6 my-2">
                     {{ 'button-downloand-excell.user-sheet' | translate }}
-                  </button>
+                    <button (click)="getUserDataSheet(user.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                      <i class="far fa-file-excel"></i>.xlsx
+                    </button>
+                    <button (click)="getUserDataPdf(user.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                      <i class="fas fa-file-pdf mr-2"></i>.pdf
+                    </button>                    
+                  </span>                  
                   <button [routerLink]="['../edit', user.id]" class="navi-link align-items-center py-2 px-6 my-2"
                     ngbDropdownItem *permission="'P00000014'">
                     {{ 'button.edit-user' | translate }}

@@ -3,6 +3,7 @@ using CODWER.RERU.Core.Application.UserProfileModuleRoles.GetCreateUserProdileMo
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.RemoveModuleAccess;
 using CODWER.RERU.Core.Application.UserProfileModuleRoles.UpdateUserProfileModuleAccess;
 using CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileData;
+using CODWER.RERU.Core.Application.UserProfiles.ExportUserProfileDataPdf;
 using CODWER.RERU.Core.Application.UserProfiles.GetAllUserProfiles;
 using CODWER.RERU.Core.Application.UserProfiles.GetCandidateGeneralDatas;
 using CODWER.RERU.Core.Application.UserProfiles.GetCandidateProfile;
@@ -110,6 +111,17 @@ namespace CODWER.RERU.Core.API.Controllers
         [HttpPut("print-personal-data-excell")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintUserProfileExcell([FromBody] ExportUserProfileDataCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return File(result.Content, result.ContentType, result.Name);
+        }
+
+        [HttpPut("print-personal-data-pdf")]
+        [IgnoreResponseWrap]
+        public async Task<IActionResult> PrintUserProfilePdf([FromBody] ExportUserProfileDataPdfCommand command)
         {
             var result = await Mediator.Send(command);
 
