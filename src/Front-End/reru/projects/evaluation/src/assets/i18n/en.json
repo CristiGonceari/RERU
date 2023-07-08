@@ -588,7 +588,9 @@
     "endTime": "End Time",
     "file": "File",
     "history": "History",
-    "validDuring": "Valid during"
+    "validDuring": "Valid during",
+    "done": "Done",
+    "in-progress": "In progress..."
   },
 
   "answers": {
