@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosar personal</title>
+    <style>
+        body {
+            font-family: 'Times New Roman';
+            font-size: 15px;
+            padding: 1.9cm 1.32cm 3.67cm 1.9cm;
+            margin: 0;
+        }
+
+        div.header {
+            width: 900px;
+            float: right;
+            height: 10%;
+        }
+
+        div.body {
+            text-align: justify;
+            height: 70%;
+        }
+
+        div.footer {
+            height: 20%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+            div.footer div.container-signature {
+                display: flex;
+                justify-content: space-between;
+                width: 900px;
+            }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: 210mm;
+                width: 297mm;
+            }
+        }
+
+        .subPhotoField{
+            width: 98px;
+            background-color: #8e95a1; 
+            color: black;
+        }
+
+        .subPhotoResponse{
+            width: 129px;
+        }
+
+        .field{
+            width: 149px;
+            background-color: #8e95a1; 
+            color: black;
+        }
+
+        .response{
+            width: 185px;
+        }
+    </style>
+</head>
+<body>
+    <table style="width: 907px; height: 132px; border-collapse:collapse;" border="1" cellpadding="5">
+        <tbody>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">Date Generale</th>
+            </tr>
+            <tr>
+            <td colspan="2" rowspan="5">
+                <div style="width: 100%;">
+                    <img style="padding: 15px; width: 200px; height: 200px; margin: 0 auto;" ; src="data:image/png;base64,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" alt="logo">
+                </div>
+            </td>
+            <td class="field">Naţionalitate</td>
+            <td class="response">{nationality}</td>
+            <td class="field">Cetățenie</td>
+            <td class="response">{citizenship}</td>
+            </tr>
+            <tr >
+            <td class="field">Nivelul de cunoaștere a limbii de stat</td>
+            <td class="response">{languageLevel}</td>
+            <td class="field">Sex</td>
+            <td class="response">{sex}</td>
+            </tr>
+            <tr >
+            <td class="field">Buletinul de identitate (seria, eliberat la data, de către)</td>
+            <td class="response">{bulletinSeriesReleaseDay}, {bulletinEmittedBy} </td>
+            <td class="field">IDNP(13 cifre)</td>
+            <td class="response">{idnp}</td>
+            </tr>
+            <tr >
+            <td class="field">Starea civilă la data completării dosarului personal</td>
+            <td class="response">{materialStatus}</td>
+            <td class="field">Locul nașterii (țara, orașul, cod poștal)</td>
+            <td class="response">{birthPlaceCountryCity}</td>
+            </tr>
+            <tr >
+            <td class="field">Viza de domiciliu (țara, orașul, cod poștal)</td>
+            <td class="response">{residenceAddress}, {birthPlacePostCode}</td>
+            <td class="field">Viza de domiciliu a părinților (țara, orașul, cod poștal)</td>
+            <td class="response">{parentsResidenceAddress}</td>
+            </tr>
+            <tr >
+            <td class="subPhotoField">Numele</td>
+            <td class="subPhotoResponse">{firstName}</td>
+            <td class="field">Telefon de contact</td>
+            <td class="response">{phoneNumber}</td>
+            <td class="field">Telefon fix</td>
+            <td class="response">{homePhone}</td>
+            </tr>
+            <tr >
+            <td class="subPhotoField">Prenumele</td>
+            <td class="subPhotoResponse">{lastName}</td>
+            <td class="field">Telefon de serviciu</td>
+            <td class="response">{workPhone}</td>
+            <td class="field">Email</td>
+            <td class="response">{email}</td>
+            </tr>
+            <tr >
+            <td class="subPhotoField">Patronimicul</td>
+            <td class="subPhotoResponse">{fatherName}</td>
+            <td class="field">Departament</td>
+            <td class="response">{department}</td>
+            <td class="field">Mod acces</td>
+            <td class="response">{accessMode}</td>
+            </tr>
+            <tr >
+            <td class="subPhotoField">Data nașterii</td>
+            <td class="subPhotoResponse">{birthDate}</td>
+            <td class="field">Rol</td>
+            <td class="response">{role}</td>
+            <td class="field">Funcție</td>
+            <td class="response">{employeeFunction}</td>
+            </tr>
+            <tr>
+                <th colspan="6"></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">1.Studii</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{studies}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">2.Nivelul de cunoaștere a limbilor moderne</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{modernLanguagesLevel}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">3.Obligațiunea militară</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{userProfileMilitaryObligations}</td>
+            <tr>
+                <th colspan="6"></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">4.Recomandare la studiii</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{recommendationForStudies}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">5.Relații de rudenie sau afinitate cu angajații MAI</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{kinshipRelation}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">6.Date biografice ale rudelor apropiate candidatului</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{kinshipRelationInfo}</td>
+            <tr>
+                <th colspan="6"></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">7.Date referitoare la răspunderea penală sau contravențională a rudelor apropiate ale candidatului</th>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center; height: 30px;">{kinshipRelationCriminalData}</td>
+            </tr>
+            <tr>
+                <th colspan="6"></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">8.Autobiografie</th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #8e95a1; color: black; height: 30px;">Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:</th>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center; height: 30px;">
+                    – Numele, prenumele, patronimicul, data și locul nașterii, originea socială, limba maternă;<br>
+                    – Instituțiile de învățământ în care a studiat, anul absolvirii sau abandonării lor, media generală, specialitățile, profesiile obținute;<br>
+                    – Starea civilă, data căsătoriei (divorțului), numele, prenumele, patronimicul soției (soțului), prenumele și anul nașterii copiilor;<br>
+                    – Serviciul militar, perioada, centrul militar care a decis încorporarea; în caz că nu a fost supus serviciului militar se indică temeiul;<br>
+                    – Activitatea în organele elective (perioada și organul);<br>
+                    – Posesia gradelor/titlurilor științifice, științifico-didactice, onorifice și sportive, data acordării lor și autoritatea emitentă;<br>
+                    – Existența stagiului de muncă oficial și neoficial (perioada, funcția (postul), instituția, organizația, întreprinderea);<br>
+                    – Locul de trai și viza de domiciliu (se indică ambele dacă nu coincid).<br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center; height: 30px;">{autobiography}</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">9.Accesul la module</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{moduleRoles}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">10.Poziții solicitate</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{solicitedVacantPosition}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">11.Teste</th>
+            </tr>
+            <tr style="text-align: center; color: black; height: 30px;">
+                <th colspan="6">Teste efectuate</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{myTests}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr style="text-align: center; color: black; height: 30px;">
+                <th colspan="6">Teste evaluate</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{evaluatedTests}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center; background-color: #1f3864; color: white; height: 30px;">12.Evaluări</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{myEvaluations}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr style="text-align: center; color: black; height: 30px;">
+                <th colspan="6">Evaluări evaluate</th>
+            </tr>
+            <td colspan="6" style="text-align: center;">{evaluatedEvaluations}</td>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            </tbody>
+        </table>
+</body>
+</html>

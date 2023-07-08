@@ -71,4 +71,12 @@ export class UserProfileService extends AbstractService {
 			observe: 'events'
 		});
 	}
+
+	exportUserProfilePdf(data): Observable<any> {
+		return this.http.put(`${this.coreUrl}/${this.routeUrl}/print-personal-data-pdf`, data, {
+			reportProgress: true,
+			responseType: 'blob',
+			observe: 'events'
+		});
+	}
 }

@@ -11,22 +11,27 @@
         <div class="card card-custom">
           <div class="card-body pt-4">
             <div style="overflow: visible" class="text-right">
-              <div ngbDropdown class="dropdown dropdown-inline">
+              <div ngbDropdown class="dropdown dropdown-inline" container="body">
                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                   <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                     <svg-icon key="actions" [useToolTip]="false" [width]="24" [height]="24"></svg-icon>
                   </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                  <div ngbDropdownMenu aria-labelledby="action1">
+                  <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
                     <button (click)="navigateToEvaluation(user.data.id)"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                       {{ 'button.view-user' | translate }} (Evaluation)
                     </button>
-                    <button (click)="getUserDataSheet(user.data.id)"
-                      class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                    <span *permission="'P00000020'" class="py-2 px-6 my-2">
                       {{ 'button-downloand-excell.user-sheet' | translate }}
-                    </button>
+                      <button (click)="getUserDataSheet(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                        <i class="far fa-file-excel"></i>.xlsx
+                      </button>
+                      <button (click)="getUserDataPdf(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                        <i class="fas fa-file-pdf mr-2"></i>.pdf
+                      </button>                    
+                    </span>                                                      
                     <button [routerLink]="['../../user-profile', user?.data?.id, 'overview']"
                       class="navi-link align-items-center px-6" ngbDropdownItem *permission="'P00000020'">
                       {{ 'button.view-user' | translate }}
@@ -234,7 +239,7 @@
         <div class="mobile-container-menu" *ngIf="!oneColumn">
           <div class="card card-custom mb-7 w-100">
             <div style="overflow: visible" class="text-right">
-              <div ngbDropdown class="dropdown dropdown-inline">
+              <div ngbDropdown class="dropdown dropdown-inline" container="body">
                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2 mt-2">
                   <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
@@ -252,15 +257,20 @@
                   </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                  <div ngbDropdownMenu aria-labelledby="action1" class="mobile-dropdown-view">
+                  <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
                       <button (click)="navigateToEvaluation(user.data.id)"
                         class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                         {{ 'button.view-user' | translate }} (Evaluation)
                       </button>
-                      <button (click)="getUserDataSheet(user.data.id)"
-                        class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                      <span *permission="'P00000020'">
                         {{ 'button-downloand-excell.user-sheet' | translate }}
-                      </button>
+                        <button (click)="getUserDataSheet(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                          <i class="far fa-file-excel"></i>.xlsx
+                        </button>
+                        <button (click)="getUserDataPdf(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                          <i class="fas fa-file-pdf mr-2"></i>.pdf
+                        </button>                    
+                      </span>                      
                       <button [routerLink]="['../../user-profile', user?.data?.id, 'overview']"
                         class="navi-link align-items-center px-6" ngbDropdownItem *permission="'P00000020'">
                         {{ 'button.view-user' | translate }}

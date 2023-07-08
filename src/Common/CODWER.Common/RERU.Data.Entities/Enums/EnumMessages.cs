@@ -1,5 +1,6 @@
 ﻿using CVU.ERP.Common.DataTransferObjects.Users;
 using CVU.ERP.StorageService.Entities;
+using RERU.Data.Entities.PersonalEntities.Enums;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace RERU.Data.Entities.Enums
@@ -148,6 +149,38 @@ namespace RERU.Data.Entities.Enums
         public const string PregatireDeSpecialitate = "Pregatire de specialitate";
         public const string InstructiaTragerii = "Instrucțiunea tragerii";
         public const string InterventiaProfesionala = "Intervenția profesională";
+
+        public const string Daily = "Frecvență la zi";
+        public const string LowFrequency = "Frecvență redusă";
+        public const string Remote = "La distanță";
+
+        public const string Initial = "Inițiale";
+        public const string Retraining = "Recalificare";
+
+        public const string Recruit = "Recrut";
+        public const string Disobedient = "Nesupus/ă";
+        public const string PerformedMilitaryService = "Serviciul militar îndeplinit";
+        public const string AlternativeService = "Serviciu de alternativă";
+        public const string MilitaryChair = "Catedra militară";
+
+        public const string Father = "Tată";
+        public const string Mother = "Mama";
+        public const string Brother = "Frate";
+        public const string Sister = "Soră";
+        public const string Wife = "Soție";
+        public const string Husband = "Soțul";
+        public const string Children = "Copii";
+        public const string Parent = "Părinte";
+        public const string HusbandsBrothers = "Frații soțului";
+        public const string HusbandsSisters = "Surorile soțului";
+        public const string WifesSisters = "Surorile soției";
+        public const string WifesBrothers = "Frații soției";
+
+        public const string Real = "Real";
+        public const string Humanist = "Umanist";
+        public const string Arts = "Arte";
+        public const string Sport = "Sportiv";
+        public const string Etc = "Etc";
 
         public static string Translate(FileTypeEnum fileType)
         {
@@ -443,6 +476,18 @@ namespace RERU.Data.Entities.Enums
             };
         }
 
+        public static string Translate(KnowledgeQuelifiersEnum knowledgeQuelifiers)
+        {
+            return knowledgeQuelifiers switch
+            {
+                KnowledgeQuelifiersEnum.BasicKnowledge => Basic,
+                KnowledgeQuelifiersEnum.Good => Good,
+                KnowledgeQuelifiersEnum.VeryGood => VeryGood,
+                _ => "—"
+            };
+        }
+
+
         public static string Translate(SexTypeEnum? sexTypeEnum)
         {
             return sexTypeEnum switch
@@ -482,6 +527,75 @@ namespace RERU.Data.Entities.Enums
                 BasicTestTemplateEnum.PregatireDeSpecialitate => PregatireDeSpecialitate,
                 BasicTestTemplateEnum.InstructiaTragerii => InstructiaTragerii,
                 BasicTestTemplateEnum.InterventiaProfesionala => InterventiaProfesionala,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(StudyFrequencyEnum? studyFrequency)
+        {
+            return studyFrequency switch
+            {
+                StudyFrequencyEnum.Daily => Daily,
+                StudyFrequencyEnum.LowFrequency => LowFrequency,
+                StudyFrequencyEnum.Remote => Remote,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(StudyCourseType? studyCourseType)
+        {
+            return studyCourseType switch
+            {
+                StudyCourseType.Initial => Initial,
+                StudyCourseType.Perfecting => Perfectiosation,
+                StudyCourseType.Retraining => Retraining,
+                StudyCourseType.Specialization => Specialization,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(MilitaryObligationTypeEnum? militaryObligationType)
+        {
+            return militaryObligationType switch
+            {
+                MilitaryObligationTypeEnum.AlternativeService => AlternativeService,
+                MilitaryObligationTypeEnum.Disobedient => Disobedient,
+                MilitaryObligationTypeEnum.MilitaryChair => MilitaryChair,
+                MilitaryObligationTypeEnum.PerformedMilitaryService => PerformedMilitaryService,
+                MilitaryObligationTypeEnum.Recruit => Recruit,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(KinshipDegreeEnum kinshipDegree)
+        {
+            return kinshipDegree switch
+            {
+                KinshipDegreeEnum.Brother => Brother,
+                KinshipDegreeEnum.Children => Children,
+                KinshipDegreeEnum.Father => Father,
+                KinshipDegreeEnum.Husband => Husband,
+                KinshipDegreeEnum.HusbandsBrothers => HusbandsBrothers,
+                KinshipDegreeEnum.HusbandsSisters => HusbandsSisters,
+                KinshipDegreeEnum.Mother => Mother,
+                KinshipDegreeEnum.Parent => Parent,
+                KinshipDegreeEnum.Sister => Sister,
+                KinshipDegreeEnum.Wife => Wife,
+                KinshipDegreeEnum.WifesBrothers => WifesBrothers,
+                KinshipDegreeEnum.WifesSisters => WifesSisters,
+                _ => "-"
+            };
+        }
+
+        public static string Translate(StudyProfileEnum? studyProfile)
+        {
+            return studyProfile switch
+            {
+                StudyProfileEnum.Arts => Arts,
+                StudyProfileEnum.Etc => Etc,
+                StudyProfileEnum.Humanist => Humanist,
+                StudyProfileEnum.Real => Real,
+                StudyProfileEnum.Sport => Sport,
                 _ => "-"
             };
         }
