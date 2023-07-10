@@ -27,7 +27,22 @@ namespace CODWER.RERU.Evaluation.Application.SolicitedPositions.MySolicitedPosit
             RuleFor(x => x.Data)
                 .MustAsync(async (solicitedPosition, cancellationToken) => await IsCandidate(solicitedPosition, appDbContext, userProfileService))
                 .WithErrorCode(ValidationCodes.CAN_APPLY_POSITION_IF_YOU_ARE_EVALUATOR_EVENT);
+
+            RuleFor(x => x.Data.CandidatePositionId)
+                .MustAsync(async (candidatePositionId, cancellationToken) => await IsPositionAlreadyApplied(candidatePositionId, appDbContext, userProfileService))
+                .WithErrorCode(ValidationCodes.POSITION_ALREADY_APPLIED);
         }
+
+        private async Task<bool> IsPositionAlreadyApplied(int candidatePositionId, AppDbContext appDbContext, IUserProfileService userProfileService)
+        {
+            var myUserProfile = await userProfileService.GetCurrentUserProfileDto();
+
+            var appliedPosition = await appDbContext.SolicitedVacantPositions
+                .FirstOrDefaultAsync(x => x.CandidatePositionId == candidatePositionId && x.UserProfileId == myUserProfile.Id);
+
+            return appliedPosition == null;
+        }
+
 
         private async Task<bool> IsCandidate(AddEditSolicitedPositionDto solicitedPosition, 
                                             AppDbContext appDbContext, 
