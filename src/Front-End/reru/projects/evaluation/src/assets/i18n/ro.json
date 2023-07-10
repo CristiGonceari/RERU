@@ -1042,6 +1042,7 @@
     "03001807": "Testul grilă acceptă întrebări cu un singur răspuns sau cu răspunsuri multiple",
     "03001808": "Evaluatorul evenimentului nu poate aplica la poziția vacantă care conține acel eveniment",
     "03001809": "Nu poate fi activat șablonul de tip grilă, dacă conține întrebări care necesită verificare",
+    "03001810": "Ai aplicat deja la această poziție",
     "03001901": "Rezultatul nu poate fi calculat",
     "03001902": "Numai testul terminat poate fi setat ca verificat",
     "03001903": "Nu toate răspunsurile sunt verificate",

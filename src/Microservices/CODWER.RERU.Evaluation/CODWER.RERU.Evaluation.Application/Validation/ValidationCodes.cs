@@ -1,4 +1,6 @@
-﻿namespace CODWER.RERU.Evaluation.Application.Validation
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
+namespace CODWER.RERU.Evaluation.Application.Validation
 {
     public class ValidationCodes
     {
@@ -149,6 +151,7 @@
         public static string CAN_ADD_QUESTIONS_ONE_ANSWER_QUESTIONS_OR_MULTIPLE_ANSWERS = "03001807";
         public static string CAN_APPLY_POSITION_IF_YOU_ARE_EVALUATOR_EVENT = "03001808";
         public static string CAN_ACTIVATE_TEST_TEMPLATE_GRID_NEVALID = "03001809";
+        public static string POSITION_ALREADY_APPLIED = "03001810";
 
         //verify tests
         public static string CANT_CALCULATE_RESULT = "03001901";
