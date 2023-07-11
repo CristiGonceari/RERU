@@ -590,7 +590,8 @@
     "history": "Istoria",
     "validDuring": "Valabil in perioada",
     "done": "Finisat",
-    "in-progress": "Se încarcă..."
+    "upload": "Se încarcă...",
+    "download": "Se descarcă..."
   },
   "answers": {
     "option-settings": "Setări Opțiuni",

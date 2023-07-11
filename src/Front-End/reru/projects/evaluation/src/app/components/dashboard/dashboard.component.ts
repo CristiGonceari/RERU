@@ -180,41 +180,49 @@ export class DashboardComponent implements OnInit {
   
   private resportProggress(httpEvent: HttpEvent<string[] | Blob>): void
   {
+    let status = '';
     switch(httpEvent.type )
     { 
       case HttpEventType.Sent:
           this.isLoadingSent = true;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'Uploading...')
+        this.translate.get('processes.upload').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.DownloadProgress:
-          this.isLoadingSent = false;
-          this.updateStatus(httpEvent.loaded, httpEvent.total, 'Dowloading...')
+        this.translate.get('processes.download').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.ResponseHeader:
           console.log("Returned Header", httpEvent)
         break;
       case HttpEventType.Response:
-          if (httpEvent.body instanceof Array) {
-            this.fileStatus.status = 'done';
-            for (const filename of httpEvent.body) {
-              this.filenames.unshift(filename);
-            }
-          } else {
-            const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
-            const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
-            const file = new File([blob], fileName, { type: httpEvent.body.type });
-            saveAs(file);
+        this.translate.get('processes.done').subscribe((res: string) => {
+          status = res;
+        });
+        if (httpEvent.body instanceof Array) {
+          this.fileStatus.requestType = status;
+          for (const filename of httpEvent.body) {
+            this.filenames.unshift(filename);
           }
-          this.fileStatus.status = 'done';
-          this.fileStatus.percent = 0;
-          break;
+        } else {
+          const fileName = httpEvent.headers.get('Content-Disposition').split('filename=')[1].split(';')[0];
+          const blob = new Blob([httpEvent.body], { type: httpEvent.body.type });
+          const file = new File([blob], fileName, { type: httpEvent.body.type });
+          saveAs(file);
+        }
+        this.fileStatus.status = status;
+        this.fileStatus.percent = 0;
+        break;
     }
   }
   updateStatus(loaded: number, total: number | undefined, requestType: string)
   {
-    this.fileStatus.status = "progress";
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
