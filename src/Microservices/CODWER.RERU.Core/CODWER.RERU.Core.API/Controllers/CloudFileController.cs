@@ -5,6 +5,9 @@ using CVU.ERP.StorageService.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CODWER.RERU.Core.API.Controllers
@@ -33,7 +36,10 @@ namespace CODWER.RERU.Core.API.Controllers
             var result = await _storageFileService.GetFile(fileId);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-            return File(result.Content, result.ContentType, result.Name);
+            string normalizedString = result.Name.Normalize(NormalizationForm.FormD);
+            string removedFileDiacritics = new string(normalizedString.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray());
+
+            return File(result.Content, result.ContentType, removedFileDiacritics);
         }
 
         [HttpDelete("{fileId}")]
