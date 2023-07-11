@@ -590,7 +590,8 @@
     "history": "History",
     "validDuring": "Valid during",
     "done": "Done",
-    "in-progress": "In progress..."
+    "upload": "Uploading...",
+    "download": "Downloading..."
   },
 
   "answers": {

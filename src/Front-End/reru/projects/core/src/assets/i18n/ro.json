@@ -309,7 +309,10 @@
     "startTime": "Început",
     "endTime": "Sfârșit",
     "file": "Fișier",
-    "history": "Istoria"
+    "history": "Istoria",
+    "done": "Finisat",
+    "upload": "Se încarcă...",
+    "download": "Se descarcă..."
   },
   "user-profile": {
     "overview": "Vizualizare profil personal",

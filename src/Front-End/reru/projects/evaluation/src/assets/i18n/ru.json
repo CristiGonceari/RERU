@@ -589,7 +589,8 @@
     "history": "История",
     "validDuring": "Действует в течение",
     "done": "Выполнено",
-    "in-progress": "В процессе..."
+    "upload": "Загрузка...",
+    "download": "Скачивание..."
   },
   "answers": {
     "option-settings": "Настройка Опции",

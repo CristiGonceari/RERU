@@ -52,7 +52,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   title: string;
   description: string;
-  inProgress: string;
   no: string;
   yes: string;
 
@@ -384,29 +383,29 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   }
 
   private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    let status = '';
     switch (httpEvent.type) {
       case HttpEventType.Sent:
         this.isLoadingMedia = true;
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        forkJoin([
-					this.translate.get('position.in-progress'),
-				]).subscribe(([inProgress]) => {
-					this.inProgress = inProgress;
-				});
-        this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
+        this.translate.get('processes.upload').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.DownloadProgress:
-        forkJoin([
-					this.translate.get('position.in-progress'),
-				]).subscribe(([inProgress]) => {
-					this.inProgress = inProgress;
-				});
-        this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
+        this.translate.get('processes.download').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.Response:
-        this.fileStatus.requestType = "Done";
+        this.translate.get('processes.done').subscribe((res: string) => {
+          status = res;
+        });
+        this.fileStatus.requestType = status;
         this.postAnswer(+this.answerStatusEnum.Answered);
         this.isLoadingMedia = false;
         break;

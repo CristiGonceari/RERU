@@ -306,7 +306,10 @@
     "startTime": "Start Time",
     "endTime": "End Time",
     "file": "File",
-    "history": "History"
+    "history": "History",
+    "done": "Done",
+    "upload": "Uploading...",
+    "download": "Downloading..."
   },
   "user-profile": {
     "overview": "Overview profile",

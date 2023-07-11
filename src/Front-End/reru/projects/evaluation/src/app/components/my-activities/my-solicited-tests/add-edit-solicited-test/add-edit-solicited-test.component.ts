@@ -315,21 +315,30 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   private reportProggress(httpEvent: HttpEvent<string[] | Blob>, finishedRequests?: number, index?: number): number {
     this.isLoadingMedia = true;
-
+    
+    let status = '';
     switch (httpEvent.type) {
       case HttpEventType.Sent:
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...', index)
+        this.translate.get('processes.upload').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...', index)
+        this.translate.get('processes.download').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
-
       case HttpEventType.Response:
         if (this.files.length == finishedRequests) {
-          this.fileStatus.requestType = "Done";
+          this.translate.get('processes.done').subscribe((res: string) => {
+            status = res;
+          });
+          this.fileStatus.requestType = status;
           this.fileStatus.percent = 100;
 
           setTimeout(() => {

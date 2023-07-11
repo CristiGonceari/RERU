@@ -138,18 +138,28 @@ export class BulkImportQuestionsComponent implements OnInit {
 	}
 
 	private reportProggress(httpEvent: HttpEvent<string[] | Blob>) {	
+		let status = '';
 		switch (httpEvent.type) {
 		  case HttpEventType.Sent:
 			this.fileStatus.percent = 1;
 			break;
-		  case HttpEventType.UploadProgress:
-			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+		case HttpEventType.UploadProgress:
+			this.translate.get('processes.upload').subscribe((res: string) => {
+				status = res;
+			});
+			this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 			break;
-		  case HttpEventType.DownloadProgress:
-			this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+		case HttpEventType.DownloadProgress:
+			this.translate.get('processes.download').subscribe((res: string) => {
+				status = res;
+			});
+			this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 			break;
-		  case HttpEventType.Response:
-			this.fileStatus.requestType = "Done";
+		case HttpEventType.Response:
+			this.translate.get('processes.done').subscribe((res: string) => {
+				status = res;
+			});
+			this.fileStatus.requestType = status;
 			this.fileStatus.percent = 100;	
 			setTimeout(() => { this.isLoadingMedia = false; }, 1000);
 			break;

@@ -278,11 +278,16 @@ export class AddEditQuestionComponent implements OnInit {
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-      case HttpEventType.DownloadProgress:
-        this.translate.get('position.in-progress').subscribe((res: string) => {
+        this.translate.get('processes.upload').subscribe((res: string) => {
           status = res;
         });
-        this.updateStatus(httpEvent.loaded, httpEvent.total, status)
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
+        break;
+      case HttpEventType.DownloadProgress:
+        this.translate.get('processes.download').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.Response:
         this.translate.get('processes.done').subscribe((res: string) => {
