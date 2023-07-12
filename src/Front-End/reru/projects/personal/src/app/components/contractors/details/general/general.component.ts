@@ -137,7 +137,7 @@ export class GeneralComponent implements OnInit {
       fatherName: this.fb.control(contractor.fatherName, [Validators.pattern(namePattern)]),
       // idnp: this.fb.control((contractor && contractor.idnp)  || null, [Validators.required]),
       birthDate: this.fb.control(contractor.birthDate, [Validators.required]),
-      sex: this.fb.control(contractor.sex, [Validators.required]),
+      sex: this.fb.control(contractor.sex || null, [Validators.required]),
       homePhone: this.fb.control((contractor && contractor.homePhone)  || null, [Validators.pattern(phonePattern)]),
       phoneNumber: this.fb.control((contractor && contractor.phoneNumber)  || null, [Validators.required, Validators.pattern(phonePattern)]),
       workPhone: this.fb.control((contractor && contractor.workPhone)  || null, [Validators.pattern(phonePattern)]),
