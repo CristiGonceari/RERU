@@ -508,10 +508,7 @@ export class StudyComponent implements OnInit {
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
             (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
             (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
-            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile")) &&
-            (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
-            (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile"))
           ))
             
         } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
