@@ -11,22 +11,27 @@
         <div class="card card-custom">
           <div class="card-body pt-4">
             <div style="overflow: visible" class="text-right">
-              <div ngbDropdown class="dropdown dropdown-inline">
+              <div ngbDropdown class="dropdown dropdown-inline" container="body">
                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2">
                   <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                     <svg-icon key="actions" [useToolTip]="false" [width]="24" [height]="24"></svg-icon>
                   </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                  <div ngbDropdownMenu aria-labelledby="action1">
+                  <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
                     <button (click)="navigateToEvaluation(user.data.id)"
                       class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                       {{ 'button.view-user' | translate }} (Evaluation)
                     </button>
-                    <button (click)="getUserDataSheet(user.data.id)"
-                      class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                    <span *permission="'P00000020'" class="py-2 px-6 my-2">
                       {{ 'button-downloand-excell.user-sheet' | translate }}
-                    </button>
+                      <button (click)="getUserDataSheet(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                        <i class="far fa-file-excel"></i>.xlsx
+                      </button>
+                      <button (click)="getUserDataPdf(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                        <i class="fas fa-file-pdf mr-2"></i>.pdf
+                      </button>                    
+                    </span>                                                      
                     <button [routerLink]="['../../user-profile', user?.data?.id, 'overview']"
                       class="navi-link align-items-center px-6" ngbDropdownItem *permission="'P00000020'">
                       {{ 'button.view-user' | translate }}
@@ -74,9 +79,9 @@
                 </div>
               </div>
               <div class="d-flex flex-column">
-                <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                <div class="font-weight-bolder font-size-h5 text-dark-75">
                   {{ user?.data.lastName + ' ' + user?.data.firstName }}
-                </a>
+                </div>
                 <p class="text-muted mt-2 d-inline-flex" *ngIf="user?.data.isActive === true">
                   <span class="mr-2">
                     <svg-icon key="success" [width]="16" [height]="16"></svg-icon>
@@ -109,28 +114,28 @@
               <div class="my-3">
                 <app-get-media-file *ngIf="!avatarLoading" [fileId]="fileId"></app-get-media-file>
               </div>
-              <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+              <div class="font-weight-bolder font-size-h5 text-dark-75">
                 {{ user?.data.lastName + ' ' + user?.data.firstName }}
-              </a>
-              <p class="text-muted mt-3" *ngIf="user?.data.isActive === true">
+              </div>
+              <p class="text-muted mt-3 d-inline-flex" *ngIf="user?.data.isActive === true">
                 <span class="mr-2">
                   <svg-icon key="success" [width]="16" [height]="16"></svg-icon>
                 </span>
                 Active
               </p>
-              <p class="text-muted mt-3" *ngIf="user?.data.isActive === false">
+              <p class="text-muted mt-3 d-inline-flex" *ngIf="user?.data.isActive === false">
                 <span class="mr-2">
                   <svg-icon key="error" [width]="16" [height]="16"></svg-icon>
                 </span>
                 Inactive
               </p>
-              <p class="text-muted" *ngIf="user?.data.userStatusEnum === 1">
+              <p class="text-muted d-inline-flex" *ngIf="user?.data.userStatusEnum === 1">
                 <span class="mr-2">
                   <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
                 </span>
                 {{'statuses.employee' | translate}}
               </p>
-              <p class="text-muted" *ngIf="user?.data.userStatusEnum === 0">
+              <p class="text-muted d-inline-flex" *ngIf="user?.data.userStatusEnum === 0">
                 <span class="mr-2">
                   <svg-icon key="user" [width]="16" [height]="16"></svg-icon>
                 </span>
@@ -234,7 +239,7 @@
         <div class="mobile-container-menu" *ngIf="!oneColumn">
           <div class="card card-custom mb-7 w-100">
             <div style="overflow: visible" class="text-right">
-              <div ngbDropdown class="dropdown dropdown-inline">
+              <div ngbDropdown class="dropdown dropdown-inline" container="body">
                 <div class="btn btn-sm btn-default btn-hover-default btn-icon mr-2 mt-2">
                   <span class="svg-icon svg-icon-md" ngbDropdownToggle>
                     <svg _ngcontent-pkv-c106="" xmlns="http://www.w3.org/2000/svg"
@@ -252,15 +257,20 @@
                   </span>
                 </div>
                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                  <div ngbDropdownMenu aria-labelledby="action1" class="mobile-dropdown-view">
+                  <div ngbDropdownMenu aria-labelledby="action1" class="p-0">
                       <button (click)="navigateToEvaluation(user.data.id)"
                         class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
                         {{ 'button.view-user' | translate }} (Evaluation)
                       </button>
-                      <button (click)="getUserDataSheet(user.data.id)"
-                        class="navi-link align-items-center py-2 px-6 my-2" ngbDropdownItem *permission="'P00000020'">
+                      <span *permission="'P00000020'">
                         {{ 'button-downloand-excell.user-sheet' | translate }}
-                      </button>
+                        <button (click)="getUserDataSheet(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                          <i class="far fa-file-excel"></i>.xlsx
+                        </button>
+                        <button (click)="getUserDataPdf(user.data.id)" class="btn btn-light-success font-weight-bold mr-3 h-auto">
+                          <i class="fas fa-file-pdf mr-2"></i>.pdf
+                        </button>                    
+                      </span>                      
                       <button [routerLink]="['../../user-profile', user?.data?.id, 'overview']"
                         class="navi-link align-items-center px-6" ngbDropdownItem *permission="'P00000020'">
                         {{ 'button.view-user' | translate }}
@@ -304,9 +314,9 @@
             <div class="card-body">
               <div class="d-flex align-items-center" *ngIf="!fileId">
                 <div class="d-flex flex-column">
-                  <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                  <div class="font-weight-bolder font-size-h5 text-dark-75">
                     {{ user?.data.lastName + ' ' + user?.data.firstName }}
-                  </a>
+                  </div>
                   <p class="text-muted mt-2 d-inline-flex " *ngIf="user?.data.isActive === true">
                     <span class="mr-2">
                       <svg-icon key="success" [width]="16" [height]="16"></svg-icon>
@@ -334,9 +344,9 @@
                 </div>
               </div>
               <div class="d-flex flex-column" *ngIf="fileId">
-                <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                <div class="font-weight-bolder font-size-h5 text-dark-75">
                   {{ user?.data.lastName + ' ' + user?.data.firstName }}
-                </a>
+                </div>
                 <p class="text-muted mt-3" *ngIf="user?.data.isActive === true">
                   <span class="mr-2">
                     <svg-icon key="success" [width]="16" [height]="16"></svg-icon>

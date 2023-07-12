@@ -3,6 +3,7 @@ using CODWER.RERU.Personal.API.Config;
 using CODWER.RERU.Personal.Application.Contractors.AddContractor;
 using CODWER.RERU.Personal.Application.Contractors.AddUpdateContractorPermissions;
 using CODWER.RERU.Personal.Application.Contractors.EditContractorAvatar;
+using CODWER.RERU.Personal.Application.Contractors.GetAllContractorDatas;
 using CODWER.RERU.Personal.Application.Contractors.GetCandidateContractorSteps;
 using CODWER.RERU.Personal.Application.Contractors.GetContractor;
 using CODWER.RERU.Personal.Application.Contractors.GetContractorAvatar;
@@ -37,6 +38,15 @@ namespace CODWER.RERU.Personal.API.Controllers
         public async Task<ContractorDetailsDto> GetContractor([FromRoute] int id)
         {
             var query = new GetContractorQuery { Id = id };
+            var result = await Mediator.Send(query);
+
+            return result;
+        }
+
+        [HttpGet("allDatas/{id}")]
+        public async Task<string> GetAllContractorData([FromRoute] int id)
+        {
+            var query = new GetAllContractorDataQuery { Id = id };
             var result = await Mediator.Send(query);
 
             return result;

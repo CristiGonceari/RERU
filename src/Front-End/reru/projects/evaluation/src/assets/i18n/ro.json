@@ -296,7 +296,7 @@
     "deleteMsg": "Sunteți sigur(-ă) că doriți să ștergeți",
     "finalize-test": "Sigur doriți să finalizați acest test",
     "finalize-poll": "Sigur doriți să finalizați acest sondaj",
-    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebarea",
+    "bulk-downloadMsg": "Vă rugăm să utilizați formularul nostru special pentru a importa întrebările",
     "bulk-uploadMsg": "Încărcați fișierul modificat",
     "bulk-dropMsg": "Plasați fișierele aici sau faceți clic pentru a încărca",
     "bulk-beSureMsg": "Asigurați-vă că încărcați șablonul necesar",
@@ -588,7 +588,10 @@
     "endTime": "Sfârșit",
     "file": "Fișier",
     "history": "Istoria",
-    "validDuring": "Valabil in perioada"
+    "validDuring": "Valabil in perioada",
+    "done": "Finisat",
+    "upload": "Se încarcă...",
+    "download": "Se descarcă..."
   },
   "answers": {
     "option-settings": "Setări Opțiuni",
@@ -1040,6 +1043,7 @@
     "03001807": "Testul grilă acceptă întrebări cu un singur răspuns sau cu răspunsuri multiple",
     "03001808": "Evaluatorul evenimentului nu poate aplica la poziția vacantă care conține acel eveniment",
     "03001809": "Nu poate fi activat șablonul de tip grilă, dacă conține întrebări care necesită verificare",
+    "03001810": "Ai aplicat deja la această poziție",
     "03001901": "Rezultatul nu poate fi calculat",
     "03001902": "Numai testul terminat poate fi setat ca verificat",
     "03001903": "Nu toate răspunsurile sunt verificate",

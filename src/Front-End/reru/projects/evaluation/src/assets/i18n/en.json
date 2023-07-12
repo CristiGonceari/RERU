@@ -296,7 +296,7 @@
     "deleteMsg": "Are you sure you want to delete",
     "finalize-test": "Are you sure you want to finalize this test",
     "finalize-poll": "Are you sure you want to finalize this poll",
-    "bulk-downloadMsg": "Please, use our special form to import question",
+    "bulk-downloadMsg": "Please, use our special form to import questions",
     "bulk-uploadMsg": "Upload Changed File",
     "bulk-dropMsg": "Drop file here or click to upload",
     "bulk-beSureMsg": "Be sure that you upload the needed template",
@@ -588,7 +588,10 @@
     "endTime": "End Time",
     "file": "File",
     "history": "History",
-    "validDuring": "Valid during"
+    "validDuring": "Valid during",
+    "done": "Done",
+    "upload": "Uploading...",
+    "download": "Downloading..."
   },
 
   "answers": {
@@ -1043,6 +1046,7 @@
     "03001807": "Test grid accept 'one answer' or 'multiple answers' questions",
     "03001808": "The evaluator cannot apply to the vacant position that contains that event",
     "03001809": "The grid template cannot be activated, if it contains questions that require verification",
+    "03001810": "You have already applied to this position",
     "03001901": "Can not calculate the result",
     "03001902": "Only terminated test can be set as verified",
     "03001903": "Not all answers are verified",

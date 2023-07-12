@@ -127,8 +127,8 @@ export class GeneralComponent implements OnInit {
   }
 
   initForm(contractor: Contractor = <Contractor>{}): void {
-    var phonePattern = "^((\\+373-?)|0)?[0-9]{8}$"
-    var namePattern = '^[a-zA-ZĂăÎîȘșȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâ]+)*$';
+    var phonePattern = "^(\\+373-?)[0-9]{8}$"
+    var namePattern = '^[a-zA-ZĂăÎîȘșȚțÂâŞşŢţ]+([- ]?[a-zA-ZĂăÎîȘșȚțÂâŞşŢţ]+)*$';
 
     this.generalForm = this.fb.group({
       id: this.fb.control(contractor.id),
@@ -137,7 +137,7 @@ export class GeneralComponent implements OnInit {
       fatherName: this.fb.control(contractor.fatherName, [Validators.pattern(namePattern)]),
       // idnp: this.fb.control((contractor && contractor.idnp)  || null, [Validators.required]),
       birthDate: this.fb.control(contractor.birthDate, [Validators.required]),
-      sex: this.fb.control(contractor.sex, [Validators.required]),
+      sex: this.fb.control(contractor.sex || null, [Validators.required]),
       homePhone: this.fb.control((contractor && contractor.homePhone)  || null, [Validators.pattern(phonePattern)]),
       phoneNumber: this.fb.control((contractor && contractor.phoneNumber)  || null, [Validators.required, Validators.pattern(phonePattern)]),
       workPhone: this.fb.control((contractor && contractor.workPhone)  || null, [Validators.pattern(phonePattern)]),

@@ -40,7 +40,6 @@ export class DiagramComponent implements OnInit {
 	isLoadingMedia: boolean = false;
 	title: string;
 	description: string;
-	inProgress: string;
 	no: string;
 	yes: string;
 
@@ -170,29 +169,29 @@ export class DiagramComponent implements OnInit {
 
 	private reportProggress(httpEvent: HttpEvent<Blob>, isPdf): void {
 		let fileName;
+		let status = '';
 
 		switch (httpEvent.type) {
 			case HttpEventType.Sent:
 				this.fileStatus.percent = 1;
 				break;
 			case HttpEventType.UploadProgress:
-				forkJoin([
-					this.translate.get('position.in-progress'),
-				]).subscribe(([inProgress]) => {
-					this.inProgress = inProgress;
+				this.translate.get('processes.upload').subscribe((res: string) => {
+					status = res;
 				});
-				this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
+				this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 				break;
 			case HttpEventType.DownloadProgress:
-				forkJoin([
-					this.translate.get('position.in-progress'),
-				]).subscribe(([inProgress]) => {
-					this.inProgress = inProgress;
+				this.translate.get('processes.download').subscribe((res: string) => {
+					status = res;
 				});
-				this.updateStatus(httpEvent.loaded, httpEvent.total, this.inProgress)
+				this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 				break;
 			case HttpEventType.Response:
-				this.fileStatus.requestType = "Terminat";
+				this.translate.get('processes.done').subscribe((res: string) => {
+					status = res;
+				});
+				this.fileStatus.requestType = status;
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
 				if (isPdf) {

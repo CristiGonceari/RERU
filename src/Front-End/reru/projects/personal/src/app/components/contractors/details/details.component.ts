@@ -255,4 +255,9 @@ export class DetailsComponent implements OnInit {
       break;
     }
   }
+
+  //FOrTest
+  getAllContractorData(){
+    this.contractorService.getAllData(this.contractor.id).subscribe();
+  }
 }

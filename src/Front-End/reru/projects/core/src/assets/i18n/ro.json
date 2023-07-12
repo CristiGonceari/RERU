@@ -309,7 +309,10 @@
     "startTime": "Început",
     "endTime": "Sfârșit",
     "file": "Fișier",
-    "history": "Istoria"
+    "history": "Istoria",
+    "done": "Finisat",
+    "upload": "Se încarcă...",
+    "download": "Se descarcă..."
   },
   "user-profile": {
     "overview": "Vizualizare profil personal",
@@ -842,7 +845,7 @@
   },
   "studyFrequency":{
     "Daily":"Frecvență la zi",
-    "LowFrequency": "Frecvență redusa",
+    "LowFrequency": "Frecvență redusă",
     "Remote": "La distanță"
   },
   "materialStatusType": {
@@ -857,7 +860,7 @@
     "Children" : "Copii",
     "Father" : "Tată",
     "Husband" : "Soțul",
-    "HusbandsBrothers" : "Frați soțului",
+    "HusbandsBrothers" : "Frații soțului",
     "HusbandsSisters" : "Surorile soțului",
     "Mother" : "Mama",
     "Parent" : "Părinte",

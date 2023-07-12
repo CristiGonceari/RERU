@@ -299,19 +299,29 @@ export class PerformingEvaluationComponent implements OnInit, OnDestroy {
   }
 
   private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+    let status = '';
     switch (httpEvent.type) {
       case HttpEventType.Sent:
         this.isLoadingMedia = true;
         this.fileStatus.percent = 1;
         break;
       case HttpEventType.UploadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
-      break;
+        this.translate.get('processes.upload').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
+        break;
       case HttpEventType.DownloadProgress:
-        this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+        this.translate.get('processes.download').subscribe((res: string) => {
+          status = res;
+        });
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
         break;
       case HttpEventType.Response:
-        this.fileStatus.requestType = "Done";
+        this.translate.get('processes.done').subscribe((res: string) => {
+          status = res;
+        });
+        this.fileStatus.requestType = status;
         this.postAnswer(+this.answerStatusEnum.Answered);
         this.isLoadingMedia = false;
         break;

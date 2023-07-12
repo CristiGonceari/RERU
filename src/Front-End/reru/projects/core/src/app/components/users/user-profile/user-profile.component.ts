@@ -251,19 +251,59 @@ export class UserProfileComponent implements OnInit {
 		})
 	}
 
+	getUserDataPdf(id: number) {
+		this.isLoadingMedia = true;
+
+		const params = {
+			userProfileId: id
+		}
+
+		this.userProfileService.exportUserProfilePdf(params).subscribe((event) => {
+			forkJoin([
+				this.translate.get('modal.success'),
+				this.translate.get('downloand-message.succes-dosier'),
+			]).subscribe(([title, description]) => {
+				this.title = title;
+				this.description = description;
+			});
+			this.reportProggress(event);
+		},
+			(error) => {
+				forkJoin([
+					this.translate.get('modal.error'),
+					this.translate.get('downloand-message.error-dosier'),
+				]).subscribe(([title, description]) => {
+					this.title = title;
+					this.description = description;
+				});
+				this.notificationService.error(this.title, this.description, NotificationUtil.getDefaultMidConfig());
+				this.isLoadingMedia = false;
+			})
+	}
+
 	private reportProggress(httpEvent: HttpEvent<Blob>): void {
+		let status = '';
 		switch (httpEvent.type) {
 			case HttpEventType.Sent:
 				this.fileStatus.percent = 1;
 				break;
 			case HttpEventType.UploadProgress:
-				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				this.translate.get('processes.upload').subscribe((res: string) => {
+					status = res;
+				});
+				this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 				break;
 			case HttpEventType.DownloadProgress:
-				this.updateStatus(httpEvent.loaded, httpEvent.total, 'In Progress...')
+				this.translate.get('processes.download').subscribe((res: string) => {
+					status = res;
+				});
+				this.updateStatus(httpEvent.loaded, httpEvent.total, status);
 				break;
 			case HttpEventType.Response:
-				this.fileStatus.requestType = "Done";
+				this.translate.get('processes.done').subscribe((res: string) => {
+					status = res;
+				});
+				this.fileStatus.requestType = status;
 				this.notificationService.success(this.title, this.description, NotificationUtil.getDefaultMidConfig());
 
 				const fileName = httpEvent.headers.get('Content-Disposition').split("filename=")[1].split(';')[0].slice(1, -1);
