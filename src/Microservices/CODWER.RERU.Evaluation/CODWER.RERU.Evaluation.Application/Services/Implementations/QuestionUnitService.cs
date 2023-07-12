@@ -232,7 +232,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                 case QuestionTypeEnum.HashedAnswer:
                     return await GenerateHashedTemplate($"{TranslateAndFormatQuestion(QuestionTypeEnum.FreeText)}Sablon");
                 case QuestionTypeEnum.FileAnswer:
-                    return await GenerateFreeTextTemplate($"{TranslateAndFormatQuestion(QuestionTypeEnum.FreeText)}Sablon");
+                    return await GenerateFileAnswerTemplate($"{TranslateAndFormatQuestion(QuestionTypeEnum.FileAnswer)}Sablon");
                 default:
                     return null;
             }
@@ -271,6 +271,29 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             using var p = new ExcelPackage();
             var ws = p.Workbook.Worksheets.Add(workSheetName);
             ws.Cells["A1"].Value = $"TipÎntrebare={(int)QuestionTypeEnum.FreeText}";
+            ws.Cells["B1"].Value = "Categorie";
+            ws.Cells["C1"].Value = "Întrebare";
+            ws.Cells["D1"].Value = "Puncte (mai mult de 0)";
+            ws.Cells["E1"].Value = "Taguri (separate prin virgulă)";
+
+            ws.Column(1).AutoFit();
+            ws.Column(2).AutoFit();
+            ws.Column(3).Width = 75;
+            ws.Column(4).AutoFit();
+            ws.Column(5).AutoFit();
+            ws.Cells["A1:E1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Column(6).Width = 50;
+            ws.Column(6).Style.WrapText = true;
+
+            return await p.GetAsByteArrayAsync();
+        }
+
+        private async Task<byte[]> GenerateFileAnswerTemplate(string workSheetName)
+        {
+            using var p = new ExcelPackage();
+            var ws = p.Workbook.Worksheets.Add(workSheetName);
+            ws.Cells["A1"].Value = $"TipÎntrebare={(int)QuestionTypeEnum.FileAnswer}";
             ws.Cells["B1"].Value = "Categorie";
             ws.Cells["C1"].Value = "Întrebare";
             ws.Cells["D1"].Value = "Puncte (mai mult de 0)";
@@ -356,6 +379,9 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
 
                         case QuestionTypeEnum.HashedAnswer:
                             await UploadHashedOrFreeTextAnswer(ws, QuestionTypeEnum.HashedAnswer);
+                            break;
+                        case QuestionTypeEnum.FileAnswer:
+                            await UploadHashedOrFreeTextAnswer(ws, QuestionTypeEnum.FileAnswer);
                             break;
                     }
                     if (_errors.Count > 0)
@@ -636,11 +662,11 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
             };
         }
 
-        private string GetTagColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "E" : "G";
+        private string GetTagColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer or QuestionTypeEnum.FileAnswer ? "E" : "G";
 
-        private string GetPointsColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "D" : "F";
+        private string GetPointsColumn(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer or QuestionTypeEnum.FileAnswer ? "D" : "F";
 
-        private string GetColumnFromType(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer ? "F" : "J";
+        private string GetColumnFromType(QuestionTypeEnum questionType) => questionType is QuestionTypeEnum.FreeText or QuestionTypeEnum.HashedAnswer or QuestionTypeEnum.FileAnswer ? "F" : "J";
 
         private async Task SaveQuestionAndOptions(AddQuestionUnitExcelDto questionToAdd)
         {
