@@ -508,7 +508,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             if (autobiography != null)
             {
 
-                DefaultMultipleHeadColumn(1, 8, "Autobiografia se scrie personal de candidat citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarei informații:", workSheet);
+                DefaultMultipleHeadColumn(1, 8, "Autobiografia se scrie doar de  către candidat, citeț, ordonat, fără corectări și prescurtări, cu indicarea obligatorie a următoarelor date:", workSheet);
                 _row++;
 
                 AutobiographyMultipleColumnHead(1, 8, "– Numele, prenumele, patronimicul, data și locul nașterii, originea socială, limba maternă;", workSheet);
