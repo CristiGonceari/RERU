@@ -17,14 +17,14 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail
             var user = await AppDbContext.UserProfiles
                 .FirstOrDefaultAsync(d => d.Email == request.Email);
 
-            var result = new UserDetailsOverviewDto() 
-                {
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    FatherName = user.FatherName,
-                    MediaFileId = user.MediaFileId,
-                    PhoneNumber = user.PhoneNumber.Remove(4,5).Insert(4,"*****")
+            var result = new UserDetailsOverviewDto()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                FatherName = user.FatherName,
+                MediaFileId = user.MediaFileId,
+                PhoneNumber = user.PhoneNumber == null ? "" : user.PhoneNumber.Remove(4, 5).Insert(4, "*****")
             };
 
             return result;
