@@ -68,7 +68,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
 
                 await using (var db = _appDbContext.NewInstance())
                 {
-                    user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == idnp);
+                    user = await db.UserProfiles.FirstOrDefaultAsync(x => x.Idnp == idnp && x.IsDeleted == false);
                 }
 
                 var newTask = AddEditUser(workSheet, request, i, user);
@@ -268,14 +268,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     }
                 }
             }
-            
-            var isIdnpValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn);
-            var isEmailValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn);
 
-            return isIdnpValid && isEmailValid && isValid && ValidateExcelWorksheet(workSheet);
+            return isValid && await ValidateExcelWorksheetAsync(workSheet);
         }
 
-        private bool ValidateExcelWorksheet(ExcelWorksheet workSheet)
+        private async Task<bool> ValidateExcelWorksheetAsync(ExcelWorksheet workSheet)
         {
             for (int row = 1; row <= workSheet.Dimension.Rows; row++)
             {
@@ -321,21 +318,21 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     }
                 }
                
-                if (!Regex.IsMatch(FirstName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!Regex.IsMatch(FirstName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nume trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
                 
-                if (!Regex.IsMatch(LastName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!Regex.IsMatch(LastName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenume trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
 
-                if (!Regex.IsMatch(FatherName.Trim(), @"^[a-zA-ZĂăÎîȘșşȚțÂâ]+([- ]?[a-zA-ZĂăÎîȘșşȚțÂâ]+)*\s*$"))
+                if (!string.IsNullOrWhiteSpace(FatherName) && !Regex.IsMatch(FatherName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
                 {
                     workSheet.Cells[i, 12].Value += "Patronimic trebuie să conțină doar litere \n";
                     workSheet.Cells[i, 3].Style.Fill.SetBackground(_color);
@@ -348,12 +345,32 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
                     isValid = false;
                 }
+                else if (_appDbContext.UserProfiles.FirstOrDefault(i => i.Idnp == Idnp && i.IsDeleted == false) != null)
+                {
+                    workSheet.Cells[i, 12].Value += "Idnp duplicat în sistem\n";
+                    workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
+                    isValid = false;
+                }
+                else
+                {
+                    isValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn, i);
+                }
 
                 if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email.Trim(), @"(?x)^[^\s@]+@[^\s@]+\.[^\s@]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
                     workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
                     isValid = false;
+                }
+                else if (_appDbContext.UserProfiles.FirstOrDefault(i => i.Email == Email && i.IsDeleted == false) != null)
+                {
+                    workSheet.Cells[i, 12].Value += "Email duplicat în sistem\n";
+                    workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
+                    isValid = false;
+                }
+                else
+                {
+                    isValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn, i);
                 }
 
                 if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString().Trim(), @"^\d+$"))
@@ -406,7 +423,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             return isValid;
         }
 
-        private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column)
+        private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column, int i)
         {
             var cells = workSheet.Cells;
 
@@ -426,23 +443,20 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 .Where(x => x.Count() > 1);
 
             var itemsGroups = repeatedItemsGroups as IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] ?? repeatedItemsGroups.ToArray();
-            await SetInvalidCells(workSheet, itemsGroups, column);
+            await SetInvalidCells(workSheet, itemsGroups, column, i);
 
             return !itemsGroups.Any();
         }
 
-        private async Task SetInvalidCells(ExcelWorksheet workSheet, IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] itemsGroups, int column)
+        private async Task SetInvalidCells(ExcelWorksheet workSheet, IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] itemsGroups, int column, int i)
         {
             foreach (var items in itemsGroups)
             {
-                foreach (var item in items)
-                {
-                    // item.Key.Key == rowNumber;
-                    // item.Key.Value == columnNumber;
-
-                    workSheet.Cells[item.Key.Key, 12].Value += await GetErrorMessage(column);
-                    workSheet.Cells[item.Key.Key, item.Key.Value].Style.Fill.SetBackground(_color);
-                }
+                //foreach (var item in items)
+                //{
+                    workSheet.Cells[i, 12].Value += await GetErrorMessage(column);
+                    workSheet.Cells[i, column].Style.Fill.SetBackground(_color);
+                //}
             }
         }
 
