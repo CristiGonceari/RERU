@@ -68,4 +68,9 @@ export class ContractorService extends AbstractService {
 	getCandidateSteps(id: number): Observable<ApiResponse<any>> {
 		return this.http.get<ApiResponse<any>>(`${this.baseUrl}/${this.routeUrl}/candidate-registration-steps/${id}`);
 	}
+
+	//ForTest
+	getAllData(id: number): Observable<any> {
+		return this.http.get(`${this.baseUrl}/${this.routeUrl}/allDatas/${id}`);
+	}
 }
