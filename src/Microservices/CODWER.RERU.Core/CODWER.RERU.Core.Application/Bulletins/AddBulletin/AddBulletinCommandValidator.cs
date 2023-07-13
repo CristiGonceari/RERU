@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.ServiceProvider;
 using FluentValidation;
 using FluentValidation.Validators;
 using RERU.Data.Persistence.Context;
@@ -12,12 +13,12 @@ namespace CODWER.RERU.Core.Application.Bulletins.AddBulletin
     {
         public readonly AppDbContext _appDbContext;
 
-        public AddBulletinCommandValidator(AppDbContext appDbContext)
+        public AddBulletinCommandValidator(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Data)
-                .SetValidator(new BulletinValidator());
+                .SetValidator(new BulletinValidator(appDbContext, currentUserProvider));
 
             RuleFor(x => x.Data.ContractorId)
                 .Custom(CheckIfContractorHasBulletin);

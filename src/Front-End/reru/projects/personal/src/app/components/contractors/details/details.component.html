@@ -19,10 +19,9 @@
               <app-badge-state [state]="contractor.userState"></app-badge-state>
             </div>
             <div>
-              <a href="javascript:;" (click)="openChangeNameModal()"
-                class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+              <div class="font-weight-bolder font-size-h5 text-dark-75">
                 {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
-              </a>
+            </div>
               <div class="mb-2">
                 <span>
                   <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
@@ -50,10 +49,9 @@
               </div>
               <app-badge-state [state]="contractor.userState"></app-badge-state>
             <div>
-              <a href="javascript:;" (click)="openChangeNameModal()"
-                class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary my-2">
+              <div class="font-weight-bolder font-size-h5 text-dark-75 my-2">
                 {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
-              </a>
+            </div>
               <div class="mb-2">
                 <span>
                   <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
@@ -404,10 +402,9 @@
               <div class="d-flex align-items-start" *ngIf="!fileId">
                 <div>
                   <app-badge-state [state]="contractor.userState"></app-badge-state>
-                  <a href="javascript:;" (click)="openChangeNameModal()"
-                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">
+                  <div class="font-weight-bolder font-size-h5 text-dark-75">
                     {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
-                  </a>
+                </div>
                   <div class="mb-2">
                     <span>
                       <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>
@@ -431,10 +428,9 @@
               <div class="d-flex flex-column" *ngIf="fileId">
                 <div>
                   <app-badge-state [state]="contractor.userState"></app-badge-state>
-                  <a href="javascript:;" (click)="openChangeNameModal()"
-                    class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary my-2">
+                  <div class="font-weight-bolder font-size-h5 text-dark-75 my-2">
                     {{contractor.lastName}} {{contractor.firstName}} {{contractor.fatherName}}
-                  </a>
+                </div>
                   <div class="mb-2">
                     <span>
                       <span class="font-weight-bolder">{{'personal.last-organization-role' | translate}}:</span><br>

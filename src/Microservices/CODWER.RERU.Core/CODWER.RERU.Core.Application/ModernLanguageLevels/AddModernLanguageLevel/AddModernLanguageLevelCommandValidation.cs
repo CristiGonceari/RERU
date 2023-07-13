@@ -1,13 +1,14 @@
-﻿using FluentValidation;
+﻿using CVU.ERP.ServiceProvider;
+using FluentValidation;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.ModernLanguageLevels.AddModernLanguageLevel
 {
     public class AddModernLanguageLevelCommandValidation : AbstractValidator<AddModernLanguageLevelCommand>
     {
-        public AddModernLanguageLevelCommandValidation(AppDbContext appDbContext)
+        public AddModernLanguageLevelCommandValidation(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
-            RuleFor(x => x.Data).SetValidator(new ModernLanguageLevelValidator(appDbContext));
+            RuleFor(x => x.Data).SetValidator(new ModernLanguageLevelValidator(appDbContext, currentUserProvider));
         }
     }
 }

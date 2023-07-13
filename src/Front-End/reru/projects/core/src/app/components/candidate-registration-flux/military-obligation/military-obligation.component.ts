@@ -220,7 +220,7 @@ export class MilitaryObligationComponent implements OnInit {
     return this.fb.group({
       id: this.fb.control((militaryObligation && militaryObligation.id) || null, []),
       militaryObligationType: this.fb.control((militaryObligation && militaryObligation.militaryObligationType) || null, [Validators.required]),
-      institutionName: this.fb.control((militaryObligation && militaryObligation.institutionName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
+      institutionName: this.fb.control((militaryObligation && militaryObligation.institutionName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
       institutionAdress: this.fb.control((militaryObligation && militaryObligation.institutionAdress) || null, [Validators.required]),
       mobilizationYear: this.fb.control((militaryObligation && militaryObligation.mobilizationYear) || null, [Validators.required]),
       withdrawalYear: this.fb.control((militaryObligation && militaryObligation.withdrawalYear) || null, [Validators.required]),

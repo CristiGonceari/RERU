@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.ServiceProvider;
 using FluentValidation;
 using RERU.Data.Entities;
 using RERU.Data.Persistence.Context;
@@ -9,13 +10,13 @@ namespace CODWER.RERU.Core.Application.ModernLanguageLevels.UpdateUserProfileMod
 {
     public class UpdateUserProfileModernLanguageLevelCommandValidator : AbstractValidator<UpdateUserProfileModernLanguageLevelCommand>
     {
-        public UpdateUserProfileModernLanguageLevelCommandValidator(AppDbContext appDbContext)
+        public UpdateUserProfileModernLanguageLevelCommandValidator(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
             RuleFor(x=> x.Data.Id)
                 .SetValidator(new ItemMustExistValidator<ModernLanguageLevel>(appDbContext, ValidationCodes.MODERN_LANGUAGE_NOT_FOUND, ValidationMessages.NotFound));
 
             RuleFor(x => x.Data)
-                .SetValidator(new ModernLanguageLevelValidator(appDbContext));
+                .SetValidator(new ModernLanguageLevelValidator(appDbContext, currentUserProvider));
         }
     }
 }
