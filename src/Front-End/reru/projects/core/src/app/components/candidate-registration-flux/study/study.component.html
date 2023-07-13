@@ -146,8 +146,7 @@
                                                     <div class="col-lg-4 col-xl-4">
                                                         <input formControlName="studyActSeries" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.study-act-series' | translate"
-                                                            [ngClass]="inputValidator(study, 'studyActSeries')" />
+                                                            [placeholder]="'study.study-act-series' | translate"/>
                                                         <div *ngIf="isInvalidPattern(study, 'studyActSeries')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-letters-and-dash' | translate}}</div>
@@ -155,16 +154,15 @@
                                                     <div class="col-lg-4 col-xl-4">
                                                         <input formControlName="studyActNumber" autocomplete="off"
                                                             class="form-control form-control-solid" type="text"
-                                                            [placeholder]="'study.study-act-number' | translate"
-                                                            [ngClass]="inputValidator(study, 'studyActNumber')" />
+                                                            [placeholder]="'study.study-act-number' | translate"/>
                                                         <div *ngIf="isInvalidPattern(study, 'studyActNumber')"
                                                             class="invalid-feedback d-block">
                                                             {{'validations.only-numbers' | translate}}</div>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4">
-                                                        <app-stepper-date-time [parent]="study"
+                                                        <app-default-stepper-date-time [parent]="study"
                                                             [date]="'studyActRelaseDay'"
-                                                            [placeholder]="'study.study-act-emitted-date' | translate"></app-stepper-date-time>
+                                                            [placeholder]="'study.study-act-emitted-date' | translate"></app-default-stepper-date-time>
                                                     </div>
                                                 </div>
                                             </div>

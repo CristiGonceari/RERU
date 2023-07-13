@@ -19,6 +19,7 @@ import { SearchDepartmentComponent } from './components/search-department/search
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { SearchEmployeeFunctionComponent } from './components/search-employee-function/search-employee-function.component';
 import { StepperDateTimeComponent } from './components/stepper-date-time/stepper-date-time.component';
+import { DefaultStepperDateTimeComponent } from './components/default-stepper-date-time/default-stepper-date-time.component';
 import { StepperArrowHintComponent } from './components/stepper-arrow-hint/stepper-arrow-hint.component';
 import { StepperArrowHintDownComponent } from './components/stepper-arrow-hint-down/stepper-arrow-hint-down.component';
 import { SharedModule } from '@erp/shared';
@@ -38,6 +39,7 @@ const commonComponents = [
   SearchRoleComponent,
   SearchEmployeeFunctionComponent,
   StepperDateTimeComponent,
+  DefaultStepperDateTimeComponent,
   StepperArrowHintComponent,
   StepperArrowHintDownComponent
 ];
