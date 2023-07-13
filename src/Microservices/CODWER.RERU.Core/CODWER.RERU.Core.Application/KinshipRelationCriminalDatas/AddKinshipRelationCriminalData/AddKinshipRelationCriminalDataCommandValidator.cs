@@ -1,6 +1,7 @@
 ﻿using CODWER.RERU.Core.Application.Validation;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.ServiceProvider;
 using FluentValidation;
 using FluentValidation.Validators;
 using RERU.Data.Persistence.Context;
@@ -11,13 +12,13 @@ namespace CODWER.RERU.Core.Application.KinshipRelationCriminalDatas.AddKinshipRe
     public class AddKinshipRelationCriminalDataCommandValidator : AbstractValidator<AddKinshipRelationCriminalDataCommand>
     {
         private readonly AppDbContext _appDbContext;
-        public AddKinshipRelationCriminalDataCommandValidator(AppDbContext appDbContext)
+        public AddKinshipRelationCriminalDataCommandValidator(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
 
             _appDbContext = appDbContext;
 
             RuleFor(x => x.Data)
-                .SetValidator(new KinshipRelationCriminalDataValidator(appDbContext));
+                .SetValidator(new KinshipRelationCriminalDataValidator(appDbContext, currentUserProvider));
 
             RuleFor(x => x.Data.ContractorId)
                 .Custom(CheckIfUserProfileExistentKinshipRelationDate);
