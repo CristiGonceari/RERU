@@ -1,14 +1,15 @@
-﻿using FluentValidation;
+﻿using CVU.ERP.ServiceProvider;
+using FluentValidation;
 using RERU.Data.Persistence.Context;
 
 namespace CODWER.RERU.Core.Application.KinshipRelationWithUserProfiles.BulkAddEditKinshipRelationWithUserProfiles
 {
     public class BulkAddEditKinshipRelationWithUserProfilesCommandValidator : AbstractValidator<BulkAddEditKinshipRelationWithUserProfilesCommand>
     {
-        public BulkAddEditKinshipRelationWithUserProfilesCommandValidator(AppDbContext appDbContext)
+        public BulkAddEditKinshipRelationWithUserProfilesCommandValidator(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
             RuleForEach(x => x.Data)
-                .SetValidator(new KinshipRelationWithUserProfilesValidator(appDbContext));
+                .SetValidator(new KinshipRelationWithUserProfilesValidator(appDbContext, currentUserProvider));
         }
     }
 }

@@ -3,6 +3,7 @@ using CODWER.RERU.Core.DataTransferObjects.Bulletin;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Extensions;
 using CVU.ERP.Common.Validation;
+using CVU.ERP.ServiceProvider;
 using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace CODWER.RERU.Core.Application.Bulletins.UpdateBulletin
     {
         private readonly AppDbContext _appDbContext;
 
-        public UpdateBulletinCommandValidator(AppDbContext appDbContext)
+        public UpdateBulletinCommandValidator(AppDbContext appDbContext, ICurrentApplicationUserProvider currentUserProvider)
         {
             _appDbContext = appDbContext;
 
@@ -25,7 +26,7 @@ namespace CODWER.RERU.Core.Application.Bulletins.UpdateBulletin
                     ValidationMessages.InvalidReference));
 
             RuleFor(x => x.Data)
-                .SetValidator(new BulletinValidator());
+                .SetValidator(new BulletinValidator(appDbContext, currentUserProvider));
         }
 
         private void CheckIfUniqueIdnpOnUpdate(BulletinDto dto, CustomContext context)
