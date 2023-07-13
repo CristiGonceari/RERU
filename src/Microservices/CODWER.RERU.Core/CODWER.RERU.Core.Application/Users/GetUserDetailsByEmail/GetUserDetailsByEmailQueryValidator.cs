@@ -20,7 +20,7 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail
 
         private bool CheckExistentEmail(string email)
         {
-            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Email == email);
+            var userProfile = _appDbContext.UserProfiles.FirstOrDefault(x => x.Email.Trim() == email.Trim());
 
             if (userProfile != null)
             {

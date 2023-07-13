@@ -15,7 +15,7 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail
         public async Task<UserDetailsOverviewDto> Handle(GetUserDetailsByEmailQuery request, CancellationToken cancellationToken)
         {
             var user = await AppDbContext.UserProfiles
-                .FirstOrDefaultAsync(d => d.Email == request.Email);
+                .FirstOrDefaultAsync(d => d.Email.Trim() == request.Email.Trim());
 
             var result = new UserDetailsOverviewDto()
             {
@@ -24,7 +24,7 @@ namespace CODWER.RERU.Core.Application.Users.GetUserDetailsByEmail
                 LastName = user.LastName,
                 FatherName = user.FatherName,
                 MediaFileId = user.MediaFileId,
-                PhoneNumber = user.PhoneNumber == null ? "" : user.PhoneNumber.Remove(4, 5).Insert(4, "*****")
+                PhoneNumber = user.PhoneNumber == null ? "" : (user.PhoneNumber.Length >= 9 ? user.PhoneNumber.Remove(4, 5).Insert(4, "*****") : user.PhoneNumber)
             };
 
             return result;
