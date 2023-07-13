@@ -163,6 +163,16 @@ export class GeneralComponent implements OnInit {
 		);
 	}
 
+  inputValidator(form, field) {
+    const control = form.get(field);
+  
+    if (control.value === 'null') {
+      return control.touched || control.dirty ? 'is-invalid' : '';
+    }
+  
+    return control.valid ? 'is-valid' : 'is-invalid';
+  }
+
   // searchBloodType: OperatorFunction<string, readonly SelectItem[]> = (text$: Observable<string>) => {
   //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
   //   const clicksWithClosedPopup$ = this.click$.pipe(filter(() => this.instance && !this.instance.isPopupOpen()));
