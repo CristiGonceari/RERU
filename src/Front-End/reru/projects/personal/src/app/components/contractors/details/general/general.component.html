@@ -214,7 +214,7 @@
           </label>
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="sex" id="sex"
-                formControlName="sex" [ngClass]="{'is-invalid': hasErrors('sex')}">
+                formControlName="sex" [ngClass]="inputValidator(generalForm, 'sex')">
                 <option value="null">{{'module-access.select' | translate}}</option>
                 <option *ngFor="let item of sexEnum" [value]="item.value">{{ 'sexType.' + item.label | translate }}</option>
             </select>
@@ -240,7 +240,7 @@
           </label>
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="candidateCitizenshipId" id="role"
-                formControlName="candidateCitizenshipId" [ngClass]="{'is-invalid': hasErrors('candidateCitizenshipId')}">
+                formControlName="candidateCitizenshipId" [ngClass]="inputValidator(generalForm, 'candidateCitizenshipId')">
                 <option value="null">{{'module-access.select' | translate}}</option>
                 <option *ngFor="let item of citizenships" [value]="item.value">{{ item.label }}</option>
               </select>
@@ -265,8 +265,8 @@
             {{'personal.nationality' | translate}}
           </label>
           <div class="col-lg-9 col-xl-9">
-            <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="candidateCitizenshipId" id="role"
-              formControlName="candidateNationalityId" [ngClass]="{'is-invalid': hasErrors('candidateNationalityId')}">
+            <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="candidateNationalityId" id="role"
+              formControlName="candidateNationalityId" [ngClass]="inputValidator(generalForm, 'candidateNationalityId')">
               <option value="null">{{'module-access.select' | translate}}</option>
               <option *ngFor="let item of nationalities" [value]="item.value">{{ item.label }}</option>
             </select>
@@ -293,7 +293,7 @@
           <div class="col-lg-9 col-xl-9">
             <select class="form-control form-control-lg form-control-solid p-0 pl-5" name="stateLanguageLevel"
               formControlName="stateLanguageLevel" 
-              [ngClass]="{'is-invalid': hasErrors('stateLanguageLevel')}">
+              [ngClass]="inputValidator(generalForm, 'stateLanguageLevel')">
               <option value="null">{{'module-access.select' | translate}}</option>
               <option *ngFor="let item of stateLanguageLevelEnum" [value]="item.value">{{ 'languageKnowledge.' + item.label | translate}}</option>
             </select>
