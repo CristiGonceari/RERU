@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.RecommendationForStudies.BulkAddEditR
 
         public async Task<Unit> Handle(BulkAddEditRecommendationForStudyCommand request, CancellationToken cancellationToken)
         {
-            var recommendations = await _appDbContext.RecommendationForStudies.ToListAsync();
+            var recommendations = await _appDbContext.RecommendationForStudies.Where(s => s.ContractorId == request.Data[0].ContractorId).ToListAsync();
 
             foreach (var recommendationForStudyDto in request.Data)
             {

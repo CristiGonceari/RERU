@@ -22,7 +22,7 @@ namespace CODWER.RERU.Core.Application.MilitaryObligations.BulkAddEditMilitaryOb
 
         public async Task<Unit> Handle(BulkAddEditMilitaryObligationsCommand request, CancellationToken cancellationToken)
         {
-            var obligations = await _appDbContext.MilitaryObligations.ToListAsync();
+            var obligations = await _appDbContext.MilitaryObligations.Where(s => s.ContractorId == request.Data[0].ContractorId).ToListAsync();
 
             foreach (var relationDto in request.Data)
             {

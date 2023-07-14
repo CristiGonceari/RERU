@@ -23,7 +23,7 @@ namespace CODWER.RERU.Personal.Application.ModernLanguageLevels.BulkAddEditModer
 
         public async Task<Unit> Handle(BulkAddEditModernLanguageLevelsCommand request, CancellationToken cancellationToken)
         {
-            var modernLanguagelevels = await _appDbContext.ModernLanguageLevels.ToListAsync();
+            var modernLanguagelevels = await _appDbContext.ModernLanguageLevels.Where(s => s.ContractorId == request.Data[0].ContractorId).ToListAsync();
 
             foreach (var addEditModernLanguageLevelDto in request.Data)
             {
