@@ -548,7 +548,7 @@ export class StudyDetailsComponent implements OnInit {
       (<FormArray>this.languageForm.controls.modernLanguages).controls.push(
         this.generateModernLanguage(
           language,
-          language.modernLanguage,
+          language.modernLanguageId,
           this.contractorId
         )
       );
