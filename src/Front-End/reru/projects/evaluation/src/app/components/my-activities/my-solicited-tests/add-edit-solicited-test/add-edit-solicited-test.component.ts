@@ -325,13 +325,13 @@ export class AddEditSolicitedTestComponent implements OnInit {
         this.translate.get('processes.upload').subscribe((res: string) => {
           status = res;
         });
-        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status, index);
         break;
       case HttpEventType.DownloadProgress:
         this.translate.get('processes.download').subscribe((res: string) => {
           status = res;
         });
-        this.updateStatus(httpEvent.loaded, httpEvent.total, status);
+        this.updateStatus(httpEvent.loaded, httpEvent.total, status, index);
         break;
       case HttpEventType.Response:
         if (this.files.length == finishedRequests) {
