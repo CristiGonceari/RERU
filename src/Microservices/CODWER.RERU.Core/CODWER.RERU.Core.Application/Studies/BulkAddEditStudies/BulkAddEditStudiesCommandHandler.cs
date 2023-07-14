@@ -23,8 +23,8 @@ namespace CODWER.RERU.Core.Application.Studies.BulkAddEditStudies
 
         public async Task<Unit> Handle(BulkAddEditStudiesCommand request, CancellationToken cancellationToken)
         {
-            var studies = await _appDbContext.Studies.ToListAsync();
-
+            var studies = await _appDbContext.Studies.Where(s => s.ContractorId == request.Data[0].ContractorId).ToListAsync();
+            
             foreach (var studyDataDto in request.Data)
             {
                 var existentStudy = studies.FirstOrDefault(s => s.Id == studyDataDto.Id);

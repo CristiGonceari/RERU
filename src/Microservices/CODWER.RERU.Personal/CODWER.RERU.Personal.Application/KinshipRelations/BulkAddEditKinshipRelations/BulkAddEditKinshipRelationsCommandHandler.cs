@@ -22,7 +22,7 @@ namespace CODWER.RERU.Personal.Application.KinshipRelations.BulkAddEditKinshipRe
 
         public async Task<Unit> Handle(BulkAddEditKinshipRelationsCommand request, CancellationToken cancellationToken)
         {
-            var kinshipRelation = await _appDbContext.KinshipRelations.ToListAsync();
+            var kinshipRelation = await _appDbContext.KinshipRelations.Where(s => s.ContractorId == request.Data[0].ContractorId).ToListAsync();
 
             foreach (var relation in request.Data)
             {
