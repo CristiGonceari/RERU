@@ -95,7 +95,7 @@
     <None Update="Rotativa\Windows\wkhtmltopdf.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="UserGuide\GhidEvaluare.pdf">
+    <None Update="UserGuide\GhidAdmin.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
