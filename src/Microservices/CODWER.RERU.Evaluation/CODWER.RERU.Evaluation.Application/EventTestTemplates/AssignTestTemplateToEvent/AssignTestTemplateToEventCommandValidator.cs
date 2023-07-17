@@ -39,17 +39,17 @@ namespace CODWER.RERU.Evaluation.Application.EventTestTemplates.AssignTestTempla
                     .Must(x => x > 0)
                     .WithErrorCode(ValidationCodes.INVALID_MAX_ATTEMPTS);
 
-                    RuleFor(r => r.Data.EventId)
-                    .Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == TestTemplateModeEnum.Poll))
-                    .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
+                    //RuleFor(r => r.Data.EventId)
+                    //.Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == TestTemplateModeEnum.Poll))
+                    //.WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
                 });
 
-                When(r => appDbContext.TestTemplates.FirstOrDefault(l => l.Id == r.Data.TestTemplateId)?.Mode == TestTemplateModeEnum.Poll, () =>
+                /*When(r => appDbContext.TestTemplates.FirstOrDefault(l => l.Id == r.Data.TestTemplateId)?.Mode == TestTemplateModeEnum.Poll, () =>
                 {
                     RuleFor(r => r.Data.EventId)
                     .Must(x => !appDbContext.EventTestTemplates.Include(x => x.TestTemplate).Where(e => e.EventId == x).Any(tt => tt.TestTemplate.Mode == (int)TestTemplateModeEnum.Test))
                     .WithErrorCode(ValidationCodes.ONLY_POLLS_OR_TESTS);
-                });
+                });*/
 
             });
         }

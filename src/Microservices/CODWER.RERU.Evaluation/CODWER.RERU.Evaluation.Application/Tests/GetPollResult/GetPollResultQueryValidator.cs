@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿/*using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -32,4 +32,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
         }
     }
 }
-
+*/

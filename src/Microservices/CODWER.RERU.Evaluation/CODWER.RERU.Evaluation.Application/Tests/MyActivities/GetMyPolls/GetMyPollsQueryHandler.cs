@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -80,3 +80,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPolls
         }
     }
 }
+*/

@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿/*using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
 {
@@ -8,3 +8,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
         public int EventId { get; set; }
     }
 }
+*/

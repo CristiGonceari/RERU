@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Validation;
+﻿/*using CODWER.RERU.Evaluation.Application.Validation;
 using CVU.ERP.Common.Data.Persistence.EntityFramework.Validators;
 using CVU.ERP.Common.Validation;
 using FluentValidation;
@@ -17,3 +17,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls
         }
     }
 }
+*/

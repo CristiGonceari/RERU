@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Services;
+﻿/*using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Pagination;
 using MediatR;
@@ -76,3 +76,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent
         }
     }
 }
+*/

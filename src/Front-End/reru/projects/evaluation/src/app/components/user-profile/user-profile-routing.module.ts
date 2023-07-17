@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { OverviewComponent } from './overview/overview.component';
 import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluated-tests.component';
 import { UserEventsComponent } from './user-events/user-events.component';
-import { UserPollsComponent } from './user-polls/user-polls.component';
+//import { UserPollsComponent } from './user-polls/user-polls.component';
 import { UserProfileComponent } from './user-profile.component';
 import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicited-tests.component';
 import { UserTestsComponent } from './user-tests/user-tests.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'overview', component: OverviewComponent },
       { path: 'user-tests', component: UserTestsComponent },
       { path: 'user-events', component: UserEventsComponent },
-      { path: 'user-polls', component: UserPollsComponent },
+      //{ path: 'user-polls', component: UserPollsComponent },
       { path: 'evaluated-tests', component: UserEvaluatedTestsComponent },
       { path: 'solicited-tests', component: UserSolicitedTestsComponent },
       { path: 'user-evaluations', component: UserEvaluationsComponent },

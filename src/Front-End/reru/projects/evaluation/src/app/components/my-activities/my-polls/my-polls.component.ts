@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/*import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-my-polls',
@@ -16,3 +16,4 @@ export class MyPollsComponent implements OnInit {
     return document.getElementById('title').innerHTML;
   }
 }
+*/

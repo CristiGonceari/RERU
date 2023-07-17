@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-user-polls',
@@ -15,3 +15,4 @@ export class UserPollsComponent {
 		return this.title
 	}
 }
+*/

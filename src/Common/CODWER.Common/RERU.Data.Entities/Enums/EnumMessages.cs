@@ -262,7 +262,7 @@ namespace RERU.Data.Entities.Enums
             return testTypeMode switch
             {
                 TestTemplateModeEnum.Test => Test,
-                TestTemplateModeEnum.Poll => Poll,
+                //TestTemplateModeEnum.Poll => Poll,
                 TestTemplateModeEnum.Evaluation => Evaluation,
                 _ => "-"
             };

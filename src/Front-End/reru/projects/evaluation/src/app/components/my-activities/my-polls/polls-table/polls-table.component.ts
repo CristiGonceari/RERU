@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+/*import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestStatusEnum } from '../../../../utils/enums/test-status.enum';
 import { MyPollStatusEnum } from '../../../../utils/enums/my-poll-status.enum';
@@ -193,3 +193,4 @@ export class PollsTableComponent implements OnInit {
     });
   }
 }
+*/

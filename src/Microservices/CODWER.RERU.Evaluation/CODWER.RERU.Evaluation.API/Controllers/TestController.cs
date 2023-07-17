@@ -1,7 +1,7 @@
 ﻿using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.Services.GetDocumentReplacedKeysServices;
 using CODWER.RERU.Evaluation.Application.Tests.AddEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
+//using CODWER.RERU.Evaluation.Application.Tests.AddMyPoll;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests;
 using CODWER.RERU.Evaluation.Application.Tests.AddTests.SendEmailNotification;
 using CODWER.RERU.Evaluation.Application.Tests.DeleteTest;
@@ -9,12 +9,12 @@ using CODWER.RERU.Evaluation.Application.Tests.EditTestStatus;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.FinalizeTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
+//using CODWER.RERU.Evaluation.Application.Tests.GetMyPollsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsCountWithoutEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEvent;
 using CODWER.RERU.Evaluation.Application.Tests.GetMyTestsWithoutEventByDate;
-using CODWER.RERU.Evaluation.Application.Tests.GetPollResult;
+//using CODWER.RERU.Evaluation.Application.Tests.GetPollResult;
 using CODWER.RERU.Evaluation.Application.Tests.GetTest;
 using CODWER.RERU.Evaluation.Application.Tests.GetTestDocumentReplacedKeys;
 using CODWER.RERU.Evaluation.Application.Tests.GetTests;
@@ -23,12 +23,12 @@ using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.CountMyEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluatedTests.GetMyEvaluatedTestsByDate;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPolls;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPollsCount;
+//using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPolls;
+//using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPollsCount;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTests;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyTestsCount;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyPolls;
+//using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyPolls;
 using CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyTests;
 using CODWER.RERU.Evaluation.Application.Tests.PrintEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.PrintTests;
@@ -38,13 +38,13 @@ using CODWER.RERU.Evaluation.Application.Tests.StartEvaluation;
 using CODWER.RERU.Evaluation.Application.Tests.StartTest;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls;
+//using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.GetUserTestsByEvent;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluatedTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserEvaluations;
-using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls;
+//using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserPolls;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserReceivedEvaluations;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTests;
 using CODWER.RERU.Evaluation.Application.Tests.UserTests.PrintUserTestsByEvent;
@@ -151,7 +151,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("my-activities/my-polls")]
+        /*[HttpGet("my-activities/my-polls")]
         public async Task<PaginatedModel<PollDto>> GetMyPolls([FromQuery] GetMyPollsQuery query)
         {
             return await Mediator.Send(query);
@@ -161,7 +161,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<List<EventCount>> GetMyPollsCount([FromQuery] GetMyPollsCountQuery query)
         {
             return await Mediator.Send(query);
-        }
+        }*/
 
         [HttpGet("my-evaluated-tests-count")]
         public async Task<List<TestCount>> GetMyEvaluatedTestsCount([FromQuery] CountMyEvaluatedTestsQuery query)
@@ -181,11 +181,11 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("my-polls-by-event")]
+        /*[HttpGet("my-polls-by-event")]
         public async Task<PaginatedModel<PollDto>> GetMyPollsByEvent([FromQuery] GetMyPollsByEventQuery query)
         {
             return await Mediator.Send(query);
-        }
+        }*/
 
         [HttpGet("my-evaluations")]
         public async Task<PaginatedModel<TestDto>> GetMyEvaluations([FromQuery] GetMyEvaluationsQuery query)
@@ -227,7 +227,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpPost("create-my-poll")]
+        /*[HttpPost("create-my-poll")]
         public async Task<int> CreateMyPoll([FromBody] AddMyPollCommand command)
         {
             return await Mediator.Send(command);
@@ -237,7 +237,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<PollResultDto> GetPollResult([FromQuery] GetPollResultQuery query)
         {
             return await Mediator.Send(query);
-        }
+        }*/
 
         [HttpPost("allow")]
         public async Task<Unit> SetConfirmationToStartTest([FromBody] SetConfirmationToStartTestCommand command)
@@ -317,11 +317,11 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return await Mediator.Send(query);
         }
 
-        [HttpGet("user-polls")]
+        /*[HttpGet("user-polls")]
         public async Task<PaginatedModel<PollDto>> GetUserPollsByEvent([FromQuery] GetUserPollsQuery query)
         {
             return await Mediator.Send(query);
-        }
+        }*/
 
         [HttpGet("user-evaluated-tests")]
         public async Task<PaginatedModel<TestDto>> GetUserEvaluatedTests([FromQuery] GetUserEvaluatedTestsQuery query)
@@ -340,7 +340,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpPut("print-my-polls")]
+        /*[HttpPut("print-my-polls")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintMyPolls([FromBody] PrintMyPollsCommand command)
         {
@@ -349,7 +349,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
-        }
+        }*/
 
         [HttpPut("print-my-tests")]
         [IgnoreResponseWrap]
@@ -450,7 +450,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             return File(result.Content, result.ContentType, result.Name);
         }
 
-        [HttpPut("print-user-polls")]
+        /*[HttpPut("print-user-polls")]
         [IgnoreResponseWrap]
         public async Task<IActionResult> PrintUserPollsByEventPdf([FromBody] PrintUserPollsCommand command)
         {
@@ -459,7 +459,7 @@ namespace CODWER.RERU.Evaluation.API.Controllers
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
             return File(result.Content, result.ContentType, result.Name);
-        }
+        }*/
 
         [HttpGet("getTestRelacedKeys")]
         public async Task<string> GetTestDocumentReplacedKeys([FromQuery] GetTestDocumentReplacedKeysQuery query)

@@ -48,8 +48,8 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates
         {
             switch (testMode)
             {
-                case TestTemplateModeEnum.Poll:
-                    return QualifyingTypeEnum.NoQualifying;
+                //case TestTemplateModeEnum.Poll:
+                //    return QualifyingTypeEnum.NoQualifying;
                 case TestTemplateModeEnum.Test:
                     return QualifyingTypeEnum.PassedNotPassed;
                 case TestTemplateModeEnum.Evaluation:
