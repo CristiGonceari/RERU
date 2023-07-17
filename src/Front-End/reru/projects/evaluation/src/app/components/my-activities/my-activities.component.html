@@ -67,14 +67,14 @@
 										</span>
 									</a>
 								</div>
-								<div class="navi-item mb-2">
+								<!-- <div class="navi-item mb-2">
 									<a [routerLink]="['my-polls']" routerLinkActive="active" class="navi-link py-4">
 										<i class="fas fa-poll icon-md mr-3"></i>
 										<span class="navi-text font-size-lg">
 											{{ 'polls.polls' | translate }}
 										</span>
 									</a>
-								</div>
+								</div> -->
 								<div class="navi-item mb-2" *ngIf="user.userStatusEnum == 1">
 									<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active"
 										class="navi-link py-4">
@@ -111,12 +111,12 @@
 										<i class="far fa-question-circle icon-md mr-3"></i>
 									</a>
 								</div>
-								<div class="navi-item mb-2">
+								<!-- <div class="navi-item mb-2">
 									<a [routerLink]="['my-polls']" routerLinkActive="active"
 										class="navi-link py-4 pr-3 h-100">
 										<i class="fas fa-poll icon-md mr-3"></i>
 									</a>
-								</div>
+								</div> -->
 								<div class="navi-item" *ngIf="user.userStatusEnum == 1">
 									<a [routerLink]="['my-evaluated-tests']" routerLinkActive="active"
 										class="navi-link py-4 pr-3">

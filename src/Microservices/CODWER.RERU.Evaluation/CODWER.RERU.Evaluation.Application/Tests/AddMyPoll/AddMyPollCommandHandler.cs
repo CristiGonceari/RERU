@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿/*using MediatR;
 using System;
 using System.Linq;
 using System.Threading;
@@ -47,3 +47,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
         }
     }
 }
+*/

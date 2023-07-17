@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Validation;
+﻿/*using CODWER.RERU.Evaluation.Application.Validation;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.Validation;
 using CVU.ERP.Module.Application.TableExportServices.Validators;
@@ -16,3 +16,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyPolls
         }
     }
 }
+*/

@@ -34,7 +34,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var tests = GetAndFilterTestsOptimized.Filter(_appDbContext, filterData, currentUser);
 
-            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
+            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
             var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
 

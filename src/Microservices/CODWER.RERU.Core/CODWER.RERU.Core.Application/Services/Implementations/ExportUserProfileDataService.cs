@@ -117,7 +117,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             await SetUserProfileEvaluations(workSheet);
 
-            await SetUserProfilePolls(workSheet);
+            //await SetUserProfilePolls(workSheet);
 
             workSheet.Columns.AutoFit();
 
@@ -639,7 +639,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetUserProfilePolls(ExcelWorksheet workSheet)
+        /*private async Task<ExcelWorksheet> SetUserProfilePolls(ExcelWorksheet workSheet)
         {
             int initialRow = _row;
            
@@ -651,7 +651,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             DefaultTableBorder(initialRow, workSheet);
 
             return workSheet;
-        }
+        }*/
 
         private async Task<ExcelWorksheet> SetCellsForUserProfileTests(ExcelWorksheet workSheet)
         {
@@ -801,7 +801,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
 
             return workSheet;
         }
-        private async Task<ExcelWorksheet> SetCellsForUserProfilePolls(ExcelWorksheet workSheet)
+        /*private async Task<ExcelWorksheet> SetCellsForUserProfilePolls(ExcelWorksheet workSheet)
         {
             var getPolls = await GetUserProfileTestsEvaluationsPolls(TestTemplateModeEnum.Poll);
 
@@ -836,7 +836,7 @@ namespace CODWER.RERU.Core.Application.Services.Implementations
             }
 
             return workSheet;
-        }
+        }*/
 
         private string TranslateStudyFrequencyEnum(StudyFrequencyEnum frequency)
         {

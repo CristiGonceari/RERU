@@ -9,7 +9,7 @@ import { ViewTestResultComponent } from '../tests/view-test-result/view-test-res
 import { MyActivitiesComponent } from './my-activities.component';
 import { MyEvaluatedTestsComponent } from './my-evaluated-tests/my-evaluated-tests.component';
 import { MyEventsComponent } from './my-events/my-events.component';
-import { MyPollsComponent } from './my-polls/my-polls.component';
+//import { MyPollsComponent } from './my-polls/my-polls.component';
 import { MySolicitedTestsComponent } from './my-solicited-tests/my-solicited-tests.component';
 import { MyEvaluationsComponent } from './my-evaluations/my-evaluations.component';
 import { AddEditSolicitedTestComponent } from './my-solicited-tests/add-edit-solicited-test/add-edit-solicited-test.component';
@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'my-solicited-position', pathMatch: 'full' },
       { path: 'my-tests', component: MyTestsComponent },
       { path: 'my-events', component: MyEventsComponent },
-      { path: 'my-polls', component: MyPollsComponent },
+      //{ path: 'my-polls', component: MyPollsComponent },
       { path: 'my-evaluated-tests', component: MyEvaluatedTestsComponent },
       { path: 'my-evaluations', component: MyEvaluationsComponent },
       { path: 'my-solicited-position', component: MySolicitedTestsComponent },

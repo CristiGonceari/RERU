@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PollsByEventComponent } from './polls-by-event.component';
 
@@ -23,3 +23,4 @@ describe('PollsByEventComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

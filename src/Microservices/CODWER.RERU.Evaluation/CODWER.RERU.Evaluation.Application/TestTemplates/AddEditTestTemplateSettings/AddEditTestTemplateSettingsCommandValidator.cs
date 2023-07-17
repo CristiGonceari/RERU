@@ -31,12 +31,12 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
                     .Must(x => appDbContext.TestTemplates.First(tt => tt.Id == x).Status == TestTemplateStatusEnum.Draft)
                     .WithErrorCode(ValidationCodes.ONLY_PENDING_TEST_CAN_BE_CHANGED);
 
-                When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTemplateId).Mode == TestTemplateModeEnum.Poll, () =>
+                /*When(r => appDbContext.TestTemplates.First(tt => tt.Id == r.Data.TestTemplateId).Mode == TestTemplateModeEnum.Poll, () =>
                 {
                     RuleFor(x => x.Data.CanViewPollProgress)
                         .NotNull()
                         .WithErrorCode(ValidationCodes.INVALID_POLL_SETTINGS);
-                });
+                });*/
                
                 RuleFor(x => x.Data)
                     .Must(x => CheckFormulas(x))
@@ -69,7 +69,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplates.AddEditTestTemplateSe
                     return true;
                 }
             } 
-            else if (testTemplate.Mode == TestTemplateModeEnum.Poll || testTemplate.Mode == TestTemplateModeEnum.Evaluation)
+            else if (testTemplate.Mode == TestTemplateModeEnum.Evaluation)
             {
                 return true;
             }

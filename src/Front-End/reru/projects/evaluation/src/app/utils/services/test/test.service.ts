@@ -83,9 +83,9 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/poll-result`, { params });
 	}
 
-	getUserPollsByEvent(params): Observable<any> {
+	/*getUserPollsByEvent(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-polls-by-event`, { params });
-	}
+	}*/
 
 	createMinePoll(data): Observable<any> {
 		return this.http.post(`${this.baseUrl}/${this.urlRoute}/create-my-poll`, data);
@@ -158,9 +158,9 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-tests-by-event`, { params });
 	}
 
-	getUsersPolls(params): Observable<any> {
+	/*getUsersPolls(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-polls`, { params });
-	}
+	}*/
 
 	getUserEvaluatedTests(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/user-evaluated-tests`, { params });
@@ -238,7 +238,7 @@ export class TestService extends AbstractService {
 		});
 	}
 
-	printMyPolls(data): Observable<any> {
+	/*printMyPolls(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-my-polls`, data, {
 			responseType: 'blob',
 			observe: 'response',
@@ -250,7 +250,7 @@ export class TestService extends AbstractService {
 			responseType: 'blob',
 			observe: 'response',
 		});
-	}
+	}*/
 
 	printUserTestsByEvent(data): Observable<any> {
 		return this.http.put(`${this.baseUrl}/${this.urlRoute}/print-user-tests-by-event`, data, {
@@ -285,13 +285,13 @@ export class TestService extends AbstractService {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-tests-count`, {params});
 	}
 
-	getMyPolls(params): Observable<any> {
+	/*getMyPolls(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls`, { params });
 	}
 
 	getMyPollsCount(params): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${this.urlRoute}/my-activities/my-polls-count`, {params});
-	}
+	}*/
 
 	getNrEvaluations(): Observable<any> {
 		return this.http.get(`${this.baseUrl}/HomePage/tests-count`);

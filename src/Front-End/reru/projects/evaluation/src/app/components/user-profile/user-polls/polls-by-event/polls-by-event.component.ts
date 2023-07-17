@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+/*import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MyPollStatusEnum } from 'projects/evaluation/src/app/utils/enums/my-poll-status.enum';
 import { TestStatusEnum } from 'projects/evaluation/src/app/utils/enums/test-status.enum';
@@ -118,3 +118,4 @@ export class PollsByEventComponent implements OnInit {
 		}, () => this.downloadFile = false);
 	}
 }
+*/

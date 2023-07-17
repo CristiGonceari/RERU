@@ -64,11 +64,11 @@ const routes: Routes = [
 		data: { permission: 'P03000601' },
 		canActivate: [PermissionRouteGuard, AuthenticationGuard]
 	},
-	{
+	/*{
 		path: 'polls',
 		loadChildren: () => import('./components/polls/polls.module').then(m => m.PollsModule),
 		canActivate: [AuthenticationGuard]
-	},
+	},*/
 	{
 		path: 'plans', 
 		loadChildren: () => import('./components/plans/plans.module').then(m => m.PlansModule),

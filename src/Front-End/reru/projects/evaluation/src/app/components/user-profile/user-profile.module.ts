@@ -11,11 +11,11 @@ import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
 import { UserTestsComponent } from './user-tests/user-tests.component';
 import { UserEventsComponent } from './user-events/user-events.component';
-import { UserPollsComponent } from './user-polls/user-polls.component';
+//import { UserPollsComponent } from './user-polls/user-polls.component';
 import { OverviewComponent } from './overview/overview.component';
 import { TestsTableComponent } from './user-tests/tests-table/tests-table.component';
 import { TestsByEventComponent } from './user-events/tests-by-event/tests-by-event.component';
-import { PollsByEventComponent } from './user-polls/polls-by-event/polls-by-event.component';
+//import { PollsByEventComponent } from './user-polls/polls-by-event/polls-by-event.component';
 import { UserEvaluatedTestsComponent } from './user-evaluated-tests/user-evaluated-tests.component';
 import { UserEvaluatedTestsListComponent } from './user-evaluated-tests/user-evaluated-tests-list/user-evaluated-tests-list.component';
 import { UserSolicitedTestsComponent } from './user-solicited-tests/user-solicited-tests.component';
@@ -33,11 +33,11 @@ import { OwlDateTimeModule, OwlMomentDateTimeModule } from '@busacca/ng-pick-dat
     UserProfileComponent,
     UserTestsComponent,
     UserEventsComponent,
-    UserPollsComponent,
+    //UserPollsComponent,
     OverviewComponent,
     TestsTableComponent,
     TestsByEventComponent,
-    PollsByEventComponent,
+    //PollsByEventComponent,
     UserEvaluatedTestsComponent,
     UserEvaluatedTestsListComponent,
     UserSolicitedTestsComponent,
