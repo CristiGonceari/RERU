@@ -256,14 +256,14 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).Take(10).ToArray();
 
             if (!headers.SequenceEqual(requiredColumns, StringComparer.OrdinalIgnoreCase))
-            {
-                isValid = false;
+            {   
                 for (int i = 0; i < requiredColumns.Length; i++)
                 {
 					if (!headers.Any(header => string.Equals(header, requiredColumns[i], StringComparison.OrdinalIgnoreCase)))
 					{
                         workSheet.Cells[1, 12].Value = "Respectați ordinea coloanelor Nume, Prenume, Patronimic, Idnp, Email, Id Departament, Id Rol, Id Funcție, Data nașterii, Nr. telefon";
                         workSheet.Cells[1, i + 1].Style.Fill.SetBackground(_color);
+                        isValid = false;
                     }
                 }
             }
@@ -283,6 +283,8 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             }
 
             bool isValid = true;
+            bool isIdnpValid = true;
+            bool isEmailValid = true;
 
             for (int i = 2; i <= workSheet.Dimension.Rows; i++)
             {
@@ -339,26 +341,26 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(Idnp) || Idnp.Trim().Length != 13 || !Regex.IsMatch(Idnp.Trim(), @"^[0-9]+$"))
+                if (Idnp.Trim().Length != 13 || !Regex.IsMatch(Idnp.Trim(), @"^[0-9]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
                     workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
-                    isValid = false;
+                    isIdnpValid = false;
                 }
                 else
                 {
-                    isValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn, i);
+                    isIdnpValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn, i);
                 }
 
                 if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email.Trim(), @"(?x)^[^\s@]+@[^\s@]+\.[^\s@]+$"))
                 {
                     workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
                     workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
-                    isValid = false;
+                    isEmailValid = false;
                 }
                 else
                 {
-                    isValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn, i);
+                    isEmailValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn, i);
                 }
 
                 if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString().Trim(), @"^\d+$"))
@@ -408,7 +410,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 }
             }
 
-            return isValid;
+            return isValid && isIdnpValid && isEmailValid;
         }
 
         private bool IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column, int currentRow)
