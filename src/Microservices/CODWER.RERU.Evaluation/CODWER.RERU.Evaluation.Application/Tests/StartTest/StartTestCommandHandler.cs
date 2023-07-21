@@ -30,7 +30,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
 
             test.TestStatus = TestStatusEnum.InProgress;
             test.StartTime = _dateTime.Now;
-            test.EndTime = _dateTime.Now.AddMinutes(test.TestTemplate.Duration);
+            test.EndTime = test.StartTime?.AddMinutes(test.TestTemplate.Duration);
 
             await _appDbContext.SaveChangesAsync();
 
@@ -50,7 +50,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.StartTest
                 {
                     test.TestStatus = TestStatusEnum.InProgress;
                     test.StartTime = _dateTime.Now;
-                    test.EndTime = _dateTime.Now.AddMinutes(test.TestTemplate.Duration);
+                    test.EndTime = test.StartTime?.AddMinutes(test.TestTemplate.Duration);
                 }
             }
 
