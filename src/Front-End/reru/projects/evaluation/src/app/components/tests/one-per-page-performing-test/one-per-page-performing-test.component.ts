@@ -434,15 +434,13 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
   getFile() {
     this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
       if (response) {
-        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
-        // const fileNameParsed = fileName.substring(1, fileName.length - 1);
+        const fileName = response.headers.get('Content-Disposition')?.split("filename=")[1]?.split(';')[0];
         const blob = new Blob([response.body], { type: response.body.type });
-        const file = new File([blob], fileName, { type: response.body.type });
+        const file = new File([blob], decodeURIComponent(fileName), { type: response.body.type });
         saveAs(file);
       }
-    }
-    )
-  }
+    });
+  }  
 
   checkFileNameLength() {
     return this.fileName.length <= 20 ? this.fileName : this.fileName.slice(0, 20) + "...";
