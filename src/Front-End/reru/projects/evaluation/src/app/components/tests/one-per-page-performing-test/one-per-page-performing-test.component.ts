@@ -172,37 +172,6 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.answered = data.filter(st => st.answerStatus === 3).map(id => id.index);
   }
 
-  checkSaveAnswer(index) {
-    let isCkecked: boolean = false;
-
-    if (this.testTemplateSettings.possibleGetToSkipped && this.testTemplateSettings.possibleChangeAnswer) {
-      if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
-      {
-        this.parseTextAnswer();
-        if (this.questionUnit.answerText != null) isCkecked = true;
-      }
-      else if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
-      {
-        this.subscribeForHashedAnswers();
-        isCkecked = true;
-      }
-      else if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
-        isCkecked = true;
-      } 
-      else {
-        isCkecked = this.testOptionsList.some((x) => x.isSelected == true);
-      }
-
-      if (isCkecked) {
-        this.saveAnswers();
-        this.getTestQuestions(index - 1)
-      } 
-      else {
-        this.getTestQuestions(index)
-      }
-    }
-  }
-
   getTestQuestions(questionIndex?: number) {
     this.isLoading = true;
     this.questionIndex = questionIndex == null ? this.questionIndex : questionIndex;
@@ -245,7 +214,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
           })
         }
       )
-  }
+  }  
 
   getTestTemplateSettings() {
     this.testTemplateService.getTestTemplateSettings({ testTemplateId: this.testDto.testTemplateId }).subscribe(
@@ -349,40 +318,39 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveAnswers() {
+  saveAnswers(goToPrevious, random) {
     this.isLoading = true;
     this.testAnswersInput = [];
 
     if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
       this.testAnswersInput.push(this.parseTextAnswer());
-    if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
+    else if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
       this.subscribeForHashedAnswers();
-    else {
+    else if (this.questionUnit.questionType == this.questionTypeEnum.MultipleAnswers || this.questionUnit.questionType == this.questionTypeEnum.OneAnswer) {
       const selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
 
       selectedOptions.forEach(el => {
         this.testAnswersInput.push(this.parseAnswer(el));
       });
     }
-
-    if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined){
+    else if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
       let request = new FormData();
 
       request = this.parseFiles(request);
 
       this.fileTestAnswerService.create(request).subscribe((res) => {
-        this.reportProggress(res);
+        this.reportProggress(res, goToPrevious, random);
       }, (error) => {
         this.isLoadingMedia = false;
         this.isLoading = false;
       });
-    } 
+    }
     else {
-      this.postAnswer(+this.answerStatusEnum.Answered);
+      this.postAnswer(+this.answerStatusEnum.Answered, goToPrevious, random);
     }
   }
 
-  private reportProggress(httpEvent: HttpEvent<string[] | Blob>): void {
+  private reportProggress(httpEvent: HttpEvent<string[] | Blob>, goToPrevious, random): void {
     let status = '';
     switch (httpEvent.type) {
       case HttpEventType.Sent:
@@ -406,7 +374,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
           status = res;
         });
         this.fileStatus.requestType = status;
-        this.postAnswer(+this.answerStatusEnum.Answered);
+        this.postAnswer(+this.answerStatusEnum.Answered, goToPrevious, random);
         this.isLoadingMedia = false;
         break;
     }
@@ -475,7 +443,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
     this.files[0] = event.addedFiles[0];
   }
 
-  postAnswer(status) {
+  postAnswer(status, goToPrevious, random) {
     this.testQuestionService.postTestQuestions(this.parse(status)).subscribe(
       res => {
         this.testQuestionService.summary(this.testId).subscribe(
@@ -499,11 +467,19 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
             }  
             else {
               this.disableBtn = false;
-              if (this.questionIndex < this.count) {
-                this.getTestQuestions(this.questionIndex + 1);
+              if (goToPrevious) {
+                this.getTestQuestions(this.questionIndex - 1);
+              } 
+              else if (random != 0) {
+                this.getTestQuestions(random);
               } 
               else {
-                this.getTestQuestions(1);
+                if (this.questionIndex < this.count) {
+                  this.getTestQuestions(this.questionIndex + 1);
+                } 
+                else {
+                  this.getTestQuestions(1);
+                }
               }
             }
           });
@@ -516,7 +492,7 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
   skipQuestion() {
     this.isLoading = true;
-    this.postAnswer(+this.answerStatusEnum.Skipped);
+    this.postAnswer(+this.answerStatusEnum.Skipped, false, 0);
   }
 
   submitTest() {
