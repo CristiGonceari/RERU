@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
+﻿/*using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using MediatR;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
@@ -9,3 +9,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetPollResult
         public int Index { get; set; }
     }
 }
+*/

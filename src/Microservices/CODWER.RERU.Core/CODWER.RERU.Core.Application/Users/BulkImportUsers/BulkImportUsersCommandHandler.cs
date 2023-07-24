@@ -105,7 +105,6 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 throw new Exception(e.Message);
             }
         }
@@ -150,7 +149,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
+                throw new Exception(e.Message);
             }
         }
 
@@ -168,7 +167,7 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
             }
             catch (Exception e)
             {
-                workSheet.Cells[i, 12].Value = $"Error: {e.Message}";
+                throw new Exception(e.Message);
             }
         }
 
@@ -253,27 +252,11 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
         private async Task<bool> ValidateExcel(ExcelWorksheet workSheet)
         {
             bool isValid = true;
+            bool invalidExcel = true;
             var requiredColumns = new string[] { "Nume", "Prenume", "Patronimic", "Idnp", "Email", "Id Departament", "Id Rol", "Id Funcție", "Data nașterii", "Nr. telefon" };
             var headers = workSheet.Cells[1, 1, 1, workSheet.Dimension.Columns].Select(c => c.Value?.ToString().Trim()).Take(10).ToArray();
+            List<bool> rowValidations = new List<bool>(); 
 
-            if (!headers.SequenceEqual(requiredColumns, StringComparer.OrdinalIgnoreCase))
-            {
-                isValid = false;
-                for (int i = 0; i < requiredColumns.Length; i++)
-                {
-					if (!headers.Any(header => string.Equals(header, requiredColumns[i], StringComparison.OrdinalIgnoreCase)))
-					{
-                        workSheet.Cells[1, 12].Value = "Respectați ordinea coloanelor Nume, Prenume, Patronimic, Idnp, Email, Id Departament, Id Rol, Id Funcție, Data nașterii, Nr. telefon";
-                        workSheet.Cells[1, i + 1].Style.Fill.SetBackground(_color);
-                    }
-                }
-            }
-
-            return isValid && await ValidateExcelWorksheetAsync(workSheet);
-        }
-
-        private async Task<bool> ValidateExcelWorksheetAsync(ExcelWorksheet workSheet)
-        {
             for (int row = 1; row <= workSheet.Dimension.Rows; row++)
             {
                 workSheet.Cells[row, 12].Value = "";
@@ -283,184 +266,183 @@ namespace CODWER.RERU.Core.Application.Users.BulkImportUsers
                 }
             }
 
-            bool isValid = true;
-            for (int i = 2; i <= workSheet.Dimension.Rows; i++)
-            {
-                String[] delimiters = { ".", "/" };
-                var dateString = workSheet.Cells[i, 9]?.Value?.ToString();
-                var dateArray = dateString.ToString().Trim()?.Split(delimiters, StringSplitOptions.None);
-                var FirstName = workSheet.Cells[i, 1]?.Value?.ToString();
-                var LastName = workSheet.Cells[i, 2]?.Value?.ToString();
-                var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
-                var Idnp = workSheet.Cells[i, 4]?.Value?.ToString();
-                var Email = workSheet.Cells[i, 5]?.Value?.ToString();
-                var DepartmentColaboratorId = workSheet.Cells[i, 6]?.Value?.ToString();
-                var RoleColaboratorId = workSheet.Cells[i, 7]?.Value?.ToString();
-                var FunctionColaboratorId = workSheet.Cells[i, 8]?.Value?.ToString();
-                var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
-                DateTime BirthDate;
-
-                if (dateString == null || !Regex.IsMatch(dateString.ToString().Trim(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+            if (!headers.SequenceEqual(requiredColumns, StringComparer.OrdinalIgnoreCase))
+            {   
+                for (int i = 0; i < requiredColumns.Length; i++)
                 {
-                    workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este \"{workSheet.Cells[i, 9]?.Value?.ToString()}\" \n";
-                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (dateArray != null)
-                {
-                    BirthDate = new DateTime(int.Parse(dateArray[2]), int.Parse(dateArray[1]), int.Parse(dateArray[0]));
-
-                    if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
-                    {
-                        workSheet.Cells[i, 12].Value += "Vârsta minimă trebuie să fie de 18 ani \n";
-                        workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+					if (!headers.Any(header => string.Equals(header, requiredColumns[i], StringComparison.OrdinalIgnoreCase)))
+					{
+                        workSheet.Cells[1, 12].Value = "Respectați ordinea coloanelor Nume, Prenume, Patronimic, Idnp, Email, Id Departament, Id Rol, Id Funcție, Data nașterii, Nr. telefon";
+                        workSheet.Cells[1, i + 1].Style.Fill.SetBackground(_color);
                         isValid = false;
                     }
                 }
-               
-                if (!Regex.IsMatch(FirstName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nume trebuie să conțină doar litere \n";
-                    workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                
-                if (!Regex.IsMatch(LastName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenume trebuie să conțină doar litere \n";
-                    workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
+            }
 
-                if (!string.IsNullOrWhiteSpace(FatherName) && !Regex.IsMatch(FatherName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
+            for (int i = 2; i <= workSheet.Dimension.Rows; i++)
+            {
+                bool isRowValid = await ValidateExcelRowAsync(workSheet, i);
+                rowValidations.Add(isRowValid);
+                if (!isRowValid)
                 {
-                    workSheet.Cells[i, 12].Value += "Patronimic trebuie să conțină doar litere \n";
-                    workSheet.Cells[i, 3].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(Idnp.Trim()) || Idnp.Trim().Length != 13 || !Regex.IsMatch(Idnp.Trim(), @"^\d+$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
-                    workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (_appDbContext.UserProfiles.FirstOrDefault(i => i.Idnp == Idnp && i.IsDeleted == false) != null)
-                {
-                    workSheet.Cells[i, 12].Value += "Idnp duplicat în sistem\n";
-                    workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else
-                {
-                    isValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn, i);
-                }
-
-                if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email.Trim(), @"(?x)^[^\s@]+@[^\s@]+\.[^\s@]+$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
-                    workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (_appDbContext.UserProfiles.FirstOrDefault(i => i.Email == Email && i.IsDeleted == false) != null)
-                {
-                    workSheet.Cells[i, 12].Value += "Email duplicat în sistem\n";
-                    workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else
-                {
-                    isValid = await IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn, i);
-                }
-
-                if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString().Trim(), @"^\d+$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Departament trebuie să conțină doar cifre \n";
-                    workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (_appDbContext.Departments.FirstOrDefault(i => i.ColaboratorId == int.Parse(DepartmentColaboratorId)) == null)
-                {
-                    workSheet.Cells[i, 12].Value += "ID Departament nu există în baza de date\n";
-                    workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(RoleColaboratorId) || !Regex.IsMatch(RoleColaboratorId.ToString().Trim(), @"^\d+$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Rol trebuie să conțină doar cifre \n";
-                    workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (_appDbContext.Roles.FirstOrDefault(i => i.ColaboratorId == int.Parse(RoleColaboratorId)) == null)
-                {
-                    workSheet.Cells[i, 12].Value += "ID Rol nu există în baza de date\n";
-                    workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(FunctionColaboratorId) || !Regex.IsMatch(FunctionColaboratorId.ToString().Trim(), @"^\d+$"))
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Funcție trebuie să conțină doar cifre \n";
-                    workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-                else if (_appDbContext.EmployeeFunctions.FirstOrDefault(i => i.ColaboratorId == int.Parse(FunctionColaboratorId)) == null)
-                {
-                    workSheet.Cells[i, 12].Value += "ID Funcție nu există în baza de date\n";
-                    workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber.Trim(), @"(?x)^\s*\+373[0-9]{8}\s*$") || PhoneNumber.Trim().Length != 12)
-                {
-                    workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
-                    workSheet.Cells[i, 10].Style.Fill.SetBackground(_color);
-                    isValid = false;
+                    invalidExcel = false;
                 }
             }
 
-            return isValid;
+            return isValid && invalidExcel;
         }
 
-        private async Task<bool> IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column, int i)
+        private async Task<bool> ValidateExcelRowAsync(ExcelWorksheet workSheet, int i)
+        {
+            bool isValid = true;
+            bool isIdnpValid = true;
+            bool isEmailValid = true;
+
+            String[] delimiters = { ".", "/" };
+            var dateString = workSheet.Cells[i, 9]?.Value?.ToString();
+            var dateArray = dateString.ToString().Trim()?.Split(delimiters, StringSplitOptions.None);
+            var FirstName = workSheet.Cells[i, 1]?.Value?.ToString();
+            var LastName = workSheet.Cells[i, 2]?.Value?.ToString();
+            var FatherName = workSheet.Cells[i, 3]?.Value?.ToString();
+            var Idnp = workSheet.Cells[i, 4]?.Value?.ToString();
+            var Email = workSheet.Cells[i, 5]?.Value?.ToString();
+            var DepartmentColaboratorId = workSheet.Cells[i, 6]?.Value?.ToString();
+            var RoleColaboratorId = workSheet.Cells[i, 7]?.Value?.ToString();
+            var FunctionColaboratorId = workSheet.Cells[i, 8]?.Value?.ToString();
+            var PhoneNumber = workSheet.Cells[i, 10]?.Value?.ToString();
+            DateTime BirthDate;
+
+            if (dateString == null || !Regex.IsMatch(dateString.ToString().Trim(), @"^(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).\d{4}$"))
+            {
+                workSheet.Cells[i, 12].Value += $"Câmpul obligatoriu Data nașterii nu corespunde unui format valid ZZ.LL.AAAA, valoarea trimisă este \"{workSheet.Cells[i, 9]?.Value?.ToString()}\" \n";
+                workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+            else if (dateArray != null)
+            {
+                BirthDate = new DateTime(int.Parse(dateArray[2]), int.Parse(dateArray[1]), int.Parse(dateArray[0]));
+
+                if ((int)(DateTime.UtcNow - BirthDate).TotalDays / 365 < 18)
+                {
+                    workSheet.Cells[i, 12].Value += "Vârsta minimă trebuie să fie de 18 ani \n";
+                    workSheet.Cells[i, 9].Style.Fill.SetBackground(_color);
+                    isValid = false;
+                }
+            }
+               
+            if (!Regex.IsMatch(FirstName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nume trebuie să conțină doar litere \n";
+                workSheet.Cells[i, 1].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+                
+            if (!Regex.IsMatch(LastName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Prenume trebuie să conțină doar litere \n";
+                workSheet.Cells[i, 2].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(FatherName) && !Regex.IsMatch(FatherName.Trim(), @"^[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+([- ]?[a-zA-ZĂăÎîȘŞșşȚŢțţÂâ]+)*\s*$"))
+            {
+                workSheet.Cells[i, 12].Value += "Patronimic trebuie să conțină doar litere \n";
+                workSheet.Cells[i, 3].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            if (Idnp.Trim().Length != 13 || !Regex.IsMatch(Idnp.Trim(), @"^[0-9]+$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Idnp trebuie să conțină doar 13 cifre \n";
+                workSheet.Cells[i, 4].Style.Fill.SetBackground(_color);
+                isIdnpValid = false;
+            }
+            else
+            {
+                isIdnpValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.IdnpColumn, i);
+            }
+
+            if (string.IsNullOrWhiteSpace(Email) || !Regex.IsMatch(Email.Trim(), @"(?x)^[^\s@]+@[^\s@]+\.[^\s@]+$"))
+            {                    
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Email nu corespunde formatului \n";
+                workSheet.Cells[i, 5].Style.Fill.SetBackground(_color);
+                isEmailValid = false;
+            }
+            else
+            {
+                isEmailValid = IsValidDistinctDataColumn(workSheet, (int)ExcelColumnsEnum.EmailColumn, i);
+            }
+
+            if (string.IsNullOrWhiteSpace(DepartmentColaboratorId) || !Regex.IsMatch(DepartmentColaboratorId.ToString().Trim(), @"^\d+$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Departament trebuie să conțină doar cifre \n";
+                workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+            else if (_appDbContext.Departments.FirstOrDefault(i => i.ColaboratorId == int.Parse(DepartmentColaboratorId)) == null)
+            {
+                workSheet.Cells[i, 12].Value += "ID Departament nu există în baza de date\n";
+                workSheet.Cells[i, 6].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(RoleColaboratorId) || !Regex.IsMatch(RoleColaboratorId.ToString().Trim(), @"^\d+$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Rol trebuie să conțină doar cifre \n";
+                workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+            else if (_appDbContext.Roles.FirstOrDefault(i => i.ColaboratorId == int.Parse(RoleColaboratorId)) == null)
+            {
+                workSheet.Cells[i, 12].Value += "ID Rol nu există în baza de date\n";
+                workSheet.Cells[i, 7].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(FunctionColaboratorId) || !Regex.IsMatch(FunctionColaboratorId.ToString().Trim(), @"^\d+$"))
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu ID Funcție trebuie să conțină doar cifre \n";
+                workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+            else if (_appDbContext.EmployeeFunctions.FirstOrDefault(i => i.ColaboratorId == int.Parse(FunctionColaboratorId)) == null)
+            {
+                workSheet.Cells[i, 12].Value += "ID Funcție nu există în baza de date\n";
+                workSheet.Cells[i, 8].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(PhoneNumber) || !Regex.IsMatch(PhoneNumber.Trim(), @"(?x)^\s*\+373[0-9]{8}\s*$") || PhoneNumber.Trim().Length != 12)
+            {
+                workSheet.Cells[i, 12].Value += "Câmpul obligatoriu Nr. telefon nu corespunde formatului +373xxxxxxxx\n";
+                workSheet.Cells[i, 10].Style.Fill.SetBackground(_color);
+                isValid = false;
+            }
+
+            return isValid && isIdnpValid && isEmailValid;
+        }
+
+        private bool IsValidDistinctDataColumn(ExcelWorksheet workSheet, int column, int currentRow)
         {
             var cells = workSheet.Cells;
 
-            //Get new dictionary with keys of excel data
-            var dictionary = cells
-                .GroupBy(c => new { c.Start.Row, c.Start.Column })
-                .ToDictionary(
-                    rcg => new KeyValuePair<int, int>(rcg.Key.Row, rcg.Key.Column),
-                    rcg => cells[rcg.Key.Row, rcg.Key.Column].Value);
-
-            //Get needed column
-            var columnDictionary = dictionary.Where(x => x.Key.Value == column);
-
-            //Find repeated items by groups
-            var repeatedItemsGroups = columnDictionary
-                .GroupBy(x => x.Value)
-                .Where(x => x.Count() > 1);
-
-            var itemsGroups = repeatedItemsGroups as IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] ?? repeatedItemsGroups.ToArray();
-            await SetInvalidCells(workSheet, itemsGroups, column, i);
-
-            return !itemsGroups.Any();
-        }
-
-        private async Task SetInvalidCells(ExcelWorksheet workSheet, IGrouping<object, KeyValuePair<KeyValuePair<int, int>, object>>[] itemsGroups, int column, int i)
-        {
-            foreach (var items in itemsGroups)
+            for (int row = 1; row <= workSheet.Dimension.Rows; row++)
             {
-                //foreach (var item in items)
-                //{
-                    workSheet.Cells[i, 12].Value += await GetErrorMessage(column);
-                    workSheet.Cells[i, column].Style.Fill.SetBackground(_color);
-                //}
+                if (row == currentRow)
+                    continue;
+
+                if (cells[row, column].Value?.ToString() == cells[currentRow, column].Value?.ToString())
+                {
+                    workSheet.Cells[currentRow, 12].Value += GetErrorMessage(column);
+                    workSheet.Cells[currentRow, column].Style.Fill.SetBackground(_color);
+                    return false;
+                }
             }
+
+            return true;
         }
 
-        private async Task<string> GetErrorMessage(int column)
+        private string GetErrorMessage(int column)
         {
             return column switch
             {

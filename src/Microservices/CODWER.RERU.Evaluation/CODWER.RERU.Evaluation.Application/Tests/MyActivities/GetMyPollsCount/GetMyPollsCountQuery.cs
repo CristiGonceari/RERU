@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using CODWER.RERU.Evaluation.DataTransferObjects.Events;
 using MediatR;
@@ -11,3 +11,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.GetMyPollsCount
         public DateTime EndTime { get; set; }
     }
 }
+*/

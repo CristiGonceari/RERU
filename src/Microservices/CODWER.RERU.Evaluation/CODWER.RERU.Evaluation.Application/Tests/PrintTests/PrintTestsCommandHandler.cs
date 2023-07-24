@@ -52,7 +52,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.PrintTests
 
             var tests = GetAndFilterTestsOptimized.Filter(_appDbContext, filterData, curUser);
 
-            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Poll || x.TestTemplate.Mode == TestTemplateModeEnum.Test);
+            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
             var result = _printer.ExportTableSpecificFormat(new TableData<Test>
             {

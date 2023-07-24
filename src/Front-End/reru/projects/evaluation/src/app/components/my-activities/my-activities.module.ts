@@ -11,9 +11,9 @@ import { MyActivitiesRoutingModule } from './my-activities-routing.module';
 import { MyActivitiesComponent } from './my-activities.component';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MyTestsComponent } from './my-tests/my-tests.component';
-import { MyPollsComponent } from './my-polls/my-polls.component';
+//import { MyPollsComponent } from './my-polls/my-polls.component';
 import { EventsTableComponent } from './my-events/events-table/events-table.component';
-import { PollsTableComponent } from './my-polls/polls-table/polls-table.component';
+//import { PollsTableComponent } from './my-polls/polls-table/polls-table.component';
 import { TestsTableComponent } from './my-tests/tests-table/tests-table.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MaterialModule } from '../../material.module';
@@ -33,9 +33,9 @@ import { MyPositionDetailsComponent } from './my-solicited-tests/my-position-det
     MyActivitiesComponent,
     MyEventsComponent,
     MyTestsComponent,
-    MyPollsComponent,
+    //MyPollsComponent,
     EventsTableComponent,
-    PollsTableComponent,
+    //PollsTableComponent,
     TestsTableComponent,
     MyEvaluatedTestsComponent,
     EvaluatedTestsTableComponent,

@@ -34,11 +34,11 @@ namespace CODWER.RERU.Evaluation.Application.Validators.TestValidators
             switch (test.TestTemplate.Mode)
             {
                 case TestTemplateModeEnum.Test:
-                case TestTemplateModeEnum.Poll:
+                /*case TestTemplateModeEnum.Poll:
                 {
                     if (test.UserProfileId == currentUserId) return true;
                     break;
-                }
+                }*/
                 case TestTemplateModeEnum.Evaluation when test.EvaluatorId == currentUserId:
                     return true;
             }

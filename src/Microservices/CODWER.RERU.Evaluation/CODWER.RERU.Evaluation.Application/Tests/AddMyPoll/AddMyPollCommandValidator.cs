@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿/*using FluentValidation;
 using System;
 using System.Linq;
 using CODWER.RERU.Evaluation.Application.Validation;
@@ -28,3 +28,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.AddMyPoll
         }
     }
 }
+*/

@@ -37,9 +37,9 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
                     .SetValidator(x => new ItemMustExistValidator<QuestionCategory>(appDbContext, ValidationCodes.INVALID_CATEGORY,
                         ValidationMessages.InvalidReference));
 
-                RuleFor(r => r.Data)
-                    .Must(x => IsPoll(x))
-                    .WithErrorCode(ValidationCodes.POLLS_ACCEPTS_ONLY_ONE_ANSWER_QUESTIONS);
+                //RuleFor(r => r.Data)
+                //    .Must(x => IsPoll(x))
+                //    .WithErrorCode(ValidationCodes.POLLS_ACCEPTS_ONLY_ONE_ANSWER_QUESTIONS);
 
                 RuleFor(r => r.Data)
                     .Must(x => IsGridTest(x))
@@ -127,7 +127,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
             });
         }
 
-        private bool IsPoll(QuestionCategoryPreviewDto data)
+        /*private bool IsPoll(QuestionCategoryPreviewDto data)
         {
             var testTemplate = _appDbContext.TestTemplates.FirstOrDefault(x => x.Id == data.TestTemplateId);
             var selectedQuestions = false;
@@ -148,7 +148,7 @@ namespace CODWER.RERU.Evaluation.Application.TestTemplateQuestionCategories.Prev
             }
 
             return true;
-        }
+        }*/
 
         private bool IsGridTest(QuestionCategoryPreviewDto data)
         {

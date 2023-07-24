@@ -1,4 +1,4 @@
-﻿using CODWER.RERU.Evaluation.Application.Services;
+﻿/*using CODWER.RERU.Evaluation.Application.Services;
 using CODWER.RERU.Evaluation.DataTransferObjects.Tests;
 using CVU.ERP.Common.DataTransferObjects.Files;
 using CVU.ERP.Module.Application.TableExportServices;
@@ -89,3 +89,4 @@ namespace CODWER.RERU.Evaluation.Application.Tests.MyActivities.PrintMyPolls
         }
     }
 }
+*/
