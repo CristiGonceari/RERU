@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CODWER.RERU.Evaluation.API.Config;
 using CODWER.RERU.Evaluation.Application.FileTestAnswers.AddFileTestAnswer;
 using CODWER.RERU.Evaluation.Application.FileTestAnswers.GetFileTestAnswer;
@@ -18,11 +19,10 @@ namespace CODWER.RERU.Evaluation.API.Controllers
         public async Task<IActionResult> GetQuestionFile([FromRoute] string fileId)
         {
             var query = new GetQuestionFileQuery { FileId = fileId };
-
             var result = await Mediator.Send(query);
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-            return File(result.Content, result.ContentType, result.Name);
+            return File(result.Content, result.ContentType, Uri.EscapeDataString(result.Name));
         }
 
         [HttpGet("file")]
