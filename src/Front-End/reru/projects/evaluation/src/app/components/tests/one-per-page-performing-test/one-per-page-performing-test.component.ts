@@ -324,16 +324,16 @@ export class OnePerPagePerformingTestComponent implements OnInit, OnDestroy {
 
     if (this.questionUnit.questionType == this.questionTypeEnum.FreeText)
       this.testAnswersInput.push(this.parseTextAnswer());
-    else if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
+    if (this.questionUnit.questionType == this.questionTypeEnum.HashedAnswer)
       this.subscribeForHashedAnswers();
-    else if (this.questionUnit.questionType == this.questionTypeEnum.MultipleAnswers || this.questionUnit.questionType == this.questionTypeEnum.OneAnswer) {
+    else {
       const selectedOptions = this.testOptionsList.filter(Item => Item.isSelected == true);
 
       selectedOptions.forEach(el => {
         this.testAnswersInput.push(this.parseAnswer(el));
       });
     }
-    else if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
+    if (this.questionUnit.questionType == this.questionTypeEnum.FileAnswer && this.files[0] != undefined) {
       let request = new FormData();
 
       request = this.parseFiles(request);
