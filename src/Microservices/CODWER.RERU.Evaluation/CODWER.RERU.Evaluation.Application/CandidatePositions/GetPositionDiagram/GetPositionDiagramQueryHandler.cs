@@ -148,8 +148,12 @@ namespace CODWER.RERU.Evaluation.Application.CandidatePositions.GetPositionDiagr
                         .Any(x => x.CandidatePositionId == positionId))
                     )
                 {
-                    if (test.FinalAccumulatedPercentage >= test.TestTemplate.MinPercent) test.ResultStatus = TestResultStatusEnum.Passed;
-                    else test.ResultStatus = TestResultStatusEnum.NotPassed;
+                    if (test.ResultStatus == TestResultStatusEnum.Passed || test.ResultStatus == TestResultStatusEnum.NotPassed)
+                    {
+                        if (test.FinalAccumulatedPercentage >= test.TestTemplate.MinPercent) test.ResultStatus = TestResultStatusEnum.Passed;
+                        else test.ResultStatus = TestResultStatusEnum.NotPassed;
+                    }
+                    
                     var mappedTest = _mapper.Map<TestResultDiagramDto>(test);
                     mappedTestList.Add(mappedTest);
                 }
