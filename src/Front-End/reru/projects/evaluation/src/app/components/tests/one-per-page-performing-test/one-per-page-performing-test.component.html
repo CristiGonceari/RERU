@@ -183,7 +183,7 @@
                                 <div class="d-flex flex-wrap">
                                     <button class="btn btn-icon btn-light page-link"
                                         (click)="saveAnswers(true, 0)"
-                                        [disabled]="questionIndex === 1 || disableNext">
+                                        [disabled]="questionIndex === 1 || !testTemplateSettings.possibleChangeAnswer || !testTemplateSettings.possibleGetToSkipped">
                                         <span class="svg-icon svg-icon-primary svg-icon-1x">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -200,7 +200,7 @@
                                     </button>
     
                                     <button class="btn btn-icon page-link" *ngFor="let page of pager"
-                                        (click)="saveAnswers(false, page)" [disabled]="disableNext"
+                                        (click)="saveAnswers(false, page)" [disabled]="!testTemplateSettings.possibleChangeAnswer || !testTemplateSettings.possibleGetToSkipped"
                                         [class.active-page]="page === questionIndex"
                                         [ngClass]="{'viewed': getViewed(page), 'skipped': getSkipped(page), 'answered': getAnswered(page)}">
                                         {{page}}
@@ -208,7 +208,7 @@
     
                                     <button class="btn btn-icon btn-light page-link"
                                         (click)="saveAnswers(false, 0)"
-                                        [disabled]="questionIndex === testDto.questionCount || disableNext">
+                                        [disabled]="questionIndex === testDto.questionCount || !testTemplateSettings.possibleChangeAnswer || !testTemplateSettings.possibleGetToSkipped">
                                         <span class="svg-icon svg-icon-primary svg-icon-1x">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"

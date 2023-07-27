@@ -121,10 +121,9 @@ export class ViewTestResultComponent implements OnInit, OnDestroy {
   getFile() {
     this.fileTestAnswerService.getFile(this.answerFileid).subscribe(response => {
       if (response) {
-        const fileName = response.headers.get('Content-Disposition').split("filename=")[1].split(';')[0]
-				const fileNameParsed = fileName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+        const fileName = response.headers.get('Content-Disposition')?.split("filename=")[1]?.split(';')[0];
         const blob = new Blob([response.body], { type: response.body.type });
-        const file = new File([blob], fileNameParsed, { type: response.body.type });
+        const file = new File([blob], decodeURIComponent(fileName), { type: response.body.type });
         saveAs(file);
       }
     }
