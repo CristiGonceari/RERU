@@ -44,5 +44,12 @@ namespace CVU.ERP.Common.Pagination
 
             return new PaginatedModel<TDestination>(paginatedList);
         }
+
+        public async Task<PaginatedModel<TDestination>> MapPageAsync<TSource, TDestination>(IQueryable<TSource> queryableList, PaginatedQueryParameter pagedQuery, int count)
+        {
+            var paginatedList = await CreatePage<TSource, TDestination>(queryableList, pagedQuery.Page, pagedQuery.ItemsPerPage, count);
+
+            return new PaginatedModel<TDestination>(paginatedList);
+        }
     }
 }
