@@ -10,6 +10,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { NotificationUtil } from 'projects/evaluation/src/app/utils/util/notification.util';
 import { SolicitedTestStatusEnum } from 'projects/evaluation/src/app/utils/enums/solicited-test-status.model';
 import { PrintTableService } from 'projects/evaluation/src/app/utils/services/print-table/print-table.service';
+import { UserProfileService } from '../../../../utils/services/user-profile/user-profile.service';
 
 @Component({
 	selector: 'app-solicited-tests-table',
@@ -22,6 +23,7 @@ export class SolicitedTestsTableComponent implements OnInit {
 	userId: number;
 	isLoading: boolean = true;
 	downloadFile: boolean = false;
+	isAdmin: boolean = false;
 	headersToPrint = [];
 	printTranslates: any[];
 	title: string;
@@ -33,7 +35,7 @@ export class SolicitedTestsTableComponent implements OnInit {
 
 	constructor(
 		private solicitedTestService: SolicitedTestService,
-		private activatedRoute: ActivatedRoute,
+		private userProfileService: UserProfileService,
 		public translate: I18nService,
 		private modalService: NgbModal,
 		private notificationService: NotificationsService,
@@ -66,6 +68,9 @@ export class SolicitedTestsTableComponent implements OnInit {
 			page: data.page || this.pagedSummary.currentPage,
 			itemsPerPage: data.itemsPerPage || this.pagedSummary.pageSize
 		}
+		this.userProfileService.getCurrentUser().subscribe(response => {
+			this.isAdmin = response.data.userStatusEnum == 1;
+		});
 		this.solicitedTestService.getMySolicitedTests(params).subscribe(
 			res => {
 				if (res && res.data) {
