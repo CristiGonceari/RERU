@@ -18,6 +18,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
         private readonly AppDbContext _appDbContext;
         private readonly IPaginationService _paginationService;
         private readonly IUserProfileService _userProfileService;
+        private PaginatedModel<TestDto> _paginatedModel;
 
         public GetTestsQueryHandler(AppDbContext appDbContext, IPaginationService paginationService, IUserProfileService userProfileService)
         {
@@ -28,21 +29,31 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
+            await TestV2(request, cancellationToken);
+
+            return _paginatedModel;
+        }
+
+        private async Task TestV2(GetTestsQuery request, CancellationToken cancellationToken)
+        {
+            var currentUser = _appDbContext.UserProfiles.Where(x => x.Id == 1)
+                    .Select(up => new UserProfileDto { Id = up.Id, FirstName = up.FirstName, LastName = up.LastName, AccessModeEnum = up.AccessModeEnum }).First();
 
             var filterData = GetFilterData(request);
 
-            var tests = GetAndFilterTestsOptimized.Filter(_appDbContext, filterData, currentUser);
+            var testTool = await GetAndFilterTestsOptimizedv2.Filter(_appDbContext, filterData, currentUser);
 
-            tests = tests.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
+            var queryable = testTool.Queryable.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
-            var paginatedModel = await _paginationService.MapAndPaginateModelAsync<Test, TestDto>(tests, request);
+            var count = testTool.SelectedTestsIds.Count();
+            var skipCount = (request.Page - 1) * request.ItemsPerPage;
 
-            paginatedModel = await CheckIfHasCandidatePosition(paginatedModel);
+            var items = testTool.SelectedTestsIds.Skip(skipCount).Take(request.ItemsPerPage).ToList();
 
-            paginatedModel = await CheckTestEvaluator(paginatedModel, currentUser);
+            _paginatedModel = await _paginationService.MapPageAsync<Test, TestDto>(queryable.Where(t => items.Contains(t.Id)), request, count);
 
-            return paginatedModel;
+            await CheckIfHasCandidatePosition();
+            await CheckTestEvaluator(currentUser);
         }
 
         private TestFiltersDto GetFilterData(GetTestsQuery request) => new TestFiltersDto
@@ -64,10 +75,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
             ColaboratorId = request.ColaboratorId,
         };
 
-        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition(PaginatedModel<TestDto> paginatedModel)
+        private async Task<PaginatedModel<TestDto>> CheckIfHasCandidatePosition()
         {
-            var itemsEvents = paginatedModel.Items.Select(i => i.EventId);
-            var itemsUsers = paginatedModel.Items.Select(i => i.UserId);
+            var itemsEvents = _paginatedModel.Items.Select(i => i.EventId);
+            var itemsUsers = _paginatedModel.Items.Select(i => i.UserId);
 
             var eventUsers = _appDbContext.EventUsers
                 .Include(x => x.EventUserCandidatePositions)
@@ -79,7 +90,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 })
                 .ToList();
 
-            paginatedModel.Items = paginatedModel.Items.Select(item =>
+            _paginatedModel.Items = _paginatedModel.Items.Select(item =>
             {
                 var eventUser = eventUsers.FirstOrDefault(x => x.EventId == item.EventId && x.UserProfileId == item.UserId);
 
@@ -95,12 +106,12 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 return item;
             }).ToList();
 
-            return paginatedModel;
+            return _paginatedModel;
         }
 
-        private async Task<PaginatedModel<TestDto>> CheckTestEvaluator(PaginatedModel<TestDto> paginatedModel, UserProfileDto currentUser)
+        private async Task<PaginatedModel<TestDto>> CheckTestEvaluator(UserProfileDto currentUser)
         {
-            var testEventIds = paginatedModel.Items.Select(x => x.EventId).ToList();
+            var testEventIds = _paginatedModel.Items.Select(x => x.EventId).ToList();
 
             var eventEvaluators = _appDbContext.EventEvaluators
                 .Where(x => testEventIds.Contains(x.EventId))
@@ -110,7 +121,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 })
                 .ToList();
 
-            paginatedModel.Items = paginatedModel.Items.Select(item =>
+            _paginatedModel.Items = _paginatedModel.Items.Select(item =>
             {
                 var testEventEvaluators = eventEvaluators.Where(x => x.EventId == item.EventId);
 
@@ -124,7 +135,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                 return item;
             }).ToList();
 
-            return paginatedModel;
+            return _paginatedModel;
         }
     }
 }

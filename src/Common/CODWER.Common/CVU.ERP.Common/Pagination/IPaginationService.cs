@@ -12,5 +12,6 @@ namespace CVU.ERP.Common.Pagination
         PaginatedList<TSource, TDestination> PaginatedResults<TSource, TDestination>(IQueryable<TSource> list, PaginatedQueryParameter query, Expression<Func<TSource, string>>[] membersToSearch = null);
         Task<PaginatedModel<TDestination>> MapAndPaginateModelAsync<TSource, TDestination>(IQueryable<TSource> list, PaginatedQueryParameter query, Expression<Func<TSource, string>>[] membersToSearch = null);
         PaginatedModel<TSource> MapAndPaginateModel<TSource>(List<TSource> list, PaginatedQueryParameter pagedQuery, Expression<Func<TSource, string>>[] membersToSearch = null);
+        Task<PaginatedModel<TDestination>> MapPageAsync<TSource, TDestination>(IQueryable<TSource> queryableList, PaginatedQueryParameter pagedQuery, int count);
     }
 }
