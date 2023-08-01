@@ -29,6 +29,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
         {
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
             await TestV2(request, cancellationToken);
 
             return _paginatedModel;
@@ -36,8 +37,10 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         private async Task TestV2(GetTestsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = _appDbContext.UserProfiles.Where(x => x.Id == 1)
-                    .Select(up => new UserProfileDto { Id = up.Id, FirstName = up.FirstName, LastName = up.LastName, AccessModeEnum = up.AccessModeEnum }).First();
+            //var currentUser = _appDbContext.UserProfiles.Where(x => x.Id == 1)
+            //        .Select(up => new UserProfileDto { Id = up.Id, FirstName = up.FirstName, LastName = up.LastName, AccessModeEnum = up.AccessModeEnum }).First();
+
+            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
 
             var filterData = GetFilterData(request);
 
