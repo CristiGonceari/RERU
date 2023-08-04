@@ -19,7 +19,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
         public static async Task<List<TempData>> GetAllTestIds(AppDbContext appDbContext)
         {
             return await appDbContext.Tests
-                .Select(x => new TempData { Id = x.Id, CreatedDate = x.CreateDate, HashGroupKey = x.HashGroupKey }).ToListAsync();
+                .Select(x => new TempData { Id = x.Id, CreatedDate = x.CreateDate, HashGroupKey = x.HashGroupKey }).AsNoTracking().ToListAsync();
         }
 
         public static async Task<List<int>> FilterUserProfilesRoles(AppDbContext appDbContext, int moduleRoleId)
@@ -28,7 +28,8 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Where(x => x.TestTemplate.TestTemplateModuleRoles.Select(x => x.ModuleRoleId).Contains(moduleRoleId)
-                                            || !x.TestTemplate.TestTemplateModuleRoles.Any());
+                                            || !x.TestTemplate.TestTemplateModuleRoles.Any())
+                    .AsNoTracking();
 
                 return await tests.Select(t => t.Id).ToListAsync();
             }
@@ -40,6 +41,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Include(t => t.UserProfile)
+                    .AsNoTracking()
                     .AsQueryable();
 
                 switch (currentUser.AccessModeEnum)
@@ -69,6 +71,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 return await dbContext.Tests
                     .Include(x => x.TestTemplate)
                     .Where(x => x.TestTemplate.Name.ToLower().Contains(request.TestTemplateName.ToLower()))
+                    .AsNoTracking()
                     .Select(x => x.Id).ToListAsync();
             }
         }
@@ -81,6 +84,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
+                    .AsNoTracking()
                     .AsQueryable();
 
                 foreach (var s in toSearch)
@@ -103,6 +107,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Include(x=>x.Evaluator)
+                    .AsNoTracking()
                     .AsQueryable();
 
                 foreach (var s in toSearch)
@@ -124,6 +129,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
                     .Where(x => x.UserProfile.Email.ToLower().Contains(request.Email.ToLower()))
+                    .AsNoTracking()
                     .AsQueryable();
 
                 return await tests.Select(t => t.Id).ToListAsync();
@@ -139,6 +145,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
                     .Where(x => x.UserProfile.Idnp.Contains(request.Idnp))
+                    .AsNoTracking()
                     .AsQueryable();
 
                 return await tests.Select(t => t.Id).ToListAsync();
@@ -151,6 +158,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Where(x => x.TestStatus == request.TestStatus)
+                    .AsNoTracking()
                     .AsQueryable();
 
                 return await tests.Select(t => t.Id).ToListAsync();
@@ -163,6 +171,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Where(x => x.ResultStatus == request.ResultStatus)
+                    .AsNoTracking()
                     .AsQueryable();
 
                 return await tests.Select(t => t.Id).ToListAsync();
@@ -176,7 +185,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x=>x.Location)
                     .Include(x=>x.Location).Where(x => x.Location.Name.ToLower().Contains(request.LocationKeyword.ToLower()) || x.Location.Address.ToLower().Contains(request.LocationKeyword.ToLower()))
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -188,7 +199,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.Event)
                     .Where(x => x.Event.Name.ToLower().Contains(request.EventName.ToLower()))
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -199,6 +212,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Where(x => x.ProgrammedTime >= request.ProgrammedTimeFrom)
+                    .AsNoTracking()
                     .AsQueryable();
                 return await tests.Select(t => t.Id).ToListAsync();
             }
@@ -210,7 +224,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
             {
                 var tests = dbContext.Tests
                     .Where(x => x.ProgrammedTime <= request.ProgrammedTimeTo)
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -222,7 +238,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x=>x.UserProfile)
                     .Where(x => x.UserProfile.DepartmentColaboratorId == request.DepartmentId)
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -234,7 +252,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
                     .Where(x => x.UserProfile.DepartmentColaboratorId.ToString().StartsWith(request.ColaboratorId))
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -246,7 +266,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
                     .Where(x => x.UserProfile.RoleColaboratorId == request.RoleId)
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -258,7 +280,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                 var tests = dbContext.Tests
                     .Include(x => x.UserProfile)
                     .Where(x => x.UserProfile.FunctionColaboratorId == request.RoleId)
+                    .AsNoTracking()
                     .AsQueryable();
+
                 return await tests.Select(t => t.Id).ToListAsync();
             }
         }
@@ -431,6 +455,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                                 }).ToArray()
                         }).ToArray(),
                     })
+                    .AsNoTracking()
                     .AsQueryable();
         }
 

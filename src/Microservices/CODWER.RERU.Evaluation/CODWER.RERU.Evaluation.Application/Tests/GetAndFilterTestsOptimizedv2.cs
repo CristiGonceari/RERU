@@ -266,6 +266,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                         RecommendedFor = t.RecommendedFor,
                         NotRecommendedFor = t.NotRecommendedFor,
                     })
+                    .AsNoTracking()
                     .AsQueryable();
         }
 
@@ -284,6 +285,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests
                             ModuleRole = new ModuleRole { Id = mr.ModuleRole.Id, ModuleId = mr.ModuleRole.ModuleId }
                         }).ToList()
                 })
+                .AsNoTracking()
                 .FirstOrDefault(x => x.Id == currentUserId);
 
             return user;
