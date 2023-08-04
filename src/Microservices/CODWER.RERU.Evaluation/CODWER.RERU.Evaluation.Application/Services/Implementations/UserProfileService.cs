@@ -26,8 +26,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<UserProfileDto> GetCurrentUserProfileDto()
         {
             var coreUser = await _userProvider.FirstOrDefault(x => x.IsAuthenticated)?.Get();
-            var currentUserProfile = new UserProfile();
-            currentUserProfile.Contractor = new Contractor();
+            var currentUserProfile = new UserProfile
+            {
+                Contractor = new Contractor()
+            };
 
             if (coreUser != null)
             {
@@ -56,6 +58,7 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                         DepartmentColaboratorId = x.DepartmentColaboratorId,
                         FunctionColaboratorId = x.FunctionColaboratorId
                     })
+                    .AsNoTracking()
                     .FirstOrDefault(x => x.Id == int.Parse(coreUser.Id));
 
 
@@ -75,8 +78,10 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
         public async Task<UserProfile> GetCurrentUserProfile()
         {
             var coreUser = await _userProvider.FirstOrDefault(x => x.IsAuthenticated)?.Get();
-            var currentUserProfile = new UserProfile();
-            currentUserProfile.Contractor = new Contractor();
+            var currentUserProfile = new UserProfile
+            {
+                Contractor = new Contractor()
+            };
 
             if (coreUser != null)
             {
@@ -84,8 +89,8 @@ namespace CODWER.RERU.Evaluation.Application.Services.Implementations
                     .Include(x => x.Department)
                     .Include(x => x.Role)
                     .Include(x => x.Contractor)
+                    .AsNoTracking()
                     .FirstOrDefault(x => x.Id == int.Parse(coreUser.Id));
-
 
                 if (currentUserProfile == null)
                 {

@@ -29,13 +29,13 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
         public async Task<PaginatedModel<TestDto>> Handle(GetTestsQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _userProfileService.GetCurrentUserProfileDto();
-            await TestV2(request, cancellationToken);
+            // var currentUser = await _userProfileService.GetCurrentUserProfileDto();
+            await GetPaginatedItems(request, cancellationToken);
 
             return _paginatedModel;
         }
 
-        private async Task TestV2(GetTestsQuery request, CancellationToken cancellationToken)
+        private async Task GetPaginatedItems(GetTestsQuery request, CancellationToken cancellationToken)
         {
             //var currentUser = _appDbContext.UserProfiles.Where(x => x.Id == 1)
             //        .Select(up => new UserProfileDto { Id = up.Id, FirstName = up.FirstName, LastName = up.LastName, AccessModeEnum = up.AccessModeEnum }).First();
@@ -46,9 +46,9 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var testTool = await GetAndFilterTestsOptimizedv2.Filter(_appDbContext, filterData, currentUser);
 
-            var queryable = testTool.Queryable.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test).AsNoTracking();
+            var queryable = testTool.Queryable.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
 
-            var count = testTool.SelectedTestsIds.Count();
+            var count = testTool.SelectedTestsIds.Count;
             var skipCount = (request.Page - 1) * request.ItemsPerPage;
 
             var items = testTool.SelectedTestsIds.Skip(skipCount).Take(request.ItemsPerPage).ToList();
@@ -91,6 +91,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                     EventId = x.EventId,
                     UserProfileId = x.UserProfileId
                 })
+                .AsNoTracking()
                 .ToList();
 
             _paginatedModel.Items = _paginatedModel.Items.Select(item =>
@@ -122,6 +123,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
                     EventId = x.EventId,
                     EvaluatorId = x.EvaluatorId
                 })
+                .AsNoTracking()
                 .ToList();
 
             _paginatedModel.Items = _paginatedModel.Items.Select(item =>
