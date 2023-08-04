@@ -10,6 +10,7 @@ using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 {
@@ -46,7 +47,7 @@ namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 
             var testTool = await GetAndFilterTestsOptimizedv2.Filter(_appDbContext, filterData, currentUser);
 
-            var queryable = testTool.Queryable.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test);
+            var queryable = testTool.Queryable.Where(x => x.TestTemplate.Mode == TestTemplateModeEnum.Test).AsNoTracking();
 
             var count = testTool.SelectedTestsIds.Count();
             var skipCount = (request.Page - 1) * request.ItemsPerPage;
