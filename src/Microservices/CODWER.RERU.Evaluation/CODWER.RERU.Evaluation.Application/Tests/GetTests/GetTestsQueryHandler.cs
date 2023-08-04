@@ -10,7 +10,6 @@ using RERU.Data.Persistence.Context;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Data.Entity;
 
 namespace CODWER.RERU.Evaluation.Application.Tests.GetTests
 {

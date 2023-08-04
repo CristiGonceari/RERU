@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
 using ModuleRole = RERU.Data.Entities.ModuleRole;
-using System.Data.Entity;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
