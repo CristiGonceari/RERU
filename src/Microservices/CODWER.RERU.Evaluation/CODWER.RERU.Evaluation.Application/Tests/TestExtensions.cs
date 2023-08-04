@@ -11,7 +11,6 @@ using RERU.Data.Entities;
 using RERU.Data.Entities.PersonalEntities;
 using Role = RERU.Data.Entities.PersonalEntities.Role;
 using System;
-using System.Data.Entity;
 
 namespace CODWER.RERU.Evaluation.Application.Tests
 {
