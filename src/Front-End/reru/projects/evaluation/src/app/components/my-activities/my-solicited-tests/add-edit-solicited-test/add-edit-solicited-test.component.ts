@@ -113,11 +113,17 @@ export class AddEditSolicitedTestComponent implements OnInit {
 
   setFile(event, index, requiredDocumenId): void {
     const file = event;
-    const fileToAdd = this.parseFileToAdd(file, requiredDocumenId)
+    const fileToAdd = this.parseFileToAdd(file, requiredDocumenId);
 
-    if (this.files[index] !== undefined) {
-      this.files[index] = fileToAdd;
-    } else {
+    const foundIndex = this.files.findIndex(item => item.file.requiredDocumenId === requiredDocumenId);
+    
+    if(foundIndex >= 0){
+      if(event){
+        this.files[foundIndex] = fileToAdd;
+      }else{
+        this.files.splice(foundIndex, 1);
+      }
+    }else{
       this.files.push(fileToAdd);
     }
   }
