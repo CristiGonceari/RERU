@@ -35,7 +35,7 @@ export class ChangePersonalDataComponent implements OnInit {
 	ngOnInit(): void {
 		this.subsribeForParams();
 	}
-
+	
 	subsribeForParams() {
 		this.activatedRoute.params.subscribe(params => {
 			if (params) {
@@ -85,7 +85,8 @@ export class ChangePersonalDataComponent implements OnInit {
 			]),
 			emailNotification: this.fb.control(false,  [
 				Validators.required
-			])
+			]),
+			birthDate: this.fb.control(oldPersonalData.birthDate, [Validators.required])
 		});
 		this.birthDate = oldPersonalData.birthDate;
 		this.isLoading = false;
@@ -93,7 +94,7 @@ export class ChangePersonalDataComponent implements OnInit {
 
 	parseRequest(data: PersonalData): PersonalData {
 		return {
-			birthDate: this.date || null,
+			// birthDate: this.date || null,
 			...data
 		};
 	}
@@ -107,7 +108,7 @@ export class ChangePersonalDataComponent implements OnInit {
 
 	changePersonalData(): void {
 		this.isLoading = true;
-		this.setBirthDate();
+		// this.setBirthDate();
 		const personalDataForUpdate = this.parseRequest(this.personalDataForm.value);
 
 		this.userService.changePersonalData(personalDataForUpdate).subscribe(
