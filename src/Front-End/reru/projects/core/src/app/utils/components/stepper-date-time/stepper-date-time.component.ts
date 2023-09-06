@@ -16,6 +16,7 @@ export class StepperDateTimeComponent implements OnChanges {
   @Input() isLarge: boolean;
   @Input() isSmall: boolean;
   @Input() isSolid: boolean = true;
+  @Input() heightSize: string = 'auto';
   isPatternError: boolean;
 
   constructor() { }
