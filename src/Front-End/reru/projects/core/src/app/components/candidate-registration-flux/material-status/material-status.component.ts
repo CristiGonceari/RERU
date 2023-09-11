@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { forkJoin, Observable, Subject } from 'rxjs';
@@ -309,8 +309,8 @@ export class MaterialStatusComponent implements OnInit {
       kinshipDegree: this.fb.control((kinship && kinship.kinshipDegree) || null, []),
       name: this.fb.control((kinship && kinship.name) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
       lastName: this.fb.control((kinship && kinship.lastName) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
-      birthDate: this.fb.control((kinship && kinship.birthDate) || null, [Validators.required]),
-      birthLocation: this.fb.control((kinship && kinship.birthLocation) || null, [Validators.required]),
+      birthDate: this.fb.control((kinship && kinship.birthDate) || null, [Validators.required, this.dateValidator]),
+      birthLocation: this.fb.control((kinship && kinship.birthLocation) || null, [Validators.required, Validators.pattern('^[a-zA-Z\-]+$')]),
       function: this.fb.control((kinship && kinship.function) || null, [Validators.required]),
       workLocation: this.fb.control((kinship && kinship.workLocation) || null, [Validators.required]),
       residenceAddress: this.fb.control((kinship && kinship.residenceAddress) || null, [Validators.required]),
@@ -327,6 +327,19 @@ export class MaterialStatusComponent implements OnInit {
     this.referenceService.getKinshipDegreeEnum().subscribe(res => {
       this.kinshipDegreeEnum = res.data;
     })
+  }
+
+  dateValidator(c: AbstractControl): { [key: string]: boolean } | null {
+    let today: Date = new Date();
+    let currentYear: number = today.getFullYear();
+    let currentMonth: number = today.getMonth();
+    let currentDay: number = today.getDate();
+    let maxDate: Date =  new Date(currentYear, currentMonth, currentDay);
+
+    if (new Date(c.value) >= maxDate) {
+        return { 'numeric': true };
+    }
+    return null;
   }
 
   createMaterialStatus() {

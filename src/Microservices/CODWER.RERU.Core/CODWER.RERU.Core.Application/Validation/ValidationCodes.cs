@@ -56,6 +56,7 @@ namespace CODWER.RERU.Core.Application.Validation
         public static string EMPTY_BULLETIN_EMITTER = "01000702";
         public static string BULLETIN_NOT_FOUND = "01000703";
         public static string CONTRACTOR_HAS_BULLETIN = "01000704";
+        public static string EMPTY_BULLETIN_RELASE_DAY = "01000705";
 
         //Address 
         public static string ADDRESS_NOT_FOUND = "01000801";

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ValidatorUtil } from '../../../utils/util/validator.util';
 import { AddressModel, BulletinModel } from '../../../utils/models/bulletin.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -139,7 +139,7 @@ export class BulletinComponent implements OnInit {
   initForm(contractorId?: number): void {
 
     this.bulletinForm = this.fb.group({
-      releaseDay: this.fb.control(null, [Validators.required]),
+      releaseDay: this.fb.control(null, [Validators.required, this.dateValidator]),
       series: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘŞșşȚŢțţÂâ ]*$')]),
       emittedBy: this.fb.control(null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘŞșşȚŢțţÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
@@ -160,7 +160,7 @@ export class BulletinComponent implements OnInit {
   initExistentForm(contractorId?: number, bulletinId?, existentBulletin?, birthPlace?, residenceAddress?, parentsResidenceAddress?): void {
 
     this.bulletinForm = this.fb.group({
-      releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required]),
+      releaseDay: this.fb.control((existentBulletin && existentBulletin.releaseDay) || null, [Validators.required, this.dateValidator]),
       series: this.fb.control((existentBulletin && existentBulletin.series) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       emittedBy: this.fb.control((existentBulletin && existentBulletin.emittedBy) || null, [Validators.required, Validators.pattern('^(?! )[a-zA-Z][a-zA-Z0-9-_.]{0,20}$|^[a-zA-Z][a-zA-Z0-9-_. ]*[A-Za-z][a-zA-Z0-9-_.]{0,20}$|^(?!À-Ö)[A-Za-z0-9\',\-ĂăÎîȘșȚțÂâ ]*$')]),
       contractorId: this.fb.control(contractorId, []),
@@ -169,6 +169,19 @@ export class BulletinComponent implements OnInit {
       parentsResidenceAddress: this.buildExistentAddress(this.parseAddress(residenceAddress)),
       residenceAddress: this.buildExistentAddress(this.parseAddress(parentsResidenceAddress))
     });
+  }
+
+  dateValidator(c: AbstractControl): { [key: string]: boolean } | null {
+    let today: Date = new Date();
+    let currentYear: number = today.getFullYear();
+    let currentMonth: number = today.getMonth();
+    let currentDay: number = today.getDate();
+    let maxDate: Date =  new Date(currentYear, currentMonth, currentDay);
+
+    if (new Date(c.value) >= maxDate) {
+        return { 'numeric': true };
+    }
+    return null;
   }
 
   isInvalidPattern(field: string): boolean {

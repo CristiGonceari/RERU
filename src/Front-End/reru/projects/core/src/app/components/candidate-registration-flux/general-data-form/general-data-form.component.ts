@@ -119,8 +119,8 @@ export class GeneralDataFormComponent implements OnInit {
   initForm(initFormData?: any): void {
 
     this.userForm = this.fb.group({
-      homePhone: this.fb.control((initFormData && initFormData.homePhone) || null),
-      workPhone: this.fb.control((initFormData && initFormData.workPhone) || null),
+      homePhone: this.fb.control((initFormData && initFormData.homePhone) || null, [Validators.minLength(9), Validators.maxLength(9)]),
+      workPhone: this.fb.control((initFormData && initFormData.workPhone) || null, [Validators.minLength(9), Validators.maxLength(9)]),
       nationalityTypeId: this.fb.control((initFormData && initFormData.candidateNationalityId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       citizenshipTypeId: this.fb.control((initFormData && initFormData.candidateCitizenshipId) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       sex: this.fb.control((initFormData && initFormData.sex) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),

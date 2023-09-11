@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { SelectItem } from '../../../utils/models/select-item.model';
 import { ReferenceService } from '../../../utils/services/reference.service';
@@ -384,16 +384,16 @@ export class StudyComponent implements OnInit {
       studyCourse: this.fb.control((study && study.studyCourse) || null, [Validators.required, ValidatorUtil.isNotNullString.bind(this)]),
       faculty: this.fb.control((study && study.faculty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\- ]+$/)]),
       specialty: this.fb.control((study && study.specialty) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
-      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
-      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/)]),
-      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required]),
-      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required]),
+      yearOfAdmission: this.fb.control((study && study.yearOfAdmission) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/), , this.dateValidator]),
+      graduationYear: this.fb.control((study && study.graduationYear) || null, [Validators.required, Validators.maxLength(4), Validators.minLength(4), Validators.pattern(/^[0-9]*$/), , this.dateValidator]),
+      startStudyPeriod: this.fb.control((study && study.startStudyPeriod) || null, [Validators.required, this.dateValidator]),
+      endStudyPeriod: this.fb.control((study && study.endStudyPeriod) || null, [Validators.required, this.dateValidator]),
       title: this.fb.control((study && study.title) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
       qualification: this.fb.control((study && study.qualification) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-ZĂăÎîȘŞșşȚŢțţÂâ\-,. ]+$/)]),
       creditCount: this.fb.control((study && study.creditCount) || null, [Validators.required]),
       studyActSeries: this.fb.control((study && study.studyActSeries) || null, [Validators.required, Validators.pattern(/^[a-zA-Z-,. ]+$/)]),
       studyActNumber: this.fb.control((study && study.studyActNumber) || null, [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]),
-      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required]),
+      studyActRelaseDay: this.fb.control((study && study.studyActRelaseDay) || null, [Validators.required, this.dateValidator]),
       contractorId: this.fb.control(contractorId || null, [])
     });
   }
@@ -416,6 +416,20 @@ export class StudyComponent implements OnInit {
       subdivision: this.fb.control((recommendation && recommendation.subdivision) || null, [Validators.required]),
       contractorId: this.fb.control(contractorId || null, []),
     });
+  }
+
+
+  dateValidator(c: AbstractControl): { [key: string]: boolean } | null {
+    let today: Date = new Date();
+    let currentYear: number = today.getFullYear();
+    let currentMonth: number = today.getMonth();
+    let currentDay: number = today.getDate();
+    let maxDate: Date =  new Date(currentYear, currentMonth, currentDay);
+
+    if (new Date(c.value) >= maxDate) {
+        return { 'numeric': true };
+    }
+    return null;
   }
 
   isInvalidPattern(form, field: string): boolean {
@@ -506,9 +520,14 @@ export class StudyComponent implements OnInit {
           results.push(!(
             (study[i].value.institution && !ValidatorUtil.isInvalidPattern(study[i], "institution")) &&
             (study[i].value.studyTypeId && !ValidatorUtil.isInvalidPattern(study[i], "studyTypeId")) &&
-            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
-            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
-            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile"))
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission") && study[i].controls.yearOfAdmission.status == "VALID" ? true : false) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear") && study[i].controls.graduationYear.status == "VALID" ? true : false) &&
+            (study[i].value.studyProfile && !ValidatorUtil.isInvalidPattern(study[i], "studyProfile") &&
+            (study[i].value.studyActSeries || study[i].value.studyActNumber || study[i].value.studyActRelaseDay) ?  
+              (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
+              (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
+              (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false) : true
+            )
           ))
             
         } else if (studyType[0].validationId == 4 || studyType[0].validationId == 5) {
@@ -518,11 +537,11 @@ export class StudyComponent implements OnInit {
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
             (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
-            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
-            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission") && study[i].controls.yearOfAdmission.status == "VALID" ? true : false) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear") && study[i].controls.graduationYear.status == "VALID" ? true : false) &&
             (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
             (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false)
           ))
         } else if (studyType[0].validationId == 6) {
           results.push(!(
@@ -532,11 +551,11 @@ export class StudyComponent implements OnInit {
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
             (study[i].value.qualification && !ValidatorUtil.isInvalidPattern(study[i], "qualification")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
-            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
-            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission") && study[i].controls.yearOfAdmission.status == "VALID" ? true : false) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear") && study[i].controls.graduationYear.status == "VALID" ? true : false) &&
             (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
             (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false)
           ))
             
         } else if (studyType[0].validationId == 7 || studyType[0].validationId == 8) {
@@ -547,11 +566,11 @@ export class StudyComponent implements OnInit {
             (study[i].value.faculty && !ValidatorUtil.isInvalidPattern(study[i], "faculty")) &&
             (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
-            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
-            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission") && study[i].controls.yearOfAdmission.status == "VALID" ? true : false) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear") && study[i].controls.graduationYear.status == "VALID" ? true : false) &&
             (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
             (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false)
           ))
         } else if (studyType[0].validationId == 9 || studyType[0].validationId == 10) {
           results.push(!(
@@ -560,11 +579,11 @@ export class StudyComponent implements OnInit {
             (study[i].value.studyFrequency && !ValidatorUtil.isInvalidPattern(study[i], "studyFrequency")) &&
             (study[i].value.title && !ValidatorUtil.isInvalidPattern(study[i], "title")) &&
             (study[i].value.specialty && !ValidatorUtil.isInvalidPattern(study[i], "specialty")) &&
-            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission")) &&
-            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear")) &&
+            (study[i].value.yearOfAdmission && !ValidatorUtil.isInvalidPattern(study[i], "yearOfAdmission") && study[i].controls.yearOfAdmission.status == "VALID" ? true : false) &&
+            (study[i].value.graduationYear && !ValidatorUtil.isInvalidPattern(study[i], "graduationYear") && study[i].controls.graduationYear.status == "VALID" ? true : false) &&
             (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
             (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false)
           ))
         } else if (studyType[0].validationId == 11) {
           results.push(!(
@@ -577,7 +596,7 @@ export class StudyComponent implements OnInit {
             (study[i].value.endStudyPeriod && !ValidatorUtil.isInvalidPattern(study[i], "endStudyPeriod")) &&
             (study[i].value.studyActSeries && !ValidatorUtil.isInvalidPattern(study[i], "studyActSeries")) &&
             (study[i].value.studyActNumber && !ValidatorUtil.isInvalidPattern(study[i], "studyActNumber")) &&
-            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay"))
+            (study[i].value.studyActRelaseDay && !ValidatorUtil.isInvalidPattern(study[i], "studyActRelaseDay") && study[i].controls.studyActRelaseDay.status == "VALID" ? true : false)
           ))
         }
       }else{

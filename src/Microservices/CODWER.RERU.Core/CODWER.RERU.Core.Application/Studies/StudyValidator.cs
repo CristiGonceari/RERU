@@ -66,6 +66,12 @@ namespace CODWER.RERU.Core.Application.Studies
                .Must(x => CheckIfCurrentUser(x.ContractorId).Result)
                .WithErrorCode(ValidationCodes.USER_NOT_FOUND);
 
+            RuleFor(x => x.StudyActRelaseDay)
+               .NotEmpty()
+               .Must(p => p <= DateTime.Now)
+               .WithErrorCode(ValidationCodes.EMPTY_BULLETIN_RELASE_DAY)
+               .WithMessage(ValidationMessages.InvalidInput);
+
         }
         private async Task<bool> CheckIfCurrentUser(int id)
         {

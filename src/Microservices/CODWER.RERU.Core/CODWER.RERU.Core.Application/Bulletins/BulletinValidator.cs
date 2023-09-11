@@ -6,6 +6,7 @@ using CVU.ERP.ServiceProvider;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RERU.Data.Persistence.Context;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +30,12 @@ namespace CODWER.RERU.Core.Application.Bulletins
             RuleFor(x => x.EmittedBy)
                 .NotEmpty()
                 .WithErrorCode(ValidationCodes.EMPTY_BULLETIN_EMITTER)
+                .WithMessage(ValidationMessages.InvalidInput);
+
+            RuleFor(x => x.ReleaseDay)
+                .NotEmpty()
+                .Must(p => p <= DateTime.Now)
+                .WithErrorCode(ValidationCodes.EMPTY_BULLETIN_RELASE_DAY)
                 .WithMessage(ValidationMessages.InvalidInput);
 
             RuleFor(x => x.BirthPlace)
