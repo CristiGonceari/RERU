@@ -576,7 +576,8 @@
     "01000909": "Interval de timp nevalid",
     "01000116": "Parolă veche incorectă",
     "01000117": "Parola nouă și parola veche sunt aceleași",
-    "01000105": "Email invalid"
+    "01000105": "Email invalid",
+    "01000705": "Dată invalidă"
   },
   "print": {
     "print-table": "Printare tabel",
@@ -811,7 +812,7 @@
     "paragraf-8": "– Locul de trai și viza de domiciliu (se indică ambele dacă nu coincid)."
   },
   "declaration":{
-    "paragraf": "Declar, pe propria răspundere, că datele înscrise în această fișă sunt veridice. Sunt de acord ca autoritățile competente să-mi verifice datele din fișă și din actele prezentate"
+    "paragraf": "Declar, pe propria răspundere, că datele înscrise în această fișă sunt veridice. Sunt de acord ca autoritățile competente să-mi verifice datele din fișă și din actele prezentate."
   },
   "sexType": {
     "Male": "Masculin",

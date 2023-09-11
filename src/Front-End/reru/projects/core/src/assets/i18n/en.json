@@ -574,7 +574,8 @@
     "01000909": "Invalid time range",
     "01000116": "Wrong old password",
     "01000117": "New password and old password are the same",
-    "01000105": "Invalid email"
+    "01000105": "Invalid email",
+    "01000705": "Invalid date"
   },
   "print": {
     "print-table": "Print table",
@@ -814,7 +815,7 @@
     "paragraf-8": "- Place of residence and home visa (both indicated if they do not coincide)."
   },
   "declaration":{
-    "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me"
+    "paragraf": "I declare, on my own responsibility, that the data entered in this form are true. I agree that the competent authorities shall verify the data in the file and the documents submitted to me."
   },
   "sexType": {
     "Male": "Male",
